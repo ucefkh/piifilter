@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[project]
+name = "piifilter-detector-regex"
+version = "2.0.0"
+description = "Regex-based PII detector plugin for PIIFilter"
+requires-python = ">=3.11"
+dependencies = [
+    "piifilter-core",
+]
+
+[project.entry-points."piifilter.plugins"]
+regex = "piifilter_detector_regex"
+
+[tool.setuptools.packages.find]
+where = ["src"]

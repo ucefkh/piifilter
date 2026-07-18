@@ -28,3 +28,11 @@ Thumbs.db
 # Environment
 .env
 .env.local
+
+# Temp test files from subagents
+_test_*.py
+_check_*.py
+_sanity.py
+_verify_*.py
+test_import*.py
+check_*.py

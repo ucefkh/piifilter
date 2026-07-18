@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
-  <rect width="128" height="128" rx="16" fill="#0f172a"/>
-  <path d="M64 16C48 16 24 32 24 64s24 48 40 48 40-16 40-48-16-48-24-48z" fill="#38bdf8" fill-opacity="0.15"/>
-  <path d="M64 24a40 40 0 0 0-24 32l16 8 8-16 8 16 16-8a40 40 0 0 0-24-32z" fill="#38bdf8"/>
-  <path d="M64 72l-16-8 8 24h16l8-24z" fill="#22c55e"/>
-  <text x="64" y="108" text-anchor="middle" fill="#64748b" font-size="12" font-family="monospace">PIIFilter</text>
-</svg>

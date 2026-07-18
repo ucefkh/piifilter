@@ -1,0 +1,330 @@
+{
+  "title": "PIIFilter Detector Benchmark Report",
+  "timestamp": "2026-07-18T15:53:32Z",
+  "detectors": {
+    "regex": {
+      "prompts": {
+        "standard_pii": {
+          "detector": "regex",
+          "prompt": "standard_pii",
+          "avg_ms": 0.0359,
+          "p50_ms": 0.0297,
+          "p95_ms": 0.0642,
+          "p99_ms": 0.1747,
+          "min_ms": 0.0283,
+          "max_ms": 0.2181,
+          "stddev_ms": 0.0251,
+          "entities_found": 2,
+          "entity_types": [
+            "email",
+            "phone"
+          ],
+          "warmup_avg_ms": 0.0415,
+          "throughput_ops": 27890.2,
+          "n": 200,
+          "errors": 0
+        },
+        "credentials": {
+          "detector": "regex",
+          "prompt": "credentials",
+          "avg_ms": 0.031,
+          "p50_ms": 0.0303,
+          "p95_ms": 0.0336,
+          "p99_ms": 0.045,
+          "min_ms": 0.0293,
+          "max_ms": 0.051,
+          "stddev_ms": 0.0027,
+          "entities_found": 3,
+          "entity_types": [
+            "api_key",
+            "email",
+            "url"
+          ],
+          "warmup_avg_ms": 0.0369,
+          "throughput_ops": 32240.7,
+          "n": 200,
+          "errors": 0
+        },
+        "sensitive_ids": {
+          "detector": "regex",
+          "prompt": "sensitive_ids",
+          "avg_ms": 0.0438,
+          "p50_ms": 0.0338,
+          "p95_ms": 0.0847,
+          "p99_ms": 0.1473,
+          "min_ms": 0.0317,
+          "max_ms": 0.3077,
+          "stddev_ms": 0.0282,
+          "entities_found": 3,
+          "entity_types": [
+            "credit_card",
+            "ip_address",
+            "ssn"
+          ],
+          "warmup_avg_ms": 0.0388,
+          "throughput_ops": 22849.3,
+          "n": 200,
+          "errors": 0
+        },
+        "empty": {
+          "detector": "regex",
+          "prompt": "empty",
+          "avg_ms": 0.0001,
+          "p50_ms": 0.0001,
+          "p95_ms": 0.0002,
+          "p99_ms": 0.0002,
+          "min_ms": 0.0001,
+          "max_ms": 0.0003,
+          "stddev_ms": 0.0,
+          "entities_found": 0,
+          "entity_types": [],
+          "warmup_avg_ms": 0.0004,
+          "throughput_ops": 7522270.5,
+          "n": 200,
+          "errors": 0
+        },
+        "jwt_token": {
+          "detector": "regex",
+          "prompt": "jwt_token",
+          "avg_ms": 0.0266,
+          "p50_ms": 0.026,
+          "p95_ms": 0.0287,
+          "p99_ms": 0.0393,
+          "min_ms": 0.0253,
+          "max_ms": 0.0425,
+          "stddev_ms": 0.0022,
+          "entities_found": 1,
+          "entity_types": [
+            "token"
+          ],
+          "warmup_avg_ms": 0.0293,
+          "throughput_ops": 37629.0,
+          "n": 200,
+          "errors": 0
+        }
+      },
+      "overall_avg_ms": 0.0275,
+      "overall_max_ms": 0.0438,
+      "overall_min_ms": 0.0001
+    },
+    "presidio": {
+      "prompts": {
+        "standard_pii": {
+          "detector": "presidio",
+          "prompt": "standard_pii",
+          "avg_ms": 0.0003,
+          "p50_ms": 0.0003,
+          "p95_ms": 0.0003,
+          "p99_ms": 0.0006,
+          "min_ms": 0.0002,
+          "max_ms": 0.0025,
+          "stddev_ms": 0.0002,
+          "entities_found": 0,
+          "entity_types": [],
+          "warmup_avg_ms": 0.0036,
+          "throughput_ops": 3596415.3,
+          "n": 200,
+          "errors": 0
+        },
+        "credentials": {
+          "detector": "presidio",
+          "prompt": "credentials",
+          "avg_ms": 0.0003,
+          "p50_ms": 0.0003,
+          "p95_ms": 0.0003,
+          "p99_ms": 0.0004,
+          "min_ms": 0.0002,
+          "max_ms": 0.0005,
+          "stddev_ms": 0.0,
+          "entities_found": 0,
+          "entity_types": [],
+          "warmup_avg_ms": 0.0006,
+          "throughput_ops": 3762434.6,
+          "n": 200,
+          "errors": 0
+        },
+        "sensitive_ids": {
+          "detector": "presidio",
+          "prompt": "sensitive_ids",
+          "avg_ms": 0.0003,
+          "p50_ms": 0.0003,
+          "p95_ms": 0.0003,
+          "p99_ms": 0.0003,
+          "min_ms": 0.0002,
+          "max_ms": 0.0005,
+          "stddev_ms": 0.0,
+          "entities_found": 0,
+          "entity_types": [],
+          "warmup_avg_ms": 0.0005,
+          "throughput_ops": 3924017.6,
+          "n": 200,
+          "errors": 0
+        },
+        "empty": {
+          "detector": "presidio",
+          "prompt": "empty",
+          "avg_ms": 0.0001,
+          "p50_ms": 0.0001,
+          "p95_ms": 0.0001,
+          "p99_ms": 0.0001,
+          "min_ms": 0.0001,
+          "max_ms": 0.0002,
+          "stddev_ms": 0.0,
+          "entities_found": 0,
+          "entity_types": [],
+          "warmup_avg_ms": 0.0002,
+          "throughput_ops": 10074973.0,
+          "n": 200,
+          "errors": 0
+        },
+        "jwt_token": {
+          "detector": "presidio",
+          "prompt": "jwt_token",
+          "avg_ms": 0.0003,
+          "p50_ms": 0.0003,
+          "p95_ms": 0.0003,
+          "p99_ms": 0.0004,
+          "min_ms": 0.0002,
+          "max_ms": 0.0005,
+          "stddev_ms": 0.0,
+          "entities_found": 0,
+          "entity_types": [],
+          "warmup_avg_ms": 0.0004,
+          "throughput_ops": 3814457.7,
+          "n": 200,
+          "errors": 0
+        }
+      },
+      "overall_avg_ms": 0.0003,
+      "overall_max_ms": 0.0003,
+      "overall_min_ms": 0.0001
+    }
+  },
+  "comparison": {
+    "detector_names": [
+      "regex",
+      "presidio"
+    ],
+    "prompts": [
+      {
+        "prompt": "standard_pii",
+        "regex": {
+          "avg_ms": 0.0359,
+          "p50_ms": 0.0297,
+          "p95_ms": 0.0642,
+          "p99_ms": 0.1747,
+          "entities": 2,
+          "throughput": 27890.2,
+          "errors": 0
+        },
+        "presidio": {
+          "avg_ms": 0.0003,
+          "p50_ms": 0.0003,
+          "p95_ms": 0.0003,
+          "p99_ms": 0.0006,
+          "entities": 0,
+          "throughput": 3596415.3,
+          "errors": 0
+        }
+      },
+      {
+        "prompt": "credentials",
+        "regex": {
+          "avg_ms": 0.031,
+          "p50_ms": 0.0303,
+          "p95_ms": 0.0336,
+          "p99_ms": 0.045,
+          "entities": 3,
+          "throughput": 32240.7,
+          "errors": 0
+        },
+        "presidio": {
+          "avg_ms": 0.0003,
+          "p50_ms": 0.0003,
+          "p95_ms": 0.0003,
+          "p99_ms": 0.0004,
+          "entities": 0,
+          "throughput": 3762434.6,
+          "errors": 0
+        }
+      },
+      {
+        "prompt": "sensitive_ids",
+        "regex": {
+          "avg_ms": 0.0438,
+          "p50_ms": 0.0338,
+          "p95_ms": 0.0847,
+          "p99_ms": 0.1473,
+          "entities": 3,
+          "throughput": 22849.3,
+          "errors": 0
+        },
+        "presidio": {
+          "avg_ms": 0.0003,
+          "p50_ms": 0.0003,
+          "p95_ms": 0.0003,
+          "p99_ms": 0.0003,
+          "entities": 0,
+          "throughput": 3924017.6,
+          "errors": 0
+        }
+      },
+      {
+        "prompt": "empty",
+        "regex": {
+          "avg_ms": 0.0001,
+          "p50_ms": 0.0001,
+          "p95_ms": 0.0002,
+          "p99_ms": 0.0002,
+          "entities": 0,
+          "throughput": 7522270.5,
+          "errors": 0
+        },
+        "presidio": {
+          "avg_ms": 0.0001,
+          "p50_ms": 0.0001,
+          "p95_ms": 0.0001,
+          "p99_ms": 0.0001,
+          "entities": 0,
+          "throughput": 10074973.0,
+          "errors": 0
+        }
+      },
+      {
+        "prompt": "jwt_token",
+        "regex": {
+          "avg_ms": 0.0266,
+          "p50_ms": 0.026,
+          "p95_ms": 0.0287,
+          "p99_ms": 0.0393,
+          "entities": 1,
+          "throughput": 37629.0,
+          "errors": 0
+        },
+        "presidio": {
+          "avg_ms": 0.0003,
+          "p50_ms": 0.0003,
+          "p95_ms": 0.0003,
+          "p99_ms": 0.0004,
+          "entities": 0,
+          "throughput": 3814457.7,
+          "errors": 0
+        }
+      }
+    ],
+    "summary": {
+      "regex": {
+        "mean_avg_latency_ms": 0.0275,
+        "total_entities_detected": 9,
+        "total_errors": 0,
+        "prompts_benchmarked": 5
+      },
+      "presidio": {
+        "mean_avg_latency_ms": 0.0003,
+        "total_entities_detected": 0,
+        "total_errors": 0,
+        "prompts_benchmarked": 5
+      }
+    }
+  }
+}

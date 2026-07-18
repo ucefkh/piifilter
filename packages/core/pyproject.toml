@@ -1,4 +1,0 @@
-[package]
-name = "piifilter-core"
-version = "1.0.0"
-description = "PIIFilter core detection, replacement, risk, and gateway engines"
