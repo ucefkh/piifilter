@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PIIFilter</title>
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-primary: #0f172a;
+      --bg-secondary: #1e293b;
+      --bg-card: #1e293b;
+      --accent: #38bdf8;
+      --accent-hover: #7dd3fc;
+      --accent-dim: rgba(56, 189, 248, 0.15);
+      --text-primary: #f1f5f9;
+      --text-secondary: #94a3b8;
+      --text-dim: #64748b;
+      --green: #22c55e;
+      --green-dim: rgba(34, 197, 94, 0.15);
+      --red: #ef4444;
+      --red-dim: rgba(239, 68, 68, 0.15);
+      --border: #334155;
+      --radius: 10px;
+      --radius-sm: 6px;
+    }
+
+    body {
+      width: 320px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-size: 13px;
+      line-height: 1.5;
+      padding: 16px;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .brand svg {
+      width: 28px;
+      height: 28px;
+    }
+    .brand h1 {
+      font-size: 16px;
+      font-weight: 700;
+      background: linear-gradient(135deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+      flex-shrink: 0;
+      transition: background 0.3s;
+    }
+    .status-dot.online { background: var(--green); box-shadow: 0 0 8px var(--green-dim); }
+    .status-dot.offline { background: var(--red); box-shadow: 0 0 8px var(--red-dim); }
+
+    /* Cards */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 12px 14px;
+      margin-bottom: 10px;
+    }
+    .card-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: var(--text-dim);
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+
+    /* Toggle */
+    .toggle-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .toggle-row span { font-weight: 600; }
+    .toggle {
+      position: relative;
+      width: 42px;
+      height: 24px;
+      cursor: pointer;
+    }
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .toggle-slider {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #475569;
+      border-radius: 12px;
+      transition: 0.3s;
+    }
+    .toggle-slider::before {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 3px;
+      bottom: 3px;
+      background: #fff;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    .toggle input:checked + .toggle-slider { background: var(--accent); }
+    .toggle input:checked + .toggle-slider::before { transform: translateX(18px); }
+
+    /* Mode Select */
+    .mode-select {
+      width: 100%;
+      padding: 8px 10px;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text-primary);
+      font-size: 13px;
+      outline: none;
+      cursor: pointer;
+    }
+    .mode-select:focus { border-color: var(--accent); }
+
+    /* Stats grid */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .stat-item {
+      background: var(--bg-primary);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+    .stat-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+    .stat-risk { color: var(--text-primary); }
+    .stat-risk.low { color: var(--green); }
+    .stat-risk.medium { color: #eab308; }
+    .stat-risk.high { color: #f97316; }
+    .stat-risk.critical { color: var(--red); }
+
+    /* Actions */
+    .actions {
+      display: flex;
+      gap: 8px;
+    }
+    .btn {
+      flex: 1;
+      padding: 8px 12px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      background: var(--bg-secondary);
+      color: var(--text-primary);
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+    }
+    .btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-dim);
+    }
+    .btn-primary {
+      background: var(--accent-dim);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .btn-primary:hover {
+      background: var(--accent);
+      color: #0f172a;
+    }
+    .btn svg { width: 14px; height: 14px; }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding-top: 6px;
+      font-size: 11px;
+      color: var(--text-dim);
+    }
+    .footer a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .footer a:hover { text-decoration: underline; }
+
+    /* Hide scrollbar but keep scroll */
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <svg viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="24" height="24" rx="6" fill="rgba(56,189,248,0.15)" stroke="#38bdf8" stroke-width="1.5"/>
+        <path d="M8 14l3 3 7-7" stroke="#38bdf8" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M14 8a6 6 0 100 12" stroke="#38bdf8" stroke-width="1.5" stroke-linecap="round" opacity="0.5"/>
+      </svg>
+      <h1>PIIFilter</h1>
+    </div>
+    <span class="status-dot offline" id="statusDot" title="Server status"></span>
+  </div>
+
+  <!-- Toggle -->
+  <div class="card">
+    <div class="toggle-row">
+      <span>Filter prompts</span>
+      <label class="toggle">
+        <input type="checkbox" id="toggleActive" checked />
+        <span class="toggle-slider"></span>
+      </label>
+    </div>
+  </div>
+
+  <!-- Mode -->
+  <div class="card">
+    <div class="card-label">Filtering mode</div>
+    <select class="mode-select" id="modeSelect">
+      <option value="semantic">🔬 Semantic — contextual PII removal</option>
+      <option value="mask">🎭 Mask — replace with placeholders</option>
+      <option value="generalize">📊 Generalize — broad categories</option>
+    </select>
+  </div>
+
+  <!-- Stats -->
+  <div class="card">
+    <div class="card-label">Session stats</div>
+    <div class="stats-grid">
+      <div class="stat-item">
+        <div class="stat-value" id="filteredCount">0</div>
+        <div class="stat-label">Filtered</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value stat-risk" id="lastRisk">none</div>
+        <div class="stat-label">Last risk</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="lastLatency">0ms</div>
+        <div class="stat-label">Last latency</div>
+      </div>
+      <div class="stat-item">
+        <div class="stat-value" id="serverStatus">OFF</div>
+        <div class="stat-label">Server</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <button class="btn" id="btnScan">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <circle cx="7" cy="7" r="5"/>
+        <line x1="10.5" y1="10.5" x2="14" y2="14"/>
+      </svg>
+      Scan page
+    </button>
+    <button class="btn btn-primary" id="btnDocs">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+        <path d="M3 2h10a1 1 0 011 1v10a1 1 0 01-1 1H3a1 1 0 01-1-1V3a1 1 0 011-1z"/>
+        <line x1="5" y1="5" x2="11" y2="5"/>
+        <line x1="5" y1="8" x2="11" y2="8"/>
+        <line x1="5" y1="11" x2="8" y2="11"/>
+      </svg>
+      Settings
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    PIIFilter <span id="version">2.0.0</span> &mdash;
+    <a href="#" id="linkDocs">docs</a>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

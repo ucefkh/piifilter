@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+          cache-dependency-glob: "pyproject.toml"
+      
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      
+      - name: Install dependencies
+        run: |
+          uv pip install -e "core"
+          uv pip install pytest pytest-asyncio
+      
+      - name: Run core tests
+        run: uv run pytest tests/core/ -v --tb=short
+      
+      - name: Run fuzz tests
+        run: uv run pytest tests/fuzz/ -v --tb=short
+      
+      - name: Run benchmarks (quick smoke)
+        run: uv run python benchmarks/run.py --iterations 10 --no-pipeline
+      
+      - name: Verify all plugins import
+        run: |
+          uv run python -c "
+            import sys
+            sys.path.insert(0, 'plugins/detector-regex/src')
+            sys.path.insert(0, 'plugins/detector-presidio/src')
+            sys.path.insert(0, 'plugins/strategy-mask/src')
+            sys.path.insert(0, 'plugins/strategy-semantic/src')
+            sys.path.insert(0, 'plugins/strategy-generalize/src')
+            sys.path.insert(0, 'plugins/provider-openai/src')
+            for mod in [
+                'piifilter_detector_regex',
+                'piifilter_strategy_mask',
+                'piifilter_strategy_semantic',
+                'piifilter_strategy_generalize',
+                'piifilter_provider_openai',
+            ]:
+                __import__(mod)
+                print(f'✅ {mod}')
+          "
