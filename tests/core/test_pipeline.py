@@ -306,7 +306,7 @@ class TestPipelineRisk:
         result = await pipeline.run(basic_session)
         assert result.risk is not None
         assert result.risk.score == 0.0
-        assert result.risk.level in (RiskLevel.LOW, "low")
+        assert result.risk.level in (RiskLevel.LOW, "LOW")
 
     async def test_risk_score_increases(self, pipeline, basic_session):
         pipeline.registry.register_detector(MockDetector(

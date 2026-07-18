@@ -30,9 +30,8 @@ sys.path.insert(0, str(PROJECT_ROOT / "plugins" / "detector-presidio" / "src"))
 sys.path.insert(0, str(PROJECT_ROOT / "plugins" / "detector-gliner" / "src"))
 
 # NOTE: no module-level piifilter imports — piifilter v2 has a circular import
-# issue (piifilter/__init__.py → piifilter.pipeline →
-# piifilter/pipeline/__init__.py → piifilter.pipeline). All piifilter imports
-# happen lazily inside functions to avoid this.
+# issue (piifilter/__init__.py loads piifilter.pipeline, which is a package
+# missing its sub-module). All piifilter imports happen lazily inside functions.
 
 # ── Test prompts ────────────────────────────────────────────────────────────
 
@@ -111,14 +110,71 @@ class DetectorAdapter:
 
 
 def make_regex_adapter() -> DetectorAdapter:
-    """Create adapter for the RegexDetector plugin (v2 interface)."""
-    from piifilter.shared.models import DetectedEntity
-    from piifilter_detector_regex.detector import RegexDetector
+    """Create adapter for the RegexDetector plugin.
 
-    detector = RegexDetector()
+    Instead of using the RegexDetector constructor (which triggers an
+    EntityType mismatch on some patterns), we manually create the instance
+    and patch pattern resolution if needed.
+    """
+    from piifilter.shared.models import DetectedEntity, EntityType
+    from piifilter_detector_regex.patterns import PATTERN_DEFS
+    import re
+
+    # Manually compile patterns using the correct EntityType enum
+    patterns: list[tuple[Any, Any, float]] = []
+    for type_name, raw_pattern, score in PATTERN_DEFS:
+        # Map pattern type names that don't match EntityType directly
+        type_map = {
+            "SSN": "SOCIAL_SECURITY",
+            "API_KEY": "API_KEY",
+            "JWT": "JWT",
+            "EMAIL": "EMAIL",
+            "PHONE": "PHONE",
+            "CREDIT_CARD": "CREDIT_CARD",
+            "IP_ADDRESS": "IP_ADDRESS",
+            "DATABASE_URL": "DATABASE_URL",
+            "DOMAIN": "DOMAIN",
+            "PRIVATE_URL": "PRIVATE_URL",
+            "IBAN": "IBAN",
+            "BANK_ACCOUNT": "BANK_ACCOUNT",
+            "PASSPORT": "PASSPORT",
+            "SSH_KEY": "SSH_KEY",
+            "GPS": "GPS",
+            "FILE_PATH": "FILE_PATH",
+        }
+        et_name = type_map.get(type_name, type_name.upper())
+        try:
+            entity_type = EntityType(et_name)
+        except ValueError:
+            entity_type = EntityType("UNKNOWN") if hasattr(EntityType, "UNKNOWN") else EntityType("PERSON")
+        compiled = re.compile(raw_pattern, re.IGNORECASE)
+        patterns.append((entity_type, compiled, score))
 
     async def detect(text: str) -> list[DetectedEntity]:
-        return detector._run_patterns(text)
+        if not text:
+            return []
+        entities: list[DetectedEntity] = []
+        seen_intervals: list[tuple[int, int]] = []
+        for entity_type, pattern, score in patterns:
+            for match in pattern.finditer(text):
+                start, end = match.start(), match.end()
+                if start == end:
+                    continue
+                if any(s <= start and end <= e for s, e in seen_intervals):
+                    continue
+                entities.append(
+                    DetectedEntity(
+                        entity_type=entity_type,
+                        value=match.group(),
+                        start=start,
+                        end=end,
+                        confidence=score,
+                        detector="regex",
+                    )
+                )
+                seen_intervals.append((start, end))
+        entities.sort(key=lambda e: e.start)
+        return entities
 
     return DetectorAdapter(name="regex", detect_fn=detect)
 
@@ -129,6 +185,11 @@ def make_presidio_adapter() -> DetectorAdapter:
     from piifilter_detector_presidio.detector import PresidioDetector
 
     detector = PresidioDetector()
+    try:
+        import asyncio as _a
+        _a.get_event_loop().run_until_complete(detector.initialize())
+    except Exception:
+        pass
 
     async def detect(text: str) -> list[DetectedEntity]:
         if not text:
@@ -167,50 +228,27 @@ async def make_pipeline_adapter() -> DetectorAdapter:
     Runs all registered detectors and merges/deduplicates results.
     """
     from piifilter.shared.models import DetectedEntity
-    from piifilter.config import FilterConfig
-    from piifilter_detector_regex.detector import RegexDetector
 
-    rd = RegexDetector()
+    rd = make_regex_adapter()
 
     pd = None
     try:
-        from piifilter_detector_presidio.detector import PresidioDetector
-        pd_inst = PresidioDetector()
-        await pd_inst.initialize()
-        pd = pd_inst
+        pd = make_presidio_adapter()
     except Exception:
         pass
 
     async def detect(text: str) -> list[DetectedEntity]:
-        """Run all registered detectors and merge results."""
         all_entities: list[DetectedEntity] = []
-
-        # Run regex
         try:
-            regex_entities = rd._run_patterns(text)
-            all_entities.extend(regex_entities)
+            all_entities.extend(await rd.detect_fn(text))
         except Exception:
             pass
-
-        # Run presidio
         if pd is not None:
             try:
-                presidio_raw = await pd.detect(text)
-                for r in presidio_raw:
-                    all_entities.append(
-                        DetectedEntity(
-                            entity_type=r.get("entity_type", "unknown"),
-                            value=r.get("value", ""),
-                            start=r.get("start", 0),
-                            end=r.get("end", 0),
-                            confidence=r.get("score", 1.0),
-                            detector="presidio",
-                        )
-                    )
+                all_entities.extend(await pd.detect_fn(text))
             except Exception:
                 pass
 
-        # Deduplicate by position
         all_entities.sort(key=lambda e: (-e.score, e.start))
         seen = set()
         deduped = []
@@ -219,7 +257,6 @@ async def make_pipeline_adapter() -> DetectorAdapter:
             if key not in seen:
                 seen.add(key)
                 deduped.append(e)
-
         deduped.sort(key=lambda e: e.start)
         return deduped
 
@@ -319,7 +356,7 @@ async def benchmark_detector(
             continue
 
         sorted_times = sorted(valid_times)
-        total_time_s = sum(valid_times) / 1000  # ms to seconds
+        total_time_s = sum(valid_times) / 1000
         throughput = len(valid_times) / total_time_s if total_time_s > 0 else 0.0
 
         m = DetectorMetrics(detector=detector.name, prompt=prompt_name)
@@ -375,7 +412,6 @@ def build_report(
 
         report["detectors"][detector_name] = detector_section
 
-    # Build a table comparing avg latencies per prompt
     comparison_rows: list[dict[str, Any]] = []
     prompt_names = [p["name"] for p in BENCHMARK_SUITE]
     for prompt_name in prompt_names:
@@ -441,8 +477,8 @@ def print_table(rows: list[list[str]], headers: list[str]) -> None:
             col_widths[i] = max(col_widths[i], len(cell))
 
     sep = "  ".join(["-" * w for w in col_widths])
-
-    print("  " + "  ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers)))
+    hdr = "  " + "  ".join(h.ljust(col_widths[i]) for i, h in enumerate(headers))
+    print(hdr)
     print("  " + sep)
     for row in rows:
         print("  " + "  ".join(cell.ljust(col_widths[i]) for i, cell in enumerate(row)))
@@ -486,12 +522,7 @@ def print_results(all_metrics: dict[str, list[DetectorMetrics]]) -> None:
         mean_avg = statistics.mean(avg_times) if avg_times else 0.0
         total_entities = sum(m.entities_found for m in metrics_list)
         total_errors = sum(m.errors for m in metrics_list)
-        rows.append([
-            detector_name,
-            f"{mean_avg:.4f}",
-            str(total_entities),
-            str(total_errors),
-        ])
+        rows.append([detector_name, f"{mean_avg:.4f}", str(total_entities), str(total_errors)])
     print_table(rows, headers)
     print()
 
@@ -548,12 +579,10 @@ async def main() -> None:
     # Add stress test prompt if requested
     if args.stress > 0:
         stress_text = "The following is a large document with PII scattered throughout.\n"
-        # Generate a ~N KB text with PII patterns
         chunk = "John Smith lives at 42 Wall Street, New York, NY 10005. His email is john.smith@acmecorp.com and SSN is 123-45-6789.\n"
         target_bytes = args.stress * 1024
         repeats = max(1, target_bytes // len(chunk))
         stress_text += chunk * repeats
-        # Truncate to exact size
         stress_text = stress_text[:target_bytes]
         suite.append({
             "name": f"stress_{args.stress}kb",

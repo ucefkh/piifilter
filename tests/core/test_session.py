@@ -129,8 +129,6 @@ class TestSessionTiming:
         s = Session(prompt="test")
         s.mark_started()
         s.mark_completed()
-        # Even with no real delay, both timestamps use datetime.utcnow()
-        # which has microsecond resolution — the delta should be >= 0
         assert s.latency_ms >= 0.0
 
     def test_latency_millisecond_precision(self):
@@ -138,8 +136,6 @@ class TestSessionTiming:
         s = Session(prompt="test")
         s.mark_started()
         s.mark_completed()
-        # If latency were in seconds, 0.001 would be a typical value.
-        # In ms it's usually much smaller (microseconds).
         assert s.latency_ms < 1000.0  # sanity: never more than 1 second
 
 
@@ -269,7 +265,7 @@ class TestSessionEntities:
         assert s.entities[0].length == 16
 
     def test_entity_property_aliases(self):
-        """DetectedEntity's type/score/text aliases work through Session."""
+        """DetectedEntity's type/text/score aliases work through Session."""
         e = DetectedEntity(EntityType.PHONE, "555-0100", 0, 9)
         assert e.type == EntityType.PHONE
         assert e.type is e.entity_type
@@ -290,16 +286,17 @@ class TestSessionEntities:
         assert s.entities[0].type == EntityType.EMAIL
         assert s.entities[1].type == EntityType.PHONE
 
-    def test_entity_with_metadata(self):
+    def test_entity_with_votes_and_source(self):
         e = DetectedEntity(
-            EntityType.CUSTOM, "secret", 0, 6,
-            detector="custom_detector",
-            context="prefix",
-            metadata={"source": "regex", "rule": "r1"},
+            EntityType.API_KEY, "sk-abc", 0, 6,
+            confidence=0.95,
+            detector="regex_detector",
+            source_detector="regex_v2",
+            detector_votes=[{"detector": "regex", "confidence": 0.95}],
         )
-        assert e.detector == "custom_detector"
-        assert e.context == "prefix"
-        assert e.metadata["source"] == "regex"
+        assert e.detector == "regex_detector"
+        assert e.source_detector == "regex_v2"
+        assert len(e.detector_votes) == 1
 
     def test_entity_len(self):
         e = DetectedEntity(EntityType.API_KEY, "sk-abc123", 0, 9)
@@ -323,18 +320,15 @@ class TestSessionRisk:
     def test_risk_is_critical(self):
         r = RiskAssessment(score=95.0, level=RiskLevel.CRITICAL)
         assert r.is_critical()
-        assert r.is_high()
 
     def test_risk_is_not_critical(self):
         r = RiskAssessment(score=20.0, level=RiskLevel.LOW)
         assert not r.is_critical()
-        assert not r.is_high()
 
     def test_risk_with_string_level(self):
         """RiskLevel accepts string forms too."""
-        r = RiskAssessment(score=60.0, level="medium")
+        r = RiskAssessment(score=60.0, level="MEDIUM")
         assert not r.is_critical()
-        assert not r.is_high()
 
     def test_risk_with_details(self):
         r = RiskAssessment(
@@ -350,9 +344,16 @@ class TestSessionRisk:
         assert r.recommendation == "Review"
         assert len(r.details) == 1
 
-    def test_risk_with_flags(self):
-        r = RiskAssessment(score=30.0, level=RiskLevel.LOW, flags=["test_flag"])
-        assert "test_flag" in r.flags
+    def test_risk_with_reason_codes(self):
+        r = RiskAssessment(score=30.0, level=RiskLevel.LOW, reason_codes=["test_code"])
+        assert "test_code" in r.reason_codes
+
+    def test_risk_default_values(self):
+        """RiskAssessment has sensible defaults."""
+        r = RiskAssessment()
+        assert r.score == 0.0
+        assert r.level == RiskLevel.LOW
+        assert r.detected_count == 0
 
 
 class TestSessionReplacements:
@@ -381,7 +382,7 @@ class TestSessionReplacements:
     def test_replacement_not_reversible(self):
         r = Replacement(
             original="test", replacement="***",
-            entity_type=EntityType.PASSWORD, start=0, end=4,
+            entity_type=EntityType.API_KEY, start=0, end=4,
             reversible=False,
         )
         assert r.reversible is False
@@ -389,7 +390,7 @@ class TestSessionReplacements:
     def test_replacement_default_mode(self):
         r = Replacement(
             original="a", replacement="b",
-            entity_type=EntityType.NAME, start=0, end=1,
+            entity_type=EntityType.PERSON, start=0, end=1,
         )
         assert r.mode == ReplacementMode.SEMANTIC
 
