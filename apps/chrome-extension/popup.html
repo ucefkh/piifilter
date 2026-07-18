@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>PIIFilter</title>
+  <style>
+    body {
+      width: 320px;
+      min-height: 200px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      margin: 0;
+      padding: 16px;
+      background: #0f172a;
+      color: #e2e8f0;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .header h1 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+    .status {
+      margin-left: auto;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #22c55e;
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .status.off {
+      background: #ef4444;
+      animation: none;
+    }
+    .stat-row {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .stat-card {
+      flex: 1;
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 10px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 20px;
+      font-weight: 700;
+      color: #38bdf8;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: #94a3b8;
+      margin-top: 2px;
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-top: 1px solid #1e293b;
+      margin-top: 8px;
+    }
+    .switch {
+      position: relative;
+      width: 40px;
+      height: 22px;
+    }
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #334155;
+      border-radius: 22px;
+      transition: 0.3s;
+    }
+    .slider:before {
+      content: "";
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      left: 2px;
+      bottom: 2px;
+      background: white;
+      border-radius: 50%;
+      transition: 0.3s;
+    }
+    input:checked + .slider {
+      background: #38bdf8;
+    }
+    input:checked + .slider:before {
+      transform: translateX(18px);
+    }
+    .mode-select {
+      width: 100%;
+      padding: 6px 8px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: #e2e8f0;
+      font-size: 13px;
+    }
+    .config-row {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    .config-row select {
+      flex: 1;
+    }
+    .footer {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid #1e293b;
+    }
+    .btn {
+      flex: 1;
+      padding: 6px 12px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      color: #e2e8f0;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .btn:hover {
+      background: #334155;
+    }
+    .btn.primary {
+      background: #0284c7;
+      border-color: #0284c7;
+    }
+    .btn.primary:hover {
+      background: #0369a1;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🛡️ PIIFilter</h1>
+    <div class="status" id="statusDot"></div>
+  </div>
+
+  <div class="stat-row">
+    <div class="stat-card">
+      <div class="stat-value" id="filteredCount">0</div>
+      <div class="stat-label">Filtered</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="riskScore">—</div>
+      <div class="stat-label">Last Risk</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value" id="latency">—</div>
+      <div class="stat-label">Latency</div>
+    </div>
+  </div>
+
+  <div class="toggle">
+    <span>Active</span>
+    <label class="switch">
+      <input type="checkbox" id="activeToggle" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <div class="config-row">
+    <select class="mode-select" id="modeSelect">
+      <option value="semantic">Semantic</option>
+      <option value="mask">Mask</option>
+      <option value="generalize">Generalize</option>
+      <option value="policy">Policy</option>
+    </select>
+    <select class="mode-select" id="thresholdSelect">
+      <option value="low">Low Risk</option>
+      <option value="medium" selected>Medium Risk</option>
+      <option value="high">High Risk</option>
+      <option value="critical">Critical Only</option>
+    </select>
+  </div>
+
+  <div class="footer">
+    <button class="btn" id="scanPage">🔍 Scan Page</button>
+    <button class="btn primary" id="openServer">⚙️ Settings</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

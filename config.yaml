@@ -1,0 +1,10 @@
+# PIIFilter Configuration
+replacement_mode: semantic
+risk_threshold: medium
+store_logs: false
+replacement_seed: deterministic
+provider:
+  name: lmstudio
+  endpoint: http://localhost:1234/v1
+  api_key: ""
+  default_model: gpt-3.5-turbo
