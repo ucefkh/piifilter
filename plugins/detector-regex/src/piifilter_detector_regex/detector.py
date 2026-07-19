@@ -146,7 +146,7 @@ def _resolve_entity_type(name: str) -> EntityType:
 
     Some type names used in patterns (e.g. JWT, IBAN, GPS) are not
     present in the core ``EntityType`` enum, so they are mapped to
-    the closest matching value or ``EntityType.UNKNOWN``.
+    the closest matching value or ``EntityType.PERSON``.
     """
     _LEGACY_MAP: dict[str, str] = {
         "SOCIAL_SECURITY": "ssn",
@@ -163,10 +163,20 @@ def _resolve_entity_type(name: str) -> EntityType:
         "iban": "bank_account",
         "gps": "unknown",
     }
+    # New entity types we added to PATTERN_DEFS that map directly:
+    _DIRECT_MAP = {
+        "PERSON", "EMAIL", "PHONE", "ADDRESS", "CITY", "COUNTRY",
+        "COMPANY", "BANK_ACCOUNT", "IBAN", "CREDIT_CARD", "PASSPORT",
+        "SOCIAL_SECURITY", "JWT", "API_KEY", "SSH_KEY", "DATABASE_URL",
+        "PRIVATE_URL", "PROJECT_NAME", "CUSTOMER_NAME", "EMPLOYEE_NAME",
+        "GPS", "DOMAIN", "IP_ADDRESS", "FILE_PATH",
+    }
+    if name in _DIRECT_MAP:
+        return EntityType(name)
     lookup = _LEGACY_MAP.get(name, name.lower())
     # If the lookup value isn't a valid EntityType, try the fallback
     try:
         return EntityType(lookup)
     except ValueError:
-        fallback = _FALLBACK_MAP.get(lookup, "unknown")
+        fallback = _FALLBACK_MAP.get(lookup, "person")
         return EntityType(fallback)

@@ -18,6 +18,7 @@ from typing import Any, AsyncGenerator
 from unittest.mock import AsyncMock, MagicMock, patch
 
 import httpx
+import pytest
 
 # Skip integration tests unless explicitly requested
 pytestmark = pytest.mark.skipif(
@@ -26,7 +27,6 @@ pytestmark = pytest.mark.skipif(
 )
 
 
-import pytest
 from httpx_sse import aconnect_sse
 from piifilter.config import FilterConfig
 

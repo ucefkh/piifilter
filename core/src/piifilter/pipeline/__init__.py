@@ -116,17 +116,29 @@ class FilterPipeline:
                     PipelineEvent.PIPELINE_ERROR, session
                 )
 
-        # Deduplicate: prefer higher confidence, keep provenance
-        all_entities.sort(key=lambda e: (-e.score, e.start))
-        seen = set()
+        # Priority-based dedup: give regex higher priority than presidio
+        # for overlapping spans, since regex has higher precision.
+        # Sort by detector priority first (regex=0, presidio=1, gliner=2),
+        # then by score descending, then position.
+        all_entities.sort(key=lambda e: (
+            0 if e.detector == "regex" else 1 if e.detector == "presidio" else 2,
+            -e.score,
+            e.start,
+        ))
+
+        # Dedup by interval: if a higher-priority (regex) entity already
+        # covers this span, skip lower-priority ones.
+        # But if a lower-priority entity has a DIFFERENT type and is NOT
+        # fully contained by the same-type interval, keep it.
+        seen_intervals: dict[str, list[tuple[int, int]]] = {}
         deduped = []
         for e in all_entities:
-            key = (e.start, e.end, e.type.value)
-            if key not in seen:
-                seen.add(key)
+            et = e.type.value if hasattr(e.type, 'value') else str(e.type)
+            intervals = seen_intervals.get(et, [])
+            contained = any(s <= e.start and e.end <= e2 for s, e2 in intervals)
+            if not contained:
+                seen_intervals.setdefault(et, []).append((e.start, e.end))
                 deduped.append(e)
-            elif e.score > deduped[-1].score:
-                deduped[-1] = e  # replace with higher confidence
 
         deduped.sort(key=lambda e: e.start)
         session.entities = deduped

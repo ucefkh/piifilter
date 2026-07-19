@@ -11,33 +11,53 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Install uv
         uses: astral-sh/setup-uv@v3
         with:
           enable-cache: true
           cache-dependency-glob: "pyproject.toml"
-      
+
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      
+
       - name: Create virtual env + install dependencies
         run: |
           uv venv
           uv pip install -e "core"
           uv pip install -e "sdk" --no-deps
-          uv pip install pytest pytest-asyncio httpx
-      
+          uv pip install pytest pytest-asyncio httpx httpx-sse
+
       - name: Run core tests
         run: uv run pytest tests/core/ -v --tb=short
-      
+
       - name: Run fuzz tests
         run: uv run pytest tests/fuzz/ -v --tb=short
-      
+
       - name: Run benchmarks (quick smoke)
         run: uv run python benchmarks/run.py --iterations 10 --no-pipeline
-      
+
+      - name: Start Ollama for live tests
+        run: |
+          ollama serve &
+          sleep 3
+          curl -s http://localhost:11434/api/tags
+
+      - name: Pull small test model for CI
+        run: |
+          if ! curl -s http://localhost:11434/api/tags | grep -q "deepseek-r1:8b"; then
+            ollama pull deepseek-r1:8b 2>&1 | tail -3
+          fi
+          echo "Ollama ready"
+
+      - name: Run live integration tests
+        env:
+          PIIFILTER_LIVE_TESTS: "1"
+          PIIFILTER_LIVE_TIMEOUT: "180"
+        run: |
+          uv run pytest tests/integration/ -v --tb=short -x --timeout=200
+
       - name: Verify all plugins import
         run: uv run python .github/scripts/verify_plugins.py

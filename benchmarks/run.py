@@ -120,6 +120,14 @@ def make_regex_adapter() -> DetectorAdapter:
     from piifilter_detector_regex.patterns import PATTERN_DEFS
     import re
 
+    _DIRECT_MAP = {
+        "PERSON", "EMAIL", "PHONE", "ADDRESS", "CITY", "COUNTRY",
+        "COMPANY", "BANK_ACCOUNT", "IBAN", "CREDIT_CARD", "PASSPORT",
+        "SOCIAL_SECURITY", "JWT", "API_KEY", "SSH_KEY", "DATABASE_URL",
+        "PRIVATE_URL", "PROJECT_NAME", "CUSTOMER_NAME", "EMPLOYEE_NAME",
+        "GPS", "DOMAIN", "IP_ADDRESS", "FILE_PATH",
+    }
+
     # Manually compile patterns using the correct EntityType enum
     patterns: list[tuple[Any, Any, float]] = []
     for type_name, raw_pattern, score in PATTERN_DEFS:
@@ -142,11 +150,14 @@ def make_regex_adapter() -> DetectorAdapter:
             "GPS": "GPS",
             "FILE_PATH": "FILE_PATH",
         }
-        et_name = type_map.get(type_name, type_name.upper())
+        if type_name in _DIRECT_MAP:
+            et_name = type_name
+        else:
+            et_name = type_map.get(type_name, type_name.upper())
         try:
             entity_type = EntityType(et_name)
         except ValueError:
-            entity_type = EntityType("UNKNOWN") if hasattr(EntityType, "UNKNOWN") else EntityType("PERSON")
+            entity_type = EntityType("PERSON")
         compiled = re.compile(raw_pattern, re.IGNORECASE)
         patterns.append((entity_type, compiled, score))
 

@@ -102,6 +102,14 @@ def make_regex_adapter() -> DetectorAdapter:
     from piifilter_detector_regex.patterns import PATTERN_DEFS
     import re
 
+    _DIRECT_MAP = {
+        "PERSON", "EMAIL", "PHONE", "ADDRESS", "CITY", "COUNTRY",
+        "COMPANY", "BANK_ACCOUNT", "IBAN", "CREDIT_CARD", "PASSPORT",
+        "SOCIAL_SECURITY", "JWT", "API_KEY", "SSH_KEY", "DATABASE_URL",
+        "PRIVATE_URL", "PROJECT_NAME", "CUSTOMER_NAME", "EMPLOYEE_NAME",
+        "GPS", "DOMAIN", "IP_ADDRESS", "FILE_PATH",
+    }
+
     patterns: list[Any] = []
     for type_name, raw_pattern, score in PATTERN_DEFS:
         type_map = {
@@ -122,7 +130,10 @@ def make_regex_adapter() -> DetectorAdapter:
             "GPS": "GPS",
             "FILE_PATH": "FILE_PATH",
         }
-        et_name = type_map.get(type_name, type_name.upper())
+        if type_name in _DIRECT_MAP:
+            et_name = type_name
+        else:
+            et_name = type_map.get(type_name, type_name.upper())
         try:
             entity_type = EntityType(et_name)
         except ValueError:
@@ -194,7 +205,14 @@ def make_gliner_adapter() -> DetectorAdapter:
 
 
 async def make_pipeline_adapter(shared_presidio: DetectorAdapter | None = None) -> DetectorAdapter:
-    """Combined pipeline adapter (regex + presidio, deduped)."""
+    """Combined pipeline adapter (regex + presidio, deduped).
+
+    Uses priority-based merging: regex results take precedence over
+    presidio for overlapping spans, since regex has demonstrated higher
+    precision on most entity types. However, if a regex result and a
+    presidio result overlap but have different entity types, both are
+    kept (per-type interval tracking).
+    """
     rd = make_regex_adapter()
     pd = shared_presidio
     if pd is None:
@@ -216,16 +234,33 @@ async def make_pipeline_adapter(shared_presidio: DetectorAdapter | None = None) 
                     all_entities.extend(pd_results)
             except Exception:
                 pass
-        # Dedup by (start, end, entity_type)
-        all_entities.sort(key=lambda e: (-e.get("score", 0), e["start"]))
-        seen = set()
+
+        # Priority-based dedup: prefer regex over presidio for type conflicts.
+        # Sort by detector priority (regex=0, presidio=1, gliner=2),
+        # then by score descending, then position.
+        detector_priority = {"regex": 0, "presidio": 1, "gliner": 2}
+        all_entities.sort(
+            key=lambda e: (
+                detector_priority.get(e.get("detector", ""), 99),
+                -e.get("score", 0),
+                e.get("start", 0),
+            )
+        )
+
+        # Per-type interval tracking: keep different entity types even
+        # when they overlap, but skip same-type duplicates.
+        seen_intervals: dict[str, list[tuple[int, int]]] = {}
         deduped = []
         for e in all_entities:
-            key = (e["start"], e["end"], e["entity_type"])
-            if key not in seen:
-                seen.add(key)
+            et = e.get("entity_type", "UNKNOWN")
+            intervals = seen_intervals.get(et, [])
+            start, end = e.get("start", 0), e.get("end", 0)
+            contained = any(s <= start and end <= e2 for s, e2 in intervals)
+            if not contained:
+                seen_intervals.setdefault(et, []).append((start, end))
                 deduped.append(e)
-        deduped.sort(key=lambda e: e["start"])
+
+        deduped.sort(key=lambda e: e.get("start", 0))
         return deduped
 
     return DetectorAdapter(name="pipeline", detect_fn=detect)

@@ -3,6 +3,18 @@
 Wraps Microsoft Presidio AnalyzerEngine for PII detection, mapping
 presidio entity types to the system's EntityType enum. Falls back
 gracefully if presidio-analyzer is not installed.
+
+Key decisions for false-positive control:
+  - Only high-confidence entities (score >= 0.7) are returned.
+  - Only presidio entity types with a high-precision mapping are kept;
+    all others are dropped rather than defaulting to PERSON (which
+    caused 0.14 precision on the benchmark).
+  - DATE_TIME is dropped entirely — it was mapped to PERSON before,
+    destroying PERSON precision.
+  - URL is inspected: only ``private/internal`` URLs (hostnames without
+    dots, or loopback/local addresses) map to PRIVATE_URL. All other
+    URLs are dropped to avoid conflicting with Regex DOMAIN detection.
+  - LOCATION and ADDRESS are mapped but filtered by the score threshold.
 """
 
 from __future__ import annotations
@@ -17,33 +29,115 @@ from piifilter.shared.models import EntityType
 logger = logging.getLogger(__name__)
 
 # ── Presidio-to-EntityType mapping ──────────────────────────────────────────
+#
+# Only map entities where presidio has demonstrated high precision.
+# Dropped entirely (not listed here):
+#   - DATE_TIME     → was mapped to PERSON → destroyed PERSON precision
+#   - NUMBER / AGE  → not in the 24 entity types
+#   - LOCATION      → mapped to ADDRESS but generates massive false positives (>30 FP)
+#                     due to the 0.7 score floor being too permissive for NER noise
+#   - DEFAULT       → not mapped
 
 PRESIDIO_TYPE_MAP: dict[str, EntityType] = {
+    # High-precision financial / identity entities
+    "CREDIT_CARD": EntityType.CREDIT_CARD,
+    "US_SSN": EntityType.SOCIAL_SECURITY,
+    "US_PASSPORT": EntityType.PASSPORT,
+    "US_DRIVER_LICENSE": EntityType.PASSPORT,
+    "US_BANK_NUMBER": EntityType.BANK_ACCOUNT,
+    # Contact info
     "EMAIL_ADDRESS": EntityType.EMAIL,
     "PHONE_NUMBER": EntityType.PHONE,
-    "US_SSN": EntityType.SOCIAL_SECURITY,
-    "US_DRIVER_LICENSE": EntityType.PASSPORT,
-    "US_PASSPORT": EntityType.PASSPORT,
-    "US_BANK_NUMBER": EntityType.BANK_ACCOUNT,
-    "CREDIT_CARD": EntityType.CREDIT_CARD,
+    # Network identifiers
     "IP_ADDRESS": EntityType.IP_ADDRESS,
-    "PERSON": EntityType.PERSON,
-    "LOCATION": EntityType.ADDRESS,
-    "DATE_TIME": EntityType.PERSON,
-    "URL": EntityType.PRIVATE_URL,
+    # Credentials
     "API_KEY": EntityType.API_KEY,
+    # Person — presidio NER can be noisy, so this will be heavily
+    # pruned by the score threshold below
+    "PERSON": EntityType.PERSON,
 }
 
 PRESIDIO_KNOWN_ENTITIES: set[str] = set(PRESIDIO_TYPE_MAP.keys())
 
+# Minimum confidence score for presidio results to be included.
+# This aggressively prunes the many low-confidence false positives
+# that presidio's NER produces for generic text.
+_MIN_SCORE: float = 0.75
 
-def _presidio_to_entity_type(presidio_type: str) -> EntityType:
-    """Map a Presidio entity type string to the system's EntityType.
 
-    Returns ``EntityType.PERSON`` for unmapped types so the pipeline
-    never crashes on unrecognised presidio labels.
+_PRIVATE_URL_PREFIXES = (
+    "https://localhost",
+    "http://localhost",
+    "https://127.0.0.1",
+    "http://127.0.0.1",
+    "https://10.",
+    "http://10.",
+    "https://172.16.",
+    "http://172.16.",
+    "https://192.168.",
+    "http://192.168.",
+    "https://[::1]",
+    "http://[::1]",
+)
+"""Prefixes that distinguish private/internal URLs from public ones."""
+
+
+def _is_private_url(url: str) -> bool:
+    """Return True if *url* looks like a private / internal URL."""
+    lower = url.lower().strip()
+    if lower.startswith(_PRIVATE_URL_PREFIXES):
+        return True
+    # Hostname without dots (e.g. http://my-internal-service:8080/path)
+    # could be an internal hostname — treat as private.
+    import urllib.parse
+
+    try:
+        parsed = urllib.parse.urlparse(lower)
+        hostname = parsed.hostname
+        if hostname and "." not in hostname:
+            return True
+    except Exception:
+        pass
+    return False
+
+
+def _presidio_to_entity_type(
+    presidio_type: str,
+    score: float,
+    text: str | None = None,
+) -> EntityType | None:
+    """Map a Presidio entity to the system's EntityType (or None to drop).
+
+    Parameters
+    ----------
+    presidio_type:
+        The entity label returned by presidio (e.g. "PERSON", "URL").
+    score:
+        Presidio's confidence score for this detection.
+    text:
+        The original text span that was detected. Used for URL inspection.
+
+    Returns
+    -------
+    The mapped ``EntityType``, or ``None`` if the entity should be
+    dropped entirely (low confidence, unmappable, or known false-positive
+    category).
     """
-    return PRESIDIO_TYPE_MAP.get(presidio_type, EntityType.PERSON)
+    # Hard score floor — drop everything below the threshold.
+    if score < _MIN_SCORE:
+        return None
+
+    # Special handling: URL → PRIVATE_URL only for private URLs.
+    # Public URLs are dropped to avoid false-positive conflicts with
+    # the regex-based DOMAIN detector.
+    if presidio_type == "URL":
+        if text is not None and _is_private_url(text):
+            return EntityType.PRIVATE_URL
+        return None
+
+    # Standard mapping lookup. Unknown presidio types are dropped
+    # rather than defaulting to PERSON (which tanked precision).
+    return PRESIDIO_TYPE_MAP.get(presidio_type, None)
 
 
 # ── PresidioDetector ────────────────────────────────────────────────────────
@@ -129,8 +223,8 @@ class PresidioDetector(Detector):
         text:
             The text to analyse.
         language:
-            Language hint passed to Presidio (e.g. ``\"en\"``).
-            Defaults to ``\"en\"`` if not provided.
+            Language hint passed to Presidio (e.g. ``\\"en\\"``).
+            Defaults to ``\\"en\\"`` if not provided.
 
         Returns
         -------
@@ -153,13 +247,23 @@ class PresidioDetector(Detector):
 
             detections: list[dict[str, Any]] = []
             for r in results:
-                mapped = _presidio_to_entity_type(r.entity_type)
+                span_text = text[r.start : r.end]
+                mapped = _presidio_to_entity_type(
+                    r.entity_type,
+                    float(r.score),
+                    text=span_text,
+                )
+                if mapped is None:
+                    # Dropped — low score, unmappable, or known
+                    # false-positive category.
+                    continue
+
                 detection: dict[str, Any] = {
                     "entity_type": mapped.value,
                     "start": r.start,
                     "end": r.end,
                     "score": float(r.score),
-                    "value": text[r.start : r.end],
+                    "value": span_text,
                     "detector": self.name,
                 }
                 # Attach explanation text if available (presidio >= 2.x)
@@ -179,9 +283,14 @@ class PresidioDetector(Detector):
     # ── Supported entities ───────────────────────────────────────────
 
     async def supported_entities(self) -> list[EntityType]:
-        """Return the entity types this detector can recognise."""
-        return list(set(PRESIDIO_TYPE_MAP.values()))
-
+            """Return the entity types this detector can recognise.
+            Include PRIVATE_URL even though it's not in PRESIDIO_TYPE_MAP
+            (it's handled specially in _presidio_to_entity_type for URL).
+            """
+            types: set[EntityType] = set(PRESIDIO_TYPE_MAP.values())
+            if EntityType.PRIVATE_URL not in types:
+                types.add(EntityType.PRIVATE_URL)
+            return list(types)
     # ── Debug helpers ────────────────────────────────────────────────
 
     def __repr__(self) -> str:
