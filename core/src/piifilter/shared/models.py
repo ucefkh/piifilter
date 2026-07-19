@@ -9,7 +9,7 @@ from typing import Any, Optional
 
 
 class EntityType(str, Enum):
-    """All 24 PII entity types PIIFilter detects and handles."""
+    """All 26 PII entity types PIIFilter detects and handles."""
     PERSON = "PERSON"
     EMAIL = "EMAIL"
     PHONE = "PHONE"
@@ -34,6 +34,8 @@ class EntityType(str, Enum):
     DOMAIN = "DOMAIN"
     IP_ADDRESS = "IP_ADDRESS"
     FILE_PATH = "FILE_PATH"
+    DATE = "DATE"
+    URL = "URL"
 
 
 class ReplacementMode(str, Enum):

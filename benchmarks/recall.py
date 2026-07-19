@@ -13,6 +13,7 @@ import argparse
 import asyncio
 import json
 import math
+import random
 import sys
 import time
 from collections import defaultdict
@@ -55,6 +56,78 @@ def wilson_score(p: float, n: int, z: float = 1.96) -> tuple[float, float]:
     centre = (p + z * z / (2 * n)) / denominator
     margin = z * math.sqrt((p * (1 - p) / n + z * z / (4 * n * n))) / denominator
     return (centre - margin, centre + margin)
+
+
+# ── Stratified train/test split ──────────────────────────────────────────────
+
+
+def stratified_train_test_split(
+    examples: list[LabeledExample],
+    test_size: float = 0.2,
+    random_state: int = 42,
+) -> tuple[list[LabeledExample], list[LabeledExample]]:
+    """Split examples into train/test sets, stratified by primary entity type.
+
+    Each example is assigned a *primary* entity type: the type with the fewest
+    occurrences in the dataset (rarest type wins). For examples with no entities,
+    a special ``NONE`` stratum is used. This ensures every entity type appears
+    in both train and test splits proportional to its frequency.
+
+    Parameters
+    ----------
+    examples : list[LabeledExample]
+        Full dataset.
+    test_size : float
+        Fraction of each stratum to assign to the test set (default 0.2).
+    random_state : int
+        Seed for reproducibility.
+
+    Returns
+    -------
+    (train, test) : (list[LabeledExample], list[LabeledExample])
+    """
+    rng = random.Random(random_state)
+
+    # Compute global entity-type frequencies (for rarest-type assignment)
+    type_counts: dict[str, int] = defaultdict(int)
+    for ex in examples:
+        types_in_ex = list({e["type"] for e in ex.entities})
+        for t in types_in_ex:
+            type_counts[t] += 1
+
+    # Assign each example a primary stratum
+    def _primary_stratum(ex: LabeledExample) -> str:
+        types_in_ex = list({e["type"] for e in ex.entities})
+        if not types_in_ex:
+            return "NONE"
+        # Rarest type wins — biases toward minority classes
+        return min(types_in_ex, key=lambda t: type_counts.get(t, 0))
+
+    # Group examples by stratum
+    strata: dict[str, list[tuple[int, LabeledExample]]] = defaultdict(list)
+    for idx, ex in enumerate(examples):
+        stratum = _primary_stratum(ex)
+        strata[stratum].append((idx, ex))
+
+    train: list[LabeledExample] = []
+    test: list[LabeledExample] = []
+
+    for stratum, members in strata.items():
+        rng.shuffle(members)
+        n_test = max(1, round(len(members) * test_size))
+        # Ensure at least 1 test example, but at most all but 1 training example
+        n_test = min(n_test, len(members) - 1) if len(members) > 1 else n_test
+        test_members = members[:n_test]
+        train_members = members[n_test:]
+
+        for _, ex in test_members:
+            test.append(ex)
+        for _, ex in train_members:
+            train.append(ex)
+
+    rng.shuffle(train)
+    rng.shuffle(test)
+    return train, test
 
 
 # ── Labeled example model ───────────────────────────────────────────────────
@@ -155,6 +228,7 @@ def make_regex_adapter() -> DetectorAdapter:
         "SOCIAL_SECURITY", "JWT", "API_KEY", "SSH_KEY", "DATABASE_URL",
         "PRIVATE_URL", "PROJECT_NAME", "CUSTOMER_NAME", "EMPLOYEE_NAME",
         "GPS", "DOMAIN", "IP_ADDRESS", "FILE_PATH",
+        "DATE", "URL",
     }
 
     patterns: list[Any] = []
@@ -538,10 +612,10 @@ def print_table(rows: list[list[str]], headers: list[str]) -> None:
         print("  " + "  ".join(cell.ljust(col_widths[i]) for i, cell in enumerate(row)))
 
 
-def print_results(all_results: dict[str, dict[str, Any]]) -> None:
+def print_results(all_results: dict[str, dict[str, Any]], split_note: str = "") -> None:
     """Print recall benchmark results."""
     print("\n" + "=" * 90)
-    print("  PIIFilter Detection Recall Benchmark Report")
+    print(f"  PIIFilter Detection Recall Benchmark Report{split_note}")
     print("=" * 90)
     print(f"  Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime())}")
     print()
@@ -593,13 +667,40 @@ async def main() -> None:
                         help="Dataset file path (default: benchmarks/data/pii_dataset.json)")
     parser.add_argument("--no-pipeline", action="store_true",
                         help="Skip pipeline detector")
+    parser.add_argument("--held-out", type=float, default=None,
+                        help="Fraction of data to hold out as test set for "
+                             "reliable evaluation (e.g. 0.2 = 80/20 split). "
+                             "Only metrics on the held-out set are reported.")
     args = parser.parse_args()
 
     # Load dataset
     dataset_path = Path(args.dataset) if args.dataset else None
-    dataset = load_dataset(dataset_path)
-    print(f"\n  Loaded {len(dataset)} labeled examples from "
+    full_dataset = load_dataset(dataset_path)
+    print(f"\n  Loaded {len(full_dataset)} labeled examples from "
           f"{(dataset_path or DATA_DIR / 'pii_dataset.json').name}")
+
+    # Held-out split logic
+    train_dataset = full_dataset
+    test_dataset = full_dataset
+    split_note = " (full set)"
+    if args.held_out is not None:
+        test_size = args.held_out
+        if not (0.0 < test_size < 1.0):
+            parser.error("--held-out must be between 0.0 and 1.0")
+        train_dataset, test_dataset = stratified_train_test_split(
+            full_dataset, test_size=test_size,
+        )
+        print(f"  Train/test split: {len(train_dataset)} train + "
+              f"{len(test_dataset)} test (held-out={test_size:.0%})")
+        # Report entity-type distribution on the test set
+        test_type_counts: dict[str, int] = defaultdict(int)
+        for ex in test_dataset:
+            for ee in ex.entities:
+                test_type_counts[ee["type"]] += 1
+        test_entity_total = sum(test_type_counts.values())
+        print(f"  Test set: {test_entity_total} entities across "
+              f"{len(test_dataset)} examples")
+        split_note = " (held-out)"
 
     # Build detectors
     detector_names = [d.strip() for d in args.detectors.split(",")]
@@ -634,29 +735,37 @@ async def main() -> None:
     # Evaluate each detector
     all_results: dict[str, dict[str, Any]] = {}
     for name, adapter in adapters.items():
-        print(f"  Evaluating {name} detector...")
-        results = await evaluate_detector(name, dataset, adapter.detect_fn)
+        print(f"  Evaluating {name} detector{split_note}...")
+        results = await evaluate_detector(name, test_dataset, adapter.detect_fn)
         all_results[name] = results
 
     # Print results
-    print_results(all_results)
+    print_results(all_results, split_note=split_note)
 
     # Save to file
     output_path = args.output
     if output_path:
         output_file = Path(output_path)
     else:
-        output_file = DATA_DIR.parent / "recall-results.json"
+        suffix = "-heldout" if args.held_out else ""
+        output_file = DATA_DIR.parent / f"recall-results{suffix}.json"
 
     report = {
-        "title": "PIIFilter Detection Recall Benchmark Report",
+        "title": f"PIIFilter Detection Recall Benchmark Report{split_note}",
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "dataset": {
             "path": str(dataset_path or DATA_DIR / "pii_dataset.json"),
-            "examples": len(dataset),
-            "total_entities": sum(len(ex.entities) for ex in dataset),
-            "entity_types": sorted(set(ee["type"] for ex in dataset for ee in ex.entities)),
+            "total_examples": len(full_dataset),
+            "test_examples": len(test_dataset),
+            "total_entities": sum(len(ex.entities) for ex in test_dataset),
+            "entity_types": sorted(set(ee["type"] for ex in test_dataset for ee in ex.entities)),
         },
+        "split": {
+            "method": "stratified_train_test_split",
+            "test_size": args.held_out,
+            "train_examples": len(train_dataset),
+            "test_examples": len(test_dataset),
+        } if args.held_out else None,
         "detectors": all_results,
     }
     output_file.write_text(json.dumps(report, indent=2, ensure_ascii=False))

@@ -22,12 +22,33 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
 
     # ── SSH_KEY ──────────────────────────────────────────────────────
     ("SSH_KEY", r"-----BEGIN(?: OPENSSH| RSA| DSA| EC| ECDSA)? PRIVATE KEY-----", 0.95),
+    ("SSH_KEY", r"-----BEGIN PGP PRIVATE KEY BLOCK-----", 0.95),
+    # ssh-rsa public keys: ssh-rsa AAAA... (base64 encoded key)
+    ("SSH_KEY", r"\bssh-rsa\s+AAAA[a-zA-Z0-9+/=_-]{50,}(?:\s+\S+)?\b", 0.95),
+    ("SSH_KEY", r"\bssh-ed25519\s+AAAA[a-zA-Z0-9+/=_-]{30,}(?:\s+\S+)?\b", 0.95),
+    ("SSH_KEY", r"\bssh-dss\s+AAAA[a-zA-Z0-9+/=_-]{30,}(?:\s+\S+)?\b", 0.95),
+
+    # ── DATE ─────────────────────────────────────────────────────────
+    # Month-name dates: "Jan 15, 2026" or "January 15 2026"
+    ("DATE", r"\b(?:Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)[a-z]* \d{1,2},? \d{4}\b", 0.90),
+    # ISO format: YYYY-MM-DD and YYYY-M-D
+    ("DATE", r"\b\d{4}-\d{1,2}-\d{1,2}\b", 0.85),
+    # Slash format: DD/MM/YYYY or MM/DD/YYYY or DD/MM/YY
+    ("DATE", r"\b\d{1,2}/\d{1,2}/\d{2,4}\b", 0.75),
+    # Date after context keywords like "DOB is", "Date:", "Expires:", "Born:", "Updated:", "Valid until"
+    ("DATE", r"(?i)(?:DOB|Date|Expires|Born|Updated|Valid\s+until)\s*:?\s*\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b", 0.85),
+
+    # ── URL ──────────────────────────────────────────────────────────
+    # Full http/https URLs
+    ("URL", r"\bhttps?://[\w./?=&%-]+(?:\.[\w./?=&%-]+)*\b", 0.85),
+    # www. prefixed URLs without protocol
+    ("URL", r"\bwww\.[\w./?=&%-]+\.[\w]{2,}(?:/[\w./?=&%-]*)?\b", 0.80),
 
     # ── JWT ──────────────────────────────────────────────────────────
     ("JWT", r"\beyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\b", 0.95),
     # Truncated JWT (two parts, common in abbreviated context)
     ("JWT", r"\beyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.\.\.\w*\b", 0.90),
-    ("JWT", r"\beyJ[a-zA-Z0-9_-]{3,20}\.\.\.[a-zA-Z0-9_-]{3,10}\b", 0.85),
+    ("JWT", r"\beyJ[a-zA-Z0-9_-]{3,20}\.\.[a-zA-Z0-9_-]{3,10}\b", 0.85),
     # JWT with 3 dots as ellipsis: "eyJzdW...IyfQ"
     ("JWT", r"\beyJ[a-zA-Z0-9_-]+\.\.\.[a-zA-Z0-9_-]+\b", 0.85),
     # JWT that is essentially a base64 encoded payload (single segment, no dots)
@@ -45,6 +66,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # "6016 1331 9268 19") can look like credit card numbers. The dedup logic
     # skips detections contained within already-matched intervals.
     ("IBAN", r"\b[A-Z]{2}\d{2}(?:[ ]?(?:[A-Z0-9]{4})){4,7}(?:[ ]?\d{1,4})?\b", 0.85),
+    # Shorter IBAN variants: NL91 ABNA 0417 1643 00, DK50 0040 0440 1162 43, NO93 8601 1117 947
+    ("IBAN", r"\b[A-Z]{2}\d{2}\s+[A-Z]{4}\s+\d{4}\s+\d{4}\s+\d{2,4}(?:\s+\d{1,3})?\b", 0.85),
 
     # ── CREDIT_CARD ──────────────────────────────────────────────────
     ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
@@ -69,7 +92,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("API_KEY", r"\b(?:[A-Za-z0-9+/=]{20,})\b(?=.*(?:key|token|secret))", 0.90),
 
     # ── PHONE ────────────────────────────────────────────────────────
-    ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*[\-]?\s*[\+\d\(][\d\s\-\\.\(\)]{7,20}\b", 0.90),
+    ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*[\-]?\s*[\+\d\(][\d\s\-\.\(\)]{7,20}\b", 0.90),
     ("PHONE", r"(?:^|\s)\+\d{1,3}[-.\s]\d{2,4}[-.\s]\d{3,4}[-.\s]\d{4}\b", 0.88),
     ("PHONE", r"(?:^|\s)\+\d{1,3}\s+\d{2,3}\s+\d{3}\s+\d{3,4}\b", 0.85),
     ("PHONE", r"(?:^|\s)\+\d\s+\d{3}\s+\d{3}[-.\s]?\d{2}[-.\s]?\d{2}\b", 0.85),
@@ -88,6 +111,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PRIVATE_URL", r"\bhttps?://(?:localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)(?::\d+)?(?:/[^\s]*)?\b", 0.90),
     ("PRIVATE_URL", r"\bhttps?://[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)?(?:/[^\s]*)?\b", 0.90),
     ("PRIVATE_URL", r"\b[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)(?:/[^\s]*)?\b", 0.85),
+    # Bare internal hostname (no dot): http://internal:80/path
+    ("PRIVATE_URL", r"\bhttps?://(?:internal|localhost|db|api|app|backend|frontend|redis|postgres|mysql|rabbitmq)(?::\d+)?(?:/[^\s]*)?\b", 0.80),
 
     # ── IP_ADDRESS ───────────────────────────────────────────────────
     ("IP_ADDRESS", r"\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b", 0.90),
@@ -118,7 +143,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PASSPORT", r"\b[A-Z]{1,2}\d{6,9}\b", 0.75),
 
     # ── BANK_ACCOUNT ─────────────────────────────────────────────────
-    ("BANK_ACCOUNT", r"(?i)\b(?:bank|account|acct)\s*(?:number|no|#)?\s*:?\s*\d{8,17}\b", 0.85),
+    ("BANK_ACCOUNT", r"(?i)\b(?:bank|account|acct|A/c)\s*(?:number|no|#)?\s*:?\s*\d{8,17}\b", 0.85),
     # Non-IBAN-looking digit sequences — exclude those starting with 2 letters
     ("BANK_ACCOUNT", r"(?<![A-Za-z])\b\d{12,20}\b", 0.55),
 
@@ -162,18 +187,36 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
 
     # ── CUSTOMER_NAME ────────────────────────────────────────────────
     ("CUSTOMER_NAME", r"(?i)\b(?:customer|client)\s+(?:name\s+)?(?:is\s+)?(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
-    ("CUSTOMER_NAME", r"(?i)\bCustomer:\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
+    ("CUSTOMER_NAME", r"(?i)\b(?:Customer|Client):\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
     ("CUSTOMER_NAME", r"(?i)\bcustomer\s+(?:we\s+)?(?:have|here)\s+is\s+(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.75),
+    # "Customer name:" prefix
+    ("CUSTOMER_NAME", r"(?i)\bCustomer\s+name:\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
+    # "User X ordered" pattern
+    ("CUSTOMER_NAME", r"(?i)\bUser\s+(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\s+ordered\b", 0.75),
 
     # ── EMPLOYEE_NAME ────────────────────────────────────────────────
     ("EMPLOYEE_NAME", r"(?i)\b(?:employee|staff|teammate|colleague|manager|supervisor|engineer|developer|designer)\s+(?:name\s+)?(?:is\s+)?(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
     ("EMPLOYEE_NAME", r"(?i)\b(?:employee|staff)\s+(?:named|name)\s+(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
     ("EMPLOYEE_NAME", r"(?i)\bEmployee:\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
     ("EMPLOYEE_NAME", r"(?i)\b(?:add\s+)?employee\s+(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.75),
+    # "Team member X" pattern
+    ("EMPLOYEE_NAME", r"(?i)\bTeam\s+member\s+(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
+    # "Staff: X" pattern
+    ("EMPLOYEE_NAME", r"(?i)\bStaff:\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
+    # "Employee name: X" pattern
+    ("EMPLOYEE_NAME", r"(?i)\bEmployee\s+name:\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
 
     # ── PROJECT_NAME ─────────────────────────────────────────────────
     ("PROJECT_NAME", r"(?i)\b(?:project|initiative|campaign|program)\s+(?:name\s+)?(?:is\s+)?(?:called\s+)?(?-i:[A-Z])[a-zA-Z0-9]+(?:\s+(?-i:[A-Z])[a-zA-Z0-9]+)*\b", 0.80),
     ("PROJECT_NAME", r"\b(?:Project|Operation|Initiative|Program|Code[- ]?name)\s+(?-i:[A-Z])[a-zA-Z0-9]+\b", 0.85),
+    # Standalone capitalized project names like "Project Phoenix", "Omega Protocol"
+    ("PROJECT_NAME", r"\b(?:Project|Operation|Initiative|Program|Task)\s+(?-i:[A-Z])[a-zA-Z]+(?:\s+(?-i:[A-Z])[a-zA-Z0-9]+)?\b", 0.80),
+    # Two-word capitalized names in project context like "Blue Sky", "Omega Protocol"
+    ("PROJECT_NAME", r"(?i)\b(?:working\s+on|assigned\s+to)\s+(?-i:[A-Z])[a-zA-Z]+(?:\s+(?-i:[A-Z])[a-zA-Z]+)?\b", 0.70),
+    # "X milestone due" pattern
+    ("PROJECT_NAME", r"(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\s+milestone\s+due\b", 0.70),
+    # "X is in development / in maintenance"
+    ("PROJECT_NAME", r"(?i)(?-i:[A-Z])[a-zA-Z]+(?:\s+(?-i:[A-Z])[a-zA-Z]+)?\s+is\s+in\s+(?:development|maintenance|maint)\b", 0.65),
 
     # ── ADDRESS ──────────────────────────────────────────────────────
         # Standard address: "N Street Name St/Rd/Ave/etc."
@@ -219,5 +262,27 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # a company keyword (e.g., Acme, Widgets type prefixes).
     # This avoids matching common name phrases, address components, project names, etc.
     ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+(?:Technologies|Tech|Systems|Software|Solutions|Group|Partners|Holdings|Enterprises|Ventures|Industries|Global|International|Digital|Media|Networks|Services|Consulting|Associates|Motors|Airlines|Foods|Pharma|Bio|Labs|Works|Studios|Games|Health|Energy|Power|Capital|Finance|Insurance|Logistics|Transport|Retail|Electric|Chemical|Materials|Mining|Oil|Gas|Water|Telecom|Interactive|Cloud|Data|AI|Robotics|Research)\b", 0.55),
+    # Context-prefixed single-word company names: "works at X", "Invoice from X",
+    # "Signed by X", "X is the vendor", "Company: X", "regarding X"
+    # Requires the company word to be capitalized, 3+ letters long.
+    ("COMPANY", r"(?i)(?:(?:work|works)\s+at|Invoice\s+from|Signed\s+by|regarding)\s+(?:(?:the|our)\s+)?(?-i:[A-Z])[a-z]{3,}(?:(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]{2,})?)\b", 0.65),
+    # "Company: X" / "Vendor: X" / "Organization: X" prefix — NOT "Client:" which
+    # often precedes a person name.
+    ("COMPANY", r"(?i)(?:Company|Vendor|Organization)\s*[：:]\s*(?:(?:the|our)\s+)?(?-i:[A-Z])[a-z]{2,}(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]+)?\b", 0.70),
+    # "X is the vendor" / "X is our vendor" / "X is a vendor"
+    ("COMPANY", r"(?-i:[A-Z])[a-z]{3,}(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]+)?\s+is\s+(?:the|our|a)\s+vendor\b", 0.65),
+    # Two capitalized words acting as company name (no suffix needed) in
+    # company context — preceded by known company keywords.
+    ("COMPANY", r"(?i)(?:(?:work|works)\s+at|Invoice\s+from|Signed\s+by|regarding)\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)\b", 0.60),
+    # Explicit known companies list — single-word brand names that are
+    # well-known companies. These are high-precision names that don't
+    # require context keywords. Only include names that are unlikely to
+    # be common person names or other false positives.
+    ("COMPANY", r"\b(?:Meta|Apple|Google|Amazon|Microsoft|Netflix|Spotify|Tesla|SpaceX|Intel|IBM|Oracle|SAP|Adobe|Salesforce|Uber|Airbnb|Lyft|Pinterest|Snapchat|TikTok|Zoom|Slack|GitHub|GitLab|Atlassian|Shopify|Twilio|Stripe|Square|PayPal|Venmo|Coinbase|Palantir|Snowflake|Datadog|MongoDB|Databricks|HashiCorp|Canva|Figma|Notion|Linear|Vercel|Netlify|DigitalOcean|Heroku|Alibaba|Tencent|Baidu|Samsung|Sony|Nintendo|Honda|Toyota|BMW|Mercedes|Audi|Volkswagen|Porsche|Ferrari|McLaren|Boeing|Raytheon|Nestle|Pepsi|Pfizer|Moderna|Novartis|Roche|Merck|Sanofi|Bayer|Siemens|Bosch|Philips|Xerox|Cisco|Dell|Lenovo|Asus|Acer|Huawei|Xiaomi|Oppo|Vivo|OnePlus|Nokia|Ericsson|Qualcomm|Broadcom|AMD|Nvidia|Micron|Seagate|DoorDash|Instacart|Roblox|Unity|Capcom|Sega|Ubisoft|Activision|Blizzard|Mitsubishi|Canon|Panasonic|Sharp|Toshiba|Hitachi|Fujitsu|Nikon|Ricoh|Epson|Logitech|GoPro|Fitbit|Roku|Dropbox|Evernote|Trello|Asana|Monday|Zendesk|HubSpot|Mailchimp|Wix|Squarespace|Weebly|Godaddy|Namecheap|Cloudflare|Fastly|Akamai|Okta|CrowdStrike|Palo Alto|Fortinet|Splunk|New Relic|Sumo Logic|Elastic|Confluent|HashiCorp|Hugging Face|OpenAI|Anthropic|Cohere|Stability AI|Midjourney|Runway)\b", 0.75),
+    # Two-word explicit known companies (with spaces in name)
+    ("COMPANY", r"\b(?:Wells Fargo|Bank of America|Coca-Cola|Procter & Gamble|Johnson & Johnson|Morgan Stanley|Credit Suisse|Deutsche Bank|Goldman Sachs|Hewlett Packard|Hewlett-Packard|Lockheed Martin|Northrop Grumman|Electronic Arts|Take-Two Interactive|Square Enix|Bandai Namco|Western Digital|General Electric|General Motors|Ford Motor|Berkshire Hathaway|McKinsey & Company|Boston Consulting|Bain & Company|Deloitte Consulting|PricewaterhouseCoopers|Ernst & Young|KPMG|Accenture|Walmart|Target|Costco|Home Depot|Lowe's|Best Buy|McDonald's|Burger King|Wendy's|KFC|Taco Bell|Pizza Hut|Domino's|Subway|Starbucks|Dunkin'|Chipotle|Panera|Whole Foods|Trader Joe's|Aldi|Lidl|Carrefour|Tesco|Sainsbury's|John Lewis)\b", 0.80),
+    # Catch compound company names like LexCorp, Oscorp, OpenCorp, etc.
+    # Pattern: capitalized word ending in Corp/Soft/Tech/Works/Labs/etc
+    ("COMPANY", r"\b[A-Z][a-z]{2,}(?:Corp|Corp\.|Soft|Tech|Works|Labs|Ware|Mart|Hub|Box|Cloud|Space|Mail|Sync|Chat|Bot|Pay|Log|Jet|Nest|Map|Pad|Pod)\b", 0.70),
 
 ]
