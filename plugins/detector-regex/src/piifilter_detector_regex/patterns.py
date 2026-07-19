@@ -45,8 +45,9 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # and must NOT be followed by more space-separated digit groups (which is an IBAN feature)
     ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4}\b(?![ -]\d{2,4})", 0.85),
     ("CREDIT_CARD", r"\b\d{4}[- ]\d{6}[- ]\d{5}\b", 0.80),
-    # Low confidence: 4-4-4-2..4 pattern — must NOT have an IBAN-like preceding block or additional digit groups
-    ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)(?<![A-Za-z])\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b(?!\s*\d{2,4})", 0.65),
+    # Low confidence: 4-4-4-2..4 pattern — must NOT have an IBAN-like preceding block or additional digit groups.
+    # Must NOT be the trailing portion of an IBAN (preceded by a digit-group and space).
+    ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)(?<![A-Za-z])(?<!\d{4}[- ])\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b(?![- ]\d{2,4})(?!\s*\d{2,4})", 0.65),
     # Continuous 16-digit credit card numbers (no dashes) — Luhn-prefixed only
     ("CREDIT_CARD", r"(?i)(?:credit\s*card|cc|card\s+#?)\b\s*\d{16}\b", 0.80),
     ("CREDIT_CARD", r"\b(?:4\d{3}|5[1-5]\d{2}|6\d{3}|3[47]\d{2})\d{12}\b", 0.80),
@@ -197,7 +198,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|Incorporated|PLC|AG|SA|BV|NV)\.?\b", 0.80),
     ("COMPANY", r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|BV|NV)\.?\b", 0.80),
     ("COMPANY", r"\b[A-Z][a-z]+(?:[A-Z][a-z]+)*\s+(?:Technologies|Tech|Systems|Software|Solutions|Group|Partners|Holdings|Enterprises|Ventures|Industries|Global|International|Digital|Media|Networks|Services|Consulting|Associates)\b", 0.75),
-    # Two capitalized words — low confidence
-    ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+[A-Z][a-z]+\b", 0.45),
+    # Two capitalized words — low confidence. Only match if the second word
+    # looks like a company name component (e.g., Corp, Inc like structures or
+    # industry words like Motors, Airlines, Foods, etc.) or the first word is
+    # a company keyword (e.g., Acme, Widgets type prefixes).
+    # This avoids matching common name phrases, address components, project names, etc.
+    ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+(?:Technologies|Tech|Systems|Software|Solutions|Group|Partners|Holdings|Enterprises|Ventures|Industries|Global|International|Digital|Media|Networks|Services|Consulting|Associates|Motors|Airlines|Foods|Pharma|Bio|Labs|Works|Studios|Games|Health|Energy|Power|Capital|Finance|Insurance|Logistics|Transport|Retail|Electric|Chemical|Materials|Mining|Oil|Gas|Water|Telecom|Interactive|Cloud|Data|AI|Robotics|Research)\b", 0.55),
 
 ]

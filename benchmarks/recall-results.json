@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report",
-  "timestamp": "2026-07-19T19:13:01Z",
+  "timestamp": "2026-07-19T19:30:17Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "examples": 122,
@@ -37,13 +37,13 @@
       "detector": "regex",
       "total_examples": 122,
       "total_expected_entities": 184,
-      "total_detected_entities": 224,
-      "total_true_positives": 182,
-      "total_false_positives": 42,
-      "total_false_negatives": 2,
-      "overall_precision": 0.8125,
-      "overall_recall": 0.9891304347826086,
-      "overall_f1": 0.892156862745098,
+      "total_detected_entities": 206,
+      "total_true_positives": 181,
+      "total_false_positives": 25,
+      "total_false_negatives": 3,
+      "overall_precision": 0.8786407766990292,
+      "overall_recall": 0.9836956521739131,
+      "overall_f1": 0.9282051282051283,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -70,20 +70,20 @@
           "f1": 1.0
         },
         "CITY": {
-          "true_positives": 16,
-          "false_positives": 15,
-          "false_negatives": 0,
-          "precision": 0.5161,
-          "recall": 1.0,
-          "f1": 0.6809
+          "true_positives": 14,
+          "false_positives": 4,
+          "false_negatives": 1,
+          "precision": 0.7778,
+          "recall": 0.9333,
+          "f1": 0.8485
         },
         "COMPANY": {
           "true_positives": 8,
-          "false_positives": 3,
+          "false_positives": 0,
           "false_negatives": 0,
-          "precision": 0.7273,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.8421
+          "f1": 1.0
         },
         "COUNTRY": {
           "true_positives": 16,
@@ -95,11 +95,11 @@
         },
         "CREDIT_CARD": {
           "true_positives": 12,
-          "false_positives": 6,
+          "false_positives": 3,
           "false_negatives": 0,
-          "precision": 0.6667,
+          "precision": 0.8,
           "recall": 1.0,
-          "f1": 0.8
+          "f1": 0.8889
         },
         "CUSTOMER_NAME": {
           "true_positives": 10,
@@ -239,18 +239,16 @@
         }
       },
       "confusion_matrix": {
-        "ADDRESS": {
-          "CITY": 2,
-          "COUNTRY": 1
+        "EMPLOYEE_NAME": {
+          "EMPLOYEE_NAME": 1
         },
-        "IBAN": {
-          "CREDIT_CARD": 4
+        "CITY": {
+          "CITY": 3
         },
         "NONE": {
-          "CITY": 10,
+          "CITY": 1,
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
-          "COMPANY": 3,
           "COUNTRY": 1,
           "PHONE": 1,
           "ADDRESS": 3,
@@ -260,11 +258,11 @@
           "EMAIL": 1,
           "JWT": 1
         },
-        "EMPLOYEE_NAME": {
-          "EMPLOYEE_NAME": 1
+        "IBAN": {
+          "CREDIT_CARD": 1
         },
-        "CITY": {
-          "CITY": 3
+        "ADDRESS": {
+          "COUNTRY": 1
         },
         "PERSON": {
           "PERSON": 2
@@ -299,16 +297,15 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -332,9 +329,9 @@
           "index": 3,
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
@@ -342,7 +339,6 @@
           ],
           "detected_types": [
             "BANK_ACCOUNT",
-            "CREDIT_CARD",
             "IBAN"
           ]
         },
@@ -487,15 +483,14 @@
           "index": 13,
           "text_preview": "Coordinates: 40.7128, -74.0060 (NYC) and lat: 51.5074, lon: -0.1278 (London)",
           "expected": 4,
-          "detected": 5,
+          "detected": 4,
           "true_positives": 4,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "CITY",
             "GPS"
           ]
         },
@@ -620,26 +615,25 @@
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 2,
           "expected_types": [
             "ADDRESS",
@@ -1139,15 +1133,14 @@
           "index": 54,
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 4,
-          "detected": 6,
+          "detected": 4,
           "true_positives": 4,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "CITY",
             "GPS"
           ]
         },
@@ -1155,15 +1148,14 @@
           "index": 55,
           "text_preview": "GPS: 27.1751 N, 78.0421 E (Taj Mahal)",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "COMPANY",
             "GPS"
           ]
         },
@@ -1276,15 +1268,14 @@
           "index": 63,
           "text_preview": "IBAN: FR76 3000 6000 0112 3456 7890 189",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
-            "CREDIT_CARD",
             "IBAN"
           ]
         },
@@ -1292,15 +1283,14 @@
           "index": 64,
           "text_preview": "IBAN: CH93 0076 2011 6238 5295 7",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
-            "CREDIT_CARD",
             "IBAN"
           ]
         },
@@ -1499,9 +1489,9 @@
           "index": 77,
           "text_preview": "City: The population of Mumbai is over 20 million.",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CITY"
@@ -1544,15 +1534,14 @@
           "index": 80,
           "text_preview": "Phone: +49 30 12345678 (Berlin office)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "CITY",
             "PHONE"
           ]
         },
@@ -1636,15 +1625,14 @@
           "index": 86,
           "text_preview": "GPS: lat: 55.7558, lng: 37.6173 (Moscow) and lat: 59.9343, lng: 30.3351 (SPB)",
           "expected": 4,
-          "detected": 5,
+          "detected": 4,
           "true_positives": 4,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "CITY",
             "GPS"
           ]
         },
@@ -1826,15 +1814,13 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 0,
-          "detected": 3,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 3,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "ADDRESS",
-            "CITY",
-            "COMPANY"
+            "ADDRESS"
           ]
         },
         {
@@ -2027,14 +2013,12 @@
           "index": 114,
           "text_preview": "Person: James researcher published his findings in Nature at London University.",
           "expected": 0,
-          "detected": 5,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 5,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "CITY",
-            "COMPANY",
             "PERSON"
           ]
         },
@@ -2123,13 +2107,13 @@
       "detector": "pipeline",
       "total_examples": 122,
       "total_expected_entities": 184,
-      "total_detected_entities": 225,
-      "total_true_positives": 182,
-      "total_false_positives": 43,
-      "total_false_negatives": 2,
-      "overall_precision": 0.8088888888888889,
-      "overall_recall": 0.9891304347826086,
-      "overall_f1": 0.8899755501222494,
+      "total_detected_entities": 207,
+      "total_true_positives": 181,
+      "total_false_positives": 26,
+      "total_false_negatives": 3,
+      "overall_precision": 0.8743961352657005,
+      "overall_recall": 0.9836956521739131,
+      "overall_f1": 0.925831202046036,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -2156,20 +2140,20 @@
           "f1": 1.0
         },
         "CITY": {
-          "true_positives": 16,
-          "false_positives": 15,
-          "false_negatives": 0,
-          "precision": 0.5161,
-          "recall": 1.0,
-          "f1": 0.6809
+          "true_positives": 14,
+          "false_positives": 4,
+          "false_negatives": 1,
+          "precision": 0.7778,
+          "recall": 0.9333,
+          "f1": 0.8485
         },
         "COMPANY": {
           "true_positives": 8,
-          "false_positives": 3,
+          "false_positives": 0,
           "false_negatives": 0,
-          "precision": 0.7273,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.8421
+          "f1": 1.0
         },
         "COUNTRY": {
           "true_positives": 16,
@@ -2181,11 +2165,11 @@
         },
         "CREDIT_CARD": {
           "true_positives": 12,
-          "false_positives": 6,
+          "false_positives": 3,
           "false_negatives": 0,
-          "precision": 0.6667,
+          "precision": 0.8,
           "recall": 1.0,
-          "f1": 0.8
+          "f1": 0.8889
         },
         "CUSTOMER_NAME": {
           "true_positives": 10,
@@ -2325,18 +2309,16 @@
         }
       },
       "confusion_matrix": {
-        "ADDRESS": {
-          "CITY": 2,
-          "COUNTRY": 1
+        "EMPLOYEE_NAME": {
+          "EMPLOYEE_NAME": 1
         },
-        "IBAN": {
-          "CREDIT_CARD": 4
+        "CITY": {
+          "CITY": 3
         },
         "NONE": {
-          "CITY": 10,
+          "CITY": 1,
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
-          "COMPANY": 3,
           "COUNTRY": 1,
           "PHONE": 1,
           "ADDRESS": 3,
@@ -2346,14 +2328,14 @@
           "EMAIL": 1,
           "JWT": 1
         },
-        "EMPLOYEE_NAME": {
-          "EMPLOYEE_NAME": 1
-        },
-        "CITY": {
-          "CITY": 3
+        "IBAN": {
+          "CREDIT_CARD": 1
         },
         "IP_ADDRESS": {
           "IP_ADDRESS": 2
+        },
+        "ADDRESS": {
+          "COUNTRY": 1
         },
         "PERSON": {
           "PERSON": 1
@@ -2388,16 +2370,15 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -2421,9 +2402,9 @@
           "index": 3,
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
@@ -2431,7 +2412,6 @@
           ],
           "detected_types": [
             "BANK_ACCOUNT",
-            "CREDIT_CARD",
             "IBAN"
           ]
         },
@@ -2576,15 +2556,14 @@
           "index": 13,
           "text_preview": "Coordinates: 40.7128, -74.0060 (NYC) and lat: 51.5074, lon: -0.1278 (London)",
           "expected": 4,
-          "detected": 5,
+          "detected": 4,
           "true_positives": 4,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "CITY",
             "GPS"
           ]
         },
@@ -2709,26 +2688,25 @@
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 2,
           "expected_types": [
             "ADDRESS",
@@ -3228,15 +3206,14 @@
           "index": 54,
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 4,
-          "detected": 6,
+          "detected": 4,
           "true_positives": 4,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "CITY",
             "GPS"
           ]
         },
@@ -3244,15 +3221,14 @@
           "index": 55,
           "text_preview": "GPS: 27.1751 N, 78.0421 E (Taj Mahal)",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "COMPANY",
             "GPS"
           ]
         },
@@ -3365,15 +3341,14 @@
           "index": 63,
           "text_preview": "IBAN: FR76 3000 6000 0112 3456 7890 189",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
-            "CREDIT_CARD",
             "IBAN"
           ]
         },
@@ -3381,15 +3356,14 @@
           "index": 64,
           "text_preview": "IBAN: CH93 0076 2011 6238 5295 7",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
-            "CREDIT_CARD",
             "IBAN"
           ]
         },
@@ -3588,9 +3562,9 @@
           "index": 77,
           "text_preview": "City: The population of Mumbai is over 20 million.",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CITY"
@@ -3633,15 +3607,14 @@
           "index": 80,
           "text_preview": "Phone: +49 30 12345678 (Berlin office)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "CITY",
             "PHONE"
           ]
         },
@@ -3725,15 +3698,14 @@
           "index": 86,
           "text_preview": "GPS: lat: 55.7558, lng: 37.6173 (Moscow) and lat: 59.9343, lng: 30.3351 (SPB)",
           "expected": 4,
-          "detected": 5,
+          "detected": 4,
           "true_positives": 4,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "CITY",
             "GPS"
           ]
         },
@@ -3915,15 +3887,13 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 0,
-          "detected": 3,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 3,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "ADDRESS",
-            "CITY",
-            "COMPANY"
+            "ADDRESS"
           ]
         },
         {
@@ -4116,14 +4086,12 @@
           "index": 114,
           "text_preview": "Person: James researcher published his findings in Nature at London University.",
           "expected": 0,
-          "detected": 5,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 5,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "CITY",
-            "COMPANY",
             "PERSON"
           ]
         },
