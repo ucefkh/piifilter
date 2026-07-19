@@ -28,15 +28,18 @@ CTX_CC_SSN_TRIGGERS: set[str] = {
 }
 
 # Compiled regex: match any trigger word (case-insensitive) followed by
-# up to ~60 chars of filler, then a digit sequence (3–19 consecutive
+# up to ~60 chars of filler, then a digit sequence (6–19 consecutive
 # digits, or 4+4+4+4 / 3+2+4 patterns with ANY single separator).
 # The trigger word must be followed by a non-word/non-hyphen boundary
 # (colon, space, or end of input) to avoid matching "SSN-like" patterns.
+# The bare-digit variant requires a word boundary before the digits and
+# at least 6 digits — short numbers like "123" near words like "number"
+# in non-PII contexts (e.g. "ticket number", "phone number") are excluded.
 _CTX_CC_SSN_RE = re.compile(
     r"(?i)\b("
     + "|".join(re.escape(w) for w in sorted(CTX_CC_SSN_TRIGGERS, key=len, reverse=True))
     + r")\b(?!-).{0,60}?"
-    r"(?P<digits>(?:\d{3,19}|(?:\d{4}[- . \u00A0•*#Xx*]{1}\d{4}[- . \u00A0•*#Xx*]{1}\d{4}[- . \u00A0•*#Xx*]{1}\d{2,4})|(?:\d{3}[- . \u00A0•*#Xx*]{1}\d{2}[- . \u00A0•*#Xx*]{1}\d{4})))",
+    r"(?P<digits>(?:\b\d{6,19}|(?:\d{4}[- .\u00A0•*#Xx*]{1}\d{4}[- .\u00A0•*#Xx*]{1}\d{4}[- .\u00A0•*#Xx*]{1}\d{2,4})|(?:\d{3}[- .\u00A0•*#Xx*]{1}\d{2}[- .\u00A0•*#Xx*]{1}\d{4})))",
     re.UNICODE,
 )
 

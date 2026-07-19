@@ -2,11 +2,11 @@
   "summary": {
     "overall": {
       "total_examples": 201,
-      "full_pipeline_detected": 74,
-      "full_pipeline_rate": 36.8,
+      "full_pipeline_detected": 75,
+      "full_pipeline_rate": 37.3,
       "raw_regex_detected": 57,
       "raw_regex_rate": 28.4,
-      "deobfuscation_improvement": 8.5
+      "deobfuscation_improvement": 9.0
     },
     "by_category": {
       "Punctuation-stuffed": {
@@ -87,20 +87,12 @@
       },
       "CREDIT_CARD": {
         "total": 14,
-        "full_pipeline_detected": 0,
-        "full_pipeline_rate": 0.0,
+        "full_pipeline_detected": 8,
+        "full_pipeline_rate": 57.1,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 0.0,
+        "improvement": 57.1,
         "missed_examples": [
-          "CREDIT_CARD:hex-escape",
-          "CREDIT_CARD:hex-escape",
-          "CREDIT_CARD:hex-escape",
-          "CREDIT_CARD:hex-escape",
-          "CREDIT_CARD:hex-escape",
-          "CREDIT_CARD:hex-escape",
-          "CREDIT_CARD:hex-escape",
-          "CREDIT_CARD:hex-escape",
           "CREDIT_CARD:binary-8bit",
           "CREDIT_CARD:binary-8bit",
           "CREDIT_CARD:binary-8bit",
@@ -154,12 +146,13 @@
       },
       "IP_ADDRESS": {
         "total": 6,
-        "full_pipeline_detected": 1,
-        "full_pipeline_rate": 16.7,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
         "raw_regex_detected": 1,
         "raw_regex_rate": 16.7,
-        "improvement": 0.0,
+        "improvement": -16.7,
         "missed_examples": [
+          "IP_ADDRESS:pig-latin-ip",
           "IP_ADDRESS:pig-latin-ip",
           "IP_ADDRESS:pig-latin-ip",
           "IP_ADDRESS:pig-latin-ip",
@@ -188,12 +181,20 @@
       },
       "PASSPORT": {
         "total": 14,
-        "full_pipeline_detected": 9,
-        "full_pipeline_rate": 64.3,
+        "full_pipeline_detected": 1,
+        "full_pipeline_rate": 7.1,
         "raw_regex_detected": 1,
         "raw_regex_rate": 7.1,
-        "improvement": 57.1,
+        "improvement": 0.0,
         "missed_examples": [
+          "PASSPORT:zwj-interleaving",
+          "PASSPORT:zwj-interleaving",
+          "PASSPORT:zwj-interleaving",
+          "PASSPORT:zwj-interleaving",
+          "PASSPORT:zwj-interleaving",
+          "PASSPORT:zwj-interleaving",
+          "PASSPORT:zwj-interleaving",
+          "PASSPORT:zwj-interleaving",
           "PASSPORT:syllabic-split",
           "PASSPORT:syllabic-split",
           "PASSPORT:syllabic-split",
@@ -230,17 +231,12 @@
       },
       "GPS": {
         "total": 8,
-        "full_pipeline_detected": 4,
-        "full_pipeline_rate": 50.0,
+        "full_pipeline_detected": 8,
+        "full_pipeline_rate": 100.0,
         "raw_regex_detected": 4,
         "raw_regex_rate": 50.0,
-        "improvement": 0.0,
-        "missed_examples": [
-          "GPS:hex-escape",
-          "GPS:hex-escape",
-          "GPS:hex-escape",
-          "GPS:hex-escape"
-        ]
+        "improvement": 50.0,
+        "missed_examples": []
       },
       "PERSON": {
         "total": 8,
@@ -261,25 +257,26 @@
       },
       "BANK_ACCOUNT": {
         "total": 6,
-        "full_pipeline_detected": 5,
-        "full_pipeline_rate": 83.3,
+        "full_pipeline_detected": 2,
+        "full_pipeline_rate": 33.3,
         "raw_regex_detected": 6,
         "raw_regex_rate": 100.0,
-        "improvement": -16.7,
+        "improvement": -66.7,
         "missed_examples": [
+          "BANK_ACCOUNT:camelCase_split",
+          "BANK_ACCOUNT:camelCase_split",
+          "BANK_ACCOUNT:camelCase_split",
           "BANK_ACCOUNT:camelCase_split"
         ]
       },
       "COUNTRY": {
         "total": 1,
-        "full_pipeline_detected": 0,
-        "full_pipeline_rate": 0.0,
+        "full_pipeline_detected": 1,
+        "full_pipeline_rate": 100.0,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 0.0,
-        "missed_examples": [
-          "COUNTRY:pig-latin"
-        ]
+        "improvement": 100.0,
+        "missed_examples": []
       },
       "CUSTOMER_NAME": {
         "total": 8,
@@ -688,7 +685,7 @@
       "full_detections": [
         {
           "type": "PERSON",
-          "value": "https://1n7ern4l.c0mp4ny/d4shb04rd",
+          "value": "https://lnternal.company/dashboard",
           "score": 0.85
         }
       ],
@@ -713,7 +710,7 @@
       "full_detections": [
         {
           "type": "PRIVATE_URL",
-          "value": "http://10.0.0.5/c0nf1g/b4ckup",
+          "value": "http://10.0.0.5/conflg/backup",
           "score": 0.9
         }
       ],
@@ -738,7 +735,7 @@
       "full_detections": [
         {
           "type": "PRIVATE_URL",
-          "value": "https://192.168.50.10/53cur3/p0r7al",
+          "value": "https://192.168.50.10/53cur3/portal",
           "score": 0.9
         }
       ],
@@ -788,7 +785,7 @@
       "full_detections": [
         {
           "type": "PERSON",
-          "value": "https://1n7r4n3t.wh1t3l4b3l.c0mp4ny/4ud17",
+          "value": "https://lntranet.whltelabel.company/4ud17",
           "score": 0.85
         }
       ],
@@ -949,8 +946,14 @@
       "text": "The payment was processed using token \\x34\\x35\\x31\\x32\\x33\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34 for the order.",
       "ground_truth": "4512345678901234",
       "pii_value": "\\x34\\x35\\x31\\x32\\x33\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "4512345678901234",
+          "score": 0.8
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -962,8 +965,14 @@
       "text": "Please confirm the last digits of card \\x34\\x35\\x33\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34 for verification.",
       "ground_truth": "4532145678901234",
       "pii_value": "\\x34\\x35\\x33\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "card 4532145678901234",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -975,8 +984,14 @@
       "text": "Subscription renewed for card ending in \\x34\\x35\\x34\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34.",
       "ground_truth": "4542145678901234",
       "pii_value": "\\x34\\x35\\x34\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "4542145678901234",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -988,8 +1003,14 @@
       "text": "Invalid transaction attempted with card number \\x34\\x35\\x35\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34.",
       "ground_truth": "4552145678901234",
       "pii_value": "\\x34\\x35\\x35\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "4552145678901234",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1001,8 +1022,14 @@
       "text": "Auto-pay set up for account linked to \\x34\\x35\\x36\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34.",
       "ground_truth": "4562145678901234",
       "pii_value": "\\x34\\x35\\x36\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "4562145678901234",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1014,8 +1041,14 @@
       "text": "Refund processed to original card \\x34\\x35\\x37\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34 successfully.",
       "ground_truth": "4572145678901234",
       "pii_value": "\\x34\\x35\\x37\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "4572145678901234",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1027,8 +1060,14 @@
       "text": "Fraud alert triggered for card \\x34\\x35\\x38\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34 at suspicious merchant.",
       "ground_truth": "4582145678901234",
       "pii_value": "\\x34\\x35\\x38\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "4582145678901234",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1040,8 +1079,14 @@
       "text": "Customer service requested details for card ending \\x34\\x35\\x39\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34.",
       "ground_truth": "4592145678901234",
       "pii_value": "\\x34\\x35\\x39\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "4592145678901234",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1388,11 +1433,6 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "172.16.254",
-          "score": 0.75
-        },
-        {
           "type": "IP_ADDRESS",
           "value": "172.16.254.1",
           "score": 0.9
@@ -1400,11 +1440,6 @@
       ],
       "raw_regex_detected": true,
       "raw_detections": [
-        {
-          "type": "SOCIAL_SECURITY",
-          "value": "172.16.254",
-          "score": 0.75
-        },
         {
           "type": "IP_ADDRESS",
           "value": "172.16.254.1",
@@ -1473,11 +1508,6 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "198.51.100",
-          "score": 0.75
-        },
-        {
           "type": "IP_ADDRESS",
           "value": "198.51.100.7",
           "score": 0.9
@@ -1485,11 +1515,6 @@
       ],
       "raw_regex_detected": true,
       "raw_detections": [
-        {
-          "type": "SOCIAL_SECURITY",
-          "value": "198.51.100",
-          "score": 0.75
-        },
         {
           "type": "IP_ADDRESS",
           "value": "198.51.100.7",
@@ -1570,14 +1595,8 @@
       "text": "The IPv6 node at cafe:b100:0000:0000:0000:00ff:00fe:baef needs reconfiguration.",
       "ground_truth": "feac:0b10:0000:0000:0000:ff00:fe00:baef",
       "pii_value": "cafe:b100:0000:0000:0000:00ff:00fe:baef",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "cafe:b100:0000:0000:0000:00ff:00fe:baef",
-          "score": 0.88
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -1775,14 +1794,8 @@
       "text": "Please verify the passport number P\\u200dA\\u200d1\\u200d2\\u200d3\\u200d4\\u200d5\\u200d6\\u200d7\\u200d8 before issuing the visa.",
       "ground_truth": "PA12345678",
       "pii_value": "P‍A‍1‍2‍3‍4‍5‍6‍7‍8",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "PASSPORT",
-          "value": " passport number PA12345678",
-          "score": 0.85
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1794,14 +1807,8 @@
       "text": "The system flagged passport B\\u200dJ\\u200d0\\u200d2\\u200d4\\u200d5\\u200d6\\u200d7\\u200d1\\u200d3 as expired in 2023.",
       "ground_truth": "BJ02456713",
       "pii_value": "B‍J‍0‍2‍4‍5‍6‍7‍1‍3",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "PASSPORT",
-          "value": " passport BJ02456713",
-          "score": 0.85
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1813,14 +1820,8 @@
       "text": "Traveler with passport X\\u200dZ\\u200d9\\u200d8\\u200d7\\u200d6\\u200d5\\u200d4\\u200d3\\u200d2 was denied boarding.",
       "ground_truth": "XZ98765432",
       "pii_value": "X‍Z‍9‍8‍7‍6‍5‍4‍3‍2",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "PASSPORT",
-          "value": " passport XZ98765432",
-          "score": 0.85
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1832,14 +1833,8 @@
       "text": "Her passport number L\\u200dM\\u200d3\\u200d2\\u200d1\\u200d0\\u200d9\\u200d8\\u200d7\\u200d6 was stolen last month.",
       "ground_truth": "LM32109876",
       "pii_value": "L‍M‍3‍2‍1‍0‍9‍8‍7‍6",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "PASSPORT",
-          "value": " passport number LM32109876",
-          "score": 0.85
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1851,14 +1846,8 @@
       "text": "Update the booking for passport A\\u200dB\\u200d5\\u200d6\\u200d7\\u200d8\\u200d9\\u200d0\\u200d1\\u200d2 on file.",
       "ground_truth": "AB56789012",
       "pii_value": "A‍B‍5‍6‍7‍8‍9‍0‍1‍2",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "PASSPORT",
-          "value": " passport AB56789012",
-          "score": 0.85
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1870,14 +1859,8 @@
       "text": "Officer scanned passport G\\u200dH\\u200d4\\u200d3\\u200d2\\u200d1\\u200d8\\u200d7\\u200d6\\u200d5 and granted entry.",
       "ground_truth": "GH43218765",
       "pii_value": "G‍H‍4‍3‍2‍1‍8‍7‍6‍5",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "PASSPORT",
-          "value": " passport GH43218765",
-          "score": 0.85
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1889,14 +1872,8 @@
       "text": "Passenger holding R\\u200dS\\u200d0\\u200d1\\u200d2\\u200d3\\u200d4\\u200d5\\u200d6\\u200d7 must reapply for expedited service.",
       "ground_truth": "RS01234567",
       "pii_value": "R‍S‍0‍1‍2‍3‍4‍5‍6‍7",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "PASSPORT",
-          "value": "RS01234567",
-          "score": 0.75
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1908,14 +1885,8 @@
       "text": "The embassy confirmed passport N\\u200dO\\u200d7\\u200d6\\u200d5\\u200d4\\u200d3\\u200d2\\u200d1\\u200d0 is valid.",
       "ground_truth": "NO76543210",
       "pii_value": "N‍O‍7‍6‍5‍4‍3‍2‍1‍0",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "PASSPORT",
-          "value": " passport NO76543210",
-          "score": 0.85
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2917,8 +2888,14 @@
       "text": "The delivery truck was last pinged at \\x33\\x39\\x2e\\x37\\x34\\x32\\x36\\x35\\x31\\x2c\\x20\\x2d\\x31\\x30\\x34\\x2e\\x39\\x39\\x30\\x32\\x38\\x33 near the warehouse.",
       "ground_truth": "39.742651, -104.990283",
       "pii_value": "\\x33\\x39\\x2e\\x37\\x34\\x32\\x36\\x35\\x31\\x2c\\x20\\x2d\\x31\\x30\\x34\\x2e\\x39\\x39\\x30\\x32\\x38\\x33",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "GPS",
+          "value": "39.742651, -104.990283",
+          "score": 0.88
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2930,8 +2907,19 @@
       "text": "The coordinates \\x34\\x38\\x2e\\x38\\x35\\x36\\x36\\x31\\x30\\x2c\\x20\\x32\\x2e\\x33\\x35\\x31\\x30\\x30\\x34 point to the Eiffel Tower.",
       "ground_truth": "48.856610, 2.351004",
       "pii_value": "\\x34\\x38\\x2e\\x38\\x35\\x36\\x36\\x31\\x30\\x2c\\x20\\x32\\x2e\\x33\\x35\\x31\\x30\\x30\\x34",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "GPS",
+          "value": "coordinates 48.856610",
+          "score": 0.9
+        },
+        {
+          "type": "GPS",
+          "value": "48.856610, 2.351004",
+          "score": 0.88
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2943,8 +2931,14 @@
       "text": "User reported location as \\x33\\x34\\x2e\\x30\\x35\\x32\\x32\\x33\\x35\\x2c\\x20\\x2d\\x31\\x31\\x38\\x2e\\x32\\x34\\x33\\x36\\x38\\x35 in downtown LA.",
       "ground_truth": "34.052235, -118.243685",
       "pii_value": "\\x33\\x34\\x2e\\x30\\x35\\x32\\x32\\x33\\x35\\x2c\\x20\\x2d\\x31\\x31\\x38\\x2e\\x32\\x34\\x33\\x36\\x38\\x35",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "GPS",
+          "value": "34.052235, -118.243685",
+          "score": 0.88
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2958,6 +2952,11 @@
       "pii_value": "\\x35\\x31\\x2e\\x35\\x30\\x37\\x33\\x35\\x31\\x2c\\x20\\x2d\\x30\\x2e\\x31\\x32\\x37\\x37\\x35\\x38",
       "full_pipeline_detected": true,
       "full_detections": [
+        {
+          "type": "GPS",
+          "value": "51.507351, -0.127758",
+          "score": 0.88
+        },
         {
           "type": "CITY",
           "value": "in London",
@@ -2984,6 +2983,11 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
+          "type": "GPS",
+          "value": "35.689500, 139.710390",
+          "score": 0.88
+        },
+        {
           "type": "CITY",
           "value": "in Tokyo",
           "score": 0.5
@@ -3006,8 +3010,14 @@
       "text": "Check-in at \\x34\\x30\\x2e\\x37\\x31\\x32\\x37\\x37\\x35\\x2c\\x20\\x2d\\x37\\x34\\x2e\\x30\\x30\\x35\\x39\\x37\\x35 near Wall Street.",
       "ground_truth": "40.712775, -74.005975",
       "pii_value": "\\x34\\x30\\x2e\\x37\\x31\\x32\\x37\\x37\\x35\\x2c\\x20\\x2d\\x37\\x34\\x2e\\x30\\x30\\x35\\x39\\x37\\x35",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "GPS",
+          "value": "40.712775, -74.005975",
+          "score": 0.88
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -3021,6 +3031,11 @@
       "pii_value": "\\x32\\x35\\x2e\\x30\\x33\\x34\\x32\\x38\\x30\\x2c\\x20\\x31\\x32\\x31\\x2e\\x35\\x36\\x34\\x35\\x31\\x30",
       "full_pipeline_detected": true,
       "full_detections": [
+        {
+          "type": "GPS",
+          "value": "25.034280, 121.564510",
+          "score": 0.88
+        },
         {
           "type": "CITY",
           "value": "in Taipei",
@@ -3046,6 +3061,11 @@
       "pii_value": "\\x2d\\x33\\x33\\x2e\\x38\\x36\\x38\\x36\\x30\\x30\\x2c\\x20\\x31\\x35\\x31\\x2e\\x32\\x30\\x39\\x39\\x30\\x30",
       "full_pipeline_detected": true,
       "full_detections": [
+        {
+          "type": "GPS",
+          "value": "-33.868600, 151.209900",
+          "score": 0.88
+        },
         {
           "type": "CITY",
           "value": "in Sydney",
@@ -3229,14 +3249,8 @@
       "text": "Her salary is deposited into DE02 5001 0517 5423 4567 89 automatically each month.",
       "ground_truth": "DE02500105175423456789",
       "pii_value": "DE02 5001 0517 5423 4567 89",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IBAN",
-          "value": "DE02500105175423456789",
-          "score": 0.85
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -3254,14 +3268,8 @@
       "text": "Set up the recurring transfer using FR14 2004 1010 0505 0001 3M02 606 for the rental income.",
       "ground_truth": "FR1420041010050500013M02606",
       "pii_value": "FR14 2004 1010 0505 0001 3M02 606",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IBAN",
-          "value": "FR1420041010050500013M02606",
-          "score": 0.85
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -3279,14 +3287,8 @@
       "text": "Confirm the IBAN ES91 2100 0418 4502 0005 1332 is correct before initiating the SEPA transfer.",
       "ground_truth": "ES9121000418450200051332",
       "pii_value": "ES91 2100 0418 4502 0005 1332",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IBAN",
-          "value": "ES9121000418450200051332",
-          "score": 0.85
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -3310,11 +3312,6 @@
           "type": "COUNTRY",
           "value": "UAE",
           "score": 0.8
-        },
-        {
-          "type": "IBAN",
-          "value": "AE070331234567890123456",
-          "score": 0.85
         }
       ],
       "raw_regex_detected": true,
@@ -3417,8 +3414,14 @@
       "text": "We're sourcing raw materials from a supplier in exicoMay to reduce costs.",
       "ground_truth": "Mexico",
       "pii_value": "exicoMay",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "COUNTRY",
+          "value": "Mexico",
+          "score": 0.8
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },

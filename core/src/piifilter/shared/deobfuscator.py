@@ -14,6 +14,14 @@ Transforms implemented:
 8. Unicode escape sequences (\\uXXXX) → actual characters
 9. URL percent-encoding (%XX) decoded for PII-relevant chars (@, ., -, _, etc.)
 10. Spoken numbers → digits (one→1, two→2, etc.) for phone/SSN/ip patterns
+11. Hex escape sequences (\\xHH → char) [NEW: Transform A]
+12. Binary 8-bit decoding [NEW: Transform B]
+13. Unicode fractions → decimals [NEW: Transform C]
+14. Extended l33tspeak decoding [NEW: Transform D]
+15. Morse code decoding [NEW: Transform E]
+16. XML numeric escape decoder [NEW: Transform F]
+17. Punctuation-stuffing remover [NEW: Transform G]
+18. Pig latin decoder [NEW: Transform H]
 """
 
 from __future__ import annotations
@@ -111,7 +119,7 @@ _CC_SEGMENT_RE = re.compile(
 _CC_AMEX_SEGMENT_RE = re.compile(
     r"\b(\d{4})[_.\s-]+(\d{6})[_.\s-]+(\d{5})\b"
 )
-_CC_MIXED_NORMALIZE_RE = re.compile(r"(\d)[_\-.]+(?=\d)")
+_CC_MIXED_NORMALIZE_RE = re.compile(r"(\d)[_\-\.]+(?=\d)")
 
 # ── IP-spoken separator normalizer ────────────────────────────────────────────
 # After spoken number conversion, collapse digit spaces for IP too
@@ -173,17 +181,26 @@ class Deobfuscator:
             is a list of dicts describing each transform applied.
         """
         log: list[dict] = []
+        # Base normalizations
         text = self._nfkc_normalize(text, log)
         text = self._strip_html_comments(text, log)
         text = self._unwrap_at_dot(text, log)
         text = self._fix_obfuscated_email_entities(text, log)
+        # NEW: XML escape decoder (before HTML entity decoding)
+        text = self._decode_xml_escape(text, log)
         text = self._unwrap_html_entities(text, log)
         text = self._unwrap_zero_width(text, log)
         text = self._normalize_dashes(text, log)
         text = self._remove_soft_hyphen(text, log)
         text = self._flatten_fullwidth(text, log)
         text = self._unwrap_unicode_escapes(text, log)
+        # NEW: Hex escape decoder (before URL percent-decoding)
+        text = self._decode_hex_escapes(text, log)
         text = self._decode_url_percent(text, log)
+        # NEW: Binary strings decoded early
+        text = self._decode_binary_strings(text, log)
+        # NEW: Unicode fractions → digits
+        text = self._normalize_unicode_fractions(text, log)
         text = self._unwrap_spoken_numbers(text, log)
         text = self._map_spoken_separators(text, log)
         text = self._normalize_ip_octet_spaces(text, log)
@@ -197,6 +214,11 @@ class Deobfuscator:
         text = self._decode_base64(text, log)
         text = self._extract_area_serial(text, log)
         text = self._reconstruct_split_tokens(text, log)
+        # NEW: Extended transforms — run late, after basic cleanup
+        text = self._decode_l33t(text, log)
+        text = self._decode_morse(text, log)
+        text = self._remove_punctuation_stuffing(text, log)
+        text = self._decode_pig_latin(text, log)
         return text, log
 
     # ── 1. NFKC normalization ──────────────────────────────────────────
@@ -847,6 +869,345 @@ class Deobfuscator:
             log.append({
                 "transform": "split_tokens",
                 "description": "Reconstructed PII split across concatenated/tokenized segments",
+                "changed": True,
+            })
+        return text
+
+    # ═════════════════════════════════════════════════════════════════════
+    # NEW TRANSFORMS (A-H) for v3 adversarial dataset
+    # ═════════════════════════════════════════════════════════════════════
+
+    # ── A. Hex escape decoder ──────────────────────────────────────────
+    # Replace \xHH sequences with their ASCII character
+    # e.g. \x34\x35\x31\x32 → "4512"
+    _HEX_ESCAPE_RE = re.compile(r"\\x([0-9a-fA-F]{2})")
+
+    @classmethod
+    def _decode_hex_escapes(cls, text: str, log: list) -> str:
+        """Decode \\xHH hex escape sequences to ASCII characters.
+
+        Runs BEFORE URL percent-decoding. Handles literal \\x34 sequences
+        (backslash + 'x' + 2 hex digits) that appear in the text as strings.
+        """
+        original = text
+
+        def _replace_hex_esc(m: re.Match[str]) -> str:
+            cp = int(m.group(1), 16)
+            if 0x20 <= cp <= 0x7E:
+                return chr(cp)
+            return m.group(0)
+
+        text = cls._HEX_ESCAPE_RE.sub(_replace_hex_esc, text)
+        if text != original:
+            log.append({
+                "transform": "hex_escapes",
+                "description": "Decoded \\xHH hex escape sequences",
+                "changed": True,
+            })
+        return text
+
+    # ── B. Binary 8-bit decoder ────────────────────────────────────────
+    # Detect space-separated 8-bit binary groups, strip spaces, decode to ASCII
+    _BINARY8_RE = re.compile(r"\b[01]{8}(?:\s+[01]{8}){7,}\b")
+
+    @classmethod
+    def _decode_binary_strings(cls, text: str, log: list) -> str:
+        """Detect long binary (0/1) strings, decode 8-bit chunks to ASCII.
+
+        Handles space-separated 8-bit groups. Only replaces when the decoded
+        result contains PII-relevant characters.
+        """
+        original = text
+
+        def _try_decode_binary(m: re.Match[str]) -> str:
+            bin_str = m.group(0)
+            cleaned = bin_str.replace(" ", "")
+            if len(cleaned) % 8 != 0:
+                return bin_str
+            chars = []
+            for i in range(0, len(cleaned), 8):
+                byte = cleaned[i:i+8]
+                chars.append(chr(int(byte, 2)))
+            decoded = "".join(chars)
+            if any(c.isalnum() or c in "@._-:# " for c in decoded):
+                return decoded
+            return bin_str
+
+        text = cls._BINARY8_RE.sub(_try_decode_binary, text)
+        if text != original:
+            log.append({
+                "transform": "binary_strings",
+                "description": "Decoded binary (8-bit) encoded strings",
+                "changed": True,
+            })
+        return text
+
+    # ── C. Unicode fractions → decimals ────────────────────────────────
+    _UNICODE_FRACTION_MAP = {
+        "\u00BD": "0.5",     # ½ → 0.5
+        "\u2153": "0.333",   # ⅓ → 0.333
+        "\u2154": "0.667",   # ⅔ → 0.667
+        "\u00BC": "0.25",   # ¼ → 0.25
+        "\u00BE": "0.75",   # ¾ → 0.75
+        "\u2155": "0.2",    # ⅕ → 0.2
+        "\u2156": "0.4",    # ⅖ → 0.4
+        "\u2157": "0.6",    # ⅗ → 0.6
+        "\u2158": "0.8",    # ⅘ → 0.8
+        "\u2159": "0.167",  # ⅙ → 0.167
+        "\u215A": "0.833",  # ⅚ → 0.833
+        "\u215B": "0.125",  # ⅛ → 0.125
+        "\u215C": "0.375",  # ⅜ → 0.375
+        "\u215D": "0.625",  # ⅝ → 0.625
+        "\u215E": "0.875",  # ⅞ → 0.875
+    }
+    _UNICODE_FRACTION_RE = re.compile("|".join(re.escape(k) for k in _UNICODE_FRACTION_MAP))
+
+    @classmethod
+    def _normalize_unicode_fractions(cls, text: str, log: list) -> str:
+        """Convert Unicode fraction characters to decimal strings.
+
+        e.g. ½ → 0.5, ⅘ → 0.8, ¾ → 0.75
+        This allows subsequent phone/date/SSN patterns to match.
+        """
+        original = text
+        text = cls._UNICODE_FRACTION_RE.sub(
+            lambda m: cls._UNICODE_FRACTION_MAP[m.group(0)],
+            text,
+        )
+        if text != original:
+            log.append({
+                "transform": "unicode_fractions",
+                "description": "Normalized Unicode fraction characters to decimal values",
+                "changed": True,
+            })
+        return text
+
+    # ── D. Extended l33tspeak decoder ───────────────────────────────────
+    _L33T_MAP = str.maketrans({
+        "0": "o", "3": "e", "1": "l", "4": "a", "5": "s",
+        "7": "t", "8": "b", "@": "a", "$": "s",
+    })
+    # Match word-like tokens that could contain l33t
+    _L33T_PII_TOKEN_RE = re.compile(
+        r"\b(?:[a-zA-Z][a-zA-Z0-9_@$]{3,}|[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})\b"
+    )
+    # Match tokens with mixed case + numerals (classic l33t indicator)
+    _L33T_MIXED_TOKEN_RE = re.compile(
+        r"(?<!\w)(?:[a-z]+\d+[a-z]+\d*[a-z]*|[a-z]*\d+[a-z]+\d+[a-z]*|[A-Z]\d[A-Z][a-z]*\d|[A-Z][a-z]*\d[A-Z][a-z]*)\w{2,}(?!\w)",
+        re.IGNORECASE,
+    )
+
+    @classmethod
+    def _decode_l33t(cls, text: str, log: list) -> str:
+        """Decode extended l33tspeak substitutions in PII-adjacent tokens.
+
+        Only applied when the token looks like it could be PII (word with
+        embedded numerals or email-like). Handles patterns like 4dm1n→admin.
+        """
+        original = text
+
+        def _try_l33t(m: re.Match[str]) -> str:
+            token = m.group(0)
+            decoded = token.translate(cls._L33T_MAP)
+            if decoded != token:
+                orig_digits = sum(1 for c in token if c.isdigit())
+                new_digits = sum(1 for c in decoded if c.isdigit())
+                if new_digits < orig_digits or "@" in decoded:
+                    return decoded
+            return token
+
+        text = cls._L33T_PII_TOKEN_RE.sub(_try_l33t, text)
+        text = cls._L33T_MIXED_TOKEN_RE.sub(_try_l33t, text)
+        if text != original:
+            log.append({
+                "transform": "l33t_decode",
+                "description": "Decoded extended l33tspeak patterns in PII tokens",
+                "changed": True,
+            })
+        return text
+
+    # ── E. Morse code decoder ──────────────────────────────────────────
+    _MORSE_TABLE = {
+        ".-": "A", "-...": "B", "-.-.": "C", "-..": "D", ".": "E",
+        "..-.": "F", "--.": "G", "....": "H", "..": "I", ".---": "J",
+        "-.-": "K", ".-..": "L", "--": "M", "-.": "N", "---": "O",
+        ".--.": "P", "--.-": "Q", ".-.": "R", "...": "S", "-": "T",
+        "..-": "U", "...-": "V", ".--": "W", "-..-": "X", "-.--": "Y",
+        "--..": "Z",
+        "-----": "0", ".----": "1", "..---": "2", "...--": "3", "....-": "4",
+        ".....": "5", "-....": "6", "--...": "7", "---..": "8", "----.": "9",
+        ".-.-.-": ".",  # period
+        "--..--": ",",  # comma
+        "..--..": "?",  # question mark
+        ".----.": "'",  # apostrophe
+        "-.-.--": "!",  # exclamation mark
+        "-..-.": "/",   # slash
+        "-.--.": "(",   # left paren
+        "-.--.-": ")",  # right paren
+        ".-...": "&",   # ampersand
+        "---...": ":",  # colon
+        "-.-.-.": ";",  # semicolon
+        "-...-": "=",   # equals
+        ".-.-.": "+",   # plus
+        ".-..-.": "\"", # double quote
+        "..--.-": "_",  # underscore
+        "...-..-": "$",  # dollar sign
+        ".--.-.": "@",   # at sign
+    }
+    _MORSE_RE = re.compile(
+        r"(?<!\w)([.\-]+(?:\s+[.\-]+)+)(?!\w)"
+    )
+
+    @classmethod
+    def _decode_morse(cls, text: str, log: list) -> str:
+        """Detect Morse code sequences and decode them to ASCII.
+
+        Handles standard International Morse code for A-Z, 0-9, and common
+        punctuation. Only replaces when decoded result looks like PII.
+        """
+        original = text
+
+        def _try_morse(m: re.Match[str]) -> str:
+            morse_str = m.group(1)
+            codes = morse_str.split()
+            decoded_chars = []
+            for code in codes:
+                ch = cls._MORSE_TABLE.get(code)
+                if ch is None:
+                    return m.group(0)
+                decoded_chars.append(ch)
+            decoded = "".join(decoded_chars)
+            if decoded and any(c.isalnum() or c in "@.:/-_" for c in decoded):
+                return decoded
+            return m.group(0)
+
+        text = cls._MORSE_RE.sub(_try_morse, text)
+        if text != original:
+            log.append({
+                "transform": "morse_decode",
+                "description": "Decoded Morse code sequences",
+                "changed": True,
+            })
+        return text
+
+    # ── F. XML numeric escape decoder ───────────────────────────────────
+    # Run BEFORE existing HTML entity decoder
+    _XML_DECIMAL_RE = re.compile(r"&#(\d{1,5});")
+    _XML_HEX_RE = re.compile(r"&#[xX]([0-9a-fA-F]{1,4});")
+
+    @classmethod
+    def _decode_xml_escape(cls, text: str, log: list) -> str:
+        """Decode XML numeric character references (&#DDD; and &#xHH;).
+
+        Runs BEFORE the existing HTML entity decoder so that &#49; etc.
+        get decoded to digit characters before the standard entity pass
+        handles named entities like &lt; and &amp;.
+        """
+        original = text
+
+        def _replace_decimal(m: re.Match[str]) -> str:
+            cp = int(m.group(1))
+            if 0x20 <= cp <= 0x7E or 0xA0 <= cp <= 0xFF:
+                return chr(cp)
+            return m.group(0)
+
+        def _replace_hex(m: re.Match[str]) -> str:
+            cp = int(m.group(1), 16)
+            if 0x20 <= cp <= 0x7E or 0xA0 <= cp <= 0xFF:
+                return chr(cp)
+            return m.group(0)
+
+        text = cls._XML_DECIMAL_RE.sub(_replace_decimal, text)
+        text = cls._XML_HEX_RE.sub(_replace_hex, text)
+        if text != original:
+            log.append({
+                "transform": "xml_escape",
+                "description": "Decoded XML numeric character references",
+                "changed": True,
+            })
+        return text
+
+    # ── G. Punctuation-stuffing remover ─────────────────────────────────
+    # Detect runs where every 2nd character is non-alphanumeric (punctuation)
+    _PUNCT_STUFF_LONG_RE = re.compile(
+        r"(?<!\w)((?:[a-zA-Z0-9][^\w\s]){6,}[a-zA-Z0-9])(?!\w)"
+    )
+
+    @classmethod
+    def _remove_punctuation_stuffing(cls, text: str, log: list) -> str:
+        """Remove interleaved punctuation from runs where punctuation
+        is inserted between every digit/letter.
+
+        e.g. "1..9..8..5..--..0..4..--..1..5" → "1985--04--15" → after date normalizer → "1985-04-15"
+        e.g. "O..p,,e;;r..a,,t;;i..o,,n;;" → "Operation"
+        """
+        original = text
+
+        def _clean_stuffed(m: re.Match[str]) -> str:
+            full = m.group(0)
+            # Remove all non-alphanumeric, non-whitespace characters
+            cleaned = re.sub(r"[^\w\s]", "", full)
+            return cleaned
+
+        text = cls._PUNCT_STUFF_LONG_RE.sub(_clean_stuffed, text)
+        if text != original:
+            log.append({
+                "transform": "punct_stuffing",
+                "description": "Removed punctuation stuffing from obfuscated text",
+                "changed": True,
+            })
+        return text
+
+    # ── H. Pig latin decoder ────────────────────────────────────────────
+    # Detect words ending with "ay" suffix (pig latin pattern)
+    _PIG_LATIN_RE = re.compile(r"\b([a-zA-Z]+)ay\b", re.IGNORECASE)
+
+    @classmethod
+    def _decode_pig_latin(cls, text: str, log: list) -> str:
+        """Detect and decode pig-latin obfuscated words.
+
+        Standard pig latin: take leading consonant(s) to end + "ay"
+        e.g. "world" → "orldway", "Mexico" → "exicoMay", "hello" → "ellohay"
+
+        Reverse: strip "ay", move trailing consonant cluster to front.
+        e.g. "orldway" → "world", "exicoMay" → "Mexico", "ellohay" → "hello"
+        """
+        original = text
+
+        def _try_decode_pig(m: re.Match[str]) -> str:
+            word = m.group(1)
+
+            # Pattern for capitalized pig latin (e.g. "exicoMay", "orldHay")
+            # Find uppercase letters in otherwise lowercase word
+            upper_positions = [i for i, c in enumerate(word) if c.isupper()]
+            if upper_positions:
+                # The consonant cluster moved to end starts at the first uppercase letter
+                first_upper = upper_positions[0]
+                # The part from first_upper onward is the original leading consonants
+                prefix = word[first_upper:]  # e.g. "M" from "exicoMay"
+                root = word[:first_upper]     # e.g. "exico" from "exicoMay"
+                result = prefix + root
+                if result:
+                    result = result[0].upper() + result[1:].lower()
+                return result
+
+            # Pattern for all-lowercase pig latin (e.g. "orldway")
+            # Standard reverse: find trailing consonant cluster after last vowel
+            # e.g. "orldway": vowel sequence ends at 'a', trailing consonants "w"
+            trailing_match = re.search(r"[aeiou].*?([^aeiou]+)$", word, re.IGNORECASE)
+            if trailing_match:
+                trailing = trailing_match.group(1)
+                rest = word[:-len(trailing)]
+                result = trailing + rest
+                return result
+
+            return m.group(0)
+
+        text = cls._PIG_LATIN_RE.sub(_try_decode_pig, text)
+        if text != original:
+            log.append({
+                "transform": "pig_latin",
+                "description": "Decoded pig-latin style obfuscation",
                 "changed": True,
             })
         return text

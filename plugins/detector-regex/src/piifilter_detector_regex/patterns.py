@@ -65,7 +65,17 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("DATABASE_URL", r"\b(?:postgresql|postgres|mysql|mongodb|redis|sqlite|oracle|mssql)://\S+", 0.95),
 
     # ── SSN ──────────────────────────────────────────────────────────
+    # IMPORTANT ORDERING: More specific patterns (context-prefixed) must come
+    # BEFORE bare patterns so dedup picks the longer, higher-confidence match.
     # Masked/bullet SSN — partial redaction with last-4 visible: XXX-XX-9074, ***-**-0720, SSN 9XX-XX-4321
+    # Context-prefixed SSN: catches ALL separator variants (hyphen, NBSP, dot, space, or none)
+    # when preceded by an SSN-related keyword like "SSN:", "Social Security:", "SS#", "Tax ID:"
+    # Also handles "SSN is", "My SSN is" patterns via optional "is" after the keyword.
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{3}[- \u00A0.]?\d{2}[- \u00A0.]?\d{4}\b", 0.95),
+        # Context-prefixed bare 9-digit SSN (no separator at all) — e.g. "SSN: 123456789"
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{9}\b", 0.95),
+        # Matches standard SSN formats: 123-45-6789 (hyphen) and 123\xa045\xa06789 (non-breaking space)
+    ("SOCIAL_SECURITY", r"\b\d{3}[-\u00A0]\d{2}[-\u00A0]\d{4}\b", 0.90),
     # X-mask or star-mask in first 5 positions, last-4 digits visible
     ("SOCIAL_SECURITY", r"[X*#]{3}[- ][X*#]{2}[- ]\d{4}", 0.70),
     # Same with bullet characters (U+2022, U+25CF): •••-••-9074
@@ -76,25 +86,18 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|ss#)\s+[X*#]{3}[- ]{2,4}\d{4}\b", 0.65),
     # Context-based masked SSN: "masked SSN: XXX-XX-9074"
     ("SOCIAL_SECURITY", r"(?i)(?:mask|redact|obfuscat)[a-z]*\s*(?:social|ssn|ss#)\s*:?\s*[X*#]{3}[- ]\d{2}[- ]\d{4}\b", 0.60),
-        # Matches standard SSN formats: 123-45-6789 (hyphen) and 123\xa045\xa06789 (non-breaking space)
-    ("SOCIAL_SECURITY", r"\b\d{3}[-\u00A0]\d{2}[-\u00A0]\d{4}\b", 0.90),
-        # Context-prefixed SSN: catches ALL separator variants (hyphen, NBSP, dot, space, or none)
-        # when preceded by an SSN-related keyword like "SSN:", "Social Security:", "SS#", "Tax ID:"
-        # Also handles "SSN is", "My SSN is" patterns via optional "is" after the keyword.
-    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{3}[- \u00A0.]?\d{2}[- \u00A0.]?\d{4}\b", 0.95),
-        # Context-prefixed bare 9-digit SSN (no separator at all) — e.g. "SSN: 123456789"
-    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{9}\b", 0.95),
-        # General SSN-like pattern — requires at least ONE separator character (hyphen, space, dot, NBSP)
-        # between the first two digit groups. This prevents bare consecutive digit strings like
+        # General SSN-like pattern — requires at least ONE separator character (hyphen, space, or NBSP)
+        # between the first two digit groups. Dots (.) are excluded since they match IP octets
+        # like "168.10.255" which are not SSNs. This prevents bare consecutive digit strings like
         # "987654321" from being matched as 4-2-3 or 3-2-4 SSN groupings when there's no real separator.
         # Uses lookaround to avoid matching within longer digit sequences.
         # Supports both standard 3-2-4 and reverse 4-2-3/4-2-4 groupings.
         # Lower confidence (0.75) since it matches SSN-like patterns without context keywords.
-    ("SOCIAL_SECURITY", r"(?<!\d)\d{3,4}[- \u00A0.]\d{2}[- \u00A0.]?\d{3,4}(?!\d)", 0.75),
+    ("SOCIAL_SECURITY", r"(?<!\d)\d{3,4}[-\u00A0 ]\d{2}[-\u00A0 ]?\d{3,4}(?!\d)", 0.75),
         # General SSN-like pattern anchored to word boundaries — catches reverse 4-2-3/4-2-4
         # groupings that lookarounds may miss (e.g. when surrounded by spaces or punctuation).
         # Requires at least one separator between first two groups.
-    ("SOCIAL_SECURITY", r"\b\d{4}[- \u00A0.]\d{2}[- \u00A0.]?\d{3,4}\b", 0.75),
+    ("SOCIAL_SECURITY", r"\b\d{4}[-\u00A0 ]\d{2}[-\u00A0 ]?\d{3,4}\b", 0.75),
 
     # ── IBAN ─────────────────────────────────────────────────────────
     # IBAN must come BEFORE CREDIT_CARD patterns since IBAN substrings (like
