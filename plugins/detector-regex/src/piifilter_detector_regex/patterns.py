@@ -264,19 +264,16 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("IP_ADDRESS", r"\b(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\s+){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\b", 0.80),
     # Decimal IP (32-bit integer): 3232235876
     # Valid range: 16777216 (1.0.0.0) to 4294967295 (255.255.255.255)
-    # Requires 8-10 digits. Word boundaries avoid matching inside longer digit runs.
+    # Requires 9-10 digits. 8-digit numbers like 37828224 are CC fragments
+    # or other false positives, never genuine decimal IPs in practice.
+    # Word boundaries avoid matching inside longer digit runs.
     # Only match if the numeric value is a valid 32-bit unsigned integer IP.
-    # Excludes dates by requiring first octet >= 2 (day=DD '01'-'31' or month '01'-'12'
-    # would be < 2 in the first digit for the first two digits). More precisely,
-    # the minimum valid decimal IP is 16777216 (1.0.0.0), so 8-digit numbers starting
-    # with '1' must be checked: 1xxxxxxx. Only 16777216-19999999 are valid.
-    # Numbers starting with 0 (8 digits) are never valid decimal IPs.
     # The numeric validation is done in the detector's _run_patterns() method.
     # IMPORTANT: Now that dotted-decimal IPs are caught on pre-strip text, this
     # catch-all is only needed for genuine decimal-form IPs (rare). Lower confidence
-    # since 8-10 digit numbers that happen to fall in the valid IP range are often
-    # dates or numeric IDs rather than actual integer-encoded IP addresses.
-    ("IP_ADDRESS", r"\b(?:[1-9]\d{7,9})\b", 0.50),
+    # since 9-10 digit numbers that happen to fall in the valid IP range are often
+    # SSNs, phone numbers, or bank accounts rather than actual integer-encoded IPs.
+    ("IP_ADDRESS", r"\b(?:[1-9]\d{8,9})\b", 0.50),
 
     # ── GPS ──────────────────────────────────────────────────────────
     # Full coordinate pair after keyword label: "lat/lng/coordinates/gps: value1, value2"

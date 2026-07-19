@@ -288,56 +288,44 @@ class RegexDetector(Detector):
 
                     # ── Anti-SSN heuristic: exclude 9-digit numbers that pass
                     # SSN area/group/serial validation — they are SSNs, not IPs.
+                    # Also exclude numbers with SSN context keywords regardless
+                    # of area validity (catches demo SSNs like 911-68-3710).
                     if len(digits_only) == 9:
+                        # Check SSN context keywords in surrounding text
+                        context_before = text[max(0, start - 50):start].lower()
+                        context_after = text[end:min(len(text), end + 30)].lower()
+                        ssn_keywords = ("ssn", "social security", "tax id", "ss#")
+                        if any(kw in context_before for kw in ssn_keywords):
+                            continue
                         area, group, serial = digits_only[:3], digits_only[3:5], digits_only[5:]
                         if (area != "000" and area != "666"
                                 and not ("900" <= area <= "999")
                                 and group != "00" and serial != "0000"):
                             continue
 
-                    # ── Anti-phone heuristic: exclude 10-digit numbers that
-                    # would have a first octet of 1 (common US phone prefix)
-                    # and second octet > 0 (no actual IP starts with 1.0.x.x
-                    # as a bare decimal representation 99.9% of the time).
-                    # NANP phone numbers start with [2-9] for the area code
-                    # but the first digit of a 10-digit decimal IP is always
-                    # determined by the numeric value. 10-digit IPs starting
-                    # with '1' (1000000000 to 1999999999) decode to first
-                    # octet 59-119 which is a valid public IP range, but
-                    # bare 10-digit numbers starting with 1 are virtually
-                    # always phone numbers.
-                    if len(digits_only) == 10 and digits_only.startswith("1"):
-                        # Check if the context before the match suggests
-                        # a phone number: look for phone-related keywords
-                        # within 50 chars before the match.
-                        context_start = max(0, start - 60)
-                        context_before = text[context_start:start].lower()
+                    # ── Anti-phone / anti-bank heuristic: exclude 10-digit numbers
+                    # that are preceded by phone or bank-account context keywords,
+                    # or that start with '1' without IP context (likely NANP phone).
+                    if len(digits_only) == 10:
+                        context_before = text[max(0, start - 50):start].lower()
                         phone_keywords = (
                             "phone", "tel", "mobile", "cell", "call",
-                            "contact", "number", "dial"
+                            "contact", "dial", "number"
+                        )
+                        bank_keywords = (
+                            "bank", "account", "acct", "a/c"
                         )
                         if any(kw in context_before for kw in phone_keywords):
                             continue
-                        # Also skip common bare phone formats:
-                        # 10-digit numbers starting with 1 that have
-                        # second digit 0-9 and an area code that starts
-                        # with a phone-valid digit (2-9 for NANP).
-                        # Many phone numbers like 15551234567 are 11 digits
-                        # so they won't match, but 10-digit numbers like
-                        # 4155552671 (not starting with 1) won't be caught
-                        # here. The 10-digit numbers starting with 1 are
-                        # almost exclusively phones — exclude them entirely.
-                        continue
-
-                    # ── Anti-SSN heuristic for 10-digit numbers: if the
-                    # first 9 digits pass SSN validation, it's likely an
-                    # SSN with a trailing digit from adjacent text.
-                    if len(digits_only) == 10:
-                        first_nine = digits_only[:9]
-                        area_g, group_g, serial_g = first_nine[:3], first_nine[3:5], first_nine[5:]
-                        if (area_g != "000" and area_g != "666"
-                                and not ("900" <= area_g <= "999")
-                                and group_g != "00" and serial_g != "0000"):
+                        if any(kw in context_before for kw in bank_keywords):
+                            continue
+                        # NANP phone numbers: 10-digit numbers starting with '1'
+                        # are virtually always NANP phones (1-XXX-XXX-XXXX).
+                        # However, some genuine decimal IPs (e.g. 168430090)
+                        # are 9 digits, so this only affects 10-digit '1xxxx...'
+                        # numbers. Keep if preceded by IP-related context.
+                        ip_context = text[max(0, start - 30):start].lower()
+                        if digits_only.startswith("1") and "ip" not in ip_context:
                             continue
 
                 entities.append(
