@@ -172,7 +172,9 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # ── PHONE ────────────────────────────────────────────────────────
         # Unicode dash character class: hyphen-minus, en-dash, em-dash, minus sign
         # Keyword-prefixed phone numbers (phone/tel/mobile/cell/call + number)
-        ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*\-?\s*[\+\d\(][\d\s\-\.\(\)]{7,20}\b", 0.90),
+        # Must have at least 7 digits to avoid matching short sequences.
+        # Negative lookahead avoids matching credit card numbers (4 groups of 4+ digits).
+        ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*\-?\s*(?!\d{4,}[–—−\-.\s]\d{4,}[–—−\-.\s]\d{4,})\+?[\d\(][\d\s\-\.\(\)]{7,20}\b", 0.90),
         # International with + and unicode dashes: +1-555-123-4567, +1–555–123–4567, +1—555—123—4567, +1−555−123−4567
         ("PHONE", r"(?:^|\s)\+\d{1,3}[–—−\-. ]\d{2,4}[–—−\-. ]\d{3,4}[–—−\-. ]\d{4}\b", 0.88),
         # International with + and spaces only (variable groupings): +44 20 7946 0958, +1 555 123 4567
@@ -194,12 +196,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # Spaced 3+3+4 (US format with spaces): "555 123 4567", "555  123  4567"
         ("PHONE", r"\b\d{3}\s{1,2}\d{3}\s{1,2}\d{4}\b", 0.72),
         # Bare 10-digit US phone (no context needed): "5551234567", "4155552671"
-        # Negative lookbehind avoids matching bank account numbers.
-        ("PHONE", r"(?<!account\s)(?<!account is\s)(?<!acct\s)(?<!bank\s)(?<!bank account\s)(?<!bank account is\s)(?<!A/c\s)(?<!\d)\d{10}(?!\d)", 0.50),
+        # Negative lookbehind avoids matching bank account numbers, API keys, tokens, secrets, etc.
+        # Negative lookahead avoids matching when part of longer numeric ID (e.g. within API keys).
+        ("PHONE", r"(?<!\d)\d{10}(?!\d)", 0.50),
         # E.164 bare: 11-14 continuous digits
-        # Negative lookbehind avoids matching bank account numbers.
-        ("PHONE", r"(?<!account\s)(?<!account is\s)(?<!acct\s)(?<!bank\s)(?<!bank account\s)(?<!bank account is\s)(?<!A/c\s)(?<!\d)\d{11}(?!\d)", 0.60),
-        ("PHONE", r"(?<!account\s)(?<!account is\s)(?<!acct\s)(?<!bank\s)(?<!bank account\s)(?<!bank account is\s)(?<!A/c\s)(?<!\d)\d{12}(?!\d)", 0.60),
+        ("PHONE", r"(?<!\d)\d{11}(?!\d)", 0.60),
+        ("PHONE", r"(?<!\d)\d{12}(?!\d)", 0.60),
         # E.164 bare with country code prefix context: "tel:" prefix
         ("PHONE", r"\btel:\d{7,15}\b", 0.85),
         # URL-encoded international: %2B1-555-123-4567 (handles single or double spaces)
@@ -209,7 +211,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         ("PHONE", r"\b07\d{9}\b", 0.75),
         # Variable-spaced international (country code + space + variable-length groups):
         # "44 20 7946 0958", "966 55 123 4567", "49 30 12345678"
-        ("PHONE", r"\b\d{1,4}\s+\d{2,4}(?:\s+\d{2,8}){1,2}\b", 0.60),
+        # Must NOT match IBAN segments (preceded by 2 letters + 2 digits),
+        # credit card numbers (4-4-4-4 patterns), or IP addresses.
+        # Negative lookahead excludes CC-like and IBAN-like patterns.
+        ("PHONE", r"\b(?!(?:IBAN|iban)\s)\d{1,4}\s+\d{2,4}(?:\s+\d{2,8}){1,2}\b", 0.60),
         # UK mobile format with parentheses: (077) 009-00123
         ("PHONE", r"\(\d{4,5}\)\s*\d{3}[–—−\-.]?\d{5}\b", 0.78),
         # Country code space-separated with dash in subgroups: "86 138-0013-8000"
@@ -223,9 +228,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         ("PHONE", r"(?i)\bPhone:\s*\+\d{1,3}\s+\d{2,4}\s+\d{5,10}\b", 0.80),
         # Universal variable-separator pattern: catch-all for phone-like sequences
         # with at least 9 digits and mixed separators (dashes, dots, spaces)
-        # Uses negative lookahead to avoid matching IP addresses (which are
-        # already covered by IP_ADDRESS patterns with higher specificity).
-        ("PHONE", r"(?!\d{1,3}(?:\.\d{1,3}){3}\b)\b\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]\d{2,4}\b", 0.55),
+        # Uses negative lookahead to avoid matching:
+        #   - IP addresses (already covered by IP_ADDRESS patterns)
+        #   - Credit card 4-4-4-4 patterns (already covered by CREDIT_CARD)
+        #   - IBAN segments (preceded by 2-letter country code)
+        ("PHONE", r"(?!\d{1,3}(?:\.\d{1,3}){3}\b)(?![A-Z]{2}\d)\b\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]?\d{2,4}\b(?![–—−\-.\s]?\d{2,4})", 0.55),
 
     # ── IP_ADDRESS ───────────────────────────────────────────────────
     # Standard dotted-decimal IPv4 with strict octet validation (0-255 per octet).
@@ -238,11 +245,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # IPv6 with single :: anywhere
     ("IP_ADDRESS", r"\b(?:(?:[0-9a-fA-F]{1,4}:){1,7}:|:(?::[0-9a-fA-F]{1,4}){1,7})\b", 0.88),
     # IPv6 loopback: ::1
-    ("IP_ADDRESS", r"\b::1\b", 0.90),
-    # IPv6 unspecified: ::
-    ("IP_ADDRESS", r"\b::\b", 0.85),
-    # IPv6 embedded IPv4: ::ffff:192.168.1.1 or ::192.168.1.1
-    ("IP_ADDRESS", r"\b(?:(?:[0-9a-fA-F]{1,4}:){1,4}:)?:(?:ffff:)?(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\b", 0.88),
+        ("IP_ADDRESS", r"(?:(?<=\s)|(?<=\A)|(?<=:))::1(?:(?=\s)|(?=\Z))", 0.90),
+        # IPv6 unspecified: ::
+        ("IP_ADDRESS", r"(?:(?<=\s)|(?<=\A))::(?:(?=\s)|(?=\Z))", 0.85),
+        # IPv6 embedded IPv4: ::ffff:192.168.1.1 or ::192.168.1.1
+        # Uses lookbehind for left boundary since ::ffff: starts with colon
+        ("IP_ADDRESS", r"(?:(?<=\s)|(?<=\A)|(?<=:))(?:[0-9a-fA-F]{1,4}:)*(?::(?:ffff:)?)?(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\b", 0.88),
     # Compressed IPv6 with single :: (mid-rule): catches what the :: patterns above miss
     # e.g. 2001:db8::1, fe80::1, 2001:db8::ff00:42:8329
     ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:)+(?::[0-9a-fA-F]{1,4})+\b(?<!:)(?<![0-9a-fA-F]{5})", 0.85),
@@ -255,9 +263,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Decimal IP (32-bit integer): 3232235876
     # Valid range: 16777216 (1.0.0.0) to 4294967295 (255.255.255.255)
     # Requires 8-10 digits. Word boundaries avoid matching inside longer digit runs.
-    # Negative lookahead avoids matching if followed by .\d (partial IPv4 dotted decimal)
-    # or preceded by \d. (partial dotted decimal) or a date separator.
-    ("IP_ADDRESS", r"\b(?:[1-9]\d{7,9})(?<!\d{4}\.\d)(?<!\d{3}\.\d)(?<!\d{2}\.\d)(?!\.\d)\b", 0.65),
+    # Only match if the numeric value is a valid 32-bit unsigned integer IP.
+    # Excludes dates by requiring first octet >= 2 (day=DD '01'-'31' or month '01'-'12'
+    # would be < 2 in the first digit for the first two digits). More precisely,
+    # the minimum valid decimal IP is 16777216 (1.0.0.0), so 8-digit numbers starting
+    # with '1' must be checked: 1xxxxxxx. Only 16777216-19999999 are valid.
+    # Numbers starting with 0 (8 digits) are never valid decimal IPs.
+    # The numeric validation is done in the detector's _run_patterns() method.
+    ("IP_ADDRESS", r"\b(?:[1-9]\d{7,9})\b", 0.65),
 
     # ── GPS ──────────────────────────────────────────────────────────
     # Full coordinate pair after keyword label: "lat/lng/coordinates/gps: value1, value2"

@@ -199,7 +199,21 @@ class Deobfuscator:
         text = self._unwrap_unicode_escapes(text, log)
         # NEW: Hex escape decoder (before URL percent-decoding)
         text = self._decode_hex_escapes(text, log)
-        text = self._decode_url_percent(text, log)
+        # ── Recursive decode-until-stable loop for double-encoding ──
+        # URL percent-encoding and hex-escapes can be double/triple-encoded.
+        # E.g. %25%32%35 → Round 1: %25 → Round 2: %
+        # Re-apply both decoders until no further changes occur, up to max 5 rounds.
+        for _round in range(5):
+            prev = text
+            text = self._decode_url_percent(text, log)
+            text = self._decode_hex_escapes(text, log)
+            if text == prev:
+                break
+        # ── Percent-sandwiched separators ──
+        # After URL decoding %25 → %, the resulting % between word characters
+        # needs to become a space so COMPANY patterns can match.
+        # E.g. Globex%Corporation → Globex Corporation
+        text = self._normalize_pct_separator(text, log)
         # NEW: Binary strings decoded early
         text = self._decode_binary_strings(text, log)
         # NEW: Unicode fractions → digits
@@ -224,9 +238,11 @@ class Deobfuscator:
         text = self._reconstruct_split_tokens(text, log)
         # NEW: Extended transforms — run late, after basic cleanup
         text = self._decode_l33t(text, log)
-        text = self._decode_morse(text, log)
         text = self._remove_punctuation_stuffing(text, log)
         text = self._decode_pig_latin(text, log)
+        text = self._swap_case(text, log)
+        # NEW: Reversed words — catch reversed email components and person names
+        text = self._decode_reversed_words(text, log)
         return text, log, text_for_gps
 
     # ── 1. NFKC normalization ──────────────────────────────────────────
@@ -947,6 +963,31 @@ class Deobfuscator:
             })
         return text
 
+    # ── Percent separator normalizer ──────────────────────────────────
+    # After URL decoding, %25→% leaves lone % between word chars.
+    # Convert % between word characters to space for COMPANY detection.
+    _PCT_BETWEEN_WORDS_RE = re.compile(r"(?<=[a-zA-Z])%(?=[a-zA-Z])")
+
+    @classmethod
+    def _normalize_pct_separator(cls, text: str, log: list) -> str:
+        """Convert bare '%' between word characters to a space.
+
+        After URL percent-decoding, double-encoded '%25' becomes '%'.
+        When '%' sits between two word characters (e.g. Globex%Corporation),
+        it was originally a space used in COMPANY names.
+
+        This is a targeted transform — only fires on % between alpha chars.
+        """
+        original = text
+        text = cls._PCT_BETWEEN_WORDS_RE.sub(" ", text)
+        if text != original:
+            log.append({
+                "transform": "pct_separator",
+                "description": "Converted % between word characters to space (double-encoding residue)",
+                "changed": True,
+            })
+        return text
+
     # ── B. Binary 8-bit decoder ────────────────────────────────────────
     # Detect space-separated 8-bit binary groups, strip spaces, decode to ASCII
     _BINARY8_RE = re.compile(r"\b[01]{8}(?:\s+[01]{8}){7,}\b")
@@ -1332,6 +1373,84 @@ class Deobfuscator:
             log.append({
                 "transform": "swap_case",
                 "description": "Swapped case on case-shifted words (nEW→New, hOUSTON→Houston)",
+                "changed": True,
+            })
+        return text
+
+    # ── J. Reverse-words decoder ──────────────────────────────────────────
+    # Detect email-like constructs with reversed domain segments and reversed
+    # local-part words (e.g., "gro.moc@olleh" → "hello@com.org"), as well
+    # as person names with reversed word order (e.g., "Doe Jane" → "Jane Doe").
+
+    _REVERSED_EMAIL_RE = re.compile(
+        r"(?<!\w)([a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)+)@([a-zA-Z0-9_]+(?:_[a-zA-Z0-9_]+)+)(?!\w)"
+    )
+
+    _REVERSED_NAME_RE = re.compile(
+        r"\b([A-Z][a-z]+)\s+([A-Z][a-z]+)\b"
+    )
+
+    # Common last-name tokens to avoid false-positives on non-obfuscated text
+    _REVERSED_NAME_SKIP = {
+        "the", "this", "that", "with", "from", "have", "been", "were",
+        "they", "what", "when", "where", "which", "their", "them",
+        "over", "into", "only", "also", "very", "just", "more",
+        "than", "then", "some", "such", "like", "about", "after",
+        "before", "between", "through", "during", "without",
+    }
+
+    @classmethod
+    def _decode_reversed_words(cls, text: str, log: list) -> str:
+        """Detect and decode reversed-word obfuscation patterns.
+
+        Handles two patterns:
+        1. Reversed email: domain segments reversed AND local-part words
+           reversed, e.g. "gro.moc@olleh_321_ydob_emosewa" →
+           "awesome_body_123_hello@com.org"
+
+        2. Reversed names: "Doe Jane" → "Jane Doe"
+
+        Only fires when the reversal produces a detectable improvement
+        (email-like pattern for emails, or known-word heuristic for names).
+        """
+        original = text
+
+        # ── Pattern 1: Reversed email ──
+        def _reverse_email(m: re.Match[str]) -> str:
+            domain_part = m.group(1)   # e.g. "gro.moc"
+            local_part = m.group(2)    # e.g. "olleh_321_ydob_emosewa"
+
+            # Reverse domain: split by '.', reverse order
+            domain_segments = domain_part.split(".")
+            domain_segments.reverse()
+            recovered_domain = ".".join(domain_segments)
+
+            # Reverse local part: split by '_', reverse order, reverse each word
+            words = local_part.split("_")
+            words.reverse()
+            recovered_words = [w[::-1] for w in words]
+            recovered_local = "_".join(recovered_words)
+
+            return f"{recovered_local}@{recovered_domain}"
+
+        text = cls._REVERSED_EMAIL_RE.sub(_reverse_email, text)
+
+        # ── Pattern 2: Reversed person name ──
+        def _reverse_name(m: re.Match[str]) -> str:
+            first = m.group(1)
+            second = m.group(2)
+            if first.lower() in cls._REVERSED_NAME_SKIP or second.lower() in cls._REVERSED_NAME_SKIP:
+                return m.group(0)
+            if len(first) < 3 or len(second) < 3:
+                return m.group(0)
+            return f"{second} {first}"
+
+        text = cls._REVERSED_NAME_RE.sub(_reverse_name, text)
+
+        if text != original:
+            log.append({
+                "transform": "reversed_words",
+                "description": "Decoded reversed-word obfuscation (email segments, person names)",
                 "changed": True,
             })
         return text

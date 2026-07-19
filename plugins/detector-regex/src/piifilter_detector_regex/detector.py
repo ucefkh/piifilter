@@ -246,6 +246,22 @@ class RegexDetector(Detector):
                     if len(digits) >= 13 and not self._luhn_check(digits):
                         continue
 
+                # Numeric validation for decimal IP: ensure value is in valid
+                # 32-bit unsigned integer range (16777216 to 4294967295).
+                # This prevents 8-digit dates like "12312025" (Dec 31, 2025)
+                # from being misclassified as decimal IP addresses.
+                if entity_type == EntityType.IP_ADDRESS and score < 0.80:
+                    # Low-confidence IP patterns (decimal IP) need numeric validation
+                    ip_text = match.group()
+                    digits_only = "".join(c for c in ip_text if c.isdigit())
+                    if len(digits_only) >= 7:
+                        try:
+                            ip_int = int(digits_only)
+                            if ip_int < 16777216 or ip_int > 4294967295:
+                                continue
+                        except ValueError:
+                            continue
+
                 entities.append(
                     DetectedEntity(
                         entity_type=entity_type,

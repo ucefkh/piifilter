@@ -2,11 +2,11 @@
   "summary": {
     "overall": {
       "total_examples": 201,
-      "full_pipeline_detected": 113,
-      "full_pipeline_rate": 56.2,
+      "full_pipeline_detected": 126,
+      "full_pipeline_rate": 62.7,
       "raw_regex_detected": 57,
       "raw_regex_rate": 28.4,
-      "deobfuscation_improvement": 27.9
+      "deobfuscation_improvement": 34.3
     },
     "by_category": {
       "Punctuation-stuffed": {
@@ -104,20 +104,17 @@
       },
       "Reversed words": {
         "total": 16,
-        "full_pipeline_detected": 1,
-        "full_pipeline_rate": 6.2,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 25.0,
         "raw_regex_detected": 1,
         "raw_regex_rate": 6.2,
-        "improvement": 0.0,
+        "improvement": 18.8,
         "missed_examples": [
           "EMAIL:reversed-words",
           "EMAIL:reversed-words",
           "EMAIL:reversed-words",
           "EMAIL:reversed-words",
-          "EMAIL:reversed-words",
-          "EMAIL:reversed-words",
-          "EMAIL:reversed-words",
-          "EMAIL:reversed-words",
+          "PERSON:reversed-words",
           "PERSON:reversed-words",
           "PERSON:reversed-words",
           "PERSON:reversed-words",
@@ -140,12 +137,13 @@
       },
       "Case-shifted": {
         "total": 10,
-        "full_pipeline_detected": 4,
-        "full_pipeline_rate": 40.0,
+        "full_pipeline_detected": 3,
+        "full_pipeline_rate": 30.0,
         "raw_regex_detected": 4,
         "raw_regex_rate": 40.0,
-        "improvement": 0.0,
+        "improvement": -10.0,
         "missed_examples": [
+          "IP_ADDRESS:case-shifted",
           "CITY:case-shifted",
           "CITY:case-shifted",
           "CITY:case-shifted",
@@ -156,13 +154,14 @@
       },
       "Pig-latin style": {
         "total": 7,
-        "full_pipeline_detected": 6,
-        "full_pipeline_rate": 85.7,
+        "full_pipeline_detected": 5,
+        "full_pipeline_rate": 71.4,
         "raw_regex_detected": 1,
         "raw_regex_rate": 14.3,
-        "improvement": 71.4,
+        "improvement": 57.1,
         "missed_examples": [
-          "IP_ADDRESS:pig-latin-ip"
+          "IP_ADDRESS:pig-latin-ip",
+          "COUNTRY:pig-latin"
         ]
       },
       "Unicode fractions": {
@@ -185,12 +184,15 @@
       },
       "XML escaping": {
         "total": 4,
-        "full_pipeline_detected": 4,
-        "full_pipeline_rate": 100.0,
+        "full_pipeline_detected": 2,
+        "full_pipeline_rate": 50.0,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 100.0,
-        "missed_examples": []
+        "improvement": 50.0,
+        "missed_examples": [
+          "PHONE:xml-escape",
+          "PHONE:xml-escape"
+        ]
       },
       "ZWJ interleaving": {
         "total": 8,
@@ -212,32 +214,18 @@
       },
       "Morse code": {
         "total": 23,
-        "full_pipeline_detected": 0,
-        "full_pipeline_rate": 0.0,
+        "full_pipeline_detected": 14,
+        "full_pipeline_rate": 60.9,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 0.0,
+        "improvement": 60.9,
         "missed_examples": [
           "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
           "EMPLOYEE_NAME:morse-code",
           "EMPLOYEE_NAME:morse-code",
           "EMPLOYEE_NAME:morse-code",
           "EMPLOYEE_NAME:morse-code",
           "EMPLOYEE_NAME:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
           "DATE:morse-code",
           "DATE:morse-code",
           "DATE:morse-code"
@@ -256,21 +244,14 @@
     "by_type": {
       "DATE": {
         "total": 18,
-        "full_pipeline_detected": 6,
-        "full_pipeline_rate": 33.3,
+        "full_pipeline_detected": 13,
+        "full_pipeline_rate": 72.2,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 33.3,
+        "improvement": 72.2,
         "missed_examples": [
           "DATE:punct-stuff",
           "DATE:punct-stuff",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
           "DATE:morse-code",
           "DATE:morse-code",
           "DATE:morse-code"
@@ -315,16 +296,12 @@
       },
       "EMAIL": {
         "total": 14,
-        "full_pipeline_detected": 6,
-        "full_pipeline_rate": 42.9,
+        "full_pipeline_detected": 10,
+        "full_pipeline_rate": 71.4,
         "raw_regex_detected": 6,
         "raw_regex_rate": 42.9,
-        "improvement": 0.0,
+        "improvement": 28.6,
         "missed_examples": [
-          "EMAIL:reversed-words",
-          "EMAIL:reversed-words",
-          "EMAIL:reversed-words",
-          "EMAIL:reversed-words",
           "EMAIL:reversed-words",
           "EMAIL:reversed-words",
           "EMAIL:reversed-words",
@@ -333,23 +310,27 @@
       },
       "IP_ADDRESS": {
         "total": 10,
-        "full_pipeline_detected": 9,
-        "full_pipeline_rate": 90.0,
+        "full_pipeline_detected": 8,
+        "full_pipeline_rate": 80.0,
         "raw_regex_detected": 5,
         "raw_regex_rate": 50.0,
-        "improvement": 40.0,
+        "improvement": 30.0,
         "missed_examples": [
+          "IP_ADDRESS:case-shifted",
           "IP_ADDRESS:pig-latin-ip"
         ]
       },
       "PHONE": {
         "total": 12,
-        "full_pipeline_detected": 12,
-        "full_pipeline_rate": 100.0,
+        "full_pipeline_detected": 10,
+        "full_pipeline_rate": 83.3,
         "raw_regex_detected": 1,
         "raw_regex_rate": 8.3,
-        "improvement": 91.7,
-        "missed_examples": []
+        "improvement": 75.0,
+        "missed_examples": [
+          "PHONE:xml-escape",
+          "PHONE:xml-escape"
+        ]
       },
       "PASSPORT": {
         "total": 14,
@@ -362,19 +343,12 @@
       },
       "URL": {
         "total": 14,
-        "full_pipeline_detected": 6,
-        "full_pipeline_rate": 42.9,
+        "full_pipeline_detected": 13,
+        "full_pipeline_rate": 92.9,
         "raw_regex_detected": 6,
         "raw_regex_rate": 42.9,
-        "improvement": 0.0,
+        "improvement": 50.0,
         "missed_examples": [
-          "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
-          "URL:morse-code",
           "URL:morse-code"
         ]
       },
@@ -464,12 +438,13 @@
       },
       "PERSON": {
         "total": 8,
-        "full_pipeline_detected": 1,
-        "full_pipeline_rate": 12.5,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
         "raw_regex_detected": 1,
         "raw_regex_rate": 12.5,
-        "improvement": 0.0,
+        "improvement": -12.5,
         "missed_examples": [
+          "PERSON:reversed-words",
           "PERSON:reversed-words",
           "PERSON:reversed-words",
           "PERSON:reversed-words",
@@ -508,12 +483,14 @@
       },
       "COUNTRY": {
         "total": 1,
-        "full_pipeline_detected": 1,
-        "full_pipeline_rate": 100.0,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 100.0,
-        "missed_examples": []
+        "improvement": 0.0,
+        "missed_examples": [
+          "COUNTRY:pig-latin"
+        ]
       },
       "CUSTOMER_NAME": {
         "total": 8,
@@ -1070,8 +1047,14 @@
       "text": "The configuration file is located at C:\\%25%35%33%25%36%35%25%37%33%25%37%30%25%32%65\\config.ini.",
       "ground_truth": "C:\\temp\\config.ini",
       "pii_value": "C:\\%25%35%33%25%36%35%25%37%33%25%37%30%25%32%65\\config.ini",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "FILE_PATH",
+          "value": "c:\\sESP.\\CONFIG.INI.",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1099,9 +1082,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
-          "value": "44617461",
-          "score": 0.65
+          "type": "FILE_PATH",
+          "value": "d:\\dATA\\BACKUP.ZIP.",
+          "score": 0.9
         }
       ],
       "raw_regex_detected": false,
@@ -1117,11 +1100,6 @@
       "pii_value": "/opt/%25%32%35%25%33%32%25%33%30%25%32%35%25%33%32%25%33%30/bin/script.sh",
       "full_pipeline_detected": true,
       "full_detections": [
-        {
-          "type": "PHONE",
-          "value": "253230253230",
-          "score": 0.6
-        },
         {
           "type": "DOMAIN",
           "value": "script.sh",
@@ -1149,8 +1127,13 @@
       "full_detections": [
         {
           "type": "FILE_PATH",
-          "value": "C:\\Users\\",
+          "value": "c:\\uSERS\\",
           "score": 0.9
+        },
+        {
+          "type": "DOMAIN",
+          "value": "NOTE.TXT",
+          "score": 0.75
         }
       ],
       "raw_regex_detected": true,
@@ -1176,11 +1159,6 @@
           "type": "FILE_PATH",
           "value": "/var/log",
           "score": 0.9
-        },
-        {
-          "type": "BANK_ACCOUNT",
-          "value": "25323024302530313233",
-          "score": 0.55
         }
       ],
       "raw_regex_detected": true,
@@ -1200,14 +1178,8 @@
       "text": "The video file is stored in E:\\%25%32%35%25%33%32%25%33%35%25%33%33%25%36%35%25%37%32\\media\\video.mp4.",
       "ground_truth": "E:\\%25%32%35%25%33%32%25%33%35%25%33%33\\media\\video.mp4",
       "pii_value": "E:\\%25%32%35%25%33%32%25%33%35%25%33%33%25%36%35%25%37%32\\media\\video.mp4",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "PHONE",
-          "value": "253235336572",
-          "score": 0.6
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1481,8 +1453,14 @@
       "text": "The clinical trial coordinator can be reached at ude.ysu@htlaeh_evitcuderp_lareneg for questions.",
       "ground_truth": "general_preventive_health@ysu.ude",
       "pii_value": "ude.ysu@htlaeh_evitcuderp_lareneg",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "general_preductive_health@ysu.ude",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1494,8 +1472,14 @@
       "text": "Her personal blog contact is moc.tra@eno_tsrif_enola_retso for guest post submissions.",
       "ground_truth": "oster_alone_first_one@tra.moc",
       "pii_value": "moc.tra@eno_tsrif_enola_retso",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "oster_alone_first_one@tra.moc",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1520,8 +1504,14 @@
       "text": "For hardware troubleshooting, use moc.liamg@999_sloot_sdraob as the preferred contact.",
       "ground_truth": "boards_tools_999@gmail.moc",
       "pii_value": "moc.liamg@999_sloot_sdraob",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "boards_tools_999@liamg.moc",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1546,8 +1536,14 @@
       "text": "Submit your debug logs directly to moc.tcg@999_enignE_revird_tset for analysis.",
       "ground_truth": "test_driver_Engine_999@tcg.moc",
       "pii_value": "moc.tcg@999_enignE_revird_tset",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "test_driver_Engine_999@tcg.moc",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1759,14 +1755,8 @@
       "text": "Please whitelist 192.0.2.88 for the monitoring tool.",
       "ground_truth": "192.0.2.88",
       "pii_value": "192.0.2.88",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "1920288",
-          "score": 0.65
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -2007,11 +1997,6 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "PERSON",
-          "value": "Dr. Owens",
-          "score": 0.85
-        },
-        {
           "type": "BANK_ACCOUNT",
           "value": "611312122314131312",
           "score": 0.55
@@ -2091,14 +2076,8 @@
       "text": "Please reach out to our support line at +1 (555) &lt;span&gt;123-4567&lt;/span&gt; for urgent assistance.",
       "ground_truth": "+1 (555) 123-4567",
       "pii_value": "+1 (555) &lt;span&gt;123-4567&lt;/span&gt;",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "1234567",
-          "score": 0.65
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2110,14 +2089,8 @@
       "text": "Maria mentioned her direct line is +1 (312) &amp;apos;555-0199&amp;apos; for project inquiries.",
       "ground_truth": "+1 (312) '555-0199'",
       "pii_value": "+1 (312) &amp;apos;555-0199&amp;apos;",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "5550199",
-          "score": 0.65
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2454,8 +2427,14 @@
       "text": "The promo code page was recently moved to .... - - .--. -...- .-- .-- .-- .-.-.- ... .... .- .-. .--. ... .... --- --- - . .-. ... .-.-.- -.-. --- -- -...- ... .... --- . for security reasons.",
       "ground_truth": "https://sharp-shooters.co/sh0e",
       "pii_value": ".... - - .--. -...- .-- .-- .-- .-.-.- ... .... .- .-. .--. ... .... --- --- - . .-. ... .-.-.- -.-. --- -- -...- ... .... --- .",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "DOMAIN",
+          "value": "WWW.SHARPSHOOTERS.COM",
+          "score": 0.75
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2467,8 +2446,19 @@
       "text": "Please confirm this is still the employee portal: .... - - .--. ... -...- .-- .-- .-- .-.-.- -... .-.. ..- . ... -...- .-. . ... .. -.. . .-. -.-. . .-.. .-.. ... .-.-.- -.-. --- -- -...- .... --- -- .",
       "ground_truth": "https://www.blue-residence.com/home",
       "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- -... .-.. ..- . ... -...- .-. . ... .. -.. . .-. -.-. . .-.. .-.. ... .-.-.- -.-. --- -- -...- .... --- -- .",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "DOMAIN",
+          "value": "WWW.BLUES",
+          "score": 0.75
+        },
+        {
+          "type": "DOMAIN",
+          "value": "RESIDERCELLS.COM",
+          "score": 0.75
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2480,8 +2470,14 @@
       "text": "A bug in the authentication script was reported for .... - - .--. ... -...- .-- .-- .-- .-.-.- -- . - .- .-.. -- ..- ... . ..- -- .-.-.- -. . - -...- .-.. --- --. .. -.",
       "ground_truth": "https://www.metal-muse.net/login",
       "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- -- . - .- .-.. -- ..- ... . ..- -- .-.-.- -. . - -...- .-.. --- --. .. -.",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "DOMAIN",
+          "value": "WWW.METALMUSEUM.NET",
+          "score": 0.75
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2493,8 +2489,14 @@
       "text": "The veterinary archive is at .... - - .--. ... -...- .-- .-- .-- .-.-.- ... - ..- -.. .. --- .-.-.- ...- . - -...- .--. .- .--. . .-. ... currently.",
       "ground_truth": "https://www.studio.vet/papers",
       "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- ... - ..- -.. .. --- .-.-.- ...- . -...- .--. .- .--. . .-. ...",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "DOMAIN",
+          "value": "WWW.STUDIO.VET",
+          "score": 0.75
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2506,8 +2508,14 @@
       "text": "I found a listing for discounted lab equipment on .... - - .--. ... -...- .-- .-- .-- .-.-.- -.-. .-. .- .. --. ... .-.. .. ... - .-.-.- --- .-. --. -...- ... .... --- .--. .-. --- ----.",
       "ground_truth": "https://www.craigslist.org/shopro/",
       "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- -.-. .-. .- .. --. ... .-.. .. ... - .-.-.- --- .-. --. -...- ... .... --- .--. .-. --- ----.",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "DOMAIN",
+          "value": "WWW.CRAIGSLIST.ORG",
+          "score": 0.75
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2519,8 +2527,14 @@
       "text": "Order status can be tracked here: .... - - .--. ... -...- .-- .-- .-- .-.-.- ... .. .-.. ...- . .-. ... - .-. . .- -- .-.-.- ... .... --- .--. -...- -... .- -.-. -.- .--. .- -.-. -.- ...",
       "ground_truth": "https://www.silver-stream.shop/backpacks",
       "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- ... .. .-.. ...- . .-. ... - .-. . .- -- .-.-.- ... .... --- .--. -...- -... .- -.-. -.- .--. .- -.-. -.- ...",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "DOMAIN",
+          "value": "WWW.SILVERSTREAM.SHOP",
+          "score": 0.75
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2545,8 +2559,14 @@
       "text": "The audio sample is hosted on .... - - .--. ... -...- .-- .-- .-- .-.-.- --. .-. .- .--. .... --- .--. .... --- -. . .-.-.- ..- ... -...- ... .... .. .-. - at the moment.",
       "ground_truth": "https://www.graphophone.us/shirt",
       "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- --. .-. .- .--. .... --- .--. .... --- -. . .-.-.- ..- ... -...- ... .... .. .-. -",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "DOMAIN",
+          "value": "WWW.GRAPHOPHONE.US",
+          "score": 0.75
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -3388,7 +3408,7 @@
         },
         {
           "type": "CITY",
-          "value": "in London",
+          "value": "in lONDON",
           "score": 0.5
         }
       ],
@@ -3418,7 +3438,7 @@
         },
         {
           "type": "CITY",
-          "value": "in Tokyo",
+          "value": "in tOKYO",
           "score": 0.5
         }
       ],
@@ -3467,7 +3487,7 @@
         },
         {
           "type": "CITY",
-          "value": "in Taipei",
+          "value": "in tAIPEI",
           "score": 0.5
         }
       ],
@@ -3497,7 +3517,7 @@
         },
         {
           "type": "CITY",
-          "value": "in Sydney",
+          "value": "in sYDNEY",
           "score": 0.5
         }
       ],
@@ -3583,14 +3603,8 @@
       "text": "The IT ticket was assigned to Jones David this morning.",
       "ground_truth": "David Jones",
       "pii_value": "Jones David",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "PROJECT_NAME",
-          "value": "assigned to Jones David",
-          "score": 0.7
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -3642,6 +3656,11 @@
           "type": "PHONE",
           "value": "345 67 89 1011",
           "score": 0.6
+        },
+        {
+          "type": "PHONE",
+          "value": "67 89 1011 2141",
+          "score": 0.55
         }
       ]
     },
@@ -3667,6 +3686,11 @@
           "type": "PHONE",
           "value": "60 16 31 31",
           "score": 0.6
+        },
+        {
+          "type": "PHONE",
+          "value": "31 31 9268 19",
+          "score": 0.55
         }
       ]
     },
@@ -3866,14 +3890,8 @@
       "text": "We're sourcing raw materials from a supplier in exicoMay to reduce costs.",
       "ground_truth": "Mexico",
       "pii_value": "exicoMay",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "COUNTRY",
-          "value": "Mexico",
-          "score": 0.8
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4038,7 +4056,7 @@
       "raw_detections": [
         {
           "type": "PHONE",
-          "value": "3704-0044-0532-0130",
+          "value": "0044-0532-0130-00",
           "score": 0.55
         }
       ]
@@ -4082,7 +4100,7 @@
       "raw_detections": [
         {
           "type": "PHONE",
-          "value": "0002-0123-1234-5678",
+          "value": "0123-1234-5678-9015",
           "score": 0.55
         }
       ]
@@ -4160,8 +4178,14 @@
       "text": "The project deadline is ..--- ----- ..--- ..... ----- ....- .---- ----- and we need to finalize the report by then.",
       "ground_truth": "2025-04-10",
       "pii_value": "..--- ----- ..--- ..... ----- ....- .---- -----",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "20250410",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4199,8 +4223,14 @@
       "text": "Please confirm the transaction date of ..--- ----- .---- ----- .---- ..--- ----- ..--- for the refund.",
       "ground_truth": "2010-12-02",
       "pii_value": "..--- ----- .---- ----- .---- ..--- ----- ..---",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "20101202",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4225,8 +4255,14 @@
       "text": "The metadata shows the event date as ..... .---- ...-- ----- ----- ----- ----- ----- which is probably corrupted.",
       "ground_truth": "13-00-0000",
       "pii_value": "..... .---- ...-- ----- ----- ----- ----- -----",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "51300000",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4238,8 +4274,14 @@
       "text": "The server logged the access date as ..--- ----- ..--- ....- ..... ----- ----- ..--- even though the month is impossible.",
       "ground_truth": "2024-50-02",
       "pii_value": "..--- ----- ..--- ....- ..... ----- ----- ..---",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "20245002",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4251,8 +4293,14 @@
       "text": "The license expiration is ..--- ----- ..--- ....- ..... ----- ----- ..--- July 3rd but this is odd.",
       "ground_truth": "7003-05-20",
       "pii_value": "--... ----- ----- ...-- ----- ..... ..--- -----",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "20245002",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4264,8 +4312,14 @@
       "text": "The research dataset includes a date field with ..... ..--- ..--- ..--- ----- ----- ----- ----- for missing records.",
       "ground_truth": "5222-00-00",
       "pii_value": "..... ..--- ..--- ..--- ----- ----- ----- -----",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "52220000",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4277,8 +4331,14 @@
       "text": "The invoice date is ..--- ----- .---- ..... ...-- ----- .---- ----- which doesn't match the shipping date.",
       "ground_truth": "2015-30-10",
       "pii_value": "..--- ----- .---- ..... ...-- ----- .---- -----",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "20153010",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     }
