@@ -2,11 +2,11 @@
   "summary": {
     "overall": {
       "total_examples": 117,
-      "full_pipeline_detected": 95,
-      "full_pipeline_rate": 81.2,
+      "full_pipeline_detected": 96,
+      "full_pipeline_rate": 82.1,
       "raw_regex_detected": 61,
       "raw_regex_rate": 52.1,
-      "deobfuscation_improvement": 29.1
+      "deobfuscation_improvement": 29.9
     },
     "by_category": {
       "Homoglyph emails": {
@@ -142,13 +142,12 @@
       },
       "Comments/injection": {
         "total": 12,
-        "full_pipeline_detected": 10,
-        "full_pipeline_rate": 83.3,
+        "full_pipeline_detected": 11,
+        "full_pipeline_rate": 91.7,
         "raw_regex_detected": 9,
         "raw_regex_rate": 75.0,
-        "improvement": 8.3,
+        "improvement": 16.7,
         "missed_examples": [
-          "HTML comment in SSN",
           "JS comment in phone"
         ]
       },
@@ -1734,9 +1733,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "DOMAIN",
-          "value": "example.com",
-          "score": 0.75
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
         }
       ],
       "raw_regex_detected": true,
@@ -1752,8 +1751,14 @@
       "category": "Comments/injection",
       "label": "HTML comment in SSN",
       "text": "123<!-- -->-45<!-- -->-6789",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },

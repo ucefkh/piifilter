@@ -174,7 +174,9 @@ class Deobfuscator:
         """
         log: list[dict] = []
         text = self._nfkc_normalize(text, log)
+        text = self._strip_html_comments(text, log)
         text = self._unwrap_at_dot(text, log)
+        text = self._fix_obfuscated_email_entities(text, log)
         text = self._unwrap_html_entities(text, log)
         text = self._unwrap_zero_width(text, log)
         text = self._normalize_dashes(text, log)
@@ -206,6 +208,61 @@ class Deobfuscator:
                 "changed": True,
             })
         return n
+
+    # ── 1b. HTML comments ─────────────────────────────────────────────────
+
+    _HTML_COMMENT_RE = re.compile(r"<!--.*?-->")
+
+    @classmethod
+    def _strip_html_comments(cls, text: str, log: list) -> str:
+        """Strip HTML comments like <!--comment--> from the text."""
+        original = text
+        text = cls._HTML_COMMENT_RE.sub("", text)
+        if text != original:
+            log.append({
+                "transform": "html_comments",
+                "description": f"Stripped {len(original) - len(text)} chars of HTML comments",
+                "changed": True,
+            })
+        return text
+
+    # ── 1c. Obfuscated email &#046; → &#64; ──────────────────────────────
+
+    # Some email obfuscations use &#046; (decimal 46 = period) where they
+    # mean @. Since HTML entity decoding correctly turns &#046; into '.',
+    # and &#46; also into '.', we must detect the pattern BEFORE decoding.
+    # Pattern: word &#046; word &#46; tld → convert the first &#046; to &#64;
+    _OBS_EMAIL_046_RE = re.compile(
+        r"\b([a-zA-Z0-9._%+\-*]+)\s*&#046;\s*([a-zA-Z0-9\-]+(?:\s*&#46;\s*[a-zA-Z0-9\-]+)+)\b"
+    )
+
+    @classmethod
+    def _fix_obfuscated_email_entities(cls, text: str, log: list) -> str:
+        """Convert &#046; → &#64; when it's being used as @ in email obfuscation.
+
+        e.g. 'alice &#046; acme &#46; com' → 'alice &#64; acme &#46; com'
+        so that HTML entity decoding produces 'alice@acme.com'.
+        """
+        original = text
+
+        def _fix_046(m: re.Match) -> str:
+            local = m.group(1)
+            domain = m.group(2)
+            # The part before the &#046; is the email local part.
+            # The part after &#046; but before the first &#46; is the domain name.
+            # Everything after &#46; is the TLD(s).
+            # We replace &#046; with &#64; (the @ sign)
+            # The &#46; stays as-is (will decode to '.')
+            return f"{local} &#64; {domain}"
+
+        text = cls._OBS_EMAIL_046_RE.sub(_fix_046, text)
+        if text != original:
+            log.append({
+                "transform": "obfuscated_email_046",
+                "description": "Fixed &#046; → &#64; in obfuscated email patterns",
+                "changed": True,
+            })
+        return text
 
     # ── 2. [at] / [dot] unwrapping ─────────────────────────────────────
 
