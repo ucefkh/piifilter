@@ -76,19 +76,40 @@ jobs:
           uv pip install -e "plugins/provider-lmstudio"
           uv pip install pytest pytest-asyncio httpx httpx-sse
 
-      - name: Start Ollama
+      - name: Skip Ollama — not needed for unit tests
+        run: echo "Ollama skipped for unit tests (only needed for live-integration / webcrawler tests)"
+
+      - name: Start Ollama (pre-built binary, no install.sh)
+        if: false  # Only enable when running integration tests
         run: |
-          curl -fsSL https://ollama.com/install.sh | sh
+          curl -fsSLo /tmp/ollama.tgz "https://github.com/ollama/ollama/releases/latest/download/ollama-linux-amd64.tgz"
+          tar -C /usr/local -xzf /tmp/ollama.tgz
           ollama serve &
           sleep 8
           for i in $(seq 1 5); do curl -sf http://localhost:11434/api/tags > /dev/null && echo "Ollama ready" && break; sleep 2; done
 
-      - name: Pull CI test model (mistral)
+      - name: Pull CI test model (mistral) — pre-built
+        if: false
         run: |
           if ! curl -s http://localhost:11434/api/tags | grep -q "mistral"; then
             ollama pull mistral 2>&1 | tail -3
           fi
           echo "Model ready"
+
+      - name: Verify /v1/models endpoint
+        if: false
+        run: |
+          echo "Available models:"
+          curl -s http://localhost:11434/v1/models | python3 -c \
+            "import json,sys; d=json.load(sys.stdin); print('\\n'.join(m['id'] for m in d.get('data',[])))"
+
+      - name: Run live provider integration tests (requires Ollama)
+        if: false
+        env:
+          PIIFILTER_LIVE_TESTS: "1"
+          PIIFILTER_LIVE_TIMEOUT: "180"
+        run: |
+          uv run pytest tests/integration/test_provider_real.py -v --tb=short -x --timeout=200
 
       - name: Verify /v1/models endpoint
         run: |

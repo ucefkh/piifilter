@@ -137,39 +137,61 @@ def detect_full_pipeline(text: str, patterns: list[tuple[EntityType, re.Pattern[
 
 # ── Categorization ──────────────────────────────────────────────────────────
 
-STRATEGY_CATEGORIES: dict[str, str] = {
-    "punct-stuff": "Punctuation-stuffed",
-    "punct-stuffed": "Punctuation-stuffed",
-    "punctuation-stuffed": "Punctuation-stuffed",
-    "emoji substitution": "Emoji substitution",
-    "emoji-substitution": "Emoji substitution",
-    "l33tspeak": "L33tspeak",
-    "double encoding": "Double encoding",
-    "double-encoding": "Double encoding",
-    "leet-speak extended": "Leet-speak extended",
-    "hexadecimal encoding": "Hexadecimal encoding",
-    "hex-encoding": "Hexadecimal encoding",
-    "binary encoding": "Binary encoding",
-    "reversed words": "Reversed words",
-    "camelCase split": "CamelCase split",
-    "case-shifted": "Case-shifted",
-    "pig-latin style": "Pig-latin style",
-    "unicode fractions": "Unicode fractions",
-    "XML escaping": "XML escaping",
-    "xml-escaping": "XML escaping",
-    "zero-width joiner interleaving": "ZWJ interleaving",
-    "syllabic split": "Syllabic split",
-    "morse code": "Morse code",
-    "circular-shifted": "Circular-shifted",
-    "fractional characters": "Fractional characters",
-    # Catch-all
-    "custom": "Other",
-}
+# Maps every strategy string found in the v3 dataset to its display category.
+# The categorize() function does prefix matching, so order matters:
+# more specific prefixes must come before more general ones.
+STRATEGY_CATEGORIES: list[tuple[str, str]] = [
+    # Punctuation-related
+    ("punctuation-stuffed", "Punctuation-stuffed"),
+    ("punct-stuffed", "Punctuation-stuffed"),
+    ("punct-stuff", "Punctuation-stuffed"),
+    # Emoji
+    ("emoji-substitution", "Emoji substitution"),
+    ("emoji substitution", "Emoji substitution"),
+    # Leet / hex / binary
+    ("leet-speak extended", "Leet-speak extended"),
+    ("l33tspeak", "L33tspeak"),
+    ("hex-escape", "Hexadecimal encoding"),
+    ("hexadecimal encoding", "Hexadecimal encoding"),
+    ("hex-encoding", "Hexadecimal encoding"),
+    ("binary-8bit", "Binary encoding"),
+    ("binary encoding", "Binary encoding"),
+    # Words / text transforms
+    ("reversed-words", "Reversed words"),
+    ("reversed words", "Reversed words"),
+    ("camelCase_split", "CamelCase split"),
+    ("camelCase split", "CamelCase split"),
+    ("case-shifted", "Case-shifted"),
+    ("pig-latin-ip", "Pig-latin style"),
+    ("pig-latin style", "Pig-latin style"),
+    ("pig-latin", "Pig-latin style"),
+    # Encoding / escaping
+    ("unicode-superscript-subscript", "Unicode fractions"),
+    ("unicode-fractions", "Unicode fractions"),
+    ("unicode fractions", "Unicode fractions"),
+    ("fractional characters", "Fractional characters"),
+    ("xml-escape", "XML escaping"),
+    ("xml-escaping", "XML escaping"),
+    ("XML escaping", "XML escaping"),
+    ("double-encoding", "Double encoding"),
+    ("double encoding", "Double encoding"),
+    # Structural
+    ("zwj-interleaving", "ZWJ interleaving"),
+    ("zero-width joiner interleaving", "ZWJ interleaving"),
+    ("syllabic-split", "Syllabic split"),
+    ("syllabic split", "Syllabic split"),
+    ("morse-code", "Morse code"),
+    ("morse code", "Morse code"),
+    ("circ-shift-in-segment", "Circular-shifted"),
+    ("circular-shifted", "Circular-shifted"),
+    # Catch-all fallback
+    ("custom", "Other"),
+]
 
 
 def categorize(ex: dict[str, Any]) -> str:
     strat = ex.get("strategy", "")
-    for prefix, cat in STRATEGY_CATEGORIES.items():
+    for prefix, cat in STRATEGY_CATEGORIES:
         if strat.startswith(prefix):
             return cat
     # Fallback: by entity type

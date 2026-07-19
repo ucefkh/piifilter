@@ -223,18 +223,34 @@ class Deobfuscator:
 
     # ── 1. NFKC normalization ──────────────────────────────────────────
 
-    @staticmethod
-    def _nfkc_normalize(text: str, log: list) -> str:
-        n = unicodedata.normalize("NFKC", text)
-        if n != text:
+    @classmethod
+    def _nfkc_normalize(cls, text: str, log: list) -> str:
+        original = text
+        text = unicodedata.normalize("NFKC", text)
+        if text != original:
             log.append({
-                "transform": "NFKC",
-                "description": f"NFKC normalized ({len(text)}→{len(n)} chars)",
+                "transform": "nfkc_normalize",
+                "description": "NFKC normalization (kills fractions, homoglyphs, fullwidth)",
                 "changed": True,
             })
-        return n
+        return text
 
-    # ── 1b. HTML comments ─────────────────────────────────────────────────
+    # ── 1b. Strip inner separators within numeric spans ──────────────────────
+    # Before regex pattern matching, collapse separators between digits
+    # so runs like "1-2-3" → "123" while keeping alphabetic words intact.
+    # This catches spacing/punctuation obfuscation of numeric PII (SSN, CC, phone).
+
+    @staticmethod
+    def _strip_inner_separators(text: str) -> str:
+        """Strip non-alphanumeric (but keep newlines) chars between adjacent digits.
+
+        ``re.sub(r"(\\d)[^\\w\\n]+(?=\\d)", r"\\1", text)`` collapses
+        obfuscated numeric sequences like ``1-2-3`` → ``123`` while
+        leaving alphabetic words and line structure intact.
+        """
+        return re.sub(r"(\d)[^\w\n]+(?=\d)", r"\1", text)
+
+    # ── 1c. HTML comments ─────────────────────────────────────────────────
 
     _HTML_COMMENT_RE = re.compile(r"<!--.*?-->")
 
@@ -528,6 +544,23 @@ class Deobfuscator:
             log.append({
                 "transform": "digit_collapse",
                 "description": "Collapsed spaces between adjacent digits",
+                "changed": True,
+            })
+        return text
+
+    # ── 11b. Strip non-alpha separators inside digit spans ──────────────
+
+    _ALNUM_SEP_RE = re.compile(r"(\d)[^\w\n]+(?=\d)")
+
+    @classmethod
+    def _strip_non_alpha_seps(cls, text: str, log: list) -> str:
+        """Strip non-alpha separators between digits (e.g. 1..2..3 -> 123)."""
+        original = text
+        text = cls._ALNUM_SEP_RE.sub(r"\1", text)
+        if text != original:
+            log.append({
+                "transform": "strip_inner_seps",
+                "description": "Stripped non-alpha separators inside digit spans",
                 "changed": True,
             })
         return text

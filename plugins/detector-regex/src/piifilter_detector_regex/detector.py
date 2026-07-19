@@ -15,33 +15,7 @@ from piifilter.shared.models import DetectedEntity, EntityType
 from piifilter.shared.deobfuscator import Deobfuscator
 
 from . import patterns
-
-# ── Context-window fallback classifier ──────────────────────────────────
-# Trigger words that suggest a nearby number might be a CC, SSN, or
-# financial account identifier — even if structural regex failed.
-CTX_CC_SSN_TRIGGERS: set[str] = {
-    "card", "credit", "cc", "cvv", "cvc",
-    "exp", "expiry", "expiration",
-    "ssn", "social", "security",
-    "acct", "account", "routing", "aba", "pan",
-    "number", "num",
-}
-
-# Compiled regex: match any trigger word (case-insensitive) followed by
-# up to ~60 chars of filler, then a digit sequence (6–19 consecutive
-# digits, or 4+4+4+4 / 3+2+4 patterns with ANY single separator).
-# The trigger word must be followed by a non-word/non-hyphen boundary
-# (colon, space, or end of input) to avoid matching "SSN-like" patterns.
-# The bare-digit variant requires a word boundary before the digits and
-# at least 6 digits — short numbers like "123" near words like "number"
-# in non-PII contexts (e.g. "ticket number", "phone number") are excluded.
-_CTX_CC_SSN_RE = re.compile(
-    r"(?i)\b("
-    + "|".join(re.escape(w) for w in sorted(CTX_CC_SSN_TRIGGERS, key=len, reverse=True))
-    + r")\b(?!-).{0,60}?"
-    r"(?P<digits>(?:\b\d{6,19}|(?:\d{4}[- .\u00A0•*#Xx*]{1}\d{4}[- .\u00A0•*#Xx*]{1}\d{4}[- .\u00A0•*#Xx*]{1}\d{2,4})|(?:\d{3}[- .\u00A0•*#Xx*]{1}\d{2}[- .\u00A0•*#Xx*]{1}\d{4})))",
-    re.UNICODE,
-)
+from . import patterns
 
 
 class RegexDetector(Detector):
@@ -93,7 +67,14 @@ class RegexDetector(Detector):
         Returns a list of dicts with keys: text, type, start, end, score, detector.
         """
         cleaned, _log = self._deobfuscator(text)
-        entities = self._run_patterns(cleaned)
+        entities, cc_ssn_spans = self._run_patterns(cleaned)
+        # Structural recall pass: Luhn check on ALL 13-19 digit runs
+        # and SSN validator on ALL exactly-9-digit runs not already matched.
+        luhn_found = self._run_luhn_on_numeric_runs(cleaned, cc_ssn_spans)
+        entities.extend(luhn_found)
+        ssn_found = self._validate_ssn_runs(cleaned, cc_ssn_spans)
+        entities.extend(ssn_found)
+        entities.sort(key=lambda e: e.start)
         return [
             {
                 "text": e.value,
@@ -118,7 +99,14 @@ class RegexDetector(Detector):
         Shortcut that bypasses the dict conversion of ``detect(text)``.
         """
         cleaned, _log = self._deobfuscator(session.prompt)
-        return self._run_patterns(cleaned)
+        entities, cc_ssn_spans = self._run_patterns(cleaned)
+        # Structural recall pass
+        luhn_found = self._run_luhn_on_numeric_runs(cleaned, cc_ssn_spans)
+        entities.extend(luhn_found)
+        ssn_found = self._validate_ssn_runs(cleaned, cc_ssn_spans)
+        entities.extend(ssn_found)
+        entities.sort(key=lambda e: e.start)
+        return entities
 
     # ── Entity listing ──────────────────────────────────────────────
 
@@ -208,61 +196,6 @@ class RegexDetector(Detector):
                     )
                 )
                 seen_intervals.append((start, end))
-
-        entities.sort(key=lambda e: e.start)
-
-        # ── Context-window fallback pass ──────────────────────────────
-        # After all structural patterns have run, scan for digit sequences
-        # that sit near trigger words (card, credit, ssn, etc.) but which
-        # no pattern matched.  Assign low recall-biased confidence (0.55)
-        # so the downstream score threshold can still accept them.
-        cc_ssn_covered: set[tuple[int, int]] = {
-            (e.start, e.end)
-            for e in entities
-            if e.entity_type in (EntityType.CREDIT_CARD, EntityType.SOCIAL_SECURITY)
-        }
-        for ctx_match in _CTX_CC_SSN_RE.finditer(text):
-            ctx_end = ctx_match.start() + len(ctx_match.group())
-            digits_raw = ctx_match.group("digits")
-            if not digits_raw:
-                continue
-
-            dstart = ctx_match.start() + ctx_match.group().index(digits_raw)
-            dend = dstart + len(digits_raw)
-
-            # Skip if this span is already covered by a CC or SSN match
-            if any(s <= dstart and dend <= e for s, e in cc_ssn_covered):
-                continue
-
-            # Decide type based on trigger word proximity
-            trigger = ctx_match.group(1).lower()
-            trigger_words = set(trigger.split())
-            is_ssn_context = any(t in trigger_words for t in ("ssn", "social", "security"))
-            is_cc_context = any(
-                t in trigger_words for t in ("card", "credit", "cc", "cvv", "cvc", "exp", "expiry", "expiration", "pan")
-            )
-
-            if is_ssn_context:
-                entity_type = EntityType.SOCIAL_SECURITY
-            elif is_cc_context:
-                entity_type = EntityType.CREDIT_CARD
-            else:
-                # Account/routing/aba/number without SSN/CC keyword —
-                # default to SOCIAL_SECURITY since SSNs have fewer false
-                # positives for account-like numbers
-                entity_type = EntityType.SOCIAL_SECURITY
-
-            entities.append(
-                DetectedEntity(
-                    entity_type=entity_type,
-                    value=digits_raw,
-                    start=dstart,
-                    end=dend,
-                    confidence=0.55,
-                    detector="regex",
-                )
-            )
-            cc_ssn_covered.add((dstart, dend))
 
         entities.sort(key=lambda e: e.start)
         return entities
