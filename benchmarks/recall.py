@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """PIIFilter Detection Recall Benchmark — measures precision/recall/F1 per entity type
 for each detector using a labeled synthetic dataset.
 
@@ -138,7 +137,10 @@ def make_regex_adapter() -> DetectorAdapter:
             entity_type = EntityType(et_name)
         except ValueError:
             entity_type = EntityType("PERSON") if hasattr(EntityType, "PERSON") else EntityType("UNKNOWN")
-        compiled = re.compile(raw_pattern, re.IGNORECASE)
+        # Compile patterns respecting their inline (?i) flags.
+        # Use re.UNICODE but NOT re.IGNORECASE by default — patterns that need
+        # case-insensitivity use inline (?i) within their regex string.
+        compiled = re.compile(raw_pattern, re.UNICODE)
         patterns.append((entity_type, compiled, score))
 
     async def detect(text: str) -> list[dict[str, Any]]:
@@ -495,205 +497,89 @@ def print_results(all_results: dict[str, dict[str, Any]]) -> None:
         print_table(rows, headers)
         print()
 
-        # Confusion matrix
-        confusion = results.get("confusion_matrix", {})
-        if confusion:
-            print("  Confusion Matrix (expected → detected):")
-            all_actual_types: set[str] = set()
-            for v in confusion.values():
-                all_actual_types.update(v.keys())
-            sorted_actual = sorted(all_actual_types)
-            cm_headers = ["Expected \\ Actual"] + sorted_actual
-            cm_rows = []
-            for exp_type in sorted(confusion.keys()):
-                row = [exp_type]
-                for act_type in sorted_actual:
-                    row.append(str(confusion[exp_type].get(act_type, 0)))
-                cm_rows.append(row)
-            print_table(cm_rows, cm_headers)
-            print()
-
-        # Bottom N false positives and false negatives
-        example_results = results.get("example_results", [])
-        fp_examples = [ex for ex in example_results if ex["false_positives"] > 0][:3]
-        fn_examples = [ex for ex in example_results if ex["false_negatives"] > 0][:3]
-
-        if fp_examples:
-            print("  Sample false positives (top 3):")
-            for ex in fp_examples:
-                print(f"    Example {ex['index']}: text={ex['text_preview'][:60]}... "
-                      f"(detected {ex['false_positives']} extra)")
-
-        if fn_examples:
-            print("  Sample false negatives (top 3):")
-            for ex in fn_examples:
-                print(f"    Example {ex['index']}: text={ex['text_preview'][:60]}... "
-                      f"(missed {ex['false_negatives']} entities)")
-
-        print()
-
-    # Inter-detector comparison
-    if len(all_results) > 1:
-        print("  ── INTER-DETECTOR COMPARISON ──")
-        headers = ["Metric"] + list(all_results.keys())
-        rows = []
-        for metric_key, metric_label in [("overall_precision", "Precision"),
-                                          ("overall_recall", "Recall"),
-                                          ("overall_f1", "F1"),
-                                          ("total_true_positives", "TP"),
-                                          ("total_false_positives", "FP"),
-                                          ("total_false_negatives", "FN")]:
-            row = [metric_label]
-            for det_name in all_results.keys():
-                val = all_results[det_name][metric_key]
-                if isinstance(val, float):
-                    row.append(f"{val:.4f}")
-                else:
-                    row.append(str(val))
-            rows.append(row)
-        print_table(rows, headers)
-        print()
-
 
 # ── Main ────────────────────────────────────────────────────────────────────
 
 
 async def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="PIIFilter Detection Recall Benchmark",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog=__doc__,
-    )
-    parser.add_argument(
-        "--detectors",
-        type=str,
-        nargs="+",
-        default=["regex", "presidio"],
-        help="Detectors to benchmark (default: regex presidio)",
-    )
-    parser.add_argument(
-        "--dataset",
-        type=str,
-        default=None,
-        help="Path to labeled dataset JSON (default: benchmarks/data/pii_dataset.json)",
-    )
-    parser.add_argument(
-        "--output",
-        type=str,
-        default="benchmarks/recall-results.json",
-        help="Output path for JSON results (default: benchmarks/recall-results.json)",
-    )
+    parser = argparse.ArgumentParser(description="PIIFilter Detection Recall Benchmark")
+    parser.add_argument("--detectors", type=str, default="regex",
+                        help="Comma-separated detector names (regex, presidio)")
+    parser.add_argument("--output", type=str, default=None,
+                        help="Output JSON file path")
+    parser.add_argument("--dataset", type=str, default=None,
+                        help="Dataset file path (default: benchmarks/data/pii_dataset.json)")
+    parser.add_argument("--no-pipeline", action="store_true",
+                        help="Skip pipeline detector")
     args = parser.parse_args()
 
     # Load dataset
     dataset_path = Path(args.dataset) if args.dataset else None
     dataset = load_dataset(dataset_path)
-    print(f"\n  Loaded dataset: {len(dataset)} examples")
-    total_entities = sum(len(ex.entities) for ex in dataset)
-    print(f"  Total labeled entities: {total_entities}")
-    entity_types = sorted(set(ee["type"] for ex in dataset for ee in ex.entities))
-    print(f"  Entity types covered: {len(entity_types)} → {', '.join(entity_types)}")
-    print()
+    print(f"\n  Loaded {len(dataset)} labeled examples from "
+          f"{(dataset_path or DATA_DIR / 'pii_dataset.json').name}")
 
-    # Build detector adapters
-    adapter_factories: dict[str, Callable[[], DetectorAdapter]] = {
-        "regex": make_regex_adapter,
-        "presidio": make_presidio_adapter,
-        "gliner": make_gliner_adapter,
-    }
+    # Build detectors
+    detector_names = [d.strip() for d in args.detectors.split(",")]
 
-    adapters: list[DetectorAdapter] = []
-    for name in args.detectors:
-        if name in adapter_factories:
-            factory = adapter_factories[name]
-            try:
-                result = factory()
-                if asyncio.iscoroutine(result):
-                    result = await result
-                adapters.append(result)
-            except Exception as exc:
-                print(f"  Warning: Failed to create detector '{name}': {exc}")
-        else:
-            print(f"  Warning: Unknown detector '{name}', skipping")
-
-    # Also add pipeline if both regex and presidio are selected
+    adapters: dict[str, DetectorAdapter] = {}
     presidio_adapter = None
-    for a in adapters:
-        if a.name == "presidio":
-            presidio_adapter = a
-            break
-    if "regex" in args.detectors and presidio_adapter is not None:
+
+    if "presidio" in detector_names or not args.no_pipeline:
         try:
-            pipeline = await make_pipeline_adapter(shared_presidio=presidio_adapter)
-            adapters.append(pipeline)
+            presidio_adapter = await make_presidio_adapter()
+            print(f"  Presidio detector: {'loaded' if presidio_adapter else 'not found'}")
         except Exception as exc:
-            print(f"  Warning: Pipeline benchmark unavailable: {exc}")
+            print(f"  Presidio detector: error loading ({exc})")
+
+    if "regex" in detector_names:
+        adapters["regex"] = make_regex_adapter()
+    if "presidio" in detector_names and presidio_adapter:
+        adapters["presidio"] = presidio_adapter
+    if not args.no_pipeline:
+        try:
+            pipeline = await make_pipeline_adapter(presidio_adapter)
+            adapters["pipeline"] = pipeline
+        except Exception as exc:
+            print(f"  Pipeline detector: error loading ({exc})")
 
     if not adapters:
-        print("No detectors to benchmark!")
-        sys.exit(1)
+        print("  No detectors available to benchmark")
+        return
 
-    print(f"  Detectors: {[a.name for a in adapters]}")
     print()
 
-    # Run evaluation
+    # Evaluate each detector
     all_results: dict[str, dict[str, Any]] = {}
+    for name, adapter in adapters.items():
+        print(f"  Evaluating {name} detector...")
+        results = await evaluate_detector(name, dataset, adapter.detect_fn)
+        all_results[name] = results
 
-    for adapter in adapters:
-        print(f"  Evaluating '{adapter.name}'...")
-        t_start = time.perf_counter()
+    # Print results
+    print_results(all_results)
 
-        results = await evaluate_detector(
-            adapter.name,
-            dataset,
-            adapter.detect_fn,
-        )
+    # Save to file
+    output_path = args.output
+    if output_path:
+        output_file = Path(output_path)
+    else:
+        output_file = DATA_DIR.parent / "recall-results.json"
 
-        elapsed = time.perf_counter() - t_start
-        print(f"    Completed in {elapsed:.2f}s")
-        all_results[adapter.name] = results
-
-    # Assemble full report
-    report: dict[str, Any] = {
+    report = {
         "title": "PIIFilter Detection Recall Benchmark Report",
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "dataset": {
             "path": str(dataset_path or DATA_DIR / "pii_dataset.json"),
             "examples": len(dataset),
-            "total_entities": total_entities,
-            "entity_types": entity_types,
+            "total_entities": sum(len(ex.entities) for ex in dataset),
+            "entity_types": sorted(set(ee["type"] for ex in dataset for ee in ex.entities)),
         },
         "detectors": all_results,
-        "comparison": {},
     }
-
-    # Build comparison section
-    if len(all_results) > 1:
-        comparison = {
-            "overall_precision": {},
-            "overall_recall": {},
-            "overall_f1": {},
-            "total_tp": {},
-            "total_fp": {},
-            "total_fn": {},
-        }
-        for det_name, results in all_results.items():
-            comparison["overall_precision"][det_name] = round(results["overall_precision"], 4)
-            comparison["overall_recall"][det_name] = round(results["overall_recall"], 4)
-            comparison["overall_f1"][det_name] = round(results["overall_f1"], 4)
-            comparison["total_tp"][det_name] = results["total_true_positives"]
-            comparison["total_fp"][det_name] = results["total_false_positives"]
-            comparison["total_fn"][det_name] = results["total_false_negatives"]
-        report["comparison"] = comparison
-
-    # Save results
-    output_path = Path(args.output)
-    output_path.parent.mkdir(parents=True, exist_ok=True)
-    output_path.write_text(json.dumps(report, indent=2, default=str))
-    print(f"\n  Results saved to {output_path.resolve()}")
-
-    # Print to console
-    print_results(all_results)
+    output_file.write_text(json.dumps(report, indent=2, ensure_ascii=False))
+    print(f"\n  Results saved to {output_file}")
+    print()
 
 
 if __name__ == "__main__":

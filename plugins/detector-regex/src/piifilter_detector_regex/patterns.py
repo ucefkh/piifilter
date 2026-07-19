@@ -2,140 +2,193 @@
 
 All patterns are separated from detection logic so they can be
 inspected, tested, or extended independently.
+
+CRITICAL DESIGN RULE: Patterns are ordered so more specific patterns come
+before general ones. Types that can be detected as substrings of other types
+(DOMAIN can appear within DATABASE_URL, EMAIL can overlap with DOMAIN, etc.)
+are placed AFTER those more specific types so deduplication in the detector
+picks the higher-specificity match.
+
+DESIGN NOTE: Patterns that need case-insensitive keyword matching should use
+inline (?i) flags. However, when using (?i), character classes like [A-Z] become
+case-insensitive too. To enforce actual uppercase letters in name positions,
+these patterns use (?-i:[A-Z]) to temporarily disable case-insensitivity.
 """
 
 from __future__ import annotations
 
 # Each tuple: (entity_type_name, regex_pattern, confidence_score)
-# Patterns are ordered — more specific patterns come before general ones
-# to avoid false positives from broader patterns.
-
 PATTERN_DEFS: list[tuple[str, str, float]] = [
-    # ── EMAIL ────────────────────────────────────────────────────────
-    # Standard RFC-like email addresses
-    ("EMAIL", r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b", 0.90),
+
+    # ── SSH_KEY ──────────────────────────────────────────────────────
+    ("SSH_KEY", r"-----BEGIN(?: OPENSSH| RSA| DSA| EC| ECDSA)? PRIVATE KEY-----", 0.95),
 
     # ── JWT ──────────────────────────────────────────────────────────
-    # base64.base64.base64 — must come before DOMAIN to avoid
-    # JWT tokens being misclassified as domain names
     ("JWT", r"\beyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\b", 0.95),
+    # Truncated JWT (two parts, common in abbreviated context)
+    ("JWT", r"\beyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.\.\.\w*\b", 0.90),
+    ("JWT", r"\beyJ[a-zA-Z0-9_-]{3,20}\.\.\.[a-zA-Z0-9_-]{3,10}\b", 0.85),
+    # JWT with 3 dots as ellipsis: "eyJzdW...IyfQ"
+    ("JWT", r"\beyJ[a-zA-Z0-9_-]+\.\.\.[a-zA-Z0-9_-]+\b", 0.85),
+    # JWT that is essentially a base64 encoded payload (single segment, no dots)
+    ("JWT", r"\beyJ[a-zA-Z0-9+/=_-]{20,}\b", 0.70),
 
-    # ── DOMAIN ───────────────────────────────────────────────────────
-    # Domain names (not just email extracts)
-    ("DOMAIN", r"\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b", 0.85),
+    # ── DATABASE_URL ─────────────────────────────────────────────────
+    ("DATABASE_URL", r"\b(?:postgresql|postgres|mysql|mongodb|redis|sqlite|oracle|mssql)://\S+", 0.95),
+
+    # ── SSN ──────────────────────────────────────────────────────────
+    ("SOCIAL_SECURITY", r"\b\d{3}[-]\d{2}[-]\d{4}\b", 0.90),
+
+    # ── CREDIT_CARD ──────────────────────────────────────────────────
+    ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
+    ("CREDIT_CARD", r"\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4}\b", 0.85),
+    ("CREDIT_CARD", r"\b\d{4}[- ]\d{6}[- ]\d{5}\b", 0.80),
+    # Low confidence: 4-4-4-2..4 pattern — often overlaps with IBAN; only match if not preceded by 2 letters
+    ("CREDIT_CARD", r"(?<![A-Za-z])\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b", 0.65),
+    # Continuous 16-digit credit card numbers (no dashes)
+    ("CREDIT_CARD", r"\b(?:4\d{3}|5[1-5]\d{2}|6\d{3}|3[47]\d{2})\d{12}\b", 0.80),
+    ("CREDIT_CARD", r"\b\d{16}\b", 0.55),
+
+    # ── EMAIL ────────────────────────────────────────────────────────
+    ("EMAIL", r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b", 0.90),
 
     # ── API_KEY ──────────────────────────────────────────────────────
-    # Common key prefixes (sk-, pk-, etc.) — capture full key value
     ("API_KEY", r"\b(?:sk-|pk-|api[-_]?key|token|secret)[-_]?[a-zA-Z0-9_\-]{16,64}\b", 0.95),
     ("API_KEY", r"\b(?:[A-Za-z0-9+/=]{20,})\b(?=.*(?:key|token|secret))", 0.90),
 
-    # ── SSN (US Social Security) ─────────────────────────────────────
-    # ###-##-#### — must come before PHONE to avoid misclassification
-    ("SSN", r"\b\d{3}[-]\d{2}[-]\d{4}\b", 0.90),
+    # ── IBAN ─────────────────────────────────────────────────────────
+    ("IBAN", r"\b[A-Z]{2}\d{2}(?:[ ]?(?:[A-Z0-9]{4})){4,7}(?:[ ]?\d{1,4})?\b", 0.85),
 
     # ── PHONE ────────────────────────────────────────────────────────
-    # Context-prefixed phone numbers — only match when preceded by phone-related keywords
-    ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*:?\s*[\+\d\(][\d\s\-\.\(\)]{7,20}\b", 0.90),
-    # International phone numbers with explicit country code (+ or opening paren)
-    ("PHONE", r"\b(?:\+?\d{1,3}[-.\s]?)?\(?\d{2,4}\)?[-.\s]?\d{3,4}[-.\s]?\d{4}\b", 0.85),
-    # Phones with parentheses area code: (415) 555-2671
-    ("PHONE", r"\b\(\d{3}\)\s*\d{3}[-.\s]?\d{4}\b", 0.85),
-    # Simple 10-digit: 555-123-4567 (typically US/Canada)
-    ("PHONE", r"\b\d{3}[-]\d{3}[-]\d{4}\b", 0.80),
-
-    # ── CREDIT_CARD ──────────────────────────────────────────────────
-    # Context-prefixed credit card — only match when preceded by relevant keywords
-    ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
-    # 14-19 digit card numbers with common separators (spaces, dashes)
-    # Fallback when no context keyword is present — lower confidence
-    ("CREDIT_CARD", r"\b(?:\d[ -]*?){14,19}\b", 0.70),
-
-    # ── IP_ADDRESS ───────────────────────────────────────────────────
-    # IPv4
-    ("IP_ADDRESS", r"\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b", 0.90),
-    # IPv6 (simplified)
-    ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\b", 0.85),
-    ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){1,7}[0-9a-fA-F]{1,4}\b", 0.80),
-
-    # ── DATABASE_URL ─────────────────────────────────────────────────
-    # Connection strings
-    ("DATABASE_URL", r"\b(?:postgresql|postgres|mysql|mongodb|redis|sqlite|oracle|mssql)://\S+", 0.95),
-
-    # ── GPS ──────────────────────────────────────────────────────────
-    # Lat/lng coordinates (must have explicit comma or separator)
-    ("GPS", r"[-+]?(?:[1-8]?\d(?:\.\d+)?|90(?:\.0+)?)\s*[°º]?\s*[,;]\s*[-+]?(?:180(?:\.0+)?|(?:1[0-7]\d|\d{1,2})(?:\.\d+)?)\s*[°º]?", 0.85),
-    ("GPS", r"\b(?:lat|latitude)\s*[:=]?\s*[-+]?\d+(?:\.\d+)?\s*[,;]\s*(?:lon|lng|longitude)\s*[:=]?\s*[-+]?\d+(?:\.\d+)?\b", 0.90),
-
-    # ── FILE_PATH ────────────────────────────────────────────────────
-    # Unix absolute paths (minimum 3 levels deep with / separators)
-    ("FILE_PATH", r"(?<!/)/(?:[a-zA-Z0-9._-]+/){3,}[a-zA-Z0-9._-]*(?!\w)", 0.85),
-    # Common Unix root patterns explicitly (2 levels minimum)
-    ("FILE_PATH", r"(?<!/)/(?:home|var|etc|usr|opt|tmp|root|mnt|media|run|srv)/(?:[a-zA-Z0-9._-]+/?)+[a-zA-Z0-9._-]+(?!\w)", 0.90),
-    # Windows absolute paths
-    ("FILE_PATH", r"(?<!\w)(?:[A-Za-z]:\\[a-zA-Z0-9._\\ -]+)(?!\w)", 0.90),
+    ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*[\-]?\s*[\+\d\(][\d\s\-\.\(\)]{7,20}\b", 0.90),
+    ("PHONE", r"(?:^|\s)\+\d{1,3}[-.\s]\d{2,4}[-.\s]\d{3,4}[-.\s]\d{4}\b", 0.88),
+    ("PHONE", r"(?:^|\s)\+\d{1,3}\s+\d{2,3}\s+\d{3}\s+\d{3,4}\b", 0.85),
+    ("PHONE", r"(?:^|\s)\+\d\s+\d{3}\s+\d{3}[-.\s]?\d{2}[-.\s]?\d{2}\b", 0.85),
+    ("PHONE", r"\(?\d{3}\)?[-.\s]\d{3}[-.\s]?\d{4}\b", 0.85),
+    ("PHONE", r"\b\d{3}-\d{3}-\d{4}\b", 0.70),
+    # UK mobile format: 07XXX XXX XXX (after "Phone:" keyword)
+    ("PHONE", r"(?i)\bPhone:\s*\d{5}\s+\d{3}\s+\d{3}\b", 0.80),
+    # Phone numbers after CJK 电话/電話 keywords
+    ("PHONE", r"(?i)(?:电话|電話)\+[\d-]+[\s-]?\d{3,4}[\s-]?\d{4,}\b", 0.85),
+    # CJK phone: 電話は+X XX-XXXX-XXXX (Japanese context)
+    ("PHONE", r"(?i)(?:電話は|电话是|電話)\s*\+\d+[\s-]?\d+[\s-]?\d+[\s-]?\d+\b", 0.85),
+    # German format after Phone: — "+49 30 12345678"
+    ("PHONE", r"(?i)\bPhone:\s*\+\d{1,3}\s+\d{2,4}\s+\d{5,10}\b", 0.80),
 
     # ── PRIVATE_URL ──────────────────────────────────────────────────
-    # Internal/hosted URLs (localhost, private IPs, private domains)
-    ("PRIVATE_URL", r"\b(?:https?://)?(?:localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)(?::\d+)?(?:/[^\s]*)?\b", 0.90),
-    ("PRIVATE_URL", r"\b(?:https?://)?[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.\w+)*(?::\d+)?(?:/[^\s]*)?\b", 0.90),
+    ("PRIVATE_URL", r"\bhttps?://(?:localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)(?::\d+)?(?:/[^\s]*)?\b", 0.90),
+    ("PRIVATE_URL", r"\bhttps?://[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)?(?:/[^\s]*)?\b", 0.90),
+    ("PRIVATE_URL", r"\b[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)(?:/[^\s]*)?\b", 0.85),
 
-    # ── IBAN ─────────────────────────────────────────────────────────
-    # International bank account numbers
-    ("IBAN", r"\b[A-Z]{2}\d{2}[ ]?(?:\d{4}[ ]?){4,7}\d?\b", 0.85),
+    # ── IP_ADDRESS ───────────────────────────────────────────────────
+    ("IP_ADDRESS", r"\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b", 0.90),
+    ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\b", 0.88),
+    ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){1,5}::(?:[0-9a-fA-F]{1,4}:){0,4}[0-9a-fA-F]{1,4}\b", 0.85),
+    ("IP_ADDRESS", r"\b::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}\b", 0.85),
+    ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){1,7}::\b", 0.85),
 
-    # ── BANK_ACCOUNT ─────────────────────────────────────────────────
-    # Context-prefixed bank account — only match when preceded by relevant keywords
-    ("BANK_ACCOUNT", r"(?i)\b(?:bank|account|acct)\s*(?:number|no|#)?\s*:?\s*\d{8,17}\b", 0.85),
-    # Bare 8-17 digit sequence — fallback when no context keyword present
-    ("BANK_ACCOUNT", r"\b\d{8,17}\b", 0.65),
+    # ── GPS ──────────────────────────────────────────────────────────
+    ("GPS", r"\b(?:lat|lng|lon|latitude|longitude|coordinates?|coords?|gps)\s*[:=]?\s*[-+]?\d{1,3}\.\d+(?:\s*°)?", 0.90),
+    ("GPS", r"[-+]?\d{1,2}\.\d{4,}\s*[,;]\s*[-+]?\d{1,3}\.\d{4,}", 0.88),
+    ("GPS", r"[-+]?\d{1,2}\.\d+\s*°?\s*[NS]\s*[,;]?\s*[-+]?\d{1,3}\.\d+\s*°?\s*[EW]", 0.85),
+    # Individual decimal coordinates — match after keyword: "Coordinates: 40.7128"
+    ("GPS", r"(?i)(?:lat|lng|lon|latitude|longitude|coordinates|coord|gps)\s*[:=]\s*[-+]?\d{1,3}\.\d{4,}", 0.88),
+    # Individual numbers that are clearly coordinates (2-digit integer part, 4+ decimal places)
+    ("GPS", r"(?<!\d)(?<!\d\.)[-+]?\d{1,2}\.\d{4,}(?!\d)", 0.70),
+
+    # ── FILE_PATH ────────────────────────────────────────────────────
+    ("FILE_PATH", r"(?<!\/)/(?:[a-zA-Z0-9._-]+/){3,}[a-zA-Z0-9._-]*(?!\w)", 0.85),
+    ("FILE_PATH", r"(?<!\/)/(?:home|var|etc|usr|opt|tmp|root|mnt|media|run|srv)/(?:[a-zA-Z0-9._-]+/?)+[a-zA-Z0-9._-]+(?!\w)", 0.90),
+    ("FILE_PATH", r"(?<!\w)(?:[A-Za-z]:\\[a-zA-Z0-9._\\ -]+)(?!\w)", 0.90),
+
+    # ── DOMAIN ───────────────────────────────────────────────────────
+    ("DOMAIN", r"\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b", 0.75),
 
     # ── PASSPORT ─────────────────────────────────────────────────────
-    # Context-prefixed passport — only match when preceded by relevant keywords
-    ("PASSPORT", r"(?i)\b(?:passport)\s*(?:number|no|#)?\s*:?\s*[A-Z]{0,2}\d{6,9}\b", 0.85),
-    # Passport number patterns (letters + digits, 6-9 chars)
+    ("PASSPORT", r"(?i)(?:^|\s)(?:passport)\s*(?:number|no|#)?\s*:?\s*[A-Z]{0,2}\d{6,9}\b", 0.85),
     ("PASSPORT", r"\b[A-Z]{1,2}\d{6,9}\b", 0.75),
-    ("PASSPORT", r"\b\d{8,9}\b", 0.65),
 
-    # ── SSH_KEY ──────────────────────────────────────────────────────
-    # SSH private key markers
-    ("SSH_KEY", r"-----BEGIN(?: OPENSSH| RSA| DSA| EC| ECDSA)? PRIVATE KEY-----", 0.95),
+    # ── BANK_ACCOUNT ─────────────────────────────────────────────────
+    ("BANK_ACCOUNT", r"(?i)\b(?:bank|account|acct)\s*(?:number|no|#)?\s*:?\s*\d{8,17}\b", 0.85),
+    # Non-IBAN-looking digit sequences — exclude those starting with 2 letters
+    ("BANK_ACCOUNT", r"(?<![A-Za-z])\b\d{12,20}\b", 0.55),
 
     # ── PERSON ───────────────────────────────────────────────────────
-    # Named entity patterns: title-prefixed names (Mr. Smith, Dr. Jones, etc.)
-    ("PERSON", r"\b(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\b", 0.85),
-    # First-name Last-name preceded by context (my name is, i'm, introduce, contact person, etc.)
-    ("PERSON", r"(?i)\b(?:my name is|i'm|i am|call me|name is|introduce)\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+){1,2}\b", 0.80),
-    # "ROLE + Name" patterns: Our CEO/President/Director + Capitalized Name
-    ("PERSON", r"(?i)\b(?:ceo|cfo|cto|president|director|founder|owner)\s+[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\b", 0.75),
+    # Title-prefixed — name must be 2+ chars, not a single letter
+    ("PERSON", r"\b(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.85),
+    # "I'm/My name is/Call me + Name"
+    ("PERSON", r"(?i)(?:\bmy name is|\bI'm|\bcall me|\bname is)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,}){0,2}\b", 0.80),
+    # "ROLE + Name" — exclude common role/researcher-type words after the name
+    ("PERSON", r"(?i)\b(?:ceo|cfo|cto|president|director|founder|owner)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.75),
+    # "Person:" prefix — handle titles like Dr., Mr. — require at least one real name word
+    ("PERSON", r"(?i)\bPerson:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.80),
+    # "Contact person:" / "Contact name:"
+    ("PERSON", r"(?i)\bContact\s+(?:person|name):\s*(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.80),
+    # Unicode/Non-Latin names — matched by context keywords (CJK + common non-Latin alphabet names)
+    # CJK: keyword 用户/联系人/姓名 directly followed by name (no colon needed)
+    # Exclude common technical terms that look like capitalized names (Postgresql, Admin, Root, etc.)
+    ("PERSON", r"(?i)\b(?:contact|person)\s*[：:]\s*[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?\b", 0.75),
+    # user: prefix — more restrictive to avoid technical terms like 'user: postgresql'
+    ("PERSON", r"(?i)\buser\s*[：:](?!\s*(?:admin|root|postgres|postgresql|mysql|default|guest|test|anonymous|nobody|system|api|service))\s*[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?\b", 0.70),
+    # CJK-specific: 用户/联系人/姓名 directly followed by 2+ CJK characters
+    ("PERSON", r"(?:用户|联系人|姓名|名前)[：:]?\s*[\u4e00-\u9fff]{2,4}(?:\s+[\u4e00-\u9fff]{2,4})?\b", 0.80),
+    # Russian/Cyrillic names
+    ("PERSON", r"(?i)\b(?:contact|user|person|connect|reach)\s+(?:is|name)\s+[\u0400-\u04ff]+\b", 0.75),
+    # Arabic script names — handle بـ prefix (U+0628 + optional tatweel U+0640)
+    ("PERSON", r"(?i)\b(?:اتصل)\s+بـ?\s*[\u0600-\u06ff]+\b", 0.80),
+    ("PERSON", r"(?i)\b(?:اسم|اسمي)\s+[\u0600-\u06ff]+\b", 0.80),
+    # Japanese: CJK name followed by の (possessive) or さん (honorific)
+    ("PERSON", r"[\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{2,4}(?:の|さん)\b", 0.70),
+    # Greek alphabet names (O + name pattern for "O Γιώργος")
+    ("PERSON", r"(?i)\bO\s+[\u0370-\u03ff]+\b", 0.70),
+    # Any non-Latin name caught by context + multiple non-Latin word chars
+    ("PERSON", r"\b(?:name|email|phone|mail|contact|user)\s*[：:]\s*[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff]+\b", 0.65),
+    # Non-Latin names after language labels — use lookbehind so match starts at the name
+    ("PERSON", r"(?i)(?:(?<=Russian:)|(?<=Arabic:)|(?<=Japanese:)|(?<=Greek:)|(?<=Unicode))\s*(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]*(?:\s+(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]*)?\b", 0.70),
+
+    # ── CUSTOMER_NAME ────────────────────────────────────────────────
+    ("CUSTOMER_NAME", r"(?i)\b(?:customer|client)\s+(?:name\s+)?(?:is\s+)?(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
+    ("CUSTOMER_NAME", r"(?i)\bCustomer:\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
+    ("CUSTOMER_NAME", r"(?i)\bcustomer\s+(?:we\s+)?(?:have|here)\s+is\s+(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.75),
+
+    # ── EMPLOYEE_NAME ────────────────────────────────────────────────
+    ("EMPLOYEE_NAME", r"(?i)\b(?:employee|staff|teammate|colleague|manager|supervisor|engineer|developer|designer)\s+(?:name\s+)?(?:is\s+)?(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
+    ("EMPLOYEE_NAME", r"(?i)\b(?:employee|staff)\s+(?:named|name)\s+(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
+    ("EMPLOYEE_NAME", r"(?i)\bEmployee:\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
+    ("EMPLOYEE_NAME", r"(?i)\b(?:add\s+)?employee\s+(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.75),
+
+    # ── PROJECT_NAME ─────────────────────────────────────────────────
+    ("PROJECT_NAME", r"(?i)\b(?:project|initiative|campaign|program)\s+(?:name\s+)?(?:is\s+)?(?:called\s+)?(?-i:[A-Z])[a-zA-Z0-9]+(?:\s+(?-i:[A-Z])[a-zA-Z0-9]+)*\b", 0.80),
+    ("PROJECT_NAME", r"\b(?:Project|Operation|Initiative|Program|Code[- ]?name)\s+(?-i:[A-Z])[a-zA-Z0-9]+\b", 0.85),
 
     # ── ADDRESS ──────────────────────────────────────────────────────
-    # Street addresses: number + street name + street type
     ("ADDRESS", r"\b\d{1,5}\s+(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s+(?:St(?:reet)?|Ave(?:nue)?|Dr(?:ive)?|Rd|Road|Blvd|Boulevard|Ln|Lane|Way|Ct|Court|Pl|Place|Cir(?:cle)?|Pkwy|Parkway)\b", 0.80),
-    # PO Box
     ("ADDRESS", r"\bP\.?\s*O\.?\s+Box\s+\d+\b", 0.85),
-    # Suite/Apt number
     ("ADDRESS", r"\b(?:Suite|Apt|Unit|Building)\s+#?\d+[A-Za-z]?\b", 0.80),
+    # UK-style address: "10 Downing Street"
+    ("ADDRESS", r"\b\d{1,3}\s+(?:[A-Z][a-z]+)\s+(?:Street|Road|Lane|Drive|Way|Close|Gardens|Hill|Square|Mews|Court|Avenue)\b", 0.75),
 
     # ── CITY ─────────────────────────────────────────────────────────
-    # Not reliable via regex — handled by Presidio or GLiNER. Minimal heuristic:
-    # Common US/EU city names that start with capital letter (low confidence)
-    ("CITY", r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\s*(?:,|\s+[A-Z]{2}\s+\d{5}(?:-\d{4})?)\b", 0.70),
+    ("CITY", r"(?i)\b(?:city|town)\s*(?:of|pop|population)?\s*:?\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.70),
+    # Cities followed by comma + known country — exclude country names from city position
+    ("CITY", r"\b(?!(?:Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|UAE|Israel)\s*,)[A-Z][a-z]+\s*,\s+(?:Germany|France|Italy|Spain|UK|England|USA|US|China|Japan|India|Brazil|Canada|Australia)\b", 0.70),
+    # City after "works at X in City" or "based in City"
+        ("CITY", r"(?i)\b(?:based\s+in|works?\s+(?:at\s+\S+\s+)?in|lives?\s+in|located\s+in|situated\s+in)\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
+        # City after "in" followed by comma and country or end of context
+        ("CITY", r"(?i)\bin\s+(?-i:[A-Z])[a-z]{2,}(?:\s*,\s*(?:Germany|France|Italy|Spain|UK|USA|Canada|Australia))?\b", 0.50),
+    # City in population context: "X (37M), Y (32M)"
+        ("CITY", r"(?i)\b[A-Z][a-z]+\s*\(\d+\s*M\)", 0.55),
+        # Standalone city name when it's the first word of a sentence (common cities)
+        ("CITY", r"\b(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)\b", 0.50),
 
     # ── COUNTRY ──────────────────────────────────────────────────────
-    # Common country names (exhaustive-ish list)
     ("COUNTRY", r"\b(?:USA|US(?:A)?|UK|United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|UAE|Israel|Greece|Czech|Finland|Hungary|Romania|Ukraine)\b", 0.80),
 
     # ── COMPANY ──────────────────────────────────────────────────────
-    # Company suffixes
-    ("COMPANY", r"\b[A-Z][a-zA-Z]+(?:[A-Z][a-zA-Z]+)*(?:\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|Incorporated|PLC|AG|SA|BV|NV))\.?\b", 0.80),
-    # Tech companies common patterns
+    ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|Incorporated|PLC|AG|SA|BV|NV)\.?\b", 0.80),
+    ("COMPANY", r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|BV|NV)\.?\b", 0.80),
     ("COMPANY", r"\b[A-Z][a-z]+(?:[A-Z][a-z]+)*\s+(?:Technologies|Tech|Systems|Software|Solutions|Group|Partners|Holdings|Enterprises|Ventures|Industries|Global|International|Digital|Media|Networks|Services|Consulting|Associates)\b", 0.75),
+    # Two capitalized words — low confidence
+    ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+[A-Z][a-z]+\b", 0.45),
 
-    # ── CUSTOMER_NAME / EMPLOYEE_NAME / PROJECT_NAME ─────────────────
-    # These are domain-specific — regex can only approximate with context prefixes
-    ("CUSTOMER_NAME", r"(?i)\b(?:customer|client|account)\s+(?:name\s+)?(?:is\s+)?[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\b", 0.75),
-    ("EMPLOYEE_NAME", r"(?i)\b(?:employee|staff|teammate|colleague|manager|supervisor|engineer|developer|designer)\s+(?:name\s+)?(?:is\s+)?[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?\b", 0.75),
-    ("PROJECT_NAME", r"(?i)\b(?:project|initiative|campaign|program)\s+(?:name\s+)?(?:is\s+)?(?:called\s+)??[A-Z][a-zA-Z0-9]+(?:\s+[A-Z][a-zA-Z0-9]+)*\b", 0.75),
-    # Project codenames like "Project X", "Operation Y"
-    ("PROJECT_NAME", r"\b(?:Project|Operation|Initiative|Program|Code[- ]?name)\s+[A-Z][a-zA-Z0-9]+\b", 0.80),
 ]

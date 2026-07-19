@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report",
-  "timestamp": "2026-07-19T18:11:44Z",
+  "timestamp": "2026-07-19T19:09:23Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "examples": 122,
@@ -37,13 +37,13 @@
       "detector": "regex",
       "total_examples": 122,
       "total_expected_entities": 184,
-      "total_detected_entities": 198,
-      "total_true_positives": 144,
-      "total_false_positives": 54,
-      "total_false_negatives": 40,
-      "overall_precision": 0.7272727272727273,
-      "overall_recall": 0.782608695652174,
-      "overall_f1": 0.7539267015706806,
+      "total_detected_entities": 224,
+      "total_true_positives": 182,
+      "total_false_positives": 42,
+      "total_false_negatives": 2,
+      "overall_precision": 0.8125,
+      "overall_recall": 0.9891304347826086,
+      "overall_f1": 0.892156862745098,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -62,36 +62,36 @@
           "f1": 0.9524
         },
         "BANK_ACCOUNT": {
-          "true_positives": 4,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "precision": 1.0,
-          "recall": 0.6667,
-          "f1": 0.8
+          "recall": 1.0,
+          "f1": 1.0
         },
         "CITY": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 8,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
+          "true_positives": 16,
+          "false_positives": 15,
+          "false_negatives": 0,
+          "precision": 0.5161,
+          "recall": 1.0,
+          "f1": 0.6809
         },
         "COMPANY": {
-          "true_positives": 6,
-          "false_positives": 3,
-          "false_negatives": 1,
-          "precision": 0.6667,
-          "recall": 0.8571,
-          "f1": 0.75
-        },
-        "COUNTRY": {
-          "true_positives": 18,
+          "true_positives": 8,
           "false_positives": 3,
           "false_negatives": 0,
-          "precision": 0.8571,
+          "precision": 0.7273,
           "recall": 1.0,
-          "f1": 0.9231
+          "f1": 0.8421
+        },
+        "COUNTRY": {
+          "true_positives": 16,
+          "false_positives": 2,
+          "false_negatives": 1,
+          "precision": 0.8889,
+          "recall": 0.9412,
+          "f1": 0.9143
         },
         "CREDIT_CARD": {
           "true_positives": 12,
@@ -102,12 +102,12 @@
           "f1": 0.8
         },
         "CUSTOMER_NAME": {
-          "true_positives": 2,
-          "false_positives": 2,
-          "false_negatives": 4,
-          "precision": 0.5,
-          "recall": 0.3333,
-          "f1": 0.4
+          "true_positives": 10,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
         },
         "DATABASE_URL": {
           "true_positives": 14,
@@ -119,27 +119,27 @@
         },
         "DOMAIN": {
           "true_positives": 18,
-          "false_positives": 12,
+          "false_positives": 1,
           "false_negatives": 0,
-          "precision": 0.6,
+          "precision": 0.9474,
           "recall": 1.0,
-          "f1": 0.75
+          "f1": 0.973
         },
         "EMAIL": {
           "true_positives": 44,
-          "false_positives": 7,
+          "false_positives": 1,
           "false_negatives": 0,
-          "precision": 0.8627,
+          "precision": 0.9778,
           "recall": 1.0,
-          "f1": 0.9263
+          "f1": 0.9888
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 6,
-          "false_positives": 1,
-          "false_negatives": 3,
+          "true_positives": 12,
+          "false_positives": 2,
+          "false_negatives": 0,
           "precision": 0.8571,
-          "recall": 0.6667,
-          "f1": 0.75
+          "recall": 1.0,
+          "f1": 0.9231
         },
         "FILE_PATH": {
           "true_positives": 14,
@@ -150,36 +150,36 @@
           "f1": 0.9655
         },
         "GPS": {
-          "true_positives": 12,
-          "false_positives": 3,
-          "false_negatives": 10,
-          "precision": 0.8,
-          "recall": 0.5455,
-          "f1": 0.6486
+          "true_positives": 32,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
         },
         "IBAN": {
-          "true_positives": 6,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "precision": 1.0,
-          "recall": 0.8571,
-          "f1": 0.9231
-        },
-        "IP_ADDRESS": {
-          "true_positives": 26,
-          "false_positives": 1,
-          "false_negatives": 1,
-          "precision": 0.963,
-          "recall": 0.963,
-          "f1": 0.963
-        },
-        "JWT": {
           "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "precision": 1.0,
-          "recall": 0.8889,
-          "f1": 0.9412
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "IP_ADDRESS": {
+          "true_positives": 28,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
+        },
+        "JWT": {
+          "true_positives": 10,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "precision": 0.9091,
+          "recall": 1.0,
+          "f1": 0.9524
         },
         "PASSPORT": {
           "true_positives": 8,
@@ -190,36 +190,36 @@
           "f1": 1.0
         },
         "PERSON": {
-          "true_positives": 6,
-          "false_positives": 0,
-          "false_negatives": 6,
-          "precision": 1.0,
-          "recall": 0.5,
-          "f1": 0.6667
+          "true_positives": 18,
+          "false_positives": 5,
+          "false_negatives": 0,
+          "precision": 0.7826,
+          "recall": 1.0,
+          "f1": 0.878
         },
         "PHONE": {
-          "true_positives": 22,
-          "false_positives": 10,
-          "false_negatives": 1,
-          "precision": 0.6875,
-          "recall": 0.9565,
-          "f1": 0.8
+          "true_positives": 24,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "precision": 0.96,
+          "recall": 1.0,
+          "f1": 0.9796
         },
         "PRIVATE_URL": {
           "true_positives": 14,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
-          "precision": 0.9333,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9655
+          "f1": 1.0
         },
         "PROJECT_NAME": {
-          "true_positives": 16,
+          "true_positives": 18,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "precision": 1.0,
-          "recall": 0.9412,
-          "f1": 0.9697
+          "recall": 1.0,
+          "f1": 1.0
         },
         "SOCIAL_SECURITY": {
           "true_positives": 8,
@@ -239,47 +239,38 @@
         }
       },
       "confusion_matrix": {
-        "NONE": {
-          "CUSTOMER_NAME": 2,
-          "COUNTRY": 2,
-          "FILE_PATH": 1,
-          "DOMAIN": 2,
-          "EMPLOYEE_NAME": 1,
-          "PHONE": 2,
-          "ADDRESS": 3,
-          "COMPANY": 3,
-          "API_KEY": 1,
-          "EMAIL": 1,
-          "PRIVATE_URL": 1
-        },
-        "BANK_ACCOUNT": {
-          "PHONE": 1,
-          "CREDIT_CARD": 2
-        },
-        "IBAN": {
-          "PHONE": 4,
-          "CREDIT_CARD": 4
-        },
-        "CREDIT_CARD": {
-          "PHONE": 3
-        },
-        "DATABASE_URL": {
-          "EMAIL": 6,
-          "DOMAIN": 1
-        },
-        "PRIVATE_URL": {
-          "DOMAIN": 4,
-          "IP_ADDRESS": 1
-        },
-        "FILE_PATH": {
-          "DOMAIN": 5
-        },
         "ADDRESS": {
-          "GPS": 1,
+          "CITY": 2,
           "COUNTRY": 1
         },
-        "IP_ADDRESS": {
-          "GPS": 2
+        "IBAN": {
+          "CREDIT_CARD": 4
+        },
+        "NONE": {
+          "CITY": 10,
+          "FILE_PATH": 1,
+          "EMPLOYEE_NAME": 1,
+          "COMPANY": 3,
+          "COUNTRY": 1,
+          "PHONE": 1,
+          "ADDRESS": 3,
+          "DOMAIN": 1,
+          "PERSON": 3,
+          "API_KEY": 1,
+          "EMAIL": 1,
+          "JWT": 1
+        },
+        "EMPLOYEE_NAME": {
+          "EMPLOYEE_NAME": 1
+        },
+        "CITY": {
+          "CITY": 3
+        },
+        "PERSON": {
+          "PERSON": 2
+        },
+        "BANK_ACCOUNT": {
+          "CREDIT_CARD": 2
         }
       },
       "example_results": [
@@ -308,30 +299,32 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "CITY",
             "COUNTRY"
           ]
         },
@@ -339,35 +332,33 @@
           "index": 3,
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
-          "detected": 5,
-          "true_positives": 1,
-          "false_positives": 4,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
+            "BANK_ACCOUNT",
             "CREDIT_CARD",
-            "CUSTOMER_NAME",
-            "IBAN",
-            "PHONE"
+            "IBAN"
           ]
         },
         {
           "index": 4,
           "text_preview": "Credit card: 4111-1111-1111-1111 and another card 5500 0000 0000 0004",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD",
-            "PHONE"
+            "CREDIT_CARD"
           ]
         },
         {
@@ -451,31 +442,29 @@
           "index": 10,
           "text_preview": "Database URL: postgresql://admin:secret@db.internal:5432/production",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 11,
           "text_preview": "Internal URL: https://jenkins.internal:8080/job/deploy and https://admin.corp.in",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "DOMAIN",
             "PRIVATE_URL"
           ]
         },
@@ -498,14 +487,15 @@
           "index": 13,
           "text_preview": "Coordinates: 40.7128, -74.0060 (NYC) and lat: 51.5074, lon: -0.1278 (London)",
           "expected": 4,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 5,
+          "true_positives": 4,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
@@ -513,15 +503,14 @@
           "index": 14,
           "text_preview": "File path: /home/alice/projects/src/main/config.yaml and C:\\Users\\Bob\\Documents\\",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "DOMAIN",
             "FILE_PATH"
           ]
         },
@@ -598,9 +587,9 @@
           "text_preview": "The best customer we have is Clara Oswald and she works at Data Corp.",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "CUSTOMER_NAME"
@@ -614,9 +603,9 @@
           "index": 20,
           "text_preview": "Please add employee David Tennant to the access list for project Galactic.",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
@@ -632,25 +621,25 @@
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
             "ADDRESS",
-            "COUNTRY"
+            "CITY"
           ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 2,
+          "detected": 4,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 3,
           "false_negatives": 2,
           "expected_types": [
             "ADDRESS",
@@ -658,8 +647,7 @@
             "COUNTRY"
           ],
           "detected_types": [
-            "COUNTRY",
-            "GPS"
+            "CITY"
           ]
         },
         {
@@ -711,32 +699,30 @@
           "index": 26,
           "text_preview": "Redis connection: redis://default:password@cache-cluster.internal:6379",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 27,
           "text_preview": "MongoDB: mongodb://admin:secret@mongo-prod.internal:27017/sales",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
@@ -758,14 +744,17 @@
           "index": 29,
           "text_preview": "Coordinates: 48.8566 N, 2.3522 E is the center of Paris",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY",
+            "GPS"
+          ]
         },
         {
           "index": 30,
@@ -801,48 +790,47 @@
           "index": 32,
           "text_preview": "CC: 3782-822463-10005 (Amex) and 6011-1111-1111-1117 (Discover)",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD",
-            "PHONE"
+            "CREDIT_CARD"
           ]
         },
         {
           "index": 33,
           "text_preview": "Bank: 98765432109876543210 and IBAN: GB29 NWBK 6016 1331 9268 19",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 0,
-          "false_positives": 2,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
+            "BANK_ACCOUNT",
             "CREDIT_CARD",
-            "PHONE"
+            "IBAN"
           ]
         },
         {
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL"
           ]
         },
@@ -850,15 +838,14 @@
           "index": 35,
           "text_preview": "File paths: /var/log/nginx/access.log and /etc/ssh/sshd_config",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "DOMAIN",
             "FILE_PATH"
           ]
         },
@@ -883,9 +870,9 @@
           "index": 37,
           "text_preview": "IT: www.example.com, support@help.io, 192.168.0.1, and /tmp/test/data/cache.log",
           "expected": 3,
-          "detected": 5,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -903,16 +890,15 @@
           "index": 38,
           "text_preview": "Connect as user: postgresql://app_user:Str0ng!Pass@db-prod.internal:5432/analyti",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
@@ -936,15 +922,16 @@
           "index": 40,
           "text_preview": "Customer: Martha Jones (martha.jones@bigpharma.com) order #ORD-001",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL"
           ],
           "detected_types": [
+            "CUSTOMER_NAME",
             "EMAIL"
           ]
         },
@@ -952,10 +939,10 @@
           "index": 41,
           "text_preview": "Project Nebula starts Q1 and Project Orion is in maintenance mode.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PROJECT_NAME"
           ],
@@ -982,10 +969,10 @@
           "index": 43,
           "text_preview": "Compressed IPv6: 2001:db8::1 and fe80::1",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
@@ -1013,16 +1000,18 @@
           "index": 45,
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COMPANY",
             "PERSON"
           ],
           "detected_types": [
+            "CITY",
+            "COMPANY",
             "PERSON"
           ]
         },
@@ -1030,14 +1019,16 @@
           "index": 46,
           "text_preview": "City pop: Tokyo (37M), Delhi (32M), Shanghai (28M)",
           "expected": 3,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 3,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 47,
@@ -1073,15 +1064,14 @@
           "index": 49,
           "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "GPS",
             "IP_ADDRESS"
           ]
         },
@@ -1149,14 +1139,15 @@
           "index": 54,
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 4,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 6,
+          "true_positives": 4,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
@@ -1164,28 +1155,30 @@
           "index": 55,
           "text_preview": "GPS: 27.1751 N, 78.0421 E (Taj Mahal)",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "COMPANY",
+            "GPS"
+          ]
         },
         {
           "index": 56,
           "text_preview": "File: /opt/application/config/production/settings.json",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "DOMAIN",
             "FILE_PATH"
           ]
         },
@@ -1238,82 +1231,77 @@
           "index": 60,
           "text_preview": "MySQL: mysql://dev_user:dev_pass@mysql-dev.internal:3306/staging",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 61,
           "text_preview": "SQLite: sqlite:///data/db/production.db",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "DOMAIN"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 62,
           "text_preview": "Oracle: oracle://scott:tiger@oracle.internal:1521/XEPDB1",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 63,
           "text_preview": "IBAN: FR76 3000 6000 0112 3456 7890 189",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "IBAN",
-            "PHONE"
+            "IBAN"
           ]
         },
         {
           "index": 64,
           "text_preview": "IBAN: CH93 0076 2011 6238 5295 7",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "IBAN",
-            "PHONE"
+            "IBAN"
           ]
         },
         {
@@ -1380,32 +1368,34 @@
           "index": 69,
           "text_preview": "Employee: Rose Tyler (rose@torchwood.xyz), employee: Jack Harkness (jack@torchwo",
           "expected": 4,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 4,
+          "true_positives": 4,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "EMPLOYEE_NAME"
           ]
         },
         {
           "index": 70,
           "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
+            "CUSTOMER_NAME",
             "EMAIL",
             "PROJECT_NAME"
           ]
@@ -1414,10 +1404,10 @@
           "index": 71,
           "text_preview": "Contact person: Donna Noble (donna@temp-services.co.uk). Project Bad Wolf is GO.",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
@@ -1425,6 +1415,7 @@
           ],
           "detected_types": [
             "EMAIL",
+            "PERSON",
             "PROJECT_NAME"
           ]
         },
@@ -1463,15 +1454,14 @@
           "index": 74,
           "text_preview": "Private endpoint: https://control-plane.internal:8443/api/v1/config",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "DOMAIN",
             "PRIVATE_URL"
           ]
         },
@@ -1494,15 +1484,14 @@
           "index": 76,
           "text_preview": "Internal app: https://payroll.corp.local/admin",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "DOMAIN",
             "PRIVATE_URL"
           ]
         },
@@ -1510,14 +1499,16 @@
           "index": 77,
           "text_preview": "City: The population of Mumbai is over 20 million.",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 78,
@@ -1553,14 +1544,15 @@
           "index": 80,
           "text_preview": "Phone: +49 30 12345678 (Berlin office)",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
+            "CITY",
             "PHONE"
           ]
         },
@@ -1584,14 +1576,16 @@
           "index": 82,
           "text_preview": "JWT: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "JWT"
           ],
-          "detected_types": []
+          "detected_types": [
+            "JWT"
+          ]
         },
         {
           "index": 83,
@@ -1627,15 +1621,14 @@
           "index": 85,
           "text_preview": "File: D:\\Projects\\Backup\\2024\\financial\\statements.xlsx",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "DOMAIN",
             "FILE_PATH"
           ]
         },
@@ -1643,1985 +1636,55 @@
           "index": 86,
           "text_preview": "GPS: lat: 55.7558, lng: 37.6173 (Moscow) and lat: 59.9343, lng: 30.3351 (SPB)",
           "expected": 4,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 5,
+          "true_positives": 4,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
         {
           "index": 87,
           "text_preview": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
-          "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "EMAIL",
-            "EMPLOYEE_NAME",
-            "PROJECT_NAME"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PROJECT_NAME"
-          ]
-        },
-        {
-          "index": 88,
-          "text_preview": "Customer: River Song (river@library.silence) - project Impossible Astronaut",
-          "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "CUSTOMER_NAME",
-            "EMAIL",
-            "PROJECT_NAME"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PROJECT_NAME"
-          ]
-        },
-        {
-          "index": 89,
-          "text_preview": "The quick brown fox jumps over the lazy dog.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 90,
-          "text_preview": "Meeting at 2 PM tomorrow in the conference room B.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 91,
-          "text_preview": "The price of milk is $3.50 at the local grocery store.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 92,
-          "text_preview": "Please review the quarterly report before Friday.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 93,
-          "text_preview": "The server maintenance is scheduled for this weekend.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 94,
-          "text_preview": "User typed a phone-like number: 123-456-7890 but this is not a real phone.",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "PHONE"
-          ]
-        },
-        {
-          "index": 95,
-          "text_preview": "My street is 123 Main Street, not 123 Main St.",
-          "expected": 0,
-          "detected": 2,
-          "true_positives": 0,
-          "false_positives": 2,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
-        },
-        {
-          "index": 96,
-          "text_preview": "Version 3.1.4 is the latest release of the software package.",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "COMPANY"
-          ]
-        },
-        {
-          "index": 97,
-          "text_preview": "The year 2025 will be important for our company growth.",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "COMPANY"
-          ]
-        },
-        {
-          "index": 98,
-          "text_preview": "Please use ticket number TKT-12345 for the bug report.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 99,
-          "text_preview": "What does a@b or x@y mean? These arent real emails - short local parts.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 100,
-          "text_preview": "The value 555-1212 is often used in TV shows as a fake number.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 101,
-          "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
-        },
-        {
-          "index": 102,
-          "text_preview": "User 192.168.x.x is a common notation for private networks.",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "COMPANY"
-          ]
-        },
-        {
-          "index": 103,
-          "text_preview": "The parameter --api_endpoint should use https://example.com/api.",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "DOMAIN"
-          ]
-        },
-        {
-          "index": 104,
-          "text_preview": "Unicode PII: \u8054\u7cfb\u7528\u6237\u5f20\u4f1f\uff0c\u90ae\u7bb1\u662fzhangwei@example.cn\uff0c\u7535\u8bdd+86 138-0013-8000",
-          "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "EMAIL",
-            "PERSON",
-            "PHONE"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PHONE"
-          ]
-        },
-        {
-          "index": 105,
-          "text_preview": "Arabic: \u0627\u062a\u0635\u0644 \u0628\u0640 \u0623\u062d\u0645\u062f \u0639\u0644\u0649 ahmed@example.sa \u0623\u0648 +966 55 123 4567",
-          "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "EMAIL",
-            "PERSON",
-            "PHONE"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PHONE"
-          ]
-        },
-        {
-          "index": 106,
-          "text_preview": "Russian: \u0418\u0432\u0430\u043d \u0418\u0432\u0430\u043d\u043e\u0432, email: ivan@example.ru, \u0442\u0435\u043b: +7 495 123-45-67",
-          "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "EMAIL",
-            "PERSON",
-            "PHONE"
-          ],
-          "detected_types": [
-            "EMAIL"
-          ]
-        },
-        {
-          "index": 107,
-          "text_preview": "Japanese: \u7530\u4e2d\u592a\u90ce\u306e\u30e1\u30fc\u30eb\u306ftanaka@example.jp\u3001\u96fb\u8a71\u306f+81 90-1234-5678",
-          "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "EMAIL",
-            "PERSON",
-            "PHONE"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PHONE"
-          ]
-        },
-        {
-          "index": 108,
-          "text_preview": "Greek: O \u0393\u03b9\u03ce\u03c1\u03b3\u03bf\u03c2 \u03ad\u03c7\u03b5\u03b9 email: giorgos@example.gr",
-          "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "EMAIL",
-            "PERSON"
-          ],
-          "detected_types": [
-            "EMAIL"
-          ]
-        },
-        {
-          "index": 109,
-          "text_preview": "Very long JWT: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwi",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "JWT"
-          ],
-          "detected_types": [
-            "JWT"
-          ]
-        },
-        {
-          "index": 110,
-          "text_preview": "mixed RTL/LTR: my email is john@doe.com and my phone is +972 50 123 4567 \u05e9\u05dc\u05d5\u05dd",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "EMAIL",
-            "PHONE"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PHONE"
-          ]
-        },
-        {
-          "index": 111,
-          "text_preview": "Base64 encoded email: dGVzdEBleGFtcGxlLmNvbQ== looks like a token but its an ema",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "API_KEY"
-          ]
-        },
-        {
-          "index": 112,
-          "text_preview": "Partially redacted: My credit card is ****-****-****-1111 and SSN is ***-**-6789",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 113,
-          "text_preview": "Redacted phone: XXX-XXX-7890 and email: xxxx@domain.com",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "EMAIL"
-          ]
-        },
-        {
-          "index": 114,
-          "text_preview": "Person: James researcher published his findings in Nature at London University.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 115,
-          "text_preview": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "PHONE"
-          ]
-        },
-        {
-          "index": 116,
-          "text_preview": "Phone-like: 5552368 is short sequence, not enough digits for phone.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 117,
-          "text_preview": "Email-like: admin@localhost is technically valid but internal-only.",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "PRIVATE_URL"
-          ]
-        },
-        {
-          "index": 118,
-          "text_preview": "Domain: 123 is not a valid domain name by itself.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 119,
-          "text_preview": "Path: tmp/foo/bar is relative, not absolute, so not a FILE_PATH.",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 120,
-          "text_preview": "Base64 encoded SSN: MTIzLTQ1LTY3ODk= in base64, detectors should not decode this",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        },
-        {
-          "index": 121,
-          "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
-          "expected": 0,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": []
-        }
-      ]
-    },
-    "presidio": {
-      "detector": "presidio",
-      "total_examples": 122,
-      "total_expected_entities": 184,
-      "total_detected_entities": 67,
-      "total_true_positives": 43,
-      "total_false_positives": 24,
-      "total_false_negatives": 141,
-      "overall_precision": 0.6417910447761194,
-      "overall_recall": 0.23369565217391305,
-      "overall_f1": 0.3426294820717131,
-      "per_type": {
-        "ADDRESS": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "API_KEY": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 5,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "BANK_ACCOUNT": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "CITY": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 8,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "COMPANY": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "COUNTRY": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 9,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "CREDIT_CARD": {
-          "true_positives": 12,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "precision": 1.0,
-          "recall": 1.0,
-          "f1": 1.0
-        },
-        "CUSTOMER_NAME": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 5,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "DATABASE_URL": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 7,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "DOMAIN": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 9,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "EMAIL": {
-          "true_positives": 38,
-          "false_positives": 1,
-          "false_negatives": 3,
-          "precision": 0.9744,
-          "recall": 0.9268,
-          "f1": 0.95
-        },
-        "EMPLOYEE_NAME": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 6,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "FILE_PATH": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 7,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "GPS": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 16,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "IBAN": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "IP_ADDRESS": {
-          "true_positives": 16,
-          "false_positives": 0,
-          "false_negatives": 6,
-          "precision": 1.0,
-          "recall": 0.7273,
-          "f1": 0.8421
-        },
-        "JWT": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 5,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "PASSPORT": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "PERSON": {
-          "true_positives": 8,
-          "false_positives": 22,
-          "false_negatives": 5,
-          "precision": 0.2667,
-          "recall": 0.6154,
-          "f1": 0.3721
-        },
-        "PHONE": {
-          "true_positives": 8,
-          "false_positives": 1,
-          "false_negatives": 8,
-          "precision": 0.8889,
-          "recall": 0.5,
-          "f1": 0.64
-        },
-        "PRIVATE_URL": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 7,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "PROJECT_NAME": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 9,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        },
-        "SOCIAL_SECURITY": {
-          "true_positives": 4,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "precision": 1.0,
-          "recall": 0.6667,
-          "f1": 0.8
-        },
-        "SSH_KEY": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
-        }
-      },
-      "confusion_matrix": {
-        "FILE_PATH": {
-          "PERSON": 1
-        },
-        "CUSTOMER_NAME": {
-          "PERSON": 4
-        },
-        "EMPLOYEE_NAME": {
-          "PERSON": 6
-        },
-        "NONE": {
-          "PERSON": 7,
-          "PHONE": 1,
-          "EMAIL": 1
-        },
-        "DATABASE_URL": {
-          "PERSON": 1
-        },
-        "ADDRESS": {
-          "PERSON": 1
-        },
-        "DOMAIN": {
-          "PERSON": 1
-        },
-        "EMAIL": {
-          "PERSON": 1
-        }
-      },
-      "example_results": [
-        {
-          "index": 0,
-          "text_preview": "Hi, I'm Alice Johnson from Acme Corp. Email: alice@acme.com Phone: +1-555-123-45",
-          "expected": 4,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "COMPANY",
-            "EMAIL",
-            "PERSON",
-            "PHONE"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PERSON"
-          ]
-        },
-        {
-          "index": 1,
-          "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "ADDRESS"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 2,
-          "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "CITY",
-            "COUNTRY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 3,
-          "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "BANK_ACCOUNT",
-            "IBAN"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 4,
-          "text_preview": "Credit card: 4111-1111-1111-1111 and another card 5500 0000 0000 0004",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "CREDIT_CARD"
-          ],
-          "detected_types": [
-            "CREDIT_CARD"
-          ]
-        },
-        {
-          "index": 5,
-          "text_preview": "My passport is AB1234567 and my SSN is 987-65-4321",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "PASSPORT",
-            "SOCIAL_SECURITY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 6,
-          "text_preview": "The server IP is 192.168.1.100 and the backup is 10.0.0.5",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "IP_ADDRESS"
-          ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
-        },
-        {
-          "index": 7,
-          "text_preview": "JWT token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNvrBuFQiulGqjDh",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "JWT"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 8,
-          "text_preview": "API key: sk-abcdef1234567890abcdef1234567890abcdef12",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "API_KEY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 9,
-          "text_preview": "SSH key: -----BEGIN OPENSSH PRIVATE KEY-----\nABC123...\n-----END OPENSSH PRIVATE ",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "SSH_KEY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 10,
-          "text_preview": "Database URL: postgresql://admin:secret@db.internal:5432/production",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "DATABASE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 11,
-          "text_preview": "Internal URL: https://jenkins.internal:8080/job/deploy and https://admin.corp.in",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "PRIVATE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 12,
-          "text_preview": "Domain: google.com and api.github.com and my-site.internal",
-          "expected": 3,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 3,
-          "expected_types": [
-            "DOMAIN"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 13,
-          "text_preview": "Coordinates: 40.7128, -74.0060 (NYC) and lat: 51.5074, lon: -0.1278 (London)",
-          "expected": 4,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "expected_types": [
-            "GPS"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 14,
-          "text_preview": "File path: /home/alice/projects/src/main/config.yaml and C:\\Users\\Bob\\Documents\\",
-          "expected": 2,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 2,
-          "expected_types": [
-            "FILE_PATH"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 15,
-          "text_preview": "Project: Project Phoenix is our codename for the new ERP rollout.",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "PROJECT_NAME"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 16,
-          "text_preview": "Our customer Jane Smith from Widgets Inc. wants her data removed.",
-          "expected": 2,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 2,
-          "expected_types": [
-            "COMPANY",
-            "CUSTOMER_NAME"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 17,
-          "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
-          "expected": 2,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 2,
-          "expected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 18,
-          "text_preview": "Contact me at bob.smith@example.org or call +44 20 7946 0958 for the project Vul",
-          "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "EMAIL",
-            "PHONE",
-            "PROJECT_NAME"
-          ],
-          "detected_types": [
-            "EMAIL"
-          ]
-        },
-        {
-          "index": 19,
-          "text_preview": "The best customer we have is Clara Oswald and she works at Data Corp.",
-          "expected": 2,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 2,
-          "expected_types": [
-            "COMPANY",
-            "CUSTOMER_NAME"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 20,
-          "text_preview": "Please add employee David Tennant to the access list for project Galactic.",
-          "expected": 2,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 2,
-          "expected_types": [
-            "EMPLOYEE_NAME",
-            "PROJECT_NAME"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 21,
-          "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "ADDRESS",
-            "CITY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 22,
-          "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
-          "expected": 3,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 3,
-          "expected_types": [
-            "ADDRESS",
-            "CITY",
-            "COUNTRY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 23,
-          "text_preview": "Send to: maria.garcia@co.jp | CC: info@company.co.uk | BCC: devops@internal.corp",
-          "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "EMAIL"
-          ],
-          "detected_types": [
-            "EMAIL"
-          ]
-        },
-        {
-          "index": 24,
-          "text_preview": "Token: eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiJ9.SflKxwRJSMeKKF2",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
-          "expected_types": [
-            "JWT"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 25,
-          "text_preview": "API key: pk-98765fedcba0987654321fedcba0987654321fedcba",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "API_KEY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 26,
-          "text_preview": "Redis connection: redis://default:password@cache-cluster.internal:6379",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "DATABASE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 27,
-          "text_preview": "MongoDB: mongodb://admin:secret@mongo-prod.internal:27017/sales",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
-          "expected_types": [
-            "DATABASE_URL"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 28,
-          "text_preview": "SSH config: -----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIxYb...\n-----END EC PRIVATE ",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "SSH_KEY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 29,
-          "text_preview": "Coordinates: 48.8566 N, 2.3522 E is the center of Paris",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "GPS"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 30,
-          "text_preview": "Passport: CD987654 and also passport XY123456",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "PASSPORT"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 31,
-          "text_preview": "SSN: 123-45-6789 and also 456-78-9012",
-          "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "SOCIAL_SECURITY"
-          ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
-        },
-        {
-          "index": 32,
-          "text_preview": "CC: 3782-822463-10005 (Amex) and 6011-1111-1111-1117 (Discover)",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "CREDIT_CARD"
-          ],
-          "detected_types": [
-            "CREDIT_CARD"
-          ]
-        },
-        {
-          "index": 33,
-          "text_preview": "Bank: 98765432109876543210 and IBAN: GB29 NWBK 6016 1331 9268 19",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "BANK_ACCOUNT",
-            "IBAN"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 34,
-          "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "PRIVATE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 35,
-          "text_preview": "File paths: /var/log/nginx/access.log and /etc/ssh/sshd_config",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "FILE_PATH"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 36,
-          "text_preview": "Our CEO Bob Smith (bob@company.com) approved the merger.",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "EMAIL",
-            "PERSON"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PERSON"
-          ]
-        },
-        {
-          "index": 37,
-          "text_preview": "IT: www.example.com, support@help.io, 192.168.0.1, and /tmp/test/data/cache.log",
-          "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "DOMAIN",
-            "EMAIL",
-            "IP_ADDRESS"
-          ],
-          "detected_types": [
-            "EMAIL"
-          ]
-        },
-        {
-          "index": 38,
-          "text_preview": "Connect as user: postgresql://app_user:Str0ng!Pass@db-prod.internal:5432/analyti",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "DATABASE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 39,
-          "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 0,
-          "false_positives": 2,
-          "false_negatives": 2,
-          "expected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 40,
-          "text_preview": "Customer: Martha Jones (martha.jones@bigpharma.com) order #ORD-001",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
-          "expected_types": [
-            "CUSTOMER_NAME",
-            "EMAIL"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PERSON"
-          ]
-        },
-        {
-          "index": 41,
-          "text_preview": "Project Nebula starts Q1 and Project Orion is in maintenance mode.",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "PROJECT_NAME"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 42,
-          "text_preview": "IPv6 address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "IP_ADDRESS"
-          ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
-        },
-        {
-          "index": 43,
-          "text_preview": "Compressed IPv6: 2001:db8::1 and fe80::1",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "IP_ADDRESS"
-          ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
-        },
-        {
-          "index": 44,
-          "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
-          "expected_types": [
-            "ADDRESS"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 45,
-          "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
-          "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "CITY",
-            "COMPANY",
-            "PERSON"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 46,
-          "text_preview": "City pop: Tokyo (37M), Delhi (32M), Shanghai (28M)",
-          "expected": 3,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 3,
-          "expected_types": [
-            "CITY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 47,
-          "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
-          "expected": 6,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 6,
-          "expected_types": [
-            "COUNTRY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 48,
-          "text_preview": "SSN: 111-22-3333 is used as the sample number",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "SOCIAL_SECURITY"
-          ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
-        },
-        {
-          "index": 49,
-          "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
           "detected": 3,
           "true_positives": 3,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "IP_ADDRESS"
-          ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
-        },
-        {
-          "index": 50,
-          "text_preview": "Phone: +1-212-555-0198 and (415) 555-2671 and 555-123-4567",
-          "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "PHONE"
-          ],
-          "detected_types": [
-            "PHONE"
-          ]
-        },
-        {
-          "index": 51,
-          "text_preview": "Email: test.user+tag@mail.company.io",
-          "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [
-            "EMAIL"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PERSON"
-          ]
-        },
-        {
-          "index": 52,
-          "text_preview": "Email: firstname_lastname@mail-server.co.jp",
-          "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [
-            "EMAIL"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PERSON"
-          ]
-        },
-        {
-          "index": 53,
-          "text_preview": "Domain: subdomain.company.example.org and a.io",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "DOMAIN"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 54,
-          "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
-          "expected": 4,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "expected_types": [
-            "GPS"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 55,
-          "text_preview": "GPS: 27.1751 N, 78.0421 E (Taj Mahal)",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "GPS"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 56,
-          "text_preview": "File: /opt/application/config/production/settings.json",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "FILE_PATH"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 57,
-          "text_preview": "File: /home/user/tmp/cache/data",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "FILE_PATH"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 58,
-          "text_preview": "SSH key: -----BEGIN RSA PRIVATE KEY-----\nProc-Type: 4,ENCRYPTED\n-----END RSA PRI",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "SSH_KEY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 59,
-          "text_preview": "SSH: -----BEGIN DSA PRIVATE KEY-----\nMIIBvAIB...\n-----END DSA PRIVATE KEY-----",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "SSH_KEY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 60,
-          "text_preview": "MySQL: mysql://dev_user:dev_pass@mysql-dev.internal:3306/staging",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "DATABASE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 61,
-          "text_preview": "SQLite: sqlite:///data/db/production.db",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "DATABASE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 62,
-          "text_preview": "Oracle: oracle://scott:tiger@oracle.internal:1521/XEPDB1",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "DATABASE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 63,
-          "text_preview": "IBAN: FR76 3000 6000 0112 3456 7890 189",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "IBAN"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 64,
-          "text_preview": "IBAN: CH93 0076 2011 6238 5295 7",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "IBAN"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 65,
-          "text_preview": "Passport num: EF12345678",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "PASSPORT"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 66,
-          "text_preview": "API key: api_key_abcdef1234567890abcdef1234567890",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "API_KEY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 67,
-          "text_preview": "Token: secret_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
-          "expected_types": [
-            "API_KEY"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 68,
-          "text_preview": "Domain: example.internal and mysql.corp.local and api.staging.private",
-          "expected": 3,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 3,
-          "expected_types": [
-            "DOMAIN"
-          ],
-          "detected_types": [
-            "PERSON"
-          ]
-        },
-        {
-          "index": 69,
-          "text_preview": "Employee: Rose Tyler (rose@torchwood.xyz), employee: Jack Harkness (jack@torchwo",
-          "expected": 4,
-          "detected": 4,
-          "true_positives": 2,
-          "false_positives": 2,
-          "false_negatives": 2,
-          "expected_types": [
-            "EMAIL",
-            "EMPLOYEE_NAME"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PERSON"
-          ]
-        },
-        {
-          "index": 70,
-          "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
-          "expected": 3,
-          "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 2,
-          "expected_types": [
-            "CUSTOMER_NAME",
-            "EMAIL",
-            "PROJECT_NAME"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PERSON"
-          ]
-        },
-        {
-          "index": 71,
-          "text_preview": "Contact person: Donna Noble (donna@temp-services.co.uk). Project Bad Wolf is GO.",
-          "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "EMAIL",
-            "PERSON",
-            "PROJECT_NAME"
-          ],
-          "detected_types": [
-            "EMAIL",
-            "PERSON"
-          ]
-        },
-        {
-          "index": 72,
-          "text_preview": "Bank: 1234567890123456 and account: 8765432109876543",
-          "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
-          "expected_types": [
-            "BANK_ACCOUNT"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 73,
-          "text_preview": "CC: 4111111111111111 and 5500000000000004 (no dashes)",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "CREDIT_CARD"
-          ],
-          "detected_types": [
-            "CREDIT_CARD"
-          ]
-        },
-        {
-          "index": 74,
-          "text_preview": "Private endpoint: https://control-plane.internal:8443/api/v1/config",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "PRIVATE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 75,
-          "text_preview": "Local: http://localhost:4000/graphql for the playground",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "PRIVATE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 76,
-          "text_preview": "Internal app: https://payroll.corp.local/admin",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "PRIVATE_URL"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 77,
-          "text_preview": "City: The population of Mumbai is over 20 million.",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "CITY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 78,
-          "text_preview": "Country: Switzerland has 4 official languages.",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "COUNTRY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 79,
-          "text_preview": "The server at 10.0.0.1 handles requests from 192.168.1.50 to 172.16.0.10",
-          "expected": 3,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 3,
-          "expected_types": [
-            "IP_ADDRESS"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 80,
-          "text_preview": "Phone: +49 30 12345678 (Berlin office)",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "PHONE"
-          ],
-          "detected_types": [
-            "PHONE"
-          ]
-        },
-        {
-          "index": 81,
-          "text_preview": "Phone: 07700 900 123 (UK mobile)",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
-          "expected_types": [
-            "PHONE"
-          ],
-          "detected_types": [
-            "PHONE"
-          ]
-        },
-        {
-          "index": 82,
-          "text_preview": "JWT: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "JWT"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 83,
-          "text_preview": "JWT with sig: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiJ9.V0rtziRdmiYSdgCwTSAOfFzQ",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "JWT"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 84,
-          "text_preview": "API: pk-a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "API_KEY"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 85,
-          "text_preview": "File: D:\\Projects\\Backup\\2024\\financial\\statements.xlsx",
-          "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "FILE_PATH"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 86,
-          "text_preview": "GPS: lat: 55.7558, lng: 37.6173 (Moscow) and lat: 59.9343, lng: 30.3351 (SPB)",
-          "expected": 4,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "expected_types": [
-            "GPS"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 87,
-          "text_preview": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
-          "expected": 3,
-          "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 2,
-          "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME",
             "PROJECT_NAME"
           ],
           "detected_types": [
             "EMAIL",
-            "PERSON"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 88,
           "text_preview": "Customer: River Song (river@library.silence) - project Impossible Astronaut",
           "expected": 3,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 3,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
             "PROJECT_NAME"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL",
+            "PROJECT_NAME"
+          ]
         },
         {
           "index": 89,
@@ -3695,12 +1758,14 @@
           "index": 95,
           "text_preview": "My street is 123 Main Street, not 123 Main St.",
           "expected": 0,
-          "detected": 0,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "ADDRESS"
+          ]
         },
         {
           "index": 96,
@@ -3761,13 +1826,15 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 0,
-          "detected": 1,
+          "detected": 3,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 3,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "PERSON"
+            "ADDRESS",
+            "CITY",
+            "COMPANY"
           ]
         },
         {
@@ -3785,89 +1852,99 @@
           "index": 103,
           "text_preview": "The parameter --api_endpoint should use https://example.com/api.",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "DOMAIN"
+          ]
         },
         {
           "index": 104,
-          "text_preview": "Unicode PII: \u8054\u7cfb\u7528\u6237\u5f20\u4f1f\uff0c\u90ae\u7bb1\u662fzhangwei@example.cn\uff0c\u7535\u8bdd+86 138-0013-8000",
+          "text_preview": "Unicode PII: 联系用户张伟，邮箱是zhangwei@example.cn，电话+86 138-0013-8000",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
             "PHONE"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "PERSON",
+            "PHONE"
           ]
         },
         {
           "index": 105,
-          "text_preview": "Arabic: \u0627\u062a\u0635\u0644 \u0628\u0640 \u0623\u062d\u0645\u062f \u0639\u0644\u0649 ahmed@example.sa \u0623\u0648 +966 55 123 4567",
+          "text_preview": "Arabic: اتصل بـ أحمد على ahmed@example.sa أو +966 55 123 4567",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
             "PHONE"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "PERSON",
+            "PHONE"
           ]
         },
         {
           "index": 106,
-          "text_preview": "Russian: \u0418\u0432\u0430\u043d \u0418\u0432\u0430\u043d\u043e\u0432, email: ivan@example.ru, \u0442\u0435\u043b: +7 495 123-45-67",
+          "text_preview": "Russian: Иван Иванов, email: ivan@example.ru, тел: +7 495 123-45-67",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
             "PHONE"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "PERSON",
+            "PHONE"
           ]
         },
         {
           "index": 107,
-          "text_preview": "Japanese: \u7530\u4e2d\u592a\u90ce\u306e\u30e1\u30fc\u30eb\u306ftanaka@example.jp\u3001\u96fb\u8a71\u306f+81 90-1234-5678",
+          "text_preview": "Japanese: 田中太郎のメールはtanaka@example.jp、電話は+81 90-1234-5678",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
             "PHONE"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "PERSON",
+            "PHONE"
           ]
         },
         {
           "index": 108,
-          "text_preview": "Greek: O \u0393\u03b9\u03ce\u03c1\u03b3\u03bf\u03c2 \u03ad\u03c7\u03b5\u03b9 email: giorgos@example.gr",
+          "text_preview": "Greek: O Γιώργος έχει email: giorgos@example.gr",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON"
@@ -3881,41 +1958,46 @@
           "index": 109,
           "text_preview": "Very long JWT: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwi",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "expected_types": [
-            "JWT"
-          ],
-          "detected_types": []
-        },
-        {
-          "index": 110,
-          "text_preview": "mixed RTL/LTR: my email is john@doe.com and my phone is +972 50 123 4567 \u05e9\u05dc\u05d5\u05dd",
-          "expected": 2,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
+          "expected_types": [
+            "JWT"
+          ],
+          "detected_types": [
+            "JWT"
+          ]
+        },
+        {
+          "index": 110,
+          "text_preview": "mixed RTL/LTR: my email is john@doe.com and my phone is +972 50 123 4567 שלום",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PHONE"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "PHONE"
           ]
         },
         {
           "index": 111,
           "text_preview": "Base64 encoded email: dGVzdEBleGFtcGxlLmNvbQ== looks like a token but its an ema",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "API_KEY"
+          ]
         },
         {
           "index": 112,
@@ -3945,12 +2027,14 @@
           "index": 114,
           "text_preview": "Person: James researcher published his findings in Nature at London University.",
           "expected": 0,
-          "detected": 1,
+          "detected": 5,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 5,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
+            "CITY",
+            "COMPANY",
             "PERSON"
           ]
         },
@@ -4024,12 +2108,14 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "JWT"
+          ]
         }
       ]
     },
@@ -4037,13 +2123,13 @@
       "detector": "pipeline",
       "total_examples": 122,
       "total_expected_entities": 184,
-      "total_detected_entities": 224,
-      "total_true_positives": 146,
-      "total_false_positives": 78,
-      "total_false_negatives": 38,
-      "overall_precision": 0.6517857142857143,
-      "overall_recall": 0.7934782608695652,
-      "overall_f1": 0.7156862745098039,
+      "total_detected_entities": 225,
+      "total_true_positives": 182,
+      "total_false_positives": 43,
+      "total_false_negatives": 2,
+      "overall_precision": 0.8088888888888889,
+      "overall_recall": 0.9891304347826086,
+      "overall_f1": 0.8899755501222494,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -4062,36 +2148,36 @@
           "f1": 0.9524
         },
         "BANK_ACCOUNT": {
-          "true_positives": 4,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "precision": 1.0,
-          "recall": 0.6667,
-          "f1": 0.8
+          "recall": 1.0,
+          "f1": 1.0
         },
         "CITY": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 8,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0
+          "true_positives": 16,
+          "false_positives": 15,
+          "false_negatives": 0,
+          "precision": 0.5161,
+          "recall": 1.0,
+          "f1": 0.6809
         },
         "COMPANY": {
-          "true_positives": 6,
-          "false_positives": 3,
-          "false_negatives": 1,
-          "precision": 0.6667,
-          "recall": 0.8571,
-          "f1": 0.75
-        },
-        "COUNTRY": {
-          "true_positives": 18,
+          "true_positives": 8,
           "false_positives": 3,
           "false_negatives": 0,
-          "precision": 0.8571,
+          "precision": 0.7273,
           "recall": 1.0,
-          "f1": 0.9231
+          "f1": 0.8421
+        },
+        "COUNTRY": {
+          "true_positives": 16,
+          "false_positives": 2,
+          "false_negatives": 1,
+          "precision": 0.8889,
+          "recall": 0.9412,
+          "f1": 0.9143
         },
         "CREDIT_CARD": {
           "true_positives": 12,
@@ -4102,12 +2188,12 @@
           "f1": 0.8
         },
         "CUSTOMER_NAME": {
-          "true_positives": 2,
-          "false_positives": 2,
-          "false_negatives": 4,
-          "precision": 0.5,
-          "recall": 0.3333,
-          "f1": 0.4
+          "true_positives": 10,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
         },
         "DATABASE_URL": {
           "true_positives": 14,
@@ -4119,27 +2205,27 @@
         },
         "DOMAIN": {
           "true_positives": 18,
-          "false_positives": 12,
+          "false_positives": 1,
           "false_negatives": 0,
-          "precision": 0.6,
+          "precision": 0.9474,
           "recall": 1.0,
-          "f1": 0.75
+          "f1": 0.973
         },
         "EMAIL": {
           "true_positives": 44,
-          "false_positives": 7,
+          "false_positives": 1,
           "false_negatives": 0,
-          "precision": 0.8627,
+          "precision": 0.9778,
           "recall": 1.0,
-          "f1": 0.9263
+          "f1": 0.9888
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 6,
-          "false_positives": 1,
-          "false_negatives": 3,
+          "true_positives": 12,
+          "false_positives": 2,
+          "false_negatives": 0,
           "precision": 0.8571,
-          "recall": 0.6667,
-          "f1": 0.75
+          "recall": 1.0,
+          "f1": 0.9231
         },
         "FILE_PATH": {
           "true_positives": 14,
@@ -4150,20 +2236,20 @@
           "f1": 0.9655
         },
         "GPS": {
-          "true_positives": 12,
-          "false_positives": 3,
-          "false_negatives": 10,
-          "precision": 0.8,
-          "recall": 0.5455,
-          "f1": 0.6486
+          "true_positives": 32,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0
         },
         "IBAN": {
-          "true_positives": 6,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "precision": 1.0,
-          "recall": 0.8571,
-          "f1": 0.9231
+          "recall": 1.0,
+          "f1": 1.0
         },
         "IP_ADDRESS": {
           "true_positives": 28,
@@ -4174,12 +2260,12 @@
           "f1": 0.9655
         },
         "JWT": {
-          "true_positives": 8,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "precision": 1.0,
-          "recall": 0.8889,
-          "f1": 0.9412
+          "true_positives": 10,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "precision": 0.9091,
+          "recall": 1.0,
+          "f1": 0.9524
         },
         "PASSPORT": {
           "true_positives": 8,
@@ -4190,36 +2276,36 @@
           "f1": 1.0
         },
         "PERSON": {
-          "true_positives": 8,
-          "false_positives": 22,
-          "false_negatives": 5,
-          "precision": 0.2667,
-          "recall": 0.6154,
-          "f1": 0.3721
+          "true_positives": 18,
+          "false_positives": 4,
+          "false_negatives": 0,
+          "precision": 0.8182,
+          "recall": 1.0,
+          "f1": 0.9
         },
         "PHONE": {
-          "true_positives": 22,
-          "false_positives": 11,
-          "false_negatives": 1,
-          "precision": 0.6667,
-          "recall": 0.9565,
-          "f1": 0.7857
+          "true_positives": 24,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "precision": 0.96,
+          "recall": 1.0,
+          "f1": 0.9796
         },
         "PRIVATE_URL": {
           "true_positives": 14,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
-          "precision": 0.9333,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9655
+          "f1": 1.0
         },
         "PROJECT_NAME": {
-          "true_positives": 16,
+          "true_positives": 18,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "precision": 1.0,
-          "recall": 0.9412,
-          "f1": 0.9697
+          "recall": 1.0,
+          "f1": 1.0
         },
         "SOCIAL_SECURITY": {
           "true_positives": 8,
@@ -4239,67 +2325,41 @@
         }
       },
       "confusion_matrix": {
-        "NONE": {
-          "CUSTOMER_NAME": 2,
-          "COUNTRY": 2,
-          "PERSON": 7,
-          "FILE_PATH": 1,
-          "DOMAIN": 2,
-          "EMPLOYEE_NAME": 1,
-          "PHONE": 2,
-          "ADDRESS": 3,
-          "COMPANY": 3,
-          "API_KEY": 1,
-          "EMAIL": 1,
-          "PRIVATE_URL": 1
-        },
-        "BANK_ACCOUNT": {
-          "PHONE": 1,
-          "CREDIT_CARD": 2
-        },
-        "IBAN": {
-          "PHONE": 4,
-          "CREDIT_CARD": 4
-        },
-        "CREDIT_CARD": {
-          "PHONE": 3
-        },
-        "DATABASE_URL": {
-          "EMAIL": 6,
-          "PERSON": 1,
-          "DOMAIN": 1
-        },
-        "PRIVATE_URL": {
-          "DOMAIN": 4,
-          "IP_ADDRESS": 1
-        },
-        "FILE_PATH": {
-          "PERSON": 1,
-          "DOMAIN": 5
-        },
-        "CUSTOMER_NAME": {
-          "PERSON": 4
-        },
-        "EMPLOYEE_NAME": {
-          "PERSON": 6
-        },
         "ADDRESS": {
-          "GPS": 1,
-          "PERSON": 1,
+          "CITY": 2,
           "COUNTRY": 1
         },
+        "IBAN": {
+          "CREDIT_CARD": 4
+        },
+        "NONE": {
+          "CITY": 10,
+          "FILE_PATH": 1,
+          "EMPLOYEE_NAME": 1,
+          "COMPANY": 3,
+          "COUNTRY": 1,
+          "PHONE": 1,
+          "ADDRESS": 3,
+          "DOMAIN": 1,
+          "PERSON": 3,
+          "API_KEY": 1,
+          "EMAIL": 1,
+          "JWT": 1
+        },
+        "EMPLOYEE_NAME": {
+          "EMPLOYEE_NAME": 1
+        },
+        "CITY": {
+          "CITY": 3
+        },
         "IP_ADDRESS": {
-          "IP_ADDRESS": 1,
-          "GPS": 2
+          "IP_ADDRESS": 2
         },
-        "PHONE": {
-          "PHONE": 1
-        },
-        "DOMAIN": {
+        "PERSON": {
           "PERSON": 1
         },
-        "EMAIL": {
-          "PERSON": 1
+        "BANK_ACCOUNT": {
+          "CREDIT_CARD": 2
         }
       },
       "example_results": [
@@ -4328,30 +2388,32 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "CITY",
             "COUNTRY"
           ]
         },
@@ -4359,35 +2421,33 @@
           "index": 3,
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
-          "detected": 5,
-          "true_positives": 1,
-          "false_positives": 4,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
+            "BANK_ACCOUNT",
             "CREDIT_CARD",
-            "CUSTOMER_NAME",
-            "IBAN",
-            "PHONE"
+            "IBAN"
           ]
         },
         {
           "index": 4,
           "text_preview": "Credit card: 4111-1111-1111-1111 and another card 5500 0000 0000 0004",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD",
-            "PHONE"
+            "CREDIT_CARD"
           ]
         },
         {
@@ -4471,31 +2531,29 @@
           "index": 10,
           "text_preview": "Database URL: postgresql://admin:secret@db.internal:5432/production",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 11,
           "text_preview": "Internal URL: https://jenkins.internal:8080/job/deploy and https://admin.corp.in",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "DOMAIN",
             "PRIVATE_URL"
           ]
         },
@@ -4518,14 +2576,15 @@
           "index": 13,
           "text_preview": "Coordinates: 40.7128, -74.0060 (NYC) and lat: 51.5074, lon: -0.1278 (London)",
           "expected": 4,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 5,
+          "true_positives": 4,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
@@ -4533,17 +2592,15 @@
           "index": 14,
           "text_preview": "File path: /home/alice/projects/src/main/config.yaml and C:\\Users\\Bob\\Documents\\",
           "expected": 2,
-          "detected": 5,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 3,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "DOMAIN",
-            "FILE_PATH",
-            "PERSON"
+            "FILE_PATH"
           ]
         },
         {
@@ -4565,9 +2622,9 @@
           "index": 16,
           "text_preview": "Our customer Jane Smith from Widgets Inc. wants her data removed.",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -4575,17 +2632,16 @@
           ],
           "detected_types": [
             "COMPANY",
-            "CUSTOMER_NAME",
-            "PERSON"
+            "CUSTOMER_NAME"
           ]
         },
         {
           "index": 17,
           "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
@@ -4593,8 +2649,7 @@
           ],
           "detected_types": [
             "EMPLOYEE_NAME",
-            "IP_ADDRESS",
-            "PERSON"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4620,18 +2675,17 @@
           "index": 19,
           "text_preview": "The best customer we have is Clara Oswald and she works at Data Corp.",
           "expected": 2,
-          "detected": 3,
-          "true_positives": 1,
-          "false_positives": 2,
-          "false_negatives": 1,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "CUSTOMER_NAME"
           ],
           "detected_types": [
             "COMPANY",
-            "CUSTOMER_NAME",
-            "PERSON"
+            "CUSTOMER_NAME"
           ]
         },
         {
@@ -4648,7 +2702,6 @@
           ],
           "detected_types": [
             "EMPLOYEE_NAME",
-            "PERSON",
             "PROJECT_NAME"
           ]
         },
@@ -4657,25 +2710,25 @@
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
             "ADDRESS",
-            "COUNTRY"
+            "CITY"
           ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 2,
+          "detected": 4,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 3,
           "false_negatives": 2,
           "expected_types": [
             "ADDRESS",
@@ -4683,8 +2736,7 @@
             "COUNTRY"
           ],
           "detected_types": [
-            "COUNTRY",
-            "GPS"
+            "CITY"
           ]
         },
         {
@@ -4706,16 +2758,15 @@
           "index": 24,
           "text_preview": "Token: eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiJ9.SflKxwRJSMeKKF2",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "JWT"
           ],
           "detected_types": [
-            "JWT",
-            "PERSON"
+            "JWT"
           ]
         },
         {
@@ -4737,33 +2788,30 @@
           "index": 26,
           "text_preview": "Redis connection: redis://default:password@cache-cluster.internal:6379",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 27,
           "text_preview": "MongoDB: mongodb://admin:secret@mongo-prod.internal:27017/sales",
           "expected": 1,
-          "detected": 3,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL",
-            "PERSON"
+            "DATABASE_URL"
           ]
         },
         {
@@ -4785,14 +2833,17 @@
           "index": 29,
           "text_preview": "Coordinates: 48.8566 N, 2.3522 E is the center of Paris",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY",
+            "GPS"
+          ]
         },
         {
           "index": 30,
@@ -4828,48 +2879,47 @@
           "index": 32,
           "text_preview": "CC: 3782-822463-10005 (Amex) and 6011-1111-1111-1117 (Discover)",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD",
-            "PHONE"
+            "CREDIT_CARD"
           ]
         },
         {
           "index": 33,
           "text_preview": "Bank: 98765432109876543210 and IBAN: GB29 NWBK 6016 1331 9268 19",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 0,
-          "false_positives": 2,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
+            "BANK_ACCOUNT",
             "CREDIT_CARD",
-            "PHONE"
+            "IBAN"
           ]
         },
         {
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL"
           ]
         },
@@ -4877,15 +2927,14 @@
           "index": 35,
           "text_preview": "File paths: /var/log/nginx/access.log and /etc/ssh/sshd_config",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "DOMAIN",
             "FILE_PATH"
           ]
         },
@@ -4910,9 +2959,9 @@
           "index": 37,
           "text_preview": "IT: www.example.com, support@help.io, 192.168.0.1, and /tmp/test/data/cache.log",
           "expected": 3,
-          "detected": 5,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -4930,25 +2979,24 @@
           "index": 38,
           "text_preview": "Connect as user: postgresql://app_user:Str0ng!Pass@db-prod.internal:5432/analyti",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 39,
           "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
           "expected": 2,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 3,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
@@ -4956,8 +3004,7 @@
           ],
           "detected_types": [
             "EMPLOYEE_NAME",
-            "IP_ADDRESS",
-            "PERSON"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4965,26 +3012,26 @@
           "text_preview": "Customer: Martha Jones (martha.jones@bigpharma.com) order #ORD-001",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "CUSTOMER_NAME",
+            "EMAIL"
           ]
         },
         {
           "index": 41,
           "text_preview": "Project Nebula starts Q1 and Project Orion is in maintenance mode.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PROJECT_NAME"
           ],
@@ -5011,9 +3058,9 @@
           "index": 43,
           "text_preview": "Compressed IPv6: 2001:db8::1 and fe80::1",
           "expected": 2,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
@@ -5026,33 +3073,34 @@
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
             "ADDRESS",
-            "COUNTRY",
-            "PERSON"
+            "COUNTRY"
           ]
         },
         {
           "index": 45,
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COMPANY",
             "PERSON"
           ],
           "detected_types": [
+            "CITY",
+            "COMPANY",
             "PERSON"
           ]
         },
@@ -5060,14 +3108,16 @@
           "index": 46,
           "text_preview": "City pop: Tokyo (37M), Delhi (32M), Shanghai (28M)",
           "expected": 3,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 3,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 47,
@@ -5103,15 +3153,14 @@
           "index": 49,
           "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "GPS",
             "IP_ADDRESS"
           ]
         },
@@ -5119,9 +3168,9 @@
           "index": 50,
           "text_preview": "Phone: +1-212-555-0198 and (415) 555-2671 and 555-123-4567",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
@@ -5134,32 +3183,30 @@
           "index": 51,
           "text_preview": "Email: test.user+tag@mail.company.io",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "EMAIL"
           ]
         },
         {
           "index": 52,
           "text_preview": "Email: firstname_lastname@mail-server.co.jp",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "EMAIL"
           ]
         },
         {
@@ -5181,14 +3228,15 @@
           "index": 54,
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 4,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 6,
+          "true_positives": 4,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
@@ -5196,28 +3244,30 @@
           "index": 55,
           "text_preview": "GPS: 27.1751 N, 78.0421 E (Taj Mahal)",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "COMPANY",
+            "GPS"
+          ]
         },
         {
           "index": 56,
           "text_preview": "File: /opt/application/config/production/settings.json",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "DOMAIN",
             "FILE_PATH"
           ]
         },
@@ -5270,82 +3320,77 @@
           "index": 60,
           "text_preview": "MySQL: mysql://dev_user:dev_pass@mysql-dev.internal:3306/staging",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 61,
           "text_preview": "SQLite: sqlite:///data/db/production.db",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "DOMAIN"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 62,
           "text_preview": "Oracle: oracle://scott:tiger@oracle.internal:1521/XEPDB1",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL",
-            "EMAIL"
+            "DATABASE_URL"
           ]
         },
         {
           "index": 63,
           "text_preview": "IBAN: FR76 3000 6000 0112 3456 7890 189",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "IBAN",
-            "PHONE"
+            "IBAN"
           ]
         },
         {
           "index": 64,
           "text_preview": "IBAN: CH93 0076 2011 6238 5295 7",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "IBAN",
-            "PHONE"
+            "IBAN"
           ]
         },
         {
@@ -5382,32 +3427,30 @@
           "index": 67,
           "text_preview": "Token: secret_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "API_KEY"
           ],
           "detected_types": [
-            "API_KEY",
-            "PERSON"
+            "API_KEY"
           ]
         },
         {
           "index": 68,
           "text_preview": "Domain: example.internal and mysql.corp.local and api.staging.private",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
-            "PERSON"
+            "DOMAIN"
           ]
         },
         {
@@ -5415,16 +3458,16 @@
           "text_preview": "Employee: Rose Tyler (rose@torchwood.xyz), employee: Jack Harkness (jack@torchwo",
           "expected": 4,
           "detected": 4,
-          "true_positives": 2,
-          "false_positives": 2,
-          "false_negatives": 2,
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME"
           ],
           "detected_types": [
             "EMAIL",
-            "PERSON"
+            "EMPLOYEE_NAME"
           ]
         },
         {
@@ -5432,17 +3475,17 @@
           "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
           "expected": 3,
           "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
+            "CUSTOMER_NAME",
             "EMAIL",
-            "PERSON",
             "PROJECT_NAME"
           ]
         },
@@ -5500,15 +3543,14 @@
           "index": 74,
           "text_preview": "Private endpoint: https://control-plane.internal:8443/api/v1/config",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "DOMAIN",
             "PRIVATE_URL"
           ]
         },
@@ -5531,15 +3573,14 @@
           "index": 76,
           "text_preview": "Internal app: https://payroll.corp.local/admin",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "DOMAIN",
             "PRIVATE_URL"
           ]
         },
@@ -5547,14 +3588,16 @@
           "index": 77,
           "text_preview": "City: The population of Mumbai is over 20 million.",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 78,
@@ -5590,14 +3633,15 @@
           "index": 80,
           "text_preview": "Phone: +49 30 12345678 (Berlin office)",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
+            "CITY",
             "PHONE"
           ]
         },
@@ -5621,14 +3665,16 @@
           "index": 82,
           "text_preview": "JWT: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "JWT"
           ],
-          "detected_types": []
+          "detected_types": [
+            "JWT"
+          ]
         },
         {
           "index": 83,
@@ -5664,15 +3710,14 @@
           "index": 85,
           "text_preview": "File: D:\\Projects\\Backup\\2024\\financial\\statements.xlsx",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "DOMAIN",
             "FILE_PATH"
           ]
         },
@@ -5680,14 +3725,15 @@
           "index": 86,
           "text_preview": "GPS: lat: 55.7558, lng: 37.6173 (Moscow) and lat: 59.9343, lng: 30.3351 (SPB)",
           "expected": 4,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 5,
+          "true_positives": 4,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
@@ -5696,9 +3742,9 @@
           "text_preview": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
           "expected": 3,
           "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME",
@@ -5706,7 +3752,7 @@
           ],
           "detected_types": [
             "EMAIL",
-            "PERSON",
+            "EMPLOYEE_NAME",
             "PROJECT_NAME"
           ]
         },
@@ -5714,16 +3760,17 @@
           "index": 88,
           "text_preview": "Customer: River Song (river@library.silence) - project Impossible Astronaut",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
+            "CUSTOMER_NAME",
             "EMAIL",
             "PROJECT_NAME"
           ]
@@ -5813,27 +3860,23 @@
           "index": 96,
           "text_preview": "Version 3.1.4 is the latest release of the software package.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "COMPANY"
-          ]
+          "detected_types": []
         },
         {
           "index": 97,
           "text_preview": "The year 2025 will be important for our company growth.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "COMPANY"
-          ]
+          "detected_types": []
         },
         {
           "index": 98,
@@ -5872,28 +3915,27 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 0,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 3,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
             "ADDRESS",
-            "PERSON"
+            "CITY",
+            "COMPANY"
           ]
         },
         {
           "index": 102,
           "text_preview": "User 192.168.x.x is a common notation for private networks.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "COMPANY"
-          ]
+          "detected_types": []
         },
         {
           "index": 103,
@@ -5910,12 +3952,12 @@
         },
         {
           "index": 104,
-          "text_preview": "Unicode PII: \u8054\u7cfb\u7528\u6237\u5f20\u4f1f\uff0c\u90ae\u7bb1\u662fzhangwei@example.cn\uff0c\u7535\u8bdd+86 138-0013-8000",
+          "text_preview": "Unicode PII: 联系用户张伟，邮箱是zhangwei@example.cn，电话+86 138-0013-8000",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
@@ -5923,17 +3965,18 @@
           ],
           "detected_types": [
             "EMAIL",
+            "PERSON",
             "PHONE"
           ]
         },
         {
           "index": 105,
-          "text_preview": "Arabic: \u0627\u062a\u0635\u0644 \u0628\u0640 \u0623\u062d\u0645\u062f \u0639\u0644\u0649 ahmed@example.sa \u0623\u0648 +966 55 123 4567",
+          "text_preview": "Arabic: اتصل بـ أحمد على ahmed@example.sa أو +966 55 123 4567",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
@@ -5941,34 +3984,37 @@
           ],
           "detected_types": [
             "EMAIL",
+            "PERSON",
             "PHONE"
           ]
         },
         {
           "index": 106,
-          "text_preview": "Russian: \u0418\u0432\u0430\u043d \u0418\u0432\u0430\u043d\u043e\u0432, email: ivan@example.ru, \u0442\u0435\u043b: +7 495 123-45-67",
+          "text_preview": "Russian: Иван Иванов, email: ivan@example.ru, тел: +7 495 123-45-67",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
             "PHONE"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "PERSON",
+            "PHONE"
           ]
         },
         {
           "index": 107,
-          "text_preview": "Japanese: \u7530\u4e2d\u592a\u90ce\u306e\u30e1\u30fc\u30eb\u306ftanaka@example.jp\u3001\u96fb\u8a71\u306f+81 90-1234-5678",
+          "text_preview": "Japanese: 田中太郎のメールはtanaka@example.jp、電話は+81 90-1234-5678",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
@@ -5976,17 +4022,18 @@
           ],
           "detected_types": [
             "EMAIL",
+            "PERSON",
             "PHONE"
           ]
         },
         {
           "index": 108,
-          "text_preview": "Greek: O \u0393\u03b9\u03ce\u03c1\u03b3\u03bf\u03c2 \u03ad\u03c7\u03b5\u03b9 email: giorgos@example.gr",
+          "text_preview": "Greek: O Γιώργος έχει email: giorgos@example.gr",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON"
@@ -6013,7 +4060,7 @@
         },
         {
           "index": 110,
-          "text_preview": "mixed RTL/LTR: my email is john@doe.com and my phone is +972 50 123 4567 \u05e9\u05dc\u05d5\u05dd",
+          "text_preview": "mixed RTL/LTR: my email is john@doe.com and my phone is +972 50 123 4567 שלום",
           "expected": 2,
           "detected": 2,
           "true_positives": 2,
@@ -6069,12 +4116,14 @@
           "index": 114,
           "text_preview": "Person: James researcher published his findings in Nature at London University.",
           "expected": 0,
-          "detected": 1,
+          "detected": 5,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 5,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
+            "CITY",
+            "COMPANY",
             "PERSON"
           ]
         },
@@ -6082,14 +4131,12 @@
           "index": 115,
           "text_preview": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "PHONE"
-          ]
+          "detected_types": []
         },
         {
           "index": 116,
@@ -6106,14 +4153,12 @@
           "index": 117,
           "text_preview": "Email-like: admin@localhost is technically valid but internal-only.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "PRIVATE_URL"
-          ]
+          "detected_types": []
         },
         {
           "index": 118,
@@ -6152,46 +4197,16 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "JWT"
+          ]
         }
       ]
-    }
-  },
-  "comparison": {
-    "overall_precision": {
-      "regex": 0.7273,
-      "presidio": 0.6418,
-      "pipeline": 0.6518
-    },
-    "overall_recall": {
-      "regex": 0.7826,
-      "presidio": 0.2337,
-      "pipeline": 0.7935
-    },
-    "overall_f1": {
-      "regex": 0.7539,
-      "presidio": 0.3426,
-      "pipeline": 0.7157
-    },
-    "total_tp": {
-      "regex": 144,
-      "presidio": 43,
-      "pipeline": 146
-    },
-    "total_fp": {
-      "regex": 54,
-      "presidio": 24,
-      "pipeline": 78
-    },
-    "total_fn": {
-      "regex": 40,
-      "presidio": 141,
-      "pipeline": 38
     }
   }
 }

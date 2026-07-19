@@ -101,7 +101,10 @@ class RegexDetector(Detector):
         compiled: list[tuple[EntityType, Pattern[str], float]] = []
         for type_name, raw_pattern, score in patterns.PATTERN_DEFS:
             entity_type = _resolve_entity_type(type_name)
-            pattern = re.compile(raw_pattern, re.IGNORECASE)
+            # Use re.UNICODE — patterns use inline (?i) flags for case-insensitivity,
+            # and (?-i:...) to selectively disable it. re.IGNORECASE would override
+            # the (?-i:...) flag and break patterns that require case sensitivity.
+            pattern = re.compile(raw_pattern, re.UNICODE)
             compiled.append((entity_type, pattern, score))
         return compiled
 

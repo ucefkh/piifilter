@@ -104,7 +104,7 @@ class FilterPipeline:
         all_entities = []
         for detector in self.registry.list_detectors():
             try:
-                entities = await detector.detect(session)
+                entities = await detector.detect(session.prompt)
                 all_entities.extend(entities)
             except Exception as exc:
                 logger.warning("Detector %s failed: %s", detector.name, exc)
@@ -121,9 +121,11 @@ class FilterPipeline:
         # Sort by detector priority first (regex=0, presidio=1, gliner=2),
         # then by score descending, then position.
         all_entities.sort(key=lambda e: (
-            0 if e.detector == "regex" else 1 if e.detector == "presidio" else 2,
-            -e.score,
-            e.start,
+            0 if (e.get("detector") if isinstance(e, dict) else e.detector) == "regex"
+            else 1 if (e.get("detector") if isinstance(e, dict) else e.detector) == "presidio"
+            else 2,
+            -(e.get("score") if isinstance(e, dict) else e.score),
+            e.get("start") if isinstance(e, dict) else e.start,
         ))
 
         # Dedup by interval: if a higher-priority (regex) entity already
@@ -133,14 +135,19 @@ class FilterPipeline:
         seen_intervals: dict[str, list[tuple[int, int]]] = {}
         deduped = []
         for e in all_entities:
-            et = e.type.value if hasattr(e.type, 'value') else str(e.type)
+            if isinstance(e, dict):
+                et = e.get("entity_type", "UNKNOWN")
+                estart, eend = e.get("start", 0), e.get("end", 0)
+            else:
+                et = e.type.value if hasattr(e.type, 'value') else str(e.type)
+                estart, eend = e.start, e.end
             intervals = seen_intervals.get(et, [])
-            contained = any(s <= e.start and e.end <= e2 for s, e2 in intervals)
+            contained = any(s <= estart and eend <= e2 for s, e2 in intervals)
             if not contained:
-                seen_intervals.setdefault(et, []).append((e.start, e.end))
+                seen_intervals.setdefault(et, []).append((estart, eend))
                 deduped.append(e)
 
-        deduped.sort(key=lambda e: e.start)
+        deduped.sort(key=lambda e: e.get("start") if isinstance(e, dict) else e.start)
         session.entities = deduped
         return session
 

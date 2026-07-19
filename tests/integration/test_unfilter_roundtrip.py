@@ -86,6 +86,20 @@ async def test_unfilter_roundtrip_basic():
     alias_store = AliasStore(seed="roundtrip_test")
     registry = PluginRegistry()
 
+    # Register detectors
+    from piifilter_detector_regex.detector import RegexDetector
+    regex_detector = RegexDetector()
+    await regex_detector.initialize()
+    registry.register_detector(regex_detector, overwrite=True)
+
+    try:
+        from piifilter_detector_presidio.detector import PresidioDetector
+        presidio_detector = PresidioDetector()
+        await presidio_detector.initialize()
+        registry.register_detector(presidio_detector, overwrite=True)
+    except Exception:
+        pass
+
     from piifilter_provider_lmstudio.provider import LMStudioProvider
 
     provider = LMStudioProvider()

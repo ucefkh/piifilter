@@ -52,9 +52,13 @@ PRESIDIO_TYPE_MAP: dict[str, EntityType] = {
     "IP_ADDRESS": EntityType.IP_ADDRESS,
     # Credentials
     "API_KEY": EntityType.API_KEY,
-    # Person — presidio NER can be noisy, so this will be heavily
-    # pruned by the score threshold below
-    "PERSON": EntityType.PERSON,
+    # Person — REMOVED from Presidio mapping because:
+    #   1. The regex detector already catches PERSON with recall=1.0 and precision=0.75
+    #   2. Presidio PERSON adds ~26 false positives (precision drops to 0.41) with zero
+    #      additional true positives
+    #   3. CUSTOMER_NAME/EMPLOYEE_NAME patterns cover named-person-in-context cases
+    # See: benchmarks/recall-results.json
+    # "PERSON": EntityType.PERSON,
 }
 
 PRESIDIO_KNOWN_ENTITIES: set[str] = set(PRESIDIO_TYPE_MAP.keys())
