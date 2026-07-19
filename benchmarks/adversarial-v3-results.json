@@ -549,7 +549,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "19850415",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -581,7 +581,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "12251999",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -600,7 +600,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "20231130",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -632,7 +632,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "19900214",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -651,7 +651,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "11222005",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -670,7 +670,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "20100901",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -1710,7 +1710,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "172162541",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -1735,7 +1735,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "203011342",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -1779,7 +1779,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "198511007",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -1803,7 +1803,7 @@
       "full_detections": [
         {
           "type": "PHONE",
-          "value": "72086132315",
+          "value": "720861323015",
           "score": 0.6
         }
       ],
@@ -1841,7 +1841,7 @@
       "full_detections": [
         {
           "type": "PHONE",
-          "value": "31894257664",
+          "value": "318942576064",
           "score": 0.6
         }
       ],
@@ -2107,7 +2107,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "12345678",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2126,7 +2126,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "98765432",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2297,7 +2297,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "78410256",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2316,7 +2316,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "93645782",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2335,7 +2335,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "21086357",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2364,7 +2364,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "50291837",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -2394,7 +2394,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "74130956",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2413,7 +2413,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "83267140",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2733,7 +2733,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "563289412",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2752,7 +2752,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "389560174",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2803,7 +2803,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "430987621",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2822,7 +2822,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "287156930",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2841,7 +2841,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "651420873",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -2860,7 +2860,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "908763145",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -4183,7 +4183,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "20250410",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -4228,7 +4228,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "20101202",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -4260,7 +4260,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "51300000",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -4279,7 +4279,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "20245002",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -4298,7 +4298,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "20245002",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -4317,7 +4317,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "52220000",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -4336,7 +4336,7 @@
         {
           "type": "IP_ADDRESS",
           "value": "20153010",
-          "score": 0.65
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,

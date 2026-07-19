@@ -35,6 +35,8 @@ class DetectionConfig(BaseModel):
     enabled_detectors: list[str] = Field(default_factory=lambda: ["regex", "presidio"])
     confidence_threshold: float = 0.5
     min_votes: int = 1  # how many detectors must agree
+    pipeline_mode: bool = True  # when True, UNION raw-regex + pipeline results
+                               # (max merge: never let pipeline remove a correct regex match)
 
 
 class ReplacementConfig(BaseModel):

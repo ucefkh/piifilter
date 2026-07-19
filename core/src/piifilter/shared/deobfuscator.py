@@ -236,13 +236,16 @@ class Deobfuscator:
         text = self._decode_base64(text, log)
         text = self._extract_area_serial(text, log)
         text = self._reconstruct_split_tokens(text, log)
+        # NEW: Reversed words — catch reversed email components and person names
+        # Run BEFORE swap_case and l33t so case-shift and digit-substitution
+        # don't destroy the patterns we need to match (e.g. "Doe Jane" must
+        # stay as proper-case for reversed-name detection).
+        text = self._decode_reversed_words(text, log)
         # NEW: Extended transforms — run late, after basic cleanup
         text = self._decode_l33t(text, log)
         text = self._remove_punctuation_stuffing(text, log)
         text = self._decode_pig_latin(text, log)
         text = self._swap_case(text, log)
-        # NEW: Reversed words — catch reversed email components and person names
-        text = self._decode_reversed_words(text, log)
         return text, log, text_for_gps
 
     # ── 1. NFKC normalization ──────────────────────────────────────────
@@ -696,7 +699,15 @@ class Deobfuscator:
 
         def _strip_leading_zeros(m: re.Match) -> str:
             a, b, c, d = m.group(1), m.group(2), m.group(3), m.group(4)
-            return f"{int(a)}.{int(b)}.{int(c)}.{int(d)}"
+            ia, ib, ic, id_ = int(a), int(b), int(c), int(d)
+            # Only strip leading zeros if ALL resulting values are valid
+            # IP octets (0-255). This prevents destroying credit card numbers
+            # like 5500.0000.0000.0004 where groups > 255 (5500) or leading
+            # zeros (0000) that int() would collapse to 0 are legitimate
+            # CC groups, not IP octets.
+            if all(v <= 255 for v in (ia, ib, ic, id_)):
+                return f"{ia}.{ib}.{ic}.{id_}"
+            return m.group(0)
 
         text = cls._IP_OCTET_DOT_RE.sub(_strip_leading_zeros, text)
         if text != original:
@@ -990,14 +1001,17 @@ class Deobfuscator:
 
     # ── B. Binary 8-bit decoder ────────────────────────────────────────
     # Detect space-separated 8-bit binary groups, strip spaces, decode to ASCII
-    _BINARY8_RE = re.compile(r"\b[01]{8}(?:\s+[01]{8}){7,}\b")
+    # Match 3+ groups (24+ bits = 3+ chars) — catches short binary CC/SSN prefixes
+    _BINARY8_RE = re.compile(r"\b[01]{8}(?:\s+[01]{8}){3,}\b")
 
     @classmethod
     def _decode_binary_strings(cls, text: str, log: list) -> str:
-        """Detect long binary (0/1) strings, decode 8-bit chunks to ASCII.
+        """Detect binary (0/1) strings, decode 8-bit chunks to ASCII.
 
-        Handles space-separated 8-bit groups. Only replaces when the decoded
-        result contains PII-relevant characters.
+        Handles space-separated 8-bit groups (3+ groups = 24+ bits).
+        Only replaces when the decoded result contains PII-relevant characters.
+        After decoding, extracts embedded digit-only runs (CC/SSN/phone numbers)
+        that may be mixed with prefix words in the decoded text.
         """
         original = text
 
@@ -1011,8 +1025,19 @@ class Deobfuscator:
                 byte = cleaned[i:i+8]
                 chars.append(chr(int(byte, 2)))
             decoded = "".join(chars)
+            # Only replace if decoded has PII-relevant chars
             if any(c.isalnum() or c in "@._-:# " for c in decoded):
-                return decoded
+                # Split digit suffix from alpha prefix so standalone digit
+                # patterns (CC, SSN, phone) can match independently.
+                # E.g. "TEST-CARD12345670123" — separate the digit run from
+                # the alphabetic prefix so the CC/phone patterns can match
+                # just the digits.
+                separated = re.sub(
+                    r"([a-zA-Z-]+)(\d{8,})$",
+                    r"\1 \2",
+                    decoded,
+                )
+                return separated
             return bin_str
 
         text = cls._BINARY8_RE.sub(_try_decode_binary, text)

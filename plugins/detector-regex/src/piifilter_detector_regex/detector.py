@@ -73,15 +73,34 @@ class RegexDetector(Detector):
         """
         t0 = time.monotonic()
         cleaned, _log, text_for_gps = self._deobfuscator(text)
-        # Run GPS patterns BEFORE inner-separator stripping (dots are essential
-        # for GPS coordinate matching — stripping would destroy them).
-        gps_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.GPS})
-        # Run DATE patterns on pre-strip text too — dates like "12/31/2025" and
-        # "2024-01-15" contain "/" and "-" separators that _strip_inner_separators
-        # removes, collapsing them into bare digit runs that then get misdetected
-        # as decimal IP addresses by the \b(?:[1-9]\d{6,9})\b pattern.
-        date_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.DATE})
-        # Now strip inner separators and run remaining patterns
+
+        # ── Pre-strip patterns ─────────────────────────────────────────
+        # These entity types MUST run on deobfuscated-but-NOT-stripped text
+        # because _strip_inner_separators removes dots, dashes, slashes, and
+        # other separators that are essential for pattern matching.
+        #
+        # GPS    — dots in coordinates (e.g. 40.7128) are destroyed by stripping
+        # DATE   — "/" and "-" in dates (12/31/2025, 2024-01-15) are destroyed
+        # IP_ADDRESS — dots in dotted-decimal IPs (192.168.1.100) are destroyed,
+        #             causing ALL standard IPv4 addresses to be missed after
+        #             stripping reduces them to bare digit runs. Without this fix,
+        #             only the unreliable decimal-IP catch-all pattern (score 0.65)
+        #             fires, producing false positives on SSN-like and date-like
+        #             digit runs while missing real IPs entirely.
+        gps_entities, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.GPS}
+        )
+        date_entities, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.DATE}
+        )
+        ip_entities, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.IP_ADDRESS}
+        )
+
+        # ── Now strip inner separators for structural patterns ──────────
+        # After stripping, patterns like bare-digit CC, SSN, API keys, etc.
+        # can match. IP patterns MUST NOT run here because stripping has
+        # already destroyed dotted-decimal format.
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
         # Structural recall pass: Luhn check on ALL 13-19 digit runs
@@ -90,9 +109,10 @@ class RegexDetector(Detector):
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, cc_ssn_spans)
         entities.extend(ssn_found)
-        # Merge pre-strip entities (GPS + DATE) with the rest (from stripped text)
+        # Merge pre-strip entities (GPS + DATE + IP) with the rest (from stripped text)
         entities.extend(gps_entities)
         entities.extend(date_entities)
+        entities.extend(ip_entities)
         entities.sort(key=lambda e: e.start)
         elapsed = time.monotonic() - t0
 
@@ -123,10 +143,11 @@ class RegexDetector(Detector):
         IMPORTANT: GPS patterns are run on pre-strip text (see detect() docs).
         """
         cleaned, _log, text_for_gps = self._deobfuscator(session.prompt)
-        # GPS: run on pre-strip text so decimal places survive
+        # Pre-strip patterns: GPS, DATE, IP — these need dots/slashes/dashes
+        # to survive, which _strip_inner_separators destroys.
         gps_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.GPS})
-        # DATE: run on pre-strip text so "/" and "-" separators survive stripping
         date_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.DATE})
+        ip_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.IP_ADDRESS})
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
         # Structural recall pass
@@ -136,6 +157,7 @@ class RegexDetector(Detector):
         entities.extend(ssn_found)
         entities.extend(gps_entities)
         entities.extend(date_entities)
+        entities.extend(ip_entities)
         entities.sort(key=lambda e: e.start)
         return entities
 
@@ -250,6 +272,8 @@ class RegexDetector(Detector):
                 # 32-bit unsigned integer range (16777216 to 4294967295).
                 # This prevents 8-digit dates like "12312025" (Dec 31, 2025)
                 # from being misclassified as decimal IP addresses.
+                # Additional anti-FP heuristics suppress SSN and phone numbers
+                # that happen to decode to valid IP octets.
                 if entity_type == EntityType.IP_ADDRESS and score < 0.80:
                     # Low-confidence IP patterns (decimal IP) need numeric validation
                     ip_text = match.group()
@@ -260,6 +284,60 @@ class RegexDetector(Detector):
                             if ip_int < 16777216 or ip_int > 4294967295:
                                 continue
                         except ValueError:
+                            continue
+
+                    # ── Anti-SSN heuristic: exclude 9-digit numbers that pass
+                    # SSN area/group/serial validation — they are SSNs, not IPs.
+                    if len(digits_only) == 9:
+                        area, group, serial = digits_only[:3], digits_only[3:5], digits_only[5:]
+                        if (area != "000" and area != "666"
+                                and not ("900" <= area <= "999")
+                                and group != "00" and serial != "0000"):
+                            continue
+
+                    # ── Anti-phone heuristic: exclude 10-digit numbers that
+                    # would have a first octet of 1 (common US phone prefix)
+                    # and second octet > 0 (no actual IP starts with 1.0.x.x
+                    # as a bare decimal representation 99.9% of the time).
+                    # NANP phone numbers start with [2-9] for the area code
+                    # but the first digit of a 10-digit decimal IP is always
+                    # determined by the numeric value. 10-digit IPs starting
+                    # with '1' (1000000000 to 1999999999) decode to first
+                    # octet 59-119 which is a valid public IP range, but
+                    # bare 10-digit numbers starting with 1 are virtually
+                    # always phone numbers.
+                    if len(digits_only) == 10 and digits_only.startswith("1"):
+                        # Check if the context before the match suggests
+                        # a phone number: look for phone-related keywords
+                        # within 50 chars before the match.
+                        context_start = max(0, start - 60)
+                        context_before = text[context_start:start].lower()
+                        phone_keywords = (
+                            "phone", "tel", "mobile", "cell", "call",
+                            "contact", "number", "dial"
+                        )
+                        if any(kw in context_before for kw in phone_keywords):
+                            continue
+                        # Also skip common bare phone formats:
+                        # 10-digit numbers starting with 1 that have
+                        # second digit 0-9 and an area code that starts
+                        # with a phone-valid digit (2-9 for NANP).
+                        # Many phone numbers like 15551234567 are 11 digits
+                        # so they won't match, but 10-digit numbers like
+                        # 4155552671 (not starting with 1) won't be caught
+                        # here. The 10-digit numbers starting with 1 are
+                        # almost exclusively phones — exclude them entirely.
+                        continue
+
+                    # ── Anti-SSN heuristic for 10-digit numbers: if the
+                    # first 9 digits pass SSN validation, it's likely an
+                    # SSN with a trailing digit from adjacent text.
+                    if len(digits_only) == 10:
+                        first_nine = digits_only[:9]
+                        area_g, group_g, serial_g = first_nine[:3], first_nine[3:5], first_nine[5:]
+                        if (area_g != "000" and area_g != "666"
+                                and not ("900" <= area_g <= "999")
+                                and group_g != "00" and serial_g != "0000"):
                             continue
 
                 entities.append(

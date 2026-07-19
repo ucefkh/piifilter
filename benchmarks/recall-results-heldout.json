@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out)",
-  "timestamp": "2026-07-19T23:25:11Z",
+  "timestamp": "2026-07-19T23:43:32Z",
   "dataset": {
     "path": "benchmarks/data/pii_dataset_v2.json",
     "total_examples": 2365,
@@ -46,13 +46,13 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 495,
-      "total_true_positives": 380,
-      "total_false_positives": 115,
-      "total_false_negatives": 160,
-      "overall_precision": 0.7676767676767676,
-      "overall_recall": 0.7037037037037037,
-      "overall_f1": 0.7342995169082125,
+      "total_detected_entities": 531,
+      "total_true_positives": 423,
+      "total_false_positives": 108,
+      "total_false_negatives": 117,
+      "overall_precision": 0.7966101694915254,
+      "overall_recall": 0.7833333333333333,
+      "overall_f1": 0.7899159663865546,
       "per_type": {
         "ADDRESS": {
           "true_positives": 0,
@@ -175,23 +175,23 @@
           ]
         },
         "CREDIT_CARD": {
-          "true_positives": 58,
-          "false_positives": 1,
-          "false_negatives": 9,
-          "n": 67,
-          "precision": 0.9831,
-          "recall": 0.8657,
-          "f1": 0.9206,
-          "f2": 0.8869,
+          "true_positives": 68,
+          "false_positives": 2,
+          "false_negatives": 4,
+          "n": 72,
+          "precision": 0.9714,
+          "recall": 0.9444,
+          "f1": 0.9577,
+          "f2": 0.9497,
           "recall_ci": [
-            0.764,
-            0.9277
+            0.8657,
+            0.9782
           ],
           "real_n": 30,
-          "real_recall": 0.7,
+          "real_recall": 0.8667,
           "real_recall_ci": [
-            0.5212,
-            0.8334
+            0.7032,
+            0.9469
           ]
         },
         "CUSTOMER_NAME": {
@@ -375,23 +375,23 @@
           ]
         },
         "IP_ADDRESS": {
-          "true_positives": 16,
-          "false_positives": 33,
-          "false_negatives": 38,
-          "n": 54,
-          "precision": 0.3265,
-          "recall": 0.2963,
-          "f1": 0.3107,
-          "f2": 0.3019,
+          "true_positives": 92,
+          "false_positives": 26,
+          "false_negatives": 0,
+          "n": 92,
+          "precision": 0.7797,
+          "recall": 1.0,
+          "f1": 0.8762,
+          "f2": 0.9465,
           "recall_ci": [
-            0.1914,
-            0.4283
+            0.9599,
+            1.0
           ],
           "real_n": 46,
-          "real_recall": 0.1739,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0909,
-            0.3072
+            0.9229,
+            1.0
           ]
         },
         "JWT": {
@@ -456,13 +456,13 @@
         },
         "PHONE": {
           "true_positives": 112,
-          "false_positives": 31,
+          "false_positives": 30,
           "false_negatives": 1,
           "n": 113,
-          "precision": 0.7832,
+          "precision": 0.7887,
           "recall": 0.9912,
-          "f1": 0.875,
-          "f2": 0.9412,
+          "f1": 0.8784,
+          "f2": 0.9428,
           "recall_ci": [
             0.9516,
             0.9984
@@ -587,12 +587,14 @@
           "PRIVATE_URL": 7
         },
         "PHONE": {
-          "PHONE": 1
+          "PHONE": 1,
+          "IP_ADDRESS": 2
         },
         "IP_ADDRESS": {
-          "PHONE": 27,
+          "PHONE": 26,
+          "IP_ADDRESS": 6,
           "SOCIAL_SECURITY": 5,
-          "IP_ADDRESS": 1,
+          "CREDIT_CARD": 1,
           "BANK_ACCOUNT": 1
         },
         "JWT": {
@@ -600,7 +602,7 @@
           "JWT": 2
         },
         "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 26
+          "IP_ADDRESS": 11
         },
         "DATE": {
           "DATE": 3,
@@ -615,7 +617,8 @@
           "COUNTRY": 4
         },
         "PRIVATE_URL": {
-          "URL": 2
+          "URL": 2,
+          "IP_ADDRESS": 2
         },
         "COUNTRY": {
           "CITY": 2
@@ -623,9 +626,6 @@
         "BANK_ACCOUNT": {
           "CREDIT_CARD": 1,
           "PHONE": 1
-        },
-        "CREDIT_CARD": {
-          "IP_ADDRESS": 1
         },
         "PROJECT_NAME": {
           "PROJECT_NAME": 1
@@ -910,14 +910,15 @@
           "index": 18,
           "text_preview": "Obfuscated ip_address: 94.157.73.235/16",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -958,15 +959,14 @@
           "index": 21,
           "text_preview": "Hidden field: 5320-48-466",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -1004,14 +1004,15 @@
           "index": 24,
           "text_preview": "Encoded: 192.168.1.1/16",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -1019,15 +1020,14 @@
           "index": 25,
           "text_preview": "Found: 323134383630303530",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -1136,14 +1136,15 @@
           "index": 33,
           "text_preview": "Encoded: 164 . 32 . 199 . 232",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -1181,15 +1182,14 @@
           "index": 36,
           "text_preview": "Hidden field: 6789-45-123",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -1212,14 +1212,16 @@
           "index": 38,
           "text_preview": "Obfuscated ip_address: 012.0130.00.01",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 39,
@@ -1403,16 +1405,17 @@
           "index": 51,
           "text_preview": "Server server-39.corp at IP 47.94.124.103",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -1544,14 +1547,16 @@
           "index": 60,
           "text_preview": "Encoded: 10 point 0 point 0 point 5",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 61,
@@ -1746,15 +1751,14 @@
           "index": 74,
           "text_preview": "Data: 313330323933303131",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -1790,15 +1794,14 @@
           "index": 77,
           "text_preview": "SSN: 123-45-6789 and also 456-78-9012",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -2063,14 +2066,15 @@
           "index": 95,
           "text_preview": "Raw: 47.149.58.243 (IP)",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -2184,15 +2188,14 @@
           "index": 103,
           "text_preview": "Raw: MTUwLTE0LTE3MTY=",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -2259,14 +2262,15 @@
           "index": 108,
           "text_preview": "IPv6 address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -2437,14 +2441,16 @@
           "index": 120,
           "text_preview": "Compressed IPv6: 2001:db8::1 and fe80::1",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 4,
+          "true_positives": 2,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 121,
@@ -2555,14 +2561,16 @@
           "index": 128,
           "text_preview": "Data: 10 10 10 10",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 129,
@@ -2753,16 +2761,17 @@
           "index": 141,
           "text_preview": "Server server-14.corp at IP 44.121.95.140",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -2800,14 +2809,16 @@
           "index": 144,
           "text_preview": "Found: 10.0.0.1/16",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 145,
@@ -2828,14 +2839,15 @@
           "index": 146,
           "text_preview": "Raw: 166 point 16 point 56 point 184",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -2843,15 +2855,14 @@
           "index": 147,
           "text_preview": "Obfuscated social_security: 456 78 9012 (segmented)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -2965,14 +2976,15 @@
           "index": 155,
           "text_preview": "Data: 46 dot 157 dot 42 dot 191",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -2980,16 +2992,17 @@
           "index": 156,
           "text_preview": "Server server-10.corp at IP 168.153.172.244",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -2997,9 +3010,9 @@
           "index": 157,
           "text_preview": "Data: 99.89.149.88 (IP)",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
@@ -3087,14 +3100,15 @@
           "index": 163,
           "text_preview": "Local: http://127.0.0.1:8080/api",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 1,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "URL"
           ]
         },
@@ -3165,14 +3179,16 @@
           "index": 168,
           "text_preview": "Data: 172  16  0  1",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 169,
@@ -3223,14 +3239,15 @@
           "index": 172,
           "text_preview": "Obfuscated ip_address: 168.153.172.244 (IP)",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -3253,28 +3270,32 @@
           "index": 174,
           "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 1,
           "expected_types": [
             "EMPLOYEE_NAME",
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 175,
           "text_preview": "Encoded: 5500 . 0000 . 0000 . 0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 176,
@@ -3421,15 +3442,14 @@
           "index": 185,
           "text_preview": "Raw: 313037333432393339",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -3748,14 +3768,16 @@
           "index": 207,
           "text_preview": "Data: 5500 . 0000 . 0000 . 0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 208,
@@ -3866,14 +3888,15 @@
           "index": 215,
           "text_preview": "Raw: 138 125 117 210",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -3896,14 +3919,15 @@
           "index": 217,
           "text_preview": "Obfuscated ip_address: 144 point 30 point 226 point 101",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -4018,16 +4042,17 @@
           "index": 225,
           "text_preview": "Server server-33.corp at IP 126.51.126.114",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -4035,15 +4060,14 @@
           "index": 226,
           "text_preview": "Encoded: area 116 group 27 serial 6292",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -4080,15 +4104,14 @@
           "index": 229,
           "text_preview": "Hidden field: MTIzLTQ1LTY3ODk=",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -4139,15 +4162,14 @@
           "index": 233,
           "text_preview": "Data: 5311-70-574",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -4316,16 +4338,17 @@
           "index": 245,
           "text_preview": "Server server-17.local at IP 94.157.73.235",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -4333,14 +4356,15 @@
           "index": 246,
           "text_preview": "Local: http://127.0.0.1:5000/admin",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 1,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "URL"
           ]
         },
@@ -4449,14 +4473,16 @@
           "index": 254,
           "text_preview": "Found: 5500.0000.0000.0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 255,
@@ -4636,14 +4662,15 @@
           "index": 267,
           "text_preview": "Data: 555 123 4567",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -4666,16 +4693,17 @@
           "index": 269,
           "text_preview": "Server server-5.local at IP 136.15.159.86",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -4792,15 +4820,14 @@
           "index": 277,
           "text_preview": "Obfuscated social_security: 4083-76-759",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -4910,29 +4937,31 @@
           "index": 285,
           "text_preview": "Encoded: 0300.0250.01.0144",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "CREDIT_CARD",
+            "IP_ADDRESS"
           ]
         },
         {
           "index": 286,
           "text_preview": "Found: 54 point 55 point 143 point 201",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -4940,10 +4969,10 @@
           "index": 287,
           "text_preview": "The server at 10.0.0.1 handles requests from 192.168.1.50 to 172.16.0.10",
           "expected": 3,
-          "detected": 3,
-          "true_positives": 1,
+          "detected": 5,
+          "true_positives": 3,
           "false_positives": 2,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
@@ -4956,14 +4985,15 @@
           "index": 288,
           "text_preview": "Encoded: 2753611752",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -5067,14 +5097,14 @@
           "text_preview": "Data: 5424 . 0000 . 0000 . 0015",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "CREDIT_CARD"
           ]
         },
         {
@@ -5229,14 +5259,15 @@
           "index": 307,
           "text_preview": "Data: 3232235777",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -5261,14 +5292,16 @@
           "index": 309,
           "text_preview": "Found: 5500.0000.0000.0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 310,
@@ -5350,15 +5383,16 @@
           "index": 315,
           "text_preview": "Raw: 104.113.193.120/16",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "IP_ADDRESS"
           ]
         },
         {
@@ -5425,14 +5459,15 @@
           "index": 320,
           "text_preview": "Raw: 104 113 193 120",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -5455,14 +5490,15 @@
           "index": 322,
           "text_preview": "Raw: 138 point 125 point 117 point 210",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -5753,14 +5789,15 @@
           "index": 342,
           "text_preview": "Encoded: 0210.017.0237.0126",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -5900,9 +5937,9 @@
           "index": 352,
           "text_preview": "Raw: 192  168  0  1",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
@@ -6105,14 +6142,15 @@
           "index": 365,
           "text_preview": "Raw: 190.107.225.59 (IP)",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -6196,9 +6234,9 @@
           "index": 371,
           "text_preview": "Data: 9 3 4 4 3 6 9 5 8",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
@@ -6211,15 +6249,14 @@
           "index": 372,
           "text_preview": "Hidden field: area 123 group 45 serial 6789",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -6734,15 +6771,14 @@
           "index": 407,
           "text_preview": "Found: NTI4LTY2LTI1MTA=",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -6953,14 +6989,15 @@
           "index": 422,
           "text_preview": "Found: 1555123497",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -7032,15 +7069,14 @@
           "index": 427,
           "text_preview": "Found: 3693-23-622",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -7061,14 +7097,15 @@
           "index": 429,
           "text_preview": "Data: 47 dot 94 dot 124 dot 103",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -7162,14 +7199,15 @@
           "index": 436,
           "text_preview": "Data: 2886729729",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -7192,9 +7230,9 @@
           "index": 438,
           "text_preview": "Hidden field: 192 . 168 . 1 . 1",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
@@ -7310,15 +7348,14 @@
           "index": 446,
           "text_preview": "Obfuscated social_security: 145 02 8143 (segmented)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -7502,14 +7539,15 @@
           "index": 459,
           "text_preview": "Obfuscated ip_address: 31.154.220.62 (IP)",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -7715,13 +7753,13 @@
       "detector": "pipeline",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 579,
-      "total_true_positives": 412,
-      "total_false_positives": 167,
-      "total_false_negatives": 128,
-      "overall_precision": 0.7115716753022453,
-      "overall_recall": 0.762962962962963,
-      "overall_f1": 0.736371760500447,
+      "total_detected_entities": 600,
+      "total_true_positives": 443,
+      "total_false_positives": 157,
+      "total_false_negatives": 97,
+      "overall_precision": 0.7383333333333333,
+      "overall_recall": 0.8203703703703704,
+      "overall_f1": 0.7771929824561403,
       "per_type": {
         "ADDRESS": {
           "true_positives": 0,
@@ -7844,23 +7882,23 @@
           ]
         },
         "CREDIT_CARD": {
-          "true_positives": 58,
-          "false_positives": 12,
-          "false_negatives": 9,
-          "n": 67,
-          "precision": 0.8286,
-          "recall": 0.8657,
-          "f1": 0.8467,
-          "f2": 0.858,
+          "true_positives": 68,
+          "false_positives": 13,
+          "false_negatives": 4,
+          "n": 72,
+          "precision": 0.8395,
+          "recall": 0.9444,
+          "f1": 0.8889,
+          "f2": 0.9214,
           "recall_ci": [
-            0.764,
-            0.9277
+            0.8657,
+            0.9782
           ],
           "real_n": 30,
-          "real_recall": 0.7,
+          "real_recall": 0.8667,
           "real_recall_ci": [
-            0.5212,
-            0.8334
+            0.7032,
+            0.9469
           ]
         },
         "CUSTOMER_NAME": {
@@ -8044,23 +8082,23 @@
           ]
         },
         "IP_ADDRESS": {
-          "true_positives": 40,
-          "false_positives": 34,
-          "false_negatives": 26,
-          "n": 66,
-          "precision": 0.5405,
-          "recall": 0.6061,
-          "f1": 0.5714,
-          "f2": 0.5917,
+          "true_positives": 92,
+          "false_positives": 24,
+          "false_negatives": 0,
+          "n": 92,
+          "precision": 0.7931,
+          "recall": 1.0,
+          "f1": 0.8846,
+          "f2": 0.9504,
           "recall_ci": [
-            0.4855,
-            0.715
+            0.9599,
+            1.0
           ],
           "real_n": 46,
-          "real_recall": 0.4348,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.3021,
-            0.5775
+            0.9229,
+            1.0
           ]
         },
         "JWT": {
@@ -8125,13 +8163,13 @@
         },
         "PHONE": {
           "true_positives": 112,
-          "false_positives": 38,
+          "false_positives": 37,
           "false_negatives": 1,
           "n": 113,
-          "precision": 0.7467,
+          "precision": 0.7517,
           "recall": 0.9912,
-          "f1": 0.8517,
-          "f2": 0.9302,
+          "f1": 0.855,
+          "f2": 0.9318,
           "recall_ci": [
             0.9516,
             0.9984
@@ -8257,21 +8295,21 @@
           "PRIVATE_URL": 7
         },
         "IP_ADDRESS": {
-          "PHONE": 27,
+          "PHONE": 26,
+          "IP_ADDRESS": 4,
           "SOCIAL_SECURITY": 5,
-          "IP_ADDRESS": 2,
+          "CREDIT_CARD": 1,
           "BANK_ACCOUNT": 1
         },
         "CREDIT_CARD": {
-          "CREDIT_CARD": 11,
-          "IP_ADDRESS": 1
+          "CREDIT_CARD": 11
         },
         "JWT": {
           "DOMAIN": 6,
           "JWT": 2
         },
         "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 26,
+          "IP_ADDRESS": 11,
           "SOCIAL_SECURITY": 11
         },
         "EMAIL": {
@@ -8287,7 +8325,8 @@
           "BANK_ACCOUNT": 4
         },
         "PHONE": {
-          "PHONE": 8
+          "PHONE": 8,
+          "IP_ADDRESS": 2
         },
         "DATE": {
           "IP_ADDRESS": 5
@@ -8300,7 +8339,8 @@
           "PERSON": 2
         },
         "PRIVATE_URL": {
-          "URL": 2
+          "URL": 2,
+          "IP_ADDRESS": 2
         },
         "COMPANY": {
           "PERSON": 3
@@ -8594,9 +8634,9 @@
           "index": 18,
           "text_preview": "Obfuscated ip_address: 94.157.73.235/16",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
@@ -8643,15 +8683,14 @@
           "index": 21,
           "text_preview": "Hidden field: 5320-48-466",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -8689,14 +8728,15 @@
           "index": 24,
           "text_preview": "Encoded: 192.168.1.1/16",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -8704,15 +8744,14 @@
           "index": 25,
           "text_preview": "Found: 323134383630303530",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -8823,14 +8862,15 @@
           "index": 33,
           "text_preview": "Encoded: 164 . 32 . 199 . 232",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -8868,15 +8908,14 @@
           "index": 36,
           "text_preview": "Hidden field: 6789-45-123",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -8899,14 +8938,16 @@
           "index": 38,
           "text_preview": "Obfuscated ip_address: 012.0130.00.01",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 39,
@@ -9234,14 +9275,16 @@
           "index": 60,
           "text_preview": "Encoded: 10 point 0 point 0 point 5",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 61,
@@ -9440,15 +9483,14 @@
           "index": 74,
           "text_preview": "Data: 313330323933303131",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -9484,15 +9526,14 @@
           "index": 77,
           "text_preview": "SSN: 123-45-6789 and also 456-78-9012",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -9758,14 +9799,15 @@
           "index": 95,
           "text_preview": "Raw: 47.149.58.243 (IP)",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -9879,15 +9921,14 @@
           "index": 103,
           "text_preview": "Raw: MTUwLTE0LTE3MTY=",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -10133,9 +10174,9 @@
           "index": 120,
           "text_preview": "Compressed IPv6: 2001:db8::1 and fe80::1",
           "expected": 2,
-          "detected": 2,
+          "detected": 4,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
@@ -10253,14 +10294,16 @@
           "index": 128,
           "text_preview": "Data: 10 10 10 10",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 129,
@@ -10502,14 +10545,16 @@
           "index": 144,
           "text_preview": "Found: 10.0.0.1/16",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 145,
@@ -10530,14 +10575,15 @@
           "index": 146,
           "text_preview": "Raw: 166 point 16 point 56 point 184",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -10545,15 +10591,14 @@
           "index": 147,
           "text_preview": "Obfuscated social_security: 456 78 9012 (segmented)",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -10667,14 +10712,15 @@
           "index": 155,
           "text_preview": "Data: 46 dot 157 dot 42 dot 191",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -10791,14 +10837,15 @@
           "index": 163,
           "text_preview": "Local: http://127.0.0.1:8080/api",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 1,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "URL"
           ]
         },
@@ -10870,14 +10917,16 @@
           "index": 168,
           "text_preview": "Data: 172  16  0  1",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 169,
@@ -10959,15 +11008,16 @@
           "index": 174,
           "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 0,
+          "detected": 3,
+          "true_positives": 1,
           "false_positives": 2,
-          "false_negatives": 2,
+          "false_negatives": 1,
           "expected_types": [
             "EMPLOYEE_NAME",
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PERSON"
           ]
         },
@@ -10975,14 +11025,16 @@
           "index": 175,
           "text_preview": "Encoded: 5500 . 0000 . 0000 . 0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 176,
@@ -11129,15 +11181,14 @@
           "index": 185,
           "text_preview": "Raw: 313037333432393339",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -11458,14 +11509,16 @@
           "index": 207,
           "text_preview": "Data: 5500 . 0000 . 0000 . 0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 208,
@@ -11577,14 +11630,15 @@
           "index": 215,
           "text_preview": "Raw: 138 125 117 210",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -11607,14 +11661,15 @@
           "index": 217,
           "text_preview": "Obfuscated ip_address: 144 point 30 point 226 point 101",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -11747,15 +11802,14 @@
           "index": 226,
           "text_preview": "Encoded: area 116 group 27 serial 6292",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -11794,15 +11848,14 @@
           "index": 229,
           "text_preview": "Hidden field: MTIzLTQ1LTY3ODk=",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -11858,15 +11911,14 @@
           "index": 233,
           "text_preview": "Data: 5311-70-574",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -12055,14 +12107,15 @@
           "index": 246,
           "text_preview": "Local: http://127.0.0.1:5000/admin",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 1,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "URL"
           ]
         },
@@ -12171,14 +12224,16 @@
           "index": 254,
           "text_preview": "Found: 5500.0000.0000.0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 255,
@@ -12358,14 +12413,15 @@
           "index": 267,
           "text_preview": "Data: 555 123 4567",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -12515,15 +12571,14 @@
           "index": 277,
           "text_preview": "Obfuscated social_security: 4083-76-759",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -12637,29 +12692,31 @@
           "index": 285,
           "text_preview": "Encoded: 0300.0250.01.0144",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "CREDIT_CARD",
+            "IP_ADDRESS"
           ]
         },
         {
           "index": 286,
           "text_preview": "Found: 54 point 55 point 143 point 201",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -12667,10 +12724,10 @@
           "index": 287,
           "text_preview": "The server at 10.0.0.1 handles requests from 192.168.1.50 to 172.16.0.10",
           "expected": 3,
-          "detected": 3,
-          "true_positives": 1,
+          "detected": 5,
+          "true_positives": 3,
           "false_positives": 2,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
@@ -12683,14 +12740,15 @@
           "index": 288,
           "text_preview": "Encoded: 2753611752",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -12794,14 +12852,14 @@
           "text_preview": "Data: 5424 . 0000 . 0000 . 0015",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "CREDIT_CARD"
           ]
         },
         {
@@ -12956,14 +13014,15 @@
           "index": 307,
           "text_preview": "Data: 3232235777",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -12989,14 +13048,16 @@
           "index": 309,
           "text_preview": "Found: 5500.0000.0000.0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 310,
@@ -13078,15 +13139,16 @@
           "index": 315,
           "text_preview": "Raw: 104.113.193.120/16",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "IP_ADDRESS"
           ]
         },
         {
@@ -13156,14 +13218,15 @@
           "index": 320,
           "text_preview": "Raw: 104 113 193 120",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -13186,14 +13249,15 @@
           "index": 322,
           "text_preview": "Raw: 138 point 125 point 117 point 210",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -13485,14 +13549,15 @@
           "index": 342,
           "text_preview": "Encoded: 0210.017.0237.0126",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -13841,14 +13906,15 @@
           "index": 365,
           "text_preview": "Raw: 190.107.225.59 (IP)",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -13932,9 +13998,9 @@
           "index": 371,
           "text_preview": "Data: 9 3 4 4 3 6 9 5 8",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
@@ -13947,15 +14013,14 @@
           "index": 372,
           "text_preview": "Hidden field: area 123 group 45 serial 6789",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -14193,9 +14258,9 @@
           "index": 388,
           "text_preview": "Server server-61.corp at IP 37.63.130.34",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -14475,15 +14540,14 @@
           "index": 407,
           "text_preview": "Found: NTI4LTY2LTI1MTA=",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -14696,14 +14760,15 @@
           "index": 422,
           "text_preview": "Found: 1555123497",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -14775,15 +14840,14 @@
           "index": 427,
           "text_preview": "Found: 3693-23-622",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -14804,14 +14868,15 @@
           "index": 429,
           "text_preview": "Data: 47 dot 94 dot 124 dot 103",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -14908,14 +14973,15 @@
           "index": 436,
           "text_preview": "Data: 2886729729",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "IP_ADDRESS",
             "PHONE"
           ]
         },
@@ -15056,15 +15122,14 @@
           "index": 446,
           "text_preview": "Obfuscated social_security: 145 02 8143 (segmented)",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },

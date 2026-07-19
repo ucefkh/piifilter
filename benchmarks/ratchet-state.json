@@ -1,0 +1,371 @@
+{
+  "stage": 0,
+  "consecutive_passes": 0,
+  "reference_floors": {
+    "regex:ADDRESS": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 18,
+      "reference_recall": 0.0,
+      "reference_real_recall": 0.0
+    },
+    "regex:API_KEY": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 16,
+      "reference_recall": 0.75,
+      "reference_real_recall": 0.6
+    },
+    "regex:BANK_ACCOUNT": {
+      "recall_floor": 0.8231,
+      "real_recall_floor": 0.7071,
+      "n": 13,
+      "reference_recall": 0.9231,
+      "reference_real_recall": 0.8571
+    },
+    "regex:CITY": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 11,
+      "reference_recall": 0.3636,
+      "reference_real_recall": 0.2222
+    },
+    "regex:COMPANY": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 23,
+      "reference_recall": 0.087,
+      "reference_real_recall": 0.0455
+    },
+    "regex:COUNTRY": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 9,
+      "reference_recall": 0.0,
+      "reference_real_recall": 0.0
+    },
+    "regex:CREDIT_CARD": {
+      "recall_floor": 0.7657,
+      "real_recall_floor": 0.55,
+      "n": 67,
+      "reference_recall": 0.8657,
+      "reference_real_recall": 0.7
+    },
+    "regex:CUSTOMER_NAME": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 7,
+      "reference_recall": 0.0,
+      "reference_real_recall": 0.0
+    },
+    "regex:DATABASE_URL": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 16,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "regex:DATE": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 26,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "regex:DOMAIN": {
+      "recall_floor": 0.8286,
+      "real_recall_floor": 0.7167,
+      "n": 28,
+      "reference_recall": 0.9286,
+      "reference_real_recall": 0.8667
+    },
+    "regex:EMAIL": {
+      "recall_floor": 0.8908,
+      "real_recall_floor": 0.8318,
+      "n": 218,
+      "reference_recall": 0.9908,
+      "reference_real_recall": 0.9818
+    },
+    "regex:EMPLOYEE_NAME": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 5,
+      "reference_recall": 0.0,
+      "reference_real_recall": 0.0
+    },
+    "regex:FILE_PATH": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 16,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "regex:GPS": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 16,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "regex:IBAN": {
+      "recall_floor": 0.8231,
+      "real_recall_floor": 0.7071,
+      "n": 13,
+      "reference_recall": 0.9231,
+      "reference_real_recall": 0.8571
+    },
+    "regex:IP_ADDRESS": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 54,
+      "reference_recall": 0.2963,
+      "reference_real_recall": 0.1739
+    },
+    "regex:JWT": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 28,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "regex:PASSPORT": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 14,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "regex:PERSON": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 32,
+      "reference_recall": 0.375,
+      "reference_real_recall": 0.2308
+    },
+    "regex:PHONE": {
+      "recall_floor": 0.8912,
+      "real_recall_floor": 0.8325,
+      "n": 113,
+      "reference_recall": 0.9912,
+      "reference_real_recall": 0.9825
+    },
+    "regex:PRIVATE_URL": {
+      "recall_floor": 0.7333,
+      "real_recall_floor": 0.5643,
+      "n": 12,
+      "reference_recall": 0.8333,
+      "reference_real_recall": 0.7143
+    },
+    "regex:PROJECT_NAME": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 6,
+      "reference_recall": 0.0,
+      "reference_real_recall": 0.0
+    },
+    "regex:SOCIAL_SECURITY": {
+      "recall_floor": 0.8157,
+      "real_recall_floor": 0.7447,
+      "n": 83,
+      "reference_recall": 0.9157,
+      "reference_real_recall": 0.8947
+    },
+    "regex:SSH_KEY": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 12,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "regex:URL": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 64,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "pipeline:ADDRESS": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 18,
+      "reference_recall": 0.0,
+      "reference_real_recall": 0.0
+    },
+    "pipeline:API_KEY": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 16,
+      "reference_recall": 0.75,
+      "reference_real_recall": 0.6
+    },
+    "pipeline:BANK_ACCOUNT": {
+      "recall_floor": 0.8231,
+      "real_recall_floor": 0.7071,
+      "n": 13,
+      "reference_recall": 0.9231,
+      "reference_real_recall": 0.8571
+    },
+    "pipeline:CITY": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 11,
+      "reference_recall": 0.3636,
+      "reference_real_recall": 0.2222
+    },
+    "pipeline:COMPANY": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 23,
+      "reference_recall": 0.087,
+      "reference_real_recall": 0.0455
+    },
+    "pipeline:COUNTRY": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 9,
+      "reference_recall": 0.0,
+      "reference_real_recall": 0.0
+    },
+    "pipeline:CREDIT_CARD": {
+      "recall_floor": 0.7657,
+      "real_recall_floor": 0.55,
+      "n": 67,
+      "reference_recall": 0.8657,
+      "reference_real_recall": 0.7
+    },
+    "pipeline:CUSTOMER_NAME": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 7,
+      "reference_recall": 0.0,
+      "reference_real_recall": 0.0
+    },
+    "pipeline:DATABASE_URL": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 16,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "pipeline:DATE": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 26,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "pipeline:DOMAIN": {
+      "recall_floor": 0.8286,
+      "real_recall_floor": 0.7167,
+      "n": 28,
+      "reference_recall": 0.9286,
+      "reference_real_recall": 0.8667
+    },
+    "pipeline:EMAIL": {
+      "recall_floor": 0.8908,
+      "real_recall_floor": 0.8318,
+      "n": 218,
+      "reference_recall": 0.9908,
+      "reference_real_recall": 0.9818
+    },
+    "pipeline:EMPLOYEE_NAME": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 5,
+      "reference_recall": 0.0,
+      "reference_real_recall": 0.0
+    },
+    "pipeline:FILE_PATH": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 16,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "pipeline:GPS": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 16,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "pipeline:IBAN": {
+      "recall_floor": 0.8231,
+      "real_recall_floor": 0.7071,
+      "n": 13,
+      "reference_recall": 0.9231,
+      "reference_real_recall": 0.8571
+    },
+    "pipeline:IP_ADDRESS": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 66,
+      "reference_recall": 0.6061,
+      "reference_real_recall": 0.4348
+    },
+    "pipeline:JWT": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 28,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "pipeline:PASSPORT": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 14,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "pipeline:PERSON": {
+      "recall_floor": 0.8804,
+      "real_recall_floor": 0.8115,
+      "n": 51,
+      "reference_recall": 0.9804,
+      "reference_real_recall": 0.9615
+    },
+    "pipeline:PHONE": {
+      "recall_floor": 0.8912,
+      "real_recall_floor": 0.8325,
+      "n": 113,
+      "reference_recall": 0.9912,
+      "reference_real_recall": 0.9825
+    },
+    "pipeline:PRIVATE_URL": {
+      "recall_floor": 0.7333,
+      "real_recall_floor": 0.5643,
+      "n": 12,
+      "reference_recall": 0.8333,
+      "reference_real_recall": 0.7143
+    },
+    "pipeline:PROJECT_NAME": {
+      "recall_floor": 0.7,
+      "real_recall_floor": 0.5,
+      "n": 6,
+      "reference_recall": 0.0,
+      "reference_real_recall": 0.0
+    },
+    "pipeline:SOCIAL_SECURITY": {
+      "recall_floor": 0.8286,
+      "real_recall_floor": 0.7447,
+      "n": 84,
+      "reference_recall": 0.9286,
+      "reference_real_recall": 0.8947
+    },
+    "pipeline:SSH_KEY": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 12,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    },
+    "pipeline:URL": {
+      "recall_floor": 0.9,
+      "real_recall_floor": 0.85,
+      "n": 64,
+      "reference_recall": 1.0,
+      "reference_real_recall": 1.0
+    }
+  },
+  "history": []
+}

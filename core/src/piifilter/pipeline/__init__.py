@@ -15,7 +15,7 @@ from piifilter.session import Session
 from piifilter.events.bus import EventBus, PipelineEvent
 from piifilter.registry.registry import PluginRegistry
 from piifilter.config import FilterConfig
-from piifilter.shared.models import ReplacementMode, RiskLevel
+from piifilter.shared.models import DetectedEntity, ReplacementMode, RiskLevel
 from piifilter.shared.alias_store import AliasStore
 
 logger = logging.getLogger(__name__)
@@ -127,6 +127,16 @@ class FilterPipeline:
             -(e.get("score") if isinstance(e, dict) else e.score),
             e.get("start") if isinstance(e, dict) else e.start,
         ))
+
+        # ── max(raw, pipeline) merge ───────────────────────────────────
+        # Save raw regex results BEFORE dedup. When pipeline_mode is True
+        # we UNION them back after dedup so pipeline can never remove a
+        # correct regex match.  Regex has perfect precision on its entity
+        # types — if it matched, the match is real.
+        _raw_regex_entities: list[dict | DetectedEntity] = [
+            e for e in all_entities
+            if _entity_detector(e) == "regex"
+        ]
 
         # Dedup by interval: if a higher-priority (regex) entity already
         # covers this span, skip lower-priority ones.
@@ -340,6 +350,40 @@ class FilterPipeline:
                 all_interval_map.setdefault(et, []).append((estart, eend))
                 deduped.append(e)
 
+        # ── max(raw, pipeline) merge ────────────────────────────────
+        # When pipeline_mode is True, UNION raw-regex results back in.
+        # This ensures pipeline dedup can NEVER remove a correct regex
+        # match.  For overlapping spans we prefer the regex entity
+        # (perfect precision) over any other detector's result.
+        if session.config.detection.pipeline_mode and _raw_regex_entities:
+            # Build a set of (start, end, type) for entities already in deduped
+            deduped_spans: set[tuple[int, int, str]] = set()
+            for e in deduped:
+                s, endpos, et = _entity_span(e)
+                deduped_spans.add((s, endpos, et))
+
+            for raw_e in _raw_regex_entities:
+                rs, rend, ret = _entity_span(raw_e)
+                raw_key = (rs, rend, ret)
+
+                # If this exact regex entity is NOT in deduped, add it back.
+                # Also check for containment: if no deduped entity of the
+                # same type fully contains this span, add it.
+                if raw_key in deduped_spans:
+                    continue
+
+                # Check if a deduped entity of the same type already
+                # fully contains this span.  If so, the regex entity is
+                # a duplicate — skip.  But if it's a DIFFERENT type or
+                # not contained, keep the regex match.
+                contained_by_dedup = any(
+                    s <= rs and rend <= endpos and et == ret
+                    for s, endpos, et in deduped_spans
+                )
+                if not contained_by_dedup:
+                    deduped.append(raw_e)
+                    deduped_spans.add(raw_key)
+
         deduped.sort(key=lambda e: e.get("start") if isinstance(e, dict) else e.start)
         session.entities = deduped
         return session
@@ -479,3 +523,24 @@ class FilterPipeline:
     async def close(self) -> None:
         """Shutdown all registered plugins."""
         await self.registry.shutdown_all()
+
+
+# ── Module-level helpers ────────────────────────────────────────────
+
+
+def _entity_detector(e: dict | DetectedEntity) -> str:
+    """Extract detector name from an entity dict or DetectedEntity object."""
+    if isinstance(e, dict):
+        return e.get("detector", "")
+    return getattr(e, "detector", "")
+
+
+def _entity_span(e: dict | DetectedEntity) -> tuple[int, int, str]:
+    """Extract (start, end, entity_type) from an entity dict or DetectedEntity."""
+    if isinstance(e, dict):
+        return (
+            e.get("start", 0),
+            e.get("end", 0),
+            e.get("entity_type", "UNKNOWN"),
+        )
+    return (e.start, e.end, e.type.value if hasattr(e.type, 'value') else str(e.type))

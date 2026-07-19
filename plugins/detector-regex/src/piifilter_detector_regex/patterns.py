@@ -190,9 +190,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # Parenthesized area code with space separator: (415) 555 2671
         ("PHONE", r"\(\d{3}\)\s*\d{3}\s+\d{4,6}\b", 0.78),
         # 3-3-4 format with unicode dashes or dots: 555-123-4567, 555–123–4567, 555.123.4567
-        ("PHONE", r"\b\d{3}[–—−\-.]\d{3}[–—−\-.]\d{4}\b", 0.70),
+        # Negative lookbehind: block if preceded by a dot (IP octet like .168.1.1)
+        ("PHONE", r"(?<!\.)\b\d{3}[–—−\-.]\d{3}[–—−\-.]\d{4}\b(?!\.\d{1,3})", 0.70),
         # Country-code prefixed (1-xxx-xxx-xxxx) with unicode dashes
-        ("PHONE", r"\b\d{1}[–—−\-.]\d{3}[–—−\-.]\d{3}[–—−\-.]\d{4}\b", 0.75),
+        # Negative lookbehind: block if preceded by a dot (IP octet fragment)
+        ("PHONE", r"(?<!\.)\b\d{1}[–—−\-.]\d{3}[–—−\-.]\d{3}[–—−\-.]\d{4}\b(?!\.\d{1,3})", 0.75),
         # Spaced 3+3+4 (US format with spaces): "555 123 4567", "555  123  4567"
         ("PHONE", r"\b\d{3}\s{1,2}\d{3}\s{1,2}\d{4}\b", 0.72),
         # Bare 10-digit US phone (no context needed): "5551234567", "4155552671"
@@ -270,7 +272,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # with '1' must be checked: 1xxxxxxx. Only 16777216-19999999 are valid.
     # Numbers starting with 0 (8 digits) are never valid decimal IPs.
     # The numeric validation is done in the detector's _run_patterns() method.
-    ("IP_ADDRESS", r"\b(?:[1-9]\d{7,9})\b", 0.65),
+    # IMPORTANT: Now that dotted-decimal IPs are caught on pre-strip text, this
+    # catch-all is only needed for genuine decimal-form IPs (rare). Lower confidence
+    # since 8-10 digit numbers that happen to fall in the valid IP range are often
+    # dates or numeric IDs rather than actual integer-encoded IP addresses.
+    ("IP_ADDRESS", r"\b(?:[1-9]\d{7,9})\b", 0.50),
 
     # ── GPS ──────────────────────────────────────────────────────────
     # Full coordinate pair after keyword label: "lat/lng/coordinates/gps: value1, value2"
@@ -311,20 +317,25 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Title-prefixed — name must be 2+ chars, not a single letter
     ("PERSON", r"\b(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.85),
     # "I'm/My name is/Call me + Name"
-    ("PERSON", r"(?i)(?:\bmy name is|\bI'm|\bcall me|\bname is)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,}){0,2}\b", 0.80),
+    # Require 3+ chars in each name word to avoid single-letter initials or short fragments
+    ("PERSON", r"(?i)(?:\bmy name is|\bI'm|\bcall me|\bname is)\s+(?-i:[A-Z])[a-z]{3,}(?:\s+(?-i:[A-Z])[a-z]{3,}){0,2}\b", 0.80),
     # "ROLE + Name" — exclude common role/researcher-type words after the name
-    ("PERSON", r"(?i)\b(?:ceo|cfo|cto|president|director|founder|owner)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.75),
+    # Require 3+ chars to avoid matching 2-letter initials; lower confidence
+    ("PERSON", r"(?i)\b(?:ceo|cfo|cto|president|director|founder|owner)\s+(?-i:[A-Z])[a-z]{3,}(?:\s+(?-i:[A-Z])[a-z]{3,})?\b", 0.70),
     # "Person:" prefix — handle titles like Dr., Mr. — require at least one real name word
     # Negative lookahead blocks words like "researcher", "published", "from", "at" that are common role/context words
-    ("PERSON", r"(?i)\bPerson:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?(?:\s+(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?){0,1}(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those))(?:[.]?)\b", 0.80),
+    # Also blocks common non-person continuations: addresses, company suffixes, job titles
+    ("PERSON", r"(?i)\bPerson:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?(?:\s+(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?){0,1}(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those|Inc|Corp|LLC|Ltd|Limited|GmbH|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd))(?:[.]?)\b", 0.80),
     # "Contact person:" / "Contact name:"
     ("PERSON", r"(?i)\bContact\s+(?:person|name):\s*(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.80),
     # Unicode/Non-Latin names — matched by context keywords (CJK + common non-Latin alphabet names)
     # CJK: keyword 用户/联系人/姓名 directly followed by name (no colon needed)
     # Exclude common technical terms that look like capitalized names (Postgresql, Admin, Root, etc.)
-    ("PERSON", r"(?i)\b(?:contact|person)\s*[：:]\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those))\b", 0.75),
+    # Also exclude company suffixes and address suffixes
+    ("PERSON", r"(?i)\b(?:contact|person)\s*[：:]\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those|Inc|Corp|LLC|Ltd|Limited|GmbH|Street|St|Avenue|Ave|Road|Rd))\b", 0.75),
     # user: prefix — more restrictive to avoid technical terms like 'user: postgresql'
-    ("PERSON", r"(?i)\buser\s*[：:](?!\s*(?:admin|root|postgres|postgresql|mysql|default|guest|test|anonymous|nobody|system|api|service))\s*[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?\b", 0.70),
+    # Extended exclusion list for common non-person user labels; require 3+ chars in name
+    ("PERSON", r"(?i)\buser\s*[：:](?!\s*(?:admin|root|postgres|postgresql|mysql|default|guest|test|anonymous|nobody|system|api|service|demo|readonly|backup|deploy|ci|cd|bot|monitor|agent|worker|dev|prod|staging|localhost|primary|secondary))\s*[A-Z][a-z]{3,}(?:\s+[A-Z][a-z]{3,})?\b", 0.65),
     # CJK-specific: 用户/联系人/姓名 directly followed by 2+ CJK characters
     ("PERSON", r"(?:用户|联系人|姓名|名前)[：:]?\s*[\u4e00-\u9fff]{2,4}(?:\s+[\u4e00-\u9fff]{2,4})?\b", 0.80),
     # Russian/Cyrillic names
