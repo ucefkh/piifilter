@@ -167,10 +167,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PROJECT_NAME", r"\b(?:Project|Operation|Initiative|Program|Code[- ]?name)\s+(?-i:[A-Z])[a-zA-Z0-9]+\b", 0.85),
 
     # ── ADDRESS ──────────────────────────────────────────────────────
-    # Standard address: "N Street Name St/Rd/Ave/etc."
-    # Uses a negative lookbehind for common anecdotal/teaching contexts ("is ", "not ")
-    # and a negative lookahead for pop-culture references in parentheses.
-    ("ADDRESS", r"\b(?<!is\s)(?<!not\s)\d{1,5}\s+(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s+(?:St(?:reet)?|Ave(?:nue)?|Dr(?:ive)?|Rd|Road|Blvd|Boulevard|Ln|Lane|Way|Ct|Court|Pl|Place|Cir(?:cle)?|Pkwy|Parkway)(?![,.]?\s*(?:\w+\s+){0,5}\([^)]*(?:famous|from\s+(?:movie|show|film|Finding|the\s+[A-Z])))\b", 0.80),
+        # Standard address: "N Street Name St/Rd/Ave/etc."
+        # Uses negative lookbehind (?<!not\s) to block ", not 123 Main St" teaching patterns.
+        # Uses a general negative lookahead for parentheticals that look like media references
+        # ("(famous from Finding Nemo)", "(from the movie...)") rather than address clarifications.
+        ("ADDRESS", r"\b(?<!not\s)\d{1,5}\s+(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s+(?:St(?:reet)?|Ave(?:nue)?|Dr(?:ive)?|Rd|Road|Blvd|Boulevard|Ln|Lane|Way|Ct|Court|Pl|Place|Cir(?:cle)?|Pkwy|Parkway)(?![,.]?\s*(?:\w+\s+){0,5}\([^)]*(?:movie|show|film|game|series|cartoon|animation|episode|from\s+[A-Z]))\b", 0.80),
     ("ADDRESS", r"\bP\.?\s*O\.?\s+Box\s+\d+\b", 0.85),
     ("ADDRESS", r"\b(?:Suite|Apt|Unit|Building)\s+#?\d+[A-Za-z]?\b", 0.80),
 
