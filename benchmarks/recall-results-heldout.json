@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out)",
-  "timestamp": "2026-07-19T20:50:34Z",
+  "timestamp": "2026-07-19T20:52:44Z",
   "dataset": {
     "path": "benchmarks/data/pii_dataset_v2.json",
     "total_examples": 2365,
@@ -47,12 +47,12 @@
       "total_examples": 473,
       "total_expected_entities": 540,
       "total_detected_entities": 524,
-      "total_true_positives": 420,
-      "total_false_positives": 104,
-      "total_false_negatives": 120,
-      "overall_precision": 0.8015267175572519,
-      "overall_recall": 0.7777777777777778,
-      "overall_f1": 0.7894736842105262,
+      "total_true_positives": 421,
+      "total_false_positives": 103,
+      "total_false_negatives": 119,
+      "overall_precision": 0.8034351145038168,
+      "overall_recall": 0.7796296296296297,
+      "overall_f1": 0.7913533834586466,
       "per_type": {
         "ADDRESS": {
           "true_positives": 32,
@@ -475,23 +475,23 @@
           ]
         },
         "PRIVATE_URL": {
-          "true_positives": 12,
+          "true_positives": 14,
           "false_positives": 0,
-          "false_negatives": 1,
-          "n": 13,
+          "false_negatives": 0,
+          "n": 14,
           "precision": 1.0,
-          "recall": 0.9231,
-          "f1": 0.96,
-          "f2": 0.9375,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.6669,
-            0.9863
+            0.7847,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "PROJECT_NAME": {
@@ -527,11 +527,11 @@
             0.6773,
             0.8623
           ],
-          "real_n": 23,
-          "real_recall": 0.7826,
+          "real_n": 19,
+          "real_recall": 0.9474,
           "real_recall_ci": [
-            0.581,
-            0.9034
+            0.7536,
+            0.9906
           ]
         },
         "SSH_KEY": {
@@ -556,13 +556,13 @@
         },
         "URL": {
           "true_positives": 64,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 64,
-          "precision": 0.9552,
+          "precision": 0.9697,
           "recall": 1.0,
-          "f1": 0.9771,
-          "f2": 0.9907,
+          "f1": 0.9846,
+          "f2": 0.9938,
           "recall_ci": [
             0.9434,
             1.0
@@ -602,9 +602,6 @@
         "ADDRESS": {
           "COUNTRY": 8,
           "CITY": 12
-        },
-        "PRIVATE_URL": {
-          "URL": 1
         },
         "COUNTRY": {
           "CITY": 2
@@ -3559,15 +3556,14 @@
           "text_preview": "Internal URL: https://jenkins.internal:8080/job/deploy and https://admin.corp.in",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "PRIVATE_URL",
-            "URL"
+            "PRIVATE_URL"
           ]
         },
         {
@@ -7765,12 +7761,12 @@
       "total_examples": 473,
       "total_expected_entities": 540,
       "total_detected_entities": 582,
-      "total_true_positives": 437,
-      "total_false_positives": 145,
-      "total_false_negatives": 103,
-      "overall_precision": 0.7508591065292096,
-      "overall_recall": 0.8092592592592592,
-      "overall_f1": 0.7789661319073083,
+      "total_true_positives": 438,
+      "total_false_positives": 144,
+      "total_false_negatives": 102,
+      "overall_precision": 0.7525773195876289,
+      "overall_recall": 0.8111111111111111,
+      "overall_f1": 0.7807486631016044,
       "per_type": {
         "ADDRESS": {
           "true_positives": 32,
@@ -8193,23 +8189,23 @@
           ]
         },
         "PRIVATE_URL": {
-          "true_positives": 12,
+          "true_positives": 14,
           "false_positives": 0,
-          "false_negatives": 1,
-          "n": 13,
+          "false_negatives": 0,
+          "n": 14,
           "precision": 1.0,
-          "recall": 0.9231,
-          "f1": 0.96,
-          "f2": 0.9375,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.6669,
-            0.9863
+            0.7847,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "PROJECT_NAME": {
@@ -8245,11 +8241,11 @@
             0.6773,
             0.8623
           ],
-          "real_n": 23,
-          "real_recall": 0.7826,
+          "real_n": 19,
+          "real_recall": 0.9474,
           "real_recall_ci": [
-            0.581,
-            0.9034
+            0.7536,
+            0.9906
           ]
         },
         "SSH_KEY": {
@@ -8274,13 +8270,13 @@
         },
         "URL": {
           "true_positives": 64,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 64,
-          "precision": 0.9552,
+          "precision": 0.9697,
           "recall": 1.0,
-          "f1": 0.9771,
-          "f2": 0.9907,
+          "f1": 0.9846,
+          "f2": 0.9938,
           "recall_ci": [
             0.9434,
             1.0
@@ -8328,9 +8324,6 @@
           "COUNTRY": 8,
           "CITY": 12,
           "PERSON": 2
-        },
-        "PRIVATE_URL": {
-          "URL": 1
         },
         "COMPANY": {
           "PERSON": 3
@@ -11300,15 +11293,14 @@
           "text_preview": "Internal URL: https://jenkins.internal:8080/job/deploy and https://admin.corp.in",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "PRIVATE_URL",
-            "URL"
+            "PRIVATE_URL"
           ]
         },
         {
