@@ -2,9 +2,9 @@
   "summary": {
     "overall": {
       "total_examples": 117,
-      "detected": 81,
-      "missed": 36,
-      "detection_rate": 69.2
+      "detected": 90,
+      "missed": 27,
+      "detection_rate": 76.9
     },
     "by_category": {
       "Homoglyph emails": {
@@ -16,13 +16,10 @@
       },
       "Zero-width chars": {
         "total": 8,
-        "detected": 6,
-        "missed": 2,
-        "detection_rate": 75.0,
-        "missed_examples": [
-          "ZWNJ in phone",
-          "ZWSP in IP"
-        ]
+        "detected": 8,
+        "missed": 0,
+        "detection_rate": 100.0,
+        "missed_examples": []
       },
       "[at]/[dot] formats": {
         "total": 9,
@@ -72,29 +69,24 @@
       },
       "Encoded (base64/rot13)": {
         "total": 11,
-        "detected": 3,
-        "missed": 8,
-        "detection_rate": 27.3,
+        "detected": 5,
+        "missed": 6,
+        "detection_rate": 45.5,
         "missed_examples": [
           "base64 email",
           "base64 SSN",
           "base64 phone",
           "base64 IP",
           "base64 credit card",
-          "base64 full address",
-          "rot13 phone",
-          "rot13 IP"
+          "base64 full address"
         ]
       },
       "HTML entities": {
         "total": 6,
-        "detected": 4,
-        "missed": 2,
-        "detection_rate": 66.7,
-        "missed_examples": [
-          "IP as entities",
-          "phone as entities"
-        ]
+        "detected": 6,
+        "missed": 0,
+        "detection_rate": 100.0,
+        "missed_examples": []
       },
       "Split across tokens": {
         "total": 9,
@@ -113,22 +105,17 @@
       },
       "URL encoding": {
         "total": 5,
-        "detected": 3,
-        "missed": 2,
-        "detection_rate": 60.0,
-        "missed_examples": [
-          "phone %2B",
-          "IP with %2E"
-        ]
+        "detected": 5,
+        "missed": 0,
+        "detection_rate": 100.0,
+        "missed_examples": []
       },
       "Unicode tricks": {
         "total": 9,
-        "detected": 8,
-        "missed": 1,
-        "detection_rate": 88.9,
-        "missed_examples": [
-          "phone with en-dashes"
-        ]
+        "detected": 9,
+        "missed": 0,
+        "detection_rate": 100.0,
+        "missed_examples": []
       },
       "Comments/injection": {
         "total": 12,
@@ -146,8 +133,8 @@
         "missed": 2,
         "detection_rate": 50.0,
         "missed_examples": [
-          "IP reversed",
-          "phone reversed"
+          "phone reversed",
+          "SSN reversed"
         ]
       },
       "Mixed case tricks": {
@@ -335,8 +322,13 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123456789",
+          "value": "SSN: 123-45-6789",
           "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -344,15 +336,27 @@
       "category": "Zero-width chars",
       "label": "ZWNJ in phone",
       "text": "Phone: +1-555-12\\u200c3-4567",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "PHONE",
+          "value": " +1-555-123-4567",
+          "score": 0.88
+        }
+      ]
     },
     {
       "category": "Zero-width chars",
       "label": "ZWSP in IP",
       "text": "IP: 192\\u200b.168\\u200b.1\\u200b.1",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "[at]/[dot] formats",
@@ -520,8 +524,13 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123456789",
+          "value": "SSN: 123-45-6789",
           "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -533,8 +542,13 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123456789",
+          "value": "SSN: 123-45-6789",
           "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -546,8 +560,13 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123456789",
+          "value": "SSN: 123-45-6789",
           "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -559,8 +578,13 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123456789",
+          "value": "SSN: 123-45-6789",
           "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -572,8 +596,13 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123456789",
+          "value": "SSN: 123-45-6789",
           "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -585,8 +614,13 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN:  123456789",
+          "value": "SSN:  123-45-6789",
           "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -598,8 +632,13 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123456789",
+          "value": "SSN: 123-45-6789",
           "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -824,8 +863,13 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123456789",
+          "value": "SSN: 123-45-6789",
           "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -846,15 +890,27 @@
       "category": "Encoded (base64/rot13)",
       "label": "rot13 phone",
       "text": "rot13 phone: +1-555-123-4567",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "PHONE",
+          "value": " +1-555-123-4567",
+          "score": 0.88
+        }
+      ]
     },
     {
       "category": "Encoded (base64/rot13)",
       "label": "rot13 IP",
       "text": "rot13 IP: 192.168.1.1",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "HTML entities",
@@ -903,8 +959,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123456789",
-          "score": 0.75
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -912,15 +968,27 @@
       "category": "HTML entities",
       "label": "IP as entities",
       "text": "&#49;&#57;&#50;&#46;&#49;&#54;&#56;&#46;&#49;&#46;&#49;",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "HTML entities",
       "label": "phone as entities",
       "text": "&#43;&#49;&#45;&#53;&#53;&#53;&#45;&#49;&#50;&#51;&#45;&#52;&#53;&#54;&#55;",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "PHONE",
+          "value": "+1-555-123-4567",
+          "score": 0.88
+        }
+      ]
     },
     {
       "category": "Split across tokens",
@@ -1027,8 +1095,14 @@
       "category": "URL encoding",
       "label": "phone %2B",
       "text": "%2B1-555-123-4567",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "PHONE",
+          "value": "+1-555-123-4567",
+          "score": 0.88
+        }
+      ]
     },
     {
       "category": "URL encoding",
@@ -1047,8 +1121,14 @@
       "category": "URL encoding",
       "label": "IP with %2E",
       "text": "192%2E168%2E1%2E1",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
@@ -1071,8 +1151,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123456789",
-          "score": 0.75
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -1084,8 +1164,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123456789",
-          "score": 0.75
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -1119,8 +1199,14 @@
       "category": "Unicode tricks",
       "label": "phone with en-dashes",
       "text": "+1–555–123–4567",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "PHONE",
+          "value": "+1-555-123-4567",
+          "score": 0.88
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
@@ -1130,8 +1216,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123456789",
-          "score": 0.75
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -1143,8 +1229,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123456789",
-          "score": 0.75
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -1322,8 +1408,14 @@
       "category": "Reversed/mirrored",
       "label": "IP reversed",
       "text": "1.1.168.192",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "1.1.168.192",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Reversed/mirrored",
@@ -1336,14 +1428,8 @@
       "category": "Reversed/mirrored",
       "label": "SSN reversed",
       "text": "9876-54-321",
-      "detected": true,
-      "detections": [
-        {
-          "type": "SOCIAL_SECURITY",
-          "value": "987654321",
-          "score": 0.75
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "Mixed case tricks",
@@ -1425,8 +1511,13 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 000000000",
+          "value": "SSN: 000-00-0000",
           "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "000-00-0000",
+          "score": 0.9
         }
       ]
     },
@@ -1438,8 +1529,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123456789",
-          "score": 0.75
+          "value": "123-45-6789",
+          "score": 0.9
         }
       ]
     },
@@ -1470,9 +1561,9 @@
       "detected": true,
       "detections": [
         {
-          "type": "BANK_ACCOUNT",
-          "value": "192168001001",
-          "score": 0.55
+          "type": "IP_ADDRESS",
+          "value": "192.168.001.001",
+          "score": 0.9
         }
       ]
     }

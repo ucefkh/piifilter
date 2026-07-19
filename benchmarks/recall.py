@@ -497,6 +497,22 @@ async def make_pipeline_adapter(shared_presidio: DetectorAdapter | None = None) 
             "api", "rest", "graphql", "grpc", "soap",
             "json", "xml", "yaml", "toml", "csv", "tsv",
             "back", "cancel", "create", "delete", "enable", "disable",
+            # Additional common words found in FP analysis
+            "email", "mail", "token", "cert", "key", "pass",
+            "subject", "body", "header", "footer",
+            "address", "phone", "mobile", "fax",
+            "id", "ids", "ref", "no", "num", "str", "int",
+            "bool", "obj", "arr", "dict", "list",
+            "manager", "director", "ceo", "cto", "cfo",
+            "employee", "customer", "client", "vendor",
+            "username", "password", "secret", "salt",
+            "hash", "encrypt", "decrypt", "auth", "perm",
+            "access", "grant", "deny", "allow", "block",
+            "web", "app", "desktop", "mobile", "cloud",
+            "dir", "dirs", "file", "files", "doc", "docs",
+            "log", "logs", "msg", "message", "title",
+            "desc", "description", "summary", "detail",
+            "note", "notes", "comment", "comments",
         }
 
         seen_intervals: dict[str, list[tuple[int, int]]] = {}

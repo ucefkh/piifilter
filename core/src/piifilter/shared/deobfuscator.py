@@ -459,10 +459,10 @@ class Deobfuscator:
         "3782 822463 10005"   → (AMEX) keep as-is (already matches)
         """
         original = text
-        # First normalize mixed separators to spaces
-        text = _CC_MIXED_NORMALIZE_RE.sub(r"\1 ", text)
-        # Then try specific segment patterns
+        # Only normalize underscores and dots that match known CC group patterns
+        # 4-4-4-4 pattern with underscores: 4111_1111_1111_1111
         text = _CC_SEGMENT_RE.sub(r"\1 \2 \3 \4", text)
+        # 4-6-5 pattern (AMEX) with underscores: 3782_822463_10005
         text = _CC_AMEX_SEGMENT_RE.sub(r"\1 \2 \3", text)
         if text != original:
             log.append({

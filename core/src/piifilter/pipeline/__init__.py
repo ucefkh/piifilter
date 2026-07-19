@@ -227,6 +227,22 @@ class FilterPipeline:
             "api", "rest", "graphql", "grpc", "soap",
             "json", "xml", "yaml", "toml", "csv", "tsv",
             "back", "cancel", "create", "delete", "enable", "disable",
+            # Additional common words found in FP analysis
+            "email", "mail", "token", "cert", "key", "pass",
+            "subject", "body", "header", "footer",
+            "address", "phone", "mobile", "fax",
+            "id", "ids", "ref", "no", "num", "str", "int",
+            "bool", "obj", "arr", "dict", "list",
+            "manager", "director", "ceo", "cto", "cfo",
+            "employee", "customer", "client", "vendor",
+            "username", "password", "secret", "salt",
+            "hash", "encrypt", "decrypt", "auth", "perm",
+            "access", "grant", "deny", "allow", "block",
+            "web", "app", "desktop", "mobile", "cloud",
+            "dir", "dirs", "file", "files", "doc", "docs",
+            "log", "logs", "msg", "message", "title",
+            "desc", "description", "summary", "detail",
+            "note", "notes", "comment", "comments",
         }
 
         seen_intervals: dict[str, list[tuple[int, int]]] = {}
@@ -270,6 +286,16 @@ class FilterPipeline:
                 #    span is a common word (e.g. "The Man", "First Name"),
                 #    suppress it too.
                 if len(tokens) > 1 and all(t in _COMMON_WORDS for t in tokens):
+                    continue
+
+                # 5. Email-context guard: if a multi-word PERSON span is
+                #    followed immediately (with or without space) by an
+                #    opening paren or email-like text, it's likely a
+                #    name-in-email-header format where regex already
+                #    handles the entity.
+                # Use session.prompt (original text) to check context after the span.
+                after_span = session.prompt[eend:eend+20] if eend < len(session.prompt) else ""
+                if after_span.strip().startswith("(") or after_span.strip().startswith("<"):
                     continue
 
             # Cross-type suppression: PERSON from NER that overlaps with
