@@ -186,11 +186,13 @@ class Deobfuscator:
         text = self._decode_url_percent(text, log)
         text = self._unwrap_spoken_numbers(text, log)
         text = self._map_spoken_separators(text, log)
+        text = self._normalize_ip_octet_spaces(text, log)
+        text = self._normalize_ip_octet_dots(text, log)
         text = self._normalize_ssn_segments(text, log)
         text = self._normalize_cc_segments(text, log)
         text = self._cleanup_dash_spaces(text, log)
-        text = self._collapse_digit_spaces(text, log)
         text = self._collapse_ip_spaces(text, log)
+        text = self._collapse_digit_spaces(text, log)
         text = self._decode_hex(text, log)
         text = self._decode_base64(text, log)
         text = self._extract_area_serial(text, log)
@@ -572,6 +574,60 @@ class Deobfuscator:
         return text
 
     # ── 13. Collapse digit spaces ──────────────────────────────────────
+
+    _IP_OCTET_SPACE_RE = re.compile(
+        r"\b((?:2(?:5[0-5]|[0-4]\d)|1\d{2}|[1-9]?\d))\s+"
+        r"((?:2(?:5[0-5]|[0-4]\d)|1\d{2}|[1-9]?\d))\s+"
+        r"((?:2(?:5[0-5]|[0-4]\d)|1\d{2}|[1-9]?\d))\s+"
+        r"((?:2(?:5[0-5]|[0-4]\d)|1\d{2}|[1-9]?\d))\b"
+    )
+
+    @classmethod
+    def _normalize_ip_octet_spaces(cls, text: str, log: list) -> str:
+        """Convert space-separated IP octets to dotted format.
+
+        "168 153 172 244" → "168.153.172.244"
+        "171 110 20 205" → "171.110.20.205"
+        "10 0 0 50" → "10.0.0.50"
+        """
+        original = text
+        text = cls._IP_OCTET_SPACE_RE.sub(r"\1.\2.\3.\4", text)
+        if text != original:
+            log.append({
+                "transform": "ip_octet_spaces",
+                "description": "Normalized space-separated IP octets to dotted format",
+                "changed": True,
+            })
+        return text
+
+    _IP_OCTET_DOT_RE = re.compile(
+        r"\b(\d{1,4})\.(\d{1,4})\.(\d{1,4})\.(\d{1,4})\b"
+    )
+
+    @classmethod
+    def _normalize_ip_octet_dots(cls, text: str, log: list) -> str:
+        """Normalize leading-zero-padded dotted IP octets to standard format.
+
+        "0204.0115.0260.0325" → "204.115.260.325"
+        "0103.0207.0142.0216" → "103.207.142.216"
+
+        Strips leading zeros so the CC segment normalizer doesn't
+        consume zero-padded IP octets thinking they're CC groups.
+        """
+        original = text
+
+        def _strip_leading_zeros(m: re.Match) -> str:
+            a, b, c, d = m.group(1), m.group(2), m.group(3), m.group(4)
+            return f"{int(a)}.{int(b)}.{int(c)}.{int(d)}"
+
+        text = cls._IP_OCTET_DOT_RE.sub(_strip_leading_zeros, text)
+        if text != original:
+            log.append({
+                "transform": "ip_octet_dots",
+                "description": "Normalized zero-padded IP octets to dotted format",
+                "changed": True,
+            })
+        return text
 
     @classmethod
     def _collapse_ip_spaces(cls, text: str, log: list) -> str:

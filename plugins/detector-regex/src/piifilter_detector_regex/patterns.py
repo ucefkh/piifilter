@@ -203,6 +203,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){1,5}::(?:[0-9a-fA-F]{1,4}:){0,4}[0-9a-fA-F]{1,4}\b", 0.85),
     ("IP_ADDRESS", r"\b::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}\b", 0.85),
     ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){1,7}::\b", 0.85),
+    # Hex-format IP: 0xc0.0xa8.0x00.0x01
+    ("IP_ADDRESS", r"\b0x[0-9a-fA-F]{2}(?:\.0x[0-9a-fA-F]{2}){3}\b", 0.85),
+    # Octal IP: 012.0130.00.01
+    ("IP_ADDRESS", r"\b0[0-7]{1,4}(?:\.0[0-7]{1,4}){3}\b", 0.85),
+    # Space-separated dotted-decimal: 192 168 1 100
+    ("IP_ADDRESS", r"\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\s+){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b", 0.80),
+    # Decimal IP (32-bit integer): 3232235876
+    ("IP_ADDRESS", r"\b(?:[1-9]\d{6,9})\b", 0.65),
 
     # ── GPS ──────────────────────────────────────────────────────────
     ("GPS", r"\b(?:lat|lng|lon|latitude|longitude|coordinates?|coords?|gps)\s*[:=]?\s*[-+]?\d{1,3}\.\d+(?:\s*°)?", 0.90),
