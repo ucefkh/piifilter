@@ -318,13 +318,21 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PROJECT_NAME", r"(?i)(?-i:[A-Z])[a-zA-Z]+(?:\s+(?-i:[A-Z])[a-zA-Z]+)?\s+is\s+in\s+(?:development|maintenance|maint)\b", 0.65),
 
     # ── ADDRESS ──────────────────────────────────────────────────────
-        # Standard address: "N Street Name St/Rd/Ave/etc."
-        # Uses negative lookbehind (?<!not\s) to block ", not 123 Main St" teaching patterns.
-        # Uses a general negative lookahead for parentheticals that look like media references
-        # ("(famous from Finding Nemo)", "(from the movie...)") rather than address clarifications.
-        ("ADDRESS", r"\b(?<!not\s)\d{1,5}\s+(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s+(?:St(?:reet)?|Ave(?:nue)?|Dr(?:ive)?|Rd|Road|Blvd|Boulevard|Ln|Lane|Way|Ct|Court|Pl|Place|Cir(?:cle)?|Pkwy|Parkway)(?![,.]?\s*(?:\w+\s+){0,5}\([^)]*(?:movie|show|film|game|series|cartoon|animation|episode|from\s+[A-Z]))\b", 0.80),
-    ("ADDRESS", r"\bP\.?\s*O\.?\s+Box\s+\d+\b", 0.85),
-    ("ADDRESS", r"\b(?:Suite|Apt|Unit|Building)\s+#?\d+[A-Za-z]?\b", 0.80),
+            # Standard address: "N Street Name St/Rd/Ave/etc."
+            # Enhanced: captures street + city + state + ZIP/postcode for full address matching.
+            # Uses negative lookbehind (?<!not\s) to block ", not 123 Main St" teaching patterns.
+            # Uses a general negative lookahead for parentheticals that look like media references.
+            # Optional suffix captures city, state abbreviation + ZIP, or UK postcode after street.
+            ("ADDRESS", r"\b(?<!not\s)\d{1,5}\s+(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s+(?:St(?:reet)?|Ave(?:nue)?|Dr(?:ive)?|Rd|Road|Blvd|Boulevard|Ln|Lane|Way|Ct|Court|Pl|Place|Cir(?:cle)?|Pkwy|Parkway)(?:,\s*[A-Z][a-z]+(?:[\s-]+[A-Z][a-z]+)*(?:,\s*(?:[A-Z]{2}\s+\d{5}(?:-\d{4})?|[A-Z]{1,2}\d{1,2}[A-Z]?\s+\d[A-Z]{2}|\d{5})))?(?:\s*,\s*[A-Za-z]+(?:\s+[A-Za-z]+)?)?(?![,.]?\s*(?:\w+\s+){0,5}\([^)]*(?:movie|show|film|game|series|cartoon|animation|episode|from\s+[A-Z]))\b", 0.85),
+            # European-style addresses: "Street Name N, Postcode City" — where the number comes
+        # after the street name, followed by comma and postcode + city.
+        # Supports multi-word street names with lowercase particles (den, der, von, etc.)
+        # and non-ASCII characters (ü, ß, é, etc.). The first word must start with an
+        # uppercase letter to avoid matching generic phrases.
+        # Catches patterns like "Unter den Linden 1, 10117 Berlin", "Rue de la Paix 15, 75002 Paris"
+    ("ADDRESS", r"\b(?:[A-Z]\w*(?:\s+(?:[A-Z]\w*|den|der|die|das|von|vom|zum|zur|am|im|in|an|auf|bei|mit|und|oder|aus|nicht|dem|des|ein|eine|einer|einem|für|über|unter|und|of|the|la|le|les|de|del|della|dos|das|van|ver|des|du|sur|aux|en|el)){0,5})\s+\d{1,4}[a-z]?,\s*\d{4,5}\s+\w+(?:[\s-]+\w+)?\b", 0.80),
+        ("ADDRESS", r"\bP\.?\s*O\.?\s+Box\s+\d+\b", 0.85),
+        ("ADDRESS", r"\b(?:Suite|Apt|Unit|Building)\s+#?\d+[A-Za-z]?\b", 0.80),
 
     # ── CITY ─────────────────────────────────────────────────────────
     ("CITY", r"(?i)\b(?:city|town)\s*(?:of|pop|population)?\s*:?\s*(?!(?:The|A|An|This|That|These|Those|Our|Their|My|Your|His|Her|Its)\b)[A-Z][a-z]+(?:[ -]+[A-Z][a-z]+)?\b", 0.70),
