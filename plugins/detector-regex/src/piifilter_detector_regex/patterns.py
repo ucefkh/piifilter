@@ -284,5 +284,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Catch compound company names like LexCorp, Oscorp, OpenCorp, etc.
     # Pattern: capitalized word ending in Corp/Soft/Tech/Works/Labs/etc
     ("COMPANY", r"\b[A-Z][a-z]{2,}(?:Corp|Corp\.|Soft|Tech|Works|Labs|Ware|Mart|Hub|Box|Cloud|Space|Mail|Sync|Chat|Bot|Pay|Log|Jet|Nest|Map|Pad|Pod)\b", 0.70),
+    # Two-word company names used in "I'm from X" introductions — the "from"
+    # keyword must immediately precede a capitalized two-word phrase.
+    # Low confidence to avoid FPs on "from New York", "from Boston" etc.
+    # Avoid matching inside parentheticals like "(famous from Finding Nemo)"
+    ("COMPANY", r"(?<!\w)(?<!\()(?:from)\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))\b", 0.50),
 
 ]
