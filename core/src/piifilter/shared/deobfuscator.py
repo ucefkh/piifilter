@@ -267,34 +267,6 @@ class Deobfuscator:
         text = re.sub(r"\s+\.\s+", ".", text)
         text = re.sub(r"\s+\.", ".", text)
         text = re.sub(r"\.\s+", ".", text)
-
-        # ── Email-specific heuristics after HTML entity decoding ──
-        # Some obfuscations use &#046; (period, char 46) in place of @,
-        # e.g. "alice &#046; acme &#46; com" → "alice.acme.com"
-        # We detect: text_like.text_like(.text_like)+ patterns that look
-        # like emails with no @ sign, and convert the FIRST dot (the one
-        # before the "domain name" part) to @.
-        # Pattern: word.word.word → first dot becomes @
-        _email_like = re.compile(
-            r"\b([a-zA-Z0-9._%+\-*]+)\.([a-zA-Z0-9\-]+(?:\.(?:co|com|org|net|edu|gov|uk|jp|de|fr|au|io|ai|dev|app|ca|us|cn|in|sa|gr|br|it|es|nl|se|no|pl|ru|kr|jp|mx|nz|be|at|ch|dk|fi|ie|pt|hu|ro|za|tr|il|sg|hk|tw|th|my|ph|vn|ar|cl|coop|info|biz|pro|name|museum|travel|aero|jobs|mobi|cat|tel|asia|xxx|post|geo|casa|work|cloud|site|online|store|tech|space|xyz|top|club|band|guru|global|email|support|app|dev|io|ai|design|media|news|social|live|life|world|company|network|group|agency|digital|expert|solutions|marketing|center|systems|software|blog|press|studio|academy|education|foundation|institute|international|partners|productions|properties|pictures|photo|photography|photos|place|plumbing|poker|politics|porn|press|pro|productions|prof|promo|properties|property|protection|pub|publ|pictures|qa|quebec|racing|radio|re|realty|recipes|red|rehab|reise|reisen|rent|rentals|repair|report|republican|rest|restaurant|review|reviews|rich|rio|rip|rocks|rodeo|room|rsvp|ruhr|run|ryukyu|saar|sale|salon|sarl|save|saxo|sc|sca|scb|schaeffler|school|schule|schwarz|science|scot|sd|seat|security|seek|select|sener|services|seven|sew|sex|sexy|sh|shiksha|shoes|shop|shopping|shouji|show|shrimp|silk|sina|singles|site|ski|skin|sky|skype|sling|sm|smart|smile|sn|sncf|soccer|social|softbank|software|sohu|solar|solutions|song|sony|soy|space|spiegel|spot|spreadbetting|sr|srl|st|stada|staples|star|starhub|statefarm|stc|stcgroup|stockholm|storage|store|stream|studio|study|style|su|sucks|supplies|supply|support|surf|surgery|suzuki|swatch|swiss|sydney|systems|taipei|talk|taobao|target|tatamotors|tatar|tattoo|tax|taxi|tci|tdk|team|tech|technology|tel|telefonica|temasek|tennis|teva|thd|theater|theatre|tickets|tienda|tips|tires|tirol|tk|tl|tm|tn|to|today|tokyo|tools|top|toray|toshiba|total|tours|town|toyota|toys|trade|trading|training|travel|travelersinsurance|trust|trv|tt|tui|tunes|tushu|tv|tvs|tw|tz|ua|ug|uk|unicom|university|uno|uol|us|uy|uz|va|vacations|vana|vegas|ventures|verisign|versicherung|vet|vg|vi|viajes|video|vig|viking|villas|vin|vip|virgin|vision|vista|vistaprint|viva|vlaanderen|vn|vodka|volkswagen|vote|voting|voto|voyage|vu|wales|walter|wang|watch|webcam|website|wed|wedding|weir|wf|whoswho|wien|wiki|williamhill|win|windows|wine|winners|wme|wolterskluwer|woodside|work|works|world|wow|ws|wtc|wtf|xbox|xerox|xin|xperia|xxx|xyz|yachts|yahoo|yamaxun|yandex|ye|yodobashi|yoga|yokohama|youtube|yt|yun|za|zara|zero|zip|zone|zuerich|zw))+)\b"
-        )
-
-        def _fix_email_no_at(m: re.Match) -> str:
-            """Convert first dot to @ in apparent email-without-at patterns."""
-            local = m.group(1)
-            domain = m.group(2)
-            # The local part already contained a dot, so the first dot
-            # is actually @. Split local part into real-local and domain.
-            parts = local.split(".", 1)
-            if len(parts) == 2:
-                return f"{parts[0]}@{parts[1]}.{domain}"
-            return m.group(0)
-
-        # Apply only when the text looks like an email without @
-        # i.e., contains no @ but has word.word(.word)+ pattern
-        if "@" not in text:
-            text = _email_like.sub(_fix_email_no_at, text)
-
         if text != original:
             log.append({
                 "transform": "html_entities",

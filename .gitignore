@@ -36,11 +36,5 @@ node_modules/
 apps/vscode-extension/out/
 
 # Temp test files from subagents
-_test_*.py
-_check_*.py
-_sanity.py
-_verify_*.py
-test_import*.py
-check_*.py
-_diag*.py
-_debug*.py_*.py
+_*.py
+benchmarks/_*.py
