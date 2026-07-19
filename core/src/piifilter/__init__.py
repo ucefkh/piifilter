@@ -11,6 +11,8 @@ No provider code. No transport code. No Chrome code.
 All plugins live in piifilter.plugins.* or external packages.
 """
 
+from __future__ import annotations
+
 from piifilter.session import Session
 from piifilter.pipeline import FilterPipeline
 from piifilter.config import FilterConfig
