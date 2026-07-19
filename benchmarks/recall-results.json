@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set)",
-  "timestamp": "2026-07-19T20:52:06Z",
+  "timestamp": "2026-07-19T21:09:34Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
@@ -39,13 +39,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 228,
-      "total_true_positives": 201,
-      "total_false_positives": 27,
-      "total_false_negatives": 11,
-      "overall_precision": 0.881578947368421,
-      "overall_recall": 0.9481132075471698,
-      "overall_f1": 0.9136363636363637,
+      "total_detected_entities": 236,
+      "total_true_positives": 204,
+      "total_false_positives": 32,
+      "total_false_negatives": 8,
+      "overall_precision": 0.864406779661017,
+      "overall_recall": 0.9622641509433962,
+      "overall_f1": 0.9107142857142857,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -69,13 +69,13 @@
         },
         "API_KEY": {
           "true_positives": 10,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 10,
-          "precision": 0.9091,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9524,
-          "f2": 0.9804,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7225,
             1.0
@@ -88,23 +88,23 @@
           ]
         },
         "BANK_ACCOUNT": {
-          "true_positives": 6,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 1,
-          "n": 7,
+          "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
-          "recall": 0.8571,
-          "f1": 0.9231,
-          "f2": 0.8824,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.75,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.3006,
-            0.9544
+            0.5101,
+            1.0
           ]
         },
         "CITY": {
@@ -129,13 +129,13 @@
         },
         "COMPANY": {
           "true_positives": 8,
-          "false_positives": 2,
+          "false_positives": 4,
           "false_negatives": 0,
           "n": 8,
-          "precision": 0.8,
+          "precision": 0.6667,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 0.8,
+          "f2": 0.9091,
           "recall_ci": [
             0.6756,
             1.0
@@ -229,13 +229,13 @@
         },
         "DOMAIN": {
           "true_positives": 16,
-          "false_positives": 4,
+          "false_positives": 6,
           "false_negatives": 1,
           "n": 17,
-          "precision": 0.8,
+          "precision": 0.7273,
           "recall": 0.9412,
-          "f1": 0.8649,
-          "f2": 0.9091,
+          "f1": 0.8205,
+          "f2": 0.8889,
           "recall_ci": [
             0.7302,
             0.9895
@@ -248,23 +248,23 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 78,
-          "false_positives": 2,
-          "false_negatives": 3,
-          "n": 81,
-          "precision": 0.975,
-          "recall": 0.963,
-          "f1": 0.9689,
-          "f2": 0.9653,
+          "true_positives": 80,
+          "false_positives": 4,
+          "false_negatives": 2,
+          "n": 82,
+          "precision": 0.9524,
+          "recall": 0.9756,
+          "f1": 0.9639,
+          "f2": 0.9709,
           "recall_ci": [
-            0.8967,
-            0.9873
+            0.9154,
+            0.9933
           ],
           "real_n": 42,
-          "real_recall": 0.9286,
+          "real_recall": 0.9524,
           "real_recall_ci": [
-            0.8099,
-            0.9754
+            0.8421,
+            0.9868
           ]
         },
         "EMPLOYEE_NAME": {
@@ -348,23 +348,23 @@
           ]
         },
         "IP_ADDRESS": {
-          "true_positives": 24,
-          "false_positives": 0,
-          "false_negatives": 3,
-          "n": 27,
-          "precision": 1.0,
-          "recall": 0.8889,
-          "f1": 0.9412,
-          "f2": 0.9091,
+          "true_positives": 28,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "n": 29,
+          "precision": 0.9655,
+          "recall": 0.9655,
+          "f1": 0.9655,
+          "f2": 0.9655,
           "recall_ci": [
-            0.7194,
-            0.9615
+            0.8282,
+            0.9939
           ],
           "real_n": 15,
-          "real_recall": 0.8,
+          "real_recall": 0.9333,
           "real_recall_ci": [
-            0.5481,
-            0.9295
+            0.7018,
+            0.9881
           ]
         },
         "JWT": {
@@ -408,34 +408,34 @@
           ]
         },
         "PERSON": {
-          "true_positives": 18,
+          "true_positives": 16,
           "false_positives": 1,
-          "false_negatives": 0,
-          "n": 18,
-          "precision": 0.9474,
-          "recall": 1.0,
-          "f1": 0.973,
-          "f2": 0.989,
+          "false_negatives": 1,
+          "n": 17,
+          "precision": 0.9412,
+          "recall": 0.9412,
+          "f1": 0.9412,
+          "f2": 0.9412,
           "recall_ci": [
-            0.8241,
-            1.0
+            0.7302,
+            0.9895
           ],
           "real_n": 9,
-          "real_recall": 1.0,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.7008,
-            1.0
+            0.565,
+            0.9801
           ]
         },
         "PHONE": {
           "true_positives": 28,
-          "false_positives": 4,
+          "false_positives": 1,
           "false_negatives": 1,
           "n": 29,
-          "precision": 0.875,
+          "precision": 0.9655,
           "recall": 0.9655,
-          "f1": 0.918,
-          "f2": 0.9459,
+          "f1": 0.9655,
+          "f2": 0.9655,
           "recall_ci": [
             0.8282,
             0.9939
@@ -489,13 +489,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 14,
-          "false_positives": 1,
+          "false_positives": 3,
           "false_negatives": 0,
           "n": 14,
-          "precision": 0.9333,
+          "precision": 0.8235,
           "recall": 1.0,
-          "f1": 0.9655,
-          "f2": 0.9859,
+          "f1": 0.9032,
+          "f2": 0.9589,
           "recall_ci": [
             0.7847,
             1.0
@@ -543,12 +543,13 @@
         }
       },
       "confusion_matrix": {
+        "COMPANY": {
+          "COMPANY": 2,
+          "DOMAIN": 2
+        },
         "ADDRESS": {
           "CITY": 1,
           "COUNTRY": 1
-        },
-        "BANK_ACCOUNT": {
-          "PHONE": 1
         },
         "NONE": {
           "COMPANY": 2,
@@ -560,9 +561,9 @@
           "ADDRESS": 1,
           "URL": 1,
           "PERSON": 1,
-          "API_KEY": 1,
-          "EMAIL": 2,
-          "SOCIAL_SECURITY": 1,
+          "EMAIL": 4,
+          "SOCIAL_SECURITY": 3,
+          "IP_ADDRESS": 1,
           "JWT": 1,
           "CREDIT_CARD": 1,
           "DOMAIN": 1
@@ -570,14 +571,14 @@
         "DOMAIN": {
           "URL": 1
         },
+        "PERSON": {
+          "DOMAIN": 1
+        },
         "CITY": {
           "CITY": 1
         },
-        "IP_ADDRESS": {
-          "PHONE": 2
-        },
         "EMAIL": {
-          "DOMAIN": 3
+          "DOMAIN": 2
         }
       },
       "example_results": [
@@ -585,9 +586,9 @@
           "index": 0,
           "text_preview": "Hi, I'm Alice Johnson from Acme Corp. Email: alice@acme.com Phone: +1-555-123-45",
           "expected": 4,
-          "detected": 4,
+          "detected": 6,
           "true_positives": 4,
-          "false_positives": 0,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -597,6 +598,7 @@
           ],
           "detected_types": [
             "COMPANY",
+            "DOMAIN",
             "EMAIL",
             "PERSON",
             "PHONE"
@@ -640,16 +642,16 @@
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
-            "IBAN",
-            "PHONE"
+            "BANK_ACCOUNT",
+            "IBAN"
           ]
         },
         {
@@ -838,9 +840,9 @@
           "index": 16,
           "text_preview": "Our customer Jane Smith from Widgets Inc. wants her data removed.",
           "expected": 2,
-          "detected": 2,
+          "detected": 4,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -848,7 +850,8 @@
           ],
           "detected_types": [
             "COMPANY",
-            "CUSTOMER_NAME"
+            "CUSTOMER_NAME",
+            "DOMAIN"
           ]
         },
         {
@@ -1307,9 +1310,9 @@
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
           "detected": 3,
-          "true_positives": 3,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CITY",
             "COMPANY",
@@ -1318,7 +1321,7 @@
           "detected_types": [
             "CITY",
             "COMPANY",
-            "PERSON"
+            "DOMAIN"
           ]
         },
         {
@@ -1371,15 +1374,14 @@
           "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
           "detected": 3,
-          "true_positives": 1,
-          "false_positives": 2,
-          "false_negatives": 2,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -2293,7 +2295,7 @@
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "API_KEY"
+            "EMAIL"
           ]
         },
         {
@@ -2348,12 +2350,14 @@
           "index": 116,
           "text_preview": "Phone-like: 5552368 is short sequence, not enough digits for phone.",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 117,
@@ -2392,12 +2396,14 @@
           "index": 120,
           "text_preview": "Base64 encoded SSN: MTIzLTQ1LTY3ODk= in base64, detectors should not decode this",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 121,
@@ -2476,9 +2482,9 @@
           "index": 126,
           "text_preview": "Base64: am9obkBleGFtcGxlLmNvbQ== decodes to john@example.com",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
@@ -2491,9 +2497,9 @@
           "index": 127,
           "text_preview": "Encoded SSN: MTIzLTQ1LTY3ODk= decodes to 123-45-6789",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
@@ -2595,14 +2601,14 @@
           "text_preview": "Hidden: john<!--comment-->@example.com",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "EMAIL"
           ]
         },
         {
@@ -2835,13 +2841,13 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 244,
-      "total_true_positives": 202,
-      "total_false_positives": 42,
-      "total_false_negatives": 10,
-      "overall_precision": 0.8278688524590164,
-      "overall_recall": 0.9528301886792453,
-      "overall_f1": 0.8859649122807017,
+      "total_detected_entities": 253,
+      "total_true_positives": 203,
+      "total_false_positives": 50,
+      "total_false_negatives": 9,
+      "overall_precision": 0.8023715415019763,
+      "overall_recall": 0.9575471698113207,
+      "overall_f1": 0.8731182795698925,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -2865,13 +2871,13 @@
         },
         "API_KEY": {
           "true_positives": 10,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 10,
-          "precision": 0.9091,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9524,
-          "f2": 0.9804,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7225,
             1.0
@@ -2884,23 +2890,23 @@
           ]
         },
         "BANK_ACCOUNT": {
-          "true_positives": 6,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 1,
-          "n": 7,
+          "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
-          "recall": 0.8571,
-          "f1": 0.9231,
-          "f2": 0.8824,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.75,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.3006,
-            0.9544
+            0.5101,
+            1.0
           ]
         },
         "CITY": {
@@ -2925,13 +2931,13 @@
         },
         "COMPANY": {
           "true_positives": 8,
-          "false_positives": 2,
+          "false_positives": 4,
           "false_negatives": 0,
           "n": 8,
-          "precision": 0.8,
+          "precision": 0.6667,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 0.8,
+          "f2": 0.9091,
           "recall_ci": [
             0.6756,
             1.0
@@ -3025,13 +3031,13 @@
         },
         "DOMAIN": {
           "true_positives": 16,
-          "false_positives": 4,
+          "false_positives": 6,
           "false_negatives": 1,
           "n": 17,
-          "precision": 0.8,
+          "precision": 0.7273,
           "recall": 0.9412,
-          "f1": 0.8649,
-          "f2": 0.9091,
+          "f1": 0.8205,
+          "f2": 0.8889,
           "recall_ci": [
             0.7302,
             0.9895
@@ -3044,23 +3050,23 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 78,
-          "false_positives": 4,
-          "false_negatives": 3,
-          "n": 81,
-          "precision": 0.9512,
-          "recall": 0.963,
-          "f1": 0.9571,
-          "f2": 0.9606,
+          "true_positives": 80,
+          "false_positives": 9,
+          "false_negatives": 2,
+          "n": 82,
+          "precision": 0.8989,
+          "recall": 0.9756,
+          "f1": 0.9357,
+          "f2": 0.9592,
           "recall_ci": [
-            0.8967,
-            0.9873
+            0.9154,
+            0.9933
           ],
           "real_n": 42,
-          "real_recall": 0.9286,
+          "real_recall": 0.9524,
           "real_recall_ci": [
-            0.8099,
-            0.9754
+            0.8421,
+            0.9868
           ]
         },
         "EMPLOYEE_NAME": {
@@ -3145,13 +3151,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 28,
-          "false_positives": 2,
+          "false_positives": 3,
           "false_negatives": 1,
           "n": 29,
-          "precision": 0.9333,
+          "precision": 0.9032,
           "recall": 0.9655,
-          "f1": 0.9492,
-          "f2": 0.9589,
+          "f1": 0.9333,
+          "f2": 0.9524,
           "recall_ci": [
             0.8282,
             0.9939
@@ -3204,34 +3210,34 @@
           ]
         },
         "PERSON": {
-          "true_positives": 16,
+          "true_positives": 14,
           "false_positives": 5,
-          "false_negatives": 1,
-          "n": 17,
-          "precision": 0.7619,
-          "recall": 0.9412,
-          "f1": 0.8421,
-          "f2": 0.8989,
+          "false_negatives": 2,
+          "n": 16,
+          "precision": 0.7368,
+          "recall": 0.875,
+          "f1": 0.8,
+          "f2": 0.8434,
           "recall_ci": [
-            0.7302,
-            0.9895
+            0.6398,
+            0.965
           ],
           "real_n": 9,
-          "real_recall": 0.8889,
+          "real_recall": 0.7778,
           "real_recall_ci": [
-            0.565,
-            0.9801
+            0.4526,
+            0.9368
           ]
         },
         "PHONE": {
           "true_positives": 28,
-          "false_positives": 6,
+          "false_positives": 3,
           "false_negatives": 1,
           "n": 29,
-          "precision": 0.8235,
+          "precision": 0.9032,
           "recall": 0.9655,
-          "f1": 0.8889,
-          "f2": 0.9333,
+          "f1": 0.9333,
+          "f2": 0.9524,
           "recall_ci": [
             0.8282,
             0.9939
@@ -3285,13 +3291,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 14,
-          "false_positives": 1,
+          "false_positives": 3,
           "false_negatives": 0,
           "n": 14,
-          "precision": 0.9333,
+          "precision": 0.8235,
           "recall": 1.0,
-          "f1": 0.9655,
-          "f2": 0.9859,
+          "f1": 0.9032,
+          "f2": 0.9589,
           "recall_ci": [
             0.7847,
             1.0
@@ -3339,13 +3345,18 @@
         }
       },
       "confusion_matrix": {
+        "COMPANY": {
+          "COMPANY": 2,
+          "DOMAIN": 2
+        },
+        "EMAIL": {
+          "EMAIL": 5,
+          "DOMAIN": 2
+        },
         "ADDRESS": {
           "CITY": 1,
           "PERSON": 1,
           "COUNTRY": 1
-        },
-        "BANK_ACCOUNT": {
-          "PHONE": 1
         },
         "CREDIT_CARD": {
           "CREDIT_CARD": 4
@@ -3360,9 +3371,9 @@
           "ADDRESS": 1,
           "PERSON": 4,
           "URL": 1,
-          "API_KEY": 1,
-          "EMAIL": 2,
-          "SOCIAL_SECURITY": 1,
+          "EMAIL": 4,
+          "SOCIAL_SECURITY": 3,
+          "IP_ADDRESS": 1,
           "JWT": 1,
           "CREDIT_CARD": 2,
           "DOMAIN": 1
@@ -3371,18 +3382,16 @@
           "URL": 1
         },
         "IP_ADDRESS": {
-          "IP_ADDRESS": 2,
-          "PHONE": 2
+          "IP_ADDRESS": 2
+        },
+        "PERSON": {
+          "DOMAIN": 1
         },
         "CITY": {
           "CITY": 1
         },
         "PHONE": {
           "PHONE": 2
-        },
-        "EMAIL": {
-          "EMAIL": 2,
-          "DOMAIN": 3
         }
       },
       "example_results": [
@@ -3390,9 +3399,9 @@
           "index": 0,
           "text_preview": "Hi, I'm Alice Johnson from Acme Corp. Email: alice@acme.com Phone: +1-555-123-45",
           "expected": 4,
-          "detected": 4,
+          "detected": 7,
           "true_positives": 4,
-          "false_positives": 0,
+          "false_positives": 3,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -3402,6 +3411,7 @@
           ],
           "detected_types": [
             "COMPANY",
+            "DOMAIN",
             "EMAIL",
             "PERSON",
             "PHONE"
@@ -3445,16 +3455,16 @@
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
-            "IBAN",
-            "PHONE"
+            "BANK_ACCOUNT",
+            "IBAN"
           ]
         },
         {
@@ -3643,9 +3653,9 @@
           "index": 16,
           "text_preview": "Our customer Jane Smith from Widgets Inc. wants her data removed.",
           "expected": 2,
-          "detected": 2,
+          "detected": 4,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -3653,7 +3663,8 @@
           ],
           "detected_types": [
             "COMPANY",
-            "CUSTOMER_NAME"
+            "CUSTOMER_NAME",
+            "DOMAIN"
           ]
         },
         {
@@ -4113,9 +4124,9 @@
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
           "detected": 3,
-          "true_positives": 3,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CITY",
             "COMPANY",
@@ -4124,7 +4135,7 @@
           "detected_types": [
             "CITY",
             "COMPANY",
-            "PERSON"
+            "DOMAIN"
           ]
         },
         {
@@ -4176,16 +4187,15 @@
           "index": 49,
           "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -5100,7 +5110,7 @@
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "API_KEY"
+            "EMAIL"
           ]
         },
         {
@@ -5157,12 +5167,14 @@
           "index": 116,
           "text_preview": "Phone-like: 5552368 is short sequence, not enough digits for phone.",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 117,
@@ -5201,12 +5213,14 @@
           "index": 120,
           "text_preview": "Base64 encoded SSN: MTIzLTQ1LTY3ODk= in base64, detectors should not decode this",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 121,
@@ -5285,9 +5299,9 @@
           "index": 126,
           "text_preview": "Base64: am9obkBleGFtcGxlLmNvbQ== decodes to john@example.com",
           "expected": 1,
-          "detected": 1,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
@@ -5300,9 +5314,9 @@
           "index": 127,
           "text_preview": "Encoded SSN: MTIzLTQ1LTY3ODk= decodes to 123-45-6789",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
@@ -5405,14 +5419,14 @@
           "text_preview": "Hidden: john<!--comment-->@example.com",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "EMAIL"
           ]
         },
         {
@@ -5495,9 +5509,9 @@
           "index": 140,
           "text_preview": "CSS: '. alice@acme.com' is a quoted email",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
