@@ -153,8 +153,18 @@ def make_regex_adapter() -> DetectorAdapter:
                 start, end = match.start(), match.end()
                 if start == end:
                     continue
-                if any(s <= start and end <= e for s, e in seen_intervals):
+                # Check if this match is contained within an existing interval
+                contained = any(s <= start and end <= e for s, e in seen_intervals)
+                if contained:
                     continue
+                # If this match CONTAINS one or more existing intervals, replace them
+                # (wider match takes precedence over narrower)
+                new_seen = [(s, e) for s, e in seen_intervals if not (start <= s and e <= end)]
+                if len(new_seen) != len(seen_intervals):
+                    # Some intervals were subsumed — remove corresponding entities
+                    subsumed_starts = {s for s, e in seen_intervals if start <= s and e <= end}
+                    entities = [e for e in entities if e["start"] not in subsumed_starts]
+                seen_intervals = new_seen
                 entities.append({
                     "entity_type": entity_type.value,
                     "value": match.group(),

@@ -1,6 +1,6 @@
 {
-  "description": "PIIFilter Detection Recall Benchmark Dataset — 122 labeled examples covering all 24 entity types plus edge cases and negatives. Auto-generated with verified positions.",
-  "version": "1.1.0",
+  "description": "PIIFilter Detection Recall Benchmark Dataset — 122 labeled examples covering all 24 entity types plus edge cases and negatives. Auto-generated with verified positions. (adversarial subset: 123–150 — 28 obfuscated PII examples)",
+  "version": "1.2.0",
   "examples": [
     {
       "text": "Hi, I'm Alice Johnson from Acme Corp. Email: alice@acme.com Phone: +1-555-123-4567",
@@ -1689,6 +1689,314 @@
     {
       "text": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ...flQpDQEf4RZwtYVgYkY9wQfF0sZgRv8nKpLmNvXzUxM",
       "entities": []
+    },
+    {
+      "text": "Contact: jоhn@example.com (Cyrillic о instead of Latin o)",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "jоhn@example.com",
+          "start": 9,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "Email: test@exаmple.com (Cyrillic а in domain)",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "test@exаmple.com",
+          "start": 7,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Reach me at joh‍n@example.com (zero-width joiner)",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "joh‍n@example.com",
+          "start": 13,
+          "end": 37
+        }
+      ]
+    },
+    {
+      "text": "Email: bob​@​example.com (zero-width spaces)",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "bob​@​example.com",
+          "start": 7,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "text": "Base64: am9obkBleGFtcGxlLmNvbQ== decodes to john@example.com",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "start": 41,
+          "end": 57
+        }
+      ]
+    },
+    {
+      "text": "Encoded SSN: MTIzLTQ1LTY3ODk= decodes to 123-45-6789",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "start": 35,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "text": "ROT13: wbua@rknzcyr.pbz (john@example.com)",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "wbua@rknzcyr.pbz",
+          "start": 7,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "ROT13 CC: 4VVV-VVVV-VVVV-VVGK (4111-1111-1111-1111)",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "4VVV-VVVV-VVVV-VVGK",
+          "start": 9,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "text": "URL-encoded: john%40example.com",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "john%40example.com",
+          "start": 14,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "URL-encoded phone: %2B1-555-123-4567",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "%2B1-555-123-4567",
+          "start": 19,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "text": "Token split: \"john\" + \"@\" + \"example.com\"",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "start": 28,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "text": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "start": 23,
+          "end": 57
+        }
+      ]
+    },
+    {
+      "text": "Hidden: john<!--comment-->@example.com",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "start": 8,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "text": "Send to [contact](mailto:alice@acme.com) for info",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "alice@acme.com",
+          "start": 23,
+          "end": 37
+        }
+      ]
+    },
+    {
+      "text": "HTML entities: john&#64;example&#46;com",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "john&#64;example&#46;com",
+          "start": 15,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "text": "Code: `alice@acme.com` in backticks",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "alice@acme.com",
+          "start": 7,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "text": "JSON escaped: john\\u0040example\\u002Ecom",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "john\\u0040example\\u002Ecom",
+          "start": 15,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "text": "Reversed: moc.elpmaxe@nhoj (decodes to john@example.com)",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "start": 41,
+          "end": 57
+        }
+      ]
+    },
+    {
+      "text": "CSS: '. alice@acme.com' is a quoted email",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "alice@acme.com",
+          "start": 7,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "Phone: +1-555-123-4Ӧ97 (Cyrillic Ҧ instead of 5)",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-555-123-4Ӧ97",
+          "start": 7,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Ssn: 123-45-6789  (with irregular spacing)",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "start": 5,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "text": "Full-width: ａｌｉｃｅ＠ａｃｍｅ．ｃｏｍ",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "ａｌｉｃｅ＠ａｃｍｅ．ｃｏｍ",
+          "start": 12,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "Trailing dot: test@example.com. (period after domain)",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "test@example.com",
+          "start": 15,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "Bidi: ‮support@company.com‬ (with LTR override marks)",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "support@company.com",
+          "start": 7,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "HTML code: <code>alice@acme.com</code> in HTML snippet",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "alice@acme.com",
+          "start": 13,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "text": "Phone: +1–555–123–4567 (en-dashes instead of hyphens)",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1–555–123–4567",
+          "start": 7,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "SSN: 123 45 6789 (non-breaking spaces)",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123 45 6789",
+          "start": 5,
+          "end": 18
+        }
+      ]
+    },
+    {
+      "text": "// email = 'john' + '@' + 'example.com'",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "start": 22,
+          "end": 53
+        }
+      ]
     }
   ]
 }
