@@ -143,9 +143,13 @@ class LabeledExample:
 @dataclass
 class RecallResult:
     entity_type: str
+    # ── Full-set metrics ──
     true_positives: int = 0
     false_positives: int = 0
     false_negatives: int = 0
+    # ── Real-only sub-metrics (excludes masked/obfuscated) ──
+    real_true_positives: int = 0
+    real_false_negatives: int = 0
 
     @property
     def n(self) -> int:
@@ -183,6 +187,21 @@ class RecallResult:
     def recall_ci(self) -> tuple[float, float]:
         return wilson_score(self.recall, self.n)
 
+    # ── Real-only properties ──
+
+    @property
+    def real_n(self) -> int:
+        return self.real_true_positives + self.real_false_negatives
+
+    @property
+    def real_recall(self) -> float:
+        denom = self.real_true_positives + self.real_false_negatives
+        return self.real_true_positives / denom if denom else 0.0
+
+    @property
+    def real_recall_ci(self) -> tuple[float, float]:
+        return wilson_score(self.real_recall, self.real_n)
+
 
 @dataclass
 class ConfusionEntry:
@@ -192,18 +211,87 @@ class ConfusionEntry:
     count: int = 0
 
 
+# ── Masked/obfuscated PII detection ─────────────────────────
+
+
+def is_masked_pii(entity: dict) -> bool:
+    """Check if an entity is masked/anonymized/obfuscated — already not real PII.
+
+    An entity is considered masked/obfuscated if its *value* contains any of:
+      - X-masked patterns (e.g. XXX-XX-9074, SSN 1XX-XX-6789, 9XX-XX-4321)
+      - Star-masked (e.g. ***-**-0720)
+      - Hash-like (e.g. 393837363534333231, hex/base64 encoded)
+      - Spoken-out / spaced-out digits that have been rearranged or include
+        extra textual context that makes the value already anonymized
+
+    Currently focused on SOCIAL_SECURITY; the same heuristic can be extended
+    to other entity types as adversarial examples are added.
+    """
+    value = entity.get("value", "")
+    typ = entity.get("type", entity.get("entity_type", "")).upper()
+
+    if typ != "SOCIAL_SECURITY":
+        return False  # Only SSN has masked variants for now
+
+    # X-masked: contains 'X' or '*' in place of digits as obfuscation markers
+    # Patterns like XXX-XX-9074, 9XX-XX-4321, SSN 1XX-XX-6789, ***-**-0720
+    if "X" in value.upper() or "*" in value:
+        return True
+
+    # Hex-encoded: purely hexadecimal and long enough to be a SSN
+    digits_only = "".join(c for c in value if c.isalnum())
+    if len(digits_only) >= 9 and all(c in "0123456789abcdefABCDEF" for c in digits_only):
+        # It's all hex digits — could be hex-encoded SSN or base64
+        return True
+
+    # Base64-encoded SSN: contains only base64-legal chars (A-Za-z0-9+/=)
+    # and has roughly SSN-like length (12+ chars) and ends with '=' padding
+    if len(value) >= 12 and value.rstrip("=").replace("+", "").replace("/", ""):
+        import re as _re
+        if _re.match(r'^[A-Za-z0-9+/]+=*$', value.strip()) and len(value) <= 40:
+            # Could be base64 — flag it if it looks like encoded text (no spaces, mixed case)
+            if any(c.isupper() for c in value) and any(c.islower() for c in value):
+                return True
+
+    # Spoken-out / segmented with extra textual context
+    # e.g. "area 123 group 45 serial 6789", "456 78 9012 (segmented)"
+    lower_val = value.lower()
+    spoken_markers = ["area ", "group ", "serial ", " (segmented)"]
+    if any(marker in lower_val for marker in spoken_markers):
+        return True
+
+    # Spaced-out digits (e.g. "4 5 6 7 8 9 0 1 2", "1 1 1 2 2 3 3 3 3")
+    # — the original value has been structurally altered
+    tokens = value.split()
+    if len(tokens) >= 7 and all(t.isdigit() for t in tokens):
+        return True
+
+    return False
+
+
 # ── Dataset loader ──────────────────────────────────────────────────────────
 
 
 def load_dataset(path: Path | None = None) -> list[LabeledExample]:
-    """Load labeled dataset from JSON file."""
+    """Load labeled dataset from JSON file.
+
+    Each entity is augmented with an ``is_real_pii`` flag indicating whether
+    the value represents genuine PII (as opposed to a masked/obfuscated
+    variant that is already anonymized).
+    """
     if path is None:
         path = DATA_DIR / "pii_dataset.json"
     raw = json.loads(path.read_text())
-    return [
-        LabeledExample(text=ex["text"], entities=ex.get("entities", []))
-        for ex in raw.get("examples", [])
-    ]
+    examples = []
+    for ex in raw.get("examples", []):
+        entities = ex.get("entities", [])
+        # Tag each entity with is_real_pii
+        tagged = []
+        for ee in entities:
+            ee["is_real_pii"] = not is_masked_pii(ee)
+            tagged.append(ee)
+        examples.append(LabeledExample(text=ex["text"], entities=tagged))
+    return examples
 
 
 # ── Detector adapter (same pattern as run.py) ───────────────────────────────
@@ -686,6 +774,18 @@ async def evaluate_detector(detector_name: str, dataset: list[LabeledExample],
             type_results[et].true_positives += tp
             type_results[et].false_negatives += fn
 
+            # Real-only sub-metrics: only count entities that carry real PII
+            real_tp = sum(1 for ei, ee in enumerate(expected_entities)
+                          if ee["type"].upper() == et
+                          and expected_matched[ei]
+                          and ee.get("is_real_pii", True))
+            real_fn = sum(1 for ei, ee in enumerate(expected_entities)
+                          if ee["type"].upper() == et
+                          and not expected_matched[ei]
+                          and ee.get("is_real_pii", True))
+            type_results[et].real_true_positives += real_tp
+            type_results[et].real_false_negatives += real_fn
+
         for di, det in enumerate(detected):
             det_type = str(det.get("entity_type", "UNKNOWN")).upper()
             if detected_matched[di]:
@@ -736,7 +836,7 @@ async def evaluate_detector(detector_name: str, dataset: list[LabeledExample],
     # Sort entity types for consistent output
     for et in sorted(type_results.keys()):
         tr = type_results[et]
-        results_dict["per_type"][et] = {
+        entry: dict[str, Any] = {
             "true_positives": tr.true_positives,
             "false_positives": tr.false_positives,
             "false_negatives": tr.false_negatives,
@@ -747,6 +847,12 @@ async def evaluate_detector(detector_name: str, dataset: list[LabeledExample],
             "f2": round(tr.f2, 4),
             "recall_ci": [round(tr.recall_ci[0], 4), round(tr.recall_ci[1], 4)],
         }
+        # Add real-only sub-metrics (only for types that have masked entities)
+        if tr.real_n > 0:
+            entry["real_n"] = tr.real_n
+            entry["real_recall"] = round(tr.real_recall, 4)
+            entry["real_recall_ci"] = [round(tr.real_recall_ci[0], 4), round(tr.real_recall_ci[1], 4)]
+        results_dict["per_type"][et] = entry
 
     return results_dict
 
@@ -771,9 +877,9 @@ def print_table(rows: list[list[str]], headers: list[str]) -> None:
 
 def print_results(all_results: dict[str, dict[str, Any]], split_note: str = "") -> None:
     """Print recall benchmark results."""
-    print("\n" + "=" * 90)
+    print("\n" + "=" * 120)
     print(f"  PIIFilter Detection Recall Benchmark Report{split_note}")
-    print("=" * 90)
+    print("=" * 120)
     print(f"  Timestamp: {time.strftime('%Y-%m-%d %H:%M:%S UTC', time.gmtime())}")
     print()
 
@@ -790,25 +896,63 @@ def print_results(all_results: dict[str, dict[str, Any]], split_note: str = "") 
               f"FN={results['total_false_negatives']}")
         print()
 
+        # Check if any type has real-only metrics (i.e. masked entities exist)
+        has_real = any("real_n" in m for m in results["per_type"].values())
+
         # Per-type table
-        headers = ["Entity Type", "N", "Precision", "Recall", "F1", "F2", "Recall CI (95%)", "TP", "FP", "FN"]
+        if has_real:
+            headers = ["Entity Type", "N", "Recall", "Recall (real)", "Real N",
+                       "Precision", "F1", "F2", "Recall CI (95%)", "TP", "FP", "FN"]
+        else:
+            headers = ["Entity Type", "N", "Recall", "Precision", "F1", "F2",
+                       "Recall CI (95%)", "TP", "FP", "FN"]
+
         rows = []
         for et, metrics in sorted(results["per_type"].items()):
             ci = metrics["recall_ci"]
-            rows.append([
-                et,
-                str(metrics["n"]),
-                f"{metrics['precision']:.4f}",
-                f"{metrics['recall']:.4f}",
-                f"{metrics['f1']:.4f}",
-                f"{metrics['f2']:.4f}",
-                f"[{ci[0]:.2f}, {ci[1]:.2f}]",
-                str(metrics['true_positives']),
-                str(metrics['false_positives']),
-                str(metrics['false_negatives']),
-            ])
+            recall_str = f"{metrics['recall']:.4f}"
+            if has_real:
+                real_recall_str = f"{metrics.get('real_recall', metrics['recall']):.4f}"
+                # Mark real-only with asterisk when it differs from full recall
+                if "real_n" in metrics and metrics["n"] != metrics["real_n"]:
+                    real_recall_str += " *"
+                real_n_str = str(metrics.get("real_n", metrics["n"]))
+                rows.append([
+                    et,
+                    str(metrics["n"]),
+                    recall_str,
+                    real_recall_str,
+                    real_n_str,
+                    f"{metrics['precision']:.4f}",
+                    f"{metrics['f1']:.4f}",
+                    f"{metrics['f2']:.4f}",
+                    f"[{ci[0]:.2f}, {ci[1]:.2f}]",
+                    str(metrics['true_positives']),
+                    str(metrics['false_positives']),
+                    str(metrics['false_negatives']),
+                ])
+            else:
+                rows.append([
+                    et,
+                    str(metrics["n"]),
+                    recall_str,
+                    f"{metrics['precision']:.4f}",
+                    f"{metrics['f1']:.4f}",
+                    f"{metrics['f2']:.4f}",
+                    f"[{ci[0]:.2f}, {ci[1]:.2f}]",
+                    str(metrics['true_positives']),
+                    str(metrics['false_positives']),
+                    str(metrics['false_negatives']),
+                ])
         print_table(rows, headers)
         print()
+
+        # Print real-only footnote if applicable
+        if has_real:
+            print("  * Masked/obfuscated PII (X-encoded, hash-like, hex, "
+                  "base64, spoken-out) excluded from")
+            print("    real-only metrics — already anonymized, not PII leaks.")
+            print()
 
 
 # ── Main ────────────────────────────────────────────────────────────────────

@@ -68,8 +68,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{9}\b", 0.95),
         # General SSN-like pattern with optional separators (hyphen, NBSP, dot, space, or none).
         # Uses lookaround to avoid matching within longer digit sequences.
+        # Supports both standard 3-2-4 and reverse 4-2-3/4-2-4 groupings.
         # Lower confidence (0.75) since it matches bare SSN-like patterns without context keywords.
-    ("SOCIAL_SECURITY", r"(?<!\d)\d{3}[- \u00A0.]?\d{2}[- \u00A0.]?\d{4}(?!\d)", 0.75),
+    ("SOCIAL_SECURITY", r"(?<!\d)\d{3,4}[- \u00A0.]?\d{2}[- \u00A0.]?\d{3,4}(?!\d)", 0.75),
+        # General SSN-like pattern anchored to word boundaries — catches reverse 4-2-3/4-2-4
+        # groupings that lookarounds may miss (e.g. when surrounded by spaces or punctuation).
+    ("SOCIAL_SECURITY", r"\b\d{4}[- \u00A0.]?\d{2}[- \u00A0.]?\d{3,4}\b", 0.75),
 
     # ── IBAN ─────────────────────────────────────────────────────────
     # IBAN must come BEFORE CREDIT_CARD patterns since IBAN substrings (like
@@ -93,6 +97,18 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("CREDIT_CARD", r"\b\d{4}[ -]{2,}\d{6}[ -]{2,}\d{5}\b", 0.80),
     # 4-6-5 with dots: 4111.111111.11111
     ("CREDIT_CARD", r"\b\d{4}\.\d{6}\.\d{5}\b", 0.80),
+    # 4-4-4-[3-4] dot-separated (catches Amex 3782.8224.6310.005)
+    ("CREDIT_CARD", r"\b\d{4}\.\d{4}\.\d{4}\.\d{3,4}\b", 0.80),
+    # 4-4-4-4 with space-dot-space separators: "5500 . 0000 . 0000 . 0004"
+    ("CREDIT_CARD", r"\b\d{4} \. \d{4} \. \d{4} \. \d{4}\b", 0.80),
+    # 4-4-4-[3-4] with space-dot-space: "3782 . 8224 . 6310 . 005"
+    ("CREDIT_CARD", r"\b\d{4} \. \d{4} \. \d{4} \. \d{3,4}\b", 0.80),
+    # 2-digit-pair paired spacing (16 digits): "60 11 11 11 11 11 11 17"
+    ("CREDIT_CARD", r"\b\d{2}(?: \d{2}){7}\b", 0.75),
+    # 2-digit-pair paired spacing for 15-digit (Amex): "37 82 82 24 63 10 00 5"
+    ("CREDIT_CARD", r"\b\d{2}(?: \d{2}){6} \d{1,2}\b", 0.75),
+    # 4-4-4-2..4 with any combination of space/dot/dash separators — broad catch-all
+    ("CREDIT_CARD", r"\b\d{4}[ .-]+\d{4}[ .-]+\d{4}[ .-]+\d{2,4}\b", 0.65),
     # Low confidence: 4-4-4-2..4 pattern with single dash/space
     ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)(?<![A-Za-z])(?<!\d{4}[- ])\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b(?![- ]\d{2,4})(?!\s*\d{2,4})", 0.65),
     # Low confidence: 4-4-4-2..4 with multi-space gaps (e.g. "3782  8224  6310  005")
@@ -115,20 +131,57 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("API_KEY", r"\b(?:[A-Za-z0-9+/=]{20,})\b(?=.*(?:key|token|secret))", 0.90),
 
     # ── PHONE ────────────────────────────────────────────────────────
-    ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*[\-]?\s*[\+\d\(][\d\s\-\.\(\)]{7,20}\b", 0.90),
-    ("PHONE", r"(?:^|\s)\+\d{1,3}[-.\s]\d{2,4}[-.\s]\d{3,4}[-.\s]\d{4}\b", 0.88),
-    ("PHONE", r"(?:^|\s)\+\d{1,3}\s+\d{2,3}\s+\d{3}\s+\d{3,4}\b", 0.85),
-    ("PHONE", r"(?:^|\s)\+\d\s+\d{3}\s+\d{3}[-.\s]?\d{2}[-.\s]?\d{2}\b", 0.85),
-    ("PHONE", r"\(?\d{3}\)?[-.\s]\d{3}[-.\s]?\d{4}\b", 0.85),
-    ("PHONE", r"\b\d{3}-\d{3}-\d{4}\b", 0.70),
-    # UK mobile format: 07XXX XXX XXX (after "Phone:" keyword)
-    ("PHONE", r"(?i)\bPhone:\s*\d{5}\s+\d{3}\s+\d{3}\b", 0.80),
-    # Phone numbers after CJK 电话/電話 keywords
-    ("PHONE", r"(?i)(?:电话|電話)\+[\d-]+[\s-]?\d{3,4}[\s-]?\d{4,}\b", 0.85),
-    # CJK phone: 電話は+X XX-XXXX-XXXX (Japanese context)
-    ("PHONE", r"(?i)(?:電話は|电话是|電話)\s*\+\d+[\s-]?\d+[\s-]?\d+[\s-]?\d+\b", 0.85),
-    # German format after Phone: — "+49 30 12345678"
-    ("PHONE", r"(?i)\bPhone:\s*\+\d{1,3}\s+\d{2,4}\s+\d{5,10}\b", 0.80),
+        # Unicode dash character class: hyphen-minus, en-dash, em-dash, minus sign
+        # Keyword-prefixed phone numbers (phone/tel/mobile/cell/call + number)
+        ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*\-?\s*[\+\d\(][\d\s\-\.\(\)]{7,20}\b", 0.90),
+        # International with + and unicode dashes: +1-555-123-4567, +1–555–123–4567, +1—555—123—4567, +1−555−123−4567
+        ("PHONE", r"(?:^|\s)\+\d{1,3}[–—−\-. ]\d{2,4}[–—−\-. ]\d{3,4}[–—−\-. ]\d{4}\b", 0.88),
+        # International with + and spaces only (variable groupings): +44 20 7946 0958, +1 555 123 4567
+        ("PHONE", r"(?:^|\s)\+\d{1,3}(?:\s+\d{2,4}){2,4}\b", 0.85),
+        # International with +, country code 1 digit, spaced with optional unicode dashes inside
+        ("PHONE", r"(?:^|\s)\+\d\s+\d{3}\s+\d{3}[–—−\-. ]?\d{2}[–—−\-. ]?\d{2}\b", 0.85),
+        # International with + and mixed separators (any combo of dash types and spaces)
+        ("PHONE", r"(?:^|\s)\+\d{1,3}[–—−\-.]\d{2,4}[–—−\-. ]\d{3,4}[–—−\-. ]?\d{3,4}\b", 0.85),
+        # Bare E.164 with + prefix: "+14085551212" style
+        ("PHONE", r"\+\d{7,15}\b", 0.80),
+        # Parenthesized area code with separator: (415) 555–2671, (120) 625-59444
+        ("PHONE", r"\(\d{3}\)\s*\d{3}[–—−\-.]\d{4,6}\b", 0.82),
+        # Parenthesized area code with space separator: (415) 555 2671
+        ("PHONE", r"\(\d{3}\)\s*\d{3}\s+\d{4,6}\b", 0.78),
+        # 3-3-4 format with unicode dashes or dots: 555-123-4567, 555–123–4567, 555.123.4567
+        ("PHONE", r"\b\d{3}[–—−\-.]\d{3}[–—−\-.]\d{4}\b", 0.70),
+        # Country-code prefixed (1-xxx-xxx-xxxx) with unicode dashes
+        ("PHONE", r"\b\d{1}[–—−\-.]\d{3}[–—−\-.]\d{3}[–—−\-.]\d{4}\b", 0.75),
+        # Spaced 3+3+4 (US format with spaces): "555 123 4567", "555  123  4567"
+        ("PHONE", r"\b\d{3}\s{1,2}\d{3}\s{1,2}\d{4}\b", 0.72),
+        # Bare 10-digit US phone (no context needed): "5551234567", "4155552671"
+        ("PHONE", r"(?<!\d)\d{10}(?!\d)", 0.50),
+        # E.164 bare: 11-14 continuous digits
+        ("PHONE", r"(?<!\d)\d{11}(?!\d)", 0.60),
+        ("PHONE", r"(?<!\d)\d{12}(?!\d)", 0.60),
+        # E.164 bare with country code prefix context: "tel:" prefix
+        ("PHONE", r"\btel:\d{7,15}\b", 0.85),
+        # URL-encoded international: %2B1-555-123-4567 (handles single or double spaces)
+        ("PHONE", r"%2B\d{1,3}\s{1,2}\d{2,4}\s{1,2}\d{3,4}\s{1,2}\d{3,4}\b", 0.85),
+        # UK mobile bare with space: 07700 900 123
+        ("PHONE", r"\b07\d{2}\s+\d{3}\s+\d{3}\b", 0.80),
+        ("PHONE", r"\b07\d{9}\b", 0.75),
+        # Variable-spaced international (country code + space + grouped digits):
+        # "44 20 7946 0958", "49 30 12345678", "966 55 123 4567"
+        ("PHONE", r"\b\d{1,4}(?:\s+\d{2,4}){2,4}\b", 0.60),
+        # UK mobile format with parentheses: (077) 009-00123
+        ("PHONE", r"\(\d{4,5}\)\s*\d{3}[–—−\-.]?\d{5}\b", 0.78),
+        # Country code space-separated with dash in subgroups: "86 138-0013-8000"
+        ("PHONE", r"\b\d{1,3}\s+\d{3}[–—−\-.]\d{3,4}[–—−\-.]\d{3,4}\b", 0.78),
+        # Phone numbers after CJK 电话/電話 keywords (with unicode dash support)
+        ("PHONE", r"(?i)(?:电话|電話)\+[\d–—−\-]+[\s–—−\-]?\d{3,4}[\s–—−\-]?\d{4,}\b", 0.85),
+        # CJK phone: 電話は+X XX-XXXX-XXXX (Japanese context, unicode dash support)
+        ("PHONE", r"(?i)(?:電話は|电话是|電話)\s*\+\d+[\s–—−\-]?\d+[\s–—−\-]?\d+[\s–—−\-]?\d+\b", 0.85),
+        # German format after Phone: — "+49 30 12345678"
+        ("PHONE", r"(?i)\bPhone:\s*\+\d{1,3}\s+\d{2,4}\s+\d{5,10}\b", 0.80),
+        # Universal variable-separator pattern: catch-all for phone-like sequences
+        # with at least 9 digits and mixed separators (dashes, dots, spaces)
+        ("PHONE", r"\b\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]\d{2,4}\b", 0.55),
 
     # ── PRIVATE_URL ──────────────────────────────────────────────────
     ("PRIVATE_URL", r"\bhttps?://(?:localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)(?::\d+)?(?:/[^\s]*)?\b", 0.90),
