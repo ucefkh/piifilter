@@ -125,7 +125,11 @@ _IP_NUM_COLLAPSE_RE = re.compile(r"(?<=\d)\s+(?=\.)|(?<=\.)\s+(?=\d)")
 _DASH_SPACE_RE = re.compile(r"(?<=\d)\s+-\s+(?=\d)")
 
 
-# ── URL percent-encoding ─────────────────────────────────────────────────────
+# ── URL percent-encoding ─────────────────────────────────────
+
+# SSN re-check pattern for decoded content — used by hex/base64/area-serial transforms
+# Matches standard SSN (123-45-6789) and segment-separated formats
+_SSN_RECHECK_RE = re.compile(r"\b\d{3}[- \u00A0.]?\d{2}[- \u00A0.]?\d{4}\b")────────────────
 
 _URL_PCT_RE = re.compile(r"%([0-9a-fA-F]{2})")
 
