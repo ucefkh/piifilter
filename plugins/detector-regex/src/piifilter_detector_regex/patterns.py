@@ -41,12 +41,16 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
 
     # ── CREDIT_CARD ──────────────────────────────────────────────────
     ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
-    ("CREDIT_CARD", r"\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4}\b", 0.85),
+    # Standard 4-4-4-4 format with dashes — must NOT be inside an IBAN (not preceded by [A-Z]{2}\d{2}\s)
+    # and must NOT be followed by more space-separated digit groups (which is an IBAN feature)
+    ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4}\b(?![ -]\d{2,4})", 0.85),
     ("CREDIT_CARD", r"\b\d{4}[- ]\d{6}[- ]\d{5}\b", 0.80),
-    # Low confidence: 4-4-4-2..4 pattern — often overlaps with IBAN; only match if not preceded by 2 letters
-    ("CREDIT_CARD", r"(?<![A-Za-z])\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b", 0.65),
-    # Continuous 16-digit credit card numbers (no dashes)
+    # Low confidence: 4-4-4-2..4 pattern — must NOT have an IBAN-like preceding block or additional digit groups
+    ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)(?<![A-Za-z])\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b(?!\s*\d{2,4})", 0.65),
+    # Continuous 16-digit credit card numbers (no dashes) — Luhn-prefixed only
+    ("CREDIT_CARD", r"(?i)(?:credit\s*card|cc|card\s+#?)\b\s*\d{16}\b", 0.80),
     ("CREDIT_CARD", r"\b(?:4\d{3}|5[1-5]\d{2}|6\d{3}|3[47]\d{2})\d{12}\b", 0.80),
+    # Generic 16-digit number — low confidence
     ("CREDIT_CARD", r"\b\d{16}\b", 0.55),
 
     # ── EMAIL ────────────────────────────────────────────────────────
@@ -169,17 +173,22 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("ADDRESS", r"\b\d{1,3}\s+(?:[A-Z][a-z]+)\s+(?:Street|Road|Lane|Drive|Way|Close|Gardens|Hill|Square|Mews|Court|Avenue)\b", 0.75),
 
     # ── CITY ─────────────────────────────────────────────────────────
-    ("CITY", r"(?i)\b(?:city|town)\s*(?:of|pop|population)?\s*:?\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.70),
+    ("CITY", r"(?i)\b(?:city|town)\s*(?:of|pop|population)?\s*:?\s*(?!(?:The|A|An|This|That|These|Those|Our|Their|My|Your|His|Her|Its)\b)[A-Z][a-z]+(?:[ -]+[A-Z][a-z]+)?\b", 0.70),
     # Cities followed by comma + known country — exclude country names from city position
     ("CITY", r"\b(?!(?:Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|UAE|Israel)\s*,)[A-Z][a-z]+\s*,\s+(?:Germany|France|Italy|Spain|UK|England|USA|US|China|Japan|India|Brazil|Canada|Australia)\b", 0.70),
     # City after "works at X in City" or "based in City"
         ("CITY", r"(?i)\b(?:based\s+in|works?\s+(?:at\s+\S+\s+)?in|lives?\s+in|located\s+in|situated\s+in)\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
         # City after "in" followed by comma and country or end of context
-        ("CITY", r"(?i)\bin\s+(?-i:[A-Z])[a-z]{2,}(?:\s*,\s*(?:Germany|France|Italy|Spain|UK|USA|Canada|Australia))?\b", 0.50),
+        # Require 4+ chars and exclude common non-city capitalized words
+        ("CITY", r"(?i)\bin\s+(?!(?:Nature|Science|General|Practice|Theory|Process|System|Market|Public|Private|Common|Control|Research|Development|Management|Support|Security|Service|Report|History|Current|Future|Recent|Final|Total|Average|Standard|Normal|Special|Maintenance|Text|Mode|Progress|Review|Summary|Detail|Analysis)\b)[A-Z][a-z]{3,}(?:\s*,\s*(?:Germany|France|Italy|Spain|UK|USA|Canada|Australia))?\b", 0.50),
     # City in population context: "X (37M), Y (32M)"
         ("CITY", r"(?i)\b[A-Z][a-z]+\s*\(\d+\s*M\)", 0.55),
-        # Standalone city name when it's the first word of a sentence (common cities)
-        ("CITY", r"\b(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)\b", 0.50),
+        # Standalone city name — match at sentence start or before comma+known country
+        # Also requires the city NOT be preceded by a street address number pattern
+        ("CITY", r"(?<!\d\s)(?:(?:^|\.\s+)(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)\b|(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)\s*,\s*(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico))", 0.40),
+        # City after "of" keyword — "of Mumbai", "of London", etc. (catches "the population of Mumbai")
+        # Exclude common country names to avoid COUNTRY→CITY confusion
+        ("CITY", r"(?i)\b(?:of|the\s+city\s+of)\s+(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
 
     # ── COUNTRY ──────────────────────────────────────────────────────
     ("COUNTRY", r"\b(?:USA|US(?:A)?|UK|United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|UAE|Israel|Greece|Czech|Finland|Hungary|Romania|Ukraine)\b", 0.80),
