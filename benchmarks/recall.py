@@ -30,6 +30,33 @@ sys.path.insert(0, str(PROJECT_ROOT / "plugins" / "detector-gliner" / "src"))
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
 
+# ── Wilson score interval ────────────────────────────────────────────────────
+
+
+def wilson_score(p: float, n: int, z: float = 1.96) -> tuple[float, float]:
+    """Wilson score confidence interval for a proportion.
+
+    Parameters
+    ----------
+    p : float
+        Observed proportion (e.g. recall, precision) in [0, 1].
+    n : int
+        Sample size (number of trials).
+    z : float
+        z-score for the desired confidence level (1.96 ≈ 95 %).
+
+    Returns
+    -------
+    (lower, upper) tuple — both in [0, 1].
+    """
+    if n == 0:
+        return (0.0, 0.0)
+    denominator = 1 + z * z / n
+    centre = (p + z * z / (2 * n)) / denominator
+    margin = z * math.sqrt((p * (1 - p) / n + z * z / (4 * n * n))) / denominator
+    return (centre - margin, centre + margin)
+
+
 # ── Labeled example model ───────────────────────────────────────────────────
 
 
@@ -48,6 +75,11 @@ class RecallResult:
     false_negatives: int = 0
 
     @property
+    def n(self) -> int:
+        """Total ground-truth samples for this entity type (TP + FN)."""
+        return self.true_positives + self.false_negatives
+
+    @property
     def precision(self) -> float:
         denom = self.true_positives + self.false_positives
         return self.true_positives / denom if denom else 0.0
@@ -61,6 +93,17 @@ class RecallResult:
     def f1(self) -> float:
         p, r = self.precision, self.recall
         return 2 * p * r / (p + r) if (p + r) else 0.0
+
+    @property
+    def f2(self) -> float:
+        """F2-score (weights recall 2× precision)."""
+        p, r = self.precision, self.recall
+        denom = 5 * p + r
+        return (5 * p * r / denom) if denom else 0.0
+
+    @property
+    def recall_ci(self) -> tuple[float, float]:
+        return wilson_score(self.recall, self.n)
 
 
 @dataclass
@@ -146,6 +189,17 @@ def make_regex_adapter() -> DetectorAdapter:
     async def detect(text: str) -> list[dict[str, Any]]:
         if not text:
             return []
+
+        def _luhn_valid(digits: str) -> bool:
+            nums = [int(d) for d in digits if d.isdigit()]
+            if len(nums) < 13:
+                return False
+            for i in range(len(nums) - 2, -1, -2):
+                nums[i] *= 2
+                if nums[i] > 9:
+                    nums[i] -= 9
+            return sum(nums) % 10 == 0
+
         entities: list[dict[str, Any]] = []
         seen_intervals: list[tuple[int, int]] = []
         for entity_type, pattern, score in patterns:
@@ -165,6 +219,12 @@ def make_regex_adapter() -> DetectorAdapter:
                     subsumed_starts = {s for s, e in seen_intervals if start <= s and e <= end}
                     entities = [e for e in entities if e["start"] not in subsumed_starts]
                 seen_intervals = new_seen
+                # Luhn validation for CREDIT_CARD: discard matches whose
+                # digit content fails the checksum.
+                if entity_type == EntityType("CREDIT_CARD"):
+                    digits = "".join(c for c in match.group() if c.isdigit())
+                    if len(digits) >= 13 and not _luhn_valid(digits):
+                        continue
                 entities.append({
                     "entity_type": entity_type.value,
                     "value": match.group(),
@@ -444,9 +504,12 @@ async def evaluate_detector(detector_name: str, dataset: list[LabeledExample],
             "true_positives": tr.true_positives,
             "false_positives": tr.false_positives,
             "false_negatives": tr.false_negatives,
+            "n": tr.n,
             "precision": round(tr.precision, 4),
             "recall": round(tr.recall, 4),
             "f1": round(tr.f1, 4),
+            "f2": round(tr.f2, 4),
+            "recall_ci": [round(tr.recall_ci[0], 4), round(tr.recall_ci[1], 4)],
         }
 
     return results_dict
@@ -492,14 +555,18 @@ def print_results(all_results: dict[str, dict[str, Any]]) -> None:
         print()
 
         # Per-type table
-        headers = ["Entity Type", "Precision", "Recall", "F1", "TP", "FP", "FN"]
+        headers = ["Entity Type", "N", "Precision", "Recall", "F1", "F2", "Recall CI (95%)", "TP", "FP", "FN"]
         rows = []
         for et, metrics in sorted(results["per_type"].items()):
+            ci = metrics["recall_ci"]
             rows.append([
                 et,
+                str(metrics["n"]),
                 f"{metrics['precision']:.4f}",
                 f"{metrics['recall']:.4f}",
                 f"{metrics['f1']:.4f}",
+                f"{metrics['f2']:.4f}",
+                f"[{ci[0]:.2f}, {ci[1]:.2f}]",
                 str(metrics['true_positives']),
                 str(metrics['false_positives']),
                 str(metrics['false_negatives']),

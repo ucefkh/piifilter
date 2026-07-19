@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report",
-  "timestamp": "2026-07-19T20:13:03Z",
+  "timestamp": "2026-07-19T20:19:14Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "examples": 150,
@@ -37,205 +37,349 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 220,
-      "total_true_positives": 197,
+      "total_detected_entities": 221,
+      "total_true_positives": 198,
       "total_false_positives": 23,
-      "total_false_negatives": 15,
-      "overall_precision": 0.8954545454545455,
-      "overall_recall": 0.9292452830188679,
-      "overall_f1": 0.9120370370370371,
+      "total_false_negatives": 14,
+      "overall_precision": 0.8959276018099548,
+      "overall_recall": 0.9339622641509434,
+      "overall_f1": 0.9145496535796768,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
           "false_positives": 1,
           "false_negatives": 1,
+          "n": 7,
           "precision": 0.8571,
           "recall": 0.8571,
-          "f1": 0.8571
+          "f1": 0.8571,
+          "f2": 0.7143,
+          "recall_ci": [
+            0.4869,
+            0.9743
+          ]
         },
         "API_KEY": {
           "true_positives": 10,
           "false_positives": 1,
           "false_negatives": 0,
+          "n": 10,
           "precision": 0.9091,
           "recall": 1.0,
-          "f1": 0.9524
+          "f1": 0.9524,
+          "f2": 0.8197,
+          "recall_ci": [
+            0.7225,
+            1.0
+          ]
         },
         "BANK_ACCOUNT": {
           "true_positives": 8,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
         },
         "CITY": {
           "true_positives": 16,
           "false_positives": 3,
           "false_negatives": 0,
+          "n": 16,
           "precision": 0.8421,
           "recall": 1.0,
-          "f1": 0.9143
+          "f1": 0.9143,
+          "f2": 0.8081,
+          "recall_ci": [
+            0.8064,
+            1.0
+          ]
         },
         "COMPANY": {
           "true_positives": 8,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
         },
         "COUNTRY": {
           "true_positives": 18,
           "false_positives": 2,
           "false_negatives": 0,
+          "n": 18,
           "precision": 0.9,
           "recall": 1.0,
-          "f1": 0.9474
+          "f1": 0.9474,
+          "f2": 0.8182,
+          "recall_ci": [
+            0.8241,
+            1.0
+          ]
         },
         "CREDIT_CARD": {
           "true_positives": 12,
           "false_positives": 1,
           "false_negatives": 1,
+          "n": 13,
           "precision": 0.9231,
           "recall": 0.9231,
-          "f1": 0.9231
+          "f1": 0.9231,
+          "f2": 0.7692,
+          "recall_ci": [
+            0.6669,
+            0.9863
+          ]
         },
         "CUSTOMER_NAME": {
           "true_positives": 10,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 10,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.7225,
+            1.0
+          ]
         },
         "DATABASE_URL": {
           "true_positives": 14,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 14,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.7847,
+            1.0
+          ]
         },
         "DOMAIN": {
           "true_positives": 18,
           "false_positives": 7,
           "false_negatives": 0,
+          "n": 18,
           "precision": 0.72,
           "recall": 1.0,
-          "f1": 0.8372
+          "f1": 0.8372,
+          "f2": 0.7826,
+          "recall_ci": [
+            0.8241,
+            1.0
+          ]
         },
         "EMAIL": {
           "true_positives": 68,
           "false_positives": 2,
           "false_negatives": 8,
+          "n": 76,
           "precision": 0.9714,
           "recall": 0.8947,
-          "f1": 0.9315
+          "f1": 0.9315,
+          "f2": 0.7556,
+          "recall_ci": [
+            0.8058,
+            0.9457
+          ]
         },
         "EMPLOYEE_NAME": {
           "true_positives": 12,
           "false_positives": 1,
           "false_negatives": 0,
+          "n": 12,
           "precision": 0.9231,
           "recall": 1.0,
-          "f1": 0.96
+          "f1": 0.96,
+          "f2": 0.8219,
+          "recall_ci": [
+            0.7575,
+            1.0
+          ]
         },
         "FILE_PATH": {
           "true_positives": 14,
           "false_positives": 1,
           "false_negatives": 0,
+          "n": 14,
           "precision": 0.9333,
           "recall": 1.0,
-          "f1": 0.9655
+          "f1": 0.9655,
+          "f2": 0.8235,
+          "recall_ci": [
+            0.7847,
+            1.0
+          ]
         },
         "GPS": {
           "true_positives": 32,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 32,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.8928,
+            1.0
+          ]
         },
         "IBAN": {
           "true_positives": 8,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
         },
         "IP_ADDRESS": {
           "true_positives": 28,
           "false_positives": 0,
           "false_negatives": 1,
+          "n": 29,
           "precision": 1.0,
           "recall": 0.9655,
-          "f1": 0.9825
+          "f1": 0.9825,
+          "f2": 0.8092,
+          "recall_ci": [
+            0.8282,
+            0.9939
+          ]
         },
         "JWT": {
           "true_positives": 10,
           "false_positives": 1,
           "false_negatives": 0,
+          "n": 10,
           "precision": 0.9091,
           "recall": 1.0,
-          "f1": 0.9524
+          "f1": 0.9524,
+          "f2": 0.8197,
+          "recall_ci": [
+            0.7225,
+            1.0
+          ]
         },
         "PASSPORT": {
           "true_positives": 8,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
         },
         "PERSON": {
           "true_positives": 18,
           "false_positives": 1,
           "false_negatives": 0,
+          "n": 18,
           "precision": 0.9474,
           "recall": 1.0,
-          "f1": 0.973
+          "f1": 0.973,
+          "f2": 0.8257,
+          "recall_ci": [
+            0.8241,
+            1.0
+          ]
         },
         "PHONE": {
           "true_positives": 26,
           "false_positives": 1,
           "false_negatives": 2,
+          "n": 28,
           "precision": 0.963,
           "recall": 0.9286,
-          "f1": 0.9455
+          "f1": 0.9455,
+          "f2": 0.7784,
+          "recall_ci": [
+            0.7735,
+            0.9802
+          ]
         },
         "PRIVATE_URL": {
           "true_positives": 14,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 14,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.7847,
+            1.0
+          ]
         },
         "PROJECT_NAME": {
           "true_positives": 18,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 18,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.8241,
+            1.0
+          ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 10,
+          "true_positives": 12,
           "false_positives": 1,
-          "false_negatives": 2,
-          "precision": 0.9091,
-          "recall": 0.8333,
-          "f1": 0.8696
+          "false_negatives": 1,
+          "n": 13,
+          "precision": 0.9231,
+          "recall": 0.9231,
+          "f1": 0.9231,
+          "f2": 0.7692,
+          "recall_ci": [
+            0.6669,
+            0.9863
+          ]
         },
         "SSH_KEY": {
           "true_positives": 8,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
         }
       },
       "confusion_matrix": {
@@ -2477,14 +2621,16 @@
           "index": 148,
           "text_preview": "SSN: 123 45 6789 (non-breaking spaces)",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 149,
@@ -2507,205 +2653,349 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 224,
-      "total_true_positives": 198,
+      "total_detected_entities": 225,
+      "total_true_positives": 199,
       "total_false_positives": 26,
-      "total_false_negatives": 14,
-      "overall_precision": 0.8839285714285714,
-      "overall_recall": 0.9339622641509434,
-      "overall_f1": 0.908256880733945,
+      "total_false_negatives": 13,
+      "overall_precision": 0.8844444444444445,
+      "overall_recall": 0.9386792452830188,
+      "overall_f1": 0.9107551487414187,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
           "false_positives": 1,
           "false_negatives": 1,
+          "n": 7,
           "precision": 0.8571,
           "recall": 0.8571,
-          "f1": 0.8571
+          "f1": 0.8571,
+          "f2": 0.7143,
+          "recall_ci": [
+            0.4869,
+            0.9743
+          ]
         },
         "API_KEY": {
           "true_positives": 10,
           "false_positives": 1,
           "false_negatives": 0,
+          "n": 10,
           "precision": 0.9091,
           "recall": 1.0,
-          "f1": 0.9524
+          "f1": 0.9524,
+          "f2": 0.8197,
+          "recall_ci": [
+            0.7225,
+            1.0
+          ]
         },
         "BANK_ACCOUNT": {
           "true_positives": 8,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
         },
         "CITY": {
           "true_positives": 16,
           "false_positives": 3,
           "false_negatives": 0,
+          "n": 16,
           "precision": 0.8421,
           "recall": 1.0,
-          "f1": 0.9143
+          "f1": 0.9143,
+          "f2": 0.8081,
+          "recall_ci": [
+            0.8064,
+            1.0
+          ]
         },
         "COMPANY": {
           "true_positives": 8,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
         },
         "COUNTRY": {
           "true_positives": 18,
           "false_positives": 2,
           "false_negatives": 0,
+          "n": 18,
           "precision": 0.9,
           "recall": 1.0,
-          "f1": 0.9474
+          "f1": 0.9474,
+          "f2": 0.8182,
+          "recall_ci": [
+            0.8241,
+            1.0
+          ]
         },
         "CREDIT_CARD": {
           "true_positives": 12,
           "false_positives": 1,
           "false_negatives": 1,
+          "n": 13,
           "precision": 0.9231,
           "recall": 0.9231,
-          "f1": 0.9231
+          "f1": 0.9231,
+          "f2": 0.7692,
+          "recall_ci": [
+            0.6669,
+            0.9863
+          ]
         },
         "CUSTOMER_NAME": {
           "true_positives": 10,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 10,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.7225,
+            1.0
+          ]
         },
         "DATABASE_URL": {
           "true_positives": 14,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 14,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.7847,
+            1.0
+          ]
         },
         "DOMAIN": {
           "true_positives": 18,
           "false_positives": 7,
           "false_negatives": 0,
+          "n": 18,
           "precision": 0.72,
           "recall": 1.0,
-          "f1": 0.8372
+          "f1": 0.8372,
+          "f2": 0.7826,
+          "recall_ci": [
+            0.8241,
+            1.0
+          ]
         },
         "EMAIL": {
           "true_positives": 68,
           "false_positives": 3,
           "false_negatives": 8,
+          "n": 76,
           "precision": 0.9577,
           "recall": 0.8947,
-          "f1": 0.9252
+          "f1": 0.9252,
+          "f2": 0.7539,
+          "recall_ci": [
+            0.8058,
+            0.9457
+          ]
         },
         "EMPLOYEE_NAME": {
           "true_positives": 12,
           "false_positives": 1,
           "false_negatives": 0,
+          "n": 12,
           "precision": 0.9231,
           "recall": 1.0,
-          "f1": 0.96
+          "f1": 0.96,
+          "f2": 0.8219,
+          "recall_ci": [
+            0.7575,
+            1.0
+          ]
         },
         "FILE_PATH": {
           "true_positives": 14,
           "false_positives": 1,
           "false_negatives": 0,
+          "n": 14,
           "precision": 0.9333,
           "recall": 1.0,
-          "f1": 0.9655
+          "f1": 0.9655,
+          "f2": 0.8235,
+          "recall_ci": [
+            0.7847,
+            1.0
+          ]
         },
         "GPS": {
           "true_positives": 32,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 32,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.8928,
+            1.0
+          ]
         },
         "IBAN": {
           "true_positives": 8,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
         },
         "IP_ADDRESS": {
           "true_positives": 28,
           "false_positives": 2,
           "false_negatives": 1,
+          "n": 29,
           "precision": 0.9333,
           "recall": 0.9655,
-          "f1": 0.9492
+          "f1": 0.9492,
+          "f2": 0.8,
+          "recall_ci": [
+            0.8282,
+            0.9939
+          ]
         },
         "JWT": {
           "true_positives": 10,
           "false_positives": 1,
           "false_negatives": 0,
+          "n": 10,
           "precision": 0.9091,
           "recall": 1.0,
-          "f1": 0.9524
+          "f1": 0.9524,
+          "f2": 0.8197,
+          "recall_ci": [
+            0.7225,
+            1.0
+          ]
         },
         "PASSPORT": {
           "true_positives": 8,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
         },
         "PERSON": {
           "true_positives": 18,
           "false_positives": 1,
           "false_negatives": 0,
+          "n": 18,
           "precision": 0.9474,
           "recall": 1.0,
-          "f1": 0.973
+          "f1": 0.973,
+          "f2": 0.8257,
+          "recall_ci": [
+            0.8241,
+            1.0
+          ]
         },
         "PHONE": {
           "true_positives": 28,
           "false_positives": 1,
           "false_negatives": 1,
+          "n": 29,
           "precision": 0.9655,
           "recall": 0.9655,
-          "f1": 0.9655
+          "f1": 0.9655,
+          "f2": 0.8046,
+          "recall_ci": [
+            0.8282,
+            0.9939
+          ]
         },
         "PRIVATE_URL": {
           "true_positives": 14,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 14,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.7847,
+            1.0
+          ]
         },
         "PROJECT_NAME": {
           "true_positives": 18,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 18,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.8241,
+            1.0
+          ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 10,
+          "true_positives": 12,
           "false_positives": 1,
-          "false_negatives": 2,
-          "precision": 0.9091,
-          "recall": 0.8333,
-          "f1": 0.8696
+          "false_negatives": 1,
+          "n": 13,
+          "precision": 0.9231,
+          "recall": 0.9231,
+          "f1": 0.9231,
+          "f2": 0.7692,
+          "recall_ci": [
+            0.6669,
+            0.9863
+          ]
         },
         "SSH_KEY": {
           "true_positives": 8,
           "false_positives": 0,
           "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
           "recall": 1.0,
-          "f1": 1.0
+          "f1": 1.0,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.6756,
+            1.0
+          ]
         }
       },
       "confusion_matrix": {
@@ -4953,14 +5243,16 @@
           "index": 148,
           "text_preview": "SSN: 123 45 6789 (non-breaking spaces)",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 149,

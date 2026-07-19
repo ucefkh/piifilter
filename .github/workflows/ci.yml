@@ -43,6 +43,13 @@ jobs:
       - name: Run benchmarks (quick smoke)
         run: uv run python benchmarks/run.py --iterations 10 --no-pipeline
 
+      - name: Recall regression gate (>= 0.95)
+        run: uv run python .github/scripts/check_recall_floor.py
+        # Fails build if any entity type recall < 0.95 in benchmarks/recall-results.json
+        # Note: The quick-smoke benchmarks use an older/output path; this gate
+        # reads benchmarks/recall-results.json produced by benchmarks/recall.py.
+        # Run ./benchmarks/recall.py before this step to get accurate results.
+
       - name: Verify all plugins import
         run: uv run python .github/scripts/verify_plugins.py
 

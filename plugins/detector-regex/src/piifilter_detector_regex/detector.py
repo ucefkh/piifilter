@@ -108,8 +108,32 @@ class RegexDetector(Detector):
             compiled.append((entity_type, pattern, score))
         return compiled
 
+    @staticmethod
+    def _luhn_valid(digits: str) -> bool:
+        """Validate a digit string using the Luhn algorithm (ISO/IEC 7812).
+
+        Returns True if the checksum passes. Requires at least 13 digits
+        (the minimum length for a real credit card number).
+        """
+        nums = [int(d) for d in digits if d.isdigit()]
+        if len(nums) < 13:
+            return False
+        # Double every second digit from the right (starting at the
+        # second-to-last position, i.e. index len-2, then len-4, …)
+        for i in range(len(nums) - 2, -1, -2):
+            nums[i] *= 2
+            if nums[i] > 9:
+                nums[i] -= 9
+        return sum(nums) % 10 == 0
+
     def _run_patterns(self, text: str) -> list[DetectedEntity]:
-        """Run all compiled patterns against *text* with basic overlap dedup."""
+        """Run all compiled patterns against *text* with basic overlap dedup.
+
+        CREDIT_CARD matches are validated with the Luhn algorithm: if the
+        matched text contains 13+ digits that fail the checksum the match
+        is discarded, eliminating false positives from random 16-digit
+        numbers and IBAN trailing segments.
+        """
         if not text:
             return []
 
@@ -127,6 +151,13 @@ class RegexDetector(Detector):
                 # Skip if fully contained in an already-found match of the same type
                 if any(s <= start and end <= e for s, e in seen_intervals):
                     continue
+
+                # Luhn validation for CREDIT_CARD: discard matches whose
+                # digit content fails the checksum.
+                if entity_type == EntityType.CREDIT_CARD:
+                    digits = "".join(c for c in match.group() if c.isdigit())
+                    if len(digits) >= 13 and not self._luhn_valid(digits):
+                        continue
 
                 entities.append(
                     DetectedEntity(

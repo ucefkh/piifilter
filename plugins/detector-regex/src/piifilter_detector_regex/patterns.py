@@ -37,11 +37,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("DATABASE_URL", r"\b(?:postgresql|postgres|mysql|mongodb|redis|sqlite|oracle|mssql)://\S+", 0.95),
 
     # ── SSN ──────────────────────────────────────────────────────────
-    ("SOCIAL_SECURITY", r"\b\d{3}[-]\d{2}[-]\d{4}\b", 0.90),
+        # Matches standard SSN formats: 123-45-6789 (hyphen) and 123\xa045\xa06789 (non-breaking space)
+    ("SOCIAL_SECURITY", r"\b\d{3}[-\u00A0]\d{2}[-\u00A0]\d{4}\b", 0.90),
 
     # ── IBAN ─────────────────────────────────────────────────────────
     # IBAN must come BEFORE CREDIT_CARD patterns since IBAN substrings (like
-    # "6016 1331 9268 19") can look like credit card numbers. The dedup logic
+        # "6016 1331 9268 19") can look like credit card numbers. The dedup logic
     # skips detections contained within already-matched intervals.
     ("IBAN", r"\b[A-Z]{2}\d{2}(?:[ ]?(?:[A-Z0-9]{4})){4,7}(?:[ ]?\d{1,4})?\b", 0.85),
 
