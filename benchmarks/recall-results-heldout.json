@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out)",
-  "timestamp": "2026-07-19T22:06:32Z",
+  "timestamp": "2026-07-19T22:07:13Z",
   "dataset": {
     "path": "benchmarks/data/pii_dataset_v2.json",
     "total_examples": 2365,
@@ -46,13 +46,13 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 544,
+      "total_detected_entities": 536,
       "total_true_positives": 467,
-      "total_false_positives": 77,
+      "total_false_positives": 69,
       "total_false_negatives": 73,
-      "overall_precision": 0.8584558823529411,
+      "overall_precision": 0.871268656716418,
       "overall_recall": 0.8648148148148148,
-      "overall_f1": 0.8616236162361623,
+      "overall_f1": 0.8680297397769516,
       "per_type": {
         "ADDRESS": {
           "true_positives": 28,
@@ -516,13 +516,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 64,
-          "false_positives": 11,
+          "false_positives": 3,
           "false_negatives": 13,
           "n": 77,
-          "precision": 0.8533,
+          "precision": 0.9552,
           "recall": 0.8312,
-          "f1": 0.8421,
-          "f2": 0.8355,
+          "f1": 0.8889,
+          "f2": 0.8533,
           "recall_ci": [
             0.7323,
             0.8986
@@ -599,8 +599,7 @@
           "DOMAIN": 5
         },
         "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 10,
-          "SOCIAL_SECURITY": 8
+          "IP_ADDRESS": 10
         },
         "ADDRESS": {
           "COUNTRY": 4,
@@ -1800,9 +1799,9 @@
           "index": 77,
           "text_preview": "SSN: 123-45-6789 and also 456-78-9012",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
@@ -1983,9 +1982,9 @@
           "index": 89,
           "text_preview": "My SSN is 130-29-3011 and DOB is 12/05/1981",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -2710,9 +2709,9 @@
           "index": 137,
           "text_preview": "Tax ID: 412 14 6394",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
@@ -3390,9 +3389,9 @@
           "index": 181,
           "text_preview": "My SSN is 214-86-0050 and DOB is 01/23/1998",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -4746,9 +4745,9 @@
           "index": 271,
           "text_preview": "My SSN is 935-41-5892 and DOB is 10/22/1963",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -5784,9 +5783,9 @@
           "index": 341,
           "text_preview": "My SSN is 778-80-9376 and DOB is 02/13/1980",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -7491,9 +7490,9 @@
           "index": 454,
           "text_preview": "My SSN is 759-76-4083 and DOB is 09/12/1994",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -7731,9 +7730,9 @@
           "index": 470,
           "text_preview": "My SSN is 858-70-8943 and DOB is 03/25/1986",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
