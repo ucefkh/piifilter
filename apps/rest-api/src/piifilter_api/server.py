@@ -22,6 +22,8 @@ from pydantic import BaseModel, Field
 
 from piifilter import FilterPipeline, Session, FilterConfig
 from piifilter.shared.models import ReplacementMode
+from piifilter.shared.alias_store import AliasStore
+from piifilter_api.unfilter import create_unfilter_router
 
 logger = logging.getLogger(__name__)
 
@@ -117,7 +119,8 @@ class ConfigResponse(BaseModel):
 def create_app(config_path: Optional[str] = None) -> FastAPI:
     """Create and return a configured FastAPI application.
 
-    The app holds a single ``FilterPipeline`` instance in its state.
+    The app holds a single ``FilterPipeline`` instance in its state
+    along with a shared ``AliasStore`` for conversation-scoped aliasing.
     """
     config = FilterConfig()
     if config_path:
@@ -125,7 +128,8 @@ def create_app(config_path: Optional[str] = None) -> FastAPI:
         if p.exists():
             config = FilterConfig.from_yaml(p)
 
-    pipeline = FilterPipeline(config=config)
+    alias_store = AliasStore(seed=config.replacement.seed)
+    pipeline = FilterPipeline(config=config, alias_store=alias_store)
     app = FastAPI(
         title="PIIFilter API",
         version="2.0.0",
@@ -136,6 +140,7 @@ def create_app(config_path: Optional[str] = None) -> FastAPI:
     # Stash for endpoint use
     app.state.pipeline = pipeline
     app.state.config = config
+    app.state.alias_store = alias_store
 
     # ── Converters ──────────────────────────────────────────────
 
@@ -305,5 +310,9 @@ def create_app(config_path: Optional[str] = None) -> FastAPI:
             replacement=cfg.replacement.model_dump(),
             logging=cfg.logging.model_dump(),
         )
+
+    # ── Unfilter / alias endpoints ────────────────────────────────
+    unfilter_router = create_unfilter_router(alias_store)
+    app.include_router(unfilter_router)
 
     return app

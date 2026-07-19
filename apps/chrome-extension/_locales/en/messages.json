@@ -1,0 +1,8 @@
+{
+  "appName": {
+    "message": "PIIFilter"
+  },
+  "appDesc": {
+    "message": "Local-first AI privacy gateway — protects prompts before they reach LLMs"
+  }
+}

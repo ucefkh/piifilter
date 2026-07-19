@@ -16,6 +16,7 @@ from piifilter.events.bus import EventBus, PipelineEvent
 from piifilter.registry.registry import PluginRegistry
 from piifilter.config import FilterConfig
 from piifilter.shared.models import ReplacementMode, RiskLevel
+from piifilter.shared.alias_store import AliasStore
 
 logger = logging.getLogger(__name__)
 
@@ -32,14 +33,21 @@ class FilterPipeline:
         config: Optional[FilterConfig] = None,
         registry: Optional[PluginRegistry] = None,
         event_bus: Optional[EventBus] = None,
+        alias_store: Optional[AliasStore] = None,
     ):
         self.config = config or FilterConfig()
         self.registry = registry or PluginRegistry()
         self.event_bus = event_bus or EventBus()
+        self.alias_store = alias_store
 
     async def run(self, session: Session) -> Session:
         """Execute the full pipeline on a Session."""
         session.started_at = datetime.utcnow()
+
+        # Wire alias_store if the pipeline owns one
+        if self.alias_store is not None and session.alias_store is None:
+            session.alias_store = self.alias_store
+
         await self.event_bus.emit(PipelineEvent.PIPELINE_START, session)
         session.add_audit("pipeline", "start", {"request_id": session.request_id})
 
@@ -216,11 +224,10 @@ class FilterPipeline:
             session.replacements = replacements
         else:
             # Fallback: basic semantic replacement
-            from piifilter.shared.utils import generate_alias
             text = session.prompt
             replacements = []
             for entity in sorted(session.entities, key=lambda e: e.start, reverse=True):
-                alias = generate_alias(entity.text, session.config.replacement.seed)
+                alias = session.get_alias(entity.text, entity.type.value if hasattr(entity.type, 'value') else str(entity.type))
                 text = text[:entity.start] + alias + text[entity.end:]
                 replacements.append(type('R', (), {'original': entity.text, 'replacement': alias, 'entity_type': entity.type, 'mode': ReplacementMode.SEMANTIC})())
             session.filtered_prompt = text

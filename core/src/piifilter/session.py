@@ -12,6 +12,7 @@ from piifilter.shared.models import (
     RiskAssessment,
 )
 from piifilter.config import FilterConfig, PolicyConfig, ProviderConfig
+from piifilter.shared.alias_store import AliasStore
 
 
 @dataclass
@@ -47,6 +48,7 @@ class Session:
     config: FilterConfig = field(default_factory=FilterConfig)
     policy: Optional[dict[str, Any]] = None
     provider_config: Optional[ProviderConfig] = None
+    alias_store: Optional[AliasStore] = None
 
     # ── Audit & metadata ─────────────────────────────────────────────────
     replacement_map: dict[str, str] = field(default_factory=dict)
@@ -94,3 +96,36 @@ class Session:
     def mark_completed(self) -> None:
         """Record the pipeline completion timestamp."""
         self.completed_at = datetime.utcnow()
+
+    # ── Alias helpers (conversation-aware) ─────────────────────────────
+
+    def get_alias(self, original: str, entity_type: Optional[str] = None) -> str:
+        """Get or create a conversation-scoped alias for an original value.
+
+        Delegates to the ``alias_store`` if available, otherwise falls
+        back to a one-off call to ``generate_alias``.  Always prefer
+        setting ``alias_store`` on the session so aliases are
+        deterministic across turns within a conversation.
+        """
+        if self.alias_store is not None and self.conversation_id:
+            return self.alias_store.get_or_create(self.conversation_id, original, entity_type)
+        from piifilter.shared.utils import generate_alias
+        return generate_alias(original, self.config.replacement.seed, self.conversation_id or "")
+
+    def replace_in_response(self, text: str) -> str:
+        """Replace FILTERED aliases back to original values in an LLM response.
+
+        Scans the text for any alias known in the current conversation
+        and restores the original.  Requires ``alias_store`` and
+        ``conversation_id`` to be set.
+        """
+        if self.alias_store is None or not self.conversation_id:
+            return text
+        mappings = self.alias_store.get_all(self.conversation_id)
+        # Build reverse map: alias -> original
+        reverse = {v: k for k, v in mappings.items()}
+        result = text
+        for alias, original in reverse.items():
+            if alias in result:
+                result = result.replace(alias, original)
+        return result

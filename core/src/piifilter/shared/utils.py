@@ -12,11 +12,17 @@ from pathlib import Path
 from typing import Any
 
 
-def generate_alias(text: str, seed: str = "deterministic") -> str:
+def generate_alias(text: str, seed: str = "deterministic", context: str = "") -> str:
     """Generate a deterministic alias for a given text.
 
     Uses the text hash to pick from a curated set of replacement names,
     ensuring the same original always maps to the same alias.
+
+    When ``context`` is provided (e.g. a conversation_id), the alias is
+    scoped to that context — the same text in different contexts yields
+    different aliases.  This enables conversation-scoped aliasing where
+    the LLM builds consistent references within a conversation without
+    leaking aliases across conversations.
     """
     # Categorized alias pools for realistic semantic replacement
     alias_pools = {
@@ -61,7 +67,7 @@ def generate_alias(text: str, seed: str = "deterministic") -> str:
     }
 
     norm = text.lower().strip()
-    h = int(hashlib.md5((seed + norm).encode()).hexdigest(), 16)
+    h = int(hashlib.md5((seed + context + norm).encode()).hexdigest(), 16)
 
     # Detect entity type from regex hints
     if re.search(r'\b[\w.+-]+@[\w-]+\.[\w.-]+\b', norm):

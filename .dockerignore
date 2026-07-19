@@ -1,0 +1,17 @@
+.git
+.gitignore
+.github
+tests/
+benchmarks/
+plugins/*/__pycache__/
+plugins/*/src/*/__pycache__/
+apps/cli/
+apps/chrome-extension/
+apps/mcp-server/
+apps/openai-middleware/
+node_modules/
+.venv/
+__pycache__/
+*.pyc
+.hermes/
+README.md
