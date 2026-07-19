@@ -140,7 +140,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # 2-digit-pair paired spacing for 15-digit (Amex): "37 82 82 24 63 10 00 5"
     ("CREDIT_CARD", r"\b\d{2}(?: \d{2}){6} \d{1,2}\b", 0.75),
     # 4-4-4-2..4 with any combination of space/dot/dash separators — broad catch-all
-    ("CREDIT_CARD", r"\b\d{4}[ .-]+\d{4}[ .-]+\d{4}[ .-]+\d{2,4}\b", 0.65),
+    ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)\b\d{4}[ .-]+\d{4}[ .-]+\d{4}[ .-]+\d{2,4}\b", 0.65),
     # Low confidence: 4-4-4-2..4 pattern with single dash/space
     ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)(?<![A-Za-z])(?<!\d{4}[- ])\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b(?![- ]\d{2,4})(?!\s*\d{2,4})", 0.65),
     # Low confidence: 4-4-4-2..4 with multi-space gaps (e.g. "3782  8224  6310  005")

@@ -236,9 +236,10 @@ class RegexDetector(Detector):
 
             # Decide type based on trigger word proximity
             trigger = ctx_match.group(1).lower()
-            is_ssn_context = any(t in trigger for t in ("ssn", "social", "security"))
+            trigger_words = set(trigger.split())
+            is_ssn_context = any(t in trigger_words for t in ("ssn", "social", "security"))
             is_cc_context = any(
-                t in trigger for t in ("card", "credit", "cc", "cvv", "cvc", "exp", "expiry", "expiration", "pan")
+                t in trigger_words for t in ("card", "credit", "cc", "cvv", "cvc", "exp", "expiry", "expiration", "pan")
             )
 
             if is_ssn_context:
