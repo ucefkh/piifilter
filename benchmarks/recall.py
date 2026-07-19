@@ -96,9 +96,14 @@ class RecallResult:
 
     @property
     def f2(self) -> float:
-        """F2-score (weights recall 2× precision)."""
+        """F2-score (weights recall 2× precision).
+
+        Formula: Fβ = (1+β²) × (P × R) / (β² × P + R)
+        With β=2: F2 = 5 × P × R / (4 × P + R)
+        When P == R, F2 should equal P (=R).
+        """
         p, r = self.precision, self.recall
-        denom = 5 * p + r
+        denom = 4 * p + r
         return (5 * p * r / denom) if denom else 0.0
 
     @property

@@ -1697,7 +1697,7 @@
           "type": "EMAIL",
           "value": "jоhn@example.com",
           "start": 9,
-          "end": 24
+          "end": 25
         }
       ]
     },
@@ -1718,8 +1718,8 @@
         {
           "type": "EMAIL",
           "value": "joh‍n@example.com",
-          "start": 13,
-          "end": 37
+          "start": 12,
+          "end": 29
         }
       ]
     },
@@ -1730,7 +1730,7 @@
           "type": "EMAIL",
           "value": "bob​@​example.com",
           "start": 7,
-          "end": 38
+          "end": 24
         }
       ]
     },
@@ -1740,8 +1740,8 @@
         {
           "type": "EMAIL",
           "value": "john@example.com",
-          "start": 41,
-          "end": 57
+          "start": 44,
+          "end": 60
         }
       ]
     },
@@ -1751,8 +1751,8 @@
         {
           "type": "SOCIAL_SECURITY",
           "value": "123-45-6789",
-          "start": 35,
-          "end": 46
+          "start": 41,
+          "end": 52
         }
       ]
     },
@@ -1773,8 +1773,8 @@
         {
           "type": "CREDIT_CARD",
           "value": "4VVV-VVVV-VVVV-VVGK",
-          "start": 9,
-          "end": 28
+          "start": 10,
+          "end": 29
         }
       ]
     },
@@ -1784,7 +1784,7 @@
         {
           "type": "EMAIL",
           "value": "john%40example.com",
-          "start": 14,
+          "start": 13,
           "end": 31
         }
       ]
@@ -1839,8 +1839,8 @@
         {
           "type": "EMAIL",
           "value": "alice@acme.com",
-          "start": 23,
-          "end": 37
+          "start": 25,
+          "end": 39
         }
       ]
     },
@@ -1851,7 +1851,7 @@
           "type": "EMAIL",
           "value": "john&#64;example&#46;com",
           "start": 15,
-          "end": 38
+          "end": 39
         }
       ]
     },
@@ -1872,8 +1872,8 @@
         {
           "type": "EMAIL",
           "value": "john\\u0040example\\u002Ecom",
-          "start": 15,
-          "end": 41
+          "start": 14,
+          "end": 40
         }
       ]
     },
@@ -1883,8 +1883,8 @@
         {
           "type": "EMAIL",
           "value": "john@example.com",
-          "start": 41,
-          "end": 57
+          "start": 39,
+          "end": 55
         }
       ]
     },
@@ -1894,7 +1894,7 @@
         {
           "type": "EMAIL",
           "value": "alice@acme.com",
-          "start": 7,
+          "start": 8,
           "end": 22
         }
       ]
@@ -1906,7 +1906,7 @@
           "type": "PHONE",
           "value": "+1-555-123-4Ӧ97",
           "start": 7,
-          "end": 23
+          "end": 22
         }
       ]
     },
@@ -1938,8 +1938,8 @@
         {
           "type": "EMAIL",
           "value": "test@example.com",
-          "start": 15,
-          "end": 31
+          "start": 14,
+          "end": 30
         }
       ]
     },
@@ -1950,7 +1950,7 @@
           "type": "EMAIL",
           "value": "support@company.com",
           "start": 7,
-          "end": 34
+          "end": 26
         }
       ]
     },
@@ -1960,8 +1960,8 @@
         {
           "type": "EMAIL",
           "value": "alice@acme.com",
-          "start": 13,
-          "end": 27
+          "start": 17,
+          "end": 31
         }
       ]
     },
@@ -1972,7 +1972,7 @@
           "type": "PHONE",
           "value": "+1–555–123–4567",
           "start": 7,
-          "end": 25
+          "end": 22
         }
       ]
     },
@@ -1983,7 +1983,7 @@
           "type": "SOCIAL_SECURITY",
           "value": "123 45 6789",
           "start": 5,
-          "end": 18
+          "end": 16
         }
       ]
     },
