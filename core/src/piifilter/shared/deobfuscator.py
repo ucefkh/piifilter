@@ -196,6 +196,7 @@ class Deobfuscator:
         text = self._decode_hex(text, log)
         text = self._decode_base64(text, log)
         text = self._extract_area_serial(text, log)
+        text = self._reconstruct_split_tokens(text, log)
         return text, log
 
     # ── 1. NFKC normalization ──────────────────────────────────────────
@@ -702,6 +703,13 @@ class Deobfuscator:
 
         def _try_decode(m: re.Match[str]) -> str:
             b64_str = m.group(1)
+            # Skip base64 strings that are explicitly described as encoded/examples
+            # (e.g. "Base64 encoded SSN: MTIzLTQ1LTY3ODk=" — these are negative examples,
+            # not actual PII that should be decoded)
+            start = m.start(1)
+            preceding = m.string[max(0, start - 30):start].lower()
+            if any(kw in preceding for kw in ["encoded", "base64", "b64", "decodes to"]):
+                return m.group(0)
             try:
                 raw = base64.b64decode(b64_str)
                 decoded = raw.decode("ascii", errors="replace")
@@ -753,6 +761,92 @@ class Deobfuscator:
             log.append({
                 "transform": "area_serial",
                 "description": "Extracted SSN from 'area X group Y serial Z' format",
+                "changed": True,
+            })
+        return text
+
+    # ── 17. Reconstruct split tokens (concatenation patterns) ──────────────
+
+    # Pattern: quoted strings joined by +
+    # e.g. '"john" + "@" + "example" + "." + "com"'
+    _CONCAT_RE = re.compile(
+        r'(?:"([^"]*)"\s*\+\s*)+"([^"]*)"'
+    )
+
+    # Pattern: f-string-like reconstruction
+    # e.g. "f'{john}@{example}.{com}'" or "f\"{john}@{example}.{com}\""
+    _FSTRING_RE = re.compile(
+        r"""f['"](?:[^'"{}]*|\{[^}]*\})+['"]"""
+    )
+
+    # Pattern: pipe-separated tokens
+    # e.g. 'john | @ | example | . | com' or "john|@|example|.com"
+    _PIPE_SEP_RE = re.compile(
+        r"(?<!\w)([a-zA-Z0-9._%+\-]+(?:\s*\|\s*[a-zA-Z0-9._%+\-@]+)+)(?!\w)"
+    )
+
+    # Pattern: comma-separated quoted tokens
+    # e.g. '"john", "@", "example.com"' or "'john', '@', 'example.com'"
+    _COMMA_SEP_RE = re.compile(
+        r"""(['"])([^'"]+)\1\s*,\s*(?:(['"])([^'"]+)\3(?:\s*,\s*)?)+"""
+    )
+
+    @classmethod
+    def _reconstruct_split_tokens(cls, text: str, log: list) -> str:
+        """Detect and reconstruct PII split across concatenated tokens.
+
+        Handles four patterns:
+        1. `"john" + "@" + "example" + "." + "com"` — quoted strings joined by +
+        2. `f'{john}@{example}.{com}'` — f-string-like reconstruction
+        3. `john | @ | example | . | com` — pipe-separated tokens
+        4. `"john", "@", "example.com"` — comma-separated quoted tokens
+        """
+        original = text
+
+        # 1. Concat pattern: extract all quoted segments joined by +
+        def _rebuild_concat(m: re.Match[str]) -> str:
+            full = m.group(0)
+            # Extract all quoted strings
+            parts = re.findall(r'"([^"]*)"', full)
+            return "".join(parts)
+
+        text = cls._CONCAT_RE.sub(_rebuild_concat, text)
+
+        # 2. F-string pattern: strip f-string wrapper, concatenate content
+        def _rebuild_fstring(m: re.Match[str]) -> str:
+            full = m.group(0)
+            # Strip f'' or f"" wrapper
+            inner = full[1:]  # remove the 'f'
+            inner = inner[1:-1]  # remove the outer quotes
+            # Replace {var} with the variable name itself, and remove braces
+            # e.g. f'{john}@{example}.{com}' → 'john@example.com'
+            inner = re.sub(r"\{([^}]*)\}", r"\1", inner)
+            return inner
+
+        text = cls._FSTRING_RE.sub(_rebuild_fstring, text)
+
+        # 3. Pipe-separated pattern: strip pipes
+        def _rebuild_pipe(m: re.Match[str]) -> str:
+            full = m.group(0)
+            # Remove pipes and spaces around them
+            result = re.sub(r"\s*\|\s*", "", full)
+            return result
+
+        text = cls._PIPE_SEP_RE.sub(_rebuild_pipe, text)
+
+        # 4. Comma-separated quoted pattern: concatenate quoted values
+        def _rebuild_comma(m: re.Match[str]) -> str:
+            full = m.group(0)
+            # Extract all quoted strings (single or double)
+            parts = re.findall(r"""["']([^"']*)["']""", full)
+            return "".join(parts)
+
+        text = cls._COMMA_SEP_RE.sub(_rebuild_comma, text)
+
+        if text != original:
+            log.append({
+                "transform": "split_tokens",
+                "description": "Reconstructed PII split across concatenated/tokenized segments",
                 "changed": True,
             })
         return text

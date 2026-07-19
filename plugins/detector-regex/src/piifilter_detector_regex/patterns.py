@@ -84,14 +84,17 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{3}[- \u00A0.]?\d{2}[- \u00A0.]?\d{4}\b", 0.95),
         # Context-prefixed bare 9-digit SSN (no separator at all) — e.g. "SSN: 123456789"
     ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{9}\b", 0.95),
-        # General SSN-like pattern with optional separators (hyphen, NBSP, dot, space, or none).
+        # General SSN-like pattern — requires at least ONE separator character (hyphen, space, dot, NBSP)
+        # between the first two digit groups. This prevents bare consecutive digit strings like
+        # "987654321" from being matched as 4-2-3 or 3-2-4 SSN groupings when there's no real separator.
         # Uses lookaround to avoid matching within longer digit sequences.
         # Supports both standard 3-2-4 and reverse 4-2-3/4-2-4 groupings.
-        # Lower confidence (0.75) since it matches bare SSN-like patterns without context keywords.
-    ("SOCIAL_SECURITY", r"(?<!\d)\d{3,4}[- \u00A0.]?\d{2}[- \u00A0.]?\d{3,4}(?!\d)", 0.75),
+        # Lower confidence (0.75) since it matches SSN-like patterns without context keywords.
+    ("SOCIAL_SECURITY", r"(?<!\d)\d{3,4}[- \u00A0.]\d{2}[- \u00A0.]?\d{3,4}(?!\d)", 0.75),
         # General SSN-like pattern anchored to word boundaries — catches reverse 4-2-3/4-2-4
         # groupings that lookarounds may miss (e.g. when surrounded by spaces or punctuation).
-    ("SOCIAL_SECURITY", r"\b\d{4}[- \u00A0.]?\d{2}[- \u00A0.]?\d{3,4}\b", 0.75),
+        # Requires at least one separator between first two groups.
+    ("SOCIAL_SECURITY", r"\b\d{4}[- \u00A0.]\d{2}[- \u00A0.]?\d{3,4}\b", 0.75),
 
     # ── IBAN ─────────────────────────────────────────────────────────
     # IBAN must come BEFORE CREDIT_CARD patterns since IBAN substrings (like

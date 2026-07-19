@@ -1,0 +1,3825 @@
+{
+  "summary": {
+    "overall": {
+      "total_examples": 201,
+      "full_pipeline_detected": 74,
+      "full_pipeline_rate": 36.8,
+      "raw_regex_detected": 57,
+      "raw_regex_rate": 28.4,
+      "deobfuscation_improvement": 8.5
+    },
+    "by_category": {
+      "Punctuation-stuffed": {
+        "total": 14,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "PROJECT_NAME:punctuation-stuffed",
+          "PROJECT_NAME:punctuation-stuffed",
+          "PROJECT_NAME:punctuation-stuffed",
+          "PROJECT_NAME:punctuation-stuffed",
+          "PROJECT_NAME:punctuation-stuffed",
+          "PROJECT_NAME:punctuation-stuffed"
+        ]
+      },
+      "Emoji substitution": {
+        "total": 16,
+        "full_pipeline_detected": 8,
+        "full_pipeline_rate": 50.0,
+        "raw_regex_detected": 8,
+        "raw_regex_rate": 50.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution"
+        ]
+      },
+      "L33tspeak": {
+        "total": 14,
+        "full_pipeline_detected": 12,
+        "full_pipeline_rate": 85.7,
+        "raw_regex_detected": 12,
+        "raw_regex_rate": 85.7,
+        "improvement": 0.0,
+        "missed_examples": [
+          "SSH_KEY:l33tspeak",
+          "SSH_KEY:l33tspeak"
+        ]
+      },
+      "Double encoding": {
+        "total": 15,
+        "full_pipeline_detected": 3,
+        "full_pipeline_rate": 20.0,
+        "raw_regex_detected": 3,
+        "raw_regex_rate": 20.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "FILE_PATH:double-encoding",
+          "FILE_PATH:double-encoding",
+          "FILE_PATH:double-encoding",
+          "FILE_PATH:double-encoding",
+          "FILE_PATH:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding"
+        ]
+      },
+      "CREDIT_CARD": {
+        "total": 14,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "CREDIT_CARD:hex-escape",
+          "CREDIT_CARD:hex-escape",
+          "CREDIT_CARD:hex-escape",
+          "CREDIT_CARD:hex-escape",
+          "CREDIT_CARD:hex-escape",
+          "CREDIT_CARD:hex-escape",
+          "CREDIT_CARD:hex-escape",
+          "CREDIT_CARD:hex-escape",
+          "CREDIT_CARD:binary-8bit",
+          "CREDIT_CARD:binary-8bit",
+          "CREDIT_CARD:binary-8bit",
+          "CREDIT_CARD:binary-8bit",
+          "CREDIT_CARD:binary-8bit",
+          "CREDIT_CARD:binary-8bit"
+        ]
+      },
+      "EMAIL": {
+        "total": 8,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words"
+        ]
+      },
+      "CamelCase split": {
+        "total": 6,
+        "full_pipeline_detected": 6,
+        "full_pipeline_rate": 100.0,
+        "raw_regex_detected": 6,
+        "raw_regex_rate": 100.0,
+        "improvement": 0.0,
+        "missed_examples": []
+      },
+      "Case-shifted": {
+        "total": 10,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 40.0,
+        "raw_regex_detected": 4,
+        "raw_regex_rate": 40.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted"
+        ]
+      },
+      "IP_ADDRESS": {
+        "total": 6,
+        "full_pipeline_detected": 1,
+        "full_pipeline_rate": 16.7,
+        "raw_regex_detected": 1,
+        "raw_regex_rate": 16.7,
+        "improvement": 0.0,
+        "missed_examples": [
+          "IP_ADDRESS:pig-latin-ip",
+          "IP_ADDRESS:pig-latin-ip",
+          "IP_ADDRESS:pig-latin-ip",
+          "IP_ADDRESS:pig-latin-ip",
+          "IP_ADDRESS:pig-latin-ip"
+        ]
+      },
+      "PHONE": {
+        "total": 12,
+        "full_pipeline_detected": 3,
+        "full_pipeline_rate": 25.0,
+        "raw_regex_detected": 1,
+        "raw_regex_rate": 8.3,
+        "improvement": 16.7,
+        "missed_examples": [
+          "PHONE:unicode-fractions",
+          "PHONE:unicode-fractions",
+          "PHONE:unicode-fractions",
+          "PHONE:unicode-fractions",
+          "PHONE:unicode-fractions",
+          "PHONE:unicode-fractions",
+          "PHONE:unicode-fractions",
+          "PHONE:xml-escape",
+          "PHONE:xml-escape"
+        ]
+      },
+      "PASSPORT": {
+        "total": 14,
+        "full_pipeline_detected": 9,
+        "full_pipeline_rate": 64.3,
+        "raw_regex_detected": 1,
+        "raw_regex_rate": 7.1,
+        "improvement": 57.1,
+        "missed_examples": [
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split"
+        ]
+      },
+      "URL": {
+        "total": 14,
+        "full_pipeline_detected": 6,
+        "full_pipeline_rate": 42.9,
+        "raw_regex_detected": 6,
+        "raw_regex_rate": 42.9,
+        "improvement": 0.0,
+        "missed_examples": [
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code"
+        ]
+      },
+      "SOCIAL_SECURITY": {
+        "total": 8,
+        "full_pipeline_detected": 8,
+        "full_pipeline_rate": 100.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 100.0,
+        "missed_examples": []
+      },
+      "GPS": {
+        "total": 8,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 50.0,
+        "raw_regex_detected": 4,
+        "raw_regex_rate": 50.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "GPS:hex-escape",
+          "GPS:hex-escape",
+          "GPS:hex-escape",
+          "GPS:hex-escape"
+        ]
+      },
+      "PERSON": {
+        "total": 8,
+        "full_pipeline_detected": 1,
+        "full_pipeline_rate": 12.5,
+        "raw_regex_detected": 1,
+        "raw_regex_rate": 12.5,
+        "improvement": 0.0,
+        "missed_examples": [
+          "PERSON:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words"
+        ]
+      },
+      "BANK_ACCOUNT": {
+        "total": 6,
+        "full_pipeline_detected": 5,
+        "full_pipeline_rate": 83.3,
+        "raw_regex_detected": 6,
+        "raw_regex_rate": 100.0,
+        "improvement": -16.7,
+        "missed_examples": [
+          "BANK_ACCOUNT:camelCase_split"
+        ]
+      },
+      "COUNTRY": {
+        "total": 1,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "COUNTRY:pig-latin"
+        ]
+      },
+      "CUSTOMER_NAME": {
+        "total": 8,
+        "full_pipeline_detected": 1,
+        "full_pipeline_rate": 12.5,
+        "raw_regex_detected": 1,
+        "raw_regex_rate": 12.5,
+        "improvement": 0.0,
+        "missed_examples": [
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions"
+        ]
+      },
+      "IBAN": {
+        "total": 4,
+        "full_pipeline_detected": 3,
+        "full_pipeline_rate": 75.0,
+        "raw_regex_detected": 3,
+        "raw_regex_rate": 75.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "IBAN:syllabic-split"
+        ]
+      },
+      "EMPLOYEE_NAME": {
+        "total": 5,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "EMPLOYEE_NAME:morse-code",
+          "EMPLOYEE_NAME:morse-code",
+          "EMPLOYEE_NAME:morse-code",
+          "EMPLOYEE_NAME:morse-code",
+          "EMPLOYEE_NAME:morse-code"
+        ]
+      },
+      "DATE": {
+        "total": 10,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code"
+        ]
+      }
+    }
+  },
+  "entries": [
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "DATE",
+      "strategy": "punct-stuff",
+      "label": "DATE:punct-stuff",
+      "text": "Her birth date was recorded as 1..9..8..5..--..0..4..--..1..5 on the medical form.",
+      "ground_truth": "1985-04-15",
+      "pii_value": "1..9..8..5..--..0..4..--..1..5",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "DATE",
+      "strategy": "punct-stuff",
+      "label": "DATE:punct-stuff",
+      "text": "Please confirm the expiration date 0..6../..1..5../..2..0..0..1 from the invoice.",
+      "ground_truth": "06/15/2001",
+      "pii_value": "0..6../..1..5../..2..0..0..1",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "DATE",
+      "strategy": "punct-stuff",
+      "label": "DATE:punct-stuff",
+      "text": "The holiday party is scheduled for 1..2../..2..5../..1..9..9..9;; in the main hall.",
+      "ground_truth": "12/25/1999",
+      "pii_value": "1..2../..2..5../..1..9..9..9;;",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "DATE",
+      "strategy": "punct-stuff",
+      "label": "DATE:punct-stuff",
+      "text": "Your membership expires on 2..0..2..3..--..1..1..--..3..0 according to the records.",
+      "ground_truth": "2023-11-30",
+      "pii_value": "2..0..2..3..--..1..1..--..3..0",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "DATE",
+      "strategy": "punct-stuff",
+      "label": "DATE:punct-stuff",
+      "text": "The contract was signed on 0..7../..0..4../..1..9..8..8 by both parties.",
+      "ground_truth": "07/04/1988",
+      "pii_value": "0..7../..0..4../..1..9..8..8",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "DATE",
+      "strategy": "punct-stuff",
+      "label": "DATE:punct-stuff",
+      "text": "Valentine's Day in 1..9..9..0..--..0..2..--..1..4 was a Wednesday.",
+      "ground_truth": "1990-02-14",
+      "pii_value": "1..9..9..0..--..0..2..--..1..4",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "DATE",
+      "strategy": "punct-stuff",
+      "label": "DATE:punct-stuff",
+      "text": "The project deadline was changed to 1..1../..2..2../..2..0..0..5 per the manager.",
+      "ground_truth": "11/22/2005",
+      "pii_value": "1..1../..2..2../..2..0..0..5",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "DATE",
+      "strategy": "punct-stuff",
+      "label": "DATE:punct-stuff",
+      "text": "School started on 2..0..1..0..--..0..9..--..0..1 that year.",
+      "ground_truth": "2010-09-01",
+      "pii_value": "2..0..1..0..--..0..9..--..0..1",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "emoji-substitution",
+      "label": "PRIVATE_URL:emoji-substitution",
+      "text": "Please update the system settings via https://internal🌐company➖portal📧com➗admin before the end of the week.",
+      "ground_truth": "https://internal.company-portal@com/admin",
+      "pii_value": "https://internal🌐company➖portal📧com➗admin",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://internal",
+          "score": 0.8
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://internal",
+          "score": 0.8
+        }
+      ]
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "emoji-substitution",
+      "label": "PRIVATE_URL:emoji-substitution",
+      "text": "The server status page is accessible at http://192🌐168🌐1🌐100➗config for troubleshooting.",
+      "ground_truth": "http://192.168.1.100/config",
+      "pii_value": "http://192🌐168🌐1🌐100➗config",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "http://192",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "http://192",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "emoji-substitution",
+      "label": "PRIVATE_URL:emoji-substitution",
+      "text": "Make sure to route the request to https://internal📧tech🌐corp➖dev➗api for the new deployment.",
+      "ground_truth": "https://internal@tech.corp-dev/api",
+      "pii_value": "https://internal📧tech🌐corp➖dev➗api",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://internal",
+          "score": 0.8
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://internal",
+          "score": 0.8
+        }
+      ]
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "emoji-substitution",
+      "label": "PRIVATE_URL:emoji-substitution",
+      "text": "We lost the database; try connecting via http://10🌐0🌐0🌐2➗backup➗restore to recover.",
+      "ground_truth": "http://10.0.0.2/backup/restore",
+      "pii_value": "http://10🌐0🌐0🌐2➗backup➗restore",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "http://10",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "http://10",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "emoji-substitution",
+      "label": "PRIVATE_URL:emoji-substitution",
+      "text": "The quarterly summaries are hosted on https://internal📧finance🌐global➖hub➗reports for the team.",
+      "ground_truth": "https://internal@finance.global-hub/reports",
+      "pii_value": "https://internal📧finance🌐global➖hub➗reports",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://internal",
+          "score": 0.8
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://internal",
+          "score": 0.8
+        }
+      ]
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "emoji-substitution",
+      "label": "PRIVATE_URL:emoji-substitution",
+      "text": "Monitor the node health by hitting http://172🌐16🌐0🌐5➗healthcheck every minute.",
+      "ground_truth": "http://172.16.0.5/healthcheck",
+      "pii_value": "http://172🌐16🌐0🌐5➗healthcheck",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "http://172",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "http://172",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "emoji-substitution",
+      "label": "PRIVATE_URL:emoji-substitution",
+      "text": "Access the deployment pipeline at https://admin📧internal🌐srv➖eu➗deploy after logging in.",
+      "ground_truth": "https://admin@internal.srv-eu/deploy",
+      "pii_value": "https://admin📧internal🌐srv➖eu➗deploy",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://admin",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://admin",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "emoji-substitution",
+      "label": "PRIVATE_URL:emoji-substitution",
+      "text": "You can view real-time metrics on http://192🌐168🌐50🌐1➗monitor➗dashboard for the lab setup.",
+      "ground_truth": "http://192.168.50.1/monitor/dashboard",
+      "pii_value": "http://192🌐168🌐50🌐1➗monitor➗dashboard",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "http://192",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "http://192",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "l33tspeak",
+      "label": "PRIVATE_URL:l33tspeak",
+      "text": "The server log shows an unauthorized attempt to access http://192.168.1.100/4dm1n from an external IP address.",
+      "ground_truth": "http://192.168.1.100/admin",
+      "pii_value": "http://192.168.1.100/4dm1n",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "http://192.168.1.100/4dm1n",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "http://192.168.1.100/4dm1n",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "l33tspeak",
+      "label": "PRIVATE_URL:l33tspeak",
+      "text": "Please remember that https://1n7ern4l.c0mp4ny/d4shb04rd is only accessible from within the corporate VPN.",
+      "ground_truth": "https://internal.company/dashboard",
+      "pii_value": "https://1n7ern4l.c0mp4ny/d4shb04rd",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://1n7ern4l.c0mp4ny/d4shb04rd",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://1n7ern4l.c0mp4ny/d4shb04rd",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "l33tspeak",
+      "label": "PRIVATE_URL:l33tspeak",
+      "text": "I saved the database backup configuration on http://10.0.0.5/c0nf1g/b4ckup for the ops team to review.",
+      "ground_truth": "http://10.0.0.5/config/backup",
+      "pii_value": "http://10.0.0.5/c0nf1g/b4ckup",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "http://10.0.0.5/c0nf1g/b4ckup",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "http://10.0.0.5/c0nf1g/b4ckup",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "l33tspeak",
+      "label": "PRIVATE_URL:l33tspeak",
+      "text": "All employee timesheets must be submitted through https://192.168.50.10/53cur3/p0r7al before the end of the week.",
+      "ground_truth": "https://192.168.50.10/secure/portal",
+      "pii_value": "https://192.168.50.10/53cur3/p0r7al",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://192.168.50.10/53cur3/p0r7al",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://192.168.50.10/53cur3/p0r7al",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "l33tspeak",
+      "label": "PRIVATE_URL:l33tspeak",
+      "text": "The QA lead reported that http://172.16.0.20/7e57/3nv is returning a 503 error due to a misconfigured proxy.",
+      "ground_truth": "http://172.16.0.20/test/env",
+      "pii_value": "http://172.16.0.20/7e57/3nv",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "http://172.16.0.20/7e57/3nv",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "http://172.16.0.20/7e57/3nv",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "PRIVATE_URL",
+      "strategy": "l33tspeak",
+      "label": "PRIVATE_URL:l33tspeak",
+      "text": "Access to https://1n7r4n3t.wh1t3l4b3l.c0mp4ny/4ud17 is restricted to senior auditors only.",
+      "ground_truth": "https://intranet.whitelabel.company/audit",
+      "pii_value": "https://1n7r4n3t.wh1t3l4b3l.c0mp4ny/4ud17",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://1n7r4n3t.wh1t3l4b3l.c0mp4ny/4ud17",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://1n7r4n3t.wh1t3l4b3l.c0mp4ny/4ud17",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "FILE_PATH",
+      "strategy": "double-encoding",
+      "label": "FILE_PATH:double-encoding",
+      "text": "Check the recent entries in /var/%25%32%25%30%25%32%34%25%32%30/logs/app.log for errors.",
+      "ground_truth": "/var/$(date)/logs/app.log",
+      "pii_value": "/var/%25%32%25%30%25%32%34%25%32%30/logs/app.log",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "FILE_PATH",
+      "strategy": "double-encoding",
+      "label": "FILE_PATH:double-encoding",
+      "text": "The configuration file is located at C:\\%25%35%33%25%36%35%25%37%33%25%37%30%25%32%65\\config.ini.",
+      "ground_truth": "C:\\temp\\config.ini",
+      "pii_value": "C:\\%25%35%33%25%36%35%25%37%33%25%37%30%25%32%65\\config.ini",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "FILE_PATH",
+      "strategy": "double-encoding",
+      "label": "FILE_PATH:double-encoding",
+      "text": "Please upload the PDF to /home/%25%32%35%25%33%30%25%33%31/data/report.pdf.",
+      "ground_truth": "/home/user01/data/report.pdf",
+      "pii_value": "/home/%25%32%35%25%33%30%25%33%31/data/report.pdf",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "FILE_PATH",
+      "strategy": "double-encoding",
+      "label": "FILE_PATH:double-encoding",
+      "text": "The backup archive was saved to D:\\%25%34%34%25%36%31%25%37%34%25%36%31\\backup.zip.",
+      "ground_truth": "D:\\ProjectX\\backup.zip",
+      "pii_value": "D:\\%25%34%34%25%36%31%25%37%34%25%36%31\\backup.zip",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "FILE_PATH",
+      "strategy": "double-encoding",
+      "label": "FILE_PATH:double-encoding",
+      "text": "Run the script from /opt/%25%32%35%25%33%32%25%33%30%25%32%35%25%33%32%25%33%30/bin/script.sh to start the service.",
+      "ground_truth": "/opt/%%20/bin/script.sh",
+      "pii_value": "/opt/%25%32%35%25%33%32%25%33%30%25%32%35%25%33%32%25%33%30/bin/script.sh",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "DOMAIN",
+          "value": "script.sh",
+          "score": 0.75
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "DOMAIN",
+          "value": "script.sh",
+          "score": 0.75
+        }
+      ]
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "FILE_PATH",
+      "strategy": "double-encoding",
+      "label": "FILE_PATH:double-encoding",
+      "text": "Access the document at C:\\Users\\%25%32%35%25%34%31%25%36%64%25%36%39%25%36%65\\Documents\\note.txt.",
+      "ground_truth": "C:\\Users\\%Admin\\Documents\\note.txt",
+      "pii_value": "C:\\Users\\%25%32%35%25%34%31%25%36%64%25%36%39%25%36%65\\Documents\\note.txt",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "FILE_PATH",
+          "value": "C:\\Users\\",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "FILE_PATH",
+          "value": "C:\\Users\\",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "FILE_PATH",
+      "strategy": "double-encoding",
+      "label": "FILE_PATH:double-encoding",
+      "text": "Inspect /var/log/%25%32%35%25%33%32%25%33%30%25%32%34%25%33%30/%25%32%35%25%33%30%25%33%31%25%33%32%25%33%33.log for the latest entries.",
+      "ground_truth": "/var/log/%20$0/%30123.log",
+      "pii_value": "/var/log/%25%32%35%25%33%32%25%33%30%25%32%34%25%33%30/%25%32%35%25%33%30%25%33%31%25%33%32%25%33%33.log",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "FILE_PATH",
+          "value": "/var/log",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "FILE_PATH",
+          "value": "/var/log",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "FILE_PATH",
+      "strategy": "double-encoding",
+      "label": "FILE_PATH:double-encoding",
+      "text": "The video file is stored in E:\\%25%32%35%25%33%32%25%33%35%25%33%33%25%36%35%25%37%32\\media\\video.mp4.",
+      "ground_truth": "E:\\%25%32%35%25%33%32%25%33%35%25%33%33\\media\\video.mp4",
+      "pii_value": "E:\\%25%32%35%25%33%32%25%33%35%25%33%33%25%36%35%25%37%32\\media\\video.mp4",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "hex-escape",
+      "label": "CREDIT_CARD:hex-escape",
+      "text": "The payment was processed using token \\x34\\x35\\x31\\x32\\x33\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34 for the order.",
+      "ground_truth": "4512345678901234",
+      "pii_value": "\\x34\\x35\\x31\\x32\\x33\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "hex-escape",
+      "label": "CREDIT_CARD:hex-escape",
+      "text": "Please confirm the last digits of card \\x34\\x35\\x33\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34 for verification.",
+      "ground_truth": "4532145678901234",
+      "pii_value": "\\x34\\x35\\x33\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "hex-escape",
+      "label": "CREDIT_CARD:hex-escape",
+      "text": "Subscription renewed for card ending in \\x34\\x35\\x34\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34.",
+      "ground_truth": "4542145678901234",
+      "pii_value": "\\x34\\x35\\x34\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "hex-escape",
+      "label": "CREDIT_CARD:hex-escape",
+      "text": "Invalid transaction attempted with card number \\x34\\x35\\x35\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34.",
+      "ground_truth": "4552145678901234",
+      "pii_value": "\\x34\\x35\\x35\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "hex-escape",
+      "label": "CREDIT_CARD:hex-escape",
+      "text": "Auto-pay set up for account linked to \\x34\\x35\\x36\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34.",
+      "ground_truth": "4562145678901234",
+      "pii_value": "\\x34\\x35\\x36\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "hex-escape",
+      "label": "CREDIT_CARD:hex-escape",
+      "text": "Refund processed to original card \\x34\\x35\\x37\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34 successfully.",
+      "ground_truth": "4572145678901234",
+      "pii_value": "\\x34\\x35\\x37\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "hex-escape",
+      "label": "CREDIT_CARD:hex-escape",
+      "text": "Fraud alert triggered for card \\x34\\x35\\x38\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34 at suspicious merchant.",
+      "ground_truth": "4582145678901234",
+      "pii_value": "\\x34\\x35\\x38\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "hex-escape",
+      "label": "CREDIT_CARD:hex-escape",
+      "text": "Customer service requested details for card ending \\x34\\x35\\x39\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34.",
+      "ground_truth": "4592145678901234",
+      "pii_value": "\\x34\\x35\\x39\\x32\\x31\\x34\\x35\\x36\\x37\\x38\\x39\\x30\\x31\\x32\\x33\\x34",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "binary-8bit",
+      "label": "CREDIT_CARD:binary-8bit",
+      "text": "The binary encoding 01010100 01000101 01010011 01010100 00101101 01000011 01000001 01010010 01000100 00110001 00110010 00110011 00110100 00110101 00110110 00110111 represents the card used for the purchase.",
+      "ground_truth": "4532015112830367",
+      "pii_value": "01010100 01000101 01010011 01010100 00101101 01000011 01000001 01010010 01000100 00110001 00110010 00110011 00110100 00110101 00110110 00110111",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "binary-8bit",
+      "label": "CREDIT_CARD:binary-8bit",
+      "text": "Please process 01000110 01001001 01010010 01010011 01010100 00101101 01000010 01000001 01001110 01001011 00110000 00110001 00110010 00110011 00110100 00110101 for the refund.",
+      "ground_truth": "4916743251098273",
+      "pii_value": "01000110 01001001 01010010 01010011 01010100 00101101 01000010 01000001 01001110 01001011 00110000 00110001 00110010 00110011 00110100 00110101",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "binary-8bit",
+      "label": "CREDIT_CARD:binary-8bit",
+      "text": "The transaction with 01001101 01000001 01010011 01010100 01000101 01010010 00101101 01000011 01000001 01010010 01000100 00110010 00110011 00110100 00110101 00110110 was flagged for review.",
+      "ground_truth": "5392847610184523",
+      "pii_value": "01001101 01000001 01010011 01010100 01000101 01010010 00101101 01000011 01000001 01010010 01000100 00110010 00110011 00110100 00110101 00110110",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "binary-8bit",
+      "label": "CREDIT_CARD:binary-8bit",
+      "text": "Use the code 01000111 01001111 01001100 01000100 00101101 01000011 01000001 01010010 01000100 00110011 00110100 00110101 00110110 00110111 00111000 00111001 to complete the online order.",
+      "ground_truth": "6011423894567821",
+      "pii_value": "01000111 01001111 01001100 01000100 00101101 01000011 01000001 01010010 01000100 00110011 00110100 00110101 00110110 00110111 00111000 00111001",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "binary-8bit",
+      "label": "CREDIT_CARD:binary-8bit",
+      "text": "The payment method 01010000 01001100 01000001 01010100 01001001 01001110 01010101 01001101 00101101 01000011 01000001 01010010 01000100 00110100 00110101 00110110 isn't accepted here.",
+      "ground_truth": "371449635398431",
+      "pii_value": "01010000 01001100 01000001 01010100 01001001 01001110 01010101 01001101 00101101 01000011 01000001 01010010 01000100 00110100 00110101 00110110",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CREDIT_CARD",
+      "entity_type": "CREDIT_CARD",
+      "strategy": "binary-8bit",
+      "label": "CREDIT_CARD:binary-8bit",
+      "text": "I'll transfer the balance to 01010011 01001001 01001100 01010110 01000101 01010010 00101101 01000011 01000001 01010010 01000100 00110101 00110110 00110111 00111000 00111009 after the dispute is resolved.",
+      "ground_truth": "5432109876543210",
+      "pii_value": "01010011 01001001 01001100 01010110 01000101 01010010 00101101 01000011 01000001 01010010 01000100 00110101 00110110 00110111 00111000 00111001",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMAIL",
+      "entity_type": "EMAIL",
+      "strategy": "reversed-words",
+      "label": "EMAIL:reversed-words",
+      "text": "My recovery email is gro.moc@olleh_321_ydob_emosewa for the secondary account.",
+      "ground_truth": "awesome_body_123_hello@moc.gro",
+      "pii_value": "gro.moc@olleh_321_ydob_emosewa",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMAIL",
+      "entity_type": "EMAIL",
+      "strategy": "reversed-words",
+      "label": "EMAIL:reversed-words",
+      "text": "Please forward all invoices to ten.evil@321_enot_yalp for processing.",
+      "ground_truth": "play_tone_123@evil.ten",
+      "pii_value": "ten.evil@321_enot_yalp",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMAIL",
+      "entity_type": "EMAIL",
+      "strategy": "reversed-words",
+      "label": "EMAIL:reversed-words",
+      "text": "The clinical trial coordinator can be reached at ude.ysu@htlaeh_evitcuderp_lareneg for questions.",
+      "ground_truth": "general_preventive_health@ysu.ude",
+      "pii_value": "ude.ysu@htlaeh_evitcuderp_lareneg",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMAIL",
+      "entity_type": "EMAIL",
+      "strategy": "reversed-words",
+      "label": "EMAIL:reversed-words",
+      "text": "Her personal blog contact is moc.tra@eno_tsrif_enola_retso for guest post submissions.",
+      "ground_truth": "oster_alone_first_one@tra.moc",
+      "pii_value": "moc.tra@eno_tsrif_enola_retso",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMAIL",
+      "entity_type": "EMAIL",
+      "strategy": "reversed-words",
+      "label": "EMAIL:reversed-words",
+      "text": "The tech support ticket was filed under gro.cba@321_ot_etirw_sa_eloh yesterday.",
+      "ground_truth": "whole_as_write_to_123@cba.gro",
+      "pii_value": "gro.cba@321_ot_etirw_sa_eloh",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMAIL",
+      "entity_type": "EMAIL",
+      "strategy": "reversed-words",
+      "label": "EMAIL:reversed-words",
+      "text": "For hardware troubleshooting, use moc.liamg@999_sloot_sdraob as the preferred contact.",
+      "ground_truth": "boards_tools_999@gmail.moc",
+      "pii_value": "moc.liamg@999_sloot_sdraob",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMAIL",
+      "entity_type": "EMAIL",
+      "strategy": "reversed-words",
+      "label": "EMAIL:reversed-words",
+      "text": "The student lab access requires registration with ten.www@321_orez_tiucric.",
+      "ground_truth": "circuit_zero_123@www.ten",
+      "pii_value": "ten.www@321_orez_tiucric",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMAIL",
+      "entity_type": "EMAIL",
+      "strategy": "reversed-words",
+      "label": "EMAIL:reversed-words",
+      "text": "Submit your debug logs directly to moc.tcg@999_enignE_revird_tset for analysis.",
+      "ground_truth": "test_driver_Engine_999@tcg.moc",
+      "pii_value": "moc.tcg@999_enignE_revird_tset",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CamelCase split",
+      "entity_type": "EMAIL",
+      "strategy": "camelCase split",
+      "label": "EMAIL:camelCase split",
+      "text": "Forward the quarterly report to sarah.cOnNors@cyberdyne.net before the deadline.",
+      "ground_truth": "sarah.connors@cyberdyne.net",
+      "pii_value": "sarah.cOnNors@cyberdyne.net",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "sarah.cOnNors@cyberdyne.net",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "EMAIL",
+          "value": "sarah.cOnNors@cyberdyne.net",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "CamelCase split",
+      "entity_type": "EMAIL",
+      "strategy": "camelCase split",
+      "label": "EMAIL:camelCase split",
+      "text": "Please update the contact info for mIkE.rOsS@bluth-company.org in the CRM.",
+      "ground_truth": "mike.ross@bluth-company.org",
+      "pii_value": "mIkE.rOsS@bluth-company.org",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "mIkE.rOsS@bluth-company.org",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "EMAIL",
+          "value": "mIkE.rOsS@bluth-company.org",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "CamelCase split",
+      "entity_type": "EMAIL",
+      "strategy": "camelCase split",
+      "label": "EMAIL:camelCase split",
+      "text": "The invoice was sent to eMiLy.cArter@starkindustries.io earlier today.",
+      "ground_truth": "emily.carter@starkindustries.io",
+      "pii_value": "eMiLy.cArter@starkindustries.io",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "eMiLy.cArter@starkindustries.io",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "EMAIL",
+          "value": "eMiLy.cArter@starkindustries.io",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "CamelCase split",
+      "entity_type": "EMAIL",
+      "strategy": "camelCase split",
+      "label": "EMAIL:camelCase split",
+      "text": "Can you verify the login attempt from jAke.sUlly@pandora-research.co?",
+      "ground_truth": "jake.sully@pandora-research.co",
+      "pii_value": "jAke.sUlly@pandora-research.co",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "jAke.sUlly@pandora-research.co",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "EMAIL",
+          "value": "jAke.sUlly@pandora-research.co",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "CamelCase split",
+      "entity_type": "EMAIL",
+      "strategy": "camelCase split",
+      "label": "EMAIL:camelCase split",
+      "text": "Meeting notes were shared with lUcY.lIu@wayne-enterprises.com and the sales team.",
+      "ground_truth": "lucy.liu@wayne-enterprises.com",
+      "pii_value": "lUcY.lIu@wayne-enterprises.com",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "lUcY.lIu@wayne-enterprises.com",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "EMAIL",
+          "value": "lUcY.lIu@wayne-enterprises.com",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "CamelCase split",
+      "entity_type": "EMAIL",
+      "strategy": "camelCase split",
+      "label": "EMAIL:camelCase split",
+      "text": "The system flagged an unusual attachment sent to tOm.hAx@globex-corp.us.",
+      "ground_truth": "tom.hax@globex-corp.us",
+      "pii_value": "tOm.hAx@globex-corp.us",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "tOm.hAx@globex-corp.us",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "EMAIL",
+          "value": "tOm.hAx@globex-corp.us",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "Case-shifted",
+      "entity_type": "IP_ADDRESS",
+      "strategy": "case-shifted",
+      "label": "IP_ADDRESS:case-shifted",
+      "text": "Our VPN endpoint is 172.16.254.1; ensure your client connects correctly.",
+      "ground_truth": "172.16.254.1",
+      "pii_value": "172.16.254.1",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "172.16.254",
+          "score": 0.75
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "172.16.254.1",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "172.16.254",
+          "score": 0.75
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "172.16.254.1",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "Case-shifted",
+      "entity_type": "IP_ADDRESS",
+      "strategy": "case-shifted",
+      "label": "IP_ADDRESS:case-shifted",
+      "text": "The suspicious traffic originated from 203.0.113.42 last night.",
+      "ground_truth": "203.0.113.42",
+      "pii_value": "203.0.113.42",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "203.0.113.42",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "203.0.113.42",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "Case-shifted",
+      "entity_type": "IP_ADDRESS",
+      "strategy": "case-shifted",
+      "label": "IP_ADDRESS:case-shifted",
+      "text": "Please whitelist 192.0.2.88 for the monitoring tool.",
+      "ground_truth": "192.0.2.88",
+      "pii_value": "192.0.2.88",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.0.2.88",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.0.2.88",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "Case-shifted",
+      "entity_type": "IP_ADDRESS",
+      "strategy": "case-shifted",
+      "label": "IP_ADDRESS:case-shifted",
+      "text": "Check the access logs for any activity from 198.51.100.7 during the breach.",
+      "ground_truth": "198.51.100.7",
+      "pii_value": "198.51.100.7",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "198.51.100",
+          "score": 0.75
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "198.51.100.7",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "198.51.100",
+          "score": 0.75
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "198.51.100.7",
+          "score": 0.9
+        }
+      ]
+    },
+    {
+      "category": "IP_ADDRESS",
+      "entity_type": "IP_ADDRESS",
+      "strategy": "pig-latin-ip",
+      "label": "IP_ADDRESS:pig-latin-ip",
+      "text": "The server at 720.861.323.015 is blocking my requests.",
+      "ground_truth": "207.168.233.150",
+      "pii_value": "720.861.323.015",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "IP_ADDRESS",
+      "entity_type": "IP_ADDRESS",
+      "strategy": "pig-latin-ip",
+      "label": "IP_ADDRESS:pig-latin-ip",
+      "text": "Please connect to 249.532.761.108 instead of the old gateway.",
+      "ground_truth": "492.325.617.801",
+      "pii_value": "249.532.761.108",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "IP_ADDRESS",
+      "entity_type": "IP_ADDRESS",
+      "strategy": "pig-latin-ip",
+      "label": "IP_ADDRESS:pig-latin-ip",
+      "text": "I traced the attack back to 318.942.576.064 in the logs.",
+      "ground_truth": "183.429.765.406",
+      "pii_value": "318.942.576.064",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "IP_ADDRESS",
+      "entity_type": "IP_ADDRESS",
+      "strategy": "pig-latin-ip",
+      "label": "IP_ADDRESS:pig-latin-ip",
+      "text": "Our DNS resolves to 606.213.857.492 for that subdomain.",
+      "ground_truth": "066.123.587.924",
+      "pii_value": "606.213.857.492",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "IP_ADDRESS",
+      "entity_type": "IP_ADDRESS",
+      "strategy": "pig-latin-ip",
+      "label": "IP_ADDRESS:pig-latin-ip",
+      "text": "Whitelist 845.390.127.569 in the firewall rules.",
+      "ground_truth": "458.903.271.695",
+      "pii_value": "845.390.127.569",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "IP_ADDRESS",
+      "entity_type": "IP_ADDRESS",
+      "strategy": "pig-latin-ip",
+      "label": "IP_ADDRESS:pig-latin-ip",
+      "text": "The IPv6 node at cafe:b100:0000:0000:0000:00ff:00fe:baef needs reconfiguration.",
+      "ground_truth": "feac:0b10:0000:0000:0000:ff00:fe00:baef",
+      "pii_value": "cafe:b100:0000:0000:0000:00ff:00fe:baef",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "cafe:b100:0000:0000:0000:00ff:00fe:baef",
+          "score": 0.88
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "cafe:b100:0000:0000:0000:00ff:00fe:baef",
+          "score": 0.88
+        }
+      ]
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "unicode-fractions",
+      "label": "PHONE:unicode-fractions",
+      "text": "You can reach Maria at +34 9⅓2 ½8 ⅔ 2½ for tour arrangements.",
+      "ground_truth": "+34 932 18 23 25",
+      "pii_value": "+34 9⅓2 ½8 ⅔ 2½",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "unicode-fractions",
+      "label": "PHONE:unicode-fractions",
+      "text": "Call Luis at +1 (⅔½) 4⅓9-⅓⅓½ for tech support.",
+      "ground_truth": "+1 (235) 419-1335",
+      "pii_value": "+1 (⅔½) 4⅓9-⅓⅓½",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "unicode-fractions",
+      "label": "PHONE:unicode-fractions",
+      "text": "Please notify +44 ⅓½⅔ ⅔½ ⅔⅓ if delayed.",
+      "ground_truth": "+44 135 25 23",
+      "pii_value": "+44 ⅓½⅔ ⅔½ ⅔⅓",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "unicode-fractions",
+      "label": "PHONE:unicode-fractions",
+      "text": "Herr Schmidt confirmed +49 ⅓½¼ 4⅓½ ¼⅓ as his emergency number.",
+      "ground_truth": "+49 1325 4135 13",
+      "pii_value": "+49 ⅓½¼ 4⅓½ ¼⅓",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "unicode-fractions",
+      "label": "PHONE:unicode-fractions",
+      "text": "Dr. Owens listed +61 ⅓½ ½⅔ ¼⅓ ⅓½ for lab coordination.",
+      "ground_truth": "+61 13 18 13 13",
+      "pii_value": "+61 ⅓½ ½⅔ ¼⅓ ⅓½",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "Dr. Owens",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "Dr. Owens",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "unicode-fractions",
+      "label": "PHONE:unicode-fractions",
+      "text": "Please forward to +33 ⅔½⅔ ¼⅓ ½⅔ for billing inquiries.",
+      "ground_truth": "+33 235 13 18",
+      "pii_value": "+33 ⅔½⅔ ¼⅓ ½⅔",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "unicode-fractions",
+      "label": "PHONE:unicode-fractions",
+      "text": "Yuki can be contacted at +81 ⅓½-⅔½¼-¼⅓ during office hours.",
+      "ground_truth": "+81 13-2325-13",
+      "pii_value": "+81 ⅓½-⅔½¼-¼⅓",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "unicode-fractions",
+      "label": "PHONE:unicode-fractions",
+      "text": "The contract specifies +86 ⅔½⅓ ⅓⅔ ½¼ as Wang Li's direct line.",
+      "ground_truth": "+86 231 13 18",
+      "pii_value": "+86 ⅔½⅓ ⅓⅔ ½¼",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "xml-escape",
+      "label": "PHONE:xml-escape",
+      "text": "Please reach out to our support line at +1 (555) &lt;span&gt;123-4567&lt;/span&gt; for urgent assistance.",
+      "ground_truth": "+1 (555) 123-4567",
+      "pii_value": "+1 (555) &lt;span&gt;123-4567&lt;/span&gt;",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "xml-escape",
+      "label": "PHONE:xml-escape",
+      "text": "Maria mentioned her direct line is +1 (312) &amp;apos;555-0199&amp;apos; for project inquiries.",
+      "ground_truth": "+1 (312) '555-0199'",
+      "pii_value": "+1 (312) &amp;apos;555-0199&amp;apos;",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "xml-escape",
+      "label": "PHONE:xml-escape",
+      "text": "The Berlin team uses +49 &amp;quot;30&amp;quot; 1234 5678 for vendor communications.",
+      "ground_truth": "+49 \"30\" 1234 5678",
+      "pii_value": "+49 &amp;quot;30&amp;quot; 1234 5678",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "12345678",
+          "score": 0.65
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PHONE",
+      "entity_type": "PHONE",
+      "strategy": "xml-escape",
+      "label": "PHONE:xml-escape",
+      "text": "Our Sydney warehouse can be reached at +61 &lt;b&gt;2&lt;/b&gt; 9876 5432 for delivery scheduling.",
+      "ground_truth": "+61 2 9876 5432",
+      "pii_value": "+61 &lt;b&gt;2&lt;/b&gt; 9876 5432",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "98765432",
+          "score": 0.65
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "zwj-interleaving",
+      "label": "PASSPORT:zwj-interleaving",
+      "text": "Please verify the passport number P\\u200dA\\u200d1\\u200d2\\u200d3\\u200d4\\u200d5\\u200d6\\u200d7\\u200d8 before issuing the visa.",
+      "ground_truth": "PA12345678",
+      "pii_value": "P‍A‍1‍2‍3‍4‍5‍6‍7‍8",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PASSPORT",
+          "value": " passport number PA12345678",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "zwj-interleaving",
+      "label": "PASSPORT:zwj-interleaving",
+      "text": "The system flagged passport B\\u200dJ\\u200d0\\u200d2\\u200d4\\u200d5\\u200d6\\u200d7\\u200d1\\u200d3 as expired in 2023.",
+      "ground_truth": "BJ02456713",
+      "pii_value": "B‍J‍0‍2‍4‍5‍6‍7‍1‍3",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PASSPORT",
+          "value": " passport BJ02456713",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "zwj-interleaving",
+      "label": "PASSPORT:zwj-interleaving",
+      "text": "Traveler with passport X\\u200dZ\\u200d9\\u200d8\\u200d7\\u200d6\\u200d5\\u200d4\\u200d3\\u200d2 was denied boarding.",
+      "ground_truth": "XZ98765432",
+      "pii_value": "X‍Z‍9‍8‍7‍6‍5‍4‍3‍2",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PASSPORT",
+          "value": " passport XZ98765432",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "zwj-interleaving",
+      "label": "PASSPORT:zwj-interleaving",
+      "text": "Her passport number L\\u200dM\\u200d3\\u200d2\\u200d1\\u200d0\\u200d9\\u200d8\\u200d7\\u200d6 was stolen last month.",
+      "ground_truth": "LM32109876",
+      "pii_value": "L‍M‍3‍2‍1‍0‍9‍8‍7‍6",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PASSPORT",
+          "value": " passport number LM32109876",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "zwj-interleaving",
+      "label": "PASSPORT:zwj-interleaving",
+      "text": "Update the booking for passport A\\u200dB\\u200d5\\u200d6\\u200d7\\u200d8\\u200d9\\u200d0\\u200d1\\u200d2 on file.",
+      "ground_truth": "AB56789012",
+      "pii_value": "A‍B‍5‍6‍7‍8‍9‍0‍1‍2",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PASSPORT",
+          "value": " passport AB56789012",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "zwj-interleaving",
+      "label": "PASSPORT:zwj-interleaving",
+      "text": "Officer scanned passport G\\u200dH\\u200d4\\u200d3\\u200d2\\u200d1\\u200d8\\u200d7\\u200d6\\u200d5 and granted entry.",
+      "ground_truth": "GH43218765",
+      "pii_value": "G‍H‍4‍3‍2‍1‍8‍7‍6‍5",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PASSPORT",
+          "value": " passport GH43218765",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "zwj-interleaving",
+      "label": "PASSPORT:zwj-interleaving",
+      "text": "Passenger holding R\\u200dS\\u200d0\\u200d1\\u200d2\\u200d3\\u200d4\\u200d5\\u200d6\\u200d7 must reapply for expedited service.",
+      "ground_truth": "RS01234567",
+      "pii_value": "R‍S‍0‍1‍2‍3‍4‍5‍6‍7",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PASSPORT",
+          "value": "RS01234567",
+          "score": 0.75
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "zwj-interleaving",
+      "label": "PASSPORT:zwj-interleaving",
+      "text": "The embassy confirmed passport N\\u200dO\\u200d7\\u200d6\\u200d5\\u200d4\\u200d3\\u200d2\\u200d1\\u200d0 is valid.",
+      "ground_truth": "NO76543210",
+      "pii_value": "N‍O‍7‍6‍5‍4‍3‍2‍1‍0",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PASSPORT",
+          "value": " passport NO76543210",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "syllabic-split",
+      "label": "PASSPORT:syllabic-split",
+      "text": "My British passport number is GB-7 8 4-1 0 2-5 6-L, and I need to renew it soon.",
+      "ground_truth": "GB78410256L",
+      "pii_value": "GB-7 8 4-1 0 2-5 6-L",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "syllabic-split",
+      "label": "PASSPORT:syllabic-split",
+      "text": "The flight attendant asked to see my passport, which has the number DE-9 3 6-4 5 7-8 2-J.",
+      "ground_truth": "DE93645782J",
+      "pii_value": "DE-9 3 6-4 5 7-8 2-J",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "syllabic-split",
+      "label": "PASSPORT:syllabic-split",
+      "text": "Please update my profile with the French passport number FR-2 1 0-8 6 3-5 7-N.",
+      "ground_truth": "FR21086357N",
+      "pii_value": "FR-2 1 0-8 6 3-5 7-N",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "syllabic-split",
+      "label": "PASSPORT:syllabic-split",
+      "text": "I lost my wallet containing my US passport number US-5 0 2-9 1 8-3 7-X.",
+      "ground_truth": "US50291837X",
+      "pii_value": "US-5 0 2-9 1 8-3 7-X",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "COUNTRY",
+          "value": "US",
+          "score": 0.8
+        },
+        {
+          "type": "COUNTRY",
+          "value": "US",
+          "score": 0.8
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "COUNTRY",
+          "value": "US",
+          "score": 0.8
+        },
+        {
+          "type": "COUNTRY",
+          "value": "US",
+          "score": 0.8
+        }
+      ]
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "syllabic-split",
+      "label": "PASSPORT:syllabic-split",
+      "text": "For the visa application, they requested my Canadian passport number CA-7 4 1-3 0 9-5 6-K.",
+      "ground_truth": "CA74130956K",
+      "pii_value": "CA-7 4 1-3 0 9-5 6-K",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PASSPORT",
+      "entity_type": "PASSPORT",
+      "strategy": "syllabic-split",
+      "label": "PASSPORT:syllabic-split",
+      "text": "The hotel requires a copy of my Australian passport, number AU-8 3 2-6 7 1-4 0-Q.",
+      "ground_truth": "AU83267140Q",
+      "pii_value": "AU-8 3 2-6 7 1-4 0-Q",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "morse-code",
+      "label": "URL:morse-code",
+      "text": "The promo code page was recently moved to .... - - .--. -...- .-- .-- .-- .-.-.- ... .... .- .-. .--. ... .... --- --- - . .-. ... .-.-.- -.-. --- -- -...- ... .... --- . for security reasons.",
+      "ground_truth": "https://sharp-shooters.co/sh0e",
+      "pii_value": ".... - - .--. -...- .-- .-- .-- .-.-.- ... .... .- .-. .--. ... .... --- --- - . .-. ... .-.-.- -.-. --- -- -...- ... .... --- .",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "morse-code",
+      "label": "URL:morse-code",
+      "text": "Please confirm this is still the employee portal: .... - - .--. ... -...- .-- .-- .-- .-.-.- -... .-.. ..- . ... -...- .-. . ... .. -.. . .-. -.-. . .-.. .-.. ... .-.-.- -.-. --- -- -...- .... --- -- .",
+      "ground_truth": "https://www.blue-residence.com/home",
+      "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- -... .-.. ..- . ... -...- .-. . ... .. -.. . .-. -.-. . .-.. .-.. ... .-.-.- -.-. --- -- -...- .... --- -- .",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "morse-code",
+      "label": "URL:morse-code",
+      "text": "A bug in the authentication script was reported for .... - - .--. ... -...- .-- .-- .-- .-.-.- -- . - .- .-.. -- ..- ... . ..- -- .-.-.- -. . - -...- .-.. --- --. .. -.",
+      "ground_truth": "https://www.metal-muse.net/login",
+      "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- -- . - .- .-.. -- ..- ... . ..- -- .-.-.- -. . - -...- .-.. --- --. .. -.",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "morse-code",
+      "label": "URL:morse-code",
+      "text": "The veterinary archive is at .... - - .--. ... -...- .-- .-- .-- .-.-.- ... - ..- -.. .. --- .-.-.- ...- . - -...- .--. .- .--. . .-. ... currently.",
+      "ground_truth": "https://www.studio.vet/papers",
+      "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- ... - ..- -.. .. --- .-.-.- ...- . -...- .--. .- .--. . .-. ...",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "morse-code",
+      "label": "URL:morse-code",
+      "text": "I found a listing for discounted lab equipment on .... - - .--. ... -...- .-- .-- .-- .-.-.- -.-. .-. .- .. --. ... .-.. .. ... - .-.-.- --- .-. --. -...- ... .... --- .--. .-. --- ----.",
+      "ground_truth": "https://www.craigslist.org/shopro/",
+      "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- -.-. .-. .- .. --. ... .-.. .. ... - .-.-.- --- .-. --. -...- ... .... --- .--. .-. --- ----.",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "morse-code",
+      "label": "URL:morse-code",
+      "text": "Order status can be tracked here: .... - - .--. ... -...- .-- .-- .-- .-.-.- ... .. .-.. ...- . .-. ... - .-. . .- -- .-.-.- ... .... --- .--. -...- -... .- -.-. -.- .--. .- -.-. -.- ...",
+      "ground_truth": "https://www.silver-stream.shop/backpacks",
+      "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- ... .. .-.. ...- . .-. ... - .-. . .- -- .-.-.- ... .... --- .--. -...- -... .- -.-. -.- .--. .- -.-. -.- ...",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "morse-code",
+      "label": "URL:morse-code",
+      "text": "The link to the dev vault is .... - - .--. ... -...- ..--.- .-.. --- -. --. -... . .- .-. -... . .-. .-. -.-- .-.-.- -.-. --- -- -...- ... . -.-. .-. . - and should not be shared.",
+      "ground_truth": "https://long-berryberry.com/secret",
+      "pii_value": ".... - - .--. ... -...- ..--.- .-.. --- -. --. -... . .- .-. -... . .-. .-. -.-- .-.-.- -.-. --- -- -...- ... . -.-. .-. . -",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "morse-code",
+      "label": "URL:morse-code",
+      "text": "The audio sample is hosted on .... - - .--. ... -...- .-- .-- .-- .-.-.- --. .-. .- .--. .... --- .--. .... --- -. . .-.-.- ..- ... -...- ... .... .. .-. - at the moment.",
+      "ground_truth": "https://www.graphophone.us/shirt",
+      "pii_value": ".... - - .--. ... -...- .-- .-- .-- .-.-.- --. .-. .- .--. .... --- .--. .... --- -. . .-.-.- ..- ... -...- ... .... .. .-. -",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "circ-shift-in-segment",
+      "label": "URL:circ-shift-in-segment",
+      "text": "The phishing alert points to https://droptips.org/wroy/ugv as the callback location.",
+      "ground_truth": "https://dropbox.com/join/sup",
+      "pii_value": "https://droptips.org/wroy/ugv",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://droptips.org/wroy/ugv",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://droptips.org/wroy/ugv",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "circ-shift-in-segment",
+      "label": "URL:circ-shift-in-segment",
+      "text": "I redirected the API to https://yrdnac.etad/od/wab/troppus during the test.",
+      "ground_truth": "https://candyrate.com/be/for/support",
+      "pii_value": "https://yrdnac.etad/od/wab/troppus",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://yrdnac.etad/od/wab/troppus",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://yrdnac.etad/od/wab/troppus",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "circ-shift-in-segment",
+      "label": "URL:circ-shift-in-segment",
+      "text": "Your booking confirmation is at https://rgizevob.nis/mih/em.",
+      "ground_truth": "https://zerogive.com/me/him",
+      "pii_value": "https://rgizevob.nis/mih/em",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://rgizevob.nis/mih/em",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://rgizevob.nis/mih/em",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "circ-shift-in-segment",
+      "label": "URL:circ-shift-in-segment",
+      "text": "Access the dashboard via https://pocam.wen/imuk/042.",
+      "ground_truth": "https://camop.one/kumi/240",
+      "pii_value": "https://pocam.wen/imuk/042",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://pocam.wen/imuk/042",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://pocam.wen/imuk/042",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "circ-shift-in-segment",
+      "label": "URL:circ-shift-in-segment",
+      "text": "The flag URL is https://lanip.nus/mal/moc/knarf—do not share it.",
+      "ground_truth": "https://plain.sun/mal/com/frank",
+      "pii_value": "https://lanip.nus/mal/moc/knarf",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://lanip.nus/mal/moc/knarf-do",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://lanip.nus/mal/moc/knarf",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "URL",
+      "entity_type": "URL",
+      "strategy": "circ-shift-in-segment",
+      "label": "URL:circ-shift-in-segment",
+      "text": "I noticed a suspicious redirect to https://ellsr.nostop/skcaj/ylf in the logs.",
+      "ground_truth": "https://shells.topson/backs/fly",
+      "pii_value": "https://ellsr.nostop/skcaj/ylf",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://ellsr.nostop/skcaj/ylf",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "https://ellsr.nostop/skcaj/ylf",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "SOCIAL_SECURITY",
+      "entity_type": "SOCIAL_SECURITY",
+      "strategy": "unicode-superscript-subscript",
+      "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
+      "text": "Patient Maria Lopez provided her SSN as ⁵⁶³-²⁸-⁹⁴¹² on the intake form.",
+      "ground_truth": "563-28-9412",
+      "pii_value": "⁵⁶³-²⁸-⁹⁴¹²",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "563-28-9412",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "SOCIAL_SECURITY",
+      "entity_type": "SOCIAL_SECURITY",
+      "strategy": "unicode-superscript-subscript",
+      "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
+      "text": "For tax purposes, my SSN is listed as ⁻³⁸⁹-⁵⁶-⁰¹⁷⁴ in the payroll system.",
+      "ground_truth": "389-56-0174",
+      "pii_value": "³⁸⁹-⁵⁶-⁰¹⁷⁴",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "389-56-0174",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "SOCIAL_SECURITY",
+      "entity_type": "SOCIAL_SECURITY",
+      "strategy": "unicode-superscript-subscript",
+      "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
+      "text": "Submit the W-2 with the employee identifier ⁰⁹²-⁴⁷-⁶⁸¹³ attached.",
+      "ground_truth": "092-47-6813",
+      "pii_value": "⁰⁹²-⁴⁷-⁶⁸¹³",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "092-47-6813",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "SOCIAL_SECURITY",
+      "entity_type": "SOCIAL_SECURITY",
+      "strategy": "unicode-superscript-subscript",
+      "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
+      "text": "As per the background check, David Chen's SSN is ⁷¹⁶-⁰³-²⁵⁹⁸.",
+      "ground_truth": "716-03-2598",
+      "pii_value": "⁷¹⁶-⁰³-²⁵⁹⁸",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "SSN is 716-03-2598",
+          "score": 0.95
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "716-03-2598",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "SOCIAL_SECURITY",
+      "entity_type": "SOCIAL_SECURITY",
+      "strategy": "unicode-superscript-subscript",
+      "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
+      "text": "The encrypted field reads ⁴³⁰-⁹⁸-⁷⁶²₁, which matches the input registry.",
+      "ground_truth": "430-98-7621",
+      "pii_value": "⁴³⁰-⁹⁸-⁷⁶²¹",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "430-98-7621",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "SOCIAL_SECURITY",
+      "entity_type": "SOCIAL_SECURITY",
+      "strategy": "unicode-superscript-subscript",
+      "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
+      "text": "Please verify the redacted version: ²⁸⁷-¹⁵-⁶⁹³⁰ is the correct number for the claim.",
+      "ground_truth": "287-15-6930",
+      "pii_value": "²⁸⁷-¹⁵-⁶⁹³⁰",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "287-15-6930",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "SOCIAL_SECURITY",
+      "entity_type": "SOCIAL_SECURITY",
+      "strategy": "unicode-superscript-subscript",
+      "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
+      "text": "The insurance card had ⁶⁵¹-⁴²-⁰⁸⁷₃ printed below the barcode.",
+      "ground_truth": "651-42-0873",
+      "pii_value": "⁶⁵¹-⁴²-⁰⁸⁷³",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "651-42-0873",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "SOCIAL_SECURITY",
+      "entity_type": "SOCIAL_SECURITY",
+      "strategy": "unicode-superscript-subscript",
+      "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
+      "text": "On the application, Sarah Kim entered ⁹⁰⁸-⁷⁶-³¹⁴₅ as her SSN.",
+      "ground_truth": "908-76-3145",
+      "pii_value": "⁹⁰⁸-⁷⁶-³¹⁴⁵",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "908-76-3145",
+          "score": 0.9
+        }
+      ],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "PROJECT_NAME",
+      "strategy": "punctuation-stuffed",
+      "label": "PROJECT_NAME:punctuation-stuffed",
+      "text": "We need to allocate more resources to O..p,,e;;r..a,,t;;i..o,,n;; ..N,,e;;b..u,,l;;a before the end of the quarter.",
+      "ground_truth": "Operation Nebula",
+      "pii_value": "O..p,,e;;r..a,,t;;i..o,,n;; ..N,,e;;b..u,,l;;a",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "PROJECT_NAME",
+      "strategy": "punctuation-stuffed",
+      "label": "PROJECT_NAME:punctuation-stuffed",
+      "text": "The security update is part of C..o,,d;;e..n,,a;;m..e,, ;;S..a,,p;;p..h,,i;;r..e and should not be discussed externally.",
+      "ground_truth": "Codename Sapphire",
+      "pii_value": "C..o,,d;;e..n,,a;;m..e,, ;;S..a,,p;;p..h,,i;;r..e",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "PROJECT_NAME",
+      "strategy": "punctuation-stuffed",
+      "label": "PROJECT_NAME:punctuation-stuffed",
+      "text": "All departments must comply with the guidelines for I..n,,i;;t..i,,a;;t..i,,v;;e.. ,,H;;a..r,,m;;o..n,,y effective immediately.",
+      "ground_truth": "Initiative Harmony",
+      "pii_value": "I..n,,i;;t..i,,a;;t..i,,v;;e.. ,,H;;a..r,,m;;o..n,,y",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "PROJECT_NAME",
+      "strategy": "punctuation-stuffed",
+      "label": "PROJECT_NAME:punctuation-stuffed",
+      "text": "The infrastructure team is leading the D..a,,t;;a..L,,a;;k..e,, -;;M..i,,g;;r..a,,t;;i..o,,n effort to centralize storage.",
+      "ground_truth": "DataLake-Migration",
+      "pii_value": "D..a,,t;;a..L,,a;;k..e,, -;;M..i,,g;;r..a,,t;;i..o,,n",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "PROJECT_NAME",
+      "strategy": "punctuation-stuffed",
+      "label": "PROJECT_NAME:punctuation-stuffed",
+      "text": "T..a,,s;;k.. ,,F,,o;;r..c,,e;; ..A,,l;;p..h,,a has been given top priority by the executive board.",
+      "ground_truth": "Task Force Alpha",
+      "pii_value": "T..a,,s;;k.. ,,F,,o;;r..c,,e;; ..A,,l;;p..h,,a",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Punctuation-stuffed",
+      "entity_type": "PROJECT_NAME",
+      "strategy": "punctuation-stuffed",
+      "label": "PROJECT_NAME:punctuation-stuffed",
+      "text": "The budget for M..a,,r;;s.. ,,C,,o;;l..o,,n;;y.. ,,P,,h;;a..s,,e;; ..2 has been approved for the next fiscal year.",
+      "ground_truth": "Mars Colony Phase 2",
+      "pii_value": "M..a,,r;;s.. ,,C,,o;;l..o,,n;;y.. ,,P,,h;;a..s,,e;; ..2",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "DOMAIN",
+      "strategy": "emoji-substitution",
+      "label": "DOMAIN:emoji-substitution",
+      "text": "Please send your documents to my work email mail📧rapidshare🌐com for faster processing.",
+      "ground_truth": "mail@rapidshare.com",
+      "pii_value": "mail📧rapidshare🌐com",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "DOMAIN",
+      "strategy": "emoji-substitution",
+      "label": "DOMAIN:emoji-substitution",
+      "text": "The new online store shop🌐stellardistro➖eu is now accepting orders from international customers.",
+      "ground_truth": "shop.stellardistro-eu",
+      "pii_value": "shop🌐stellardistro➖eu",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "DOMAIN",
+      "strategy": "emoji-substitution",
+      "label": "DOMAIN:emoji-substitution",
+      "text": "If you encounter login issues, contact the help desk at support📧techvault🌐org with your account details.",
+      "ground_truth": "support@techvault.org",
+      "pii_value": "support📧techvault🌐org",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "DOMAIN",
+      "strategy": "emoji-substitution",
+      "label": "DOMAIN:emoji-substitution",
+      "text": "Our team deployed the beta version on app🌐quantum➖labs🌐io for user testing this week.",
+      "ground_truth": "app.quantum-labs.io",
+      "pii_value": "app🌐quantum➖labs🌐io",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "DOMAIN",
+      "strategy": "emoji-substitution",
+      "label": "DOMAIN:emoji-substitution",
+      "text": "To subscribe to the newsletter, send a request to info📧bluesky➖media🌐net with your name and email.",
+      "ground_truth": "info@bluesky-media.net",
+      "pii_value": "info📧bluesky➖media🌐net",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "DOMAIN",
+      "strategy": "emoji-substitution",
+      "label": "DOMAIN:emoji-substitution",
+      "text": "The company's internal portal is hosted at hub🌐cryptic➖base🌐co🌐uk for employee access only.",
+      "ground_truth": "hub.cryptic-base.co.uk",
+      "pii_value": "hub🌐cryptic➖base🌐co🌐uk",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "DOMAIN",
+      "strategy": "emoji-substitution",
+      "label": "DOMAIN:emoji-substitution",
+      "text": "All partnership inquiries should be directed to admin📧pixelcore➖studio🌐com for review.",
+      "ground_truth": "admin@pixelcore-studio.com",
+      "pii_value": "admin📧pixelcore➖studio🌐com",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Emoji substitution",
+      "entity_type": "DOMAIN",
+      "strategy": "emoji-substitution",
+      "label": "DOMAIN:emoji-substitution",
+      "text": "The developer documentation is accessible at dev🌐nexus➖grid🌐global after authentication.",
+      "ground_truth": "dev.nexus-grid.global",
+      "pii_value": "dev🌐nexus➖grid🌐global",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "SSH_KEY",
+      "strategy": "l33tspeak",
+      "label": "SSH_KEY:l33tspeak",
+      "text": "My server's SSH key fingerprint is 5HH-2A 3cDSA K3Y F1ng3rpr1n7: 4b:cd:3f:12:90:56:78:9a:bc:de:f0:12:34:56:78:90; please ensure it matches.",
+      "ground_truth": "SSH-2A ECDSA KEY Fingerprint: ab:cd:ef:12:90:56:78:9a:bc:de:f0:12:34:56:78:90",
+      "pii_value": "5HH-2A 3cDSA K3Y F1ng3rpr1n7: 4b:cd:3f:12:90:56:78:9a:bc:de:f0:12:34:56:78:90",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "4b:cd:3f:12:90:56:78:9a",
+          "score": 0.88
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "bc:de:f0:12:34:56:78:90",
+          "score": 0.88
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "4b:cd:3f:12:90:56:78:9a",
+          "score": 0.88
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "bc:de:f0:12:34:56:78:90",
+          "score": 0.88
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "SSH_KEY",
+      "strategy": "l33tspeak",
+      "label": "SSH_KEY:l33tspeak",
+      "text": "The authorization for backup access uses 5HH RSA K3Y 1D: 3c:7c:d3:4b:1f:90:a6:be:cf:de:01:23:45:67:89:ab.",
+      "ground_truth": "SSH RSA KEY ID: ec:7c:d3:4b:1f:90:a6:be:cf:de:01:23:45:67:89:ab",
+      "pii_value": "5HH RSA K3Y 1D: 3c:7c:d3:4b:1f:90:a6:be:cf:de:01:23:45:67:89:ab",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "3c:7c:d3:4b:1f:90:a6:be",
+          "score": 0.88
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "cf:de:01:23:45:67:89:ab",
+          "score": 0.88
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "3c:7c:d3:4b:1f:90:a6:be",
+          "score": 0.88
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "cf:de:01:23:45:67:89:ab",
+          "score": 0.88
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "SSH_KEY",
+      "strategy": "l33tspeak",
+      "label": "SSH_KEY:l33tspeak",
+      "text": "Please verify the 5HH 3d25519 K3Y: 53:rv3r:45:5l0p3:12:34:56:78:9a:bc:de:f0:ab:cd:3f for the new gateway.",
+      "ground_truth": "SSH Ed25519 KEY: server:as:slope:12:34:56:78:9a:bc:de:f0:ab:cd:ef",
+      "pii_value": "5HH 3d25519 K3Y: 53:rv3r:45:5l0p3:12:34:56:78:9a:bc:de:f0:ab:cd:3f",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "12:34:56:78:9a:bc:de:f0",
+          "score": 0.88
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "12:34:56:78:9a:bc:de:f0",
+          "score": 0.88
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "SSH_KEY",
+      "strategy": "l33tspeak",
+      "label": "SSH_KEY:l33tspeak",
+      "text": "My public key for the deployment is 5HH-2 RSA PUBL1C K3Y: AAAAB3NzaC1yc2EAAAADAQABAAABAQC3F ... 7h15 15 4 t35t k3y.",
+      "ground_truth": "SSH-2 RSA PUBLIC KEY: AAAAB3NzaC1yc2EAAAADAQABAAABAQC3F ... this is a test key",
+      "pii_value": "5HH-2 RSA PUBL1C K3Y: AAAAB3NzaC1yc2EAAAADAQABAAABAQC3F ... 7h15 15 4 t35t k3y",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "SSH_KEY",
+      "strategy": "l33tspeak",
+      "label": "SSH_KEY:l33tspeak",
+      "text": "Access to the repository requires the 5HH 3cDSA K3Y: 3c:7c:d3:4b:1f:90:a6:be:cf:de:01:23:45:67:89:ab:cd:ef:12.",
+      "ground_truth": "SSH ECDSA KEY: ec:7c:d3:4b:1f:90:a6:be:cf:de:01:23:45:67:89:ab:cd:ef:12",
+      "pii_value": "5HH 3cDSA K3Y: 3c:7c:d3:4b:1f:90:a6:be:cf:de:01:23:45:67:89:ab:cd:ef:12",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "3c:7c:d3:4b:1f:90:a6:be",
+          "score": 0.88
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "cf:de:01:23:45:67:89:ab",
+          "score": 0.88
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "3c:7c:d3:4b:1f:90:a6:be",
+          "score": 0.88
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "cf:de:01:23:45:67:89:ab",
+          "score": 0.88
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "SSH_KEY",
+      "strategy": "l33tspeak",
+      "label": "SSH_KEY:l33tspeak",
+      "text": "The fingerprint for the new node is 5HH-2 3d25519 K3Y F1ng3rpr1n7: b0:0b:15:4:bl:4ck:12:34:56:78:9a:bc:de:f0.",
+      "ground_truth": "SSH-2 Ed25519 KEY Fingerprint: b0:0b:15:4:bl:4ck:12:34:56:78:9a:bc:de:f0",
+      "pii_value": "5HH-2 3d25519 K3Y F1ng3rpr1n7: b0:0b:15:4:bl:4ck:12:34:56:78:9a:bc:de:f0",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "12:34:56:78:9a:bc:de:f0",
+          "score": 0.88
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "12:34:56:78:9a:bc:de:f0",
+          "score": 0.88
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "SSH_KEY",
+      "strategy": "l33tspeak",
+      "label": "SSH_KEY:l33tspeak",
+      "text": "The old backup server uses 5HH RSA K3Y: 53:rv3r:45:5l0p3:12:34:56:78:9a:bc:de:f0:ab:cd:3f:12:90 for authentication.",
+      "ground_truth": "SSH RSA KEY: server:as:slope:12:34:56:78:9a:bc:de:f0:ab:cd:ef:12:90",
+      "pii_value": "5HH RSA K3Y: 53:rv3r:45:5l0p3:12:34:56:78:9a:bc:de:f0:ab:cd:3f:12:90",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "12:34:56:78:9a:bc:de:f0",
+          "score": 0.88
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "12:34:56:78:9a:bc:de:f0",
+          "score": 0.88
+        }
+      ]
+    },
+    {
+      "category": "L33tspeak",
+      "entity_type": "SSH_KEY",
+      "strategy": "l33tspeak",
+      "label": "SSH_KEY:l33tspeak",
+      "text": "My colleague shared their 5HH-2 3cDSA PUBL1C K3Y: AAAAE2VjZHNhLXNoYTIt ... 7h1s 1s 4n0th3r 0n3 for the tunnel setup.",
+      "ground_truth": "SSH-2 ECDSA PUBLIC KEY: AAAAE2VjZHNhLXNoYTIt ... this is another one",
+      "pii_value": "5HH-2 3cDSA PUBL1C K3Y: AAAAE2VjZHNhLXNoYTIt ... 7h1s 1s 4n0th3r 0n3",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "COMPANY",
+      "strategy": "double-encoding",
+      "label": "COMPANY:double-encoding",
+      "text": "Please send the invoice to Globex%25Corporation for the monthly retainer.",
+      "ground_truth": "Globex Corporation",
+      "pii_value": "Globex%25Corporation",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "COMPANY",
+      "strategy": "double-encoding",
+      "label": "COMPANY:double-encoding",
+      "text": "The merger with Wayne%25Enterprises%25Ltd was announced in the quarterly report.",
+      "ground_truth": "Wayne Enterprises Ltd",
+      "pii_value": "Wayne%25Enterprises%25Ltd",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "COMPANY",
+      "strategy": "double-encoding",
+      "label": "COMPANY:double-encoding",
+      "text": "We are migrating our servers to Cyberdyne%25Systems%25Inc infrastructure.",
+      "ground_truth": "Cyberdyne Systems Inc",
+      "pii_value": "Cyberdyne%25Systems%25Inc",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "COMPANY",
+      "strategy": "double-encoding",
+      "label": "COMPANY:double-encoding",
+      "text": "The contract with Initech%25%26%25Co expires next quarter.",
+      "ground_truth": "Initech & Co",
+      "pii_value": "Initech%25%26%25Co",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "COMPANY",
+      "strategy": "double-encoding",
+      "label": "COMPANY:double-encoding",
+      "text": "Umbrella%25Corp%25%28Biotech%29 is sponsoring the research conference.",
+      "ground_truth": "Umbrella Corp (Biotech)",
+      "pii_value": "Umbrella%25Corp%25%28Biotech%29",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "COMPANY",
+      "strategy": "double-encoding",
+      "label": "COMPANY:double-encoding",
+      "text": "After the audit, Soylent%25Corporation%25LLC revised their compliance policy.",
+      "ground_truth": "Soylent Corporation LLC",
+      "pii_value": "Soylent%25Corporation%25LLC",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Double encoding",
+      "entity_type": "COMPANY",
+      "strategy": "double-encoding",
+      "label": "COMPANY:double-encoding",
+      "text": "The new test facility was built by Aperture%25Science%25%2C%25Inc for government contracts.",
+      "ground_truth": "Aperture Science, Inc",
+      "pii_value": "Aperture%25Science%25%2C%25Inc",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "GPS",
+      "entity_type": "GPS",
+      "strategy": "hex-escape",
+      "label": "GPS:hex-escape",
+      "text": "The delivery truck was last pinged at \\x33\\x39\\x2e\\x37\\x34\\x32\\x36\\x35\\x31\\x2c\\x20\\x2d\\x31\\x30\\x34\\x2e\\x39\\x39\\x30\\x32\\x38\\x33 near the warehouse.",
+      "ground_truth": "39.742651, -104.990283",
+      "pii_value": "\\x33\\x39\\x2e\\x37\\x34\\x32\\x36\\x35\\x31\\x2c\\x20\\x2d\\x31\\x30\\x34\\x2e\\x39\\x39\\x30\\x32\\x38\\x33",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "GPS",
+      "entity_type": "GPS",
+      "strategy": "hex-escape",
+      "label": "GPS:hex-escape",
+      "text": "The coordinates \\x34\\x38\\x2e\\x38\\x35\\x36\\x36\\x31\\x30\\x2c\\x20\\x32\\x2e\\x33\\x35\\x31\\x30\\x30\\x34 point to the Eiffel Tower.",
+      "ground_truth": "48.856610, 2.351004",
+      "pii_value": "\\x34\\x38\\x2e\\x38\\x35\\x36\\x36\\x31\\x30\\x2c\\x20\\x32\\x2e\\x33\\x35\\x31\\x30\\x30\\x34",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "GPS",
+      "entity_type": "GPS",
+      "strategy": "hex-escape",
+      "label": "GPS:hex-escape",
+      "text": "User reported location as \\x33\\x34\\x2e\\x30\\x35\\x32\\x32\\x33\\x35\\x2c\\x20\\x2d\\x31\\x31\\x38\\x2e\\x32\\x34\\x33\\x36\\x38\\x35 in downtown LA.",
+      "ground_truth": "34.052235, -118.243685",
+      "pii_value": "\\x33\\x34\\x2e\\x30\\x35\\x32\\x32\\x33\\x35\\x2c\\x20\\x2d\\x31\\x31\\x38\\x2e\\x32\\x34\\x33\\x36\\x38\\x35",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "GPS",
+      "entity_type": "GPS",
+      "strategy": "hex-escape",
+      "label": "GPS:hex-escape",
+      "text": "Our server logs show the IP originated from \\x35\\x31\\x2e\\x35\\x30\\x37\\x33\\x35\\x31\\x2c\\x20\\x2d\\x30\\x2e\\x31\\x32\\x37\\x37\\x35\\x38 in London.",
+      "ground_truth": "51.507351, -0.127758",
+      "pii_value": "\\x35\\x31\\x2e\\x35\\x30\\x37\\x33\\x35\\x31\\x2c\\x20\\x2d\\x30\\x2e\\x31\\x32\\x37\\x37\\x35\\x38",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "CITY",
+          "value": "in London",
+          "score": 0.5
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "CITY",
+          "value": "in London",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "category": "GPS",
+      "entity_type": "GPS",
+      "strategy": "hex-escape",
+      "label": "GPS:hex-escape",
+      "text": "The meeting point is set to \\x33\\x35\\x2e\\x36\\x38\\x39\\x35\\x30\\x30\\x2c\\x20\\x31\\x33\\x39\\x2e\\x37\\x31\\x30\\x33\\x39\\x30 in Tokyo.",
+      "ground_truth": "35.689500, 139.710390",
+      "pii_value": "\\x33\\x35\\x2e\\x36\\x38\\x39\\x35\\x30\\x30\\x2c\\x20\\x31\\x33\\x39\\x2e\\x37\\x31\\x30\\x33\\x39\\x30",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "CITY",
+          "value": "in Tokyo",
+          "score": 0.5
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "CITY",
+          "value": "in Tokyo",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "category": "GPS",
+      "entity_type": "GPS",
+      "strategy": "hex-escape",
+      "label": "GPS:hex-escape",
+      "text": "Check-in at \\x34\\x30\\x2e\\x37\\x31\\x32\\x37\\x37\\x35\\x2c\\x20\\x2d\\x37\\x34\\x2e\\x30\\x30\\x35\\x39\\x37\\x35 near Wall Street.",
+      "ground_truth": "40.712775, -74.005975",
+      "pii_value": "\\x34\\x30\\x2e\\x37\\x31\\x32\\x37\\x37\\x35\\x2c\\x20\\x2d\\x37\\x34\\x2e\\x30\\x30\\x35\\x39\\x37\\x35",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "GPS",
+      "entity_type": "GPS",
+      "strategy": "hex-escape",
+      "label": "GPS:hex-escape",
+      "text": "The device was located at \\x32\\x35\\x2e\\x30\\x33\\x34\\x32\\x38\\x30\\x2c\\x20\\x31\\x32\\x31\\x2e\\x35\\x36\\x34\\x35\\x31\\x30 in Taipei.",
+      "ground_truth": "25.034280, 121.564510",
+      "pii_value": "\\x32\\x35\\x2e\\x30\\x33\\x34\\x32\\x38\\x30\\x2c\\x20\\x31\\x32\\x31\\x2e\\x35\\x36\\x34\\x35\\x31\\x30",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "CITY",
+          "value": "in Taipei",
+          "score": 0.5
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "CITY",
+          "value": "in Taipei",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "category": "GPS",
+      "entity_type": "GPS",
+      "strategy": "hex-escape",
+      "label": "GPS:hex-escape",
+      "text": "Security camera footage shows the car near \\x2d\\x33\\x33\\x2e\\x38\\x36\\x38\\x36\\x30\\x30\\x2c\\x20\\x31\\x35\\x31\\x2e\\x32\\x30\\x39\\x39\\x30\\x30 in Sydney.",
+      "ground_truth": "-33.868600, 151.209900",
+      "pii_value": "\\x2d\\x33\\x33\\x2e\\x38\\x36\\x38\\x36\\x30\\x30\\x2c\\x20\\x31\\x35\\x31\\x2e\\x32\\x30\\x39\\x39\\x30\\x30",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "CITY",
+          "value": "in Sydney",
+          "score": 0.5
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "CITY",
+          "value": "in Sydney",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "category": "PERSON",
+      "entity_type": "PERSON",
+      "strategy": "reversed-words",
+      "label": "PERSON:reversed-words",
+      "text": "Please forward this package to Doe Jane at the main office.",
+      "ground_truth": "Jane Doe",
+      "pii_value": "Doe Jane",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PERSON",
+      "entity_type": "PERSON",
+      "strategy": "reversed-words",
+      "label": "PERSON:reversed-words",
+      "text": "The meeting with Williams Robert has been rescheduled to Friday.",
+      "ground_truth": "Robert Williams",
+      "pii_value": "Williams Robert",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PERSON",
+      "entity_type": "PERSON",
+      "strategy": "reversed-words",
+      "label": "PERSON:reversed-words",
+      "text": "Can you confirm if Brown Emily submitted the report yesterday?",
+      "ground_truth": "Emily Brown",
+      "pii_value": "Brown Emily",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PERSON",
+      "entity_type": "PERSON",
+      "strategy": "reversed-words",
+      "label": "PERSON:reversed-words",
+      "text": "The payroll adjustment for Garcia Michael needs approval.",
+      "ground_truth": "Michael Garcia",
+      "pii_value": "Garcia Michael",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PERSON",
+      "entity_type": "PERSON",
+      "strategy": "reversed-words",
+      "label": "PERSON:reversed-words",
+      "text": "I left the signed contract with Taylor Sarah's assistant.",
+      "ground_truth": "Sarah Taylor",
+      "pii_value": "Taylor Sarah",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PERSON",
+      "entity_type": "PERSON",
+      "strategy": "reversed-words",
+      "label": "PERSON:reversed-words",
+      "text": "The IT ticket was assigned to Jones David this morning.",
+      "ground_truth": "David Jones",
+      "pii_value": "Jones David",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PROJECT_NAME",
+          "value": "assigned to Jones David",
+          "score": 0.7
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PROJECT_NAME",
+          "value": "assigned to Jones David",
+          "score": 0.7
+        }
+      ]
+    },
+    {
+      "category": "PERSON",
+      "entity_type": "PERSON",
+      "strategy": "reversed-words",
+      "label": "PERSON:reversed-words",
+      "text": "Please update the system access for Miller Lisa upon her return.",
+      "ground_truth": "Lisa Miller",
+      "pii_value": "Miller Lisa",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "PERSON",
+      "entity_type": "PERSON",
+      "strategy": "reversed-words",
+      "label": "PERSON:reversed-words",
+      "text": "The performance review notes for Wilson James are ready for review.",
+      "ground_truth": "James Wilson",
+      "pii_value": "Wilson James",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "BANK_ACCOUNT",
+      "entity_type": "BANK_ACCOUNT",
+      "strategy": "camelCase_split",
+      "label": "BANK_ACCOUNT:camelCase_split",
+      "text": "Please route the commission to account US12 345 67 89 1011 2141 for the Q2 payout.",
+      "ground_truth": "US12345678910112141",
+      "pii_value": "US12 345 67 89 1011 2141",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PHONE",
+          "value": "345 67 89 1011",
+          "score": 0.6
+        }
+      ]
+    },
+    {
+      "category": "BANK_ACCOUNT",
+      "entity_type": "BANK_ACCOUNT",
+      "strategy": "camelCase_split",
+      "label": "BANK_ACCOUNT:camelCase_split",
+      "text": "The beneficiary bank confirmed GB29 NWBK 60 16 31 31 9268 19 as the destination for the wire.",
+      "ground_truth": "GB29NWBK60163131926819",
+      "pii_value": "GB29 NWBK 60 16 31 31 9268 19",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "31926819",
+          "score": 0.65
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PHONE",
+          "value": "60 16 31 31",
+          "score": 0.6
+        }
+      ]
+    },
+    {
+      "category": "BANK_ACCOUNT",
+      "entity_type": "BANK_ACCOUNT",
+      "strategy": "camelCase_split",
+      "label": "BANK_ACCOUNT:camelCase_split",
+      "text": "Her salary is deposited into DE02 5001 0517 5423 4567 89 automatically each month.",
+      "ground_truth": "DE02500105175423456789",
+      "pii_value": "DE02 5001 0517 5423 4567 89",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IBAN",
+          "value": "DE02500105175423456789",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IBAN",
+          "value": "DE02 5001 0517 5423 4567 89",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "BANK_ACCOUNT",
+      "entity_type": "BANK_ACCOUNT",
+      "strategy": "camelCase_split",
+      "label": "BANK_ACCOUNT:camelCase_split",
+      "text": "Set up the recurring transfer using FR14 2004 1010 0505 0001 3M02 606 for the rental income.",
+      "ground_truth": "FR1420041010050500013M02606",
+      "pii_value": "FR14 2004 1010 0505 0001 3M02 606",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IBAN",
+          "value": "FR1420041010050500013M02606",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IBAN",
+          "value": "FR14 2004 1010 0505 0001 3M02 606",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "BANK_ACCOUNT",
+      "entity_type": "BANK_ACCOUNT",
+      "strategy": "camelCase_split",
+      "label": "BANK_ACCOUNT:camelCase_split",
+      "text": "Confirm the IBAN ES91 2100 0418 4502 0005 1332 is correct before initiating the SEPA transfer.",
+      "ground_truth": "ES9121000418450200051332",
+      "pii_value": "ES91 2100 0418 4502 0005 1332",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IBAN",
+          "value": "ES9121000418450200051332",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "IBAN",
+          "value": "ES91 2100 0418 4502 0005 1332",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "BANK_ACCOUNT",
+      "entity_type": "BANK_ACCOUNT",
+      "strategy": "camelCase_split",
+      "label": "BANK_ACCOUNT:camelCase_split",
+      "text": "For UAE transactions, use AE07 0331 2345 6789 0123 456 as the receiving account number.",
+      "ground_truth": "AE070331234567890123456",
+      "pii_value": "AE07 0331 2345 6789 0123 456",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "COUNTRY",
+          "value": "UAE",
+          "score": 0.8
+        },
+        {
+          "type": "IBAN",
+          "value": "AE070331234567890123456",
+          "score": 0.85
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "COUNTRY",
+          "value": "UAE",
+          "score": 0.8
+        },
+        {
+          "type": "IBAN",
+          "value": "AE07 0331 2345 6789 0123 456",
+          "score": 0.85
+        }
+      ]
+    },
+    {
+      "category": "Case-shifted",
+      "entity_type": "CITY",
+      "strategy": "case-shifted",
+      "label": "CITY:case-shifted",
+      "text": "I've always wanted to visit nEW yORK during the holidays.",
+      "ground_truth": "New York",
+      "pii_value": "nEW yORK",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Case-shifted",
+      "entity_type": "CITY",
+      "strategy": "case-shifted",
+      "label": "CITY:case-shifted",
+      "text": "The conference will be held in hOUSTON next month.",
+      "ground_truth": "Houston",
+      "pii_value": "hOUSTON",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Case-shifted",
+      "entity_type": "CITY",
+      "strategy": "case-shifted",
+      "label": "CITY:case-shifted",
+      "text": "They decided to retire in pHOENIX due to the warm weather.",
+      "ground_truth": "Phoenix",
+      "pii_value": "pHOENIX",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Case-shifted",
+      "entity_type": "CITY",
+      "strategy": "case-shifted",
+      "label": "CITY:case-shifted",
+      "text": "Our family reunion is planned for sAN dIEGO this summer.",
+      "ground_truth": "San Diego",
+      "pii_value": "sAN dIEGO",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Case-shifted",
+      "entity_type": "CITY",
+      "strategy": "case-shifted",
+      "label": "CITY:case-shifted",
+      "text": "The package was shipped from dALLAS yesterday.",
+      "ground_truth": "Dallas",
+      "pii_value": "dALLAS",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "Case-shifted",
+      "entity_type": "CITY",
+      "strategy": "case-shifted",
+      "label": "CITY:case-shifted",
+      "text": "He is attending a music festival in aUSTIN next week.",
+      "ground_truth": "Austin",
+      "pii_value": "aUSTIN",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "COUNTRY",
+      "entity_type": "COUNTRY",
+      "strategy": "pig-latin",
+      "label": "COUNTRY:pig-latin",
+      "text": "We're sourcing raw materials from a supplier in exicoMay to reduce costs.",
+      "ground_truth": "Mexico",
+      "pii_value": "exicoMay",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CUSTOMER_NAME",
+      "entity_type": "CUSTOMER_NAME",
+      "strategy": "unicode-fractions",
+      "label": "CUSTOMER_NAME:unicode-fractions",
+      "text": "The catering invoice was addressed to H¼f & ½ for the corporate event.",
+      "ground_truth": "H4lf & 1",
+      "pii_value": "H¼f & ½",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CUSTOMER_NAME",
+      "entity_type": "CUSTOMER_NAME",
+      "strategy": "unicode-fractions",
+      "label": "CUSTOMER_NAME:unicode-fractions",
+      "text": "Please transfer the domain registration to Thr½dæl.",
+      "ground_truth": "Three4dal",
+      "pii_value": "Thr½dæl",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CUSTOMER_NAME",
+      "entity_type": "CUSTOMER_NAME",
+      "strategy": "unicode-fractions",
+      "label": "CUSTOMER_NAME:unicode-fractions",
+      "text": "M¾ Bchr submitted the purchase order for new IT equipment.",
+      "ground_truth": "M3.4 Bchr",
+      "pii_value": "M¾ Bchr",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CUSTOMER_NAME",
+      "entity_type": "CUSTOMER_NAME",
+      "strategy": "unicode-fractions",
+      "label": "CUSTOMER_NAME:unicode-fractions",
+      "text": "The quarterly report was signed by B½·c½·f.",
+      "ground_truth": "B1·c1·f",
+      "pii_value": "B½·c½·f",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CUSTOMER_NAME",
+      "entity_type": "CUSTOMER_NAME",
+      "strategy": "unicode-fractions",
+      "label": "CUSTOMER_NAME:unicode-fractions",
+      "text": "Our new partner is ⅔rd & Co., specializing in logistics.",
+      "ground_truth": "2/3rd & Co.",
+      "pii_value": "⅔rd & Co.",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "CITY",
+          "value": "in logistics",
+          "score": 0.5
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "CITY",
+          "value": "in logistics",
+          "score": 0.5
+        }
+      ]
+    },
+    {
+      "category": "CUSTOMER_NAME",
+      "entity_type": "CUSTOMER_NAME",
+      "strategy": "unicode-fractions",
+      "label": "CUSTOMER_NAME:unicode-fractions",
+      "text": "J¼n M¾ requested a refund for the defective product.",
+      "ground_truth": "J4n M3.4",
+      "pii_value": "J¼n M¾",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CUSTOMER_NAME",
+      "entity_type": "CUSTOMER_NAME",
+      "strategy": "unicode-fractions",
+      "label": "CUSTOMER_NAME:unicode-fractions",
+      "text": "Please update the contract with K½ss L¾'s new address.",
+      "ground_truth": "K1ss L3.4",
+      "pii_value": "K½ss L¾",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "CUSTOMER_NAME",
+      "entity_type": "CUSTOMER_NAME",
+      "strategy": "unicode-fractions",
+      "label": "CUSTOMER_NAME:unicode-fractions",
+      "text": "The lease agreement is between us and ⅛yth & D¾.",
+      "ground_truth": "1/8yth & D3.4",
+      "pii_value": "⅛yth & D¾",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "IBAN",
+      "entity_type": "IBAN",
+      "strategy": "syllabic-split",
+      "label": "IBAN:syllabic-split",
+      "text": "Could you please use GB29-NWBK-6016-1331-9268-19 for the international transfer?",
+      "ground_truth": "GB29NWBK60161331926819",
+      "pii_value": "GB29-NWBK-6016-1331-9268-19",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "6016-1331-9268-19",
+          "score": 0.55
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PHONE",
+          "value": "6016-1331-9268-19",
+          "score": 0.55
+        }
+      ]
+    },
+    {
+      "category": "IBAN",
+      "entity_type": "IBAN",
+      "strategy": "syllabic-split",
+      "label": "IBAN:syllabic-split",
+      "text": "The vendor requested payment via DE89-3704-0044-0532-0130-00.",
+      "ground_truth": "DE89370400440532013000",
+      "pii_value": "DE89-3704-0044-0532-0130-00",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "3704004405320130",
+          "score": 0.55
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PHONE",
+          "value": "3704-0044-0532-0130",
+          "score": 0.55
+        }
+      ]
+    },
+    {
+      "category": "IBAN",
+      "entity_type": "IBAN",
+      "strategy": "syllabic-split",
+      "label": "IBAN:syllabic-split",
+      "text": "For the Dutch refund, process it to NL91-ABNA-0417-1643-00.",
+      "ground_truth": "NL91ABNA0417164300",
+      "pii_value": "NL91-ABNA-0417-1643-00",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "IBAN",
+      "entity_type": "IBAN",
+      "strategy": "syllabic-split",
+      "label": "IBAN:syllabic-split",
+      "text": "Please confirm that PT50-0002-0123-1234-5678-9015-4 matches the Portuguese account.",
+      "ground_truth": "PT50000201231234567890154",
+      "pii_value": "PT50-0002-0123-1234-5678-9015-4",
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "0002012312345678",
+          "score": 0.55
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PHONE",
+          "value": "0002-0123-1234-5678",
+          "score": 0.55
+        }
+      ]
+    },
+    {
+      "category": "EMPLOYEE_NAME",
+      "entity_type": "EMPLOYEE_NAME",
+      "strategy": "morse-code",
+      "label": "EMPLOYEE_NAME:morse-code",
+      "text": "The shift report was signed off by -.. .- -. .. . .-.. in the log.",
+      "ground_truth": "Daniel",
+      "pii_value": "-.. .- -. .. . .-..",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMPLOYEE_NAME",
+      "entity_type": "EMPLOYEE_NAME",
+      "strategy": "morse-code",
+      "label": "EMPLOYEE_NAME:morse-code",
+      "text": "Please route the HR request to .... . .-.. . -. .- for approval.",
+      "ground_truth": "Helena",
+      "pii_value": ".... . .-.. . -. .-",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMPLOYEE_NAME",
+      "entity_type": "EMPLOYEE_NAME",
+      "strategy": "morse-code",
+      "label": "EMPLOYEE_NAME:morse-code",
+      "text": "User -- .- -.-. -.- ... was added to the project team yesterday.",
+      "ground_truth": "Mack",
+      "pii_value": "-- .- -.-. -.- ...",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMPLOYEE_NAME",
+      "entity_type": "EMPLOYEE_NAME",
+      "strategy": "morse-code",
+      "label": "EMPLOYEE_NAME:morse-code",
+      "text": "The system flagged .--. . .-. .-.. for a duplicate access attempt.",
+      "ground_truth": "Perl",
+      "pii_value": ".--. . .-. .-..",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "EMPLOYEE_NAME",
+      "entity_type": "EMPLOYEE_NAME",
+      "strategy": "morse-code",
+      "label": "EMPLOYEE_NAME:morse-code",
+      "text": "Check the timesheet submitted by .-.. .. -. -.. ... . -.-- for corrections.",
+      "ground_truth": "Lindsey",
+      "pii_value": ".-.. .. -. -.. ... . -.--",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "DATE",
+      "entity_type": "DATE",
+      "strategy": "morse-code",
+      "label": "DATE:morse-code",
+      "text": "The project deadline is ..--- ----- ..--- ..... ----- ....- .---- ----- and we need to finalize the report by then.",
+      "ground_truth": "2025-04-10",
+      "pii_value": "..--- ----- ..--- ..... ----- ....- .---- -----",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "DATE",
+      "entity_type": "DATE",
+      "strategy": "morse-code",
+      "label": "DATE:morse-code",
+      "text": "Her appointment was scheduled for ----- .---- ..--- ..--- ----- ----- .---- but she missed it.",
+      "ground_truth": "01/22/2001",
+      "pii_value": "----- .---- ..--- ..--- ----- ----- .----",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "DATE",
+      "entity_type": "DATE",
+      "strategy": "morse-code",
+      "label": "DATE:morse-code",
+      "text": "The historical archive references the date as ----- ----- .---- ----- ..--- ----- ..--- ..... in the old records.",
+      "ground_truth": "0010-02-25",
+      "pii_value": "----- ----- .---- ----- ..--- ----- ..--- .....",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "DATE",
+      "entity_type": "DATE",
+      "strategy": "morse-code",
+      "label": "DATE:morse-code",
+      "text": "Please confirm the transaction date of ..--- ----- .---- ----- .---- ..--- ----- ..--- for the refund.",
+      "ground_truth": "2010-12-02",
+      "pii_value": "..--- ----- .---- ----- .---- ..--- ----- ..---",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "DATE",
+      "entity_type": "DATE",
+      "strategy": "morse-code",
+      "label": "DATE:morse-code",
+      "text": "The form asks for the date as ----- ----- --... ----- ----- ----- ..--- ----- but that seems invalid.",
+      "ground_truth": "07/00/20",
+      "pii_value": "----- ----- --... ----- ----- ----- ..--- -----",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "DATE",
+      "entity_type": "DATE",
+      "strategy": "morse-code",
+      "label": "DATE:morse-code",
+      "text": "The metadata shows the event date as ..... .---- ...-- ----- ----- ----- ----- ----- which is probably corrupted.",
+      "ground_truth": "13-00-0000",
+      "pii_value": "..... .---- ...-- ----- ----- ----- ----- -----",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "DATE",
+      "entity_type": "DATE",
+      "strategy": "morse-code",
+      "label": "DATE:morse-code",
+      "text": "The server logged the access date as ..--- ----- ..--- ....- ..... ----- ----- ..--- even though the month is impossible.",
+      "ground_truth": "2024-50-02",
+      "pii_value": "..--- ----- ..--- ....- ..... ----- ----- ..---",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "DATE",
+      "entity_type": "DATE",
+      "strategy": "morse-code",
+      "label": "DATE:morse-code",
+      "text": "The license expiration is ..--- ----- ..--- ....- ..... ----- ----- ..--- July 3rd but this is odd.",
+      "ground_truth": "7003-05-20",
+      "pii_value": "--... ----- ----- ...-- ----- ..... ..--- -----",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "DATE",
+      "entity_type": "DATE",
+      "strategy": "morse-code",
+      "label": "DATE:morse-code",
+      "text": "The research dataset includes a date field with ..... ..--- ..--- ..--- ----- ----- ----- ----- for missing records.",
+      "ground_truth": "5222-00-00",
+      "pii_value": "..... ..--- ..--- ..--- ----- ----- ----- -----",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    },
+    {
+      "category": "DATE",
+      "entity_type": "DATE",
+      "strategy": "morse-code",
+      "label": "DATE:morse-code",
+      "text": "The invoice date is ..--- ----- .---- ..... ...-- ----- .---- ----- which doesn't match the shipping date.",
+      "ground_truth": "2015-30-10",
+      "pii_value": "..--- ----- .---- ..... ...-- ----- .---- -----",
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
+    }
+  ]
+}

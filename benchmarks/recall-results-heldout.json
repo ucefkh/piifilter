@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out)",
-  "timestamp": "2026-07-19T21:49:35Z",
+  "timestamp": "2026-07-19T22:00:58Z",
   "dataset": {
     "path": "benchmarks/data/pii_dataset_v2.json",
     "total_examples": 2365,
@@ -46,13 +46,13 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 513,
+      "total_detected_entities": 565,
       "total_true_positives": 478,
-      "total_false_positives": 35,
+      "total_false_positives": 87,
       "total_false_negatives": 61,
-      "overall_precision": 0.9317738791423001,
+      "overall_precision": 0.8460176991150442,
       "overall_recall": 0.8868274582560297,
-      "overall_f1": 0.908745247148289,
+      "overall_f1": 0.8659420289855072,
       "per_type": {
         "ADDRESS": {
           "true_positives": 34,
@@ -136,13 +136,13 @@
         },
         "COMPANY": {
           "true_positives": 40,
-          "false_positives": 0,
+          "false_positives": 7,
           "false_negatives": 2,
           "n": 42,
-          "precision": 1.0,
+          "precision": 0.8511,
           "recall": 0.9524,
-          "f1": 0.9756,
-          "f2": 0.9615,
+          "f1": 0.8989,
+          "f2": 0.9302,
           "recall_ci": [
             0.8421,
             0.9868
@@ -176,13 +176,13 @@
         },
         "CREDIT_CARD": {
           "true_positives": 52,
-          "false_positives": 0,
+          "false_positives": 4,
           "false_negatives": 12,
           "n": 64,
-          "precision": 1.0,
+          "precision": 0.9286,
           "recall": 0.8125,
-          "f1": 0.8966,
-          "f2": 0.8442,
+          "f1": 0.8667,
+          "f2": 0.8333,
           "recall_ci": [
             0.7003,
             0.8894
@@ -236,13 +236,13 @@
         },
         "DATE": {
           "true_positives": 26,
-          "false_positives": 0,
+          "false_positives": 3,
           "false_negatives": 0,
           "n": 26,
-          "precision": 1.0,
+          "precision": 0.8966,
           "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "f1": 0.9455,
+          "f2": 0.9774,
           "recall_ci": [
             0.8713,
             1.0
@@ -375,23 +375,23 @@
           ]
         },
         "IP_ADDRESS": {
-          "true_positives": 82,
-          "false_positives": 7,
-          "false_negatives": 5,
-          "n": 87,
-          "precision": 0.9213,
-          "recall": 0.9425,
-          "f1": 0.9318,
-          "f2": 0.9382,
+          "true_positives": 84,
+          "false_positives": 10,
+          "false_negatives": 4,
+          "n": 88,
+          "precision": 0.8936,
+          "recall": 0.9545,
+          "f1": 0.9231,
+          "f2": 0.9417,
           "recall_ci": [
-            0.8724,
-            0.9752
+            0.8889,
+            0.9822
           ],
           "real_n": 46,
-          "real_recall": 0.8913,
+          "real_recall": 0.913,
           "real_recall_ci": [
-            0.7696,
-            0.9527
+            0.7968,
+            0.9657
           ]
         },
         "JWT": {
@@ -436,13 +436,13 @@
         },
         "PERSON": {
           "true_positives": 36,
-          "false_positives": 0,
+          "false_positives": 3,
           "false_negatives": 8,
           "n": 44,
-          "precision": 1.0,
+          "precision": 0.9231,
           "recall": 0.8182,
-          "f1": 0.9,
-          "f2": 0.8491,
+          "f1": 0.8675,
+          "f2": 0.8372,
           "recall_ci": [
             0.6804,
             0.9049
@@ -455,34 +455,34 @@
           ]
         },
         "PHONE": {
-          "true_positives": 104,
-          "false_positives": 2,
-          "false_negatives": 5,
-          "n": 109,
-          "precision": 0.9811,
-          "recall": 0.9541,
-          "f1": 0.9674,
-          "f2": 0.9594,
+          "true_positives": 108,
+          "false_positives": 8,
+          "false_negatives": 3,
+          "n": 111,
+          "precision": 0.931,
+          "recall": 0.973,
+          "f1": 0.9515,
+          "f2": 0.9643,
           "recall_ci": [
-            0.8971,
-            0.9802
+            0.9235,
+            0.9908
           ],
           "real_n": 57,
-          "real_recall": 0.9123,
+          "real_recall": 0.9474,
           "real_recall_ci": [
-            0.8105,
-            0.9619
+            0.8563,
+            0.9819
           ]
         },
         "PRIVATE_URL": {
           "true_positives": 14,
-          "false_positives": 0,
+          "false_positives": 7,
           "false_negatives": 0,
           "n": 14,
-          "precision": 1.0,
+          "precision": 0.6667,
           "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "f1": 0.8,
+          "f2": 0.9091,
           "recall_ci": [
             0.7847,
             1.0
@@ -496,13 +496,13 @@
         },
         "PROJECT_NAME": {
           "true_positives": 10,
-          "false_positives": 0,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 10,
-          "precision": 1.0,
+          "precision": 0.8333,
           "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "f1": 0.9091,
+          "f2": 0.9615,
           "recall_ci": [
             0.7225,
             1.0
@@ -515,17 +515,17 @@
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 70,
-          "false_positives": 7,
-          "false_negatives": 10,
-          "n": 80,
-          "precision": 0.9091,
-          "recall": 0.875,
-          "f1": 0.8917,
-          "f2": 0.8816,
+          "true_positives": 64,
+          "false_positives": 24,
+          "false_negatives": 13,
+          "n": 77,
+          "precision": 0.7273,
+          "recall": 0.8312,
+          "f1": 0.7758,
+          "f2": 0.8081,
           "recall_ci": [
-            0.785,
-            0.9307
+            0.7323,
+            0.8986
           ],
           "real_n": 19,
           "real_recall": 0.9474,
@@ -584,18 +584,46 @@
         "DOMAIN": {
           "URL": 2
         },
+        "DATABASE_URL": {
+          "PRIVATE_URL": 7
+        },
+        "PHONE": {
+          "PHONE": 3,
+          "SOCIAL_SECURITY": 3
+        },
+        "COMPANY": {
+          "COMPANY": 7
+        },
+        "IP_ADDRESS": {
+          "SOCIAL_SECURITY": 10,
+          "PHONE": 3
+        },
         "JWT": {
           "DOMAIN": 5
+        },
+        "SOCIAL_SECURITY": {
+          "IP_ADDRESS": 10,
+          "SOCIAL_SECURITY": 8
         },
         "ADDRESS": {
           "COUNTRY": 3,
           "CITY": 1
         },
-        "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 7
+        "IBAN": {
+          "SOCIAL_SECURITY": 2
         },
-        "IP_ADDRESS": {
-          "SOCIAL_SECURITY": 4
+        "PASSPORT": {
+          "SOCIAL_SECURITY": 1
+        },
+        "DATE": {
+          "DATE": 3
+        },
+        "PERSON": {
+          "PERSON": 3,
+          "EMPLOYEE_NAME": 1
+        },
+        "BANK_ACCOUNT": {
+          "CREDIT_CARD": 4
         },
         "CREDIT_CARD": {
           "PHONE": 2
@@ -603,17 +631,11 @@
         "COUNTRY": {
           "CITY": 2
         },
-        "PERSON": {
-          "EMPLOYEE_NAME": 1
-        },
-        "API_KEY": {
-          "SOCIAL_SECURITY": 1
-        },
-        "PHONE": {
-          "SOCIAL_SECURITY": 2
-        },
         "GPS": {
           "GPS": 1
+        },
+        "PROJECT_NAME": {
+          "PROJECT_NAME": 2
         },
         "EMAIL": {
           "DOMAIN": 1
@@ -776,15 +798,16 @@
           "index": 10,
           "text_preview": "Redis connection: redis://default:password@cache-cluster.internal:6379",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -819,9 +842,9 @@
           "index": 13,
           "text_preview": "Data: tel:449724938045",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
@@ -834,9 +857,9 @@
           "index": 14,
           "text_preview": "Hi, I'm Cheng Adams from Acme Corp. Email: cheng.adams@data-service.ai",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -898,15 +921,16 @@
           "index": 18,
           "text_preview": "Obfuscated ip_address: 94.157.73.235/16",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -1007,14 +1031,14 @@
           "text_preview": "Found: 323134383630303530",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -1124,15 +1148,16 @@
           "index": 33,
           "text_preview": "Encoded: 164 . 32 . 199 . 232",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -1292,9 +1317,9 @@
           "index": 44,
           "text_preview": "Encoded: 1-330-957-2445",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
@@ -1414,15 +1439,16 @@
           "index": 52,
           "text_preview": "IBAN number ES79 2100 0813 6101 2345 6789",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
-            "IBAN"
+            "IBAN",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -1733,15 +1759,16 @@
           "index": 73,
           "text_preview": "Passport number HA6894682",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PASSPORT"
           ],
           "detected_types": [
-            "PASSPORT"
+            "PASSPORT",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -1749,14 +1776,14 @@
           "text_preview": "Data: 313330323933303131",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -1791,9 +1818,9 @@
           "index": 77,
           "text_preview": "SSN: 123-45-6789 and also 456-78-9012",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
@@ -1976,9 +2003,9 @@
           "index": 89,
           "text_preview": "My SSN is 130-29-3011 and DOB is 12/05/1981",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -2021,9 +2048,9 @@
           "index": 92,
           "text_preview": "Valid until 10/02/1982",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATE"
@@ -2066,15 +2093,16 @@
           "index": 95,
           "text_preview": "Raw: 47.149.58.243 (IP)",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -2128,9 +2156,9 @@
           "index": 99,
           "text_preview": "Obfuscated phone: 1-305-512-9459",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
@@ -2173,9 +2201,9 @@
           "index": 102,
           "text_preview": "Person: Prof. Quinn Walker",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PERSON"
@@ -2416,15 +2444,16 @@
           "index": 118,
           "text_preview": "Connection: redis://deploy:****@redis-cluster.internal:6379/analytics",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -2611,15 +2640,16 @@
           "index": 131,
           "text_preview": "Account: 5393818839392082",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
@@ -2656,9 +2686,9 @@
           "index": 134,
           "text_preview": "Zack Jackson (zack.jackson@mail.company.io) works at Tyrell Corp",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -2703,9 +2733,9 @@
           "index": 137,
           "text_preview": "Tax ID: 412 14 6394",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
@@ -2734,14 +2764,14 @@
           "text_preview": "Raw: 564696487",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -2766,9 +2796,9 @@
           "index": 141,
           "text_preview": "Server server-14.corp at IP 44.121.95.140",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -2776,7 +2806,8 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -2918,15 +2949,16 @@
           "index": 151,
           "text_preview": "DSN: postgresql://deploy:****@redis-cluster.internal:5432/main",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -2978,15 +3010,16 @@
           "index": 155,
           "text_preview": "Data: 46 dot 157 dot 42 dot 191",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -3117,24 +3150,25 @@
           "index": 164,
           "text_preview": "DB: redis://dev_user:****@db.internal:6379/staging",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
           "index": 165,
           "text_preview": "Sofia King (sofia.king@bigpharma.com) works at Oceanic Airlines",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -3211,15 +3245,16 @@
           "index": 170,
           "text_preview": "Data: (120) 625-59444",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "PHONE"
+            "PHONE",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -3329,9 +3364,9 @@
           "index": 178,
           "text_preview": "Contact person: Donna Noble (donna@temp-services.co.uk). Project Bad Wolf is GO.",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL",
@@ -3378,9 +3413,9 @@
           "index": 181,
           "text_preview": "My SSN is 214-86-0050 and DOB is 01/23/1998",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -3445,14 +3480,14 @@
           "text_preview": "Raw: 313037333432393339",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -3922,15 +3957,16 @@
           "index": 217,
           "text_preview": "Obfuscated ip_address: 144 point 30 point 226 point 101",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -4045,9 +4081,9 @@
           "index": 225,
           "text_preview": "Server server-33.corp at IP 126.51.126.114",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -4055,7 +4091,8 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -4092,9 +4129,9 @@
           "index": 228,
           "text_preview": "Expires: 17/10/2027",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATE"
@@ -4348,9 +4385,9 @@
           "index": 245,
           "text_preview": "Server server-17.local at IP 94.157.73.235",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -4358,7 +4395,8 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -4536,16 +4574,14 @@
           "index": 258,
           "text_preview": "secret: key_b90c97691500d1cd86a4388db3147da1",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "API_KEY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 259,
@@ -4581,9 +4617,9 @@
           "index": 261,
           "text_preview": "I work at Acme Corp",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY"
@@ -4596,15 +4632,16 @@
           "index": 262,
           "text_preview": "Bank: 1234567890123456 and account: 8765432109876543",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
@@ -4672,14 +4709,14 @@
           "text_preview": "Data: 555 123 4567",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "PHONE"
           ]
         },
         {
@@ -4701,9 +4738,9 @@
           "index": 269,
           "text_preview": "Server server-5.local at IP 136.15.159.86",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -4711,7 +4748,8 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -4733,9 +4771,9 @@
           "index": 271,
           "text_preview": "My SSN is 935-41-5892 and DOB is 10/22/1963",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -4994,7 +5032,7 @@
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "PHONE"
           ]
         },
         {
@@ -5267,7 +5305,7 @@
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "PHONE"
           ]
         },
         {
@@ -5438,9 +5476,9 @@
           "index": 319,
           "text_preview": "Contact Alice Sanchez at alice.sanchez@mail-server.co.jp regarding Tyrell Corp",
           "expected": 3,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "COMPANY",
@@ -5621,9 +5659,9 @@
           "index": 331,
           "text_preview": "Person: Ms. Dalia Ramirez",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PERSON"
@@ -5756,9 +5794,9 @@
           "index": 340,
           "text_preview": "Born: 11/03/2029",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATE"
@@ -5771,9 +5809,9 @@
           "index": 341,
           "text_preview": "My SSN is 778-80-9376 and DOB is 02/13/1980",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -5788,15 +5826,16 @@
           "index": 342,
           "text_preview": "Encoded: 0210.017.0237.0126",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -5956,9 +5995,9 @@
           "index": 353,
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
@@ -5966,6 +6005,7 @@
           ],
           "detected_types": [
             "BANK_ACCOUNT",
+            "CREDIT_CARD",
             "IBAN"
           ]
         },
@@ -6018,15 +6058,16 @@
           "index": 357,
           "text_preview": "DB: redis://readonly:****@mysql-dev.internal:6379/production",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -6063,9 +6104,9 @@
           "index": 360,
           "text_preview": "Contact Ivan Harris at ivan.harris@data-service.ai regarding Soylent Corp",
           "expected": 3,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "COMPANY",
@@ -6221,9 +6262,9 @@
           "index": 370,
           "text_preview": "Project Pandorica is in development",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PROJECT_NAME"
@@ -6356,9 +6397,9 @@
           "index": 379,
           "text_preview": "Contact Fatima Nelson at fatima.nelson@company.org regarding Cyberdyne Systems",
           "expected": 3,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "COMPANY",
@@ -6586,30 +6627,32 @@
           "index": 394,
           "text_preview": "Bank account 514142907840163367",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
           "index": 395,
           "text_preview": "Obfuscated phone: (182) 983-07007",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "PHONE"
+            "PHONE",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -6730,15 +6773,16 @@
           "index": 404,
           "text_preview": "Obfuscated phone: (120) 855-32358",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "PHONE"
+            "PHONE",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -6878,15 +6922,16 @@
           "index": 414,
           "text_preview": "DB: redis://dev_user:****@postgres.internal:6379/production",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -6908,9 +6953,9 @@
           "index": 416,
           "text_preview": "Working on Project Phoenix",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PROJECT_NAME"
@@ -6999,29 +7044,30 @@
           "text_preview": "Found: 1555123497",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "PHONE"
           ]
         },
         {
           "index": 423,
           "text_preview": "DB: redis://readonly:****@redis-cluster.internal:6379/production",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -7217,7 +7263,7 @@
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "PHONE"
           ]
         },
         {
@@ -7477,9 +7523,9 @@
           "index": 454,
           "text_preview": "My SSN is 759-76-4083 and DOB is 09/12/1994",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -7689,15 +7735,16 @@
           "index": 468,
           "text_preview": "IBAN number CH93 0076 2011 6238 5295 7",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
-            "IBAN"
+            "IBAN",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -7719,9 +7766,9 @@
           "index": 470,
           "text_preview": "My SSN is 858-70-8943 and DOB is 03/25/1986",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATE",
@@ -7770,13 +7817,13 @@
       "detector": "pipeline",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 546,
+      "total_detected_entities": 582,
       "total_true_positives": 485,
-      "total_false_positives": 61,
+      "total_false_positives": 97,
       "total_false_negatives": 54,
-      "overall_precision": 0.8882783882783882,
+      "overall_precision": 0.8333333333333334,
       "overall_recall": 0.8998144712430427,
-      "overall_f1": 0.8940092165898617,
+      "overall_f1": 0.8652988403211419,
       "per_type": {
         "ADDRESS": {
           "true_positives": 34,
@@ -7860,13 +7907,13 @@
         },
         "COMPANY": {
           "true_positives": 40,
-          "false_positives": 0,
+          "false_positives": 6,
           "false_negatives": 2,
           "n": 42,
-          "precision": 1.0,
+          "precision": 0.8696,
           "recall": 0.9524,
-          "f1": 0.9756,
-          "f2": 0.9615,
+          "f1": 0.9091,
+          "f2": 0.9346,
           "recall_ci": [
             0.8421,
             0.9868
@@ -7900,13 +7947,13 @@
         },
         "CREDIT_CARD": {
           "true_positives": 52,
-          "false_positives": 10,
+          "false_positives": 14,
           "false_negatives": 12,
           "n": 64,
-          "precision": 0.8387,
+          "precision": 0.7879,
           "recall": 0.8125,
-          "f1": 0.8254,
-          "f2": 0.8176,
+          "f1": 0.8,
+          "f2": 0.8075,
           "recall_ci": [
             0.7003,
             0.8894
@@ -8099,23 +8146,23 @@
           ]
         },
         "IP_ADDRESS": {
-          "true_positives": 82,
-          "false_positives": 10,
-          "false_negatives": 5,
-          "n": 87,
-          "precision": 0.8913,
-          "recall": 0.9425,
-          "f1": 0.9162,
-          "f2": 0.9318,
+          "true_positives": 84,
+          "false_positives": 13,
+          "false_negatives": 4,
+          "n": 88,
+          "precision": 0.866,
+          "recall": 0.9545,
+          "f1": 0.9081,
+          "f2": 0.9354,
           "recall_ci": [
-            0.8724,
-            0.9752
+            0.8889,
+            0.9822
           ],
           "real_n": 46,
-          "real_recall": 0.8913,
+          "real_recall": 0.913,
           "real_recall_ci": [
-            0.7696,
-            0.9527
+            0.7968,
+            0.9657
           ]
         },
         "JWT": {
@@ -8160,13 +8207,13 @@
         },
         "PERSON": {
           "true_positives": 50,
-          "false_positives": 9,
+          "false_positives": 11,
           "false_negatives": 1,
           "n": 51,
-          "precision": 0.8475,
+          "precision": 0.8197,
           "recall": 0.9804,
-          "f1": 0.9091,
-          "f2": 0.9506,
+          "f1": 0.8929,
+          "f2": 0.9434,
           "recall_ci": [
             0.897,
             0.9965
@@ -8179,34 +8226,34 @@
           ]
         },
         "PHONE": {
-          "true_positives": 104,
-          "false_positives": 3,
-          "false_negatives": 5,
-          "n": 109,
-          "precision": 0.972,
-          "recall": 0.9541,
-          "f1": 0.963,
-          "f2": 0.9576,
+          "true_positives": 108,
+          "false_positives": 6,
+          "false_negatives": 3,
+          "n": 111,
+          "precision": 0.9474,
+          "recall": 0.973,
+          "f1": 0.96,
+          "f2": 0.9677,
           "recall_ci": [
-            0.8971,
-            0.9802
+            0.9235,
+            0.9908
           ],
           "real_n": 57,
-          "real_recall": 0.9123,
+          "real_recall": 0.9474,
           "real_recall_ci": [
-            0.8105,
-            0.9619
+            0.8563,
+            0.9819
           ]
         },
         "PRIVATE_URL": {
           "true_positives": 14,
-          "false_positives": 0,
+          "false_positives": 7,
           "false_negatives": 0,
           "n": 14,
-          "precision": 1.0,
+          "precision": 0.6667,
           "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "f1": 0.8,
+          "f2": 0.9091,
           "recall_ci": [
             0.7847,
             1.0
@@ -8220,13 +8267,13 @@
         },
         "PROJECT_NAME": {
           "true_positives": 10,
-          "false_positives": 0,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 10,
-          "precision": 1.0,
+          "precision": 0.8333,
           "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "f1": 0.9091,
+          "f2": 0.9615,
           "recall_ci": [
             0.7225,
             1.0
@@ -8239,17 +8286,17 @@
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 70,
-          "false_positives": 7,
-          "false_negatives": 10,
-          "n": 80,
-          "precision": 0.9091,
-          "recall": 0.875,
-          "f1": 0.8917,
-          "f2": 0.8816,
+          "true_positives": 64,
+          "false_positives": 16,
+          "false_negatives": 13,
+          "n": 77,
+          "precision": 0.8,
+          "recall": 0.8312,
+          "f1": 0.8153,
+          "f2": 0.8247,
           "recall_ci": [
-            0.785,
-            0.9307
+            0.7323,
+            0.8986
           ],
           "real_n": 19,
           "real_recall": 0.9474,
@@ -8309,9 +8356,17 @@
         "DOMAIN": {
           "URL": 2
         },
+        "DATABASE_URL": {
+          "PRIVATE_URL": 7
+        },
+        "COMPANY": {
+          "COMPANY": 6,
+          "PERSON": 3
+        },
         "IP_ADDRESS": {
           "IP_ADDRESS": 3,
-          "SOCIAL_SECURITY": 4
+          "SOCIAL_SECURITY": 10,
+          "PHONE": 3
         },
         "CREDIT_CARD": {
           "CREDIT_CARD": 10,
@@ -8319,6 +8374,9 @@
         },
         "JWT": {
           "DOMAIN": 5
+        },
+        "SOCIAL_SECURITY": {
+          "IP_ADDRESS": 10
         },
         "ADDRESS": {
           "COUNTRY": 3,
@@ -8329,27 +8387,31 @@
           "EMAIL": 3,
           "DOMAIN": 1
         },
-        "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 7
+        "IBAN": {
+          "SOCIAL_SECURITY": 2
         },
-        "COMPANY": {
-          "PERSON": 3
+        "PASSPORT": {
+          "SOCIAL_SECURITY": 1
+        },
+        "PERSON": {
+          "PERSON": 2,
+          "EMPLOYEE_NAME": 1
+        },
+        "BANK_ACCOUNT": {
+          "CREDIT_CARD": 4
         },
         "PHONE": {
-          "PHONE": 1,
-          "SOCIAL_SECURITY": 2
+          "SOCIAL_SECURITY": 3,
+          "PHONE": 1
         },
         "COUNTRY": {
           "CITY": 2
         },
-        "PERSON": {
-          "EMPLOYEE_NAME": 1
-        },
-        "API_KEY": {
-          "SOCIAL_SECURITY": 1
-        },
         "GPS": {
           "GPS": 1
+        },
+        "PROJECT_NAME": {
+          "PROJECT_NAME": 2
         }
       },
       "example_results": [
@@ -8509,15 +8571,16 @@
           "index": 10,
           "text_preview": "Redis connection: redis://default:password@cache-cluster.internal:6379",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -8567,9 +8630,9 @@
           "index": 14,
           "text_preview": "Hi, I'm Cheng Adams from Acme Corp. Email: cheng.adams@data-service.ai",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -8631,15 +8694,16 @@
           "index": 18,
           "text_preview": "Obfuscated ip_address: 94.157.73.235/16",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -8740,14 +8804,14 @@
           "text_preview": "Found: 323134383630303530",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -8857,15 +8921,16 @@
           "index": 33,
           "text_preview": "Encoded: 164 . 32 . 199 . 232",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -9148,15 +9213,16 @@
           "index": 52,
           "text_preview": "IBAN number ES79 2100 0813 6101 2345 6789",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
-            "IBAN"
+            "IBAN",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -9467,15 +9533,16 @@
           "index": 73,
           "text_preview": "Passport number HA6894682",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PASSPORT"
           ],
           "detected_types": [
-            "PASSPORT"
+            "PASSPORT",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -9483,14 +9550,14 @@
           "text_preview": "Data: 313330323933303131",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -9801,15 +9868,16 @@
           "index": 95,
           "text_preview": "Raw: 47.149.58.243 (IP)",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -9908,9 +9976,9 @@
           "index": 102,
           "text_preview": "Person: Prof. Quinn Walker",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PERSON"
@@ -10151,15 +10219,16 @@
           "index": 118,
           "text_preview": "Connection: redis://deploy:****@redis-cluster.internal:6379/analytics",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -10346,15 +10415,16 @@
           "index": 131,
           "text_preview": "Account: 5393818839392082",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
@@ -10391,9 +10461,9 @@
           "index": 134,
           "text_preview": "Zack Jackson (zack.jackson@mail.company.io) works at Tyrell Corp",
           "expected": 2,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -10470,14 +10540,14 @@
           "text_preview": "Raw: 564696487",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -10502,9 +10572,9 @@
           "index": 141,
           "text_preview": "Server server-14.corp at IP 44.121.95.140",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -10512,7 +10582,8 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -10654,15 +10725,16 @@
           "index": 151,
           "text_preview": "DSN: postgresql://deploy:****@redis-cluster.internal:5432/main",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -10714,15 +10786,16 @@
           "index": 155,
           "text_preview": "Data: 46 dot 157 dot 42 dot 191",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -10853,15 +10926,16 @@
           "index": 164,
           "text_preview": "DB: redis://dev_user:****@db.internal:6379/staging",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -10948,15 +11022,16 @@
           "index": 170,
           "text_preview": "Data: (120) 625-59444",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "PHONE"
+            "PHONE",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -11182,14 +11257,14 @@
           "text_preview": "Raw: 313037333432393339",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -11659,15 +11734,16 @@
           "index": 217,
           "text_preview": "Obfuscated ip_address: 144 point 30 point 226 point 101",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -11782,9 +11858,9 @@
           "index": 225,
           "text_preview": "Server server-33.corp at IP 126.51.126.114",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -11792,7 +11868,8 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -12085,9 +12162,9 @@
           "index": 245,
           "text_preview": "Server server-17.local at IP 94.157.73.235",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -12095,7 +12172,8 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -12273,16 +12351,14 @@
           "index": 258,
           "text_preview": "secret: key_b90c97691500d1cd86a4388db3147da1",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "API_KEY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 259,
@@ -12318,9 +12394,9 @@
           "index": 261,
           "text_preview": "I work at Acme Corp",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY"
@@ -12333,15 +12409,16 @@
           "index": 262,
           "text_preview": "Bank: 1234567890123456 and account: 8765432109876543",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
@@ -12409,14 +12486,14 @@
           "text_preview": "Data: 555 123 4567",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "PHONE"
           ]
         },
         {
@@ -12438,9 +12515,9 @@
           "index": 269,
           "text_preview": "Server server-5.local at IP 136.15.159.86",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -12448,7 +12525,8 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -12733,7 +12811,7 @@
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "PHONE"
           ]
         },
         {
@@ -13006,7 +13084,7 @@
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "PHONE"
           ]
         },
         {
@@ -13179,9 +13257,9 @@
           "index": 319,
           "text_preview": "Contact Alice Sanchez at alice.sanchez@mail-server.co.jp regarding Tyrell Corp",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -13363,9 +13441,9 @@
           "index": 331,
           "text_preview": "Person: Ms. Dalia Ramirez",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PERSON"
@@ -13531,15 +13609,16 @@
           "index": 342,
           "text_preview": "Encoded: 0210.017.0237.0126",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -13699,9 +13778,9 @@
           "index": 353,
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
@@ -13709,6 +13788,7 @@
           ],
           "detected_types": [
             "BANK_ACCOUNT",
+            "CREDIT_CARD",
             "IBAN"
           ]
         },
@@ -13761,15 +13841,16 @@
           "index": 357,
           "text_preview": "DB: redis://readonly:****@mysql-dev.internal:6379/production",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -13806,9 +13887,9 @@
           "index": 360,
           "text_preview": "Contact Ivan Harris at ivan.harris@data-service.ai regarding Soylent Corp",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -13965,9 +14046,9 @@
           "index": 370,
           "text_preview": "Project Pandorica is in development",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PROJECT_NAME"
@@ -14100,9 +14181,9 @@
           "index": 379,
           "text_preview": "Contact Fatima Nelson at fatima.nelson@company.org regarding Cyberdyne Systems",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -14331,30 +14412,32 @@
           "index": 394,
           "text_preview": "Bank account 514142907840163367",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
           "index": 395,
           "text_preview": "Obfuscated phone: (182) 983-07007",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "PHONE"
+            "PHONE",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -14475,15 +14558,16 @@
           "index": 404,
           "text_preview": "Obfuscated phone: (120) 855-32358",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "PHONE"
+            "PHONE",
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -14625,15 +14709,16 @@
           "index": 414,
           "text_preview": "DB: redis://dev_user:****@postgres.internal:6379/production",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -14655,9 +14740,9 @@
           "index": 416,
           "text_preview": "Working on Project Phoenix",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PROJECT_NAME"
@@ -14746,29 +14831,30 @@
           "text_preview": "Found: 1555123497",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "PHONE"
           ]
         },
         {
           "index": 423,
           "text_preview": "DB: redis://readonly:****@redis-cluster.internal:6379/production",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -14965,7 +15051,7 @@
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "PHONE"
           ]
         },
         {
@@ -15438,15 +15524,16 @@
           "index": 468,
           "text_preview": "IBAN number CH93 0076 2011 6238 5295 7",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
           "detected_types": [
-            "IBAN"
+            "IBAN",
+            "SOCIAL_SECURITY"
           ]
         },
         {

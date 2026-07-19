@@ -2,11 +2,11 @@
   "summary": {
     "overall": {
       "total_examples": 117,
-      "full_pipeline_detected": 96,
-      "full_pipeline_rate": 82.1,
-      "raw_regex_detected": 61,
-      "raw_regex_rate": 52.1,
-      "deobfuscation_improvement": 29.9
+      "full_pipeline_detected": 100,
+      "full_pipeline_rate": 85.5,
+      "raw_regex_detected": 60,
+      "raw_regex_rate": 51.3,
+      "deobfuscation_improvement": 34.2
     },
     "by_category": {
       "Homoglyph emails": {
@@ -107,18 +107,12 @@
       },
       "Split across tokens": {
         "total": 9,
-        "full_pipeline_detected": 2,
-        "full_pipeline_rate": 22.2,
+        "full_pipeline_detected": 8,
+        "full_pipeline_rate": 88.9,
         "raw_regex_detected": 2,
         "raw_regex_rate": 22.2,
-        "improvement": 0.0,
+        "improvement": 66.7,
         "missed_examples": [
-          "email split +",
-          "IP split +",
-          "SSN split +",
-          "phone split +",
-          "email f-string like",
-          "email with pipes",
           "email with / concatenation"
         ]
       },
@@ -153,23 +147,25 @@
       },
       "Reversed/mirrored": {
         "total": 4,
-        "full_pipeline_detected": 3,
-        "full_pipeline_rate": 75.0,
-        "raw_regex_detected": 3,
-        "raw_regex_rate": 75.0,
+        "full_pipeline_detected": 2,
+        "full_pipeline_rate": 50.0,
+        "raw_regex_detected": 2,
+        "raw_regex_rate": 50.0,
         "improvement": 0.0,
         "missed_examples": [
+          "email reversed",
           "phone reversed"
         ]
       },
       "Mixed case tricks": {
         "total": 6,
-        "full_pipeline_detected": 5,
-        "full_pipeline_rate": 83.3,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 66.7,
         "raw_regex_detected": 5,
         "raw_regex_rate": 83.3,
-        "improvement": 0.0,
+        "improvement": -16.7,
         "missed_examples": [
+          "IP with octal-like",
           "SSN with letters inserted"
         ]
       },
@@ -617,8 +613,8 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
+          "type": "IP_ADDRESS",
+          "value": "6.7.8.9",
           "score": 0.9
         }
       ],
@@ -632,9 +628,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "123456789",
-          "score": 0.75
+          "type": "IP_ADDRESS",
+          "value": "1.2.3.45",
+          "score": 0.9
         }
       ],
       "raw_regex_detected": false,
@@ -1373,8 +1369,14 @@
       "category": "Split across tokens",
       "label": "email split +",
       "text": "\"john\" + \"@\" + \"example\" + \".\" + \"com\"",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1403,8 +1405,14 @@
       "category": "Split across tokens",
       "label": "IP split +",
       "text": "\"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1412,8 +1420,14 @@
       "category": "Split across tokens",
       "label": "SSN split +",
       "text": "\"123\" + \"-\" + \"45\" + \"-\" + \"6789\"",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1421,8 +1435,14 @@
       "category": "Split across tokens",
       "label": "phone split +",
       "text": "\"+1\" + \"-\" + \"555\" + \"-\" + \"123\" + \"-\" + \"4567\"",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "+1-555-123-4567",
+          "score": 0.88
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1451,8 +1471,14 @@
       "category": "Split across tokens",
       "label": "email f-string like",
       "text": "f'{john}@{example}.{com}'",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1460,8 +1486,14 @@
       "category": "Split across tokens",
       "label": "email with pipes",
       "text": "john | @ | example | . | com",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1958,22 +1990,10 @@
       "category": "Reversed/mirrored",
       "label": "email reversed",
       "text": "moc.elpmaxe@nhoj",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "DOMAIN",
-          "value": "moc.elpmaxe",
-          "score": 0.75
-        }
-      ],
-      "raw_regex_detected": true,
-      "raw_detections": [
-        {
-          "type": "DOMAIN",
-          "value": "moc.elpmaxe",
-          "score": 0.75
-        }
-      ]
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
     },
     {
       "category": "Reversed/mirrored",
@@ -2072,14 +2092,8 @@
       "category": "Mixed case tricks",
       "label": "IP with octal-like",
       "text": "0300.0250.0001.0001",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "BANK_ACCOUNT",
-          "value": "0300025000010001",
-          "score": 0.55
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -2241,17 +2255,17 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "PHONE",
-          "value": "192.168.001.001",
-          "score": 0.55
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "score": 0.9
         }
       ],
       "raw_regex_detected": true,
       "raw_detections": [
         {
-          "type": "PHONE",
+          "type": "IP_ADDRESS",
           "value": "192.168.001.001",
-          "score": 0.55
+          "score": 0.9
         }
       ]
     }

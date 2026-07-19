@@ -16,6 +16,30 @@ from piifilter.shared.deobfuscator import Deobfuscator
 
 from . import patterns
 
+# ── Context-window fallback classifier ──────────────────────────────────
+# Trigger words that suggest a nearby number might be a CC, SSN, or
+# financial account identifier — even if structural regex failed.
+CTX_CC_SSN_TRIGGERS: set[str] = {
+    "card", "credit", "cc", "cvv", "cvc",
+    "exp", "expiry", "expiration",
+    "ssn", "social", "security",
+    "acct", "account", "routing", "aba", "pan",
+    "number", "num",
+}
+
+# Compiled regex: match any trigger word (case-insensitive) followed by
+# up to ~60 chars of filler, then a digit sequence (3–19 consecutive
+# digits, or 4+4+4+4 / 3+2+4 patterns with ANY single separator).
+# The trigger word must be followed by a non-word/non-hyphen boundary
+# (colon, space, or end of input) to avoid matching "SSN-like" patterns.
+_CTX_CC_SSN_RE = re.compile(
+    r"(?i)\b("
+    + "|".join(re.escape(w) for w in sorted(CTX_CC_SSN_TRIGGERS, key=len, reverse=True))
+    + r")\b(?!-).{0,60}?"
+    r"(?P<digits>(?:\d{3,19}|(?:\d{4}[- . \u00A0•*#Xx*]{1}\d{4}[- . \u00A0•*#Xx*]{1}\d{4}[- . \u00A0•*#Xx*]{1}\d{2,4})|(?:\d{3}[- . \u00A0•*#Xx*]{1}\d{2}[- . \u00A0•*#Xx*]{1}\d{4})))",
+    re.UNICODE,
+)
+
 
 class RegexDetector(Detector):
     """High-speed regex-based PII detector.
@@ -183,6 +207,60 @@ class RegexDetector(Detector):
                 seen_intervals.append((start, end))
 
         entities.sort(key=lambda e: e.start)
+
+        # ── Context-window fallback pass ──────────────────────────────
+        # After all structural patterns have run, scan for digit sequences
+        # that sit near trigger words (card, credit, ssn, etc.) but which
+        # no pattern matched.  Assign low recall-biased confidence (0.55)
+        # so the downstream score threshold can still accept them.
+        cc_ssn_covered: set[tuple[int, int]] = {
+            (e.start, e.end)
+            for e in entities
+            if e.entity_type in (EntityType.CREDIT_CARD, EntityType.SOCIAL_SECURITY)
+        }
+        for ctx_match in _CTX_CC_SSN_RE.finditer(text):
+            ctx_end = ctx_match.start() + len(ctx_match.group())
+            digits_raw = ctx_match.group("digits")
+            if not digits_raw:
+                continue
+
+            dstart = ctx_match.start() + ctx_match.group().index(digits_raw)
+            dend = dstart + len(digits_raw)
+
+            # Skip if this span is already covered by a CC or SSN match
+            if any(s <= dstart and dend <= e for s, e in cc_ssn_covered):
+                continue
+
+            # Decide type based on trigger word proximity
+            trigger = ctx_match.group(1).lower()
+            is_ssn_context = any(t in trigger for t in ("ssn", "social", "security"))
+            is_cc_context = any(
+                t in trigger for t in ("card", "credit", "cc", "cvv", "cvc", "exp", "expiry", "expiration", "pan")
+            )
+
+            if is_ssn_context:
+                entity_type = EntityType.SOCIAL_SECURITY
+            elif is_cc_context:
+                entity_type = EntityType.CREDIT_CARD
+            else:
+                # Account/routing/aba/number without SSN/CC keyword —
+                # default to SOCIAL_SECURITY since SSNs have fewer false
+                # positives for account-like numbers
+                entity_type = EntityType.SOCIAL_SECURITY
+
+            entities.append(
+                DetectedEntity(
+                    entity_type=entity_type,
+                    value=digits_raw,
+                    start=dstart,
+                    end=dend,
+                    confidence=0.55,
+                    detector="regex",
+                )
+            )
+            cc_ssn_covered.add((dstart, dend))
+
+        entities.sort(key=lambda e: e.start)
         return entities
 
 
@@ -215,6 +293,7 @@ def _resolve_entity_type(name: str) -> EntityType:
         "SOCIAL_SECURITY", "JWT", "API_KEY", "SSH_KEY", "DATABASE_URL",
         "PRIVATE_URL", "PROJECT_NAME", "CUSTOMER_NAME", "EMPLOYEE_NAME",
         "GPS", "DOMAIN", "IP_ADDRESS", "FILE_PATH",
+        "DATE", "URL",
     }
     if name in _DIRECT_MAP:
         return EntityType(name)

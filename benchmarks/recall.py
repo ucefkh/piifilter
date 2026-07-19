@@ -331,111 +331,30 @@ class DetectorAdapter:
 
 
 def make_regex_adapter() -> DetectorAdapter:
-    """Create adapter for the RegexDetector plugin."""
-    from piifilter.shared.models import EntityType
-    from piifilter_detector_regex.patterns import PATTERN_DEFS
-    import re
+    """Create adapter for the RegexDetector plugin using the real detector."""
+    from piifilter_detector_regex.detector import RegexDetector as _RealRegexDetector
 
-    _DIRECT_MAP = {
-        "PERSON", "EMAIL", "PHONE", "ADDRESS", "CITY", "COUNTRY",
-        "COMPANY", "BANK_ACCOUNT", "IBAN", "CREDIT_CARD", "PASSPORT",
-        "SOCIAL_SECURITY", "JWT", "API_KEY", "SSH_KEY", "DATABASE_URL",
-        "PRIVATE_URL", "PROJECT_NAME", "CUSTOMER_NAME", "EMPLOYEE_NAME",
-        "GPS", "DOMAIN", "IP_ADDRESS", "FILE_PATH",
-        "DATE", "URL",
-    }
-
-    patterns: list[Any] = []
-    for type_name, raw_pattern, score in PATTERN_DEFS:
-        type_map = {
-            "SSN": "SOCIAL_SECURITY",
-            "API_KEY": "API_KEY",
-            "JWT": "JWT",
-            "EMAIL": "EMAIL",
-            "PHONE": "PHONE",
-            "CREDIT_CARD": "CREDIT_CARD",
-            "IP_ADDRESS": "IP_ADDRESS",
-            "DATABASE_URL": "DATABASE_URL",
-            "DOMAIN": "DOMAIN",
-            "PRIVATE_URL": "PRIVATE_URL",
-            "IBAN": "IBAN",
-            "BANK_ACCOUNT": "BANK_ACCOUNT",
-            "PASSPORT": "PASSPORT",
-            "SSH_KEY": "SSH_KEY",
-            "GPS": "GPS",
-            "FILE_PATH": "FILE_PATH",
-        }
-        if type_name in _DIRECT_MAP:
-            et_name = type_name
-        else:
-            et_name = type_map.get(type_name, type_name.upper())
-        try:
-            entity_type = EntityType(et_name)
-        except ValueError:
-            entity_type = EntityType("PERSON") if hasattr(EntityType, "PERSON") else EntityType("UNKNOWN")
-        # Compile patterns respecting their inline (?i) flags.
-        # Use re.UNICODE but NOT re.IGNORECASE by default — patterns that need
-        # case-insensitivity use inline (?i) within their regex string.
-        compiled = re.compile(raw_pattern, re.UNICODE)
-        patterns.append((entity_type, compiled, score))
-
-    # Use Deobfuscator to normalize PII evasion before pattern matching
-    from piifilter.shared.deobfuscator import Deobfuscator
-    _deobfuscator = Deobfuscator()
+    _detector_instance: _RealRegexDetector | None = None
 
     async def detect(text: str) -> list[dict[str, Any]]:
-        if not text:
-            return []
-
-        # Apply deobfuscation first — same as real RegexDetector
-        cleaned, _log = _deobfuscator(text)
-
-        def _luhn_valid(digits: str) -> bool:
-            nums = [int(d) for d in digits if d.isdigit()]
-            if len(nums) < 13:
-                return False
-            for i in range(len(nums) - 2, -1, -2):
-                nums[i] *= 2
-                if nums[i] > 9:
-                    nums[i] -= 9
-            return sum(nums) % 10 == 0
-
-        entities: list[dict[str, Any]] = []
-        seen_intervals: list[tuple[int, int]] = []
-        for entity_type, pattern, score in patterns:
-            for match in pattern.finditer(cleaned):
-                start, end = match.start(), match.end()
-                if start == end:
-                    continue
-                # Check if this match is contained within an existing interval
-                contained = any(s <= start and end <= e for s, e in seen_intervals)
-                if contained:
-                    continue
-                # If this match CONTAINS one or more existing intervals, replace them
-                # (wider match takes precedence over narrower)
-                new_seen = [(s, e) for s, e in seen_intervals if not (start <= s and e <= end)]
-                if len(new_seen) != len(seen_intervals):
-                    # Some intervals were subsumed — remove corresponding entities
-                    subsumed_starts = {s for s, e in seen_intervals if start <= s and e <= end}
-                    entities = [e for e in entities if e["start"] not in subsumed_starts]
-                seen_intervals = new_seen
-                # Luhn validation for CREDIT_CARD: discard matches whose
-                # digit content fails the checksum.
-                if entity_type == EntityType("CREDIT_CARD"):
-                    digits = "".join(c for c in match.group() if c.isdigit())
-                    if len(digits) >= 13 and not _luhn_valid(digits):
-                        continue
-                entities.append({
-                    "entity_type": entity_type.value,
-                    "value": match.group(),
-                    "start": start,
-                    "end": end,
-                    "score": score,
-                    "detector": "regex",
-                })
-                seen_intervals.append((start, end))
-        entities.sort(key=lambda e: e["start"])
-        return entities
+        nonlocal _detector_instance
+        if _detector_instance is None:
+            _detector_instance = _RealRegexDetector()
+            await _detector_instance.initialize()
+        raw = await _detector_instance.detect(text)
+        # Normalize keys: the real detector returns 'type' but the
+        # benchmark evaluation expects 'entity_type'.
+        return [
+            {
+                "entity_type": d["type"],
+                "value": d["text"],
+                "start": d["start"],
+                "end": d["end"],
+                "score": d["score"],
+                "detector": d["detector"],
+            }
+            for d in raw
+        ]
 
     return DetectorAdapter(name="regex", detect_fn=detect)
 
