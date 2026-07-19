@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set)",
-  "timestamp": "2026-07-19T23:03:53Z",
+  "timestamp": "2026-07-19T23:19:50Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
@@ -39,13 +39,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 243,
+      "total_detected_entities": 239,
       "total_true_positives": 190,
-      "total_false_positives": 53,
+      "total_false_positives": 49,
       "total_false_negatives": 22,
-      "overall_precision": 0.7818930041152263,
+      "overall_precision": 0.7949790794979079,
       "overall_recall": 0.8962264150943396,
-      "overall_f1": 0.8351648351648352,
+      "overall_f1": 0.8425720620842572,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -349,13 +349,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 4,
-          "false_positives": 9,
+          "false_positives": 5,
           "false_negatives": 13,
           "n": 17,
-          "precision": 0.3077,
+          "precision": 0.4444,
           "recall": 0.2353,
-          "f1": 0.2667,
-          "f2": 0.2469,
+          "f1": 0.3077,
+          "f2": 0.2597,
           "recall_ci": [
             0.0955,
             0.4726
@@ -555,8 +555,7 @@
           "PRIVATE_URL": 6
         },
         "GPS": {
-          "PHONE": 1,
-          "IP_ADDRESS": 2
+          "PHONE": 1
         },
         "EMPLOYEE_NAME": {
           "EMPLOYEE_NAME": 1
@@ -571,7 +570,6 @@
           "COUNTRY": 1,
           "PHONE": 1,
           "ADDRESS": 1,
-          "IP_ADDRESS": 4,
           "GPS": 1,
           "URL": 1,
           "PERSON": 1,
@@ -579,6 +577,7 @@
           "CREDIT_CARD": 3,
           "SOCIAL_SECURITY": 1,
           "EMAIL": 3,
+          "IP_ADDRESS": 2,
           "JWT": 1
         },
         "SOCIAL_SECURITY": {
@@ -1468,16 +1467,15 @@
           "index": 54,
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 4,
-          "detected": 6,
+          "detected": 4,
           "true_positives": 4,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "GPS",
-            "IP_ADDRESS"
+            "GPS"
           ]
         },
         {
@@ -2142,14 +2140,12 @@
           "index": 100,
           "text_preview": "The value 555-1212 is often used in TV shows as a fake number.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 101,
@@ -2381,14 +2377,12 @@
           "index": 116,
           "text_preview": "Phone-like: 5552368 is short sequence, not enough digits for phone.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 117,
@@ -2872,13 +2866,13 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 265,
+      "total_detected_entities": 261,
       "total_true_positives": 197,
-      "total_false_positives": 68,
+      "total_false_positives": 64,
       "total_false_negatives": 15,
-      "overall_precision": 0.7433962264150943,
+      "overall_precision": 0.7547892720306514,
       "overall_recall": 0.9292452830188679,
-      "overall_f1": 0.8259958071278825,
+      "overall_f1": 0.8329809725158562,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -3182,13 +3176,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 20,
-          "false_positives": 9,
+          "false_positives": 5,
           "false_negatives": 5,
           "n": 25,
-          "precision": 0.6897,
+          "precision": 0.8,
           "recall": 0.8,
-          "f1": 0.7407,
-          "f2": 0.7752,
+          "f1": 0.8,
+          "f2": 0.8,
           "recall_ci": [
             0.6087,
             0.9114
@@ -3391,8 +3385,7 @@
           "PRIVATE_URL": 6
         },
         "GPS": {
-          "PHONE": 1,
-          "IP_ADDRESS": 2
+          "PHONE": 1
         },
         "EMPLOYEE_NAME": {
           "EMPLOYEE_NAME": 1
@@ -3407,7 +3400,6 @@
           "COUNTRY": 1,
           "PHONE": 2,
           "ADDRESS": 1,
-          "IP_ADDRESS": 4,
           "PERSON": 3,
           "GPS": 1,
           "URL": 1,
@@ -3415,6 +3407,7 @@
           "CREDIT_CARD": 4,
           "SOCIAL_SECURITY": 1,
           "EMAIL": 3,
+          "IP_ADDRESS": 2,
           "JWT": 1
         },
         "SOCIAL_SECURITY": {
@@ -4316,16 +4309,15 @@
           "index": 54,
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 4,
-          "detected": 6,
+          "detected": 4,
           "true_positives": 4,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "GPS",
-            "IP_ADDRESS"
+            "GPS"
           ]
         },
         {
@@ -4990,14 +4982,12 @@
           "index": 100,
           "text_preview": "The value 555-1212 is often used in TV shows as a fake number.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 101,
@@ -5232,14 +5222,12 @@
           "index": 116,
           "text_preview": "Phone-like: 5552368 is short sequence, not enough digits for phone.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 117,

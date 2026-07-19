@@ -76,6 +76,11 @@ class RegexDetector(Detector):
         # Run GPS patterns BEFORE inner-separator stripping (dots are essential
         # for GPS coordinate matching — stripping would destroy them).
         gps_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.GPS})
+        # Run DATE patterns on pre-strip text too — dates like "12/31/2025" and
+        # "2024-01-15" contain "/" and "-" separators that _strip_inner_separators
+        # removes, collapsing them into bare digit runs that then get misdetected
+        # as decimal IP addresses by the \b(?:[1-9]\d{6,9})\b pattern.
+        date_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.DATE})
         # Now strip inner separators and run remaining patterns
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
@@ -85,10 +90,9 @@ class RegexDetector(Detector):
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, cc_ssn_spans)
         entities.extend(ssn_found)
-        # Merge GPS entities (from pre-strip text) with the rest (from stripped text)
-        # GPS entities from pre-strip text use original positions in pre-strip text,
-        # which matches the original unsplit position in the raw text after deobfuscation.
+        # Merge pre-strip entities (GPS + DATE) with the rest (from stripped text)
         entities.extend(gps_entities)
+        entities.extend(date_entities)
         entities.sort(key=lambda e: e.start)
         elapsed = time.monotonic() - t0
 
@@ -121,6 +125,8 @@ class RegexDetector(Detector):
         cleaned, _log, text_for_gps = self._deobfuscator(session.prompt)
         # GPS: run on pre-strip text so decimal places survive
         gps_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.GPS})
+        # DATE: run on pre-strip text so "/" and "-" separators survive stripping
+        date_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.DATE})
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
         # Structural recall pass
@@ -129,6 +135,7 @@ class RegexDetector(Detector):
         ssn_found = self._validate_ssn_runs(stripped, cc_ssn_spans)
         entities.extend(ssn_found)
         entities.extend(gps_entities)
+        entities.extend(date_entities)
         entities.sort(key=lambda e: e.start)
         return entities
 

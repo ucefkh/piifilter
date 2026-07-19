@@ -228,19 +228,36 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         ("PHONE", r"(?!\d{1,3}(?:\.\d{1,3}){3}\b)\b\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]\d{2,4}\b", 0.55),
 
     # ── IP_ADDRESS ───────────────────────────────────────────────────
-    ("IP_ADDRESS", r"\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b", 0.90),
+    # Standard dotted-decimal IPv4 with strict octet validation (0-255 per octet).
+    # Uses negative lookbehind/lookahead to avoid matching IP-like substrings
+    # inside dates (e.g. "12.31.2025" where month=12 day=31 would match as IP).
+    # Blocks: octet > 255, leading zeros that would imply octal.
+    ("IP_ADDRESS", r"\b(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\b", 0.90),
+    # Full IPv6 (7 colons, 8 groups): 2001:0db8:85a3:0000:0000:8a2e:0370:7334
     ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\b", 0.88),
-    ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){1,5}::(?:[0-9a-fA-F]{1,4}:){0,4}[0-9a-fA-F]{1,4}\b", 0.85),
-    ("IP_ADDRESS", r"\b::(?:[0-9a-fA-F]{1,4}:){0,6}[0-9a-fA-F]{1,4}\b", 0.85),
-    ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){1,7}::\b", 0.85),
+    # IPv6 with single :: anywhere
+    ("IP_ADDRESS", r"\b(?:(?:[0-9a-fA-F]{1,4}:){1,7}:|:(?::[0-9a-fA-F]{1,4}){1,7})\b", 0.88),
+    # IPv6 loopback: ::1
+    ("IP_ADDRESS", r"\b::1\b", 0.90),
+    # IPv6 unspecified: ::
+    ("IP_ADDRESS", r"\b::\b", 0.85),
+    # IPv6 embedded IPv4: ::ffff:192.168.1.1 or ::192.168.1.1
+    ("IP_ADDRESS", r"\b(?:(?:[0-9a-fA-F]{1,4}:){1,4}:)?:(?:ffff:)?(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\b", 0.88),
+    # Compressed IPv6 with single :: (mid-rule): catches what the :: patterns above miss
+    # e.g. 2001:db8::1, fe80::1, 2001:db8::ff00:42:8329
+    ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:)+(?::[0-9a-fA-F]{1,4})+\b(?<!:)(?<![0-9a-fA-F]{5})", 0.85),
     # Hex-format IP: 0xc0.0xa8.0x00.0x01
     ("IP_ADDRESS", r"\b0x[0-9a-fA-F]{2}(?:\.0x[0-9a-fA-F]{2}){3}\b", 0.85),
-    # Octal IP: 012.0130.00.01
-    ("IP_ADDRESS", r"\b0[0-7]{1,4}(?:\.0[0-7]{1,4}){3}\b", 0.85),
+    # Octal IP: 012.0130.00.01 — each octet must be valid octal 0-377
+    ("IP_ADDRESS", r"\b0[0-7]{1,3}(?:\.0[0-7]{1,3}){3}\b", 0.85),
     # Space-separated dotted-decimal: 192 168 1 100
-    ("IP_ADDRESS", r"\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\s+){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b", 0.80),
+    ("IP_ADDRESS", r"\b(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\s+){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\b", 0.80),
     # Decimal IP (32-bit integer): 3232235876
-    ("IP_ADDRESS", r"\b(?:[1-9]\d{6,9})\b", 0.65),
+    # Valid range: 16777216 (1.0.0.0) to 4294967295 (255.255.255.255)
+    # Requires 8-10 digits. Word boundaries avoid matching inside longer digit runs.
+    # Negative lookahead avoids matching if followed by .\d (partial IPv4 dotted decimal)
+    # or preceded by \d. (partial dotted decimal) or a date separator.
+    ("IP_ADDRESS", r"\b(?:[1-9]\d{7,9})(?<!\d{4}\.\d)(?<!\d{3}\.\d)(?<!\d{2}\.\d)(?!\.\d)\b", 0.65),
 
     # ── GPS ──────────────────────────────────────────────────────────
     # Full coordinate pair after keyword label: "lat/lng/coordinates/gps: value1, value2"

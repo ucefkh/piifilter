@@ -313,6 +313,26 @@ class FilterPipeline:
                 if overlaps_structural:
                     continue
 
+            # ── IP_ADDRESS double-fire suppression ─────────────────────
+            # Presidio/Gliner IP_ADDRESS detections that overlap with regex
+            # IP_ADDRESS detections are duplicates. Regex has higher
+            # precision for IP addresses — suppress NER-based IPs that
+            # overlap any regex-matched span.
+            if et == "IP_ADDRESS" and detector in ("presidio", "gliner"):
+                regex_ip_intervals = all_interval_map.get("IP_ADDRESS", [])
+                ner_suppressed = False
+                for s, e2 in regex_ip_intervals:
+                    # NER IP fully contained in regex IP — suppress
+                    if s <= estart and eend <= e2:
+                        ner_suppressed = True
+                        break
+                    # NER IP overlaps a regex IP span — suppress
+                    if not (eend <= s or estart >= e2):
+                        ner_suppressed = True
+                        break
+                if ner_suppressed:
+                    continue
+
             intervals = seen_intervals.get(et, [])
             contained = any(s <= estart and eend <= e2 for s, e2 in intervals)
             if not contained:

@@ -185,6 +185,8 @@ class Deobfuscator:
         # Base normalizations
         text = self._nfkc_normalize(text, log)
         text = self._strip_html_comments(text, log)
+        # Morse code BEFORE at_dot so dots in morse (e.g. ".--") aren't destroyed
+        text = self._decode_morse(text, log)
         text = self._unwrap_at_dot(text, log)
         text = self._fix_obfuscated_email_entities(text, log)
         # NEW: XML escape decoder (before HTML entity decoding)
@@ -1252,6 +1254,84 @@ class Deobfuscator:
             log.append({
                 "transform": "pig_latin",
                 "description": "Decoded pig-latin style obfuscation",
+                "changed": True,
+            })
+        return text
+
+    # ── I. Case-shift swap ────────────────────────────────────────────
+    # Reverse the case of every ASCII letter (upper→lower, lower→upper)
+    # Catches "case-shifted" obfuscation like nEW yORK → New York
+
+    @classmethod
+    def _swap_case(cls, text: str, log: list) -> str:
+        """Swap the case of every ASCII letter in the text.
+
+        Reverse case-shift obfuscation: letters that had their case flipped
+        are restored. E.g. 'nEW yORK' → 'New York', 'hOUSTON' → 'Houston'.
+
+        Only applied when a word-level analysis suggests case-shifting
+        is present (at least one word with ≥3 letters where ≥70% of letters
+        are the 'wrong' case relative to natural English capitalization).
+        """
+        original = text
+
+        def _is_case_shifted(word: str) -> bool:
+            """Heuristic: a word is case-shifted if ≥70% of its letters
+            are in the 'unnatural' case for its position.
+
+            For a word starting with lowercase when it should be capitalized
+            (e.g. 'nEW' — first letter lower, rest upper), or starting with
+            uppercase when surrounded by lowercase in the rest.
+            """
+            letters = [c for c in word if c.isalpha()]
+            if len(letters) < 3:
+                return False
+
+            # Count upper and lower among letters
+            upper = sum(1 for c in letters if c.isupper())
+            lower = sum(1 for c in letters if c.islower())
+
+            # Case-shifted: the 'unnatural' case dominates
+            # Natural: first letter capital, rest lowercase (or all same case)
+            # Case-shifted: first letter lowercase when it could be capital
+            #   e.g. nEW → 1 lower, 2 upper → upper dominates = case-shifted
+            #   e.g. hOUSTON → 1 lower, 6 upper → upper dominates = case-shifted
+            # Also: 'pHOENIX' → 1 upper, 5 lower with first=lower → mid-word capital = case-shifted
+
+            # Check if the majority case is opposite to the first letter's case
+            # For a word starting lower: if upper > lower, it's case-shifted
+            first = word[0]
+            if first.islower() and upper >= 2 and upper >= lower:
+                return True
+            # For a word starting upper: if upper < lower it's shifted
+            if first.isupper() and lower >= 2 and lower > upper:
+                return True
+            # Word with all letters the 'wrong' case: all upper or all lower
+            if upper == len(letters) and first.isupper():
+                # All caps starting with capital — this is normal shouting, not case-shifted
+                return False
+            if lower == len(letters) and first.islower():
+                # All lowercase — this is normal lowercase, not case-shifted
+                return False
+
+            return False
+
+        # Split into words, check each
+        words = text.split()
+        changed = False
+        new_words = []
+        for word in words:
+            if _is_case_shifted(word):
+                new_words.append(word.swapcase())
+                changed = True
+            else:
+                new_words.append(word)
+
+        if changed:
+            text = " ".join(new_words)
+            log.append({
+                "transform": "swap_case",
+                "description": "Swapped case on case-shifted words (nEW→New, hOUSTON→Houston)",
                 "changed": True,
             })
         return text
