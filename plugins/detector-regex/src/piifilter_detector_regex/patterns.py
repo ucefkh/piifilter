@@ -167,11 +167,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PROJECT_NAME", r"\b(?:Project|Operation|Initiative|Program|Code[- ]?name)\s+(?-i:[A-Z])[a-zA-Z0-9]+\b", 0.85),
 
     # ── ADDRESS ──────────────────────────────────────────────────────
-    ("ADDRESS", r"\b\d{1,5}\s+(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s+(?:St(?:reet)?|Ave(?:nue)?|Dr(?:ive)?|Rd|Road|Blvd|Boulevard|Ln|Lane|Way|Ct|Court|Pl|Place|Cir(?:cle)?|Pkwy|Parkway)\b", 0.80),
+    # Keyword-prefixed address: only match when preceded by address context.
+    # Excludes anecdotal/pop-culture references (parenthetical notes like "(famous from...)").
+    ("ADDRESS", r"(?:address:\s*|at\s+|is\s+at\s+|office\s+is\s+at\s+|Home\s+address:\s+|home\s+address:\s+|Visit\s+us\s+at\s+|HQ\s+is\s+at\s+)(\b\d{1,5}\s+(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s+(?:St(?:reet)?|Ave(?:nue)?|Dr(?:ive)?|Rd|Road|Blvd|Boulevard|Ln|Lane|Way|Ct|Court|Pl|Place|Cir(?:cle)?|Pkwy|Parkway))(?![,.]?\s*(?:\w+\s+){0,5}\([^)]*(?:famous|from\s+(?:movie|show|film|Finding|the\s+[A-Z])))\b", 0.80),
     ("ADDRESS", r"\bP\.?\s*O\.?\s+Box\s+\d+\b", 0.85),
     ("ADDRESS", r"\b(?:Suite|Apt|Unit|Building)\s+#?\d+[A-Za-z]?\b", 0.80),
-    # UK-style address: "10 Downing Street"
-    ("ADDRESS", r"\b\d{1,3}\s+(?:[A-Z][a-z]+)\s+(?:Street|Road|Lane|Drive|Way|Close|Gardens|Hill|Square|Mews|Court|Avenue)\b", 0.75),
 
     # ── CITY ─────────────────────────────────────────────────────────
     ("CITY", r"(?i)\b(?:city|town)\s*(?:of|pop|population)?\s*:?\s*(?!(?:The|A|An|This|That|These|Those|Our|Their|My|Your|His|Her|Its)\b)[A-Z][a-z]+(?:[ -]+[A-Z][a-z]+)?\b", 0.70),

@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report",
-  "timestamp": "2026-07-19T19:30:17Z",
+  "timestamp": "2026-07-19T19:49:51Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "examples": 122,
@@ -37,21 +37,21 @@
       "detector": "regex",
       "total_examples": 122,
       "total_expected_entities": 184,
-      "total_detected_entities": 206,
+      "total_detected_entities": 203,
       "total_true_positives": 181,
-      "total_false_positives": 25,
+      "total_false_positives": 22,
       "total_false_negatives": 3,
-      "overall_precision": 0.8786407766990292,
+      "overall_precision": 0.8916256157635468,
       "overall_recall": 0.9836956521739131,
-      "overall_f1": 0.9282051282051283,
+      "overall_f1": 0.9354005167958657,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
-          "false_positives": 3,
+          "false_positives": 0,
           "false_negatives": 1,
-          "precision": 0.6667,
+          "precision": 1.0,
           "recall": 0.8571,
-          "f1": 0.75
+          "f1": 0.9231
         },
         "API_KEY": {
           "true_positives": 10,
@@ -251,7 +251,6 @@
           "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
           "PHONE": 1,
-          "ADDRESS": 3,
           "DOMAIN": 1,
           "PERSON": 3,
           "API_KEY": 1,
@@ -1746,14 +1745,12 @@
           "index": 95,
           "text_preview": "My street is 123 Main Street, not 123 Main St.",
           "expected": 0,
-          "detected": 2,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 96,
@@ -1814,14 +1811,12 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 102,
@@ -2107,21 +2102,21 @@
       "detector": "pipeline",
       "total_examples": 122,
       "total_expected_entities": 184,
-      "total_detected_entities": 207,
+      "total_detected_entities": 204,
       "total_true_positives": 181,
-      "total_false_positives": 26,
+      "total_false_positives": 23,
       "total_false_negatives": 3,
-      "overall_precision": 0.8743961352657005,
+      "overall_precision": 0.8872549019607843,
       "overall_recall": 0.9836956521739131,
-      "overall_f1": 0.925831202046036,
+      "overall_f1": 0.9329896907216495,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
-          "false_positives": 3,
+          "false_positives": 0,
           "false_negatives": 1,
-          "precision": 0.6667,
+          "precision": 1.0,
           "recall": 0.8571,
-          "f1": 0.75
+          "f1": 0.9231
         },
         "API_KEY": {
           "true_positives": 10,
@@ -2321,7 +2316,6 @@
           "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
           "PHONE": 1,
-          "ADDRESS": 3,
           "DOMAIN": 1,
           "PERSON": 3,
           "API_KEY": 1,
@@ -3819,14 +3813,12 @@
           "index": 95,
           "text_preview": "My street is 123 Main Street, not 123 Main St.",
           "expected": 0,
-          "detected": 2,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 96,
@@ -3887,14 +3879,12 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 102,

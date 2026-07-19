@@ -1,4 +1,4 @@
-"""Debug PERSON false positives."""
+"""Debug CITY false positives."""
 import json, re, sys
 
 sys.path.insert(0, 'core/src')
@@ -49,17 +49,17 @@ for i, ex in enumerate(examples):
                 break
     
     for di, det in enumerate(detected):
-        if not detected_matched[di] and det['entity_type'] == 'PERSON':
+        if not detected_matched[di] and det['entity_type'] == 'CITY':
             found_exp = None
             for ee in expected_entities:
                 det_start, det_end = det['start'], det['end']
                 exp_start, exp_end = ee['start'], ee['end']
                 intersection = max(0, min(det_end, exp_end) - max(det_start, exp_start))
-                smallest = min(det_end - det_start, exp_end - exp_start)
+                smallest = min(det_end - det_end, exp_end - exp_start)
                 if smallest > 0 and (intersection / smallest) >= 0.25:
                     found_exp = ee['type']
                     break
             if found_exp:
-                print(f'Ex {i}: PERSON FP → expected was {found_exp}: "{det["value"]}" (score={det["score"]})')
+                print(f'Ex {i}: CITY FP → expected was {found_exp}: "{det["value"]}" (score={det["score"]})')
             else:
-                print(f'Ex {i}: PERSON FP (no expected): "{det["value"]}" (score={det["score"]})')
+                print(f'Ex {i}: CITY FP (no expected): "{det["value"]}" (score={det["score"]})')

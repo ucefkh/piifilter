@@ -1,8 +1,9 @@
-"""Debug PERSON false positives."""
+"""Debug ADDRESS false positives."""
 import json, re, sys
 
 sys.path.insert(0, 'core/src')
 sys.path.insert(0, 'plugins/detector-regex/src')
+sys.path.insert(0, 'plugins/detector-presidio/src')
 
 data = json.loads(open('benchmarks/data/pii_dataset.json').read())
 examples = data['examples']
@@ -49,7 +50,7 @@ for i, ex in enumerate(examples):
                 break
     
     for di, det in enumerate(detected):
-        if not detected_matched[di] and det['entity_type'] == 'PERSON':
+        if not detected_matched[di] and det['entity_type'] == 'ADDRESS':
             found_exp = None
             for ee in expected_entities:
                 det_start, det_end = det['start'], det['end']
@@ -60,6 +61,6 @@ for i, ex in enumerate(examples):
                     found_exp = ee['type']
                     break
             if found_exp:
-                print(f'Ex {i}: PERSON FP → expected was {found_exp}: "{det["value"]}" (score={det["score"]})')
+                print(f'Ex {i}: ADDRESS FP → expected was {found_exp}: "{det["value"]}" (score={det["score"]})')
             else:
-                print(f'Ex {i}: PERSON FP (no expected): "{det["value"]}" (score={det["score"]})')
+                print(f'Ex {i}: ADDRESS FP (no expected): "{det["value"]}" (score={det["score"]})')
