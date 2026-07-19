@@ -39,6 +39,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # ── SSN ──────────────────────────────────────────────────────────
     ("SOCIAL_SECURITY", r"\b\d{3}[-]\d{2}[-]\d{4}\b", 0.90),
 
+    # ── IBAN ─────────────────────────────────────────────────────────
+    # IBAN must come BEFORE CREDIT_CARD patterns since IBAN substrings (like
+    # "6016 1331 9268 19") can look like credit card numbers. The dedup logic
+    # skips detections contained within already-matched intervals.
+    ("IBAN", r"\b[A-Z]{2}\d{2}(?:[ ]?(?:[A-Z0-9]{4})){4,7}(?:[ ]?\d{1,4})?\b", 0.85),
+
     # ── CREDIT_CARD ──────────────────────────────────────────────────
     ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
     # Standard 4-4-4-4 format with dashes — must NOT be inside an IBAN (not preceded by [A-Z]{2}\d{2}\s)
@@ -51,8 +57,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Continuous 16-digit credit card numbers (no dashes) — Luhn-prefixed only
     ("CREDIT_CARD", r"(?i)(?:credit\s*card|cc|card\s+#?)\b\s*\d{16}\b", 0.80),
     ("CREDIT_CARD", r"\b(?:4\d{3}|5[1-5]\d{2}|6\d{3}|3[47]\d{2})\d{12}\b", 0.80),
-    # Generic 16-digit number — low confidence
-    ("CREDIT_CARD", r"\b\d{16}\b", 0.55),
+    # Generic 16-digit number — low confidence.
+    ("CREDIT_CARD", r"\b\d{16}\b", 0.50),
 
     # ── EMAIL ────────────────────────────────────────────────────────
     ("EMAIL", r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b", 0.90),
@@ -60,9 +66,6 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # ── API_KEY ──────────────────────────────────────────────────────
     ("API_KEY", r"\b(?:sk-|pk-|api[-_]?key|token|secret)[-_]?[a-zA-Z0-9_\-]{16,64}\b", 0.95),
     ("API_KEY", r"\b(?:[A-Za-z0-9+/=]{20,})\b(?=.*(?:key|token|secret))", 0.90),
-
-    # ── IBAN ─────────────────────────────────────────────────────────
-    ("IBAN", r"\b[A-Z]{2}\d{2}(?:[ ]?(?:[A-Z0-9]{4})){4,7}(?:[ ]?\d{1,4})?\b", 0.85),
 
     # ── PHONE ────────────────────────────────────────────────────────
     ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*[\-]?\s*[\+\d\(][\d\s\-\.\(\)]{7,20}\b", 0.90),
@@ -126,13 +129,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # "ROLE + Name" — exclude common role/researcher-type words after the name
     ("PERSON", r"(?i)\b(?:ceo|cfo|cto|president|director|founder|owner)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.75),
     # "Person:" prefix — handle titles like Dr., Mr. — require at least one real name word
-    ("PERSON", r"(?i)\bPerson:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.80),
+    # Negative lookahead blocks words like "researcher", "published", "from", "at" that are common role/context words
+    ("PERSON", r"(?i)\bPerson:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?(?:\s+(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?){0,1}(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those))(?:\s*[.])?\b", 0.80),
     # "Contact person:" / "Contact name:"
     ("PERSON", r"(?i)\bContact\s+(?:person|name):\s*(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.80),
     # Unicode/Non-Latin names — matched by context keywords (CJK + common non-Latin alphabet names)
     # CJK: keyword 用户/联系人/姓名 directly followed by name (no colon needed)
     # Exclude common technical terms that look like capitalized names (Postgresql, Admin, Root, etc.)
-    ("PERSON", r"(?i)\b(?:contact|person)\s*[：:]\s*[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?\b", 0.75),
+    ("PERSON", r"(?i)\b(?:contact|person)\s*[：:]\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those))\b", 0.75),
     # user: prefix — more restrictive to avoid technical terms like 'user: postgresql'
     ("PERSON", r"(?i)\buser\s*[：:](?!\s*(?:admin|root|postgres|postgresql|mysql|default|guest|test|anonymous|nobody|system|api|service))\s*[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?\b", 0.70),
     # CJK-specific: 用户/联系人/姓名 directly followed by 2+ CJK characters
@@ -140,7 +144,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Russian/Cyrillic names
     ("PERSON", r"(?i)\b(?:contact|user|person|connect|reach)\s+(?:is|name)\s+[\u0400-\u04ff]+\b", 0.75),
     # Arabic script names — handle بـ prefix (U+0628 + optional tatweel U+0640)
-    ("PERSON", r"(?i)\b(?:اتصل)\s+بـ?\s*[\u0600-\u06ff]+\b", 0.80),
+    # Exclude standalone بـ without a following name
+    ("PERSON", r"(?i)\b(?:اتصل)\s+بـ?\s*[\u0600-\u06ff]{2,}\b", 0.80),
     ("PERSON", r"(?i)\b(?:اسم|اسمي)\s+[\u0600-\u06ff]+\b", 0.80),
     # Japanese: CJK name followed by の (possessive) or さん (honorific)
     ("PERSON", r"[\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{2,4}(?:の|さん)\b", 0.70),
@@ -149,7 +154,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Any non-Latin name caught by context + multiple non-Latin word chars
     ("PERSON", r"\b(?:name|email|phone|mail|contact|user)\s*[：:]\s*[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff]+\b", 0.65),
     # Non-Latin names after language labels — use lookbehind so match starts at the name
-    ("PERSON", r"(?i)(?:(?<=Russian:)|(?<=Arabic:)|(?<=Japanese:)|(?<=Greek:)|(?<=Unicode))\s*(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]*(?:\s+(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]*)?\b", 0.70),
+    # Require at least 3+ consecutive non-Latin chars to avoid matching
+    # short prefixes that aren't names
+    # Exclude Arabic prefix words that aren't names themselves
+    ("PERSON", r"(?i)(?:(?<=Russian:)|(?<=Arabic:)|(?<=Japanese:)|(?<=Greek:)|(?<=Unicode))\s*(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{3,}(?:\s+(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]*)?\b", 0.70),
 
     # ── CUSTOMER_NAME ────────────────────────────────────────────────
     ("CUSTOMER_NAME", r"(?i)\b(?:customer|client)\s+(?:name\s+)?(?:is\s+)?(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
@@ -189,9 +197,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # Standalone city name — match at sentence start or before comma+known country
         # Also requires the city NOT be preceded by a street address number pattern
         ("CITY", r"(?<!\d\s)(?:(?:^|\.\s+)(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)\b|(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)\s*,\s*(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico))", 0.40),
-        # City after "of" keyword — "of Mumbai", "of London", etc. (catches "the population of Mumbai")
+        # City after "of" keyword — use lookbehind so "of " isn't part of the match.
+        # Split into two fixed-width lookbehinds: one for "of " and one for "city of "
         # Exclude common country names to avoid COUNTRY→CITY confusion
-        ("CITY", r"(?i)\b(?:of|the\s+city\s+of)\s+(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
+        ("CITY", r"(?i)(?<=of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
+        ("CITY", r"(?i)(?<=city of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
 
     # ── COUNTRY ──────────────────────────────────────────────────────
     ("COUNTRY", r"\b(?:USA|US(?:A)?|UK|United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|UAE|Israel|Greece|Czech|Finland|Hungary|Romania|Ukraine)\b", 0.80),

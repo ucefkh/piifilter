@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report",
-  "timestamp": "2026-07-19T19:54:55Z",
+  "timestamp": "2026-07-19T20:08:52Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "examples": 122,
@@ -37,13 +37,13 @@
       "detector": "regex",
       "total_examples": 122,
       "total_expected_entities": 184,
-      "total_detected_entities": 204,
+      "total_detected_entities": 201,
       "total_true_positives": 181,
-      "total_false_positives": 23,
+      "total_false_positives": 20,
       "total_false_negatives": 3,
-      "overall_precision": 0.8872549019607843,
+      "overall_precision": 0.900497512437811,
       "overall_recall": 0.9836956521739131,
-      "overall_f1": 0.9329896907216495,
+      "overall_f1": 0.9402597402597402,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -95,11 +95,11 @@
         },
         "CREDIT_CARD": {
           "true_positives": 12,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 0,
-          "precision": 0.8,
+          "precision": 0.8571,
           "recall": 1.0,
-          "f1": 0.8889
+          "f1": 0.9231
         },
         "CUSTOMER_NAME": {
           "true_positives": 10,
@@ -191,11 +191,11 @@
         },
         "PERSON": {
           "true_positives": 18,
-          "false_positives": 5,
+          "false_positives": 3,
           "false_negatives": 0,
-          "precision": 0.7826,
+          "precision": 0.8571,
           "recall": 1.0,
-          "f1": 0.878
+          "f1": 0.9231
         },
         "PHONE": {
           "true_positives": 24,
@@ -253,13 +253,10 @@
           "PHONE": 1,
           "ADDRESS": 1,
           "DOMAIN": 1,
-          "PERSON": 3,
+          "PERSON": 1,
           "API_KEY": 1,
           "EMAIL": 1,
           "JWT": 1
-        },
-        "IBAN": {
-          "CREDIT_CARD": 1
         },
         "ADDRESS": {
           "COUNTRY": 1
@@ -799,9 +796,9 @@
           "index": 33,
           "text_preview": "Bank: 98765432109876543210 and IBAN: GB29 NWBK 6016 1331 9268 19",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
@@ -809,7 +806,6 @@
           ],
           "detected_types": [
             "BANK_ACCOUNT",
-            "CREDIT_CARD",
             "IBAN"
           ]
         },
@@ -2011,14 +2007,12 @@
           "index": 114,
           "text_preview": "Person: James researcher published his findings in Nature at London University.",
           "expected": 0,
-          "detected": 2,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "PERSON"
-          ]
+          "detected_types": []
         },
         {
           "index": 115,
@@ -2105,13 +2099,13 @@
       "detector": "pipeline",
       "total_examples": 122,
       "total_expected_entities": 184,
-      "total_detected_entities": 205,
+      "total_detected_entities": 202,
       "total_true_positives": 181,
-      "total_false_positives": 24,
+      "total_false_positives": 21,
       "total_false_negatives": 3,
-      "overall_precision": 0.8829268292682927,
+      "overall_precision": 0.8960396039603961,
       "overall_recall": 0.9836956521739131,
-      "overall_f1": 0.9305912596401029,
+      "overall_f1": 0.9378238341968913,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -2163,11 +2157,11 @@
         },
         "CREDIT_CARD": {
           "true_positives": 12,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 0,
-          "precision": 0.8,
+          "precision": 0.8571,
           "recall": 1.0,
-          "f1": 0.8889
+          "f1": 0.9231
         },
         "CUSTOMER_NAME": {
           "true_positives": 10,
@@ -2259,11 +2253,11 @@
         },
         "PERSON": {
           "true_positives": 18,
-          "false_positives": 4,
+          "false_positives": 2,
           "false_negatives": 0,
-          "precision": 0.8182,
+          "precision": 0.9,
           "recall": 1.0,
-          "f1": 0.9
+          "f1": 0.9474
         },
         "PHONE": {
           "true_positives": 24,
@@ -2321,13 +2315,10 @@
           "PHONE": 1,
           "ADDRESS": 1,
           "DOMAIN": 1,
-          "PERSON": 3,
+          "PERSON": 1,
           "API_KEY": 1,
           "EMAIL": 1,
           "JWT": 1
-        },
-        "IBAN": {
-          "CREDIT_CARD": 1
         },
         "IP_ADDRESS": {
           "IP_ADDRESS": 2
@@ -2870,9 +2861,9 @@
           "index": 33,
           "text_preview": "Bank: 98765432109876543210 and IBAN: GB29 NWBK 6016 1331 9268 19",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
@@ -2880,7 +2871,6 @@
           ],
           "detected_types": [
             "BANK_ACCOUNT",
-            "CREDIT_CARD",
             "IBAN"
           ]
         },
@@ -4082,14 +4072,12 @@
           "index": 114,
           "text_preview": "Person: James researcher published his findings in Nature at London University.",
           "expected": 0,
-          "detected": 2,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "PERSON"
-          ]
+          "detected_types": []
         },
         {
           "index": 115,

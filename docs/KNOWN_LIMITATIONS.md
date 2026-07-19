@@ -1,324 +1,216 @@
-# Known Limitations
+# PIIFilter Known Limitations
 
-This document is an honest accounting of PIIFilter's shortcomings. We believe
-transparency about failure modes is essential for responsible deployment. If you
-rely on this tool for privacy guarantees, read this document carefully.
-
----
-
-## 1. Token Split Vulnerabilities
-
-PIIFilter's detection operates on individual tokens and chunks of text. When PII
-is split across token boundaries — for example, a phone number like
-`+1 555-123-4567` arriving as two separate chunks `+1 555-` and `123-4567` —
-neither half matches a complete pattern, and the PII goes undetected.
-
-**What this means in practice:**
-
-- Streaming input (e.g., typing character by character in a chat interface)
-  may see PII partially detected or missed entirely on the first pass
-- Long prompts chunked by the upstream caller — PII may span chunk boundaries
-- Tokenizer-split compound values like SSNs (`123-45-7890` split mid-hyphen)
-  or credit cards (`4111-1111-1111-1111` split after a dash)
-
-**Mitigation:** None at the pattern level. A post-hoc merge pass could
-re-stitch adjacent fragments, but this is not currently implemented. For
-batch/non-streaming input, the full prompt is visible at once and this is not
-an issue.
+This is an honest accounting of failure modes found in the actual source
+code (`patterns.py`, `alias_store_persistent.py`, `session.py`, etc.).
+If you rely on PIIFilter for privacy guarantees, read this carefully.
 
 ---
 
-## 2. Responsibility Gap — LLMs Can Infer PII from Context
+## Detection
 
-PIIFilter replaces detected PII with aliases (e.g., `[PERSON_1]`), then sends
-the aliased prompt to the LLM. The LLM may infer the original PII from
-surrounding context, defeating the purpose of masking.
+### CREDIT_CARD / IBAN overlap
 
-**Example:**
+IBAN numbers (`DE44 5001 0517 5407 3249 31`) contain digit-group sequences
+that structurally resemble credit card 4-4-4-4 formats. The regex
+explicitly uses negative lookbehinds `(?<![A-Z]{2}\d{2}\s)` and negative
+lookaheads `(?![ -\d{2,4}])` to avoid this, but:
 
-> Original: *"Alice is the CFO of Acme Corp, based in Berlin."*
-> Aliased: *"[PERSON_1] is the CFO of [COMPANY_1], based in [CITY_1]."*
+- IBANs with non-standard spacing or missing country-code prefixes can bypass
+  the lookbehind and get flagged as `CREDIT_CARD`.
+- The reverse (credit card caught as IBAN) is also possible since IBAN
+  accepts `[A-Z]{2}\d{2}(...){4,7}`.
+- **In practice:** expect 1-2% false crossover on mixed financial data.
 
-If the LLM already knows that Acme Corp is in Berlin and its CFO is Alice
-Johnson (from training data, tool calls, or other context in the same session),
-it may fill in the blanks and effectively "see" the PII anyway.
+### CJK phone numbers may be truncated
 
-**What this means:**
+The CJK phone patterns (lines 77-79 of `patterns.py`) require a keyword
+prefix like `电话` or `電話は`. When a phone appears in CJK context
+*without* an explicit keyword — e.g. as part of a contact card or a
+standalone `+86 138-0013-8000` — the keyword-based regex doesn't fire.
 
-- PIIFilter controls what leaves your machine, but cannot control what the LLM
-  already knows or can deduce
-- This is not a bug in the filter — it is a fundamental limitation of
-  pseudonymization vs. anonymization
-- For high-sensitivity use cases, consider combining PIIFilter with a) local
-  models only (no data leaves your network) or b) output-side re-checking
+Even when the keyword is present, the regex captures everything after it
+with `[\d-]+`, which can swallow trailing punctuation or absorb space-
+separated digit groups from subsequent text.
 
----
+### GPS single decimal coordinates
 
-## 3. Detection Gaps — Entity Recall and Precision Are Not Uniform
+The line 102 pattern `(?<!\d)(?<!\d\.)[-+]?\d{1,2}\.\d{4,}(?!\d)` at 0.70
+confidence matches **any** number with 4+ decimal places. This means:
 
-Regex patterns are the primary detection mechanism. Different entity types have
-wildly different accuracy. The benchmark numbers below (from 184 entities across
-24 types) tell the story:
+- Timestamps like `1.2345s` get flagged as GPS.
+- Version numbers like `2.71828` get flagged as GPS.
+- Any scientific decimal → false positive.
 
-| Entity Type       | Recall | Precision | Notes                                                        |
-|-------------------|--------|-----------|--------------------------------------------------------------|
-| API_KEY           | 1.00   | 0.91      | Reliable, but short keys may be missed if below length thresh|
-| CREDIT_CARD       | 1.00   | 0.67      | 67% precision = 1 in 3 matches is a false positive           |
-| DATABASE_URL      | 1.00   | 1.00      | Rock solid — distinctive format                              |
-| DOMAIN            | 1.00   | 0.60      | False positives on any `word.word` string in prose           |
-| EMAIL             | 1.00   | 0.86      | Reliable on standard formats                                 |
-| FILE_PATH         | 1.00   | 0.93      | Reliable                                                     |
-| GPS               | 0.55   | 0.80      | Lat/lon pair detection needs improvement; 45% recall gap     |
-| IP_ADDRESS        | 1.00   | 0.93      | Reliable                                                     |
-| JWT               | 0.89   | 1.00      | Reliable when present                                        |
-| PASSPORT          | 1.00   | 1.00      | Reliable                                                     |
-| PERSON            | 0.62   | 0.27      | **Major weakness** — 73% of flagged PERSON is wrong          |
-| PHONE             | 0.96   | 0.63      | False positives on numeric sequences in prose                |
-| PRIVATE_URL       | 1.00   | 0.93      | Reliable                                                     |
-| PROJECT_NAME      | 0.94   | 1.00      | Good with context keywords                                   |
-| SOCIAL_SECURITY   | 1.00   | 1.00      | Reliable                                                     |
-| SSH_KEY           | 1.00   | 1.00      | Reliable                                                     |
-| ADDRESS           | 0.86   | 0.67      | Context-dependent; misses non-standard address formats       |
-| COMPANY           | 0.86   | 0.67      | Misses companies without Inc/LLC/Corp suffix                 |
-| COUNTRY           | 1.00   | 0.86      | Good with keyword list                                       |
-| CUSTOMER_NAME     | 0.33   | 0.50      | **Very weak** — needs NER model                              |
-| EMPLOYEE_NAME     | 0.67   | 0.86      | Weak without role-prefix context                             |
-| BANK_ACCOUNT      | 0.00   | —        | **Not detected** — entirely context-dependent                |
-| CITY              | 0.00   | —        | **Not detected** — needs NER model                           |
+The only guard is the 0.70 confidence threshold; there is no semantic
+verification (no check for lat/lng range validity 0-90 / 0-180).
 
-**Key takeaways:**
+### COMPANY vs CITY confusion
 
-- **PERSON** has 27% precision — most flagged "names" are false positives.
-  This means 3 out of every 4 PERSON flags are wrong, which degrades user trust.
-- **CITY** and **BANK_ACCOUNT** have zero recall — no regex pattern catches
-  them reliably without surrounding context keywords.
-- **CREDIT_CARD** and **DOMAIN** have precision around 0.60–0.67 — expect
-  noticeable noise if you surface all detections to the user.
-- **CUSTOMER_NAME** and **EMPLOYEE_NAME** are underpowered — they rely on
-  narrow context phrases ("customer name is X") and miss everything else.
+Both entity types match two-capitalized-word patterns at low confidence:
+
+- `COMPANY` (line 207): matches `Word Technologies|Systems|Solutions|...`
+- `CITY` (lines 183-186): matches `based in CityName` or `in CityName`
+
+A phrase like *"based in Quantum Systems"* can trigger **both** CITY
+(via "based in") and COMPANY (via "Systems" keyword). The deduplication
+in the pipeline picks whichever detector runs first, which is non-
+deterministic from the user's perspective.
+
+### PERSON false positives on technical terms
+
+The `user:` pattern (line 137) explicitly excludes `admin|root|postgres|...`
+but any other capitalized technical label triggers a match:
+
+- `User: Guest` → PERSON match (Guest is a common but also a technical
+  account name)
+- `User: Alfred` → PERSON match (correct, but indistinguishable from
+  `User: Postgresql` if Postgresql weren't explicitly blacklisted)
+- Single-word names at sentence start are invisible to PERSON patterns
+  (they need a title prefix or context keyword), so *"Jane walked in"*
+  is never detected.
 
 ---
 
-## 4. Encryption Is Not Masking
+## Unfilter (alias restoration)
 
-PIIFilter detects PII and replaces it with aliases **in flight**. It does not
-encrypt the original text at any layer — the alias-to-original mapping lives in
-an in-memory AliasStore (optionally persisted as unencrypted JSON).
+### Token boundary splits in streaming
 
-**What this means:**
+The `unfilter_stream` method in `session.py` buffers tokens and checks
+for partial alias prefixes. Failure modes:
 
-- Encryption (TLS, HTTPS, WSS) protects data **in transit** between your
-  client, PIIFilter, and the LLM provider
-- Encryption **does not mask PII in the prompt itself** — that is the job of
-  the detection/replacement pipeline
-- The alias store, if persisted to disk, contains the full mapping from
-  aliases back to original values — anyone with filesystem access can read it
-- There is no disk-level encryption on the alias store file
+- **Alias split across SSE frames**: If `[PERSON_1]` arrives as
+  `[PERSON_` and `1]` in separate chunks, the buffer builds up until
+  either the full alias appears or the 2-second timeout fires. On
+  timeout, the raw partial alias text (`[PERSON_`) is emitted verbatim.
+- **Nested aliases in same buffer**: If two aliases arrive in the same
+  chunk (`[PERSON_1] [COMPANY_2]`), only the first match is consumed
+  per iteration; the second alias's prefix may sit in the buffer and
+  trigger a premature timeout flush.
+- **Alias sorting**: Aliases are sorted by length descending. If a
+  shorter alias is a prefix of a longer one, the shorter is checked
+  first; if it's in the buffer but not at the tail, it's missed.
 
-**Recommendation:** If you persist the alias store, encrypt the file at the
-application level or store it on an encrypted filesystem. Use PIIFilter behind
-a TLS-terminating reverse proxy for transport security.
+### Paraphrasing defeats unfilter
 
----
+The unfilter is a **string-replacement** pass. If the LLM rewords:
 
-## 5. Regex-Only Limitations — No Semantic Understanding
+- `[PERSON_1]` → `"the individual"` or `"the first person mentioned"`
+- `[COMPANY_1]` → `"that organization"` or `"the client"`
 
-PIIFilter relies primarily on regex pattern matching (the `detector-regex`
-plugin). Regex is inherently pattern-based, not semantic. This creates blind
-spots:
+…the original is permanently lost. The unfilter cannot reason about
+aliases; it only scans for exact string matches.
 
-**Context-dependent types that fool patterns:**
+### No unfilter without AliasStore
 
-- A date like `"March 4, 1990"` is a valid birth date (PII). Without a
-  context keyword like "DOB" or "birth" nearby, it looks like a plain date.
-- A bare numeric sequence `"123456789012"` could be a bank account, a phone
-  number extension, an order ID, or a random number — regex alone cannot
-  disambiguate.
-- Names that match common English words (`"Bill"`, `"Grace"`, `"Pat"`,
-  `"Rose"`, `"Jack"`) trigger false positives or are missed depending on
-  how the pattern is written.
-- A single capitalized word at the start of a sentence — regex cannot tell
-  if it is a name or the beginning of a sentence without NLP.
+If `alias_store` is None or `conversation_id` is unset (line 169 of
+`session.py`), the streaming unfilter returns immediately with a
+passthrough — the LLM response contains raw alias tokens like
+`[PERSON_1]` with no restoration.
 
-**Non-standard formatting:**
+### Case sensitivity
 
-- Credit cards with unusual spacing or embedded text (`"card: 4111.1111.1111.1111"`)
-- Phone numbers in non-Western formats (e.g., Japanese `080-XXXX-XXXX` without
-  country code)
-- Addresses not following `Number Street Suffix` structure (e.g., rural routes,
-  PO boxes without "P.O. Box" phrasing, non-English address formats)
-
-**Mitigation:** An NER-based plugin (`detector-gliner`) is planned but not yet
-integrated. See `plugins/detector-gliner/` for current status.
+`replace_in_response` (line 130 of `session.py`) uses `str.replace`
+which is case-sensitive. An LLM that outputs `[person_1]` instead of
+`[PERSON_1]` will leave it unreplaced. The alias store itself is also
+case-sensitive — `"Alice"` and `"alice"` are separate entries.
 
 ---
 
-## 6. Evasion Risks — Adversarial Input
+## Encryption (SQLite backend)
 
-A determined user can craft prompts that bypass PIIFilter's detection. Known
-evasion vectors:
+### Fernet key is optional
 
-**Encoding tricks:**
+When `PIIFILTER_STORE_KEY` env var is unset (the default), the
+`SQLiteAliasBackend` stores plaintext (lines 165-168 of
+`alias_store_persistent.py`). The `_encrypt`/`_decrypt` helpers
+return the input unchanged when `fernet is None`.
 
-- Base64-encoded PII — decoded values are never re-scanned
-- URL-encoded strings (`%2B1%20555%2D1234`) — the encoded form may not match
-  any pattern
-- Unicode homoglyphs replacing ASCII digits (e.g., `４` instead of `4`)
-- Hex-encoded or HTML-entity-encoded values
+This is **by design** for testability, but can catch operators off
+guard: persistence is always on when SQLite is used, but encryption
+is opt-in.
 
-**Adversarial phrasing:**
+### Hardcoded PBKDF2 salt
 
-- "My SSN is nine nine two, dash, one six, dash, seven eight nine zero" —
-  spelled-out digits avoid numeric patterns entirely
-- "My credit card is split across two lines: 4111-1111 / line break / 1111-1111"
-- Injecting false delimiters or whitespace inside standard PII patterns
+Line 42: `FERNET_SALT = b"piifilter_alias_store_salt_v1"`
 
-**Context manipulation:**
+The salt is a compile-time constant, not user-configurable. This means:
 
-- Wrapping PII in code comments or markdown code blocks that the calling
-  application strips before sending to the LLM (but after PIIFilter processes)
-- Nested multi-byte encodings
+- All PIIFilter deployments that use `PIIFILTER_STORE_KEY` derive
+  their key from the same salt → pre-computed rainbow tables against
+  the PBKDF2 output are theoretically possible.
+- Key rotation (changing `PIIFILTER_STORE_KEY`) requires a manual
+  migration: re-encrypt every row with the new key. No automated
+  re-keying exists.
 
-**Current defense:** None. PIIFilter is not designed as an adversarial filter.
-It assumes a cooperative or non-malicious user. If you face adversarial input,
-you need a separate input sanitization layer above PIIFilter.
+### Deterministic lookup hash leaks entropy
 
----
+The `lookup_key` column stores SHA-256(plaintext). An attacker with
+DB read access can:
 
-## 7. Non-English Language Limitations
+- Hash common names, emails, SSNs and compare against `lookup_key` to
+  identify which rows contain specific values (confirmation attack).
+- Since the original value is also encrypted in the same row, a matched
+  lookup_key + brute-force of weak passphrases → plaintext recovery.
 
-PIIFilter's regex patterns are primarily designed for English and, to a lesser
-extent, Latin-script European languages. Non-English detection is heuristic at
-best.
+### No cleanup on `__init__` failure
 
-**CJK (Chinese/Japanese/Korean):**
-
-- PERSON detection has CJK-specific patterns (用户, 名前, 姓名 keywords) but
-  these only fire when explicit context keywords are present
-- Names written without a introducing keyword are missed entirely
-- CITY detection in CJK text is zero — no CJK city-name patterns exist
-- PHONE detection has CJK-aware patterns (电话), but formatting variance is
-  high and misses are common
-
-**Arabic:**
-
-- Arabic-script PERSON patterns exist (اسم, اسمي keywords) but are narrow
-- Arabic numerals are not distinguished from Latin digits — a 10-digit Arabic
-  number could be flagged as PHONE when it is something else
-- No address, city, or country patterns for Arabic-script text
-
-**Cyrillic (Russian, Ukrainian, Bulgarian, etc.):**
-
-- PERSON detection via contact/user context keywords targets Cyrillic names
-  but with low recall
-- No address or company patterns for Cyrillic text
-- Phone patterns assume Latin digits
-
-**Other scripts:**
-
-- No detection support for Devanagari, Thai, Georgian, Armenian, Hebrew,
-  or any other script not explicitly listed in patterns.py
-- Non-script-specific patterns (SSN, credit card, IP, JWT, etc.) work
-  regardless of surrounding script, but entity types requiring semantic
-  understanding (PERSON, CITY, COMPANY, ADDRESS) are English/Latin-limited
+If `_init_db()` succeeds but `_make_fernet()` raises (bad env var?), the
+table is left in an inconsistent state — the DB file is created but the
+connection is never used.
 
 ---
 
-## 8. Provider Reliability — Depends on the Local LLM
+## General
 
-PIIFilter is designed to work with locally-hosted LLMs (LM Studio, vLLM) as a
-privacy gateway. This dependency creates operational limitations:
+### Detectors run independently; no cross-detector consistency
 
-**Current provider support:**
+The pipeline's `_detect` method (line 102-151 of `pipeline/__init__.py`)
+runs each detector on the full prompt independently and deduplicates by
+span. It does **not** check whether two overlapping entities of different
+types make semantic sense — e.g., a span detected as both `PERSON` and
+`COMPANY` at different positions isn't cross-validated.
 
-| Provider  | Status        | Streaming | Unfilter | Notes                              |
-|-----------|---------------|-----------|----------|------------------------------------|
-| LM Studio | ✅ Tested     | ✅ Working| ✅ Tested| Primary development target          |
-| vLLM      | ✅ Implemented| ⚠️ Untested| ⚠️ Untested| Code present, not end-to-end tested |
-| OpenAI    | ⚠️ Via middleware| ⚠️ Untested| ✅ Theoretical| Requires extra configuration     |
+### Regex patterns are English/Latin-centric
 
-**Failure modes:**
+Non-English PII:
+- CJK names need explicit keywords (`用户`, `名前`); standalone CJK
+  names in prose are invisible.
+- Arabic names (lines 143-144) need `اسم`/`اسمي` keyword prefix.
+- Cyrillic (line 141) needs `contact is Name` English wrapper.
+- Devanagari, Thai, Hebrew, Armenian: zero coverage.
 
-- If the local LLM goes down (OOM, crash, model swap), PIIFilter has no
-  automatic failover — requests fail
-- Roundtrip tests (filter → LLM → unfilter) require a real running LLM;
-  unit tests can mock this, but integration tests need infrastructure
-- Streaming unfilter depends on the LLM's output format — if the provider
-  changes its SSE schema or chunking behavior, the unfilter may break
+### Streaming alias buffering uses fixed 2s timeout
 
-**Recommendation:** Always run health checks on the upstream LLM before routing
-traffic through PIIFilter. Monitor for provider-specific error codes.
+The `timeout` parameter in `unfilter_stream` (line 152) is configurable
+but defaults to 2 seconds. If the LLM takes longer to emit the rest of
+an alias token (slow generation, high latency), the buffer flushes raw
+text with a partial alias exposed.
 
----
+### No rate limiting or auth on the REST API
 
-## 9. Performance — Regex Scanning Cost on Long Prompts
+There is no authentication layer, rate limit, or request budget. Any
+client that reaches the PIIFilter HTTP endpoint can process prompts.
+This is acceptable for local-only deployments but unsafe if exposed
+(even behind a VPN).
 
-Regex scanning is fast for typical use, but can become expensive on very long
-or complex prompts.
+### On-error fallback exposes `[PIIFilter Error: ...]`
 
-**Measured performance (benchmarks as of July 2026):**
+Line 272 of `pipeline/__init__.py`: when the provider fails, the error
+message is embedded directly into `llm_response`:
 
-- Regex detection: <1ms per prompt (typical short prompts)
-- Regex detection on large inputs (>100 KB): 10–50ms depending on pattern
-  cardinality
-- Presidio detection: 500–2000ms per prompt (model loading + inference)
-- Pipeline overhead: ~10µs per prompt (event dispatch + merging)
+```python
+session.llm_response = f"[PIIFilter Error: {exc}]"
+```
 
-**Scaling concerns:**
-
-- Each prompt is scanned against ~80+ patterns (see `patterns.py`). Adding
-  more entity types increases linear scan time.
-- Backtracking in complex regexes (e.g., GPS coordinate patterns with
-  optional groups) can cause catastrophic backtracking on pathological input.
-  Current patterns are tested against this, but edge cases exist.
-- The `unfilter_stream` method in `Session` buffers tokens with a configurable
-  timeout (default 2 seconds). Very long aliases may cause latency spikes or
-  premature flushing.
-
-**Recommendation:** For latency-sensitive applications, use regex-only mode
-(`detection.enabled_detectors: ["regex"]`). Avoid sending multi-megabyte
-prompts through Presidio. Profile with your actual prompt payloads before
-production deployment.
-
----
-
-## 10. Streaming and Stateless Detection
-
-The streaming detector processes tokens independently — it has no memory of
-previous tokens in the stream. This introduces stateless-specific failure modes:
-
-- **Partial-token false positives:** A stream fragment like `"4111-"` at the
-  end of one chunk may trigger a false CREDIT_CARD match that is corrected
-  when the next chunk arrives — but the correction may not reach the caller
-  in time
-- **Alias boundary confusion:** In streaming unfilter, if an alias
-  (`[CREDIT_CARD_1]`) is split across two SSE data frames, the unfilter may
-  output the raw alias text before enough context arrives to reverse it
-- **Stateless detector** has no deduplication across stream — the same PII
-  may be flagged multiple times as the stream progresses
-
-These are architectural limitations of a pure streaming approach without
-stateful buffering. A stateful streaming detector would add latency but
-eliminate these edge cases.
+This may leak internal state (file paths, connection strings, stack
+traces) to the caller.
 
 ---
 
 ## Summary: When Not to Use PIIFilter
 
-PIIFilter is a **local-first privacy gateway for cooperative use cases**. It is
-not:
-
-- A security boundary against adversarial users
-- An anonymization tool (it pseudonymizes, not anonymizes)
-- A replacement for transport encryption (TLS)
-- A compliance solution for GDPR, HIPAA, or similar regulations without
-  additional audit and process controls
-- A general-purpose PII redaction tool for binary, image, or audio content
-- A multilingual solution for non-English-dominant workflows
-
-Use it as part of a layered privacy strategy, not as the sole privacy
-mechanism.
-
----
-
-*Last updated: July 2026*
+- Against adversarial prompt injection — no evasion defense exists
+- For true anonymization — it pseudonymizes, not anonymizes
+- As a compliance sole-mechanism (GDPR, HIPAA) — needs audit + process
+- For binary/image/audio PII — text-only detection
+- For non-English-dominant workflows — English/Latin bias in patterns
