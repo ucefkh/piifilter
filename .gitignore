@@ -32,6 +32,9 @@ Thumbs.db
 # Node
 node_modules/
 
+# VSCode extension build output
+apps/vscode-extension/out/
+
 # Temp test files from subagents
 _test_*.py
 _check_*.py

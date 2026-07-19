@@ -1,0 +1,47 @@
+{
+  "name": "piifilter-vscode",
+  "displayName": "PIIFilter",
+  "description": "Local-first AI privacy gateway for VSCode — protects prompts before they reach AI coding assistants",
+  "version": "2.0.0",
+  "publisher": "piifilter",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Security", "Programming Languages", "Other"],
+  "activationEvents": ["onStartupFinished"],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [{
+      "command": "piifilter.showStatus",
+      "title": "PIIFilter: Show Filter Status"
+    }],
+    "configuration": {
+      "title": "PIIFilter",
+      "properties": {
+        "piifilter.serverUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:8000",
+          "description": "PIIFilter REST API server URL"
+        },
+        "piifilter.mode": {
+          "type": "string",
+          "enum": ["semantic", "mask", "generalize"],
+          "default": "semantic",
+          "description": "Replacement mode"
+        },
+        "piifilter.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable PIIFilter protection"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -w -p ./"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.3.0"
+  }
+}

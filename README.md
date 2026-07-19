@@ -4,8 +4,9 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/01TEK/piifilter"><img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python 3.11+"></a>
-  <a href=".github/workflows/ci.yml"><img src="https://img.shields.io/badge/CI-passing-brightgreen" alt="CI"></a>
+  <a href="https://github.com/ucefkh/piifilter"><img src="https://img.shields.io/badge/python-3.11%2B-blue" alt="Python 3.11+"></a>
+  <a href="https://github.com/ucefkh/piifilter/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/ucefkh/piifilter/ci.yml?branch=main&label=CI" alt="CI"></a>
+  <a href="https://pypi.org/project/piifilter/"><img src="https://img.shields.io/pypi/v/piifilter" alt="PyPI"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License"></a>
   <a href="SECURITY.md"><img src="https://img.shields.io/badge/security-policy-yellow" alt="Security Policy"></a>
 </p>
@@ -26,8 +27,14 @@ No cloud dependency. No prompt storage. Local execution. **<50 ms latency.**
 ## Quick Start
 
 ```bash
-# 1. Install the core
-pip install -e core
+# pip install the core (also available on PyPI)
+pip install piifilter
+
+# Or run via Docker
+docker run -p 8000:8000 ghcr.io/ucefkh/piifilter:latest
+
+# Or use the npm package (SDK for JS/TS)
+npm install @piifilter/sdk
 
 # 2. Run the server (REST API on port 8000)
 piifilter serve
