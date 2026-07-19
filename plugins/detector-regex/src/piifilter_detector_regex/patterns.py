@@ -38,6 +38,13 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Date after context keywords like "DOB is", "Date:", "Expires:", "Born:", "Updated:", "Valid until"
     ("DATE", r"(?i)(?:DOB|Date|Expires|Born|Updated|Valid\s+until)\s*:?\s*\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b", 0.85),
 
+    # ── PRIVATE_URL ──────────────────────────────────────────────────
+    ("PRIVATE_URL", r"\bhttps?://(?:localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)(?::\d+)?(?:/[^\s]*)?\b", 0.90),
+    ("PRIVATE_URL", r"\bhttps?://[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)?(?:/[^\s]*)?\b", 0.90),
+    ("PRIVATE_URL", r"\b[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)(?:/[^\s]*)?\b", 0.85),
+    # Bare internal hostname (no dot): http://internal:80/path
+    ("PRIVATE_URL", r"\bhttps?://(?:internal|localhost|db|api|app|backend|frontend|redis|postgres|mysql|rabbitmq)(?::\d+)?(?:/[^\s]*)?\b", 0.80),
+
     # ── URL ──────────────────────────────────────────────────────────
     # Full http/https URLs
     ("URL", r"\bhttps?://[\w./?=&%-]+(?:\.[\w./?=&%-]+)*\b", 0.85),
@@ -163,12 +170,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         ("PHONE", r"\btel:\d{7,15}\b", 0.85),
         # URL-encoded international: %2B1-555-123-4567 (handles single or double spaces)
         ("PHONE", r"%2B\d{1,3}\s{1,2}\d{2,4}\s{1,2}\d{3,4}\s{1,2}\d{3,4}\b", 0.85),
-        # UK mobile bare with space: 07700 900 123
-        ("PHONE", r"\b07\d{2}\s+\d{3}\s+\d{3}\b", 0.80),
+        # UK mobile bare with space: 07700 900 123, 07XXX XXX XXX
+        ("PHONE", r"\b07\d{3}\s+\d{3}\s+\d{3}\b", 0.80),
         ("PHONE", r"\b07\d{9}\b", 0.75),
-        # Variable-spaced international (country code + space + grouped digits):
-        # "44 20 7946 0958", "49 30 12345678", "966 55 123 4567"
-        ("PHONE", r"\b\d{1,4}(?:\s+\d{2,4}){2,4}\b", 0.60),
+        # Variable-spaced international (country code + space + variable-length groups):
+        # "44 20 7946 0958", "966 55 123 4567", "49 30 12345678"
+        ("PHONE", r"\b\d{1,4}\s+\d{2,4}(?:\s+\d{2,8}){1,2}\b", 0.60),
         # UK mobile format with parentheses: (077) 009-00123
         ("PHONE", r"\(\d{4,5}\)\s*\d{3}[–—−\-.]?\d{5}\b", 0.78),
         # Country code space-separated with dash in subgroups: "86 138-0013-8000"
@@ -182,13 +189,6 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # Universal variable-separator pattern: catch-all for phone-like sequences
         # with at least 9 digits and mixed separators (dashes, dots, spaces)
         ("PHONE", r"\b\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]\d{2,4}\b", 0.55),
-
-    # ── PRIVATE_URL ──────────────────────────────────────────────────
-    ("PRIVATE_URL", r"\bhttps?://(?:localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)(?::\d+)?(?:/[^\s]*)?\b", 0.90),
-    ("PRIVATE_URL", r"\bhttps?://[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)?(?:/[^\s]*)?\b", 0.90),
-    ("PRIVATE_URL", r"\b[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)(?:/[^\s]*)?\b", 0.85),
-    # Bare internal hostname (no dot): http://internal:80/path
-    ("PRIVATE_URL", r"\bhttps?://(?:internal|localhost|db|api|app|backend|frontend|redis|postgres|mysql|rabbitmq)(?::\d+)?(?:/[^\s]*)?\b", 0.80),
 
     # ── IP_ADDRESS ───────────────────────────────────────────────────
     ("IP_ADDRESS", r"\b(?:(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(?:25[0-5]|2[0-4]\d|[01]?\d\d?)\b", 0.90),

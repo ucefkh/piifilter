@@ -238,19 +238,30 @@ def is_masked_pii(entity: dict) -> bool:
     if "X" in value.upper() or "*" in value:
         return True
 
-    # Hex-encoded: purely hexadecimal and long enough to be a SSN
+    # Hex-encoded: purely hexadecimal and long enough to be a SSN,
+    # but must contain at least one actual hex letter (a-f) — plain digit-only
+    # strings are NOT hex encoded unless they're unusually long (>11 digits).
     digits_only = "".join(c for c in value if c.isalnum())
     if len(digits_only) >= 9 and all(c in "0123456789abcdefABCDEF" for c in digits_only):
-        # It's all hex digits — could be hex-encoded SSN or base64
-        return True
+        # Must contain at least one hex letter A-F to distinguish from plain digits
+        if any(c in "abcdefABCDEF" for c in digits_only):
+            return True
+        # All-digit strings that are suspiciously long (> 11 chars) are likely
+        # hex-encoded content, not real SSNs (real SSNs have 9 digits)
+        if len(digits_only) > 11:
+            return True
 
     # Base64-encoded SSN: contains only base64-legal chars (A-Za-z0-9+/=)
-    # and has roughly SSN-like length (12+ chars) and ends with '=' padding
-    if len(value) >= 12 and value.rstrip("=").replace("+", "").replace("/", ""):
+    # and looks like encoded text — mixed case or all uppercase with '=' padding
+    stripped = value.strip()
+    if len(stripped) >= 12 and len(stripped) <= 80:
         import re as _re
-        if _re.match(r'^[A-Za-z0-9+/]+=*$', value.strip()) and len(value) <= 40:
-            # Could be base64 — flag it if it looks like encoded text (no spaces, mixed case)
-            if any(c.isupper() for c in value) and any(c.islower() for c in value):
+        if _re.match(r'^[A-Za-z0-9+/]+=*$', stripped):
+            # Must not look like a plain English word or standard format
+            # e.g. "DEBUG", "PASSWORD" — reject long runs of uppercase without padding
+            has_mixed_case = any(c.isupper() for c in stripped) and any(c.islower() for c in stripped)
+            has_padding_and_upper = stripped.endswith("=") and any(c.isupper() for c in stripped)
+            if has_mixed_case or has_padding_and_upper:
                 return True
 
     # Spoken-out / segmented with extra textual context
