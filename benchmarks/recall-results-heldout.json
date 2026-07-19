@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out)",
-  "timestamp": "2026-07-19T21:04:13Z",
+  "timestamp": "2026-07-19T21:49:35Z",
   "dataset": {
     "path": "benchmarks/data/pii_dataset_v2.json",
     "total_examples": 2365,
@@ -46,13 +46,13 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 531,
-      "total_true_positives": 433,
-      "total_false_positives": 98,
-      "total_false_negatives": 106,
-      "overall_precision": 0.815442561205273,
-      "overall_recall": 0.8033395176252319,
-      "overall_f1": 0.8093457943925234,
+      "total_detected_entities": 513,
+      "total_true_positives": 478,
+      "total_false_positives": 35,
+      "total_false_negatives": 61,
+      "overall_precision": 0.9317738791423001,
+      "overall_recall": 0.8868274582560297,
+      "overall_f1": 0.908745247148289,
       "per_type": {
         "ADDRESS": {
           "true_positives": 34,
@@ -95,74 +95,74 @@
           ]
         },
         "BANK_ACCOUNT": {
-          "true_positives": 12,
+          "true_positives": 14,
           "false_positives": 0,
-          "false_negatives": 1,
-          "n": 13,
+          "false_negatives": 0,
+          "n": 14,
           "precision": 1.0,
-          "recall": 0.9231,
-          "f1": 0.96,
-          "f2": 0.9375,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.6669,
-            0.9863
+            0.7847,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "CITY": {
-          "true_positives": 8,
-          "false_positives": 14,
-          "false_negatives": 5,
-          "n": 13,
-          "precision": 0.3636,
-          "recall": 0.6154,
-          "f1": 0.4571,
-          "f2": 0.5405,
+          "true_positives": 6,
+          "false_positives": 3,
+          "false_negatives": 6,
+          "n": 12,
+          "precision": 0.6667,
+          "recall": 0.5,
+          "f1": 0.5714,
+          "f2": 0.5263,
           "recall_ci": [
-            0.3552,
-            0.8229
+            0.2538,
+            0.7462
           ],
           "real_n": 9,
-          "real_recall": 0.4444,
+          "real_recall": 0.3333,
           "real_recall_ci": [
-            0.1888,
-            0.7334
+            0.1206,
+            0.6458
           ]
         },
         "COMPANY": {
-          "true_positives": 38,
-          "false_positives": 1,
-          "false_negatives": 3,
-          "n": 41,
-          "precision": 0.9744,
-          "recall": 0.9268,
-          "f1": 0.95,
-          "f2": 0.936,
+          "true_positives": 40,
+          "false_positives": 0,
+          "false_negatives": 2,
+          "n": 42,
+          "precision": 1.0,
+          "recall": 0.9524,
+          "f1": 0.9756,
+          "f2": 0.9615,
           "recall_ci": [
-            0.8057,
-            0.9748
+            0.8421,
+            0.9868
           ],
           "real_n": 22,
-          "real_recall": 0.8636,
+          "real_recall": 0.9091,
           "real_recall_ci": [
-            0.6666,
-            0.9525
+            0.7218,
+            0.9747
           ]
         },
         "COUNTRY": {
           "true_positives": 14,
-          "false_positives": 9,
+          "false_positives": 4,
           "false_negatives": 2,
           "n": 16,
-          "precision": 0.6087,
+          "precision": 0.7778,
           "recall": 0.875,
-          "f1": 0.7179,
-          "f2": 0.8046,
+          "f1": 0.8235,
+          "f2": 0.8537,
           "recall_ci": [
             0.6398,
             0.965
@@ -175,23 +175,23 @@
           ]
         },
         "CREDIT_CARD": {
-          "true_positives": 36,
+          "true_positives": 52,
           "false_positives": 0,
-          "false_negatives": 20,
-          "n": 56,
+          "false_negatives": 12,
+          "n": 64,
           "precision": 1.0,
-          "recall": 0.6429,
-          "f1": 0.7826,
-          "f2": 0.6923,
+          "recall": 0.8125,
+          "f1": 0.8966,
+          "f2": 0.8442,
           "recall_ci": [
-            0.5119,
-            0.7554
+            0.7003,
+            0.8894
           ],
-          "real_n": 38,
-          "real_recall": 0.4737,
+          "real_n": 30,
+          "real_recall": 0.6,
           "real_recall_ci": [
-            0.3248,
-            0.6274
+            0.4232,
+            0.7541
           ]
         },
         "CUSTOMER_NAME": {
@@ -256,13 +256,13 @@
         },
         "DOMAIN": {
           "true_positives": 26,
-          "false_positives": 24,
+          "false_positives": 6,
           "false_negatives": 2,
           "n": 28,
-          "precision": 0.52,
+          "precision": 0.8125,
           "recall": 0.9286,
-          "f1": 0.6667,
-          "f2": 0.8025,
+          "f1": 0.8667,
+          "f2": 0.9028,
           "recall_ci": [
             0.7735,
             0.9802
@@ -375,23 +375,23 @@
           ]
         },
         "IP_ADDRESS": {
-          "true_positives": 28,
+          "true_positives": 82,
           "false_positives": 7,
-          "false_negatives": 32,
-          "n": 60,
-          "precision": 0.8,
-          "recall": 0.4667,
-          "f1": 0.5895,
-          "f2": 0.5091,
+          "false_negatives": 5,
+          "n": 87,
+          "precision": 0.9213,
+          "recall": 0.9425,
+          "f1": 0.9318,
+          "f2": 0.9382,
           "recall_ci": [
-            0.3463,
-            0.5911
+            0.8724,
+            0.9752
           ],
           "real_n": 46,
-          "real_recall": 0.3043,
+          "real_recall": 0.8913,
           "real_recall_ci": [
-            0.1908,
-            0.4481
+            0.7696,
+            0.9527
           ]
         },
         "JWT": {
@@ -435,34 +435,34 @@
           ]
         },
         "PERSON": {
-          "true_positives": 28,
+          "true_positives": 36,
           "false_positives": 0,
-          "false_negatives": 12,
-          "n": 40,
+          "false_negatives": 8,
+          "n": 44,
           "precision": 1.0,
-          "recall": 0.7,
-          "f1": 0.8235,
-          "f2": 0.7447,
+          "recall": 0.8182,
+          "f1": 0.9,
+          "f2": 0.8491,
           "recall_ci": [
-            0.5457,
-            0.8193
+            0.6804,
+            0.9049
           ],
           "real_n": 26,
-          "real_recall": 0.5385,
+          "real_recall": 0.6923,
           "real_recall_ci": [
-            0.3546,
-            0.7124
+            0.5001,
+            0.835
           ]
         },
         "PHONE": {
           "true_positives": 104,
-          "false_positives": 30,
+          "false_positives": 2,
           "false_negatives": 5,
           "n": 109,
-          "precision": 0.7761,
+          "precision": 0.9811,
           "recall": 0.9541,
-          "f1": 0.856,
-          "f2": 0.9123,
+          "f1": 0.9674,
+          "f2": 0.9594,
           "recall_ci": [
             0.8971,
             0.9802
@@ -515,17 +515,17 @@
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 60,
+          "true_positives": 70,
           "false_positives": 7,
-          "false_negatives": 15,
-          "n": 75,
-          "precision": 0.8955,
-          "recall": 0.8,
-          "f1": 0.8451,
-          "f2": 0.8174,
+          "false_negatives": 10,
+          "n": 80,
+          "precision": 0.9091,
+          "recall": 0.875,
+          "f1": 0.8917,
+          "f2": 0.8816,
           "recall_ci": [
-            0.6959,
-            0.8749
+            0.785,
+            0.9307
           ],
           "real_n": 19,
           "real_recall": 0.9474,
@@ -584,34 +584,27 @@
         "DOMAIN": {
           "URL": 2
         },
-        "COMPANY": {
-          "DOMAIN": 5,
-          "COMPANY": 1
-        },
-        "IP_ADDRESS": {
-          "PHONE": 27,
-          "SOCIAL_SECURITY": 4
-        },
         "JWT": {
           "DOMAIN": 5
         },
         "ADDRESS": {
-          "COUNTRY": 8,
-          "DOMAIN": 9,
-          "CITY": 12
-        },
-        "PERSON": {
-          "DOMAIN": 4,
-          "EMPLOYEE_NAME": 1
+          "COUNTRY": 3,
+          "CITY": 1
         },
         "SOCIAL_SECURITY": {
           "IP_ADDRESS": 7
+        },
+        "IP_ADDRESS": {
+          "SOCIAL_SECURITY": 4
         },
         "CREDIT_CARD": {
           "PHONE": 2
         },
         "COUNTRY": {
           "CITY": 2
+        },
+        "PERSON": {
+          "EMPLOYEE_NAME": 1
         },
         "API_KEY": {
           "SOCIAL_SECURITY": 1
@@ -621,9 +614,6 @@
         },
         "GPS": {
           "GPS": 1
-        },
-        "BANK_ACCOUNT": {
-          "PHONE": 1
         },
         "EMAIL": {
           "DOMAIN": 1
@@ -768,16 +758,16 @@
           "text_preview": "Hi, I'm Michael Lewis from Meta. Email: michael.lewis@techcorp.dev",
           "expected": 3,
           "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN",
+            "COMPANY",
             "EMAIL",
             "PERSON"
           ]
@@ -844,9 +834,9 @@
           "index": 14,
           "text_preview": "Hi, I'm Cheng Adams from Acme Corp. Email: cheng.adams@data-service.ai",
           "expected": 3,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -855,7 +845,6 @@
           ],
           "detected_types": [
             "COMPANY",
-            "DOMAIN",
             "EMAIL",
             "PERSON"
           ]
@@ -894,28 +883,30 @@
           "index": 17,
           "text_preview": "Raw: XXXX-XXXX-XXXX-1111",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 18,
           "text_preview": "Obfuscated ip_address: 94.157.73.235/16",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -985,14 +976,16 @@
           "index": 23,
           "text_preview": "Raw: XXXX-XXXX-XXXX-0015",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 24,
@@ -1086,14 +1079,16 @@
           "index": 30,
           "text_preview": "Encoded: ***-**-9284",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 31,
@@ -1130,14 +1125,14 @@
           "text_preview": "Encoded: 164 . 32 . 199 . 232",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -1403,16 +1398,16 @@
           "text_preview": "Server server-39.corp at IP 47.94.124.103",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -1558,22 +1553,24 @@
           "index": 61,
           "text_preview": "Raw: SSN 7XX-XX-7533",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 62,
           "text_preview": "Ship to 43 Maple Drive, Stockholm, NY 48201. Phone: +1-221-659-7408",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -1581,7 +1578,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -1634,22 +1630,24 @@
           "index": 66,
           "text_preview": "Found: ••••-••••-••••-0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 67,
           "text_preview": "Ship to 6633 Green Lane, Chicago, IL 48201. Phone: +1-695-818-2684",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -1657,8 +1655,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -1667,14 +1663,14 @@
           "text_preview": "Prof. Erik Johnson approved the request",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN"
+            "PERSON"
           ]
         },
         {
@@ -1903,22 +1899,24 @@
           "index": 84,
           "text_preview": "Data: XXXX-XXXX-XXXX-0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 85,
           "text_preview": "Ship to 6921 Oak Avenue, Tokyo, IL 80201. Phone: +44-594-549-6836",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -1926,8 +1924,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -2071,23 +2067,23 @@
           "text_preview": "Raw: 47.149.58.243 (IP)",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
           "index": 96,
           "text_preview": "Ship to 5207 Willow Way, Singapore, WA 94102. Phone: +44-661-662-5296",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -2095,8 +2091,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "COUNTRY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -2497,14 +2491,16 @@
           "index": 123,
           "text_preview": "Data: XXX-XX-3011",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 124,
@@ -2571,14 +2567,14 @@
           "text_preview": "Data: 10 10 10 10",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -2771,46 +2767,46 @@
           "text_preview": "Server server-14.corp at IP 44.121.95.140",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
           "index": 142,
           "text_preview": "Obfuscated credit_card: ••••-••••-••••-1111",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 143,
           "text_preview": "Our address is 4565 Lake Drive, Shanghai, CO 19106, UK",
           "expected": 1,
-          "detected": 3,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY",
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
@@ -2848,14 +2844,14 @@
           "text_preview": "Raw: 166 point 16 point 56 point 184",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -2983,14 +2979,14 @@
           "text_preview": "Data: 46 dot 157 dot 42 dot 191",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -2998,16 +2994,16 @@
           "text_preview": "Server server-10.corp at IP 168.153.172.244",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -3015,14 +3011,14 @@
           "text_preview": "Data: 99.89.149.88 (IP)",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -3059,9 +3055,9 @@
           "index": 160,
           "text_preview": "Hi, I'm Edward Coleman from Buy n Large. Email: edward.coleman@mail.company.io",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -3070,7 +3066,6 @@
           ],
           "detected_types": [
             "COMPANY",
-            "DOMAIN",
             "EMAIL",
             "PERSON"
           ]
@@ -3169,9 +3164,9 @@
           "index": 167,
           "text_preview": "Ship to 9489 High Street, Denver, IL 90001. Phone: +1-363-523-2075",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -3179,8 +3174,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -3249,14 +3242,14 @@
           "text_preview": "Obfuscated ip_address: 168.153.172.244 (IP)",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -3355,9 +3348,9 @@
           "index": 179,
           "text_preview": "Ship to 3192 Cedar Lane, Oslo, TX 10001. Phone: +1-829-830-7007",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -3365,7 +3358,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -3512,16 +3504,15 @@
           "index": 189,
           "text_preview": "Address: 4641 River Road, Miami, UK",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -3868,9 +3859,9 @@
           "index": 213,
           "text_preview": "Hi, I'm Bella Gonzalez from Hooli. Email: bella.gonzalez@example.com",
           "expected": 3,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "COMPANY",
@@ -3878,7 +3869,6 @@
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN",
             "EMAIL",
             "PERSON"
           ]
@@ -3903,14 +3893,14 @@
           "text_preview": "Raw: 138 125 117 210",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -3933,14 +3923,14 @@
           "text_preview": "Obfuscated ip_address: 144 point 30 point 226 point 101",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4038,9 +4028,9 @@
           "index": 224,
           "text_preview": "Ship to 4055 Lake Drive, Los Angeles, IL 55401. Phone: +1-489-263-7355",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -4048,8 +4038,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -4058,16 +4046,16 @@
           "text_preview": "Server server-33.corp at IP 126.51.126.114",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4269,17 +4257,15 @@
           "index": 239,
           "text_preview": "Address: 3630 Lake Drive, London, OR 02101, Canada",
           "expected": 1,
-          "detected": 3,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY",
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
@@ -4347,15 +4333,15 @@
           "text_preview": "Employee Prof. Kai Patel",
           "expected": 1,
           "detected": 2,
-          "true_positives": 0,
-          "false_positives": 2,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN",
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PERSON"
           ]
         },
         {
@@ -4363,16 +4349,16 @@
           "text_preview": "Server server-17.local at IP 94.157.73.235",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4506,16 +4492,15 @@
           "index": 255,
           "text_preview": "Our address is 6879 Main Street, San Francisco, Canada",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -4581,14 +4566,16 @@
           "index": 260,
           "text_preview": "Obfuscated social_security: SSN 6XX-XX-6653",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 261,
@@ -4670,14 +4657,14 @@
           "text_preview": "Obfuscated ip_address: 37 point 63 point 130 point 34",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4715,16 +4702,16 @@
           "text_preview": "Server server-5.local at IP 136.15.159.86",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4809,14 +4796,14 @@
           "text_preview": "Hidden field: 34 . 35 . 44 . 171",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4970,14 +4957,14 @@
           "text_preview": "Found: 54 point 55 point 143 point 201",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -5287,9 +5274,9 @@
           "index": 308,
           "text_preview": "Hi, I'm Usman White from Hooli. Email: usman.white@data-service.ai",
           "expected": 3,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "COMPANY",
@@ -5297,7 +5284,6 @@
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN",
             "EMAIL",
             "PERSON"
           ]
@@ -5395,14 +5381,14 @@
           "text_preview": "Raw: 104.113.193.120/16",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -5471,30 +5457,29 @@
           "text_preview": "Raw: 104 113 193 120",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
           "index": 321,
           "text_preview": "Address: 7451 Oak Avenue, Miami, TX 20001, UK",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
@@ -5502,14 +5487,14 @@
           "text_preview": "Raw: 138 point 125 point 117 point 210",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -5637,44 +5622,45 @@
           "text_preview": "Person: Ms. Dalia Ramirez",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN"
+            "PERSON"
           ]
         },
         {
           "index": 332,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
           "index": 333,
           "text_preview": "Encoded: ••••-••••-••••-1111",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 334,
@@ -5803,14 +5789,14 @@
           "text_preview": "Encoded: 0210.017.0237.0126",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -5909,17 +5895,16 @@
           "index": 349,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -5941,14 +5926,16 @@
           "index": 351,
           "text_preview": "Hidden field: ••••-••••-••••-0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 352,
@@ -5970,16 +5957,16 @@
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
-            "IBAN",
-            "PHONE"
+            "BANK_ACCOUNT",
+            "IBAN"
           ]
         },
         {
@@ -6142,9 +6129,9 @@
           "index": 364,
           "text_preview": "Ship to 5361 Main Street, Denver, CA 33101. Phone: +44-452-473-4922",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -6152,8 +6139,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -6162,14 +6147,14 @@
           "text_preview": "Raw: 190.107.225.59 (IP)",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -6510,16 +6495,16 @@
           "text_preview": "Server server-61.corp at IP 37.63.130.34",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "IP_ADDRESS"
           ],
           "detected_types": [
             "DOMAIN",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -6983,16 +6968,15 @@
           "index": 420,
           "text_preview": "Location: 2325 High Street, Los Angeles, NY 94102",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -7121,14 +7105,14 @@
           "text_preview": "Data: 47 dot 94 dot 124 dot 103",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -7343,14 +7327,16 @@
           "index": 444,
           "text_preview": "Found: ••••-••••-••••-1111",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 445,
@@ -7477,14 +7463,14 @@
           "text_preview": "Manager: Mr. Joon Jackson",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN"
+            "PERSON"
           ]
         },
         {
@@ -7569,14 +7555,14 @@
           "text_preview": "Obfuscated ip_address: 31.154.220.62 (IP)",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -7643,14 +7629,16 @@
           "index": 464,
           "text_preview": "Encoded: XXX-XX-6789",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 465,
@@ -7748,9 +7736,9 @@
           "index": 471,
           "text_preview": "Ship to 1775 Willow Way, Seattle, IL 77001. Phone: +44-990-508-7596",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -7758,8 +7746,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -7784,13 +7770,13 @@
       "detector": "pipeline",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 579,
-      "total_true_positives": 450,
-      "total_false_positives": 129,
-      "total_false_negatives": 89,
-      "overall_precision": 0.7772020725388601,
-      "overall_recall": 0.8348794063079777,
-      "overall_f1": 0.8050089445438283,
+      "total_detected_entities": 546,
+      "total_true_positives": 485,
+      "total_false_positives": 61,
+      "total_false_negatives": 54,
+      "overall_precision": 0.8882783882783882,
+      "overall_recall": 0.8998144712430427,
+      "overall_f1": 0.8940092165898617,
       "per_type": {
         "ADDRESS": {
           "true_positives": 34,
@@ -7833,74 +7819,74 @@
           ]
         },
         "BANK_ACCOUNT": {
-          "true_positives": 12,
+          "true_positives": 14,
           "false_positives": 0,
-          "false_negatives": 1,
-          "n": 13,
+          "false_negatives": 0,
+          "n": 14,
           "precision": 1.0,
-          "recall": 0.9231,
-          "f1": 0.96,
-          "f2": 0.9375,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.6669,
-            0.9863
+            0.7847,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "CITY": {
-          "true_positives": 8,
-          "false_positives": 14,
-          "false_negatives": 5,
-          "n": 13,
-          "precision": 0.3636,
-          "recall": 0.6154,
-          "f1": 0.4571,
-          "f2": 0.5405,
+          "true_positives": 6,
+          "false_positives": 3,
+          "false_negatives": 6,
+          "n": 12,
+          "precision": 0.6667,
+          "recall": 0.5,
+          "f1": 0.5714,
+          "f2": 0.5263,
           "recall_ci": [
-            0.3552,
-            0.8229
+            0.2538,
+            0.7462
           ],
           "real_n": 9,
-          "real_recall": 0.4444,
+          "real_recall": 0.3333,
           "real_recall_ci": [
-            0.1888,
-            0.7334
+            0.1206,
+            0.6458
           ]
         },
         "COMPANY": {
-          "true_positives": 38,
-          "false_positives": 1,
-          "false_negatives": 3,
-          "n": 41,
-          "precision": 0.9744,
-          "recall": 0.9268,
-          "f1": 0.95,
-          "f2": 0.936,
+          "true_positives": 40,
+          "false_positives": 0,
+          "false_negatives": 2,
+          "n": 42,
+          "precision": 1.0,
+          "recall": 0.9524,
+          "f1": 0.9756,
+          "f2": 0.9615,
           "recall_ci": [
-            0.8057,
-            0.9748
+            0.8421,
+            0.9868
           ],
           "real_n": 22,
-          "real_recall": 0.8636,
+          "real_recall": 0.9091,
           "real_recall_ci": [
-            0.6666,
-            0.9525
+            0.7218,
+            0.9747
           ]
         },
         "COUNTRY": {
           "true_positives": 14,
-          "false_positives": 9,
+          "false_positives": 4,
           "false_negatives": 2,
           "n": 16,
-          "precision": 0.6087,
+          "precision": 0.7778,
           "recall": 0.875,
-          "f1": 0.7179,
-          "f2": 0.8046,
+          "f1": 0.8235,
+          "f2": 0.8537,
           "recall_ci": [
             0.6398,
             0.965
@@ -7913,23 +7899,23 @@
           ]
         },
         "CREDIT_CARD": {
-          "true_positives": 36,
+          "true_positives": 52,
           "false_positives": 10,
-          "false_negatives": 20,
-          "n": 56,
-          "precision": 0.7826,
-          "recall": 0.6429,
-          "f1": 0.7059,
-          "f2": 0.6667,
+          "false_negatives": 12,
+          "n": 64,
+          "precision": 0.8387,
+          "recall": 0.8125,
+          "f1": 0.8254,
+          "f2": 0.8176,
           "recall_ci": [
-            0.5119,
-            0.7554
+            0.7003,
+            0.8894
           ],
-          "real_n": 38,
-          "real_recall": 0.4737,
+          "real_n": 30,
+          "real_recall": 0.6,
           "real_recall_ci": [
-            0.3248,
-            0.6274
+            0.4232,
+            0.7541
           ]
         },
         "CUSTOMER_NAME": {
@@ -7994,13 +7980,13 @@
         },
         "DOMAIN": {
           "true_positives": 26,
-          "false_positives": 24,
+          "false_positives": 6,
           "false_negatives": 2,
           "n": 28,
-          "precision": 0.52,
+          "precision": 0.8125,
           "recall": 0.9286,
-          "f1": 0.6667,
-          "f2": 0.8025,
+          "f1": 0.8667,
+          "f2": 0.9028,
           "recall_ci": [
             0.7735,
             0.9802
@@ -8014,13 +8000,13 @@
         },
         "EMAIL": {
           "true_positives": 214,
-          "false_positives": 8,
+          "false_positives": 3,
           "false_negatives": 2,
           "n": 216,
-          "precision": 0.964,
+          "precision": 0.9862,
           "recall": 0.9907,
-          "f1": 0.9772,
-          "f2": 0.9853,
+          "f1": 0.9885,
+          "f2": 0.9898,
           "recall_ci": [
             0.9669,
             0.9975
@@ -8113,23 +8099,23 @@
           ]
         },
         "IP_ADDRESS": {
-          "true_positives": 48,
-          "false_positives": 9,
-          "false_negatives": 22,
-          "n": 70,
-          "precision": 0.8421,
-          "recall": 0.6857,
-          "f1": 0.7559,
-          "f2": 0.7122,
+          "true_positives": 82,
+          "false_positives": 10,
+          "false_negatives": 5,
+          "n": 87,
+          "precision": 0.8913,
+          "recall": 0.9425,
+          "f1": 0.9162,
+          "f2": 0.9318,
           "recall_ci": [
-            0.5697,
-            0.7824
+            0.8724,
+            0.9752
           ],
           "real_n": 46,
-          "real_recall": 0.5217,
+          "real_recall": 0.8913,
           "real_recall_ci": [
-            0.3814,
-            0.6588
+            0.7696,
+            0.9527
           ]
         },
         "JWT": {
@@ -8173,34 +8159,34 @@
           ]
         },
         "PERSON": {
-          "true_positives": 42,
-          "false_positives": 8,
-          "false_negatives": 5,
-          "n": 47,
-          "precision": 0.84,
-          "recall": 0.8936,
-          "f1": 0.866,
-          "f2": 0.8824,
+          "true_positives": 50,
+          "false_positives": 9,
+          "false_negatives": 1,
+          "n": 51,
+          "precision": 0.8475,
+          "recall": 0.9804,
+          "f1": 0.9091,
+          "f2": 0.9506,
           "recall_ci": [
-            0.7741,
-            0.9537
+            0.897,
+            0.9965
           ],
           "real_n": 26,
-          "real_recall": 0.8077,
+          "real_recall": 0.9615,
           "real_recall_ci": [
-            0.6212,
-            0.9149
+            0.8111,
+            0.9932
           ]
         },
         "PHONE": {
           "true_positives": 104,
-          "false_positives": 33,
+          "false_positives": 3,
           "false_negatives": 5,
           "n": 109,
-          "precision": 0.7591,
+          "precision": 0.972,
           "recall": 0.9541,
-          "f1": 0.8455,
-          "f2": 0.9075,
+          "f1": 0.963,
+          "f2": 0.9576,
           "recall_ci": [
             0.8971,
             0.9802
@@ -8253,17 +8239,17 @@
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 60,
+          "true_positives": 70,
           "false_positives": 7,
-          "false_negatives": 15,
-          "n": 75,
-          "precision": 0.8955,
-          "recall": 0.8,
-          "f1": 0.8451,
-          "f2": 0.8174,
+          "false_negatives": 10,
+          "n": 80,
+          "precision": 0.9091,
+          "recall": 0.875,
+          "f1": 0.8917,
+          "f2": 0.8816,
           "recall_ci": [
-            0.6959,
-            0.8749
+            0.785,
+            0.9307
           ],
           "real_n": 19,
           "real_recall": 0.9474,
@@ -8323,18 +8309,8 @@
         "DOMAIN": {
           "URL": 2
         },
-        "COMPANY": {
-          "DOMAIN": 5,
-          "COMPANY": 1,
-          "PERSON": 1
-        },
-        "EMAIL": {
-          "EMAIL": 8,
-          "DOMAIN": 1
-        },
         "IP_ADDRESS": {
-          "PHONE": 27,
-          "IP_ADDRESS": 2,
+          "IP_ADDRESS": 3,
           "SOCIAL_SECURITY": 4
         },
         "CREDIT_CARD": {
@@ -8345,34 +8321,35 @@
           "DOMAIN": 5
         },
         "ADDRESS": {
-          "COUNTRY": 8,
-          "DOMAIN": 9,
-          "CITY": 12,
-          "PERSON": 2
+          "COUNTRY": 3,
+          "PERSON": 2,
+          "CITY": 1
         },
-        "PERSON": {
-          "DOMAIN": 4,
-          "PERSON": 1,
-          "EMPLOYEE_NAME": 1
+        "EMAIL": {
+          "EMAIL": 3,
+          "DOMAIN": 1
         },
         "SOCIAL_SECURITY": {
           "IP_ADDRESS": 7
         },
+        "COMPANY": {
+          "PERSON": 3
+        },
         "PHONE": {
-          "PHONE": 3,
+          "PHONE": 1,
           "SOCIAL_SECURITY": 2
         },
         "COUNTRY": {
           "CITY": 2
+        },
+        "PERSON": {
+          "EMPLOYEE_NAME": 1
         },
         "API_KEY": {
           "SOCIAL_SECURITY": 1
         },
         "GPS": {
           "GPS": 1
-        },
-        "BANK_ACCOUNT": {
-          "PHONE": 1
         }
       },
       "example_results": [
@@ -8513,17 +8490,17 @@
           "index": 9,
           "text_preview": "Hi, I'm Michael Lewis from Meta. Email: michael.lewis@techcorp.dev",
           "expected": 3,
-          "detected": 4,
-          "true_positives": 2,
-          "false_positives": 2,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN",
+            "COMPANY",
             "EMAIL",
             "PERSON"
           ]
@@ -8590,9 +8567,9 @@
           "index": 14,
           "text_preview": "Hi, I'm Cheng Adams from Acme Corp. Email: cheng.adams@data-service.ai",
           "expected": 3,
-          "detected": 6,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 3,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -8601,7 +8578,6 @@
           ],
           "detected_types": [
             "COMPANY",
-            "DOMAIN",
             "EMAIL",
             "PERSON"
           ]
@@ -8640,14 +8616,16 @@
           "index": 17,
           "text_preview": "Raw: XXXX-XXXX-XXXX-1111",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 18,
@@ -8661,8 +8639,7 @@
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -8732,14 +8709,16 @@
           "index": 23,
           "text_preview": "Raw: XXXX-XXXX-XXXX-0015",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 24,
@@ -8833,14 +8812,16 @@
           "index": 30,
           "text_preview": "Encoded: ***-**-9284",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 31,
@@ -8877,14 +8858,14 @@
           "text_preview": "Encoded: 164 . 32 . 199 . 232",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -9150,9 +9131,9 @@
           "index": 51,
           "text_preview": "Server server-39.corp at IP 47.94.124.103",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -9160,8 +9141,7 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -9307,22 +9287,24 @@
           "index": 61,
           "text_preview": "Raw: SSN 7XX-XX-7533",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 62,
           "text_preview": "Ship to 43 Maple Drive, Stockholm, NY 48201. Phone: +1-221-659-7408",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -9330,7 +9312,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -9383,22 +9364,24 @@
           "index": 66,
           "text_preview": "Found: ••••-••••-••••-0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 67,
           "text_preview": "Ship to 6633 Green Lane, Chicago, IL 48201. Phone: +1-695-818-2684",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -9406,8 +9389,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -9416,14 +9397,14 @@
           "text_preview": "Prof. Erik Johnson approved the request",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN"
+            "PERSON"
           ]
         },
         {
@@ -9652,22 +9633,24 @@
           "index": 84,
           "text_preview": "Data: XXXX-XXXX-XXXX-0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 85,
           "text_preview": "Ship to 6921 Oak Avenue, Tokyo, IL 80201. Phone: +44-594-549-6836",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -9675,8 +9658,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -9821,23 +9802,23 @@
           "text_preview": "Raw: 47.149.58.243 (IP)",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
           "index": 96,
           "text_preview": "Ship to 5207 Willow Way, Singapore, WA 94102. Phone: +44-661-662-5296",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -9845,8 +9826,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "COUNTRY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -9929,9 +9908,9 @@
           "index": 102,
           "text_preview": "Person: Prof. Quinn Walker",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PERSON"
@@ -10247,14 +10226,16 @@
           "index": 123,
           "text_preview": "Data: XXX-XX-3011",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 124,
@@ -10321,14 +10302,14 @@
           "text_preview": "Data: 10 10 10 10",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -10521,9 +10502,9 @@
           "index": 141,
           "text_preview": "Server server-14.corp at IP 44.121.95.140",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -10531,38 +10512,37 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
           "index": 142,
           "text_preview": "Obfuscated credit_card: ••••-••••-••••-1111",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 143,
           "text_preview": "Our address is 4565 Lake Drive, Shanghai, CO 19106, UK",
           "expected": 1,
-          "detected": 3,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY",
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
@@ -10600,14 +10580,14 @@
           "text_preview": "Raw: 166 point 16 point 56 point 184",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -10735,23 +10715,23 @@
           "text_preview": "Data: 46 dot 157 dot 42 dot 191",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
           "index": 156,
           "text_preview": "Server server-10.corp at IP 168.153.172.244",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -10759,8 +10739,7 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -10768,14 +10747,14 @@
           "text_preview": "Data: 99.89.149.88 (IP)",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -10812,9 +10791,9 @@
           "index": 160,
           "text_preview": "Hi, I'm Edward Coleman from Buy n Large. Email: edward.coleman@mail.company.io",
           "expected": 3,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -10823,7 +10802,6 @@
           ],
           "detected_types": [
             "COMPANY",
-            "DOMAIN",
             "EMAIL",
             "PERSON"
           ]
@@ -10923,9 +10901,9 @@
           "index": 167,
           "text_preview": "Ship to 9489 High Street, Denver, IL 90001. Phone: +1-363-523-2075",
           "expected": 2,
-          "detected": 5,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 3,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -10933,8 +10911,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -11002,16 +10978,15 @@
           "index": 172,
           "text_preview": "Obfuscated ip_address: 168.153.172.244 (IP)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -11110,9 +11085,9 @@
           "index": 179,
           "text_preview": "Ship to 3192 Cedar Lane, Oslo, TX 10001. Phone: +1-829-830-7007",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -11120,7 +11095,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -11267,16 +11241,15 @@
           "index": 189,
           "text_preview": "Address: 4641 River Road, Miami, UK",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -11623,9 +11596,9 @@
           "index": 213,
           "text_preview": "Hi, I'm Bella Gonzalez from Hooli. Email: bella.gonzalez@example.com",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "COMPANY",
@@ -11633,7 +11606,6 @@
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN",
             "EMAIL",
             "PERSON"
           ]
@@ -11658,14 +11630,14 @@
           "text_preview": "Raw: 138 125 117 210",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -11688,14 +11660,14 @@
           "text_preview": "Obfuscated ip_address: 144 point 30 point 226 point 101",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -11793,9 +11765,9 @@
           "index": 224,
           "text_preview": "Ship to 4055 Lake Drive, Los Angeles, IL 55401. Phone: +1-489-263-7355",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -11803,8 +11775,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -11812,9 +11782,9 @@
           "index": 225,
           "text_preview": "Server server-33.corp at IP 126.51.126.114",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -11822,8 +11792,7 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -12025,17 +11994,15 @@
           "index": 239,
           "text_preview": "Address: 3630 Lake Drive, London, OR 02101, Canada",
           "expected": 1,
-          "detected": 3,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY",
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
@@ -12103,24 +12070,24 @@
           "text_preview": "Employee Prof. Kai Patel",
           "expected": 1,
           "detected": 2,
-          "true_positives": 0,
-          "false_positives": 2,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN",
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PERSON"
           ]
         },
         {
           "index": 245,
           "text_preview": "Server server-17.local at IP 94.157.73.235",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -12128,8 +12095,7 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -12263,16 +12229,15 @@
           "index": 255,
           "text_preview": "Our address is 6879 Main Street, San Francisco, Canada",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -12338,14 +12303,16 @@
           "index": 260,
           "text_preview": "Obfuscated social_security: SSN 6XX-XX-6653",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 261,
@@ -12427,14 +12394,14 @@
           "text_preview": "Obfuscated ip_address: 37 point 63 point 130 point 34",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -12471,9 +12438,9 @@
           "index": 269,
           "text_preview": "Server server-5.local at IP 136.15.159.86",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -12481,8 +12448,7 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -12567,14 +12533,14 @@
           "text_preview": "Hidden field: 34 . 35 . 44 . 171",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -12730,14 +12696,14 @@
           "text_preview": "Found: 54 point 55 point 143 point 201",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -13047,9 +13013,9 @@
           "index": 308,
           "text_preview": "Hi, I'm Usman White from Hooli. Email: usman.white@data-service.ai",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "COMPANY",
@@ -13057,7 +13023,6 @@
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN",
             "EMAIL",
             "PERSON"
           ]
@@ -13155,14 +13120,14 @@
           "text_preview": "Raw: 104.113.193.120/16",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -13234,30 +13199,29 @@
           "text_preview": "Raw: 104 113 193 120",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
           "index": 321,
           "text_preview": "Address: 7451 Oak Avenue, Miami, TX 20001, UK",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
@@ -13265,14 +13229,14 @@
           "text_preview": "Raw: 138 point 125 point 117 point 210",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -13400,30 +13364,29 @@
           "text_preview": "Person: Ms. Dalia Ramirez",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN"
+            "PERSON"
           ]
         },
         {
           "index": 332,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
             "ADDRESS",
-            "COUNTRY",
             "PERSON"
           ]
         },
@@ -13431,14 +13394,16 @@
           "index": 333,
           "text_preview": "Encoded: ••••-••••-••••-1111",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 334,
@@ -13567,14 +13532,14 @@
           "text_preview": "Encoded: 0210.017.0237.0126",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -13673,17 +13638,16 @@
           "index": 349,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -13705,14 +13669,16 @@
           "index": 351,
           "text_preview": "Hidden field: ••••-••••-••••-0004",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 352,
@@ -13734,16 +13700,16 @@
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
-            "IBAN",
-            "PHONE"
+            "BANK_ACCOUNT",
+            "IBAN"
           ]
         },
         {
@@ -13907,9 +13873,9 @@
           "index": 364,
           "text_preview": "Ship to 5361 Main Street, Denver, CA 33101. Phone: +44-452-473-4922",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -13917,8 +13883,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PHONE"
           ]
         },
@@ -13927,14 +13891,14 @@
           "text_preview": "Raw: 190.107.225.59 (IP)",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -14275,9 +14239,9 @@
           "index": 388,
           "text_preview": "Server server-61.corp at IP 37.63.130.34",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
@@ -14285,8 +14249,7 @@
           ],
           "detected_types": [
             "DOMAIN",
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -14752,16 +14715,15 @@
           "index": 420,
           "text_preview": "Location: 2325 High Street, Los Angeles, NY 94102",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -14890,14 +14852,14 @@
           "text_preview": "Data: 47 dot 94 dot 124 dot 103",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -15113,14 +15075,16 @@
           "index": 444,
           "text_preview": "Found: ••••-••••-••••-1111",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
         },
         {
           "index": 445,
@@ -15248,14 +15212,14 @@
           "text_preview": "Manager: Mr. Joon Jackson",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
           "detected_types": [
-            "DOMAIN"
+            "PERSON"
           ]
         },
         {
@@ -15339,16 +15303,15 @@
           "index": 459,
           "text_preview": "Obfuscated ip_address: 31.154.220.62 (IP)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS",
-            "PHONE"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -15415,14 +15378,16 @@
           "index": 464,
           "text_preview": "Encoded: XXX-XX-6789",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 465,
@@ -15520,9 +15485,9 @@
           "index": 471,
           "text_preview": "Ship to 1775 Willow Way, Seattle, IL 77001. Phone: +44-990-508-7596",
           "expected": 2,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 3,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -15530,8 +15495,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "DOMAIN",
             "PERSON",
             "PHONE"
           ]

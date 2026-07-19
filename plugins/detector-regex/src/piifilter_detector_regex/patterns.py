@@ -65,6 +65,17 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("DATABASE_URL", r"\b(?:postgresql|postgres|mysql|mongodb|redis|sqlite|oracle|mssql)://\S+", 0.95),
 
     # ── SSN ──────────────────────────────────────────────────────────
+    # Masked/bullet SSN — partial redaction with last-4 visible: XXX-XX-9074, ***-**-0720, SSN 9XX-XX-4321
+    # X-mask or star-mask in first 5 positions, last-4 digits visible
+    ("SOCIAL_SECURITY", r"[X*#]{3}[- ][X*#]{2}[- ]\d{4}", 0.70),
+    # Same with bullet characters (U+2022, U+25CF): •••-••-9074
+    ("SOCIAL_SECURITY", r"[\u2022\u25CF]{3}[- ][\u2022\u25CF]{2}[- ]\d{4}", 0.70),
+    # Context-prefixed X-masked SSN: "SSN 9XX-XX-4321", "SSN 1XX-XX-6789" — first digit real, positions 2-5 masked
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|ss#)\s+\d[X*#]{2}[- ][X*#]{2}[- ]\d{4}\b", 0.70),
+    # Full mask with context: "SSN XXX-XX-XXXX"
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|ss#)\s+[X*#]{3}[- ]{2,4}\d{4}\b", 0.65),
+    # Context-based masked SSN: "masked SSN: XXX-XX-9074"
+    ("SOCIAL_SECURITY", r"(?i)(?:mask|redact|obfuscat)[a-z]*\s*(?:social|ssn|ss#)\s*:?\s*[X*#]{3}[- ]\d{2}[- ]\d{4}\b", 0.60),
         # Matches standard SSN formats: 123-45-6789 (hyphen) and 123\xa045\xa06789 (non-breaking space)
     ("SOCIAL_SECURITY", r"\b\d{3}[-\u00A0]\d{2}[-\u00A0]\d{4}\b", 0.90),
         # Context-prefixed SSN: catches ALL separator variants (hyphen, NBSP, dot, space, or none)
@@ -91,6 +102,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("IBAN", r"\b[A-Z]{2}\d{2}\s+[A-Z]{4}\s+\d{4}\s+\d{4}\s+\d{2,4}(?:\s+\d{1,3})?\b", 0.85),
 
     # ── CREDIT_CARD ──────────────────────────────────────────────────
+    # Masked/bullet CC — partial redaction with last-4 visible: XXXX-XXXX-XXXX-1234, ****-****-****-5678
+    ("CREDIT_CARD", r"(?:[X*#]{4}[- ]){3}\d{4}\b", 0.70),
+    # Same with bullet characters (U+2022, U+25CF): ••••-••••-••••-1111
+    ("CREDIT_CARD", r"(?:[\u2022\u25CF]{4}[- ]){3}\d{4}\b", 0.70),
+    # Context-prefixed masked CC: "Credit card: XXXX-XXXX-XXXX-1234"
+    ("CREDIT_CARD", r"(?i)(?:credit\s*card|cc|card)\s*:?\s*(?:number\s+)?(?:is\s+)?(?:[X*#]{4}[- ]){3}\d{4}\b", 0.65),
+    # Context-based masked reference: "masked card: ****-****-****-0004"
+    ("CREDIT_CARD", r"(?i)(?:mask|redact|obfuscat|hidden)[a-z]*\s*(?:credit|cc|card)\s*:?\s*(?:[X*#]{4}[- ]){3}\d{4}\b", 0.60),
     ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
     # Standard 4-4-4-4 format with single dashes or single spaces
     ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4}\b(?![ -]\d{2,4})", 0.85),

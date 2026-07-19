@@ -224,14 +224,29 @@ def is_masked_pii(entity: dict) -> bool:
       - Spoken-out / spaced-out digits that have been rearranged or include
         extra textual context that makes the value already anonymized
 
-    Currently focused on SOCIAL_SECURITY; the same heuristic can be extended
-    to other entity types as adversarial examples are added.
+    Now covers both SOCIAL_SECURITY and CREDIT_CARD masked variants.
     """
     value = entity.get("value", "")
     typ = entity.get("type", entity.get("entity_type", "")).upper()
 
+    # ── Bullet characters (U+2022 •, U+25CF ●) in any PII type ──
+    if "\u2022" in value or "\u25CF" in value:
+        return True
+
+    if typ == "CREDIT_CARD":
+        # X-masked CC: XXXX-XXXX-XXXX-1234, ****-****-****-5678
+        # Check for blocks of repeating non-digit mask chars
+        import re as _re
+        mask_blocks = _re.findall(r'([X*#])\1{3}', value)
+        if mask_blocks:
+            return True
+        # Also detect explicit mask labels in the value text
+        if "XXXX" in value or "****" in value:
+            return True
+        return False
+
     if typ != "SOCIAL_SECURITY":
-        return False  # Only SSN has masked variants for now
+        return False
 
     # X-masked: contains 'X' or '*' in place of digits as obfuscation markers
     # Patterns like XXX-XX-9074, 9XX-XX-4321, SSN 1XX-XX-6789, ***-**-0720

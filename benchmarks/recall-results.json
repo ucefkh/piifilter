@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set)",
-  "timestamp": "2026-07-19T21:29:37Z",
+  "timestamp": "2026-07-19T21:44:27Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
@@ -39,32 +39,32 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 229,
+      "total_detected_entities": 227,
       "total_true_positives": 205,
-      "total_false_positives": 24,
+      "total_false_positives": 22,
       "total_false_negatives": 7,
-      "overall_precision": 0.8951965065502183,
+      "overall_precision": 0.9030837004405287,
       "overall_recall": 0.9669811320754716,
-      "overall_f1": 0.9297052154195011,
+      "overall_f1": 0.9339407744874716,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 6,
+          "true_positives": 8,
           "false_positives": 1,
-          "false_negatives": 1,
-          "n": 7,
-          "precision": 0.8571,
-          "recall": 0.8571,
-          "f1": 0.8571,
-          "f2": 0.8571,
+          "false_negatives": 0,
+          "n": 8,
+          "precision": 0.8889,
+          "recall": 1.0,
+          "f1": 0.9412,
+          "f2": 0.9756,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.75,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.3006,
-            0.9544
+            0.5101,
+            1.0
           ]
         },
         "API_KEY": {
@@ -108,23 +108,23 @@
           ]
         },
         "CITY": {
-          "true_positives": 16,
-          "false_positives": 3,
-          "false_negatives": 0,
-          "n": 16,
-          "precision": 0.8421,
-          "recall": 1.0,
-          "f1": 0.9143,
-          "f2": 0.9639,
+          "true_positives": 14,
+          "false_positives": 2,
+          "false_negatives": 1,
+          "n": 15,
+          "precision": 0.875,
+          "recall": 0.9333,
+          "f1": 0.9032,
+          "f2": 0.9211,
           "recall_ci": [
-            0.8064,
-            1.0
+            0.7018,
+            0.9881
           ],
           "real_n": 8,
-          "real_recall": 1.0,
+          "real_recall": 0.875,
           "real_recall_ci": [
-            0.6756,
-            1.0
+            0.5291,
+            0.9776
           ]
         },
         "COMPANY": {
@@ -149,13 +149,13 @@
         },
         "COUNTRY": {
           "true_positives": 18,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 18,
-          "precision": 0.9,
+          "precision": 0.9474,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 0.973,
+          "f2": 0.989,
           "recall_ci": [
             0.8241,
             1.0
@@ -543,10 +543,6 @@
         }
       },
       "confusion_matrix": {
-        "ADDRESS": {
-          "CITY": 1,
-          "COUNTRY": 1
-        },
         "NONE": {
           "CITY": 1,
           "FILE_PATH": 1,
@@ -598,16 +594,15 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -917,33 +912,33 @@
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "ADDRESS",
             "CITY",
             "COUNTRY"
           ]
@@ -1281,16 +1276,15 @@
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
@@ -2827,32 +2821,32 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 244,
+      "total_detected_entities": 242,
       "total_true_positives": 204,
-      "total_false_positives": 40,
+      "total_false_positives": 38,
       "total_false_negatives": 8,
-      "overall_precision": 0.8360655737704918,
+      "overall_precision": 0.8429752066115702,
       "overall_recall": 0.9622641509433962,
-      "overall_f1": 0.8947368421052632,
+      "overall_f1": 0.8986784140969164,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 6,
+          "true_positives": 8,
           "false_positives": 1,
-          "false_negatives": 1,
-          "n": 7,
-          "precision": 0.8571,
-          "recall": 0.8571,
-          "f1": 0.8571,
-          "f2": 0.8571,
+          "false_negatives": 0,
+          "n": 8,
+          "precision": 0.8889,
+          "recall": 1.0,
+          "f1": 0.9412,
+          "f2": 0.9756,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.75,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.3006,
-            0.9544
+            0.5101,
+            1.0
           ]
         },
         "API_KEY": {
@@ -2896,23 +2890,23 @@
           ]
         },
         "CITY": {
-          "true_positives": 16,
-          "false_positives": 3,
-          "false_negatives": 0,
-          "n": 16,
-          "precision": 0.8421,
-          "recall": 1.0,
-          "f1": 0.9143,
-          "f2": 0.9639,
+          "true_positives": 14,
+          "false_positives": 2,
+          "false_negatives": 1,
+          "n": 15,
+          "precision": 0.875,
+          "recall": 0.9333,
+          "f1": 0.9032,
+          "f2": 0.9211,
           "recall_ci": [
-            0.8064,
-            1.0
+            0.7018,
+            0.9881
           ],
           "real_n": 8,
-          "real_recall": 1.0,
+          "real_recall": 0.875,
           "real_recall_ci": [
-            0.6756,
-            1.0
+            0.5291,
+            0.9776
           ]
         },
         "COMPANY": {
@@ -2937,13 +2931,13 @@
         },
         "COUNTRY": {
           "true_positives": 18,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 18,
-          "precision": 0.9,
+          "precision": 0.9474,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 0.973,
+          "f2": 0.989,
           "recall_ci": [
             0.8241,
             1.0
@@ -3331,11 +3325,6 @@
         }
       },
       "confusion_matrix": {
-        "ADDRESS": {
-          "CITY": 1,
-          "PERSON": 1,
-          "COUNTRY": 1
-        },
         "CREDIT_CARD": {
           "CREDIT_CARD": 4
         },
@@ -3359,6 +3348,9 @@
         },
         "IP_ADDRESS": {
           "IP_ADDRESS": 2
+        },
+        "ADDRESS": {
+          "PERSON": 1
         },
         "CITY": {
           "CITY": 1
@@ -3397,16 +3389,15 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -3716,33 +3707,33 @@
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "ADDRESS",
             "CITY",
             "COUNTRY"
           ]
@@ -4080,16 +4071,15 @@
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
             "ADDRESS",
-            "COUNTRY",
             "PERSON"
           ]
         },
