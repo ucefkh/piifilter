@@ -1,0 +1,1694 @@
+{
+  "description": "PIIFilter Detection Recall Benchmark Dataset — 122 labeled examples covering all 24 entity types plus edge cases and negatives. Auto-generated with verified positions.",
+  "version": "1.1.0",
+  "examples": [
+    {
+      "text": "Hi, I'm Alice Johnson from Acme Corp. Email: alice@acme.com Phone: +1-555-123-4567",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Alice Johnson",
+          "start": 8,
+          "end": 21
+        },
+        {
+          "type": "COMPANY",
+          "value": "Acme Corp",
+          "start": 27,
+          "end": 36
+        },
+        {
+          "type": "EMAIL",
+          "value": "alice@acme.com",
+          "start": 45,
+          "end": 59
+        },
+        {
+          "type": "PHONE",
+          "value": "+1-555-123-4567",
+          "start": 67,
+          "end": 82
+        }
+      ]
+    },
+    {
+      "text": "Our office is at 350 Fifth Avenue, New York, NY 10118",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "350 Fifth Avenue, New York, NY 10118",
+          "start": 17,
+          "end": 53
+        }
+      ]
+    },
+    {
+      "text": "Paris has a population of over 2 million people and is the capital of France.",
+      "entities": [
+        {
+          "type": "CITY",
+          "value": "Paris",
+          "start": 0,
+          "end": 5
+        },
+        {
+          "type": "COUNTRY",
+          "value": "France",
+          "start": 70,
+          "end": 76
+        }
+      ]
+    },
+    {
+      "text": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "123456789012",
+          "start": 19,
+          "end": 31
+        },
+        {
+          "type": "IBAN",
+          "value": "DE89 3704 0044 0532 0130 00",
+          "start": 47,
+          "end": 74
+        }
+      ]
+    },
+    {
+      "text": "Credit card: 4111-1111-1111-1111 and another card 5500 0000 0000 0004",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111-1111-1111-1111",
+          "start": 13,
+          "end": 32
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "5500 0000 0000 0004",
+          "start": 50,
+          "end": 69
+        }
+      ]
+    },
+    {
+      "text": "My passport is AB1234567 and my SSN is 987-65-4321",
+      "entities": [
+        {
+          "type": "PASSPORT",
+          "value": "AB1234567",
+          "start": 15,
+          "end": 24
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "987-65-4321",
+          "start": 39,
+          "end": 50
+        }
+      ]
+    },
+    {
+      "text": "The server IP is 192.168.1.100 and the backup is 10.0.0.5",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.100",
+          "start": 17,
+          "end": 30
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "10.0.0.5",
+          "start": 49,
+          "end": 57
+        }
+      ]
+    },
+    {
+      "text": "JWT token: eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNvrBuFQiulGqjDh0g",
+      "entities": [
+        {
+          "type": "JWT",
+          "value": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.dozjgNvrBuFQiulGqjDh0g",
+          "start": 11,
+          "end": 82
+        }
+      ]
+    },
+    {
+      "text": "API key: sk-abcdef1234567890abcdef1234567890abcdef12",
+      "entities": [
+        {
+          "type": "API_KEY",
+          "value": "sk-abcdef1234567890abcdef1234567890abcdef12",
+          "start": 9,
+          "end": 52
+        }
+      ]
+    },
+    {
+      "text": "SSH key: -----BEGIN OPENSSH PRIVATE KEY-----\nABC123...\n-----END OPENSSH PRIVATE KEY-----",
+      "entities": [
+        {
+          "type": "SSH_KEY",
+          "value": "-----BEGIN OPENSSH PRIVATE KEY-----",
+          "start": 9,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "text": "Database URL: postgresql://admin:secret@db.internal:5432/production",
+      "entities": [
+        {
+          "type": "DATABASE_URL",
+          "value": "postgresql://admin:secret@db.internal:5432/production",
+          "start": 14,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "text": "Internal URL: https://jenkins.internal:8080/job/deploy and https://admin.corp.intranet/login",
+      "entities": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://jenkins.internal:8080/job/deploy",
+          "start": 14,
+          "end": 54
+        },
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://admin.corp.intranet/login",
+          "start": 59,
+          "end": 92
+        }
+      ]
+    },
+    {
+      "text": "Domain: google.com and api.github.com and my-site.internal",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "google.com",
+          "start": 8,
+          "end": 18
+        },
+        {
+          "type": "DOMAIN",
+          "value": "api.github.com",
+          "start": 23,
+          "end": 37
+        },
+        {
+          "type": "DOMAIN",
+          "value": "my-site.internal",
+          "start": 42,
+          "end": 58
+        }
+      ]
+    },
+    {
+      "text": "Coordinates: 40.7128, -74.0060 (NYC) and lat: 51.5074, lon: -0.1278 (London)",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "40.7128",
+          "start": 13,
+          "end": 20
+        },
+        {
+          "type": "GPS",
+          "value": "-74.0060",
+          "start": 22,
+          "end": 30
+        },
+        {
+          "type": "GPS",
+          "value": "51.5074",
+          "start": 46,
+          "end": 53
+        },
+        {
+          "type": "GPS",
+          "value": "-0.1278",
+          "start": 60,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "text": "File path: /home/alice/projects/src/main/config.yaml and C:\\Users\\Bob\\Documents\\report.pdf",
+      "entities": [
+        {
+          "type": "FILE_PATH",
+          "value": "/home/alice/projects/src/main/config.yaml",
+          "start": 11,
+          "end": 52
+        },
+        {
+          "type": "FILE_PATH",
+          "value": "C:\\Users\\Bob\\Documents\\report.pdf",
+          "start": 57,
+          "end": 90
+        }
+      ]
+    },
+    {
+      "text": "Project: Project Phoenix is our codename for the new ERP rollout.",
+      "entities": [
+        {
+          "type": "PROJECT_NAME",
+          "value": "Project Phoenix",
+          "start": 9,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "Our customer Jane Smith from Widgets Inc. wants her data removed.",
+      "entities": [
+        {
+          "type": "CUSTOMER_NAME",
+          "value": "Jane Smith",
+          "start": 13,
+          "end": 23
+        },
+        {
+          "type": "COMPANY",
+          "value": "Widgets Inc.",
+          "start": 29,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "text": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
+      "entities": [
+        {
+          "type": "EMPLOYEE_NAME",
+          "value": "Bob Marley",
+          "start": 9,
+          "end": 19
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "10.88.0.1",
+          "start": 56,
+          "end": 65
+        }
+      ]
+    },
+    {
+      "text": "Contact me at bob.smith@example.org or call +44 20 7946 0958 for the project Vulcan.",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "bob.smith@example.org",
+          "start": 14,
+          "end": 35
+        },
+        {
+          "type": "PHONE",
+          "value": "+44 20 7946 0958",
+          "start": 44,
+          "end": 60
+        },
+        {
+          "type": "PROJECT_NAME",
+          "value": "project Vulcan",
+          "start": 69,
+          "end": 83
+        }
+      ]
+    },
+    {
+      "text": "The best customer we have is Clara Oswald and she works at Data Corp.",
+      "entities": [
+        {
+          "type": "CUSTOMER_NAME",
+          "value": "Clara Oswald",
+          "start": 29,
+          "end": 41
+        },
+        {
+          "type": "COMPANY",
+          "value": "Data Corp",
+          "start": 59,
+          "end": 68
+        }
+      ]
+    },
+    {
+      "text": "Please add employee David Tennant to the access list for project Galactic.",
+      "entities": [
+        {
+          "type": "EMPLOYEE_NAME",
+          "value": "David Tennant",
+          "start": 20,
+          "end": 33
+        },
+        {
+          "type": "PROJECT_NAME",
+          "value": "project Galactic",
+          "start": 57,
+          "end": 73
+        }
+      ]
+    },
+    {
+      "text": "Visit us at 10 Downing Street, London, SW1A 2AA",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "10 Downing Street, London, SW1A 2AA",
+          "start": 12,
+          "end": 47
+        },
+        {
+          "type": "CITY",
+          "value": "London",
+          "start": 31,
+          "end": 37
+        }
+      ]
+    },
+    {
+      "text": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
+      "entities": [
+        {
+          "type": "CITY",
+          "value": "Berlin",
+          "start": 11,
+          "end": 17
+        },
+        {
+          "type": "COUNTRY",
+          "value": "Germany",
+          "start": 19,
+          "end": 26
+        },
+        {
+          "type": "ADDRESS",
+          "value": "Unter den Linden 1, 10117 Berlin",
+          "start": 42,
+          "end": 74
+        }
+      ]
+    },
+    {
+      "text": "Send to: maria.garcia@co.jp | CC: info@company.co.uk | BCC: devops@internal.corp",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "maria.garcia@co.jp",
+          "start": 9,
+          "end": 27
+        },
+        {
+          "type": "EMAIL",
+          "value": "info@company.co.uk",
+          "start": 34,
+          "end": 52
+        },
+        {
+          "type": "EMAIL",
+          "value": "devops@internal.corp",
+          "start": 60,
+          "end": 80
+        }
+      ]
+    },
+    {
+      "text": "Token: eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+      "entities": [
+        {
+          "type": "JWT",
+          "value": "eyJraWQiOiIxMjMiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJhZG1pbiJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c",
+          "start": 7,
+          "end": 108
+        }
+      ]
+    },
+    {
+      "text": "API key: pk-98765fedcba0987654321fedcba0987654321fedcba",
+      "entities": [
+        {
+          "type": "API_KEY",
+          "value": "pk-98765fedcba0987654321fedcba0987654321fedcba",
+          "start": 9,
+          "end": 55
+        }
+      ]
+    },
+    {
+      "text": "Redis connection: redis://default:password@cache-cluster.internal:6379",
+      "entities": [
+        {
+          "type": "DATABASE_URL",
+          "value": "redis://default:password@cache-cluster.internal:6379",
+          "start": 18,
+          "end": 70
+        }
+      ]
+    },
+    {
+      "text": "MongoDB: mongodb://admin:secret@mongo-prod.internal:27017/sales",
+      "entities": [
+        {
+          "type": "DATABASE_URL",
+          "value": "mongodb://admin:secret@mongo-prod.internal:27017/sales",
+          "start": 9,
+          "end": 63
+        }
+      ]
+    },
+    {
+      "text": "SSH config: -----BEGIN EC PRIVATE KEY-----\nMHcCAQEEIIxYb...\n-----END EC PRIVATE KEY-----",
+      "entities": [
+        {
+          "type": "SSH_KEY",
+          "value": "-----BEGIN EC PRIVATE KEY-----",
+          "start": 12,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "text": "Coordinates: 48.8566 N, 2.3522 E is the center of Paris",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "48.8566",
+          "start": 13,
+          "end": 20
+        },
+        {
+          "type": "GPS",
+          "value": "2.3522",
+          "start": 24,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Passport: CD987654 and also passport XY123456",
+      "entities": [
+        {
+          "type": "PASSPORT",
+          "value": "CD987654",
+          "start": 10,
+          "end": 18
+        },
+        {
+          "type": "PASSPORT",
+          "value": "XY123456",
+          "start": 37,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "SSN: 123-45-6789 and also 456-78-9012",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "start": 5,
+          "end": 16
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "456-78-9012",
+          "start": 26,
+          "end": 37
+        }
+      ]
+    },
+    {
+      "text": "CC: 3782-822463-10005 (Amex) and 6011-1111-1111-1117 (Discover)",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "3782-822463-10005",
+          "start": 4,
+          "end": 21
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "6011-1111-1111-1117",
+          "start": 33,
+          "end": 52
+        }
+      ]
+    },
+    {
+      "text": "Bank: 98765432109876543210 and IBAN: GB29 NWBK 6016 1331 9268 19",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "98765432109876543210",
+          "start": 6,
+          "end": 26
+        },
+        {
+          "type": "IBAN",
+          "value": "GB29 NWBK 6016 1331 9268 19",
+          "start": 37,
+          "end": 64
+        }
+      ]
+    },
+    {
+      "text": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
+      "entities": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://localhost:3000/dashboard",
+          "start": 9,
+          "end": 41
+        },
+        {
+          "type": "PRIVATE_URL",
+          "value": "http://127.0.0.1/api/health",
+          "start": 46,
+          "end": 73
+        }
+      ]
+    },
+    {
+      "text": "File paths: /var/log/nginx/access.log and /etc/ssh/sshd_config",
+      "entities": [
+        {
+          "type": "FILE_PATH",
+          "value": "/var/log/nginx/access.log",
+          "start": 12,
+          "end": 37
+        },
+        {
+          "type": "FILE_PATH",
+          "value": "/etc/ssh/sshd_config",
+          "start": 42,
+          "end": 62
+        }
+      ]
+    },
+    {
+      "text": "Our CEO Bob Smith (bob@company.com) approved the merger.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Bob Smith",
+          "start": 8,
+          "end": 17
+        },
+        {
+          "type": "EMAIL",
+          "value": "bob@company.com",
+          "start": 19,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "IT: www.example.com, support@help.io, 192.168.0.1, and /tmp/test/data/cache.log",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "www.example.com",
+          "start": 4,
+          "end": 19
+        },
+        {
+          "type": "EMAIL",
+          "value": "support@help.io",
+          "start": 21,
+          "end": 36
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.0.1",
+          "start": 38,
+          "end": 49
+        }
+      ]
+    },
+    {
+      "text": "Connect as user: postgresql://app_user:Str0ng!Pass@db-prod.internal:5432/analytics",
+      "entities": [
+        {
+          "type": "DATABASE_URL",
+          "value": "postgresql://app_user:Str0ng!Pass@db-prod.internal:5432/analytics",
+          "start": 17,
+          "end": 82
+        }
+      ]
+    },
+    {
+      "text": "The employee named John (employee John) can access server 10.0.0.50",
+      "entities": [
+        {
+          "type": "EMPLOYEE_NAME",
+          "value": "John",
+          "start": 19,
+          "end": 23
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "10.0.0.50",
+          "start": 58,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "text": "Customer: Martha Jones (martha.jones@bigpharma.com) order #ORD-001",
+      "entities": [
+        {
+          "type": "CUSTOMER_NAME",
+          "value": "Martha Jones",
+          "start": 10,
+          "end": 22
+        },
+        {
+          "type": "EMAIL",
+          "value": "martha.jones@bigpharma.com",
+          "start": 24,
+          "end": 50
+        }
+      ]
+    },
+    {
+      "text": "Project Nebula starts Q1 and Project Orion is in maintenance mode.",
+      "entities": [
+        {
+          "type": "PROJECT_NAME",
+          "value": "Project Nebula",
+          "start": 0,
+          "end": 14
+        },
+        {
+          "type": "PROJECT_NAME",
+          "value": "Project Orion",
+          "start": 29,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "text": "IPv6 address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+          "start": 14,
+          "end": 53
+        }
+      ]
+    },
+    {
+      "text": "Compressed IPv6: 2001:db8::1 and fe80::1",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "2001:db8::1",
+          "start": 17,
+          "end": 28
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "fe80::1",
+          "start": 33,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "text": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "123 Maple Drive, Springfield, IL 62704, USA",
+          "start": 14,
+          "end": 57
+        }
+      ]
+    },
+    {
+      "text": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Dr. Sarah Chen",
+          "start": 8,
+          "end": 22
+        },
+        {
+          "type": "COMPANY",
+          "value": "Microsoft Research",
+          "start": 32,
+          "end": 50
+        },
+        {
+          "type": "CITY",
+          "value": "Redmond",
+          "start": 54,
+          "end": 61
+        }
+      ]
+    },
+    {
+      "text": "City pop: Tokyo (37M), Delhi (32M), Shanghai (28M)",
+      "entities": [
+        {
+          "type": "CITY",
+          "value": "Tokyo",
+          "start": 10,
+          "end": 15
+        },
+        {
+          "type": "CITY",
+          "value": "Delhi",
+          "start": 23,
+          "end": 28
+        },
+        {
+          "type": "CITY",
+          "value": "Shanghai",
+          "start": 36,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "text": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
+      "entities": [
+        {
+          "type": "COUNTRY",
+          "value": "Canada",
+          "start": 11,
+          "end": 17
+        },
+        {
+          "type": "COUNTRY",
+          "value": "Australia",
+          "start": 19,
+          "end": 28
+        },
+        {
+          "type": "COUNTRY",
+          "value": "Japan",
+          "start": 30,
+          "end": 35
+        },
+        {
+          "type": "COUNTRY",
+          "value": "Brazil",
+          "start": 37,
+          "end": 43
+        },
+        {
+          "type": "COUNTRY",
+          "value": "India",
+          "start": 45,
+          "end": 50
+        },
+        {
+          "type": "COUNTRY",
+          "value": "Egypt",
+          "start": 52,
+          "end": 57
+        }
+      ]
+    },
+    {
+      "text": "SSN: 111-22-3333 is used as the sample number",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "111-22-3333",
+          "start": 5,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "text": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "10.10.10.10",
+          "start": 6,
+          "end": 17
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "172.16.0.1",
+          "start": 19,
+          "end": 29
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.10.255",
+          "start": 31,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "Phone: +1-212-555-0198 and (415) 555-2671 and 555-123-4567",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-212-555-0198",
+          "start": 7,
+          "end": 22
+        },
+        {
+          "type": "PHONE",
+          "value": "(415) 555-2671",
+          "start": 27,
+          "end": 41
+        },
+        {
+          "type": "PHONE",
+          "value": "555-123-4567",
+          "start": 46,
+          "end": 58
+        }
+      ]
+    },
+    {
+      "text": "Email: test.user+tag@mail.company.io",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "test.user+tag@mail.company.io",
+          "start": 7,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "text": "Email: firstname_lastname@mail-server.co.jp",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "firstname_lastname@mail-server.co.jp",
+          "start": 7,
+          "end": 43
+        }
+      ]
+    },
+    {
+      "text": "Domain: subdomain.company.example.org and a.io",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "subdomain.company.example.org",
+          "start": 8,
+          "end": 37
+        },
+        {
+          "type": "DOMAIN",
+          "value": "a.io",
+          "start": 42,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "text": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 (Sydney)",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "35.6762",
+          "start": 5,
+          "end": 12
+        },
+        {
+          "type": "GPS",
+          "value": "139.6503",
+          "start": 19,
+          "end": 27
+        },
+        {
+          "type": "GPS",
+          "value": "-33.8688",
+          "start": 50,
+          "end": 58
+        },
+        {
+          "type": "GPS",
+          "value": "151.2093",
+          "start": 71,
+          "end": 79
+        }
+      ]
+    },
+    {
+      "text": "GPS: 27.1751 N, 78.0421 E (Taj Mahal)",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "27.1751",
+          "start": 5,
+          "end": 12
+        },
+        {
+          "type": "GPS",
+          "value": "78.0421",
+          "start": 16,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "File: /opt/application/config/production/settings.json",
+      "entities": [
+        {
+          "type": "FILE_PATH",
+          "value": "/opt/application/config/production/settings.json",
+          "start": 6,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "text": "File: /home/user/tmp/cache/data",
+      "entities": [
+        {
+          "type": "FILE_PATH",
+          "value": "/home/user/tmp/cache/data",
+          "start": 6,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "SSH key: -----BEGIN RSA PRIVATE KEY-----\nProc-Type: 4,ENCRYPTED\n-----END RSA PRIVATE KEY-----",
+      "entities": [
+        {
+          "type": "SSH_KEY",
+          "value": "-----BEGIN RSA PRIVATE KEY-----",
+          "start": 9,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "text": "SSH: -----BEGIN DSA PRIVATE KEY-----\nMIIBvAIB...\n-----END DSA PRIVATE KEY-----",
+      "entities": [
+        {
+          "type": "SSH_KEY",
+          "value": "-----BEGIN DSA PRIVATE KEY-----",
+          "start": 5,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "text": "MySQL: mysql://dev_user:dev_pass@mysql-dev.internal:3306/staging",
+      "entities": [
+        {
+          "type": "DATABASE_URL",
+          "value": "mysql://dev_user:dev_pass@mysql-dev.internal:3306/staging",
+          "start": 7,
+          "end": 64
+        }
+      ]
+    },
+    {
+      "text": "SQLite: sqlite:///data/db/production.db",
+      "entities": [
+        {
+          "type": "DATABASE_URL",
+          "value": "sqlite:///data/db/production.db",
+          "start": 8,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "Oracle: oracle://scott:tiger@oracle.internal:1521/XEPDB1",
+      "entities": [
+        {
+          "type": "DATABASE_URL",
+          "value": "oracle://scott:tiger@oracle.internal:1521/XEPDB1",
+          "start": 8,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "text": "IBAN: FR76 3000 6000 0112 3456 7890 189",
+      "entities": [
+        {
+          "type": "IBAN",
+          "value": "FR76 3000 6000 0112 3456 7890 189",
+          "start": 6,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "IBAN: CH93 0076 2011 6238 5295 7",
+      "entities": [
+        {
+          "type": "IBAN",
+          "value": "CH93 0076 2011 6238 5295 7",
+          "start": 6,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Passport num: EF12345678",
+      "entities": [
+        {
+          "type": "PASSPORT",
+          "value": "EF12345678",
+          "start": 14,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "API key: api_key_abcdef1234567890abcdef1234567890",
+      "entities": [
+        {
+          "type": "API_KEY",
+          "value": "api_key_abcdef1234567890abcdef1234567890",
+          "start": 9,
+          "end": 49
+        }
+      ]
+    },
+    {
+      "text": "Token: secret_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
+      "entities": [
+        {
+          "type": "API_KEY",
+          "value": "secret_a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
+          "start": 7,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "text": "Domain: example.internal and mysql.corp.local and api.staging.private",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "example.internal",
+          "start": 8,
+          "end": 24
+        },
+        {
+          "type": "DOMAIN",
+          "value": "mysql.corp.local",
+          "start": 29,
+          "end": 45
+        },
+        {
+          "type": "DOMAIN",
+          "value": "api.staging.private",
+          "start": 50,
+          "end": 69
+        }
+      ]
+    },
+    {
+      "text": "Employee: Rose Tyler (rose@torchwood.xyz), employee: Jack Harkness (jack@torchwood.xyz)",
+      "entities": [
+        {
+          "type": "EMPLOYEE_NAME",
+          "value": "Rose Tyler",
+          "start": 10,
+          "end": 20
+        },
+        {
+          "type": "EMAIL",
+          "value": "rose@torchwood.xyz",
+          "start": 22,
+          "end": 40
+        },
+        {
+          "type": "EMPLOYEE_NAME",
+          "value": "Jack Harkness",
+          "start": 53,
+          "end": 66
+        },
+        {
+          "type": "EMAIL",
+          "value": "jack@torchwood.xyz",
+          "start": 68,
+          "end": 86
+        }
+      ]
+    },
+    {
+      "text": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
+      "entities": [
+        {
+          "type": "CUSTOMER_NAME",
+          "value": "Amy Pond",
+          "start": 10,
+          "end": 18
+        },
+        {
+          "type": "EMAIL",
+          "value": "amy.pond@weeping-angels.com",
+          "start": 20,
+          "end": 47
+        },
+        {
+          "type": "PROJECT_NAME",
+          "value": "project Pandorica",
+          "start": 51,
+          "end": 68
+        }
+      ]
+    },
+    {
+      "text": "Contact person: Donna Noble (donna@temp-services.co.uk). Project Bad Wolf is GO.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Donna Noble",
+          "start": 16,
+          "end": 27
+        },
+        {
+          "type": "EMAIL",
+          "value": "donna@temp-services.co.uk",
+          "start": 29,
+          "end": 54
+        },
+        {
+          "type": "PROJECT_NAME",
+          "value": "Project Bad Wolf",
+          "start": 57,
+          "end": 73
+        }
+      ]
+    },
+    {
+      "text": "Bank: 1234567890123456 and account: 8765432109876543",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "1234567890123456",
+          "start": 6,
+          "end": 22
+        },
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "8765432109876543",
+          "start": 36,
+          "end": 52
+        }
+      ]
+    },
+    {
+      "text": "CC: 4111111111111111 and 5500000000000004 (no dashes)",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111111111111111",
+          "start": 4,
+          "end": 20
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "5500000000000004",
+          "start": 25,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "text": "Private endpoint: https://control-plane.internal:8443/api/v1/config",
+      "entities": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://control-plane.internal:8443/api/v1/config",
+          "start": 18,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "text": "Local: http://localhost:4000/graphql for the playground",
+      "entities": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "http://localhost:4000/graphql",
+          "start": 7,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "text": "Internal app: https://payroll.corp.local/admin",
+      "entities": [
+        {
+          "type": "PRIVATE_URL",
+          "value": "https://payroll.corp.local/admin",
+          "start": 14,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "text": "City: The population of Mumbai is over 20 million.",
+      "entities": [
+        {
+          "type": "CITY",
+          "value": "Mumbai",
+          "start": 24,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Country: Switzerland has 4 official languages.",
+      "entities": [
+        {
+          "type": "COUNTRY",
+          "value": "Switzerland",
+          "start": 9,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "text": "The server at 10.0.0.1 handles requests from 192.168.1.50 to 172.16.0.10",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "10.0.0.1",
+          "start": 14,
+          "end": 22
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.50",
+          "start": 45,
+          "end": 57
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "172.16.0.10",
+          "start": 61,
+          "end": 72
+        }
+      ]
+    },
+    {
+      "text": "Phone: +49 30 12345678 (Berlin office)",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+49 30 12345678",
+          "start": 7,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "Phone: 07700 900 123 (UK mobile)",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "07700 900 123",
+          "start": 7,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "text": "JWT: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
+      "entities": [
+        {
+          "type": "JWT",
+          "value": "eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
+          "start": 5,
+          "end": 79
+        }
+      ]
+    },
+    {
+      "text": "JWT with sig: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiJ9.V0rtziRdmiYSdgCwTSAOfFzQxPmuZLLO4ZTjvOEM_Oo",
+      "entities": [
+        {
+          "type": "JWT",
+          "value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiJ9.V0rtziRdmiYSdgCwTSAOfFzQxPmuZLLO4ZTjvOEM_Oo",
+          "start": 14,
+          "end": 99
+        }
+      ]
+    },
+    {
+      "text": "API: pk-a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6",
+      "entities": [
+        {
+          "type": "API_KEY",
+          "value": "pk-a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0u1v2w3x4y5z6",
+          "start": 5,
+          "end": 60
+        }
+      ]
+    },
+    {
+      "text": "File: D:\\Projects\\Backup\\2024\\financial\\statements.xlsx",
+      "entities": [
+        {
+          "type": "FILE_PATH",
+          "value": "D:\\Projects\\Backup\\2024\\financial\\statements.xlsx",
+          "start": 6,
+          "end": 55
+        }
+      ]
+    },
+    {
+      "text": "GPS: lat: 55.7558, lng: 37.6173 (Moscow) and lat: 59.9343, lng: 30.3351 (SPB)",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "55.7558",
+          "start": 10,
+          "end": 17
+        },
+        {
+          "type": "GPS",
+          "value": "37.6173",
+          "start": 24,
+          "end": 31
+        },
+        {
+          "type": "GPS",
+          "value": "59.9343",
+          "start": 50,
+          "end": 57
+        },
+        {
+          "type": "GPS",
+          "value": "30.3351",
+          "start": 64,
+          "end": 71
+        }
+      ]
+    },
+    {
+      "text": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
+      "entities": [
+        {
+          "type": "EMPLOYEE_NAME",
+          "value": "Mickey Smith",
+          "start": 10,
+          "end": 22
+        },
+        {
+          "type": "EMAIL",
+          "value": "mickey@ctos.earth",
+          "start": 24,
+          "end": 41
+        },
+        {
+          "type": "PROJECT_NAME",
+          "value": "project Last Centurion",
+          "start": 47,
+          "end": 69
+        }
+      ]
+    },
+    {
+      "text": "Customer: River Song (river@library.silence) - project Impossible Astronaut",
+      "entities": [
+        {
+          "type": "CUSTOMER_NAME",
+          "value": "River Song",
+          "start": 10,
+          "end": 20
+        },
+        {
+          "type": "EMAIL",
+          "value": "river@library.silence",
+          "start": 22,
+          "end": 43
+        },
+        {
+          "type": "PROJECT_NAME",
+          "value": "project Impossible Astronaut",
+          "start": 47,
+          "end": 75
+        }
+      ]
+    },
+    {
+      "text": "The quick brown fox jumps over the lazy dog.",
+      "entities": []
+    },
+    {
+      "text": "Meeting at 2 PM tomorrow in the conference room B.",
+      "entities": []
+    },
+    {
+      "text": "The price of milk is $3.50 at the local grocery store.",
+      "entities": []
+    },
+    {
+      "text": "Please review the quarterly report before Friday.",
+      "entities": []
+    },
+    {
+      "text": "The server maintenance is scheduled for this weekend.",
+      "entities": []
+    },
+    {
+      "text": "User typed a phone-like number: 123-456-7890 but this is not a real phone.",
+      "entities": []
+    },
+    {
+      "text": "My street is 123 Main Street, not 123 Main St.",
+      "entities": []
+    },
+    {
+      "text": "Version 3.1.4 is the latest release of the software package.",
+      "entities": []
+    },
+    {
+      "text": "The year 2025 will be important for our company growth.",
+      "entities": []
+    },
+    {
+      "text": "Please use ticket number TKT-12345 for the bug report.",
+      "entities": []
+    },
+    {
+      "text": "What does a@b or x@y mean? These arent real emails - short local parts.",
+      "entities": []
+    },
+    {
+      "text": "The value 555-1212 is often used in TV shows as a fake number.",
+      "entities": []
+    },
+    {
+      "text": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
+      "entities": []
+    },
+    {
+      "text": "User 192.168.x.x is a common notation for private networks.",
+      "entities": []
+    },
+    {
+      "text": "The parameter --api_endpoint should use https://example.com/api.",
+      "entities": []
+    },
+    {
+      "text": "Unicode PII: 联系用户张伟，邮箱是zhangwei@example.cn，电话+86 138-0013-8000",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "张伟",
+          "start": 17,
+          "end": 19
+        },
+        {
+          "type": "EMAIL",
+          "value": "zhangwei@example.cn",
+          "start": 23,
+          "end": 42
+        },
+        {
+          "type": "PHONE",
+          "value": "+86 138-0013-8000",
+          "start": 45,
+          "end": 62
+        }
+      ]
+    },
+    {
+      "text": "Arabic: اتصل بـ أحمد على ahmed@example.sa أو +966 55 123 4567",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "أحمد",
+          "start": 16,
+          "end": 20
+        },
+        {
+          "type": "EMAIL",
+          "value": "ahmed@example.sa",
+          "start": 25,
+          "end": 41
+        },
+        {
+          "type": "PHONE",
+          "value": "+966 55 123 4567",
+          "start": 45,
+          "end": 61
+        }
+      ]
+    },
+    {
+      "text": "Russian: Иван Иванов, email: ivan@example.ru, тел: +7 495 123-45-67",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Иван Иванов",
+          "start": 9,
+          "end": 20
+        },
+        {
+          "type": "EMAIL",
+          "value": "ivan@example.ru",
+          "start": 29,
+          "end": 44
+        },
+        {
+          "type": "PHONE",
+          "value": "+7 495 123-45-67",
+          "start": 51,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "text": "Japanese: 田中太郎のメールはtanaka@example.jp、電話は+81 90-1234-5678",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "田中太郎",
+          "start": 10,
+          "end": 14
+        },
+        {
+          "type": "EMAIL",
+          "value": "tanaka@example.jp",
+          "start": 19,
+          "end": 36
+        },
+        {
+          "type": "PHONE",
+          "value": "+81 90-1234-5678",
+          "start": 40,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "text": "Greek: O Γιώργος έχει email: giorgos@example.gr",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Γιώργος",
+          "start": 9,
+          "end": 16
+        },
+        {
+          "type": "EMAIL",
+          "value": "giorgos@example.gr",
+          "start": 29,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "text": "Very long JWT: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjoxNTE2MjQyNjIyfQ.HV1nKqHCpGmxzk8TMJcCnFmv5LmEHkzF1J7c5XiSgFX4pSxFrraoYUFX_NOeFgl3iDTPsoB8bSblV_QfGLxt_A",
+      "entities": [
+        {
+          "type": "JWT",
+          "value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiYWRtaW4iOnRydWUsImlhdCI6MTUxNjIzOTAyMiwiZXhwIjoxNTE2MjQyNjIyfQ.HV1nKqHCpGmxzk8TMJcCnFmv5LmEHkzF1J7c5XiSgFX4pSxFrraoYUFX_NOeFgl3iDTPsoB8bSblV_QfGLxt_A",
+          "start": 15,
+          "end": 253
+        }
+      ]
+    },
+    {
+      "text": "mixed RTL/LTR: my email is john@doe.com and my phone is +972 50 123 4567 שלום",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "john@doe.com",
+          "start": 27,
+          "end": 39
+        },
+        {
+          "type": "PHONE",
+          "value": "+972 50 123 4567",
+          "start": 56,
+          "end": 72
+        }
+      ]
+    },
+    {
+      "text": "Base64 encoded email: dGVzdEBleGFtcGxlLmNvbQ== looks like a token but its an email",
+      "entities": []
+    },
+    {
+      "text": "Partially redacted: My credit card is ****-****-****-1111 and SSN is ***-**-6789",
+      "entities": []
+    },
+    {
+      "text": "Redacted phone: XXX-XXX-7890 and email: xxxx@domain.com",
+      "entities": []
+    },
+    {
+      "text": "Person: James researcher published his findings in Nature at London University.",
+      "entities": []
+    },
+    {
+      "text": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
+      "entities": []
+    },
+    {
+      "text": "Phone-like: 5552368 is short sequence, not enough digits for phone.",
+      "entities": []
+    },
+    {
+      "text": "Email-like: admin@localhost is technically valid but internal-only.",
+      "entities": []
+    },
+    {
+      "text": "Domain: 123 is not a valid domain name by itself.",
+      "entities": []
+    },
+    {
+      "text": "Path: tmp/foo/bar is relative, not absolute, so not a FILE_PATH.",
+      "entities": []
+    },
+    {
+      "text": "Base64 encoded SSN: MTIzLTQ1LTY3ODk= in base64, detectors should not decode this",
+      "entities": []
+    },
+    {
+      "text": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ...flQpDQEf4RZwtYVgYkY9wQfF0sZgRv8nKpLmNvXzUxM",
+      "entities": []
+    }
+  ]
+}

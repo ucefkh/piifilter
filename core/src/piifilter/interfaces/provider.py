@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, AsyncGenerator
 
 if TYPE_CHECKING:
     from piifilter.session import Session
@@ -62,6 +62,23 @@ class Provider(ABC):
             ProviderError: On any transport or API error.
         """
         ...
+
+    async def forward_stream(self, session: Session) -> AsyncGenerator[str, None]:
+        """Stream the filtered prompt to the LLM, yielding chunks.
+
+        The default implementation calls ``forward()`` and yields the full
+        response as a single chunk.  Providers that support native streaming
+        should override this to yield token-by-token.
+
+        Args:
+            session: The pipeline session carrying the filtered prompt and
+                     provider configuration.
+
+        Yields:
+            Text chunks from the LLM response.
+        """
+        response = await self.forward(session)
+        yield response
 
     @abstractmethod
     async def check_health(self) -> bool:

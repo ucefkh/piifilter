@@ -1,7 +1,7 @@
 [project]
 name = "piifilter"
-version = "2.0.0"
-description = "Local-first AI privacy gateway — detect, classify, and semantically replace sensitive information before prompts reach LLMs."
+version = "0.1.0"
+description = "Local-first AI privacy gateway — detect, classify, and semantically replace sensitive information before prompts reach LLMs. (Pre-release — API not stable.)"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -9,7 +9,7 @@ authors = [
     { name = "PIIFilter", email = "hello@piifilter.dev" },
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "Intended Audience :: System Administrators",
     "License :: OSI Approved :: MIT License",
@@ -28,6 +28,7 @@ dependencies = [
     "httpx>=0.27",
     "pydantic>=2.0",
     "pydantic-settings>=2.0",
+    "cryptography>=41.0",
 ]
 
 [project.urls]

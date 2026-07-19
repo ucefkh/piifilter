@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "piifilter-provider-lmstudio"
+version = "2.0.0"
+description = "LM Studio / Ollama provider plugin for PIIFilter"
+requires-python = ">=3.11"
+dependencies = [
+    "piifilter",
+]
+
+[project.entry-points."piifilter.plugins"]
+lmstudio = "piifilter_provider_lmstudio"
+
+[tool.setuptools.packages.find]
+where = ["src"]

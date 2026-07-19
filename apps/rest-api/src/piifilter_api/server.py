@@ -13,16 +13,19 @@ No transport logic leaks into the core.  The API only calls
 
 from __future__ import annotations
 
+import json
 import logging
 from pathlib import Path
-from typing import Any, Optional
+from typing import Any, AsyncGenerator, Optional
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel, Field
+from sse_starlette.sse import EventSourceResponse
 
 from piifilter import FilterPipeline, Session, FilterConfig
 from piifilter.shared.models import ReplacementMode
 from piifilter.shared.alias_store import AliasStore
+from piifilter.shared.alias_store_persistent import SQLiteAliasBackend
 from piifilter_api.unfilter import create_unfilter_router
 
 logger = logging.getLogger(__name__)
@@ -121,6 +124,10 @@ def create_app(config_path: Optional[str] = None) -> FastAPI:
 
     The app holds a single ``FilterPipeline`` instance in its state
     along with a shared ``AliasStore`` for conversation-scoped aliasing.
+
+    If the environment variable ``PIIFILTER_STORE_KEY`` is set, the
+    alias store uses a persistent ``SQLiteAliasBackend`` (encrypted at
+    rest).  Otherwise it falls back to the in-memory default.
     """
     config = FilterConfig()
     if config_path:
@@ -128,7 +135,13 @@ def create_app(config_path: Optional[str] = None) -> FastAPI:
         if p.exists():
             config = FilterConfig.from_yaml(p)
 
-    alias_store = AliasStore(seed=config.replacement.seed)
+    # Use SQLite backend when encryption key is available (opt-in)
+    import os
+    if os.environ.get("PIIFILTER_STORE_KEY"):
+        backend = SQLiteAliasBackend(seed=config.replacement.seed)
+        alias_store = AliasStore(seed=config.replacement.seed, backend=backend)
+    else:
+        alias_store = AliasStore(seed=config.replacement.seed)
     pipeline = FilterPipeline(config=config, alias_store=alias_store)
     app = FastAPI(
         title="PIIFilter API",
@@ -314,5 +327,220 @@ def create_app(config_path: Optional[str] = None) -> FastAPI:
     # ── Unfilter / alias endpoints ────────────────────────────────
     unfilter_router = create_unfilter_router(alias_store)
     app.include_router(unfilter_router)
+
+    # ── Streaming endpoints ────────────────────────────────────────
+
+    class StreamRequest(BaseModel):
+        """Request body for streaming endpoints."""
+        prompt: str
+        conversation_id: Optional[str] = None
+        request_id: Optional[str] = None
+        mode: Optional[str] = None
+
+    class UnfilterStreamRequest(BaseModel):
+        """Request body for the unfilter streaming endpoint.
+
+        The filtered prompt (aliases) is sent as a final field alongside
+        conversation context; the actual stream of LLM tokens is sent via
+        the ``stream`` field as a list of chunks for simulation, or the
+        endpoint connects to a provider for live streaming.
+        """
+        conversation_id: str
+        stream: list[str] = []
+
+    async def _stream_filtered(
+        pipeline: FilterPipeline,
+        session: Session,
+    ) -> AsyncGenerator[str, None]:
+        """Run the detection → risk → policy → replace pipeline and yield
+        the filtered prompt as an SSE event, then the full pipeline result
+        as a final JSON event."""
+        session = await pipeline.run(session)
+
+        # Yield the filtered prompt
+        yield json.dumps({
+            "type": "filtered",
+            "data": {
+                "request_id": session.request_id,
+                "filtered_prompt": session.filtered_prompt,
+                "blocked": session.blocked,
+                "block_reason": session.block_reason,
+                "entity_count": len(session.entities),
+            },
+        })
+
+        # If the pipeline was blocked, emit an error event
+        if session.is_blocked:
+            yield json.dumps({
+                "type": "blocked",
+                "data": {
+                    "request_id": session.request_id,
+                    "reason": session.block_reason,
+                },
+            })
+            return
+
+        yield json.dumps({
+            "type": "done",
+            "data": {
+                "request_id": session.request_id,
+                "latency_ms": session.latency_ms,
+            },
+        })
+
+    async def _forward_stream(
+        pipeline: FilterPipeline,
+        session: Session,
+    ) -> AsyncGenerator[str, None]:
+        """Run the full pipeline, then forward to the LLM in streaming mode
+        and yield each chunk as an SSE event."""
+        session = await pipeline.run(session)
+
+        if session.is_blocked:
+            yield json.dumps({
+                "type": "blocked",
+                "data": {
+                    "request_id": session.request_id,
+                    "reason": session.block_reason,
+                },
+            })
+            return
+
+        yield json.dumps({
+            "type": "filtered",
+            "data": {
+                "request_id": session.request_id,
+                "entity_count": len(session.entities),
+            },
+        })
+
+        # Stream from the provider
+        provider_name = session.provider_config.name if session.provider_config else session.config.provider.name
+        provider = pipeline.registry.get_provider_or_none(provider_name)
+
+        if provider is None:
+            yield json.dumps({
+                "type": "error",
+                "data": {"message": f"Provider '{provider_name}' not found"},
+            })
+            return
+
+        try:
+            chunk_count = 0
+            async for chunk in provider.forward_stream(session):
+                chunk_count += 1
+                yield json.dumps({
+                    "type": "chunk",
+                    "data": {
+                        "text": chunk,
+                        "index": chunk_count,
+                    },
+                })
+        except Exception as exc:
+            yield json.dumps({
+                "type": "error",
+                "data": {"message": f"Streaming error: {exc}"},
+            })
+            return
+
+        yield json.dumps({
+            "type": "done",
+            "data": {
+                "request_id": session.request_id,
+                "chunks": chunk_count,
+            },
+        })
+
+    @app.post("/v1/filter/stream")
+    async def filter_stream_endpoint(req: StreamRequest):
+        """Stream the filtered prompt as SSE events.
+
+        Returns an SSE stream with events:
+          - ``filtered``: the filtered prompt and metadata
+          - ``blocked``: (if blocked) block reason
+          - ``done``: final metadata
+        """
+        session = Session(
+            prompt=req.prompt,
+            conversation_id=req.conversation_id,
+            request_id=req.request_id or Session().request_id,
+            mode=ReplacementMode(req.mode) if req.mode else None,
+        )
+        session.alias_store = pipeline.alias_store if hasattr(pipeline, 'alias_store') else app.state.alias_store
+
+        async def event_generator():
+            async for event_data in _stream_filtered(pipeline, session):
+                yield {"event": "message", "data": event_data}
+
+        return EventSourceResponse(event_generator())
+
+    @app.post("/v1/forward/stream")
+    async def forward_stream_endpoint(req: StreamRequest):
+        """Stream the filtered prompt **and forward to LLM** as SSE events.
+
+        Returns an SSE stream with events:
+          - ``filtered``: the filtered prompt metadata
+          - ``chunk``: each streaming token from the LLM
+          - ``blocked``: (if blocked) block reason
+          - ``error``: streaming error
+          - ``done``: final metadata
+        """
+        session = Session(
+            prompt=req.prompt,
+            conversation_id=req.conversation_id,
+            request_id=req.request_id or Session().request_id,
+            mode=ReplacementMode(req.mode) if req.mode else None,
+        )
+        session.provider_config = app.state.config.provider
+        session.alias_store = pipeline.alias_store if hasattr(pipeline, 'alias_store') else app.state.alias_store
+
+        async def event_generator():
+            async for event_data in _forward_stream(pipeline, session):
+                yield {"event": "message", "data": event_data}
+
+        return EventSourceResponse(event_generator())
+
+    @app.post("/v1/unfilter/stream")
+    async def unfilter_stream_endpoint(req: UnfilterStreamRequest):
+        """Streaming unfilter: receive a list of stream chunks and emit
+        SSE events with original values restored.
+
+        Returns an SSE stream with events:
+          - ``chunk``: each unfiltered chunk
+          - ``done``: final metadata
+        """
+        session = Session(
+            prompt="",
+            conversation_id=req.conversation_id,
+        )
+        session.alias_store = pipeline.alias_store if hasattr(pipeline, 'alias_store') else app.state.alias_store
+
+        async def stream_chunks():
+            for chunk in req.stream:
+                yield chunk
+
+        async def event_generator():
+            chunk_count = 0
+            async for unfiltered_chunk in session.unfilter_stream(stream_chunks()):
+                chunk_count += 1
+                yield {
+                    "event": "message",
+                    "data": json.dumps({
+                        "type": "chunk",
+                        "data": {
+                            "text": unfiltered_chunk,
+                            "index": chunk_count,
+                        },
+                    }),
+                }
+            yield {
+                "event": "message",
+                "data": json.dumps({
+                    "type": "done",
+                    "data": {"chunks": chunk_count},
+                }),
+            }
+
+        return EventSourceResponse(event_generator())
 
     return app

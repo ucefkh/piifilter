@@ -1,7 +1,7 @@
 [project]
 name = "piifilter"
-version = "2.0.0"
-description = "Local-first AI privacy gateway — detect, classify, and semantically replace sensitive information before prompts reach LLMs. Think Nginx for AI."
+version = "0.1.0"
+description = "Local-first AI privacy gateway — detect, classify, and semantically replace sensitive information before prompts reach LLMs. Think Nginx for AI. (Pre-release)"
 requires-python = ">=3.11"
 dependencies = [
     "pydantic>=2.0.0",

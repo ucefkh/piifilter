@@ -19,7 +19,7 @@ from piifilter.config import FilterConfig
 from piifilter.registry.registry import PluginRegistry
 from piifilter.events.bus import EventBus, PipelineEvent
 
-__version__ = "2.0.0"
+__version__ = "0.1.0"
 
 __all__ = [
     "Session",

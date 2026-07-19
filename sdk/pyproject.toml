@@ -1,7 +1,7 @@
 [project]
 name = "piifilter-sdk"
-version = "2.0.0"
-description = "PIIFilter SDK — the easiest way to use PIIFilter programmatically"
+version = "0.1.0"
+description = "PIIFilter SDK — the easiest way to use PIIFilter programmatically (Pre-release)"
 readme = "README.md"
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -9,7 +9,7 @@ authors = [
     { name = "PIIFilter", email = "hello@piifilter.dev" },
 ]
 classifiers = [
-    "Development Status :: 5 - Production/Stable",
+    "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
@@ -21,7 +21,7 @@ classifiers = [
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
 dependencies = [
-    "piifilter>=2.0.0",
+    "piifilter>=0.1.0",
 ]
 
 [project.urls]

@@ -1,11 +1,11 @@
 [project]
 name = "piifilter-mcp-server"
-version = "2.0.0"
-description = "MCP server for PIIFilter — expose filter_prompt as a Claude Desktop tool"
+version = "0.1.0"
+description = "MCP server for PIIFilter — expose filter_prompt as a Claude Desktop tool (Pre-release)"
 requires-python = ">=3.11"
 dependencies = [
-    "piifilter>=2.0.0",
-    "piifilter-sdk>=2.0.0",
+    "piifilter>=0.1.0",
+    "piifilter-sdk>=0.1.0",
     "mcp>=1.0.0",
 ]
 

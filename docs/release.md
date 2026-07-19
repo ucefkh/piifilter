@@ -1,4 +1,9 @@
-# Releasing PIIFilter
+# Releasing PIIFilter (Pre-release v0.x)
+
+## Status
+
+PIIFilter is pre-release software (v0.x). Releases are published to gather
+feedback from early adopters. Expect breaking changes between versions.
 
 ## Prerequisites
 
@@ -29,23 +34,23 @@ uv publish
 ```bash
 cd sdk/js
 npm login
-npm publish
+npm publish --tag alpha
 ```
 
-### 4. Chrome Extension
+### 4. Chrome Extension (not yet published)
 
 1. Go to https://chrome.google.com/webstore/devconsole
-2. Upload `dist/piifilter-chrome-v2.zip`
+2. Upload `dist/piifilter-chrome-v0.1.zip`
 3. Fill in the store listing from `docs/chrome-store-listing.md`
 4. Submit for review
 
 ### 5. GitHub Release
 
 ```bash
-gh release create v2.0.0 \
-  --title "v2.0.0" \
-  --notes "Release notes here" \
-  --generate-notes
+gh release create v0.1.0 \
+  --title "v0.1.0" \
+  --notes "Pre-release — see ROADMAP.md for known gaps" \
+  --prerelease
 ```
 
 ## Verification

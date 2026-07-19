@@ -1,6 +1,6 @@
 <p align="center">
-  <h1 align="center">PIIFilter v2</h1>
-  <p align="center"><em>Local-First AI Privacy Gateway — Think Nginx for AI</em></p>
+  <h1 align="center">PIIFilter v0.1</h1>
+  <p align="center"><em>Local-First AI Privacy Gateway — Early Development</em></p>
 </p>
 
 <p align="center">
@@ -20,7 +20,34 @@ Input:   "I want my wife Susan to review the contract for our office at 42 Broad
 Output:  "I want my wife Janette to review the contract for our office in a major metropolitan business district."
 ```
 
-No cloud dependency. No prompt storage. Local execution. **<50 ms latency.**
+No cloud dependency. No prompt storage. Local execution.
+
+---
+
+## Stability
+
+**PIIFilter is in active development (v0.x).** The API will change based on
+real-world feedback. We do not make stability guarantees until v1.0.0.
+
+What's **actually validated**:
+- ✅ Core pipeline (detect → risk → policy → replace → audit → forward)
+- ✅ Plugin system with 7 interfaces
+- ✅ 12 plugins (3 detectors, 6 providers, 3 strategies)
+- ✅ 6 transport methods (CLI, REST, Chrome, VSCode, MCP, OpenAI Middleware)
+- ✅ 392 tests, fuzz suite, CI pipeline
+- ✅ Conversation-scoped aliasing with unfilter endpoint
+- ✅ Event-driven architecture with 13 lifecycle events
+
+What's **designed but not validated against real LLM usage**:
+- ❌ End-to-end flow against a real LLM in production
+- ❌ Streaming response handling and unfilter
+- ❌ Detection recall against labeled PII datasets
+- ❌ Performance under load (>100 concurrent requests)
+- ❌ Unfilter reliability across diverse LLM output patterns
+- ❌ Production deployment (Docker, systemd, monitoring)
+
+We're building this in the open. Contributions, bug reports, and feedback
+about what breaks in your setup are genuinely appreciated.
 
 ---
 
@@ -433,12 +460,7 @@ See [SECURITY.md](SECURITY.md) for the full threat model, attack surface analysi
 
 ## Roadmap
 
-| Version | Features |
-|---|---|
-| **v2.0** | ✅ Plugin architecture, EventBus, SDK, 6 transports, config v2, 24 entity types |
-| **v2.1** | OpenAI Proxy transport, GLiNER detector, rate limiting, prometheus metrics |
-| **v2.2** | OCR for PDFs/images, voice transcription filtering, enterprise policy audit trail |
-| **v2.3** | IDE plugins (VS Code, JetBrains), Slack/Teams/Discord integrations |
+See [ROADMAP.md](ROADMAP.md) for the current plan and honest maturity assessment.
 
 ---
 
