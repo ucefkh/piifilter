@@ -79,24 +79,25 @@ class FilterConfig(BaseSettings):
 
         cfg = cls()
 
-        # Version migration
-        ver = data.pop("config_version", 1)
+        # Version migration — when not specified, assume current version (2)
+        ver = data.pop("config_version", 2)
         if ver < 2:
             # v1 → v2 migration: flat structure → nested policy/detection
             data = _migrate_v1_to_v2(data)
 
-        if "provider" in data:
-            cfg.provider = ProviderConfig(**data["provider"])
-        if "policy" in data:
+        if "provider" in data and data["provider"] is not None:
+            cfg.provider = ProviderConfig(**{k: (v if v is not None else cfg.provider.model_dump()[k]) for k, v in data["provider"].items()})
+        if "policy" in data and data["policy"] is not None:
             rules = data["policy"].get("rules", [])
             cfg.policy = PolicyConfig(rules=[PolicyRule(**r) for r in rules])
-        if "detection" in data:
-            cfg.detection = DetectionConfig(**data["detection"])
-        if "replacement" in data:
-            if "default_strategy" in data["replacement"]:
-                cfg.replacement.default_strategy = data["replacement"]["default_strategy"]
-        if "logging" in data:
-            cfg.logging = LoggingConfig(**data["logging"])
+        if "detection" in data and data["detection"] is not None:
+            cfg.detection = DetectionConfig(**{k: (v if v is not None else cfg.detection.model_dump()[k]) for k, v in data["detection"].items()})
+        if "replacement" in data and data["replacement"] is not None:
+            for k, v in data["replacement"].items():
+                if v is not None and hasattr(cfg.replacement, k):
+                    setattr(cfg.replacement, k, v)
+        if "logging" in data and data["logging"] is not None:
+            cfg.logging = LoggingConfig(**{k: (v if v is not None else cfg.logging.model_dump()[k]) for k, v in data["logging"].items()})
 
         return cfg
 

@@ -100,6 +100,13 @@ class FilterPipeline:
                 all_entities.extend(entities)
             except Exception as exc:
                 logger.warning("Detector %s failed: %s", detector.name, exc)
+                session.add_audit("detection", "error", {
+                    "detector": detector.name,
+                    "error": str(exc),
+                })
+                await self.event_bus.emit(
+                    PipelineEvent.PIPELINE_ERROR, session
+                )
 
         # Deduplicate: prefer higher confidence, keep provenance
         all_entities.sort(key=lambda e: (-e.score, e.start))
@@ -201,7 +208,7 @@ class FilterPipeline:
             return session
 
         strategy_name = session.mode.value if session.mode else session.config.replacement.default_strategy
-        strategy = self.registry.get_strategy(strategy_name)
+        strategy = self.registry.get_strategy_or_none(strategy_name)
 
         if strategy:
             filtered_text, replacements = await strategy.replace(session, session.entities)
@@ -227,7 +234,7 @@ class FilterPipeline:
             session.filtered_prompt = session.prompt
 
         provider_name = session.provider_config.name if session.provider_config else session.config.provider.name
-        provider = self.registry.get_provider(provider_name)
+        provider = self.registry.get_provider_or_none(provider_name)
 
         if provider:
             try:
@@ -237,6 +244,8 @@ class FilterPipeline:
                 session.llm_response = f"[PIIFilter Error: {exc}]"
                 session.add_audit("forward", "error", {"provider": provider_name, "error": str(exc)})
         else:
+            session.blocked = True
+            session.block_reason = f"Provider '{provider_name}' not found in registry"
             session.llm_response = f"[PIIFilter Error: Provider '{provider_name}' not registered]"
 
         return session

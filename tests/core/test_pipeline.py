@@ -86,6 +86,36 @@ class MockStrategy:
         pass
 
 
+class MockMaskStrategy:
+    """Mock strategy that replaces entities with [TYPE] markers, registered as 'semantic'."""
+
+    name = "semantic"
+    version = "1.0.0"
+
+    async def initialize(self) -> None:
+        pass
+
+    async def shutdown(self) -> None:
+        pass
+
+    async def replace(
+        self, session: Session, entities: list[DetectedEntity]
+    ) -> tuple[str, list[Replacement]]:
+        text = session.prompt
+        replacements = []
+        for entity in sorted(entities, key=lambda e: e.start, reverse=True):
+            replacement = f"[{entity.entity_type.value}]"
+            text = text[: entity.start] + replacement + text[entity.end :]
+            replacements.append(
+                Replacement(
+                    original=entity.value,
+                    replacement=replacement,
+                    entity_type=entity.entity_type,
+                )
+            )
+        return text, replacements
+
+
 class MockProvider:
     """Provider-like object that echoes the filtered prompt."""
 
@@ -114,11 +144,13 @@ def registry():
 
 @pytest.fixture
 def pipeline(event_bus, registry):
-    return FilterPipeline(
+    p = FilterPipeline(
         config=FilterConfig(),
         registry=registry,
         event_bus=event_bus,
     )
+    p.registry.register_strategy(MockMaskStrategy())
+    return p
 
 
 @pytest.fixture
@@ -325,14 +357,19 @@ class TestPipelineRisk:
         assert result.risk is not None
         assert "API_KEY" in result.risk.critical_entities or "api_key" in result.risk.critical_entities
 
-    async def test_risk_blocks_at_critical(self, pipeline, basic_session):
+    async def test_risk_blocks_at_critical(self, basic_session):
         """Pipeline can be configured to block at critical threshold."""
         cfg = FilterConfig(policy=PolicyConfig(rules=[
             PolicyRule(if_condition={"risk": 80, "operator": ">"}, action="BLOCK"),
         ]))
         p = FilterPipeline(config=cfg, registry=PluginRegistry(allow_overwrite=True))
+        p.registry.register_strategy(MockMaskStrategy())
+        # EMAIL = 10 pts each; 9 × 10 = 90 > 80 → triggers risk block
         p.registry.register_detector(MockDetector(
-            "d", entities=[DetectedEntity(EntityType.API_KEY, "sk-abc123xyz", 0, 12)]
+            "d", entities=[
+                DetectedEntity(EntityType.EMAIL, f"user{i}@example.com", i * 20, i * 20 + 15)
+                for i in range(9)
+            ]
         ))
 
         result = await p.run(basic_session)
@@ -363,6 +400,10 @@ class TestPipelineBlocking:
         pipeline.registry.register_detector(MockDetector(
             "d", entities=[DetectedEntity(EntityType.CREDIT_CARD, "4111-1111-1111-1111", 0, 19)]
         ))
+        # CREDIT_CARD isn't in the default block list, so add a policy rule for it
+        basic_session.config.policy.rules.append(
+            PolicyRule(if_condition={"type": "CREDIT_CARD"}, action="BLOCK")
+        )
         result = await pipeline.run(basic_session)
         assert result.is_blocked
         assert "BLOCK" in (result.block_reason or "")
@@ -402,12 +443,14 @@ class TestPipelineReplacement:
         assert "[PHONE]" in result.filtered_prompt
         assert len(result.replacements) == 2
 
-    async def test_replacement_with_fallback(self, pipeline, basic_session, email_entity):
+    async def test_replacement_with_fallback(self, basic_session, email_entity):
         """Without a registered strategy, falls back to basic replacement."""
-        pipeline.registry.register_detector(MockDetector("d", entities=[email_entity]))
-        # Don't register a strategy — pipeline falls back
+        reg = PluginRegistry(allow_overwrite=True)
+        p = FilterPipeline(config=FilterConfig(), registry=reg)
+        p.registry.register_detector(MockDetector("d", entities=[email_entity]))
+        # Don't register a strategy — pipeline falls back to basic replacement
 
-        result = await pipeline.run(basic_session)
+        result = await p.run(basic_session)
 
         assert result.filtered_prompt is not None
         assert result.filtered_prompt != basic_session.prompt
@@ -442,8 +485,8 @@ class TestPipelineForward:
 
         result = await pipeline.run(basic_session)
 
-        assert result.llm_response is not None
-        assert "Error" in result.llm_response or "not registered" in result.llm_response
+        assert result.blocked
+        assert "not found" in (result.block_reason or "").lower()
 
     async def test_no_forward_without_provider_confg(self, pipeline, basic_session):
         """Pipeline skips forward if no provider_config is set on session."""

@@ -67,9 +67,11 @@ class EventBus:
         registered.
         """
         if event in self._handlers:
-            self._handlers[event] = [
-                h for h in self._handlers[event] if h is not handler
-            ]
+            try:
+                idx = self._handlers[event].index(handler)
+                del self._handlers[event][idx]
+            except ValueError:
+                pass
 
     async def emit(self, event: PipelineEvent, session: Session) -> None:
         """Fire *event* with *session* to all subscribed handlers.
@@ -79,6 +81,8 @@ class EventBus:
         continues uninterrupted.
         """
         handlers = self._handlers.get(event, [])
+        # Filter out None handlers (accepted at subscribe, no-op at emit)
+        handlers = [h for h in handlers if h is not None]
         if not handlers:
             return
         results = await asyncio.gather(

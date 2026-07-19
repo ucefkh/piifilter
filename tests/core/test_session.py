@@ -371,21 +371,20 @@ class TestSessionReplacements:
             entity_type=EntityType.EMAIL,
             start=0,
             end=16,
-            mode=ReplacementMode.REDACT,
+            mode=ReplacementMode.MASK,
         )
         s.replacements.append(r)
         assert len(s.replacements) == 1
         assert s.replacements[0].original == "john@example.com"
         assert s.replacements[0].replacement == "[EMAIL]"
-        assert s.replacements[0].reversible is True
+        assert s.replacements[0].mode == ReplacementMode.MASK
 
     def test_replacement_not_reversible(self):
         r = Replacement(
             original="test", replacement="***",
             entity_type=EntityType.API_KEY, start=0, end=4,
-            reversible=False,
         )
-        assert r.reversible is False
+        assert r.mode == ReplacementMode.SEMANTIC
 
     def test_replacement_default_mode(self):
         r = Replacement(

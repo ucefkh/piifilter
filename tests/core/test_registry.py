@@ -18,7 +18,7 @@ from piifilter.registry.registry import (
     PluginRegistryError,
 )
 from piifilter.interfaces.detector import Detector
-from piifilter.interfaces.provider import Provider
+from piifilter.interfaces.provider import Provider, ProviderCapabilities
 from piifilter.interfaces.strategy import ReplacementStrategy
 from piifilter.interfaces.policy import PolicyEngine
 from piifilter.interfaces.plugin import Plugin
@@ -54,11 +54,21 @@ class MockProvider(Provider):
     def name(self) -> str:
         return self._name
 
+    @property
+    def capabilities(self) -> ProviderCapabilities:
+        return ProviderCapabilities()
+
     async def initialize(self) -> None:
         pass
 
     async def shutdown(self) -> None:
         pass
+
+    async def check_health(self) -> bool:
+        return True
+
+    async def forward(self, session) -> str:
+        return f"Echo: {session.prompt}"
 
 
 class MockStrategy(ReplacementStrategy):
