@@ -1008,6 +1008,11 @@ class Deobfuscator:
 
         def _try_l33t(m: re.Match[str]) -> str:
             token = m.group(0)
+            # Skip tokens where >50% of characters are digits — these are
+            # numeric codes (passport numbers, IBANs, etc.), not l33tspeak.
+            digit_ratio = sum(1 for c in token if c.isdigit()) / max(len(token), 1)
+            if digit_ratio > 0.5:
+                return token
             decoded = token.translate(cls._L33T_MAP)
             if decoded != token:
                 orig_digits = sum(1 for c in token if c.isdigit())

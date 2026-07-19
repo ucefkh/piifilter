@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set)",
-  "timestamp": "2026-07-19T22:07:04Z",
+  "timestamp": "2026-07-19T22:23:39Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
@@ -39,13 +39,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 238,
-      "total_true_positives": 198,
+      "total_detected_entities": 245,
+      "total_true_positives": 205,
       "total_false_positives": 40,
-      "total_false_negatives": 14,
-      "overall_precision": 0.8319327731092437,
-      "overall_recall": 0.9339622641509434,
-      "overall_f1": 0.88,
+      "total_false_negatives": 7,
+      "overall_precision": 0.8367346938775511,
+      "overall_recall": 0.9669811320754716,
+      "overall_f1": 0.8971553610503281,
       "per_type": {
         "ADDRESS": {
           "true_positives": 8,
@@ -328,23 +328,23 @@
           ]
         },
         "IBAN": {
-          "true_positives": 2,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 3,
-          "n": 5,
+          "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
-          "recall": 0.4,
-          "f1": 0.5714,
-          "f2": 0.4545,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.1176,
-            0.7693
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.25,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0456,
-            0.6994
+            0.5101,
+            1.0
           ]
         },
         "IP_ADDRESS": {
@@ -388,23 +388,23 @@
           ]
         },
         "PASSPORT": {
-          "true_positives": 0,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 4,
-          "n": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "false_negatives": 0,
+          "n": 8,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.0,
-            0.4899
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.4899
+            0.5101,
+            1.0
           ]
         },
         "PERSON": {
@@ -645,17 +645,18 @@
           "index": 3,
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
             "BANK_ACCOUNT",
-            "CREDIT_CARD"
+            "CREDIT_CARD",
+            "IBAN"
           ]
         },
         {
@@ -677,15 +678,16 @@
           "index": 5,
           "text_preview": "My passport is AB1234567 and my SSN is 987-65-4321",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PASSPORT",
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "PASSPORT",
             "SOCIAL_SECURITY"
           ]
         },
@@ -1074,14 +1076,16 @@
           "index": 30,
           "text_preview": "Passport: CD987654 and also passport XY123456",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "PASSPORT"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PASSPORT"
+          ]
         },
         {
           "index": 31,
@@ -1587,40 +1591,46 @@
           "index": 63,
           "text_preview": "IBAN: FR76 3000 6000 0112 3456 7890 189",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IBAN"
+          ]
         },
         {
           "index": 64,
           "text_preview": "IBAN: CH93 0076 2011 6238 5295 7",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IBAN"
+          ]
         },
         {
           "index": 65,
           "text_preview": "Passport num: EF12345678",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PASSPORT"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PASSPORT"
+          ]
         },
         {
           "index": 66,
@@ -2841,13 +2851,13 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 249,
-      "total_true_positives": 197,
+      "total_detected_entities": 256,
+      "total_true_positives": 204,
       "total_false_positives": 52,
-      "total_false_negatives": 15,
-      "overall_precision": 0.7911646586345381,
-      "overall_recall": 0.9292452830188679,
-      "overall_f1": 0.8546637744034706,
+      "total_false_negatives": 8,
+      "overall_precision": 0.796875,
+      "overall_recall": 0.9622641509433962,
+      "overall_f1": 0.8717948717948717,
       "per_type": {
         "ADDRESS": {
           "true_positives": 8,
@@ -3130,23 +3140,23 @@
           ]
         },
         "IBAN": {
-          "true_positives": 2,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 3,
-          "n": 5,
+          "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
-          "recall": 0.4,
-          "f1": 0.5714,
-          "f2": 0.4545,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.1176,
-            0.7693
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.25,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0456,
-            0.6994
+            0.5101,
+            1.0
           ]
         },
         "IP_ADDRESS": {
@@ -3190,23 +3200,23 @@
           ]
         },
         "PASSPORT": {
-          "true_positives": 0,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 4,
-          "n": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "false_negatives": 0,
+          "n": 8,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.0,
-            0.4899
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.4899
+            0.5101,
+            1.0
           ]
         },
         "PERSON": {
@@ -3460,17 +3470,18 @@
           "index": 3,
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
             "BANK_ACCOUNT",
-            "CREDIT_CARD"
+            "CREDIT_CARD",
+            "IBAN"
           ]
         },
         {
@@ -3492,15 +3503,16 @@
           "index": 5,
           "text_preview": "My passport is AB1234567 and my SSN is 987-65-4321",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PASSPORT",
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "PASSPORT",
             "SOCIAL_SECURITY"
           ]
         },
@@ -3889,14 +3901,16 @@
           "index": 30,
           "text_preview": "Passport: CD987654 and also passport XY123456",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "PASSPORT"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PASSPORT"
+          ]
         },
         {
           "index": 31,
@@ -4403,40 +4417,46 @@
           "index": 63,
           "text_preview": "IBAN: FR76 3000 6000 0112 3456 7890 189",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IBAN"
+          ]
         },
         {
           "index": 64,
           "text_preview": "IBAN: CH93 0076 2011 6238 5295 7",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IBAN"
+          ]
         },
         {
           "index": 65,
           "text_preview": "Passport num: EF12345678",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PASSPORT"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PASSPORT"
+          ]
         },
         {
           "index": 66,
