@@ -17,23 +17,11 @@ logger = getLogger(__name__)
 _GENERALIZATION_MAP: dict[str, str] = {
     EntityType.EMAIL.value: "an email address",
     EntityType.PHONE.value: "a phone number",
-    EntityType.SSN.value: "a social security number",
+    EntityType.SOCIAL_SECURITY.value: "a social security number",
     EntityType.CREDIT_CARD.value: "a payment method",
     EntityType.IP_ADDRESS.value: "an IP address",
-    EntityType.NAME.value: "an individual",
+    EntityType.PERSON.value: "an individual",
     EntityType.ADDRESS.value: "a physical address",
-    EntityType.DATE_OF_BIRTH.value: "a date of birth",
-    EntityType.PASSPORT.value: "a travel document",
-    EntityType.DRIVERS_LICENSE.value: "a driver's license",
-    EntityType.BANK_ACCOUNT.value: "a financial account",
-    EntityType.MEDICAL_RECORD.value: "a medical record",
-    EntityType.LICENSE_PLATE.value: "a license plate",
-    EntityType.URL.value: "a web address",
-    EntityType.API_KEY.value: "an API credential",
-    EntityType.PASSWORD.value: "a password",
-    EntityType.TOKEN.value: "an authentication token",
-    EntityType.CUSTOM.value: "custom data",
-    EntityType.UNKNOWN.value: "sensitive information",
 }
 
 

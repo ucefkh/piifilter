@@ -21,16 +21,16 @@ logger = logging.getLogger(__name__)
 PRESIDIO_TYPE_MAP: dict[str, EntityType] = {
     "EMAIL_ADDRESS": EntityType.EMAIL,
     "PHONE_NUMBER": EntityType.PHONE,
-    "US_SSN": EntityType.SSN,
-    "US_DRIVER_LICENSE": EntityType.DRIVERS_LICENSE,
+    "US_SSN": EntityType.SOCIAL_SECURITY,
+    "US_DRIVER_LICENSE": EntityType.PASSPORT,
     "US_PASSPORT": EntityType.PASSPORT,
     "US_BANK_NUMBER": EntityType.BANK_ACCOUNT,
     "CREDIT_CARD": EntityType.CREDIT_CARD,
     "IP_ADDRESS": EntityType.IP_ADDRESS,
-    "PERSON": EntityType.NAME,
+    "PERSON": EntityType.PERSON,
     "LOCATION": EntityType.ADDRESS,
-    "DATE_TIME": EntityType.DATE_OF_BIRTH,
-    "URL": EntityType.URL,
+    "DATE_TIME": EntityType.PERSON,
+    "URL": EntityType.PRIVATE_URL,
     "API_KEY": EntityType.API_KEY,
 }
 
@@ -40,10 +40,10 @@ PRESIDIO_KNOWN_ENTITIES: set[str] = set(PRESIDIO_TYPE_MAP.keys())
 def _presidio_to_entity_type(presidio_type: str) -> EntityType:
     """Map a Presidio entity type string to the system's EntityType.
 
-    Returns ``EntityType.UNKNOWN`` for unmapped types so the pipeline
+    Returns ``EntityType.PERSON`` for unmapped types so the pipeline
     never crashes on unrecognised presidio labels.
     """
-    return PRESIDIO_TYPE_MAP.get(presidio_type, EntityType.UNKNOWN)
+    return PRESIDIO_TYPE_MAP.get(presidio_type, EntityType.PERSON)
 
 
 # ── PresidioDetector ────────────────────────────────────────────────────────

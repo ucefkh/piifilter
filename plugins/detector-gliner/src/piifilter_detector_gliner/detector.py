@@ -23,23 +23,23 @@ logger = logging.getLogger(__name__)
 # ── GLiNER-EntityType mapping (default labels) ──────────────────────────────
 
 GLINER_LABEL_MAP: dict[str, EntityType] = {
-    "person": EntityType.NAME,
+    "person": EntityType.PERSON,
     "email": EntityType.EMAIL,
     "phone number": EntityType.PHONE,
     "address": EntityType.ADDRESS,
-    "date of birth": EntityType.DATE_OF_BIRTH,
+    "date of birth": EntityType.PERSON,
     "credit card": EntityType.CREDIT_CARD,
-    "ssn": EntityType.SSN,
+    "ssn": EntityType.SOCIAL_SECURITY,
     "passport number": EntityType.PASSPORT,
-    "drivers license": EntityType.DRIVERS_LICENSE,
+    "drivers license": EntityType.PASSPORT,
     "bank account": EntityType.BANK_ACCOUNT,
     "ip address": EntityType.IP_ADDRESS,
-    "url": EntityType.URL,
+    "url": EntityType.PRIVATE_URL,
     "api key": EntityType.API_KEY,
-    "license plate": EntityType.LICENSE_PLATE,
-    "medical record": EntityType.MEDICAL_RECORD,
-    "token": EntityType.TOKEN,
-    "password": EntityType.PASSWORD,
+    "license plate": EntityType.COMPANY,
+    "medical record": EntityType.PERSON,
+    "token": EntityType.JWT,
+    "password": EntityType.API_KEY,
 }
 
 GLINER_KNOWN_LABELS: list[str] = list(GLINER_LABEL_MAP.keys())
@@ -48,9 +48,9 @@ GLINER_KNOWN_LABELS: list[str] = list(GLINER_LABEL_MAP.keys())
 def _gliner_label_to_entity_type(label: str) -> EntityType:
     """Map a GLiNER label string to the system's EntityType.
 
-    Returns ``EntityType.UNKNOWN`` for unmapped labels.
+    Returns ``EntityType.PERSON`` for unmapped labels.
     """
-    return GLINER_LABEL_MAP.get(label.lower(), EntityType.UNKNOWN)
+    return GLINER_LABEL_MAP.get(label.lower(), EntityType.PERSON)
 
 
 # ── GLiNERDetector ──────────────────────────────────────────────────────────

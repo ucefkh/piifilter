@@ -43,18 +43,34 @@ jobs:
         run: |
           uv run python -c "
             import sys
-            sys.path.insert(0, 'plugins/detector-regex/src')
-            sys.path.insert(0, 'plugins/detector-presidio/src')
-            sys.path.insert(0, 'plugins/strategy-mask/src')
-            sys.path.insert(0, 'plugins/strategy-semantic/src')
-            sys.path.insert(0, 'plugins/strategy-generalize/src')
-            sys.path.insert(0, 'plugins/provider-openai/src')
+            for p in [
+                'plugins/detector-regex/src',
+                'plugins/detector-presidio/src',
+                'plugins/detector-gliner/src',
+                'plugins/strategy-mask/src',
+                'plugins/strategy-semantic/src',
+                'plugins/strategy-generalize/src',
+                'plugins/provider-openai/src',
+                'plugins/provider-anthropic/src',
+                'plugins/provider-gemini/src',
+                'plugins/provider-lmstudio/src',
+                'plugins/provider-ollama/src',
+                'plugins/provider-vllm/src',
+            ]:
+                sys.path.insert(0, p)
             for mod in [
                 'piifilter_detector_regex',
+                'piifilter_detector_presidio',
+                'piifilter_detector_gliner',
                 'piifilter_strategy_mask',
                 'piifilter_strategy_semantic',
                 'piifilter_strategy_generalize',
                 'piifilter_provider_openai',
+                'piifilter_provider_anthropic',
+                'piifilter_provider_gemini',
+                'piifilter_provider_lmstudio',
+                'piifilter_provider_ollama',
+                'piifilter_provider_vllm',
             ]:
                 __import__(mod)
                 print(f'✅ {mod}')
