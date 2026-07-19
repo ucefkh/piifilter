@@ -23,10 +23,12 @@ jobs:
         with:
           python-version: "3.11"
       
-      - name: Install dependencies
+      - name: Create virtual env + install dependencies
         run: |
+          uv venv
           uv pip install -e "core"
-          uv pip install pytest pytest-asyncio
+          uv pip install -e "sdk" --no-deps
+          uv pip install pytest pytest-asyncio httpx
       
       - name: Run core tests
         run: uv run pytest tests/core/ -v --tb=short
