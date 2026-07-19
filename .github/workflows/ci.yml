@@ -78,9 +78,10 @@ jobs:
 
       - name: Start Ollama
         run: |
+          curl -fsSL https://ollama.com/install.sh | sh
           ollama serve &
-          sleep 4
-          curl -sf http://localhost:11434/api/tags > /dev/null && echo "Ollama ready" || { echo "Ollama not started"; exit 1; }
+          sleep 8
+          for i in $(seq 1 5); do curl -sf http://localhost:11434/api/tags > /dev/null && echo "Ollama ready" && break; sleep 2; done
 
       - name: Pull CI test model (mistral)
         run: |

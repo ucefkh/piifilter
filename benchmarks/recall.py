@@ -265,9 +265,16 @@ def make_regex_adapter() -> DetectorAdapter:
         compiled = re.compile(raw_pattern, re.UNICODE)
         patterns.append((entity_type, compiled, score))
 
+    # Use Deobfuscator to normalize PII evasion before pattern matching
+    from piifilter.shared.deobfuscator import Deobfuscator
+    _deobfuscator = Deobfuscator()
+
     async def detect(text: str) -> list[dict[str, Any]]:
         if not text:
             return []
+
+        # Apply deobfuscation first — same as real RegexDetector
+        cleaned, _log = _deobfuscator(text)
 
         def _luhn_valid(digits: str) -> bool:
             nums = [int(d) for d in digits if d.isdigit()]
@@ -282,7 +289,7 @@ def make_regex_adapter() -> DetectorAdapter:
         entities: list[dict[str, Any]] = []
         seen_intervals: list[tuple[int, int]] = []
         for entity_type, pattern, score in patterns:
-            for match in pattern.finditer(text):
+            for match in pattern.finditer(cleaned):
                 start, end = match.start(), match.end()
                 if start == end:
                     continue
@@ -400,15 +407,149 @@ async def make_pipeline_adapter(shared_presidio: DetectorAdapter | None = None) 
 
         # Per-type interval tracking: keep different entity types even
         # when they overlap, but skip same-type duplicates.
+        # Cross-type suppression: Presidio PERSON detections that overlap
+        # with structural entity types are likely NER noise.
+        _PERSON_CROSS_SUPPRESS_TYPES = {
+            "FILE_PATH", "URL", "DOMAIN", "EMAIL", "IP_ADDRESS",
+            "API_KEY", "JWT", "SSH_KEY", "DATABASE_URL", "PRIVATE_URL",
+            "CREDIT_CARD", "SOCIAL_SECURITY", "PASSPORT", "IBAN",
+            # Name-like types: regex already handles these with perfect or
+            # near-perfect precision. Presidio PERSON overlapping these is
+            # always a duplicate — suppress it.
+            "EMPLOYEE_NAME", "CUSTOMER_NAME", "PROJECT_NAME",
+        }
+        # Common English words that Presidio NER often misidentifies as PERSON
+        # when they appear capitalized at the start of sentences or in headings.
+        _COMMON_WORDS: set[str] = {
+            "the", "a", "an", "in", "on", "at", "by", "to", "of", "for",
+            "with", "from", "and", "or", "but", "not", "this", "that",
+            "these", "those", "is", "are", "was", "were", "be", "been",
+            "being", "have", "has", "had", "do", "does", "did",
+            "will", "would", "could", "should", "may", "might", "must",
+            "shall", "can", "need", "dare", "ought",
+            "i", "you", "he", "she", "it", "we", "they",
+            "me", "him", "her", "us", "them",
+            "my", "your", "his", "its", "our", "their",
+            "mine", "yours", "hers", "ours", "theirs",
+            "who", "whom", "which", "what", "whose",
+            "man", "woman", "person", "people", "child",
+            "day", "week", "month", "year", "time", "today",
+            "monday", "tuesday", "wednesday", "thursday", "friday",
+            "saturday", "sunday",
+            "january", "february", "march", "april", "may", "june",
+            "july", "august", "september", "october", "november", "december",
+            "spring", "summer", "autumn", "winter",
+            "hello", "hi", "hey", "good", "bad", "new", "old",
+            "first", "last", "next", "previous", "final",
+            "one", "two", "three", "four", "five", "six", "seven",
+            "eight", "nine", "ten",
+            "yes", "no", "ok", "okay", "please", "thank", "thanks",
+            "info", "information", "data", "file", "code", "text",
+            "test", "name", "type", "user", "admin", "system",
+            "see", "let", "use", "get", "set", "put", "make", "take",
+            "note", "page", "line", "end", "start", "order", "case",
+            "high", "low", "top", "bottom", "left", "right", "center",
+            "now", "here", "there", "where", "how", "why", "when",
+            "all", "some", "any", "many", "much", "few", "several",
+            "each", "every", "both", "either", "neither",
+            "other", "another", "such", "same", "different",
+            "back", "still", "well", "just", "only", "also", "very",
+            "too", "quite", "rather", "enough",
+            "up", "down", "over", "under", "above", "below",
+            "before", "after", "during", "within", "without",
+            "about", "around", "between", "among", "through",
+            "against", "along", "across", "behind", "beyond",
+            "into", "onto", "upon", "out", "off", "away",
+            "again", "ever", "never", "always", "often",
+            "usually", "sometimes", "rarely", "seldom",
+            "then", "than", "as", "so", "if", "else",
+            "while", "because", "since", "until", "though",
+            "although", "unless", "whereas",
+            "result", "default", "failed", "error", "warning",
+            "success", "status", "value", "key", "path", "home",
+            "type", "public", "private", "internal", "external",
+            "config", "setup", "init", "list", "index", "total",
+            "server", "client", "host", "port", "link", "site",
+            "cat", "dog", "rat", "bat", "hat",
+            "img", "src", "href", "url", "uri", "urn",
+            "select", "insert", "update", "delete", "from", "where",
+            "true", "false", "null", "none", "nil", "empty",
+            "next", "prev", "back", "forward",
+            "member", "group", "team", "role", "owner", "guide",
+            "table", "row", "column", "cell", "field", "form",
+            "done", "ready", "wait", "stop", "go", "run",
+            "add", "remove", "edit", "view", "show", "hide",
+            "open", "close", "save", "load", "send", "receive",
+            "find", "search", "filter", "sort", "print",
+            "include", "exclude", "merge", "split", "join",
+            "support", "help", "contact", "about", "home",
+            "product", "service", "price", "cost", "rate", "plan",
+            "sign", "login", "logout", "register", "reset",
+            "billing", "account", "profile", "setting", "option",
+            "security", "privacy", "policy", "terms", "condition",
+            "read", "write", "copy", "paste", "cut",
+            "tag", "label", "note", "mark", "flag",
+            "source", "target", "origin", "destination",
+            "build", "deploy", "release", "version", "commit",
+            "bug", "fix", "patch", "update", "change",
+            "feature", "enhancement", "improvement", "optimization",
+            "download", "upload", "sync", "backup", "restore",
+            "api", "rest", "graphql", "grpc", "soap",
+            "json", "xml", "yaml", "toml", "csv", "tsv",
+            "back", "cancel", "create", "delete", "enable", "disable",
+        }
+
         seen_intervals: dict[str, list[tuple[int, int]]] = {}
+        all_interval_map: dict[str, list[tuple[int, int]]] = {}
         deduped = []
         for e in all_entities:
             et = e.get("entity_type", "UNKNOWN")
-            intervals = seen_intervals.get(et, [])
             start, end = e.get("start", 0), e.get("end", 0)
+            evalue = e.get("value", "")
+            detector = e.get("detector", "")
+
+            # ── PERSON false-positive guards ──────────────────────────
+            # These apply only to Presidio NER PERSON detections.
+            if et == "PERSON" and detector == "presidio":
+                text_lower = evalue.strip().lower()
+
+                # 1. Short name guard: suppress < 3 char spans.
+                if len(evalue.strip()) < 3:
+                    continue
+
+                # 2. Numeric guard: suppress spans containing digits.
+                if any(ch.isdigit() for ch in evalue):
+                    continue
+
+                # 3. Common word guard: single-token common words.
+                tokens = text_lower.split()
+                if len(tokens) == 1 and tokens[0] in _COMMON_WORDS:
+                    continue
+
+                # 4. All-common guard: multi-token all-common-word spans.
+                if len(tokens) > 1 and all(t in _COMMON_WORDS for t in tokens):
+                    continue
+
+            # Cross-type suppression: PERSON from NER that overlaps with
+            # a structural entity type is likely noise.
+            if et == "PERSON":
+                overlaps_structural = False
+                for stype in _PERSON_CROSS_SUPPRESS_TYPES:
+                    s_intervals = all_interval_map.get(stype, [])
+                    for s, e2 in s_intervals:
+                        if not (end <= s or start >= e2):
+                            overlaps_structural = True
+                            break
+                    if overlaps_structural:
+                        break
+                if overlaps_structural:
+                    continue
+
+            intervals = seen_intervals.get(et, [])
             contained = any(s <= start and end <= e2 for s, e2 in intervals)
             if not contained:
                 seen_intervals.setdefault(et, []).append((start, end))
+                all_interval_map.setdefault(et, []).append((start, end))
                 deduped.append(e)
 
         deduped.sort(key=lambda e: e.get("start", 0))

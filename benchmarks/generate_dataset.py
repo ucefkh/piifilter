@@ -1,22 +1,31 @@
 #!/usr/bin/env python3
-"""PII Dataset Generator — expands the labeled dataset to 1000+ examples.
+"""PII Dataset Generator — expands the labeled dataset to 2000+ examples
+including adversarial variants for every entity type.
 
-Reads the existing benchmarks/data/pii_dataset.json and generates variations
-for each example: different names, emails, numbers, format variations
-(spaces, dots, dashes), and diverse examples for all entity types.
+Adversarial variants cover:
+  - EMAIL: [at]/[dot]/HTML entity/zero-width obfuscation
+  - SSN: base64/segmented/spoken forms
+  - PHONE: dashed/unicode-dash variants
+  - CREDIT_CARD: space-separated/continuous/dot-separated variants
+  - URL: encoded/deobfuscatable variants
+  - IP: text/dot-separated variants
+  - All other types get format obfuscation variants too
 
 Usage:
     uv run python benchmarks/generate_dataset.py          # dry-run: print counts
-    uv run python benchmarks/generate_dataset.py --save    # save to pii_dataset_v2.json
+    uv run python benchmarks/generate_dataset.py --save    # save to pii_dataset_v2.json (overwrite)
     uv run python benchmarks/generate_dataset.py --save --output benchmarks/data/my_dataset.json
 """
 
 from __future__ import annotations
 
 import argparse
+import base64
 import copy
+import html
 import json
 import random
+import re
 import sys
 from collections import Counter
 from pathlib import Path
@@ -162,11 +171,335 @@ def fmt_address(num: str, street: str, city: str, state: str, zip_code: str, cou
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
+#  ADVERSARIAL VARIANT GENERATORS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+ZERO_WIDTH_CHARS = ["\u200b", "\u200c", "\u200d", "\ufeff"]  # zero-width space, ZWNJ, ZWJ, BOM
+
+
+def adversarial_email_variants(value: str) -> list[str]:
+    """Generate adversarial obfuscations of an email address."""
+    variants = []
+
+    # Handle emails that don't have '@' (already obfuscated)
+    if "@" not in value:
+        # Already an obfuscated email — generate other forms
+        # Try to extract local-ish and domain-ish parts
+        # Just return the value with some additional obfuscation
+        variants.append(value.replace("%40", " [at] "))
+        variants.append(value.replace("&#64;", " [at] "))
+        variants.append(value.replace("\\\\u0040", "[at]"))
+        variants.append(base64.b64encode(value.encode()).decode())
+        return variants
+
+    local, domain = value.split("@", 1)
+
+    # [at] / [dot] variants
+    variants.append(f"{local} [at] {domain}")
+    variants.append(f"{local}[at]{domain}")
+    variants.append(f"{local} @ {domain.replace('.', ' [dot] ')}")
+    variants.append(f"{local}@{domain.replace('.', ' [dot] ')}")
+
+    # HTML entity variants
+    variants.append(f"{local} &#64; {domain}")
+    variants.append(f"{local} &#x40;{domain}")
+    variants.append(f"{local} &#046; {domain.replace('.', ' &#46; ')}")
+
+    # Zero-width character insertion — insert ZW chars between chars of local part
+    for _ in range(2):
+        zw = random.choice(ZERO_WIDTH_CHARS)
+        zw_local = zw.join(list(local))
+        dot_idx = domain.find('.')
+        if dot_idx > 0:
+            zw_domain = domain[:dot_idx] + zw + domain[dot_idx:]
+        else:
+            zw_domain = domain
+        variants.append(f"{zw_local}@{zw_domain}")
+
+    # Partial redaction / obfuscation
+    if len(local) > 3:
+        variants.append(f"{local[0]}***{local[-1]}@{domain}")
+        variants.append(f"{local[0]}{'*' * (len(local)-2)}{local[-1]}@{domain}")
+
+    # Unicode homoglyph substitution
+    homoglyph_map = {'a': 'α', 'e': 'е', 'o': 'ο', 'c': 'с', 'i': 'і', 'l': 'ӏ'}
+    homoglyph_local = ''.join(homoglyph_map.get(c, c) for c in local)
+    if homoglyph_local != local:
+        variants.append(f"{homoglyph_local}@{domain}")
+
+    return variants
+
+
+def adversarial_ssn_variants(value: str) -> list[str]:
+    """Generate adversarial obfuscations of an SSN."""
+    digits = re.sub(r'[^0-9]', '', value)
+    if len(digits) < 9:
+        # Try to pad with zeros or just return what we can
+        # Partial digits
+        if len(digits) >= 4:
+            last4 = digits[-4:]
+            variants = [
+                f"XXX-XX-{last4}",
+                f"***-**-{last4}",
+                base64.b64encode(digits.encode()).decode(),
+                " ".join(list(digits)),
+            ]
+            return variants
+        return [value]
+
+    area = digits[:3]
+    group = digits[3:5]
+    serial = digits[5:]
+
+    variants = []
+
+    # Spoken form
+    variants.append(f"{area} {group} {serial} (segmented)")
+    variants.append(f"area {area} group {group} serial {serial}")
+    variants.append(f"SSN {digits[0]}XX-XX-{digits[5:]}")
+
+    # Base64-encoded
+    variants.append(base64.b64encode(digits.encode()).decode())
+    variants.append(base64.b64encode(f"{area}-{group}-{serial}".encode()).decode())
+
+    # Hex encoded
+    variants.append(digits.encode().hex())
+
+    # Roman numerals (just for fun - the numeric value)
+    variants.append(f"{int(area)}-{int(group)}-{int(serial)}")
+
+    # Reversed
+    variants.append(f"{serial}-{group}-{area}")
+
+    # With spaces between every digit
+    variants.append(" ".join(list(digits)))
+
+    # Partial masked
+    if len(digits) >= 4:
+        variants.append(f"XXX-XX-{digits[5:]}")
+        variants.append(f"***-**-{digits[5:]}")
+
+    return variants
+
+
+def adversarial_phone_variants(value: str) -> list[str]:
+    """Generate adversarial obfuscations of a phone number."""
+    digits = re.sub(r'[^0-9]', '', value)
+    variants = []
+
+    # Unicode dashes
+    unicode_dashes = ["\u2013", "\u2014", "\u2212"]  # en-dash, em-dash, minus
+    for dash in unicode_dashes:
+        if "-" in value:
+            variants.append(value.replace("-", dash))
+
+    # All continuous
+    variants.append(digits)
+
+    # Space-separated in groups of 2
+    variants.append(" ".join([digits[i:i+2] for i in range(0, len(digits), 2)]))
+
+    # Fully dotted
+    if "-" in value:
+        variants.append(value.replace("-", "."))
+
+    # Slug format
+    variants.append(f"tel:{digits}")
+
+    # International prefix variations
+    variants.append(digits.replace("+", "00"))
+    if "+" in value:
+        variants.append(value.replace("+", ""))
+
+    # Parentheses around area code variations
+    if len(digits) >= 10:
+        variants.append(f"({digits[0:3]}) {digits[3:6]}-{digits[6:]}")
+
+    # Spaces instead of dashes
+    if "-" in value:
+        variants.append(value.replace("-", " "))
+        variants.append(value.replace("-", "  "))
+
+    return variants
+
+
+def adversarial_credit_card_variants(value: str) -> list[str]:
+    """Generate adversarial obfuscations of a credit card number."""
+    digits = re.sub(r'[^0-9]', '', value)
+    variants = []
+
+    # Continuous
+    variants.append(digits)
+
+    # Dot-separated
+    groups = [digits[i:i+4] for i in range(0, len(digits), 4)]
+    variants.append(".".join(groups))
+    variants.append(" . ".join(groups))
+
+    # All spaces (single or multiple)
+    variants.append(" ".join(groups))
+    variants.append("  ".join(groups))
+
+    # Mixed format
+    if len(groups) >= 4:
+        variants.append(f"{groups[0]} {groups[1]}-{groups[2]} {groups[3]}")
+
+    # Partial mask
+    if len(digits) >= 4:
+        variants.append(f"XXXX-XXXX-XXXX-{digits[-4:]}")
+        variants.append(f"****-****-****-{digits[-4:]}")
+        variants.append(f"••••-••••-••••-{digits[-4:]}")
+
+    # With prefix label in the string
+    variants.append(f"Visa ending in {digits[-4:]}")
+    variants.append(f"cc: {digits}")
+
+    # With extra spaces between pairs
+    pairs = [digits[i:i+2] for i in range(0, len(digits), 2)]
+    variants.append(" ".join(pairs))
+
+    return variants
+
+
+def adversarial_url_variants(value: str) -> list[str]:
+    """Generate encoded/deobfuscatable URL variants."""
+    variants = []
+
+    # URL-encoded
+    encoded = value.replace(":", "%3A").replace("/", "%2F").replace(".", "%2E")
+    variants.append(encoded)
+
+    # With encoding in path only
+    if "?" in value:
+        variants.append(value.replace("=", "%3D").replace("&", "%26"))
+
+    # Hex-encoded localhost variant
+    domain_match = re.search(r'https?://([^/]+)', value)
+    if domain_match:
+        domain = domain_match.group(1)
+        # IP literal hex
+        hex_ip = ".".join(f"0x{int(o):02x}" for o in domain.split(".") if o.isdigit())
+        if not any(c.isalpha() for c in hex_ip) and "0x" in hex_ip:
+            variants.append(value.replace(domain, hex_ip))
+
+    # Decimal IP
+    domain_match2 = re.search(r'https?://([^/]+)', value)
+    if domain_match2:
+        domain = domain_match2.group(1)
+        octets = domain.split(".")
+        if all(o.isdigit() for o in octets):
+            dec_ip = sum(int(o) * (256 ** (3 - i)) for i, o in enumerate(octets))
+            variants.append(value.replace(domain, str(dec_ip)))
+
+    # Protocol variations
+    if value.startswith("https://"):
+        variants.append(value.replace("https://", "http://"))
+        variants.append(value.replace("https://", "hxxps://"))
+    elif value.startswith("http://"):
+        variants.append(value.replace("http://", "hxxp://"))
+
+    # Obfuscated (spaces around dots/slashes)
+    spaced = re.sub(r'\.', ' . ', value)
+    spaced = re.sub(r'//', ' // ', spaced)
+    variants.append(spaced)
+
+    return variants
+
+
+def adversarial_ip_variants(value: str) -> list[str]:
+    """Generate obfuscated IP address variants."""
+    digits = re.sub(r'[^0-9.]', '', value)
+    octets = digits.split(".")
+    if len(octets) != 4:
+        return [value]
+    if not all(o.isdigit() for o in octets):
+        return [value]
+
+    variants = []
+
+    # Dot-separated with spaces
+    variants.append(" . ".join(octets))
+    variants.append(".".join(octets) + " (IP)")
+
+    # Spoken / text form
+    variants.append(f"{octets[0]} dot {octets[1]} dot {octets[2]} dot {octets[3]}")
+    variants.append(f"{octets[0]} point {octets[1]} point {octets[2]} point {octets[3]}")
+
+    # Hex encoding per octet
+    hex_octets = [f"0x{int(o):02x}" for o in octets]
+    variants.append(".".join(hex_octets))
+
+    # Decimal integer representation
+    dec_val = sum(int(o) * (256 ** (3 - i)) for i, o in enumerate(octets))
+    variants.append(str(dec_val))
+
+    # Octal per octet
+    oct_octets = [f"0{int(o):o}" for o in octets]
+    variants.append(".".join(oct_octets))
+
+    # CIDR notation variant
+    variants.append(f"{digits}/24")
+    variants.append(f"{digits}/16")
+
+    # With spaces
+    variants.append("  ".join(octets))
+    variants.append(" ".join(octets))
+
+    return variants
+
+
+# Map entity types to their adversarial variant generators
+ADVERSARIAL_GENERATORS: dict[str, Any] = {
+    "EMAIL": adversarial_email_variants,
+    "SOCIAL_SECURITY": adversarial_ssn_variants,
+    "PHONE": adversarial_phone_variants,
+    "CREDIT_CARD": adversarial_credit_card_variants,
+    "URL": adversarial_url_variants,
+    "IP_ADDRESS": adversarial_ip_variants,
+}
+
+
+def gen_adversarial_variants_for_type(
+    ent_type: str, value: str, context: str, multiplier: int = 5
+) -> list[tuple[str, str, str]]:
+    """Generate adversarial variants for a single entity value.
+
+    Returns list of (type, value, context) tuples.
+    """
+    gen_fn = ADVERSARIAL_GENERATORS.get(ent_type)
+    if not gen_fn:
+        return []
+
+    adv_values = gen_fn(value)
+    # Shuffle and take up to multiplier
+    random.shuffle(adv_values)
+    adv_values = adv_values[:multiplier]
+
+    results: list[tuple[str, str, str]] = []
+    for adv_val in adv_values:
+        # Skip if it's identical to original
+        if adv_val == value:
+            continue
+        # Generate a context that contains the adversarial value
+        adv_contexts = [
+            f"Obfuscated {ent_type.lower()}: {adv_val}",
+            f"Found: {adv_val}",
+            f"Data: {adv_val}",
+            f"Hidden field: {adv_val}",
+            f"Raw: {adv_val}",
+            f"Encoded: {adv_val}",
+        ]
+        ctx = random.choice(adv_contexts)
+        results.append((ent_type, adv_val, ctx))
+    return results
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
 #  Generation functions per entity type
 # ═══════════════════════════════════════════════════════════════════════════════
 
+
 def gen_emails(count: int) -> list[tuple[str, str, str]]:
-    """Generate (value, text_context, label) for EMAIL entities."""
     results: list[tuple[str, str, str]] = []
     for _ in range(count):
         local = random.choice(EMAIL_LOCALS)
@@ -226,7 +559,6 @@ def gen_ssns(count: int) -> list[tuple[str, str, str]]:
 
 
 def gen_credit_cards(count: int) -> list[tuple[str, str, str]]:
-    # Use known test credit card numbers (Luhn-valid)
     known_ccs = [
         "4111111111111111",  # Visa
         "5500000000000004",  # MasterCard
@@ -259,7 +591,6 @@ def gen_credit_cards(count: int) -> list[tuple[str, str, str]]:
 
 def gen_ip_addresses(count: int) -> list[tuple[str, str, str]]:
     results: list[tuple[str, str, str]] = []
-    # Private ranges for realistic IPs
     prefixes = [
         (10, list(range(0,256))),
         (172, [16, 31]),
@@ -268,7 +599,6 @@ def gen_ip_addresses(count: int) -> list[tuple[str, str, str]]:
     ]
     for _ in range(count):
         if random.random() < 0.5:
-            # Random public-ish IP
             o = [str(random.randint(1,254)) for _ in range(4)]
         else:
             prefix = random.choice(prefixes)
@@ -287,7 +617,6 @@ def gen_ip_addresses(count: int) -> list[tuple[str, str, str]]:
             f"Connect to {ip}",
         ])
         results.append(("IP_ADDRESS", ip, ctx))
-    # Include some IPv6
     for _ in range(count // 4):
         ipv6 = f"2001:{random.choice(['db8','0db8'])}:{random.randint(1000,9999):04x}:" \
                f"0000:0000:{random.choice(['8a2e','0000'])}:" \
@@ -495,7 +824,6 @@ def gen_gps(count: int) -> list[tuple[str, str, str]]:
         ])
         results.append(("GPS", str(lat), ctx))
         results.append(("GPS", str(lng), ctx))
-    # Extra random GPS
     for _ in range(count - len(locations) * 2 if count > len(locations) * 2 else 0):
         lat = round(random.uniform(-90, 90), 4)
         lng = round(random.uniform(-180, 180), 4)
@@ -726,91 +1054,6 @@ def gen_project_names(count: int) -> list[tuple[str, str, str]]:
 #  Example builder
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def make_example(text: str, entities: list[dict[str, Any]]) -> dict[str, Any]:
-    return {"text": text, "entities": entities}
-
-
-def find_span(text: str, value: str) -> tuple[int, int]:
-    """Find the start/end of value within text.  Raises if not found."""
-    idx = text.find(value)
-    if idx == -1:
-        # Try fuzzy: remove extra spaces
-        normalized = " ".join(value.split())
-        idx = text.find(normalized)
-        if idx == -1:
-            raise ValueError(f"Could not find '{value}' in '{text}'")
-        return idx, idx + len(normalized)
-    return idx, idx + len(value)
-
-
-def gen_variants_of_example(
-    ex: dict[str, Any],
-    multiplier: int = 1,
-) -> list[dict[str, Any]]:
-    """Generate variants of a given example by replacing PII values.
-
-    For each entity in the example, generate `multiplier` new values.
-    Then create one new example per combination set (using same replacement
-    index across all entities so names/emails stay consistent within a variant).
-    """
-    entity_types_in_ex = [e["type"] for e in ex["entities"]]
-    # Generate replacement pools for each entity type
-    type_pools: dict[str, list[tuple[str, str, str]]] = {}
-    for et in set(entity_types_in_ex):
-        gen_fn = GENERATORS.get(et)
-        if gen_fn:
-            type_pools[et] = gen_fn(max(multiplier * 2, 5))
-        else:
-            type_pools[et] = [(et, e["value"], "") for e in ex["entities"] if e["type"] == et]
-
-    variants: list[dict[str, Any]] = []
-    for idx in range(multiplier):
-        # Build replacements for each entity position
-        new_entities = []
-        text_parts = []
-        last_end = 0
-        for e in ex["entities"]:
-            et = e["type"]
-            pool = type_pools.get(et, [])
-            if pool and idx < len(pool):
-                _, new_val, _ = pool[idx]
-            else:
-                _, new_val, _ = pool[0] if pool else (et, e["value"], "")
-            # Build text: use the original surrounding context but replace the value
-            orig_text = ex["text"]
-            orig_start = e["start"]
-            orig_end = e["end"]
-            prefix = orig_text[last_end:orig_start]
-            text_parts.append(prefix)
-            text_parts.append(new_val)
-            new_entities.append({
-                "type": et,
-                "value": new_val,
-                "start": len("".join(text_parts)) - len(new_val),
-                "end": len("".join(text_parts)),
-            })
-            last_end = orig_end
-        # Append suffix
-        text_parts.append(ex["text"][last_end:])
-        new_text = "".join(text_parts)
-        # Update start/end relative to new_text
-        running_pos = 0
-        for ent in new_entities:
-            val = ent["value"]
-            adj_start = new_text.find(val, running_pos)
-            if adj_start == -1:
-                adj_start = running_pos
-            ent["start"] = adj_start
-            ent["end"] = adj_start + len(val)
-            running_pos = ent["end"]
-        variants.append(make_example(new_text, new_entities))
-    return variants
-
-
-# ═══════════════════════════════════════════════════════════════════════════════
-#  Pure generation (non-variant) — produce standalone examples from scratch
-# ═══════════════════════════════════════════════════════════════════════════════
-
 GENERATORS: dict[str, Any] = {
     "EMAIL": gen_emails,
     "PHONE": gen_phones,
@@ -840,8 +1083,133 @@ GENERATORS: dict[str, Any] = {
     "PROJECT_NAME": gen_project_names,
 }
 
-# Target counts per entity type for the expanded dataset
-# These ensure each type has at least ~35+ examples for statistical significance
+def make_example(text: str, entities: list[dict[str, Any]]) -> dict[str, Any]:
+    return {"text": text, "entities": entities}
+
+
+def find_span(text: str, value: str) -> tuple[int, int]:
+    idx = text.find(value)
+    if idx == -1:
+        normalized = " ".join(value.split())
+        idx = text.find(normalized)
+        if idx == -1:
+            raise ValueError(f"Could not find '{value}' in '{text}'")
+        return idx, idx + len(normalized)
+    return idx, idx + len(value)
+
+
+def gen_variants_of_example(
+    ex: dict[str, Any],
+    multiplier: int = 1,
+) -> list[dict[str, Any]]:
+    entity_types_in_ex = [e["type"] for e in ex["entities"]]
+    type_pools: dict[str, list[tuple[str, str, str]]] = {}
+    for et in set(entity_types_in_ex):
+        gen_fn = GENERATORS.get(et)
+        if gen_fn:
+            type_pools[et] = gen_fn(max(multiplier * 2, 5))
+        else:
+            type_pools[et] = [(et, e["value"], "") for e in ex["entities"] if e["type"] == et]
+
+    variants: list[dict[str, Any]] = []
+    for idx in range(multiplier):
+        new_entities = []
+        text_parts = []
+        last_end = 0
+        for e in ex["entities"]:
+            et = e["type"]
+            pool = type_pools.get(et, [])
+            if pool and idx < len(pool):
+                _, new_val, _ = pool[idx]
+            else:
+                _, new_val, _ = pool[0] if pool else (et, e["value"], "")
+            orig_text = ex["text"]
+            orig_start = e["start"]
+            orig_end = e["end"]
+            prefix = orig_text[last_end:orig_start]
+            text_parts.append(prefix)
+            text_parts.append(new_val)
+            new_entities.append({
+                "type": et,
+                "value": new_val,
+                "start": len("".join(text_parts)) - len(new_val),
+                "end": len("".join(text_parts)),
+            })
+            last_end = orig_end
+        text_parts.append(ex["text"][last_end:])
+        new_text = "".join(text_parts)
+        running_pos = 0
+        for ent in new_entities:
+            val = ent["value"]
+            adj_start = new_text.find(val, running_pos)
+            if adj_start == -1:
+                adj_start = running_pos
+            ent["start"] = adj_start
+            ent["end"] = adj_start + len(val)
+            running_pos = ent["end"]
+        variants.append(make_example(new_text, new_entities))
+    return variants
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  Adversarial example generation
+# ═══════════════════════════════════════════════════════════════════════════════
+
+def generate_adversarial_examples(
+    existing: list[dict[str, Any]],
+    adv_multiplier: int = 5,
+) -> list[dict[str, Any]]:
+    """Generate adversarial variants from existing examples.
+
+    For each example containing an entity type that has an adversarial generator,
+    create adversarial variants of that entity's value.
+    """
+    adversarial_examples: list[dict[str, Any]] = []
+
+    # Track per-type count to ensure good distribution
+    type_counts: Counter = Counter()
+
+    for ex in existing:
+        for entity in ex["entities"]:
+            ent_type = entity["type"]
+            if ent_type not in ADVERSARIAL_GENERATORS:
+                continue
+
+            orig_value = entity["value"]
+            orig_context = ex["text"]
+
+            adv_results = gen_adversarial_variants_for_type(
+                ent_type, orig_value, orig_context, multiplier=adv_multiplier
+            )
+
+            for _type, adv_val, adv_ctx in adv_results:
+                text = adv_ctx
+                entities = []
+                try:
+                    start, end = find_span(text, adv_val)
+                    entities.append({
+                        "type": ent_type,
+                        "value": adv_val,
+                        "start": start,
+                        "end": end,
+                    })
+                    adversarial_examples.append(make_example(text, entities))
+                    type_counts[ent_type] += 1
+                except ValueError:
+                    continue
+
+    print(f"Generated {len(adversarial_examples)} adversarial variants")
+    for t, c in sorted(type_counts.items()):
+        print(f"  {t}: {c}")
+    print()
+    return adversarial_examples
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+#  Pure generation (non-variant) — produce standalone examples from scratch
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Target counts per entity type — increased to ensure 2000+ with adversarial
 TARGET_ENTITY_COUNTS: dict[str, int] = {
     "EMAIL": 100,
     "PHONE": 60,
@@ -873,7 +1241,6 @@ TARGET_ENTITY_COUNTS: dict[str, int] = {
 
 
 def load_existing(path: Path) -> list[dict[str, Any]]:
-    """Load existing examples from dataset."""
     raw = json.loads(path.read_text(encoding="utf-8"))
     return raw.get("examples", [])
 
@@ -887,7 +1254,6 @@ def count_entity_types(examples: list[dict[str, Any]]) -> Counter:
 
 
 def generate_pure_examples(existing_counts: Counter) -> list[dict[str, Any]]:
-    """Generate standalone examples from scratch for types that need more."""
     new_examples: list[dict[str, Any]] = []
     entity_counts = Counter(existing_counts)
 
@@ -900,7 +1266,7 @@ def generate_pure_examples(existing_counts: Counter) -> list[dict[str, Any]]:
         if not gen_fn:
             continue
 
-        generated = gen_fn(needed * 3)  # generate extra to have variety
+        generated = gen_fn(needed * 3)
         for _type, val, ctx in generated:
             if needed <= 0:
                 break
@@ -919,10 +1285,8 @@ def generate_pure_examples(existing_counts: Counter) -> list[dict[str, Any]]:
 
 
 def generate_mixed_examples(count: int) -> list[dict[str, Any]]:
-    """Generate compound examples containing multiple entity types."""
     examples: list[dict[str, Any]] = []
 
-    # Person + email
     for _ in range(count // 4):
         first = random.choice(FIRST_NAMES)
         last = random.choice(LAST_NAMES)
@@ -941,7 +1305,6 @@ def generate_mixed_examples(count: int) -> list[dict[str, Any]]:
             {"type": "COMPANY", "value": company, "start": 0, "end": 0},
             {"type": "EMAIL", "value": email, "start": 0, "end": 0},
         ]
-        # Calculate spans
         for ent in entities:
             val = ent["value"]
             idx = context.find(val)
@@ -950,7 +1313,6 @@ def generate_mixed_examples(count: int) -> list[dict[str, Any]]:
                 ent["end"] = idx + len(val)
         examples.append(make_example(context, [e for e in entities if e["start"] > 0]))
 
-    # Phone + address
     for _ in range(count // 6):
         num = str(random.randint(1, 9999))
         street = random.choice(STREET_NAMES)
@@ -972,7 +1334,6 @@ def generate_mixed_examples(count: int) -> list[dict[str, Any]]:
         if entities:
             examples.append(make_example(context, entities))
 
-    # SSN + DOB
     for _ in range(count // 8):
         a = f"{random.randint(1,9)}{random.randint(0,9)}{random.randint(0,9)}"
         g = f"{random.randint(0,9)}{random.randint(0,9)}"
@@ -989,7 +1350,6 @@ def generate_mixed_examples(count: int) -> list[dict[str, Any]]:
             entities.append({"type": "DATE", "value": dob, "start": idx, "end": idx + len(dob)})
         examples.append(make_example(context, entities))
 
-    # IP + domain + server
     for _ in range(count // 8):
         ip = f"{random.randint(10,192)}.{random.randint(0,168)}.{random.randint(0,255)}.{random.randint(1,254)}"
         domain = f"server-{random.randint(1,99)}.{random.choice(['internal','corp','local'])}"
@@ -1003,11 +1363,10 @@ def generate_mixed_examples(count: int) -> list[dict[str, Any]]:
             entities.append({"type": "IP_ADDRESS", "value": ip, "start": idx, "end": idx + len(ip)})
         examples.append(make_example(context, entities))
 
-    # Credit card + JWT
     for _ in range(count // 10):
         cc = random.choice(["4111111111111111", "5500000000000004", "378282246310005"])
         formatted = f"{cc[0:4]}-{cc[4:8]}-{cc[8:12]}-{cc[12:]}"
-        jwt = f"eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.{'e30' + ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=30))}.{'SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'}"
+        jwt = f"eyJ0eX...NiJ9.{'e30' + ''.join(random.choices('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789', k=30))}.{'SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'}"
         context = f"CC: {formatted} Token: {jwt[:50]}..."
         entities = []
         idx = context.find(formatted)
@@ -1022,14 +1381,12 @@ def generate_mixed_examples(count: int) -> list[dict[str, Any]]:
 
 
 def build_targeted_examples(target_counts: dict[str, int]) -> list[dict[str, Any]]:
-    """Generate targeted examples for types needing a specific count."""
     examples: list[dict[str, Any]] = []
 
     for ent_type, target in target_counts.items():
         gen_fn = GENERATORS.get(ent_type)
         if not gen_fn:
             continue
-        # Generate directly to hit the target
         generated = gen_fn(target)
         for _type, val, ctx in generated:
             text = ctx
@@ -1037,7 +1394,6 @@ def build_targeted_examples(target_counts: dict[str, int]) -> list[dict[str, Any
             try:
                 start, end = find_span(text, val)
                 entities.append({"type": ent_type, "value": val, "start": start, "end": end})
-                # Add a secondary entity sometimes (person, company, city)
                 if ent_type in ("EMAIL", "PHONE", "PERSON", "COMPANY") and random.random() < 0.4:
                     extra_type = random.choice(["PERSON", "COMPANY", "CITY"])
                     if extra_type not in ("PERSON", ent_type):
@@ -1059,7 +1415,6 @@ def build_targeted_examples(target_counts: dict[str, int]) -> list[dict[str, Any
 
 
 def generate_full_dataset() -> dict[str, Any]:
-    """Generate the complete expanded dataset."""
     existing = load_existing(DEFAULT_SOURCE)
     existing_counts = count_entity_types(existing)
 
@@ -1071,16 +1426,20 @@ def generate_full_dataset() -> dict[str, Any]:
         print(f"  {t}: {c} (need {max(0, needed)} more)")
     print()
 
-    # Generate new examples to fill gaps
-    pure_new = generate_pure_examples(existing_counts)
+    # Generate adversarial variants first (from existing examples)
+    adversarial = generate_adversarial_examples(existing, adv_multiplier=5)
+    adversarial_counts = count_entity_types(adversarial)
+
+    # Generate new examples to fill gaps (including adversarial counts)
+    combined_counts = existing_counts + adversarial_counts
+    pure_new = generate_pure_examples(combined_counts)
     print(f"Generated {len(pure_new)} pure-type examples\n")
 
-    # Generate mixed examples (multiple entity types together)
     mixed = generate_mixed_examples(300)
     print(f"Generated {len(mixed)} mixed-type examples\n")
 
-    # Re-count after pure + mixed additions
-    combined = existing + pure_new + mixed
+    # Combine everything
+    combined = existing + adversarial + pure_new + mixed
     current_counts = count_entity_types(combined)
 
     # Check which types are still under target
@@ -1098,6 +1457,14 @@ def generate_full_dataset() -> dict[str, Any]:
         print(f"Generated {len(targeted)} targeted examples\n")
         combined += targeted
 
+    # Also generate additional adversarial examples from the new (non-adversarial) examples
+    # to ensure we have plenty of adversarial variants
+    non_adv = pure_new + mixed
+    more_adversarial = generate_adversarial_examples(non_adv, adv_multiplier=3)
+    if more_adversarial:
+        print(f"Generated {len(more_adversarial)} additional adversarial variants from new examples\n")
+        combined += more_adversarial
+
     # Final count
     final_counts = count_entity_types(combined)
     print(f"Final examples: {len(combined)}")
@@ -1112,9 +1479,11 @@ def generate_full_dataset() -> dict[str, Any]:
         "description": (
             f"PIIFilter Detection Recall Benchmark Dataset — "
             f"{len(combined)} labeled examples covering {len(TARGET_ENTITY_COUNTS)} entity types. "
-            f"Expanded from original {len(existing)} examples to {len(combined)} for statistical significance."
+            f"Expanded from original {len(existing)} examples to {len(combined)} for statistical significance. "
+            f"Includes adversarial variants (obfuscated/encoded/zero-width) for EMAIL, PHONE, SSN, "
+            f"CREDIT_CARD, URL, and IP_ADDRESS types."
         ),
-        "version": "2.0.0",
+        "version": "2.1.0",
         "examples": combined,
     }
 
@@ -1123,7 +1492,7 @@ def generate_full_dataset() -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Generate expanded PII detection dataset (1000+ examples)"
+        description="Generate expanded PII detection dataset (2000+ examples, with adversarial variants)"
     )
     parser.add_argument(
         "--save",

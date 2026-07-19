@@ -140,7 +140,95 @@ class FilterPipeline:
             "FILE_PATH", "URL", "DOMAIN", "EMAIL", "IP_ADDRESS",
             "API_KEY", "JWT", "SSH_KEY", "DATABASE_URL", "PRIVATE_URL",
             "CREDIT_CARD", "SOCIAL_SECURITY", "PASSPORT", "IBAN",
+            # Name-like types: regex already handles these with perfect or
+            # near-perfect precision. Presidio PERSON overlapping these is
+            # always a duplicate — suppress it.
+            "EMPLOYEE_NAME", "CUSTOMER_NAME", "PROJECT_NAME",
         }
+
+        # Common English words that Presidio NER often misidentifies as PERSON
+        # when they appear capitalized at the start of sentences or in headings.
+        # These are not real person names — suppress any PERSON detection that
+        # consists entirely of one of these tokens.
+        _COMMON_WORDS: set[str] = {
+            "the", "a", "an", "in", "on", "at", "by", "to", "of", "for",
+            "with", "from", "and", "or", "but", "not", "this", "that",
+            "these", "those", "is", "are", "was", "were", "be", "been",
+            "being", "have", "has", "had", "do", "does", "did",
+            "will", "would", "could", "should", "may", "might", "must",
+            "shall", "can", "need", "dare", "ought",
+            "i", "you", "he", "she", "it", "we", "they",
+            "me", "him", "her", "us", "them",
+            "my", "your", "his", "its", "our", "their",
+            "mine", "yours", "hers", "ours", "theirs",
+            "who", "whom", "which", "what", "whose",
+            "man", "woman", "person", "people", "child",
+            "day", "week", "month", "year", "time", "today",
+            "monday", "tuesday", "wednesday", "thursday", "friday",
+            "saturday", "sunday",
+            "january", "february", "march", "april", "may", "june",
+            "july", "august", "september", "october", "november", "december",
+            "spring", "summer", "autumn", "winter",
+            "hello", "hi", "hey", "good", "bad", "new", "old",
+            "first", "last", "next", "previous", "final",
+            "one", "two", "three", "four", "five", "six", "seven",
+            "eight", "nine", "ten",
+            "yes", "no", "ok", "okay", "please", "thank", "thanks",
+            "info", "information", "data", "file", "code", "text",
+            "test", "name", "type", "user", "admin", "system",
+            "see", "let", "use", "get", "set", "put", "make", "take",
+            "note", "page", "line", "end", "start", "order", "case",
+            "high", "low", "top", "bottom", "left", "right", "center",
+            "now", "here", "there", "where", "how", "why", "when",
+            "all", "some", "any", "many", "much", "few", "several",
+            "each", "every", "both", "either", "neither",
+            "other", "another", "such", "same", "different",
+            "back", "still", "well", "just", "only", "also", "very",
+            "too", "quite", "rather", "enough",
+            "up", "down", "over", "under", "above", "below",
+            "before", "after", "during", "within", "without",
+            "about", "around", "between", "among", "through",
+            "against", "along", "across", "behind", "beyond",
+            "into", "onto", "upon", "out", "off", "away",
+            "again", "ever", "never", "always", "often",
+            "usually", "sometimes", "rarely", "seldom",
+            "then", "than", "as", "so", "if", "else",
+            "while", "because", "since", "until", "though",
+            "although", "unless", "whereas",
+            "result", "default", "failed", "error", "warning",
+            "success", "status", "value", "key", "path", "home",
+            "type", "public", "private", "internal", "external",
+            "config", "setup", "init", "list", "index", "total",
+            "server", "client", "host", "port", "link", "site",
+            "cat", "dog", "rat", "bat", "hat",
+            "img", "src", "href", "url", "uri", "urn",
+            "select", "insert", "update", "delete", "from", "where",
+            "true", "false", "null", "none", "nil", "empty",
+            "next", "prev", "back", "forward",
+            "member", "group", "team", "role", "owner", "guide",
+            "table", "row", "column", "cell", "field", "form",
+            "done", "ready", "wait", "stop", "go", "run",
+            "add", "remove", "edit", "view", "show", "hide",
+            "open", "close", "save", "load", "send", "receive",
+            "find", "search", "filter", "sort", "print",
+            "include", "exclude", "merge", "split", "join",
+            "support", "help", "contact", "about", "home",
+            "product", "service", "price", "cost", "rate", "plan",
+            "sign", "login", "logout", "register", "reset",
+            "billing", "account", "profile", "setting", "option",
+            "security", "privacy", "policy", "terms", "condition",
+            "read", "write", "copy", "paste", "cut",
+            "tag", "label", "note", "mark", "flag",
+            "source", "target", "origin", "destination",
+            "build", "deploy", "release", "version", "commit",
+            "bug", "fix", "patch", "update", "change",
+            "feature", "enhancement", "improvement", "optimization",
+            "download", "upload", "sync", "backup", "restore",
+            "api", "rest", "graphql", "grpc", "soap",
+            "json", "xml", "yaml", "toml", "csv", "tsv",
+            "back", "cancel", "create", "delete", "enable", "disable",
+        }
+
         seen_intervals: dict[str, list[tuple[int, int]]] = {}
         all_interval_map: dict[str, list[tuple[int, int]]] = {}
         deduped = []
@@ -148,9 +236,41 @@ class FilterPipeline:
             if isinstance(e, dict):
                 et = e.get("entity_type", "UNKNOWN")
                 estart, eend = e.get("start", 0), e.get("end", 0)
+                evalue = e.get("value", "")
+                detector = e.get("detector", "")
             else:
                 et = e.type.value if hasattr(e.type, 'value') else str(e.type)
                 estart, eend = e.start, e.end
+                evalue = getattr(e, 'text', getattr(e, 'value', ''))
+                detector = getattr(e, 'detector', '')
+
+            # ── PERSON false-positive guards ──────────────────────────
+            # These apply only to Presidio NER PERSON detections, since
+            # regex PERSON already has perfect precision (1.0).
+            if et == "PERSON" and detector == "presidio":
+                text_lower = evalue.strip().lower()
+
+                # 1. Short name guard: suppress single-character or
+                #    very short spans that are unlikely to be real names.
+                if len(evalue.strip()) < 3:
+                    continue
+
+                # 2. Numeric guard: suppress if the span contains digits
+                #    (real person names don't have numbers).
+                if any(ch.isdigit() for ch in evalue):
+                    continue
+
+                # 3. Common word guard: if the span is a single token
+                #    that matches a very common English word, suppress it.
+                tokens = text_lower.split()
+                if len(tokens) == 1 and tokens[0] in _COMMON_WORDS:
+                    continue
+
+                # 4. All-common guard: if every token in a multi-token
+                #    span is a common word (e.g. "The Man", "First Name"),
+                #    suppress it too.
+                if len(tokens) > 1 and all(t in _COMMON_WORDS for t in tokens):
+                    continue
 
             # Cross-type suppression: PERSON from NER that overlaps with
             # a structural entity type is likely noise.

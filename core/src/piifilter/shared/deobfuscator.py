@@ -63,20 +63,65 @@ _FULLWIDTH_ASCII = str.maketrans(
 
 # ── Spoken number mapping ─────────────────────────────────────────────────────
 
-_SPOKEN_NUMBERS = {
+_SPOKEN_SINGLE = {
     "zero": "0", "one": "1", "two": "2", "three": "3", "four": "4",
     "five": "5", "six": "6", "seven": "7", "eight": "8", "nine": "9",
     "oh": "0",
 }
-# Build regex that matches spoken numbers as whole words
+# Build regex that matches spoken number words as whole words
 _SPOKEN_RE = re.compile(
-    r"\b(?:" + "|".join(_SPOKEN_NUMBERS.keys()) + r")\b",
+    r"\b(?:" + "|".join(_SPOKEN_SINGLE.keys()) + r")\b",
     re.IGNORECASE,
 )
 
 
 def _replace_spoken(m: re.Match[str]) -> str:
-    return _SPOKEN_NUMBERS.get(m.group(0).lower(), m.group(0))
+    word = m.group(0).lower()
+    return _SPOKEN_SINGLE.get(word, m.group(0))
+
+
+# ── Dash/point mapping for spoken PII ─────────────────────────────────────────
+# After spoken numbers are converted to digits, map spoken separators
+_SPOKEN_SEP_RE = re.compile(r"\b(?:dash|point|dot|hyphen)\b", re.IGNORECASE)
+
+# Hyphen maps to "-" not "." — handle separately
+_HYPHEN_RE = re.compile(r"\bhyphen\b", re.IGNORECASE)
+
+# ── Digit-space collapse for SSN/IP detection ─────────────────────────────────
+# After "one two three dash four five dash six seven eight nine" becomes
+# "1 2 3 dash 4 5 dash 6 7 8 9", this collapses adjacent digits:
+# "1 2 3 dash 4 5 dash 6 7 8 9" -> "123 dash 45 dash 6789"
+_DIGIT_SPACE_COLLAPSE_RE = re.compile(r"(?<=\d)\s+(?=\d)")
+
+# ── SSN segment normalizer ────────────────────────────────────────────────────
+# Strip spaces, tabs, underscores, NBSP, thin spaces between digit groups in SSN
+# e.g. "123 45 6789" → "123-45-6789", "123_45_6789" → "123-45-6789"
+_SSN_SEGMENT_RE = re.compile(
+    r"\b(\d{3})[\s\u00A0\u2009\u2008\t_]+(\d{2})[\s\u00A0\u2009\u2008\t_]+(\d{4})\b"
+)
+
+# ── Credit card segment normalizer ────────────────────────────────────────────
+# Normalize CC with underscores/dots/mixed separators between digit groups
+# e.g. "4111_1111_1111_1111" → "4111 1111 1111 1111" (standard 4-4-4-4 with spaces)
+# Handle: 4-4-4 pattern, 4-6-5 pattern (AMEX), and mixed separators
+_CC_SEGMENT_RE = re.compile(
+    r"\b(\d{4})[_.\s-]+(\d{4})[_.\s-]+(\d{4})[_.\s-]+(\d{4})\b"
+)
+_CC_AMEX_SEGMENT_RE = re.compile(
+    r"\b(\d{4})[_.\s-]+(\d{6})[_.\s-]+(\d{5})\b"
+)
+_CC_MIXED_NORMALIZE_RE = re.compile(r"(\d)[_\-.]+(?=\d)")
+
+# ── IP-spoken separator normalizer ────────────────────────────────────────────
+# After spoken number conversion, collapse digit spaces for IP too
+# E.g. "1 9 2 . 1 6 8 . 1 . 1" → "192.168.1.1"
+# This runs AFTER dot/point → . mapping
+_IP_NUM_COLLAPSE_RE = re.compile(r"(?<=\d)\s+(?=\.)|(?<=\.)\s+(?=\d)")
+
+# ── Dash space cleanup for SSN ────────────────────────────────────────────────
+# After "1 2 3 - 4 5 - 6 7 8 9" → "123 - 45 - 6789", remove spaces around dashes
+# so SSN pattern can match "123-45-6789"
+_DASH_SPACE_RE = re.compile(r"(?<=\d)\s+-\s+(?=\d)")
 
 
 # ── URL percent-encoding ─────────────────────────────────────────────────────
@@ -133,6 +178,12 @@ class Deobfuscator:
         text = self._unwrap_unicode_escapes(text, log)
         text = self._decode_url_percent(text, log)
         text = self._unwrap_spoken_numbers(text, log)
+        text = self._map_spoken_separators(text, log)
+        text = self._normalize_ssn_segments(text, log)
+        text = self._normalize_cc_segments(text, log)
+        text = self._cleanup_dash_spaces(text, log)
+        text = self._collapse_digit_spaces(text, log)
+        text = self._collapse_ip_spaces(text, log)
         return text, log
 
     # ── 1. NFKC normalization ──────────────────────────────────────────
@@ -176,6 +227,9 @@ class Deobfuscator:
         original = text
         for pattern, replacement in cls._AT_DOT_PATTERNS:
             text = pattern.sub(replacement, text)
+        # Clean up spaces around newly inserted @ and . to allow email detection
+        text = re.sub(r"\s+@\s+", "@", text)
+        text = re.sub(r"\s+\.\s+", ".", text)
         if text != original:
             log.append({
                 "transform": "at_dot",
@@ -319,7 +373,7 @@ class Deobfuscator:
 
     @classmethod
     def _unwrap_spoken_numbers(cls, text: str, log: list) -> str:
-        """Convert spoken number words (one, two, … nine) to digits.
+        """Convert spoken number words (one, two, … nine, twenty, thirty, etc.) to digits.
 
         This helps detect obfuscated SSNs, IPs, and phone numbers that
         are spoken out as words rather than written as numerals.
@@ -330,6 +384,127 @@ class Deobfuscator:
             log.append({
                 "transform": "spoken_numbers",
                 "description": "Converted spoken number words to digits",
+                "changed": True,
+            })
+        return text
+
+    # ── 10. Map spoken separators ────────────────────────────────────
+
+    @classmethod
+    def _map_spoken_separators(cls, text: str, log: list) -> str:
+        """Map spoken separators (dash, point, dot, hyphen) to their symbol equivalents.
+
+        Runs AFTER spoken numbers have been converted to digits so that
+        "one two three dash four five" → "1 2 3 - 4 5".
+        """
+        original = text
+        # Map hyphen to "-" first (special case)
+        text = _HYPHEN_RE.sub("-", text)
+        # Map the rest: dash, point, dot
+        text = _SPOKEN_SEP_RE.sub(lambda m: "-" if m.group(0).lower() == "dash" else ".", text)
+        if text != original:
+            log.append({
+                "transform": "spoken_separators",
+                "description": "Mapped spoken separators (dash/point/dot/hyphen) to symbols",
+                "changed": True,
+            })
+        return text
+
+    # ── 11. Collapse digit spaces ──────────────────────────────────────
+
+    @classmethod
+    def _collapse_digit_spaces(cls, text: str, log: list) -> str:
+        """Collapse spaces between adjacent digits for SSN detection.
+
+        After spoken number conversion, "1 2 3 - 4 5 - 6 7 8 9" becomes
+        "123-45-6789" which the SSN pattern can match.
+        """
+        original = text
+        text = _DIGIT_SPACE_COLLAPSE_RE.sub("", text)
+        if text != original:
+            log.append({
+                "transform": "digit_collapse",
+                "description": "Collapsed spaces between adjacent digits",
+                "changed": True,
+            })
+        return text
+
+    # ── 12. Normalize SSN segments ─────────────────────────────────────
+
+    @classmethod
+    def _normalize_ssn_segments(cls, text: str, log: list) -> str:
+        """Normalize SSNs with spaces/underscores/tabs between digit groups.
+
+        "123 45 6789" → "123-45-6789" so the SSN pattern matches.
+        """
+        original = text
+        text = _SSN_SEGMENT_RE.sub(r"\1-\2-\3", text)
+        if text != original:
+            log.append({
+                "transform": "ssn_segments",
+                "description": "Normalized SSN segments with spaces to hyphen format",
+                "changed": True,
+            })
+        return text
+
+    # ── 12b. Credit card segment normalizer ───────────────────────────
+
+    @classmethod
+    def _normalize_cc_segments(cls, text: str, log: list) -> str:
+        """Normalize CC numbers with underscores/dots/mixed separators.
+
+        "4111_1111_1111_1111" → "4111 1111 1111 1111" (4-4-4-4 with spaces)
+        "4111.1111.1111.1111" → "4111 1111 1111 1111"
+        "4111 1111-1111 1111" → "4111 1111 1111 1111"
+        "3782 822463 10005"   → (AMEX) keep as-is (already matches)
+        """
+        original = text
+        # First normalize mixed separators to spaces
+        text = _CC_MIXED_NORMALIZE_RE.sub(r"\1 ", text)
+        # Then try specific segment patterns
+        text = _CC_SEGMENT_RE.sub(r"\1 \2 \3 \4", text)
+        text = _CC_AMEX_SEGMENT_RE.sub(r"\1 \2 \3", text)
+        if text != original:
+            log.append({
+                "transform": "cc_segments",
+                "description": "Normalized CC number separators",
+                "changed": True,
+            })
+        return text
+
+    # ── 12c. Cleanup dash spaces ──────────────────────────────────────
+
+    @classmethod
+    def _cleanup_dash_spaces(cls, text: str, log: list) -> str:
+        """Remove spaces around dashes in number sequences.
+
+        After spoken conversion, "123 - 45 - 6789" → "123-45-6789".
+        This allows the SSN pattern to match.
+        """
+        original = text
+        text = _DASH_SPACE_RE.sub("-", text)
+        if text != original:
+            log.append({
+                "transform": "dash_spaces",
+                "description": "Removed spaces around dashes in number sequences",
+                "changed": True,
+            })
+        return text
+
+    # ── 13. Collapse digit spaces ──────────────────────────────────────
+
+    @classmethod
+    def _collapse_ip_spaces(cls, text: str, log: list) -> str:
+        """Collapse spaces around dots in IP addresses that were spoken out.
+
+        "1 9 2 . 1 6 8 . 1 . 1" → "192.168.1.1"
+        """
+        original = text
+        text = _IP_NUM_COLLAPSE_RE.sub("", text)
+        if text != original:
+            log.append({
+                "transform": "ip_collapse",
+                "description": "Collapsed spaces in spoken IP addresses",
                 "changed": True,
             })
         return text

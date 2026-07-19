@@ -2,9 +2,9 @@
   "summary": {
     "overall": {
       "total_examples": 117,
-      "detected": 74,
-      "missed": 43,
-      "detection_rate": 63.2
+      "detected": 81,
+      "missed": 36,
+      "detection_rate": 69.2
     },
     "by_category": {
       "Homoglyph emails": {
@@ -16,30 +16,29 @@
       },
       "Zero-width chars": {
         "total": 8,
-        "detected": 8,
-        "missed": 0,
-        "detection_rate": 100.0,
-        "missed_examples": []
+        "detected": 6,
+        "missed": 2,
+        "detection_rate": 75.0,
+        "missed_examples": [
+          "ZWNJ in phone",
+          "ZWSP in IP"
+        ]
       },
       "[at]/[dot] formats": {
         "total": 9,
-        "detected": 6,
-        "missed": 3,
-        "detection_rate": 66.7,
+        "detected": 8,
+        "missed": 1,
+        "detection_rate": 88.9,
         "missed_examples": [
-          "email AT DOT",
-          "email at&t-style",
           "email dot dash"
         ]
       },
       "SSN spoken out": {
         "total": 5,
-        "detected": 0,
-        "missed": 5,
-        "detection_rate": 0.0,
+        "detected": 2,
+        "missed": 3,
+        "detection_rate": 40.0,
         "missed_examples": [
-          "SSN spoken (hyphens)",
-          "SSN spoken (no hyphens)",
           "SSN spoken with \"and\"",
           "SSN as words",
           "SSN grouped words"
@@ -47,27 +46,18 @@
       },
       "SSN segmented": {
         "total": 7,
-        "detected": 0,
-        "missed": 7,
-        "detection_rate": 0.0,
-        "missed_examples": [
-          "SSN with spaces",
-          "SSN with NBSP",
-          "SSN with tabs",
-          "SSN with multiple spaces",
-          "SSN with underscores",
-          "SSN with mixed spaces",
-          "SSN with thin spaces"
-        ]
+        "detected": 7,
+        "missed": 0,
+        "detection_rate": 100.0,
+        "missed_examples": []
       },
       "IP as text": {
         "total": 5,
-        "detected": 0,
-        "missed": 5,
-        "detection_rate": 0.0,
+        "detected": 1,
+        "missed": 4,
+        "detection_rate": 20.0,
         "missed_examples": [
           "IP spoken simple",
-          "IP spoken with \"point\"",
           "IP spoken full",
           "IP verbally",
           "IPv6 spoken (abbreviated)"
@@ -75,34 +65,36 @@
       },
       "CC with spaces": {
         "total": 9,
-        "detected": 7,
-        "missed": 2,
-        "detection_rate": 77.8,
-        "missed_examples": [
-          "CC with dots",
-          "CC with underscores"
-        ]
+        "detected": 9,
+        "missed": 0,
+        "detection_rate": 100.0,
+        "missed_examples": []
       },
       "Encoded (base64/rot13)": {
         "total": 11,
-        "detected": 5,
-        "missed": 6,
-        "detection_rate": 45.5,
+        "detected": 3,
+        "missed": 8,
+        "detection_rate": 27.3,
         "missed_examples": [
           "base64 email",
           "base64 SSN",
           "base64 phone",
           "base64 IP",
           "base64 credit card",
-          "base64 full address"
+          "base64 full address",
+          "rot13 phone",
+          "rot13 IP"
         ]
       },
       "HTML entities": {
         "total": 6,
-        "detected": 6,
-        "missed": 0,
-        "detection_rate": 100.0,
-        "missed_examples": []
+        "detected": 4,
+        "missed": 2,
+        "detection_rate": 66.7,
+        "missed_examples": [
+          "IP as entities",
+          "phone as entities"
+        ]
       },
       "Split across tokens": {
         "total": 9,
@@ -121,19 +113,21 @@
       },
       "URL encoding": {
         "total": 5,
-        "detected": 5,
-        "missed": 0,
-        "detection_rate": 100.0,
-        "missed_examples": []
+        "detected": 3,
+        "missed": 2,
+        "detection_rate": 60.0,
+        "missed_examples": [
+          "phone %2B",
+          "IP with %2E"
+        ]
       },
       "Unicode tricks": {
         "total": 9,
-        "detected": 7,
-        "missed": 2,
-        "detection_rate": 77.8,
+        "detected": 8,
+        "missed": 1,
+        "detection_rate": 88.9,
         "missed_examples": [
-          "SSN with figure spaces",
-          "SSN with punctuation space"
+          "phone with en-dashes"
         ]
       },
       "Comments/injection": {
@@ -152,26 +146,27 @@
         "missed": 2,
         "detection_rate": 50.0,
         "missed_examples": [
-          "phone reversed",
-          "SSN reversed"
+          "IP reversed",
+          "phone reversed"
         ]
       },
       "Mixed case tricks": {
         "total": 6,
-        "detected": 4,
-        "missed": 2,
-        "detection_rate": 66.7,
+        "detected": 5,
+        "missed": 1,
+        "detection_rate": 83.3,
         "missed_examples": [
-          "IP with octal-like",
           "SSN with letters inserted"
         ]
       },
       "Whitespace tricks": {
         "total": 5,
-        "detected": 5,
-        "missed": 0,
-        "detection_rate": 100.0,
-        "missed_examples": []
+        "detected": 4,
+        "missed": 1,
+        "detection_rate": 80.0,
+        "missed_examples": [
+          "phone with irregular spacing"
+        ]
       }
     }
   },
@@ -340,8 +335,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "value": "SSN: 123456789",
+          "score": 0.95
         }
       ]
     },
@@ -349,27 +344,15 @@
       "category": "Zero-width chars",
       "label": "ZWNJ in phone",
       "text": "Phone: +1-555-12\\u200c3-4567",
-      "detected": true,
-      "detections": [
-        {
-          "type": "PHONE",
-          "value": " +1-555-123-4567",
-          "score": 0.88
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "Zero-width chars",
       "label": "ZWSP in IP",
       "text": "IP: 192\\u200b.168\\u200b.1\\u200b.1",
-      "detected": true,
-      "detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "[at]/[dot] formats",
@@ -414,8 +397,14 @@
       "category": "[at]/[dot] formats",
       "label": "email AT DOT",
       "text": "john AT gmail DOT com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@gmail.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "[at]/[dot] formats",
@@ -460,8 +449,14 @@
       "category": "[at]/[dot] formats",
       "label": "email at&t-style",
       "text": "john AT gmail DOT com (with spaces)",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@gmail.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "[at]/[dot] formats",
@@ -474,15 +469,27 @@
       "category": "SSN spoken out",
       "label": "SSN spoken (hyphens)",
       "text": "one two three dash four five dash six seven eight nine",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "SSN spoken out",
       "label": "SSN spoken (no hyphens)",
       "text": "one two three four five six seven eight nine",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123456789",
+          "score": 0.75
+        }
+      ]
     },
     {
       "category": "SSN spoken out",
@@ -509,50 +516,92 @@
       "category": "SSN segmented",
       "label": "SSN with spaces",
       "text": "SSN: 123 45 6789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "SSN: 123456789",
+          "score": 0.95
+        }
+      ]
     },
     {
       "category": "SSN segmented",
       "label": "SSN with NBSP",
       "text": "SSN: 123\\xa045\\xa06789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "SSN: 123456789",
+          "score": 0.95
+        }
+      ]
     },
     {
       "category": "SSN segmented",
       "label": "SSN with tabs",
       "text": "SSN: 123\t45\t6789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "SSN: 123456789",
+          "score": 0.95
+        }
+      ]
     },
     {
       "category": "SSN segmented",
       "label": "SSN with multiple spaces",
       "text": "SSN: 123   45   6789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "SSN: 123456789",
+          "score": 0.95
+        }
+      ]
     },
     {
       "category": "SSN segmented",
       "label": "SSN with underscores",
       "text": "SSN: 123_45_6789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "SSN: 123456789",
+          "score": 0.95
+        }
+      ]
     },
     {
       "category": "SSN segmented",
       "label": "SSN with mixed spaces",
       "text": "SSN:  123  45  6789 ",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "SSN:  123456789",
+          "score": 0.95
+        }
+      ]
     },
     {
       "category": "SSN segmented",
       "label": "SSN with thin spaces",
       "text": "SSN: 123\\u200945\\u20096789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "SSN: 123456789",
+          "score": 0.95
+        }
+      ]
     },
     {
       "category": "IP as text",
@@ -565,8 +614,14 @@
       "category": "IP as text",
       "label": "IP spoken with \"point\"",
       "text": "one nine two point one six eight point one point one",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "IP as text",
@@ -597,8 +652,8 @@
       "detections": [
         {
           "type": "CREDIT_CARD",
-          "value": "4111 1111 1111 1111",
-          "score": 0.85
+          "value": "CC: 4111111111111111",
+          "score": 0.9
         }
       ]
     },
@@ -610,8 +665,8 @@
       "detections": [
         {
           "type": "CREDIT_CARD",
-          "value": "4111 1111 1111 1111",
-          "score": 0.85
+          "value": "credit card number: 4111111111111111",
+          "score": 0.9
         }
       ]
     },
@@ -619,15 +674,27 @@
       "category": "CC with spaces",
       "label": "CC with dots",
       "text": "CC: 4111.1111.1111.1111",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "CC: 4111111111111111",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "CC with spaces",
       "label": "CC with underscores",
       "text": "CC: 4111_1111_1111_1111",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "CC: 4111111111111111",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "CC with spaces",
@@ -637,8 +704,8 @@
       "detections": [
         {
           "type": "CREDIT_CARD",
-          "value": "4111 1111-1111 1111",
-          "score": 0.85
+          "value": "CC: 4111111111111111",
+          "score": 0.9
         }
       ]
     },
@@ -663,8 +730,8 @@
       "detections": [
         {
           "type": "CREDIT_CARD",
-          "value": "3782 822463 10005",
-          "score": 0.8
+          "value": "CC: 378282246310005",
+          "score": 0.9
         }
       ]
     },
@@ -676,8 +743,8 @@
       "detections": [
         {
           "type": "CREDIT_CARD",
-          "value": "4111 1111 1111 1111",
-          "score": 0.85
+          "value": "cc #: 4111111111111111",
+          "score": 0.9
         }
       ]
     },
@@ -689,8 +756,8 @@
       "detections": [
         {
           "type": "CREDIT_CARD",
-          "value": "4111 1111 1111 1111",
-          "score": 0.85
+          "value": "Credit card: 4111111111111111",
+          "score": 0.9
         }
       ]
     },
@@ -757,8 +824,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "value": "SSN: 123456789",
+          "score": 0.95
         }
       ]
     },
@@ -770,8 +837,8 @@
       "detections": [
         {
           "type": "CREDIT_CARD",
-          "value": "4111-1111-1111-1111",
-          "score": 0.85
+          "value": "CC: 4111111111111111",
+          "score": 0.9
         }
       ]
     },
@@ -779,27 +846,15 @@
       "category": "Encoded (base64/rot13)",
       "label": "rot13 phone",
       "text": "rot13 phone: +1-555-123-4567",
-      "detected": true,
-      "detections": [
-        {
-          "type": "PHONE",
-          "value": " +1-555-123-4567",
-          "score": 0.88
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "Encoded (base64/rot13)",
       "label": "rot13 IP",
       "text": "rot13 IP: 192.168.1.1",
-      "detected": true,
-      "detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "HTML entities",
@@ -848,8 +903,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "value": "123456789",
+          "score": 0.75
         }
       ]
     },
@@ -857,27 +912,15 @@
       "category": "HTML entities",
       "label": "IP as entities",
       "text": "&#49;&#57;&#50;&#46;&#49;&#54;&#56;&#46;&#49;&#46;&#49;",
-      "detected": true,
-      "detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "HTML entities",
       "label": "phone as entities",
       "text": "&#43;&#49;&#45;&#53;&#53;&#53;&#45;&#49;&#50;&#51;&#45;&#52;&#53;&#54;&#55;",
-      "detected": true,
-      "detections": [
-        {
-          "type": "PHONE",
-          "value": "+1-555-123-4567",
-          "score": 0.88
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "Split across tokens",
@@ -984,14 +1027,8 @@
       "category": "URL encoding",
       "label": "phone %2B",
       "text": "%2B1-555-123-4567",
-      "detected": true,
-      "detections": [
-        {
-          "type": "PHONE",
-          "value": "+1-555-123-4567",
-          "score": 0.88
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "URL encoding",
@@ -1010,14 +1047,8 @@
       "category": "URL encoding",
       "label": "IP with %2E",
       "text": "192%2E168%2E1%2E1",
-      "detected": true,
-      "detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "Unicode tricks",
@@ -1040,8 +1071,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "value": "123456789",
+          "score": 0.75
         }
       ]
     },
@@ -1053,8 +1084,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "value": "123456789",
+          "score": 0.75
         }
       ]
     },
@@ -1088,28 +1119,34 @@
       "category": "Unicode tricks",
       "label": "phone with en-dashes",
       "text": "+1–555–123–4567",
-      "detected": true,
-      "detections": [
-        {
-          "type": "PHONE",
-          "value": "+1-555-123-4567",
-          "score": 0.88
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "Unicode tricks",
       "label": "SSN with figure spaces",
       "text": "123\\u200745\\u20076789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123456789",
+          "score": 0.75
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
       "label": "SSN with punctuation space",
       "text": "123\\u200845\\u20086789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123456789",
+          "score": 0.75
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
@@ -1285,14 +1322,8 @@
       "category": "Reversed/mirrored",
       "label": "IP reversed",
       "text": "1.1.168.192",
-      "detected": true,
-      "detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "1.1.168.192",
-          "score": 0.9
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "Reversed/mirrored",
@@ -1305,8 +1336,14 @@
       "category": "Reversed/mirrored",
       "label": "SSN reversed",
       "text": "9876-54-321",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "987654321",
+          "score": 0.75
+        }
+      ]
     },
     {
       "category": "Mixed case tricks",
@@ -1338,8 +1375,14 @@
       "category": "Mixed case tricks",
       "label": "IP with octal-like",
       "text": "0300.0250.0001.0001",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "0300025000010001",
+          "score": 0.55
+        }
+      ]
     },
     {
       "category": "Mixed case tricks",
@@ -1382,8 +1425,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "000-00-0000",
-          "score": 0.9
+          "value": "SSN: 000000000",
+          "score": 0.95
         }
       ]
     },
@@ -1395,8 +1438,8 @@
       "detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "value": "123456789",
+          "score": 0.75
         }
       ]
     },
@@ -1417,14 +1460,8 @@
       "category": "Whitespace tricks",
       "label": "phone with irregular spacing",
       "text": "+1 555   123   4567",
-      "detected": true,
-      "detections": [
-        {
-          "type": "PHONE",
-          "value": "+1 555   123   4567",
-          "score": 0.85
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "Whitespace tricks",
@@ -1433,9 +1470,9 @@
       "detected": true,
       "detections": [
         {
-          "type": "IP_ADDRESS",
-          "value": "192.168.001.001",
-          "score": 0.9
+          "type": "BANK_ACCOUNT",
+          "value": "192168001001",
+          "score": 0.55
         }
       ]
     }

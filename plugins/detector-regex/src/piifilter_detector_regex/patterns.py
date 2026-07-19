@@ -60,6 +60,16 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # ── SSN ──────────────────────────────────────────────────────────
         # Matches standard SSN formats: 123-45-6789 (hyphen) and 123\xa045\xa06789 (non-breaking space)
     ("SOCIAL_SECURITY", r"\b\d{3}[-\u00A0]\d{2}[-\u00A0]\d{4}\b", 0.90),
+        # Context-prefixed SSN: catches ALL separator variants (hyphen, NBSP, dot, space, or none)
+        # when preceded by an SSN-related keyword like "SSN:", "Social Security:", "SS#", "Tax ID:"
+        # Also handles "SSN is", "My SSN is" patterns via optional "is" after the keyword.
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{3}[- \u00A0.]?\d{2}[- \u00A0.]?\d{4}\b", 0.95),
+        # Context-prefixed bare 9-digit SSN (no separator at all) — e.g. "SSN: 123456789"
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{9}\b", 0.95),
+        # General SSN-like pattern with optional separators (hyphen, NBSP, dot, space, or none).
+        # Uses lookaround to avoid matching within longer digit sequences.
+        # Lower confidence (0.75) since it matches bare SSN-like patterns without context keywords.
+    ("SOCIAL_SECURITY", r"(?<!\d)\d{3}[- \u00A0.]?\d{2}[- \u00A0.]?\d{4}(?!\d)", 0.75),
 
     # ── IBAN ─────────────────────────────────────────────────────────
     # IBAN must come BEFORE CREDIT_CARD patterns since IBAN substrings (like
@@ -71,18 +81,31 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
 
     # ── CREDIT_CARD ──────────────────────────────────────────────────
     ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
-    # Standard 4-4-4-4 format with dashes — must NOT be inside an IBAN (not preceded by [A-Z]{2}\d{2}\s)
-    # and must NOT be followed by more space-separated digit groups (which is an IBAN feature)
+    # Standard 4-4-4-4 format with single dashes or single spaces
     ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4}\b(?![ -]\d{2,4})", 0.85),
+    # 4-4-4-4 with multi-space gaps (double spaces, etc.)
+    ("CREDIT_CARD", r"\b\d{4}[ -]{2,}\d{4}[ -]{2,}\d{4}[ -]{2,}\d{4}\b", 0.85),
+    # 4-4-4-4 with dots as separators: 4111.1111.1111.1111
+    ("CREDIT_CARD", r"\b\d{4}\.\d{4}\.\d{4}\.\d{4}\b", 0.85),
+    # 4-6-5 Amex format with single dash/space
     ("CREDIT_CARD", r"\b\d{4}[- ]\d{6}[- ]\d{5}\b", 0.80),
-    # Low confidence: 4-4-4-2..4 pattern — must NOT have an IBAN-like preceding block or additional digit groups.
-    # Must NOT be the trailing portion of an IBAN (preceded by a digit-group and space).
+    # 4-6-5 with multi-space gaps
+    ("CREDIT_CARD", r"\b\d{4}[ -]{2,}\d{6}[ -]{2,}\d{5}\b", 0.80),
+    # 4-6-5 with dots: 4111.111111.11111
+    ("CREDIT_CARD", r"\b\d{4}\.\d{6}\.\d{5}\b", 0.80),
+    # Low confidence: 4-4-4-2..4 pattern with single dash/space
     ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)(?<![A-Za-z])(?<!\d{4}[- ])\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b(?![- ]\d{2,4})(?!\s*\d{2,4})", 0.65),
-    # Continuous 16-digit credit card numbers (no dashes) — Luhn-prefixed only
+    # Low confidence: 4-4-4-2..4 with multi-space gaps (e.g. "3782  8224  6310  005")
+    ("CREDIT_CARD", r"\b\d{4}[ -]{2,}\d{4}[ -]{2,}\d{4}[ -]{2,}\d{2,4}\b", 0.65),
+    # Continuous 16-digit credit card numbers (no dashes) — keyword-prefixed
     ("CREDIT_CARD", r"(?i)(?:credit\s*card|cc|card\s+#?)\b\s*\d{16}\b", 0.80),
+    # IIN-prefixed 16-digit numbers: known card issuer prefixes
     ("CREDIT_CARD", r"\b(?:4\d{3}|5[1-5]\d{2}|6\d{3}|3[47]\d{2})\d{12}\b", 0.80),
-    # Generic 16-digit number — low confidence.
+    # Generic 16-digit number — low confidence (Luhn gate filters FPs).
     ("CREDIT_CARD", r"\b\d{16}\b", 0.50),
+    # Catch-all for continuous 13-19 digit numbers that are Luhn-valid.
+    # Lower confidence since no format hint — relies on Luhn gate.
+    ("CREDIT_CARD", r"\b\d{13,19}\b", 0.65),
 
     # ── EMAIL ────────────────────────────────────────────────────────
     ("EMAIL", r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b", 0.90),
