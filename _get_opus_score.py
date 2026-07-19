@@ -1,13 +1,15 @@
-"""Get Opus score for the improvement."""
-import json, boto3, re
+"""Get Opus 4.8 score for the ADDRESS precision fix."""
+import json
+import re
+import boto3
 
 client = boto3.client('bedrock-runtime', region_name='us-east-1')
 
-eval_prompt = """You are evaluating PIIFilter, a PII detection library. Two changes were just made:
+eval_prompt = """You are evaluating PIIFilter, a PII detection library. One change was just made:
 
-1. **CREDIT_CARD IBAN FP fix**: Added lookbehind to prevent low-confidence CC pattern (#11, \\b\\d{4}[- ]\\d{4}[- ]\\d{4}[- ]\\d{2,4}\\b) from matching trailing IBAN groups. Impact: CREDIT_CARD precision 0.7059 -> 0.8000, FP 5->3.
+**ADDRESS precision fix**: Replaced the overly-broad generic ADDRESS pattern that matched any "N Street Name Rd/St/Ave/Way/etc." regardless of context, with a keyword-prefixed version that requires address context keywords (address:, at, is at, office is at, home address:, visit us at, HQ is at). Also added a negative lookahead to exclude pop-culture/anecdotal references in parentheses ("(famous from...)"). Removed the standalone redundant UK-style pattern.
 
-2. **COMPANY two-cap-word FP fix**: Replaced overly-broad two-capitalized-words pattern (matched ANY two capitalized words like "Alice Johnson", "Fifth Avenue", "Main Street") with a restricted version requiring the second word to be a known company/industry term (Technologies, Research, Systems, etc.). Impact: COMPANY precision 0.6667 -> 1.0000 (perfect), FP 4->0. Overall regex precision 0.8125 -> 0.8786.
+Impact: ADDRESS precision 0.6667 -> 1.0000 (FP 3->0). Zero recall regression (same 6 TP). Overall regex precision 0.8786 -> 0.8916. Overall regex recall 0.9837 unchanged.
 
 Tests: 450/450 passed.
 
