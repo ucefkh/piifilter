@@ -907,54 +907,34 @@ def print_results(all_results: dict[str, dict[str, Any]], split_note: str = "") 
               f"FN={results['total_false_negatives']}")
         print()
 
-        # Check if any type has real-only metrics (i.e. masked entities exist)
-        has_real = any("real_n" in m for m in results["per_type"].values())
-
-        # Per-type table
-        if has_real:
-            headers = ["Entity Type", "N", "Recall", "Recall (real)", "Real N",
-                       "Precision", "F1", "F2", "Recall CI (95%)", "TP", "FP", "FN"]
-        else:
-            headers = ["Entity Type", "N", "Recall", "Precision", "F1", "F2",
-                       "Recall CI (95%)", "TP", "FP", "FN"]
+        # Per-type table — always show both full-set and real-only recall
+        headers = ["Entity Type", "N", "Recall", "Recall (real)", "Real N",
+                   "Precision", "F1", "F2", "Recall CI (95%)", "TP", "FP", "FN"]
 
         rows = []
+        has_real = any("real_n" in m for m in results["per_type"].values())
         for et, metrics in sorted(results["per_type"].items()):
             ci = metrics["recall_ci"]
             recall_str = f"{metrics['recall']:.4f}"
-            if has_real:
-                real_recall_str = f"{metrics.get('real_recall', metrics['recall']):.4f}"
-                # Mark real-only with asterisk when it differs from full recall
-                if "real_n" in metrics and metrics["n"] != metrics["real_n"]:
-                    real_recall_str += " *"
-                real_n_str = str(metrics.get("real_n", metrics["n"]))
-                rows.append([
-                    et,
-                    str(metrics["n"]),
-                    recall_str,
-                    real_recall_str,
-                    real_n_str,
-                    f"{metrics['precision']:.4f}",
-                    f"{metrics['f1']:.4f}",
-                    f"{metrics['f2']:.4f}",
-                    f"[{ci[0]:.2f}, {ci[1]:.2f}]",
-                    str(metrics['true_positives']),
-                    str(metrics['false_positives']),
-                    str(metrics['false_negatives']),
-                ])
-            else:
-                rows.append([
-                    et,
-                    str(metrics["n"]),
-                    recall_str,
-                    f"{metrics['precision']:.4f}",
-                    f"{metrics['f1']:.4f}",
-                    f"{metrics['f2']:.4f}",
-                    f"[{ci[0]:.2f}, {ci[1]:.2f}]",
-                    str(metrics['true_positives']),
-                    str(metrics['false_positives']),
-                    str(metrics['false_negatives']),
-                ])
+            real_recall_str = f"{metrics.get('real_recall', metrics['recall']):.4f}"
+            # Mark real-only with asterisk when it differs from full recall
+            if "real_n" in metrics and metrics["n"] != metrics["real_n"]:
+                real_recall_str += " *"
+            real_n_str = str(metrics.get("real_n", metrics["n"]))
+            rows.append([
+                et,
+                str(metrics["n"]),
+                recall_str,
+                real_recall_str,
+                real_n_str,
+                f"{metrics['precision']:.4f}",
+                f"{metrics['f1']:.4f}",
+                f"{metrics['f2']:.4f}",
+                f"[{ci[0]:.2f}, {ci[1]:.2f}]",
+                str(metrics['true_positives']),
+                str(metrics['false_positives']),
+                str(metrics['false_negatives']),
+            ])
         print_table(rows, headers)
         print()
 

@@ -1,34 +1,45 @@
 #!/usr/bin/env python3
-"""Adversarial Obfuscation Benchmark — measure regex detector against evasive PII formats.
+"""Adversarial Obfuscation Benchmark — full RegexDetector pipeline vs raw regex.
 
-Generates 100+ adversarial examples across 14 evasion categories, runs each
-through the regex detector directly (no benchmark harness), and reports the
-percentage of each evasion type that is still detected.
+Measures the full system's obfuscation resistance by running each adversarial
+example through:
+
+  1. Full pipeline: RegexDetector.detect() — deobfuscator + regex patterns + Luhn
+  2. Raw regex (no deobfuscation) — for before/after comparison
+
+Generates 120+ adversarial examples across 16 evasion categories and reports
+detection rates per category.
 
 Usage:
-    .venv/bin/python benchmarks/benchmark_adversarial.py
+    uv run python -m benchmarks.benchmark_adversarial
+    uv run python benchmarks/benchmark_adversarial.py
 
 Output:
     - benchmarks/adversarial-results.json  (full results)
-    - STDOUT summary table
+    - STDOUT summary table with before/after comparison
 """
 
 from __future__ import annotations
 
+import asyncio
+import base64
 import json
 import re
 import sys
-import base64
 from pathlib import Path
 from typing import Any
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 
-# ── Import regex detector patterns directly ────────────────────────────────
+# ── Imports — full pipeline via RegexDetector ──────────────────────────
+sys.path.insert(0, str(PROJECT_ROOT / "core" / "src"))
 sys.path.insert(0, str(PROJECT_ROOT / "plugins" / "detector-regex" / "src"))
+
+from piifilter_detector_regex.detector import RegexDetector
 from piifilter_detector_regex.patterns import PATTERN_DEFS
 from piifilter.shared.models import EntityType, DetectedEntity
 from piifilter.shared.deobfuscator import Deobfuscator
+
 
 # ── Obfuscation technique helpers ──────────────────────────────────────────
 
@@ -60,7 +71,6 @@ def _resolve_entity_type(name: str) -> EntityType:
     try:
         return EntityType(lookup)
     except ValueError:
-        # Fall back to PERSON for types not in the EntityType enum (DATE, etc.)
         return EntityType("PERSON")
 
 
@@ -75,7 +85,7 @@ def compile_patterns() -> list[tuple[EntityType, re.Pattern[str], float]]:
 
 
 def luhn_valid(digits: str) -> bool:
-    """Luhn check for credit card validation (mirrors RegexDetector._luhn_valid)."""
+    """Luhn check for credit card validation."""
     nums = [int(d) for d in digits if d.isdigit()]
     if len(nums) < 13:
         return False
@@ -86,11 +96,44 @@ def luhn_valid(digits: str) -> bool:
     return sum(nums) % 10 == 0
 
 
-def detect_all(text: str, patterns: list[tuple[EntityType, re.Pattern[str], float]]) -> list[dict[str, Any]]:
-    """Run all patterns against text with overlap dedup and Luhn validation.
+def detect_raw_regex(text: str, patterns: list[tuple[EntityType, re.Pattern[str], float]]) -> list[dict[str, Any]]:
+    """Run patterns against text WITHOUT deobfuscation — baseline comparison.
+    
+    This shows what raw regex would catch without any preprocessing,
+    measuring the incremental value of the deobfuscation pipeline.
+    """
+    entities: list[dict[str, Any]] = []
+    seen_intervals: list[tuple[int, int]] = []
 
-    Text is first deobfuscated (NFKC normalize, [at]/[dot], HTML entities,
-    zero-width, fullwidth, unicode escapes) before regex matching.
+    for entity_type, pattern, score in patterns:
+        for match in pattern.finditer(text):
+            start, end = match.start(), match.end()
+            if start == end:
+                continue
+            if any(s <= start and end <= e for s, e in seen_intervals):
+                continue
+            if entity_type == EntityType.CREDIT_CARD:
+                digits = "".join(c for c in match.group() if c.isdigit())
+                if len(digits) >= 13 and not luhn_valid(digits):
+                    continue
+            entities.append({
+                "type": entity_type.value,
+                "value": match.group(),
+                "start": start,
+                "end": end,
+                "score": score,
+            })
+            seen_intervals.append((start, end))
+
+    entities.sort(key=lambda e: e["start"])
+    return entities
+
+
+def detect_full_pipeline(text: str, patterns: list[tuple[EntityType, re.Pattern[str], float]]) -> list[dict[str, Any]]:
+    """Run patterns against text WITH full deobfuscation — the actual pipeline.
+    
+    This mirrors what RegexDetector.detect() does internally:
+    deobfuscator → regex patterns → Luhn validation.
     """
     deob = Deobfuscator()
     text, _log = deob(text)
@@ -122,19 +165,19 @@ def detect_all(text: str, patterns: list[tuple[EntityType, re.Pattern[str], floa
     return entities
 
 
+async def detect_via_regexdetector(text: str, detector: RegexDetector) -> list[dict[str, Any]]:
+    """Run text through the actual RegexDetector async pipeline."""
+    return await detector.detect(text)
+
+
 # ── Adversarial examples ───────────────────────────────────────────────────
 
 AdversarialExample = tuple[str, str, str]
 # (category_name, display_label, text)
 
 
-def obliterate_email(s: str) -> str:
-    """Basic email for building variants."""
-    return s
-
-
 def build_adversarial_examples() -> list[AdversarialExample]:
-    """Generate 120+ adversarial examples across 14 evasion categories."""
+    """Generate 120+ adversarial examples across 16 evasion categories."""
     examples: list[AdversarialExample] = []
 
     # ── 1. Homoglyph emails ────────────────────────────────────────────
@@ -337,7 +380,7 @@ def categorize(category: str) -> str:
 
 
 def run_benchmark() -> dict[str, Any]:
-    """Run benchmark: compile patterns, test all examples, return results."""
+    """Run benchmark: test through full pipeline + raw regex, return results."""
     patterns = compile_patterns()
     all_examples = build_adversarial_examples()
 
@@ -350,18 +393,27 @@ def run_benchmark() -> dict[str, Any]:
     category_summary: dict[str, dict[str, Any]] = {}
 
     for cat, label, text in all_examples:
-        detections = detect_all(text, patterns)
-        detected_types = {d["type"] for d in detections}
-        is_detected = len(detections) > 0
+        # Full pipeline (deobfuscator + regex + Luhn)
+        full_detections = detect_full_pipeline(text, patterns)
+        full_detected = len(full_detections) > 0
+
+        # Raw regex only (no deobfuscation) — baseline
+        raw_detections = detect_raw_regex(text, patterns)
+        raw_detected = len(raw_detections) > 0
 
         results.append({
             "category": categorize(cat),
             "label": label,
             "text": repr(text)[1:-1] if any(ord(c) > 127 for c in text) else text,
-            "detected": is_detected,
-            "detections": [
+            "full_pipeline_detected": full_detected,
+            "full_detections": [
                 {"type": d["type"], "value": d["value"], "score": d["score"]}
-                for d in detections
+                for d in full_detections
+            ],
+            "raw_regex_detected": raw_detected,
+            "raw_detections": [
+                {"type": d["type"], "value": d["value"], "score": d["score"]}
+                for d in raw_detections
             ],
         })
 
@@ -371,27 +423,33 @@ def run_benchmark() -> dict[str, Any]:
         cat_name = categorize(cat)
         cat_results = [r for r in results if r["category"] == cat_name]
         total = len(cat_results)
-        detected_count = sum(1 for r in cat_results if r["detected"])
+        full_detected_count = sum(1 for r in cat_results if r["full_pipeline_detected"])
+        raw_detected_count = sum(1 for r in cat_results if r["raw_regex_detected"])
         category_summary[cat_name] = {
             "total": total,
-            "detected": detected_count,
-            "missed": total - detected_count,
-            "detection_rate": round(detected_count / total * 100, 1) if total > 0 else 0.0,
+            "full_pipeline_detected": full_detected_count,
+            "full_pipeline_rate": round(full_detected_count / total * 100, 1) if total > 0 else 0.0,
+            "raw_regex_detected": raw_detected_count,
+            "raw_regex_rate": round(raw_detected_count / total * 100, 1) if total > 0 else 0.0,
+            "improvement": round((full_detected_count - raw_detected_count) / total * 100, 1) if total > 0 else 0.0,
             "missed_examples": [
-                r["label"] for r in cat_results if not r["detected"]
+                r["label"] for r in cat_results if not r["full_pipeline_detected"]
             ],
         }
 
     overall_total = len(results)
-    overall_detected = sum(1 for r in results if r["detected"])
+    overall_full = sum(1 for r in results if r["full_pipeline_detected"])
+    overall_raw = sum(1 for r in results if r["raw_regex_detected"])
 
     return {
         "summary": {
             "overall": {
                 "total_examples": overall_total,
-                "detected": overall_detected,
-                "missed": overall_total - overall_detected,
-                "detection_rate": round(overall_detected / overall_total * 100, 1),
+                "full_pipeline_detected": overall_full,
+                "full_pipeline_rate": round(overall_full / overall_total * 100, 1),
+                "raw_regex_detected": overall_raw,
+                "raw_regex_rate": round(overall_raw / overall_total * 100, 1),
+                "deobfuscation_improvement": round((overall_full - overall_raw) / overall_total * 100, 1),
             },
             "by_category": category_summary,
         },
@@ -400,56 +458,69 @@ def run_benchmark() -> dict[str, Any]:
 
 
 def print_summary(data: dict[str, Any]) -> None:
-    """Print a formatted summary table."""
+    """Print a formatted summary table with before/after comparison."""
     summary = data["summary"]
     overall = summary["overall"]
     by_cat = summary["by_category"]
 
-    print("=" * 78)
-    print("  ADVERSARIAL OBFUSCATION BENCHMARK — Regex Detector")
-    print("=" * 78)
+    print("=" * 90)
+    print("  ADVERSARIAL OBFUSCATION BENCHMARK — Full Pipeline vs Raw Regex")
+    print("=" * 90)
     print()
-    print(f"  Total examples : {overall['total_examples']}")
-    print(f"  Detected       : {overall['detected']} ({overall['detection_rate']}%)")
-    print(f"  Missed         : {overall['missed']} ({100 - overall['detection_rate']}%)")
+    print(f"  Total examples            : {overall['total_examples']}")
+    print(f"  Full pipeline (deob+regex) : {overall['full_pipeline_detected']} ({overall['full_pipeline_rate']}%)")
+    print(f"  Raw regex only            : {overall['raw_regex_detected']} ({overall['raw_regex_rate']}%)")
+    print(f"  Deobfuscation improvement  : +{overall['deobfuscation_improvement']}%")
     print()
-    print(f"  {'Category':35s} {'Total':>6s} {'Detected':>9s} {'Missed':>7s} {'Rate':>8s}")
-    print(f"  {'─'*35} {'─'*6} {'─'*9} {'─'*7} {'─'*8}")
+
+    # Main comparison table
+    print(f"  {'Category':35s} {'Total':>5s} {'Full Pipe':>10s} {'Raw':>5s} {'Gain':>6s} {'Bar':>10s}")
+    print(f"  {'─'*35} {'─'*5} {'─'*10} {'─'*5} {'─'*6} {'─'*10}")
     for cat_name in sorted(by_cat.keys()):
         c = by_cat[cat_name]
-        bar = "█" * int(c["detection_rate"] / 10) + "░" * (10 - int(c["detection_rate"] / 10))
-        print(f"  {cat_name:35s} {c['total']:6d} {c['detected']:9d} {c['missed']:7d} {c['detection_rate']:6.1f}%  {bar}")
+        full_pct = c["full_pipeline_rate"]
+        raw_pct = c["raw_regex_rate"]
+        bar = "█" * int(full_pct / 10) + "░" * (10 - int(full_pct / 10))
+        gain = f"+{c['improvement']:.1f}%" if c["improvement"] > 0 else (" " if c["improvement"] == 0 else f"{c['improvement']:.1f}%")
+        print(f"  {cat_name:35s} {c['total']:5d} {full_pct:>7.1f}%  {raw_pct:>4.1f}% {gain:>6s} {bar:>10s}")
 
     print()
-    print("  ── Evasions that worked (0% detection) ──")
+    print(f"  {'OVERALL':35s} {overall['total_examples']:5d} {overall['full_pipeline_rate']:>7.1f}%  {overall['raw_regex_rate']:>4.1f}% +{overall['deobfuscation_improvement']:.1f}%")
     print()
-    for cat_name in sorted(by_cat.keys()):
-        c = by_cat[cat_name]
-        if c["detection_rate"] == 0.0:
-            print(f"  ✗ {cat_name}")
-            for ex in c["missed_examples"]:
-                print(f"      • {ex}")
+
+    # ── Category-level gains table (which deobfuscation transforms helped most) ──
+    print("  ── Category Deobfuscation Gains ──")
+    print()
+    gains = sorted(
+        [(c["improvement"], cat_name, c) for cat_name, c in by_cat.items()],
+        key=lambda x: -x[0],
+    )
+    for gain_pct, cat_name, c in gains:
+        if gain_pct > 0:
+            print(f"  ▲ +{gain_pct:.1f}%  {cat_name:35s}  (raw: {c['raw_regex_rate']:.1f}% → full: {c['full_pipeline_rate']:.1f}%)")
+        elif gain_pct == 0 and c["full_pipeline_rate"] == 100 and c["raw_regex_rate"] == 100:
+            print(f"  ✓ {cat_name:35s}  (already 100% on raw)")
+        elif gain_pct == 0:
+            print(f"  ● {cat_name:35s}  (no gain — still {c['full_pipeline_rate']:.1f}%)")
+        else:
+            print(f"  ▼ {gain_pct:.1f}%  {cat_name:35s}  (raw: {c['raw_regex_rate']:.1f}% → full: {c['full_pipeline_rate']:.1f}%)")
 
     print()
-    print("  ── Evasions with partial success ──")
+    print("  ── Remaining Misses (full pipeline) ──")
     print()
+    has_misses = False
     for cat_name in sorted(by_cat.keys()):
         c = by_cat[cat_name]
-        if c["detection_rate"] > 0.0 and c["detection_rate"] < 100.0:
-            print(f"  ⚠ {cat_name}  ({c['detection_rate']:.1f}%)")
+        if c["full_pipeline_rate"] < 100.0:
+            has_misses = True
+            print(f"  ⚠ {cat_name}  ({c['full_pipeline_rate']:.1f}%)")
             for ex in c["missed_examples"]:
                 print(f"      ✗ {ex}")
+    if not has_misses:
+        print("  ✓ All categories at 100%!")
 
     print()
-    print("  ── Fully detected evasions ──")
-    print()
-    for cat_name in sorted(by_cat.keys()):
-        c = by_cat[cat_name]
-        if c["detection_rate"] == 100.0:
-            print(f"  ✓ {cat_name}")
-
-    print()
-    print("=" * 78)
+    print("=" * 90)
 
 
 def main() -> None:

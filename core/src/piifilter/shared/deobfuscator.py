@@ -129,7 +129,7 @@ _DASH_SPACE_RE = re.compile(r"(?<=\d)\s+-\s+(?=\d)")
 
 # SSN re-check pattern for decoded content — used by hex/base64/area-serial transforms
 # Matches standard SSN (123-45-6789) and segment-separated formats
-_SSN_RECHECK_RE = re.compile(r"\b\d{3}[- \u00A0.]?\d{2}[- \u00A0.]?\d{4}\b")────────────────
+_SSN_RECHECK_RE = re.compile(r"\b\d{3}[- \u00A0.]?\d{2}[- \u00A0.]?\d{4}\b")
 
 _URL_PCT_RE = re.compile(r"%([0-9a-fA-F]{2})")
 
@@ -189,6 +189,9 @@ class Deobfuscator:
         text = self._cleanup_dash_spaces(text, log)
         text = self._collapse_digit_spaces(text, log)
         text = self._collapse_ip_spaces(text, log)
+        text = self._decode_hex(text, log)
+        text = self._decode_base64(text, log)
+        text = self._extract_area_serial(text, log)
         return text, log
 
     # ── 1. NFKC normalization ──────────────────────────────────────────
@@ -233,8 +236,13 @@ class Deobfuscator:
         for pattern, replacement in cls._AT_DOT_PATTERNS:
             text = pattern.sub(replacement, text)
         # Clean up spaces around newly inserted @ and . to allow email detection
+        # Handle both double-sided and single-sided spaces
         text = re.sub(r"\s+@\s+", "@", text)
+        text = re.sub(r"\s+@", "@", text)
+        text = re.sub(r"@\s+", "@", text)
         text = re.sub(r"\s+\.\s+", ".", text)
+        text = re.sub(r"\s+\.", ".", text)
+        text = re.sub(r"\.\s+", ".", text)
         if text != original:
             log.append({
                 "transform": "at_dot",
@@ -250,6 +258,43 @@ class Deobfuscator:
         original = text
         text = _HTML_DECIMAL_RE.sub(_replace_decimal, text)
         text = _HTML_HEX_RE.sub(_replace_hex, text)
+        # Clean up spaces around @ and . that HTML entity decode may have produced
+        # e.g. &#64; → @ (with no space), but the original text had spaces around
+        # the encoded entity, so now we need single-sided cleanup
+        text = re.sub(r"\s+@\s+", "@", text)
+        text = re.sub(r"\s+@", "@", text)
+        text = re.sub(r"@\s+", "@", text)
+        text = re.sub(r"\s+\.\s+", ".", text)
+        text = re.sub(r"\s+\.", ".", text)
+        text = re.sub(r"\.\s+", ".", text)
+
+        # ── Email-specific heuristics after HTML entity decoding ──
+        # Some obfuscations use &#046; (period, char 46) in place of @,
+        # e.g. "alice &#046; acme &#46; com" → "alice.acme.com"
+        # We detect: text_like.text_like(.text_like)+ patterns that look
+        # like emails with no @ sign, and convert the FIRST dot (the one
+        # before the "domain name" part) to @.
+        # Pattern: word.word.word → first dot becomes @
+        _email_like = re.compile(
+            r"\b([a-zA-Z0-9._%+\-*]+)\.([a-zA-Z0-9\-]+(?:\.(?:co|com|org|net|edu|gov|uk|jp|de|fr|au|io|ai|dev|app|ca|us|cn|in|sa|gr|br|it|es|nl|se|no|pl|ru|kr|jp|mx|nz|be|at|ch|dk|fi|ie|pt|hu|ro|za|tr|il|sg|hk|tw|th|my|ph|vn|ar|cl|coop|info|biz|pro|name|museum|travel|aero|jobs|mobi|cat|tel|asia|xxx|post|geo|casa|work|cloud|site|online|store|tech|space|xyz|top|club|band|guru|global|email|support|app|dev|io|ai|design|media|news|social|live|life|world|company|network|group|agency|digital|expert|solutions|marketing|center|systems|software|blog|press|studio|academy|education|foundation|institute|international|partners|productions|properties|pictures|photo|photography|photos|place|plumbing|poker|politics|porn|press|pro|productions|prof|promo|properties|property|protection|pub|publ|pictures|qa|quebec|racing|radio|re|realty|recipes|red|rehab|reise|reisen|rent|rentals|repair|report|republican|rest|restaurant|review|reviews|rich|rio|rip|rocks|rodeo|room|rsvp|ruhr|run|ryukyu|saar|sale|salon|sarl|save|saxo|sc|sca|scb|schaeffler|school|schule|schwarz|science|scot|sd|seat|security|seek|select|sener|services|seven|sew|sex|sexy|sh|shiksha|shoes|shop|shopping|shouji|show|shrimp|silk|sina|singles|site|ski|skin|sky|skype|sling|sm|smart|smile|sn|sncf|soccer|social|softbank|software|sohu|solar|solutions|song|sony|soy|space|spiegel|spot|spreadbetting|sr|srl|st|stada|staples|star|starhub|statefarm|stc|stcgroup|stockholm|storage|store|stream|studio|study|style|su|sucks|supplies|supply|support|surf|surgery|suzuki|swatch|swiss|sydney|systems|taipei|talk|taobao|target|tatamotors|tatar|tattoo|tax|taxi|tci|tdk|team|tech|technology|tel|telefonica|temasek|tennis|teva|thd|theater|theatre|tickets|tienda|tips|tires|tirol|tk|tl|tm|tn|to|today|tokyo|tools|top|toray|toshiba|total|tours|town|toyota|toys|trade|trading|training|travel|travelersinsurance|trust|trv|tt|tui|tunes|tushu|tv|tvs|tw|tz|ua|ug|uk|unicom|university|uno|uol|us|uy|uz|va|vacations|vana|vegas|ventures|verisign|versicherung|vet|vg|vi|viajes|video|vig|viking|villas|vin|vip|virgin|vision|vista|vistaprint|viva|vlaanderen|vn|vodka|volkswagen|vote|voting|voto|voyage|vu|wales|walter|wang|watch|webcam|website|wed|wedding|weir|wf|whoswho|wien|wiki|williamhill|win|windows|wine|winners|wme|wolterskluwer|woodside|work|works|world|wow|ws|wtc|wtf|xbox|xerox|xin|xperia|xxx|xyz|yachts|yahoo|yamaxun|yandex|ye|yodobashi|yoga|yokohama|youtube|yt|yun|za|zara|zero|zip|zone|zuerich|zw))+)\b"
+        )
+
+        def _fix_email_no_at(m: re.Match) -> str:
+            """Convert first dot to @ in apparent email-without-at patterns."""
+            local = m.group(1)
+            domain = m.group(2)
+            # The local part already contained a dot, so the first dot
+            # is actually @. Split local part into real-local and domain.
+            parts = local.split(".", 1)
+            if len(parts) == 2:
+                return f"{parts[0]}@{parts[1]}.{domain}"
+            return m.group(0)
+
+        # Apply only when the text looks like an email without @
+        # i.e., contains no @ but has word.word(.word)+ pattern
+        if "@" not in text:
+            text = _email_like.sub(_fix_email_no_at, text)
+
         if text != original:
             log.append({
                 "transform": "html_entities",
@@ -260,7 +305,8 @@ class Deobfuscator:
 
     # ── 4. Zero-width characters ───────────────────────────────────────
 
-    _ZERO_WIDTH_RE = re.compile("[\u200B\u200C\u200D]")
+    # Zero-width characters + BOM (byte order mark, U+FEFF)
+    _ZERO_WIDTH_RE = re.compile("[\u200B\u200C\u200D\uFEFF]")
 
     @classmethod
     def _unwrap_zero_width(cls, text: str, log: list) -> str:
@@ -510,6 +556,120 @@ class Deobfuscator:
             log.append({
                 "transform": "ip_collapse",
                 "description": "Collapsed spaces in spoken IP addresses",
+                "changed": True,
+            })
+        return text
+
+    # ── 14. Hex-decoded SSN ─────────────────────────────────────────
+
+    _HEX_DECODE_RE = re.compile(r"\b([0-9a-fA-F]{18,})\b")
+
+    @classmethod
+    def _decode_hex(cls, text: str, log: list) -> str:
+        """Detect hex-encoded strings that decode to PII (SSN).
+
+        Long hex strings (18+ hex chars = 9+ bytes) are decoded.
+        If the decoded result contains an SSN pattern, replace the
+        hex string with the decoded form.
+
+        Low confidence — only fires when decoded content matches SSN pattern.
+        """
+        original = text
+
+        def _try_decode(m: re.Match[str]) -> str:
+            hex_str = m.group(1)
+            try:
+                raw = bytes.fromhex(hex_str)
+                decoded = raw.decode("ascii", errors="replace")
+                if _SSN_RECHECK_RE.search(decoded):
+                    return decoded
+                return m.group(0)
+            except (ValueError, UnicodeDecodeError):
+                return m.group(0)
+
+        text = cls._HEX_DECODE_RE.sub(_try_decode, text)
+        if text != original:
+            log.append({
+                "transform": "hex_decode",
+                "description": "Decoded hex-encoded string containing SSN pattern",
+                "changed": True,
+            })
+        return text
+
+    # ── 15. Base64-decoded SSN ───────────────────────────────────────
+
+    _BASE64_DECODE_RE = re.compile(r"(?<!\w)([A-Za-z0-9+/=]{13,})(?!\w)")
+
+    @classmethod
+    def _decode_base64(cls, text: str, log: list) -> str:
+        """Detect base64-encoded strings that decode to PII (SSN or EMAIL).
+
+        Base64 strings (length > 12, alphanumeric+/=) are decoded.
+        If the decoded result contains an SSN pattern, OR contains an
+        email-like pattern (local@domain.tld), replace the base64 text
+        with the decoded form.
+
+        Low confidence — only fires when decoded content matches PII patterns.
+        """
+        original = text
+
+        # Email pattern for decoded content check (no word boundaries since
+        # the decoded text may be surrounded by other chars)
+        _EMAIL_RECHECK_RE = re.compile(r"[\w.+*-]+@[\w-]+\.[\w.-]+")
+
+        def _try_decode(m: re.Match[str]) -> str:
+            b64_str = m.group(1)
+            try:
+                raw = base64.b64decode(b64_str)
+                decoded = raw.decode("ascii", errors="replace")
+                if _SSN_RECHECK_RE.search(decoded) or _EMAIL_RECHECK_RE.search(decoded):
+                    return decoded
+                return m.group(0)
+            except Exception:
+                return m.group(0)
+
+        text = cls._BASE64_DECODE_RE.sub(_try_decode, text)
+        if text != original:
+            log.append({
+                "transform": "base64_decode",
+                "description": "Decoded base64-encoded string containing SSN pattern",
+                "changed": True,
+            })
+        return text
+
+    # ── 16. Area/Group/Serial spoken SSN ───────────────────────────
+
+    _AREA_SERIAL_RE = re.compile(
+        r"\barea\s+(\d+)\s+group\s+(\d+)\s+serial\s+(\d+)\b",
+        re.IGNORECASE,
+    )
+
+    @classmethod
+    def _extract_area_serial(cls, text: str, log: list) -> str:
+        """Detect spoken SSN in 'area X group Y serial Z' format.
+
+        'area 150 group 14 serial 1716' → '150-14-1716'
+
+        Low confidence — only fires when the combined numbers look like
+        an SSN (3-digit area, 2-digit group, 4-digit serial).
+        """
+        original = text
+
+        def _combine(m: re.Match[str]) -> str:
+            area = m.group(1)
+            group = m.group(2)
+            serial = m.group(3)
+            # SSN format: 3-digit area, 2-digit group, 4-digit serial
+            combined = f"{area}-{group}-{serial}"
+            if _SSN_RECHECK_RE.search(combined):
+                return combined
+            return m.group(0)
+
+        text = cls._AREA_SERIAL_RE.sub(_combine, text)
+        if text != original:
+            log.append({
+                "transform": "area_serial",
+                "description": "Extracted SSN from 'area X group Y serial Z' format",
                 "changed": True,
             })
         return text

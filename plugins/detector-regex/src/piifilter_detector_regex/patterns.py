@@ -131,7 +131,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("CREDIT_CARD", r"\b\d{13,19}\b", 0.65),
 
     # ── EMAIL ────────────────────────────────────────────────────────
-    ("EMAIL", r"\b[\w.+-]+@[\w-]+\.[\w.-]+\b", 0.90),
+    # Local part: word chars, dots, +, -, *, percent-encoded chars, quotable specials
+    # Domain: word chars and hyphens (no underscore for domain)
+    # TLD: word chars, dots and hyphens (for multi-level TLDs like .co.uk)
+    ("EMAIL", r"\b[\w.+*-]+@[\w-]+\.[\w.-]+\b", 0.90),
+    # Catch star-obfuscated emails where only * and first/last letter remains
+    # e.g. j**n@example.com, s***t@company.com — pattern above catches these now
+    # but this lower-confidence fallback catches edge cases with longer stars
+    ("EMAIL", r"\b[\w.*]{2,}@[\w.-]+\.[\w.-]+\b", 0.85),
 
     # ── API_KEY ──────────────────────────────────────────────────────
     ("API_KEY", r"\b(?:sk-|pk-|api[-_]?key|token|secret)[-_]?[a-zA-Z0-9_\-]{16,64}\b", 0.95),
