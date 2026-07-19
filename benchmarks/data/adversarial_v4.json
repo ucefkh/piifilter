@@ -1,37 +1,37 @@
 {
   "version": "4.0.0",
-  "description": "Adversarial PII dataset v4 — DeepSeek, seed 136640, 26 entity types, 10 new strategies.",
-  "seed": 136640,
-  "model": "deepseek-v4",
-  "api_base": "http://100.114.42.73:30000/v1/chat/completions",
-  "total_examples": 0,
+  "description": "Adversarial PII dataset v4 — DeepSeek, seed 237145, 26 entity types, 10 new strategies.",
+  "seed": 237145,
+  "model": "/model",
+  "api_base": "http://100.114.42.73:8000/v1",
+  "total_examples": 260,
   "entity_types": [
-    "API_KEY",
-    "URL",
-    "EMAIL",
-    "FILE_PATH",
-    "JWT",
+    "PROJECT_NAME",
+    "DOMAIN",
+    "PASSPORT",
     "SOCIAL_SECURITY",
-    "EMPLOYEE_NAME",
+    "EMAIL",
+    "BANK_ACCOUNT",
+    "PERSON",
+    "COUNTRY",
     "SSH_KEY",
+    "DATE",
+    "PHONE",
+    "COMPANY",
+    "JWT",
+    "PRIVATE_URL",
+    "CITY",
+    "ADDRESS",
+    "EMPLOYEE_NAME",
+    "URL",
+    "IBAN",
+    "DATABASE_URL",
+    "FILE_PATH",
     "CUSTOMER_NAME",
     "GPS",
-    "IBAN",
-    "IP_ADDRESS",
-    "DATE",
+    "API_KEY",
     "CREDIT_CARD",
-    "PERSON",
-    "PASSPORT",
-    "PHONE",
-    "DATABASE_URL",
-    "COMPANY",
-    "BANK_ACCOUNT",
-    "PROJECT_NAME",
-    "ADDRESS",
-    "DOMAIN",
-    "COUNTRY",
-    "PRIVATE_URL",
-    "CITY"
+    "IP_ADDRESS"
   ],
   "obfuscation_strategies": [
     "ROT13 cipher",
@@ -45,5 +45,2086 @@
     "character displacement",
     "white-on-white HTML"
   ],
-  "examples": []
+  "examples": [
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "P​r​o​j​e​c​t​ ​A​l​p​h​a",
+      "ground_truth": "Project Alpha",
+      "text": "Our team is excited to launch P​r​o​j​e​c​t​ ​A​l​p​h​a next quarter.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "O​p​e​r​a​t​i​o​n​ ​N​e​t​s​t​o​r​m",
+      "ground_truth": "Operation Netstorm",
+      "text": "The coding sprint focuses on O​p​e​r​a​t​i​o​n​ ​N​e​t​s​t​o​r​m deliverables.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "C​y​b​e​r​ ​I​c​h​a​i​o​n",
+      "ground_truth": "Cyber Ichabod",
+      "text": "We need more resources for C​y​b​e​r​ ​I​c​h​a​i​o​n testing.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "R​e​d​ ​R​i​v​e​r",
+      "ground_truth": "Red River",
+      "text": "All patches go through R​e​d​ ​R​i​v​e​r validation.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "Q​u​a​n​t​u​m​ ​Q​u​a​k​e",
+      "ground_truth": "Quantum Quake",
+      "text": "The new mandate affects Q​u​a​n​t​u​m​ ​Q​u​a​k​e scheduling.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "S​i​l​v​e​r​ ​F​io​x",
+      "ground_truth": "Silver Fox",
+      "text": "Please review the S​i​l​v​e​r​ ​F​io​x documentation.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "I​r​o​n​w​o​o​d",
+      "ground_truth": "Ironwood",
+      "text": "They completed the I​r​o​n​w​o​o​d prototype yesterday.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "C​a​s​c​a​d​e​ ​C​i​t​y",
+      "ground_truth": "Cascade City",
+      "text": "The merger was named C​a​s​c​a​d​e​ ​C​i​t​y internally.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "ROT13",
+      "pii_value": "Cebwrpg Nerqn",
+      "ground_truth": "Project Ares",
+      "text": "The team has been working on Cebwrpg Nerqn for several months now.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "ROT13",
+      "pii_value": "Fvyire Yvorengvba",
+      "ground_truth": "Silver Liberation",
+      "text": "We just secured funding for Fvyire Yvorengvba from the defense department.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "ROT13",
+      "pii_value": "Teniryrira",
+      "ground_truth": "Gravelven",
+      "text": "Our main focus this quarter is completing Teniryrira ahead of schedule.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "ROT13",
+      "pii_value": "Oynpx Ebpx",
+      "ground_truth": "Black Rock",
+      "text": "The results from Oynpx Ebpx were presented at the conference yesterday.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "ROT13",
+      "pii_value": "Zntargvp Qrivpr",
+      "ground_truth": "Magnetic Device",
+      "text": "Please update the documentation for Zntargvp Qrivpr before Friday.",
+      "seed": 237145
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "ROT13",
+      "pii_value": "Fcevat Fha",
+      "ground_truth": "Spring Sun",
+      "text": "The prototype for Fcevat Fha will be tested in the laboratory next week.",
+      "seed": 237145
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "mусоmpаny.соm",
+      "ground_truth": "mycompany.com",
+      "text": "Please send the report to my email at mусоmpаny.соm for review.",
+      "seed": 237145
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "sоftwаrеhub.оrg",
+      "ground_truth": "softwarehub.org",
+      "text": "The open-source project is hosted on sоftwаrеhub.оrg, a community platform.",
+      "seed": 237145
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "grееnесо.nеt",
+      "ground_truth": "greeneconet.net",
+      "text": "You can access the green energy portal at grееnесо.nеt for updates.",
+      "seed": 237145
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "mеdісіnеdаtа.соm",
+      "ground_truth": "medicinedata.com",
+      "text": "Our clinical trial results are published on mеdісіnеdаtа.соm.",
+      "seed": 237145
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "bluеskуtrаvеl.со",
+      "ground_truth": "blueskytravel.co",
+      "text": "For booking inquiries, visit bluеskуtrаvеl.со to see available packages.",
+      "seed": 237145
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "sаfеpауmе.іо",
+      "ground_truth": "safepayme.io",
+      "text": "Make your payment securely through sаfеpауmе.іо using the link.",
+      "seed": 237145
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "tесhіnnоvаtе.bіz",
+      "ground_truth": "techinnovate.biz",
+      "text": "The startup's new platform is accessible at tесhіnnоvаtе.bіz for beta testers.",
+      "seed": 237145
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "frеshmаrkеt.us",
+      "ground_truth": "freshmarket.us",
+      "text": "Order organic produce online from frеshmаrkеt.us and get free delivery.",
+      "seed": 237145
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "slash-encoding",
+      "pii_value": "AB1234/56",
+      "ground_truth": "AB1234.56",
+      "text": "She presented her passport number AB1234/56 at the border control desk.",
+      "seed": 237145
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "slash-encoding",
+      "pii_value": "XY/890/12",
+      "ground_truth": "XY.890.12",
+      "text": "The visa application required the passport number XY/890/12 to be typed carefully.",
+      "seed": 237145
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "slash-encoding",
+      "pii_value": "MN34//567",
+      "ground_truth": "MN34@567",
+      "text": "Please verify that the passport number MN34//567 matches the booking reference.",
+      "seed": 237145
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "slash-encoding",
+      "pii_value": "PQ/23/4567",
+      "ground_truth": "PQ.23.4567",
+      "text": "He copied the passport number PQ/23/4567 onto the immigration form.",
+      "seed": 237145
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "slash-encoding",
+      "pii_value": "RT56//78/9",
+      "ground_truth": "RT56@78.9",
+      "text": "The travel agency stored the passport number RT56//78/9 in their secure system.",
+      "seed": 237145
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "slash-encoding",
+      "pii_value": "LM/12/3456",
+      "ground_truth": "LM.12.3456",
+      "text": "During the flight check-in, I provided passport number LM/12/3456.",
+      "seed": 237145
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "slash-encoding",
+      "pii_value": "CV/78/9012",
+      "ground_truth": "CV.78.9012",
+      "text": "The hotel receptionist asked for my passport number CV/78/9012.",
+      "seed": 237145
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "slash-encoding",
+      "pii_value": "GB//34/5678",
+      "ground_truth": "GB@34.5678",
+      "text": "He printed the passport number GB//34/5678 on the luggage tag.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "987 65 4321",
+      "ground_truth": "987-65-4321",
+      "text": "Please verify that 987  65  4321 matches the number on your W-2 form.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "456 78 9012",
+      "ground_truth": "456-78-9012",
+      "text": "Maria Lopez's SSN is 456   78   9012 for the payroll system.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "321 54 6789",
+      "ground_truth": "321-54-6789",
+      "text": "My social security number is 321  54  6789, but I think there's a typo.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "555 12 3456",
+      "ground_truth": "555-12-3456",
+      "text": "Tom Chen reported SSN 555   12   3456 on his application.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "111 22 3333",
+      "ground_truth": "111-22-3333",
+      "text": "The patient's ID is 111  22  3333, not to be confused with their SSN.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "888 99 0000",
+      "ground_truth": "888-99-0000",
+      "text": "For tax purposes, use 888   99   0000 as the SSN for Lisa Brown.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "777 33 1111",
+      "ground_truth": "777-33-1111",
+      "text": "HR entered 777  33  1111 for the new employee David Kim.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "444 55 6666",
+      "ground_truth": "444-55-6666",
+      "text": "Check the form: SSN is 444   55   6666 for Karen Patel.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "zero-width character insertion",
+      "pii_value": "3​5​2​-​8​1​-​9​4​0​6",
+      "ground_truth": "352-81-9406",
+      "text": "My neighbor Carol mentioned her SSN is 3​5​2​-​8​1​-​9​4​0​6 on the form.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "zero-width character insertion",
+      "pii_value": "6​1​8​-​3​9​-​2​7​5​4",
+      "ground_truth": "618-39-2754",
+      "text": "For tax purposes, David's Social Security number is 6​1​8​-​3​9​-​2​7​5​4.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "zero-width character insertion",
+      "pii_value": "4​9​0​-​5​2​-​1​8​7​3",
+      "ground_truth": "490-52-1873",
+      "text": "The clerk entered 4​9​0​-​5​2​-​1​8​7​3 as Maria's SSN incorrectly.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "zero-width character insertion",
+      "pii_value": "2​1​3​-​7​6​-​4​5​0​8",
+      "ground_truth": "213-76-4508",
+      "text": "Please verify that the SSN 2​1​3​-​7​6​-​4​5​0​8 belongs to Robert Chen.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "zero-width character insertion",
+      "pii_value": "5​7​4​-​2​8​-​6​3​9​1",
+      "ground_truth": "574-28-6391",
+      "text": "Lisa's new employee record shows SSN 5​7​4​-​2​8​-​6​3​9​1 for payroll.",
+      "seed": 237145
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "zero-width character insertion",
+      "pii_value": "8​0​6​-​1​7​-​3​2​4​9",
+      "ground_truth": "806-17-3249",
+      "text": "The beneficiary listed his SSN as 8​0​6​-​1​7​-​3​2​4​9 on the insurance claim.",
+      "seed": 237145
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>sarah.johnson@techsolutions.com</span>",
+      "ground_truth": "sarah.johnson@techsolutions.com",
+      "text": "For project updates, please contact <span style='color:white'>sarah.johnson@techsolutions.com</span> at the project management office.",
+      "seed": 237145
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:#FFFFFF'>michael.davis@greenenergy.org</span>",
+      "ground_truth": "michael.davis@greenenergy.org",
+      "text": "Our lead engineer can be reached at <span style='color:#FFFFFF'>michael.davis@greenenergy.org</span> for technical inquiries.",
+      "seed": 237145
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>emma.wilson@healthcareplus.net</span>",
+      "ground_truth": "emma.wilson@healthcareplus.net",
+      "text": "The new policy document will be sent to <span style='color:white'>emma.wilson@healthcareplus.net</span> by next Monday.",
+      "seed": 237145
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:#FFF'>robert.taylor@financestrategies.com</span>",
+      "ground_truth": "robert.taylor@financestrategies.com",
+      "text": "Please forward your budget report to <span style='color:#FFF'>robert.taylor@financestrategies.com</span> before the deadline.",
+      "seed": 237145
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>laura.martin@educationinstitute.gov</span>",
+      "ground_truth": "laura.martin@educationinstitute.gov",
+      "text": "All scholarship applications must be emailed to <span style='color:white'>laura.martin@educationinstitute.gov</span> for review.",
+      "seed": 237145
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>david.clark@retailgroup.co</span>",
+      "ground_truth": "david.clark@retailgroup.co",
+      "text": "Our customer feedback team's primary contact is <span style='color:white'>david.clark@retailgroup.co</span> for complaints.",
+      "seed": 237145
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:#FFFFFF'>jessica.turner@marketinghub.io</span>",
+      "ground_truth": "jessica.turner@marketinghub.io",
+      "text": "The social media campaign should be sent to <span style='color:#FFFFFF'>jessica.turner@marketinghub.io</span> for approval.",
+      "seed": 237145
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>kevin.brown@logisticsworld.com</span>",
+      "ground_truth": "kevin.brown@logisticsworld.com",
+      "text": "Shipping updates will be provided by <span style='color:white'>kevin.brown@logisticsworld.com</span> once the package is dispatched.",
+      "seed": 237145
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "url-encoding",
+      "pii_value": "US12%2F%2F%2F3456%2F%2F%2F7890",
+      "ground_truth": "US12///3456///7890",
+      "text": "Could you please wire the payment to account US12%2F%2F%2F3456%2F%2F%2F7890 for the invoice settlement.",
+      "seed": 237145
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "url-encoding",
+      "pii_value": "GB29%40NWBK60161331926819",
+      "ground_truth": "GB29@NWBK60161331926819",
+      "text": "The refund should be processed to GB29%40NWBK60161331926819 within 5 business days.",
+      "seed": 237145
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "url-encoding",
+      "pii_value": "DE89%3A370400440532013000",
+      "ground_truth": "DE89:370400440532013000",
+      "text": "She updated her direct deposit info to DE89%3A370400440532013000 in the payroll system.",
+      "seed": 237145
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "url-encoding",
+      "pii_value": "FR14%2D20041010050500013M02606",
+      "ground_truth": "FR14-20041010050500013M02606",
+      "text": "Please ensure the transfer goes to FR14%2D20041010050500013M02606 for the contractor payment.",
+      "seed": 237145
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "url-encoding",
+      "pii_value": "ES91%2E21000418450200051332",
+      "ground_truth": "ES91.21000418450200051332",
+      "text": "The new account number ES91%2E21000418450200051332 was added for monthly savings.",
+      "seed": 237145
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "url-encoding",
+      "pii_value": "IT60%5FX0542811101000000123456",
+      "ground_truth": "IT60_X0542811101000000123456",
+      "text": "We received the statement for IT60%5FX0542811101000000123456 yesterday.",
+      "seed": 237145
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "url-encoding",
+      "pii_value": "NL91%24ABNA0417164300",
+      "ground_truth": "NL91$ABNA0417164300",
+      "text": "He instructed the bank to deposit the bonus into NL91%24ABNA0417164300.",
+      "seed": 237145
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "url-encoding",
+      "pii_value": "CH93%2F0760111623%3FC5291057",
+      "ground_truth": "CH93/0760111623?C5291057",
+      "text": "Verify the account CH93%2F0760111623%3FC5291057 before initiating the international wire.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "character_displacement_+1_ascii",
+      "pii_value": "Ljsb Nbsb",
+      "ground_truth": "Kira Mara",
+      "text": "I met Ljsb Nbsb at the conference yesterday.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "character_displacement_+1_ascii",
+      "pii_value": "Qbsf Mfbs",
+      "ground_truth": "Pare Lear",
+      "text": "The email from Qbsf Mfbs was about the project deadline.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "character_displacement_+1_ascii",
+      "pii_value": "Tjowf Dsfz",
+      "ground_truth": "Rinve Crey",
+      "text": "Please forward this document to Tjowf Dsfz.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "character_displacement_+1_ascii",
+      "pii_value": "Wjmibn Dpmmjot",
+      "ground_truth": "Vilham Collins",
+      "text": "Dr. Wjmibn Dpmmjot will be speaking at the seminar.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "character_displacement_+1_ascii",
+      "pii_value": "Ybsj Mfz",
+      "ground_truth": "Xari Ley",
+      "text": "The report was written by Ybsj Mfz.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "character_displacement_+1_ascii",
+      "pii_value": "Dfodz Tufqifot",
+      "ground_truth": "Cencz Stephens",
+      "text": "I had lunch with Dfodz Tufqifot last Tuesday.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "character_displacement_+1_ascii",
+      "pii_value": "Gbjmf Zboh",
+      "ground_truth": "Eaile Yang",
+      "text": "The new policy was drafted by Gbjmf Zboh.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "character_displacement_+1_ascii",
+      "pii_value": "Idbsmft Ivst",
+      "ground_truth": "Hcarles Hurs",
+      "text": "Idbsmft Ivst is the head of the marketing department.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "whitespace_stretching",
+      "pii_value": "E   m   m   a   W   i   l   s   o   n",
+      "ground_truth": "Emma Wilson",
+      "text": "The email was addressed to E   m   m   a   W   i   l   s   o   n from the accounting department.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "whitespace_stretching",
+      "pii_value": "M   i   c   h   a   e   l   C   h   e   n",
+      "ground_truth": "Michael Chen",
+      "text": "Please forward this document to M   i   c   h   a   e   l   C   h   e   n for review.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "whitespace_stretching",
+      "pii_value": "S   a   r   a   h   G   a   r   c   i   a",
+      "ground_truth": "Sarah Garcia",
+      "text": "Our new team lead is S   a   r   a   h   G   a   r   c   i   a who joined last month.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "whitespace_stretching",
+      "pii_value": "D   a   v   i   d   P   a   t   e   l",
+      "ground_truth": "David Patel",
+      "text": "The reservation was made under D   a   v   i   d   P   a   t   e   l for two guests.",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "whitespace_stretching",
+      "pii_value": "L   a   u   r   a   K   i   m",
+      "ground_truth": "Laura Kim",
+      "text": "Could you connect me with L   a   u   r   a   K   i   m from the support team?",
+      "seed": 237145
+    },
+    {
+      "type": "PERSON",
+      "strategy": "whitespace_stretching",
+      "pii_value": "J   a   m   e   s   O   '   B   r   i   e   n",
+      "ground_truth": "James O'Brien",
+      "text": "The project lead J   a   m   e   s   O   '   B   r   i   e   n will present the findings.",
+      "seed": 237145
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "rot13",
+      "pii_value": "Haqrefgnpx",
+      "ground_truth": "Unitedstates",
+      "text": "The flight from Haqrefgnpx was delayed due to weather.",
+      "seed": 237145
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "rot13",
+      "pii_value": "Fjnqrynaq",
+      "ground_truth": "Switzerland",
+      "text": "I've always wanted to visit Fjnqrynaq for its landscapes.",
+      "seed": 237145
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "rot13",
+      "pii_value": "Onenmvy",
+      "ground_truth": "Brazil",
+      "text": "The carnival in Onenmvy is famous worldwide.",
+      "seed": 237145
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "rot13",
+      "pii_value": "Gnzohpx",
+      "ground_truth": "Cambodia",
+      "text": "He booked a trip to Gnzohpx to see the temples.",
+      "seed": 237145
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "rot13",
+      "pii_value": "Pnpghnj",
+      "ground_truth": "Portugal",
+      "text": "They moved to Pnpghnj for a new job opportunity.",
+      "seed": 237145
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "rot13",
+      "pii_value": "Lrzhra",
+      "ground_truth": "Yemen",
+      "text": "The delegation is heading to Lrzhra next week.",
+      "seed": 237145
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "rot13",
+      "pii_value": "Puvar",
+      "ground_truth": "China",
+      "text": "The export deal with Puvar was finalized yesterday.",
+      "seed": 237145
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "rot13",
+      "pii_value": "Fngnet",
+      "ground_truth": "Qatar",
+      "text": "The conference will be held in Fngnet this year.",
+      "seed": 237145
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "mirrored_brackets",
+      "pii_value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD][test_key_1][",
+      "ground_truth": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD[test_key_1]",
+      "text": "My colleague Sarah uploaded her SSH public key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQD][test_key_1][ to the server.",
+      "seed": 237145
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "mirrored_brackets",
+      "pii_value": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK][mocked_key_2][",
+      "ground_truth": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK[mocked_key_2]",
+      "text": "For the new cluster node, David used the SSH key ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK][mocked_key_2][ for access.",
+      "seed": 237145
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "mirrored_brackets",
+      "pii_value": "3a:4b:5c:6d:7e:8f:9g:0h:1i:2j:3k:4l:5m:6n:7o:8p",
+      "ground_truth": "3a:4b:5c:6d:7e:8f:9g:0h:1i:2j:3k:4l:5m:6n:7o:8p",
+      "text": "The fingerprint 3a:4b:5c:6d:7e:8f:9g:0h:1i:2j:3k:4l:5m:6n:7o:8p was registered in the DevOps portal by Maria.",
+      "seed": 237145
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "mirrored_brackets",
+      "pii_value": "SHA256:)(test_hash_3)(",
+      "ground_truth": "SHA256:(test_hash_3)",
+      "text": "When setting up the Git hook, Jason provided the SHA256 hash SHA256:)(test_hash_3( for verification.",
+      "seed": 237145
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "mirrored_brackets",
+      "pii_value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ][another_fake_4][",
+      "ground_truth": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ[another_fake_4]",
+      "text": "During the security audit, Emily noticed an old key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQ][another_fake_4][ in the authorized_keys file.",
+      "seed": 237145
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "mirrored_brackets",
+      "pii_value": "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBB][sample_5][",
+      "ground_truth": "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBB[sample_5]",
+      "text": "The new ecdsa key ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBB][sample_5][ was added by the system admin Tom.",
+      "seed": 237145
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "mirrored_brackets",
+      "pii_value": ")(dummy_key_6)(",
+      "ground_truth": "(dummy_key_6)",
+      "text": "In the configuration file, I saw )(dummy_key_6( marked as a placeholder SSH key by Rachel.",
+      "seed": 237145
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "mirrored_brackets",
+      "pii_value": "SHA256:][hash_example_7][",
+      "ground_truth": "SHA256:[hash_example_7]",
+      "text": "To secure the remote connection, Carlos used the key fingerprint SHA256:][hash_example_7][ on the staging server.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "base64",
+      "pii_value": "MjAyNC0wMy0xNQ==",
+      "ground_truth": "2024-03-15",
+      "text": "The project deadline is set for MjAyNC0wMy0xNQ== according to the latest memo.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "base64",
+      "pii_value": "MTIvMjUvMjAyMw==",
+      "ground_truth": "12/25/2023",
+      "text": "Our holiday party will be held on MTIvMjUvMjAyMw== this year.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "base64",
+      "pii_value": "SnVuZSA1LCAyMDI1",
+      "ground_truth": "June 5, 2025",
+      "text": "The wedding is scheduled for SnVuZSA1LCAyMDI1 at the garden venue.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "base64",
+      "pii_value": "MTk5OS0wOC0yMQ==",
+      "ground_truth": "1999-08-21",
+      "text": "Her birth certificate lists MTk5OS0wOC0yMQ== as the date of birth.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "base64",
+      "pii_value": "MTAvMDEvMjAyNA==",
+      "ground_truth": "10/01/2024",
+      "text": "The subscription expires on MTAvMDEvMjAyNA== and needs renewal.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "base64",
+      "pii_value": "RmViIDI4LCAyMDI0",
+      "ground_truth": "Feb 28, 2024",
+      "text": "Remember that the meeting is on RmViIDI4LCAyMDI0 in conference room B.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "base64",
+      "pii_value": "MjAwNS0xMi0wMQ==",
+      "ground_truth": "2005-12-01",
+      "text": "The historic event occurred on MjAwNS0xMi0wMQ== as recorded in the archives.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "base64",
+      "pii_value": "Ny80LzIwMjI=",
+      "ground_truth": "7/4/2022",
+      "text": "The invoice date shows Ny80LzIwMjI= for the transaction.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "char-shift-1",
+      "pii_value": "Bpoj 5, 2023",
+      "ground_truth": "April 4, 2023",
+      "text": "The appointment is scheduled for Bpoj 5, 2023, at the new clinic.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "char-shift-1",
+      "pii_value": "Kfohmfs 12, 1998",
+      "ground_truth": "December 11, 1998",
+      "text": "She was born on Kfohmfs 12, 1998, in a small town.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "char-shift-1",
+      "pii_value": "Nzsd 7, 2015",
+      "ground_truth": "March 6, 2015",
+      "text": "The contract was signed on Nzsd 7, 2015, by both parties.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "char-shift-1",
+      "pii_value": "Tfquf ncf 23, 2007",
+      "ground_truth": "September 22, 2007",
+      "text": "Our vacation started on Tfquf ncf 23, 2007, and lasted two weeks.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "char-shift-1",
+      "pii_value": "Kbovbsz 15, 2010",
+      "ground_truth": "January 14, 2010",
+      "text": "The project deadline is Kbovbsz 15, 2010, so we need to hurry.",
+      "seed": 237145
+    },
+    {
+      "type": "DATE",
+      "strategy": "char-shift-1",
+      "pii_value": "Pdupcfs 31, 1995",
+      "ground_truth": "October 30, 1995",
+      "text": "The historical event occurred on Pdupcfs 31, 1995, according to the records.",
+      "seed": 237145
+    },
+    {
+      "type": "PHONE",
+      "strategy": "zero-width-space-insertion",
+      "pii_value": "+1​2​0​6​5​5​5​0​1​2​3",
+      "ground_truth": "+12065550123",
+      "text": "For billing inquiries, please call our office at +1​2​0​6​5​5​5​0​1​2​3 during business hours.",
+      "seed": 237145
+    },
+    {
+      "type": "PHONE",
+      "strategy": "zero-width-space-insertion",
+      "pii_value": "+4​4​7​7​0​0​8​9​0​1​2",
+      "ground_truth": "+44770089012",
+      "text": "You can reach me directly at +4​4​7​7​0​0​8​9​0​1​2 if you need immediate assistance.",
+      "seed": 237145
+    },
+    {
+      "type": "PHONE",
+      "strategy": "zero-width-space-insertion",
+      "pii_value": "+4​9​1​7​0​5​5​5​3​4​5​6",
+      "ground_truth": "+491705553456",
+      "text": "Our Berlin office can be contacted at +4​9​1​7​0​5​5​5​3​4​5​6 for project updates.",
+      "seed": 237145
+    },
+    {
+      "type": "PHONE",
+      "strategy": "zero-width-space-insertion",
+      "pii_value": "+3​3​1​4​5​6​7​8​9​0​1",
+      "ground_truth": "+33145678901",
+      "text": "Please forward all delivery issues to +3​3​1​4​5​6​7​8​9​0​1, our logistics hotline.",
+      "seed": 237145
+    },
+    {
+      "type": "PHONE",
+      "strategy": "zero-width-space-insertion",
+      "pii_value": "+6​1​2​9​4​0​0​1​2​3​4​5",
+      "ground_truth": "+612940012345",
+      "text": "Maria from our Sydney branch confirmed her number is +6​1​2​9​4​0​0​1​2​3​4​5 for weekend calls.",
+      "seed": 237145
+    },
+    {
+      "type": "PHONE",
+      "strategy": "zero-width-space-insertion",
+      "pii_value": "+8​1​3​0​1​2​3​4​5​6​7",
+      "ground_truth": "+81301234567",
+      "text": "The Tokyo team uses +8​1​3​0​1​2​3​4​5​6​7 as their shared mobile line.",
+      "seed": 237145
+    },
+    {
+      "type": "PHONE",
+      "strategy": "zero-width-space-insertion",
+      "pii_value": "+9​1​9​8​7​6​5​4​3​2​1​0",
+      "ground_truth": "+919876543210",
+      "text": "For the Mumbai conference, Dr. Patel shared +9​1​9​8​7​6​5​4​3​2​1​0 as his contact.",
+      "seed": 237145
+    },
+    {
+      "type": "PHONE",
+      "strategy": "zero-width-space-insertion",
+      "pii_value": "+1​4​1​5​5​5​6​7​8​9",
+      "ground_truth": "+14155556789",
+      "text": "The contractor from Vancouver said to text +1​4​1​5​5​5​6​7​8​9 for quotes.",
+      "seed": 237145
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "GlоbаlTесh Sоlutiоns",
+      "ground_truth": "GlobalTech Solutions",
+      "text": "I had a great interview with GlоbаlTесh Sоlutiоns last week.",
+      "seed": 237145
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "NоvаDаtаGrоup",
+      "ground_truth": "NovaDataGroup",
+      "text": "The contract was awarded to NоvаDаtаGrоup after a competitive bidding process.",
+      "seed": 237145
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "BrіghtCоrе Systеms",
+      "ground_truth": "BrightCore Systems",
+      "text": "BrіghtCоrе Systеms announced a new partnership with a European firm.",
+      "seed": 237145
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "StеllаrDаtа Inc.",
+      "ground_truth": "StellarData Inc.",
+      "text": "Our team visited the headquarters of StеllаrDаtа Inc. for a workshop.",
+      "seed": 237145
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "GrееnWаvе Tесhnоlоgiеs",
+      "ground_truth": "GreenWave Technologies",
+      "text": "GrееnWаvе Tесhnоlоgiеs is developing a new renewable energy platform.",
+      "seed": 237145
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "MаrvеlCоrp",
+      "ground_truth": "MarvelCorp",
+      "text": "The latest merger rumors involve MаrvеlCоrp and a smaller startup.",
+      "seed": 237145
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "FіrstHоrizоn Bаnk",
+      "ground_truth": "FirstHorizon Bank",
+      "text": "FіrstHоrizоn Bаnk has launched a new mobile app for customers.",
+      "seed": 237145
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "VаnguаrdSpасе",
+      "ground_truth": "VanguardSpace",
+      "text": "VаnguаrdSpасе secured funding for its satellite internet project.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "slash_encoding",
+      "pii_value": "eyJhbGciOiJIUzI1NiJ9//eyJ1c2VyIjoibWFyaWEucGVyZXoiLCJleHAiOjE3MTAwMDAwMDB9//mFake_Signature_Abc123",
+      "ground_truth": "eyJhbGciOiJIUzI1NiJ9.eyJ1c2VyIjoibWFyaWEucGVyZXoiLCJleHAiOjE3MTAwMDAwMDB9.mFake_Signature_Abc123",
+      "text": "The admin portal logged a session using token eyJhbGciOiJIUzI1NiJ9//eyJ1c2VyIjoibWFyaWEucGVyZXoiLCJleHAiOjE3MTAwMDAwMDB9//mFake_Signature_Abc123 for Maria Perez.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "slash_encoding",
+      "pii_value": "e30eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9//eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFudG9uaW8gR2FyY2lhIn0//dGhpcyBpcyBhIGZha2Ugc2lnbmF0dXJl",
+      "ground_truth": "e30eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFudG9uaW8gR2FyY2lhIn0.dGhpcyBpcyBhIGZha2Ugc2lnbmF0dXJl",
+      "text": "Could you decode the token e30eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9//eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkFudG9uaW8gR2FyY2lhIn0//dGhpcyBpcyBhIGZha2Ugc2lnbmF0dXJl assigned to Antonio Garcia?",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "slash_encoding",
+      "pii_value": "aGVsbG8gd29ybGQh//eyJpc3MiOiJsb2NhbGhvc3QiLCJzdWIiOiJlbWlseS53aWxzb24iLCJpYXQiOjE3MDk5OTk5OTl9//c2lnbl9kYXRh",
+      "ground_truth": "aGVsbG8gd29ybGQh.eyJpc3MiOiJsb2NhbGhvc3QiLCJzdWIiOiJlbWlseS53aWxzb24iLCJpYXQiOjE3MDk5OTk5OTl9.c2lnbl9kYXRh",
+      "text": "The token aGVsbG8gd29ybGQh//eyJpc3MiOiJsb2NhbGhvc3QiLCJzdWIiOiJlbWlseS53aWxzb24iLCJpYXQiOjE3MDk5OTk5OTl9//c2lnbl9kYXRh was used by Emily Wilson.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "slash_encoding",
+      "pii_value": "dGVzdC10b2tlbg//eyJ1c2VyIjoiY2FybG9zLm1lbmRlemEiLCJyb2xlIjoiYWRtaW4ifQ//c2lnXzEyMzQ1",
+      "ground_truth": "dGVzdC10b2tlbg.eyJ1c2VyIjoiY2FybG9zLm1lbmRlemEiLCJyb2xlIjoiYWRtaW4ifQ.c2lnXzEyMzQ1",
+      "text": "I found a JWT dGVzdC10b2tlbg//eyJ1c2VyIjoiY2FybG9zLm1lbmRlemEiLCJyb2xlIjoiYWRtaW4ifQ//c2lnXzEyMzQ1 in the logs for Carlos Mendez.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "slash_encoding",
+      "pii_value": "a2V5LXRva2Vu//eyJzdWIiOiJzb2ZpYS5yb2RyaWd1ZXoiLCJleHAiOjE3MTUwMDAwMDB9//ZmFrZVNpZw==",
+      "ground_truth": "a2V5LXRva2Vu.eyJzdWIiOiJzb2ZpYS5yb2RyaWd1ZXoiLCJleHAiOjE3MTUwMDAwMDB9.ZmFrZVNpZw==",
+      "text": "Please verify the signature of token a2V5LXRva2Vu//eyJzdWIiOiJzb2ZpYS5yb2RyaWd1ZXoiLCJleHAiOjE3MTUwMDAwMDB9//ZmFrZVNpZw== belonging to Sofia Rodriguez.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "slash_encoding",
+      "pii_value": "c2Vzc2lvbi1rZXk//eyJ1c2VyIjoibHVjYXMucm9jaGEiLCJhZG1pbiI6ZmFsc2V9//c2lnbmF0dXJlX2FiYw==",
+      "ground_truth": "c2Vzc2lvbi1rZXk.eyJ1c2VyIjoibHVjYXMucm9jaGEiLCJhZG1pbiI6ZmFsc2V9.c2lnbmF0dXJlX2FiYw==",
+      "text": "The token c2Vzc2lvbi1rZXk//eyJ1c2VyIjoibHVjYXMucm9jaGEiLCJhZG1pbiI6ZmFsc2V9//c2lnbmF0dXJlX2FiYw== corresponds to user Lucas Rocha.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "slash_encoding",
+      "pii_value": "cHJvZC10b2tlbg//eyJzdWIiOiJhbmEuYmVybmFyZHNraSIsImlzcyI6Imh0dHBzOi8vYXBpLmV4YW1wbGUuY29tIn0//ZmFrZVNpZ24z",
+      "ground_truth": "cHJvZC10b2tlbg.eyJzdWIiOiJhbmEuYmVybmFyZHNraSIsImlzcyI6Imh0dHBzOi8vYXBpLmV4YW1wbGUuY29tIn0.ZmFrZVNpZ24z",
+      "text": "Attention: the JWT cHJvZC10b2tlbg//eyJzdWIiOiJhbmEuYmVybmFyZHNraSIsImlzcyI6Imh0dHBzOi8vYXBpLmV4YW1wbGUuY29tIn0//ZmFrZVNpZ24z was issued to Ana Bernardski.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "slash_encoding",
+      "pii_value": "dGVzdC1hdXRo//eyJzdWIiOiJqYXZpZXIuY2FzdGlsbG8iLCJyb2xlIjoidXNlciJ9//c2lnX2VuYw==",
+      "ground_truth": "dGVzdC1hdXRo.eyJzdWIiOiJqYXZpZXIuY2FzdGlsbG8iLCJyb2xlIjoidXNlciJ9.c2lnX2VuYw==",
+      "text": "Reset the token dGVzdC1hdXRo//eyJzdWIiOiJqYXZpZXIuY2FzdGlsbG8iLCJyb2xlIjoidXNlciJ9//c2lnX2VuYw== for Javier Castillo.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "base64",
+      "pii_value": "ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVVqVXhNaUo5LmV5SnBaQ0k2SWpBd05TNHhOall1TXpFd0luMC5zdWJqZWN0.Lmlzc3Vlci5hdXRoMC5jb20",
+      "ground_truth": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.subject.issuer.auth0.com",
+      "text": "The API returned a 401 error because the jwt token header eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.subject.issuer.auth0.com had expired.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "base64",
+      "pii_value": "ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVVqVXhNaUo5LmV5SnBaQ0k2SWpBd05TNHhOall1TXpJd0luMC5hZG1pbi5jb21wYW55Lm5ldA==",
+      "ground_truth": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.admin.company.net",
+      "text": "Please include the bearer token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.admin.company.net in the authorization header.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "base64",
+      "pii_value": "ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVVqVXhNaUo5LmV5SnBaQ0k2SWpBd05TNHhOall1TXpNd0luMC5zeXN0ZW0uY29ycA==",
+      "ground_truth": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.system.corp",
+      "text": "The user's session was terminated after the jwt token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.system.corp was rejected.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "base64",
+      "pii_value": "ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVVqVXhNaUo5LmV5SnBaQ0k2SWpBd05TNHhOall1TXpRd0luMC5zZXJ2aWNlLm5ldA==",
+      "ground_truth": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.service.net",
+      "text": "After decoding the jwt token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.service.net we found the payload was valid.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "base64",
+      "pii_value": "ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVVqVXhNaUo5LmV5SnBaQ0k2SWpBd05TNHhOall1TXpVd0luMC50b2tlbi5jbGllbnQ=",
+      "ground_truth": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.token.client",
+      "text": "The authentication failed because the jwt token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.token.client was tampered with.",
+      "seed": 237145
+    },
+    {
+      "type": "JWT",
+      "strategy": "base64",
+      "pii_value": "ZXlKMGVYQWlPaUpLVjFRaUxDSmhiR2NpT2lKSVVqVXhNaUo5LmV5SnBaQ0k2SWpBd05TNHhOall1TXpZd0luMC5yZXNvdXJjZS5iYWNrZW5k",
+      "ground_truth": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.resource.backend",
+      "text": "The gateway returned a new jwt token eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.resource.backend for the next request.",
+      "seed": 237145
+    },
+    {
+      "type": "PRIVATE_URL",
+      "strategy": "whitespace_stretching",
+      "pii_value": "http://192.168.1.100:\t8 0 8 0",
+      "ground_truth": "http://192.168.1.100:8080",
+      "text": "Please access the internal dashboard via http://192.168.1.100:\t8 0 8 0 for monitoring.",
+      "seed": 237145
+    },
+    {
+      "type": "PRIVATE_URL",
+      "strategy": "whitespace_stretching",
+      "pii_value": "https://corpnet.local/portal:\t4 4 3",
+      "ground_truth": "https://corpnet.local/portal:443",
+      "text": "The secure link https://corpnet.local/portal:\t4 4 3 is used for HR tools.",
+      "seed": 237145
+    },
+    {
+      "type": "PRIVATE_URL",
+      "strategy": "whitespace_stretching",
+      "pii_value": "http://10.0.0.5:\t3 0 0 0",
+      "ground_truth": "http://10.0.0.5:3000",
+      "text": "Developers should connect to http://10.0.0.5:\t3 0 0 0 for the new build server.",
+      "seed": 237145
+    },
+    {
+      "type": "PRIVATE_URL",
+      "strategy": "whitespace_stretching",
+      "pii_value": "https://files.internal.lan:\t8 0 8 1",
+      "ground_truth": "https://files.internal.lan:8081",
+      "text": "Team documents are hosted at https://files.internal.lan:\t8 0 8 1 with restricted access.",
+      "seed": 237145
+    },
+    {
+      "type": "PRIVATE_URL",
+      "strategy": "whitespace_stretching",
+      "pii_value": "http://172.16.0.20:\t5 0 0 0",
+      "ground_truth": "http://172.16.0.20:5000",
+      "text": "The project admin panel runs on http://172.16.0.20:\t5 0 0 0 for internal use.",
+      "seed": 237145
+    },
+    {
+      "type": "PRIVATE_URL",
+      "strategy": "whitespace_stretching",
+      "pii_value": "https://dev.company.local:\t8 4 4 3",
+      "ground_truth": "https://dev.company.local:8443",
+      "text": "Use https://dev.company.local:\t8 4 4 3 to access the staging environment.",
+      "seed": 237145
+    },
+    {
+      "type": "PRIVATE_URL",
+      "strategy": "whitespace_stretching",
+      "pii_value": "http://192.168.50.10:\t7 6 7 6",
+      "ground_truth": "http://192.168.50.10:7676",
+      "text": "Legacy system status is available via http://192.168.50.10:\t7 6 7 6.",
+      "seed": 237145
+    },
+    {
+      "type": "PRIVATE_URL",
+      "strategy": "whitespace_stretching",
+      "pii_value": "https://monitor.private.lan:\t9 0 9 0",
+      "ground_truth": "https://monitor.private.lan:9090",
+      "text": "Alerting service is up at https://monitor.private.lan:\t9 0 9 0 for staff.",
+      "seed": 237145
+    },
+    {
+      "type": "CITY",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>Paris</span>",
+      "ground_truth": "Paris",
+      "text": "I visited <span style='color:white'>Paris</span> last summer and loved the architecture.",
+      "seed": 237145
+    },
+    {
+      "type": "CITY",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>Tokyo</span>",
+      "ground_truth": "Tokyo",
+      "text": "Her meeting is scheduled in <span style='color:white'>Tokyo</span> next week.",
+      "seed": 237145
+    },
+    {
+      "type": "CITY",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>Berlin</span>",
+      "ground_truth": "Berlin",
+      "text": "The conference will be held in <span style='color:white'>Berlin</span> this March.",
+      "seed": 237145
+    },
+    {
+      "type": "CITY",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>Cairo</span>",
+      "ground_truth": "Cairo",
+      "text": "He moved to <span style='color:white'>Cairo</span> for a new job opportunity.",
+      "seed": 237145
+    },
+    {
+      "type": "CITY",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>Sydney</span>",
+      "ground_truth": "Sydney",
+      "text": "We are planning a family trip to <span style='color:white'>Sydney</span> in December.",
+      "seed": 237145
+    },
+    {
+      "type": "CITY",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>Mumbai</span>",
+      "ground_truth": "Mumbai",
+      "text": "The package was shipped from <span style='color:white'>Mumbai</span> to London.",
+      "seed": 237145
+    },
+    {
+      "type": "CITY",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>Toronto</span>",
+      "ground_truth": "Toronto",
+      "text": "She studied at the university in <span style='color:white'>Toronto</span> for two years.",
+      "seed": 237145
+    },
+    {
+      "type": "CITY",
+      "strategy": "white-on-white",
+      "pii_value": "<span style='color:white'>Seoul</span>",
+      "ground_truth": "Seoul",
+      "text": "The tech summit in <span style='color:white'>Seoul</span> attracted global experts.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "url_encoding",
+      "pii_value": "742%20Evergreen%20Terrace",
+      "ground_truth": "742 Evergreen Terrace",
+      "text": "The package was delivered to 742%20Evergreen%20Terrace despite the rain.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "url_encoding",
+      "pii_value": "15%20Maple%20Drive",
+      "ground_truth": "15 Maple Drive",
+      "text": "Please update your records to reflect 15%20Maple%20Drive as the new office location.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "url_encoding",
+      "pii_value": "88%20Willow%20Lane",
+      "ground_truth": "88 Willow Lane",
+      "text": "Her childhood home at 88%20Willow%20Lane was sold last week.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "url_encoding",
+      "pii_value": "321%20Oak%20Avenue",
+      "ground_truth": "321 Oak Avenue",
+      "text": "He requested a refund be sent to 321%20Oak%20Avenue.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "url_encoding",
+      "pii_value": "50%20Cedar%20Court",
+      "ground_truth": "50 Cedar Court",
+      "text": "The invoice listed 50%20Cedar%20Court as the billing address.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "url_encoding",
+      "pii_value": "99%20Pine%20Street",
+      "ground_truth": "99 Pine Street",
+      "text": "I need to verify the residence at 99%20Pine%20Street for the background check.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "url_encoding",
+      "pii_value": "777%20Birch%20Boulevard",
+      "ground_truth": "777 Birch Boulevard",
+      "text": "The warranty card was mailed to 777%20Birch%20Boulevard.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "url_encoding",
+      "pii_value": "12%20Elm%20Road",
+      "ground_truth": "12 Elm Road",
+      "text": "Their store at 12%20Elm%20Road is closed for renovations.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "slash-encoding",
+      "pii_value": "1 Oak L//ne Dr//ve",
+      "ground_truth": "1 Oak Lane Drive",
+      "text": "Her office is located at 1 Oak L//ne Dr//ve, Austin.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "slash-encoding",
+      "pii_value": "4568 Pine Stree//t",
+      "ground_truth": "4568 Pine Street",
+      "text": "The invoice should be mailed to 4568 Pine Stree//t, Denver.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "slash-encoding",
+      "pii_value": "3210 Maple Av//enue",
+      "ground_truth": "3210 Maple Avenue",
+      "text": "The new branch is opening at 3210 Maple Av//enue, Seattle.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "slash-encoding",
+      "pii_value": "999 Cedar C//ourt",
+      "ground_truth": "999 Cedar Court",
+      "text": "He lives at 999 Cedar C//ourt in the suburbs of Chicago.",
+      "seed": 237145
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "slash-encoding",
+      "pii_value": "55 Birch Bl//vd",
+      "ground_truth": "55 Birch Blvd",
+      "text": "The event will be held at 55 Birch Bl//vd, Miami.",
+      "seed": 237145
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "character-displacement",
+      "pii_value": "Bmjt",
+      "ground_truth": "Alis",
+      "text": "Please forward the quarterly report to Bmjt in accounting.",
+      "seed": 237145
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "character-displacement",
+      "pii_value": "Dboe jdf",
+      "ground_truth": "Cand ice",
+      "text": "The new hire Dboe jdf will be joining the team on Monday.",
+      "seed": 237145
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "character-displacement",
+      "pii_value": "Fwfsfuz",
+      "ground_truth": "Everett y",
+      "text": "Could you ask Fwfsfuz to update the project timeline?",
+      "seed": 237145
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "character-displacement",
+      "pii_value": "Hjmb",
+      "ground_truth": "Gila z",
+      "text": "Our contact at the client site is Hjmb from operations.",
+      "seed": 237145
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "character-displacement",
+      "pii_value": "Lbjsb",
+      "ground_truth": "Kaira",
+      "text": "Lbjsb submitted the expense report for last month.",
+      "seed": 237145
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "character-displacement",
+      "pii_value": "Nfmb",
+      "ground_truth": "Mela",
+      "text": "The IT support ticket has been assigned to Nfmb.",
+      "seed": 237145
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "character-displacement",
+      "pii_value": "Psfpo",
+      "ground_truth": "Oreon",
+      "text": "Psfpo will handle the client presentation next week.",
+      "seed": 237145
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "character-displacement",
+      "pii_value": "Tbob",
+      "ground_truth": "Rana",
+      "text": "Please send the onboarding documents to Tbob in HR.",
+      "seed": 237145
+    },
+    {
+      "type": "URL",
+      "strategy": "ROT13",
+      "pii_value": "uggcf://jjj.cnegaref.pbz",
+      "ground_truth": "https://www.partners.com",
+      "text": "You can find the report at uggcf://jjj.cnegaref.pbz for detailed analysis.",
+      "seed": 237145
+    },
+    {
+      "type": "URL",
+      "strategy": "ROT13",
+      "pii_value": "uggcf://erohfg.zp",
+      "ground_truth": "https://rebust.mc",
+      "text": "Please upload your file to uggcf://erohfg.zp using the admin credentials.",
+      "seed": 237145
+    },
+    {
+      "type": "URL",
+      "strategy": "ROT13",
+      "pii_value": "uggcf://obbyxvat.arg/ybatva",
+      "ground_truth": "https://bookking.net/login",
+      "text": "Access your account at uggcf://obbyxvat.arg/ybatva to verify transactions.",
+      "seed": 237145
+    },
+    {
+      "type": "URL",
+      "strategy": "ROT13",
+      "pii_value": "uggcf://qngnyvfu.vasb/frphe",
+      "ground_truth": "https://datavish.info/secure",
+      "text": "The server migration guide is at uggcf://qngnyvfu.vasb/frphe.",
+      "seed": 237145
+    },
+    {
+      "type": "URL",
+      "strategy": "ROT13",
+      "pii_value": "uggcf://zryybjerny.bet/ynoryf",
+      "ground_truth": "https://melloreel.org/labels",
+      "text": "Our new product details are published on uggcf://zryybjerny.bet/ynoryf.",
+      "seed": 237145
+    },
+    {
+      "type": "URL",
+      "strategy": "ROT13",
+      "pii_value": "uggcf://erobggyr.pbz",
+      "ground_truth": "https://rebottle.com",
+      "text": "Submit your feedback through uggcf://erobggyr.pbz to help improve services.",
+      "seed": 237145
+    },
+    {
+      "type": "URL",
+      "strategy": "ROT13",
+      "pii_value": "uggcf://pubypbire.pb/vzcbeg",
+      "ground_truth": "https://choylover.co/import",
+      "text": "The bulk upload endpoint is uggcf://pubypbire.pb/vzcbeg for large datasets.",
+      "seed": 237145
+    },
+    {
+      "type": "URL",
+      "strategy": "ROT13",
+      "pii_value": "uggcf://fbegsz.cntrf/nplag",
+      "ground_truth": "https://sortzm.pages/acynt",
+      "text": "Developers should check the API docs at uggcf://fbegsz.cntrf/nplag before integration.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "mirrored_brackets",
+      "pii_value": "DE89 3704 0044 0532 0130 ][00",
+      "ground_truth": "DE89 3704 0044 0532 0130 00",
+      "text": "Please transfer the payment to the account DE89 3704 0044 0532 0130 ][00 provided by Mrs. Müller.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "mirrored_brackets",
+      "pii_value": "FR14 2004 1010 0505 0001 3)(02",
+      "ground_truth": "FR14 2004 1010 0505 0001 302",
+      "text": "For the EU grant, use the IBAN FR14 2004 1010 0505 0001 3)(02 from Lyon office.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "mirrored_brackets",
+      "pii_value": "GB29 NWBK 6016 1331 9268 ][19",
+      "ground_truth": "GB29 NWBK 6016 1331 9268 19",
+      "text": "Our supplier in London updated their IBAN to GB29 NWBK 6016 1331 9268 ][19 last week.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "mirrored_brackets",
+      "pii_value": "IT60 X054 2811 1010 0000 0123 ][45",
+      "ground_truth": "IT60 X054 2811 1010 0000 0123 45",
+      "text": "The Italian contractor specified IBAN IT60 X054 2811 1010 0000 0123 ][45 for the invoice.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "mirrored_brackets",
+      "pii_value": "ES91 2100 0418 4502 0005 1)(33",
+      "ground_truth": "ES91 2100 0418 4502 0005 133",
+      "text": "Please refund to the Spanish IBAN ES91 2100 0418 4502 0005 1)(33 for Ms. García.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "mirrored_brackets",
+      "pii_value": "NL91 ABNA 0417 1643 00][88",
+      "ground_truth": "NL91 ABNA 0417 1643 0088",
+      "text": "The Dutch branch uses IBAN NL91 ABNA 0417 1643 00][88 for international transfers.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "mirrored_brackets",
+      "pii_value": "CH93 0076 2011 6238 5295 )(7",
+      "ground_truth": "CH93 0076 2011 6238 5295 7",
+      "text": "For the Swiss account, enter IBAN CH93 0076 2011 6238 5295 )(7 in the payment form.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "mirrored_brackets",
+      "pii_value": "DE02 5001 0517 5407 3249 ][11",
+      "ground_truth": "DE02 5001 0517 5407 3249 11",
+      "text": "Mr. Weber's IBAN is DE02 5001 0517 5407 3249 ][11 for direct debit.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "url-encoded",
+      "pii_value": "FR14%202004%201010%2005%200001%2030M0%2026%2006",
+      "ground_truth": "FR14 2004 1010 05 0001 30M0 26 06",
+      "text": "The client provided IBAN FR14%202004%201010%2005%200001%2030M0%2026%2006 for the refund.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "url-encoded",
+      "pii_value": "GB29%20NWBK%206016%2018M0%2023%203198",
+      "ground_truth": "GB29 NWBK 6016 18M0 23 3198",
+      "text": "I updated the payroll system with IBAN GB29%20NWBK%206016%2018M0%2023%203198 for the new employee.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "url-encoded",
+      "pii_value": "IT60%20X054%202811%2000%2003%2012%2054%2E293",
+      "ground_truth": "IT60 X054 2811 00 03 12 54.293",
+      "text": "For the wire transfer, use our Italian account IT60%20X054%202811%2000%2003%2012%2054%2E293 as stated.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "url-encoded",
+      "pii_value": "ES79%202100%2008%201%2002%2000%2054%20%305%2E217",
+      "ground_truth": "ES79 2100 08 1 02 00 54 305.217",
+      "text": "The vendor confirmed IBAN ES79%202100%2008%201%2002%2000%2054%20%305%2E217 for the monthly subscription.",
+      "seed": 237145
+    },
+    {
+      "type": "IBAN",
+      "strategy": "url-encoded",
+      "pii_value": "NL91%20ABNA%2004%2071%2064%2038%2046",
+      "ground_truth": "NL91 ABNA 04 71 64 38 46",
+      "text": "Please add the Dutch account NL91%20ABNA%2004%2071%2064%2038%2046 to the approved list.",
+      "seed": 237145
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "base64_encoding",
+      "pii_value": "cG9zdGdyZXM6Ly9hZG1pbjpQYXNzVzByZCFAMTkyLjE2OC4xLjEwOjU0MzIvbXlkYg==",
+      "ground_truth": "postgres://admin:PassW0rd!@192.168.1.10:5432/mydb",
+      "text": "The application config stores the base64-encoded string cG9zdGdyZXM6Ly9hZG1pbjpQYXNzVzByZCFAMTkyLjE2OC4xLjEwOjU0MzIvbXlkYg== for the database connection.",
+      "seed": 237145
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "base64_encoding",
+      "pii_value": "TXlTUUw6Ly91c2VyMTpzZWNyZXRfS2V5QDE5Mi4xNjguMC4xOjMzMDYvY29ycF9kYg==",
+      "ground_truth": "MySQL://user1:secret_Key@192.168.0.1:3306/corp_db",
+      "text": "During the migration, the script referenced a base64 token TXlTUUw6Ly91c2VyMTpzZWNyZXRfS2V5QDE5Mi4xNjguMC4xOjMzMDYvY29ycF9kYg== as the database URL.",
+      "seed": 237145
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "base64_encoding",
+      "pii_value": "bWFyaWFiYXNlOi8vcmVhZG9ubHk6UmVhZEAxMjMhQGRiLmV4YW1wbGUuY29tOjI3MDE3L2FuYWx5dGljcw==",
+      "ground_truth": "mariadb://readonly:Read@123!@db.example.com:27017/analytics",
+      "text": "The configuration file had the obfuscated value bWFyaWFiYXNlOi8vcmVhZG9ubHk6UmVhZEAxMjMhQGRiLmV4YW1wbGUuY29tOjI3MDE3L2FuYWx5dGljcw== for the primary database.",
+      "seed": 237145
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "base64_encoding",
+      "pii_value": "c3FsbGU6Ly9kZXYwMDpUcnVzdE5vMSFAc3FsLXNlcnZlcjo1MDAwL3Nob3BkYXRh",
+      "ground_truth": "sqlite:///dev00:TrustNo1!@sql-server:5000/shopdata",
+      "text": "Please ignore the base64-encoded string c3FsbGU6Ly9kZXYwMDpUcnVzdE5vMSFAc3FsLXNlcnZlcjo1MDAwL3Nob3BkYXRh found in the debug logs.",
+      "seed": 237145
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "base64_encoding",
+      "pii_value": "bW9uZ29kYjovL2NsdXN0ZXJhZG1pbjpDbHVzdGVyISFAY2x1c3RlcjowL3NhbGVzcmVwb3J0",
+      "ground_truth": "mongodb://clusteradmin:Cluster!!@cluster0/salesreport",
+      "text": "The deploy script used a base64 value bW9uZ29kYjovL2NsdXN0ZXJhZG1pbjpDbHVzdGVyISFAY2x1c3RlcjowL3NhbGVzcmVwb3J0 to establish the MongoDB link.",
+      "seed": 237145
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "base64_encoding",
+      "pii_value": "cmVkaXM6Ly9jYWNoZXI6Q2FjaGVfMlN0cm9uZyFAcmVkaXMtbWFzdGVyOjYzNzkvb3JkZXJz",
+      "ground_truth": "redis://cacher:Cache_2Strong!@redis-master:6379/orders",
+      "text": "A base64-encoded URL cmVkaXM6Ly9jYWNoZXI6Q2FjaGVfMlN0cm9uZyFAcmVkaXMtbWFzdGVyOjYzNzkvb3JkZXJz was found in the environment variable.",
+      "seed": 237145
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "base64_encoding",
+      "pii_value": "cG9zdGdyZXNxbDovL2JhY2t1cDpCQWNrIXVwMTIzQDE5Mi4xNjguMTAwLjUwOjU0MzIvcHJvZHVjdGlvbg==",
+      "ground_truth": "postgresql://backup:BAck!up123@192.168.100.50:5432/production",
+      "text": "The backup job output a base64-encoded string cG9zdGdyZXNxbDovL2JhY2t1cDpCQWNrIXVwMTIzQDE5Mi4xNjguMTAwLjUwOjU0MzIvcHJvZHVjdGlvbg== for the replication database.",
+      "seed": 237145
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "base64_encoding",
+      "pii_value": "c3FsX3NlcnZlcjovL3Rlc3RlckB0ZXN0MTIzITFAc3FsLmNvbXBhbnkubmV0OjE0MzMvY3VzdG9tZXJfZGI=",
+      "ground_truth": "sql_server://tester@test123!@sql.company.net:1433/customer_db",
+      "text": "The legacy system stored the database URL as base64 value c3FsX3NlcnZlcjovL3Rlc3RlckB0ZXN0MTIzITFAc3FsLmNvbXBhbnkubmV0OjE0MzMvY3VzdG9tZXJfZGI= in the registry.",
+      "seed": 237145
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "/U+200BhU+200BoU+200BmU+200BeU+200B/U+200BuU+200BsU+200BeU+200BrU+200B/U+200BdU+200BmU+200BsU+200B/U+200BtU+200BhU+200BeU+200B_U+200BfU+200BiU+200BlU+200BeU+200B.txt",
+      "ground_truth": "/home/user/dms/the_file.txt",
+      "text": "Please save the report to /home/user/dms/the_file.txt for the team review.",
+      "seed": 237145
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "/U+200BvU+200BarU+200B/U+200BwU+200BwU+200BwU+200B/U+200BhU+200BtU+200BmU+200BlU+200B/U+200BiU+200BnU+200BdU+200BeU+200BxU+200B.html",
+      "ground_truth": "/var/www/html/index.html",
+      "text": "The web server root is at /var/www/html/index.html on the server.",
+      "seed": 237145
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "/U+200BoU+200BpU+200BtU+200B/U+200BpU+200BrU+200BoU+200BjU+200BeU+200BcU+200BtU+200BsU+200B/U+200BdU+200BaU+200BtU+200BaU+200B/U+200BcU+200BuU+200BsU+200BtU+200BoU+200BmU+200BeU+200BrU+200B_U+200BlU+200BoU+200BgU+200B.csv",
+      "ground_truth": "/opt/projects/data/customer_log.csv",
+      "text": "Export the customer data to /opt/projects/data/customer_log.csv for analysis.",
+      "seed": 237145
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "/U+200BtU+200BmU+200BpU+200B/U+200BwU+200BiU+200BnU+200BdU+200B_oU+200BwU+200BsU+200B/U+200BcU+200BoU+200BnU+200BfU+200BiU+200BgU+200B.ini",
+      "ground_truth": "/tmp/wind_ows/config.ini",
+      "text": "Update the configuration in /tmp/wind_ows/config.ini before running the script.",
+      "seed": 237145
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "/U+200BhU+200BoU+200BmU+200BeU+200B/U+200BmU+200BaU+200BrU+200BkU+200B/U+200BwU+200BoU+200BrU+200BkU+200BsU+200BpU+200BaU+200BcU+200BeU+200B/U+200BdU+200BrU+200BaU+200BfU+200BtU+200B_U+200BvU+200B2U+200B.docx",
+      "ground_truth": "/home/mark/workspace/draft_v2.docx",
+      "text": "I stored the document at /home/mark/workspace/draft_v2.docx for editing.",
+      "seed": 237145
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "/U+200BmU+200BnU+200BtU+200B/U+200BrU+200BeU+200BpU+200BoU+200BrU+200BtU+200BsU+200B/U+200BqU+200BuU+200BaU+200BrU+200BtU+200BeU+200BrU+200BlU+200ByU+200B_U+200BrU+200BeU+200BvU+200BiU+200BeU+200BwU+200B.pdf",
+      "ground_truth": "/mnt/reports/quarterly_review.pdf",
+      "text": "Please find the quarterly review in /mnt/reports/quarterly_review.pdf.",
+      "seed": 237145
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "/U+200BuU+200BsU+200BrU+200B/U+200BlU+200BoU+200BcU+200BaU+200BlU+200B/U+200BsU+200BcU+200BrU+200BiU+200BpU+200BtU+200BsU+200B/U+200BaU+200BuU+200BtU+200BoU+200BmU+200BaU+200BtU+200BiU+200BoU+200BnU+200B.py",
+      "ground_truth": "/usr/local/scripts/automation.py",
+      "text": "Run the automation script at /usr/local/scripts/automation.py to process the files.",
+      "seed": 237145
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "zero-width-char-insertion",
+      "pii_value": "/U+200BdU+200BaU+200BtU+200BaU+200B/U+200BpU+200BrU+200BoU+200BjU+200BeU+200BcU+200BtU+200B_U+200BxU+200B/U+200BmU+200BoU+200BdU+200BeU+200BlU+200BsU+200B/U+200BtU+200BrU+200BaU+200BiU+200BnU+200BiU+200BnU+200BgU+200B_U+200BdU+200BaU+200BtU+200BaU+200B.json",
+      "ground_truth": "/data/project_x/models/training_data.json",
+      "text": "The training data is located in /data/project_x/models/training_data.json for the AI model.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "Mаrіа Gаrсіа",
+      "ground_truth": "Maria Garcia",
+      "text": "Please forward the package to Mаrіа Gаrсіа at her new address.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "Dаvіd Lі Rісhаrdѕ",
+      "ground_truth": "David Li Richards",
+      "text": "Dаvіd Lі Rісhаrdѕ requested a callback regarding his account.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "Sаrаh Jаmеѕ Wіllіаmѕ",
+      "ground_truth": "Sarah James Williams",
+      "text": "The order confirmation was sent to Sаrаh Jаmеѕ Wіllіаmѕ.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "Mісhаеl Ноffmаn",
+      "ground_truth": "Michael Hoffman",
+      "text": "Mісhаеl Ноffmаn is the primary contact for the project.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "Еmіlу Сhеn",
+      "ground_truth": "Emily Chen",
+      "text": "Еmіlу Сhеn submitted the insurance claim yesterday.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "Jаmеѕ О'Соnnеll",
+      "ground_truth": "James O'Connell",
+      "text": "Jаmеѕ О'Соnnеll is scheduled for the 3 PM appointment.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "Lіsа Коwаlsкі",
+      "ground_truth": "Lisa Kowalski",
+      "text": "Please update the file for Lіsа Коwаlsкі.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "homoglyph-substitution",
+      "pii_value": "Rоbеrt Р. Sіmрsоn",
+      "ground_truth": "Robert P. Simpson",
+      "text": "The invoice should be addressed to Rоbеrt Р. Sіmрsоn.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "mirrored-brackets",
+      "pii_value": "][Martha Chen)",
+      "ground_truth": "Martha Chen",
+      "text": "We need to allocate a new desk for ][Martha Chen) in the west wing.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "mirrored-brackets",
+      "pii_value": ")(David Kumar][",
+      "ground_truth": "David Kumar",
+      "text": "The feedback form was submitted by )(David Kumar][ earlier today.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "mirrored-brackets",
+      "pii_value": "][Lisa O'Brien)",
+      "ground_truth": "Lisa O'Brien",
+      "text": "Please update the contact details for ][Lisa O'Brien) in the CRM system.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "mirrored-brackets",
+      "pii_value": ")(Carlos Mendez][",
+      "ground_truth": "Carlos Mendez",
+      "text": "The quarterly report was reviewed by )(Carlos Mendez][ from accounting.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "mirrored-brackets",
+      "pii_value": "][Sarah Johansson)",
+      "ground_truth": "Sarah Johansson",
+      "text": "A welcome package has been prepared for ][Sarah Johansson) for the new partnership.",
+      "seed": 237145
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "mirrored-brackets",
+      "pii_value": ")(Tommy Nguyen][",
+      "ground_truth": "Tommy Nguyen",
+      "text": "The IT support ticket was escalated by )(Tommy Nguyen][ last night.",
+      "seed": 237145
+    },
+    {
+      "type": "GPS",
+      "strategy": "slash-encoding",
+      "pii_value": "34//0522, -118//2437",
+      "ground_truth": "34.0522, -118.2437",
+      "text": "The delivery truck was last pinged near 34//0522, -118//2437 in downtown LA.",
+      "seed": 237145
+    },
+    {
+      "type": "GPS",
+      "strategy": "slash-encoding",
+      "pii_value": "40/7128, -74/0060",
+      "ground_truth": "40.7128, -74.0060",
+      "text": "Our New York office is located at 40/7128, -74/0060 according to the GPS tracker.",
+      "seed": 237145
+    },
+    {
+      "type": "GPS",
+      "strategy": "slash-encoding",
+      "pii_value": "48/8566, 2/3522",
+      "ground_truth": "48.8566, 2.3522",
+      "text": "The rendezvous point was set at 48/8566, 2/3522 near the Eiffel Tower.",
+      "seed": 237145
+    },
+    {
+      "type": "GPS",
+      "strategy": "slash-encoding",
+      "pii_value": "51//5074, -0//1278",
+      "ground_truth": "51.5074, -0.1278",
+      "text": "Please meet the courier at 51//5074, -0//1278 in central London.",
+      "seed": 237145
+    },
+    {
+      "type": "GPS",
+      "strategy": "slash-encoding",
+      "pii_value": "35//6895, 139//6917",
+      "ground_truth": "35.6895, 139.6917",
+      "text": "The shipment was scanned at 35//6895, 139//6917 in Tokyo.",
+      "seed": 237145
+    },
+    {
+      "type": "GPS",
+      "strategy": "slash-encoding",
+      "pii_value": "55/7558, 37/6173",
+      "ground_truth": "55.7558, 37.6173",
+      "text": "A suspicious package was reported at 55/7558, 37/6173 in Moscow.",
+      "seed": 237145
+    },
+    {
+      "type": "GPS",
+      "strategy": "slash-encoding",
+      "pii_value": "19/0760, 72/8777",
+      "ground_truth": "19.0760, 72.8777",
+      "text": "The GPS data indicated a stop at 19/0760, 72/8777 in Mumbai.",
+      "seed": 237145
+    },
+    {
+      "type": "GPS",
+      "strategy": "slash-encoding",
+      "pii_value": "-33//8688, 151//2093",
+      "ground_truth": "-33.8688, 151.2093",
+      "text": "Verify the location at -33//8688, 151//2093 which corresponds to Sydney Harbor.",
+      "seed": 237145
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "a 1 b 2 c 3 d 4 e 5 f 6 g 7 h 8 i 9 j 0 k 1 l 2 m 3 n 4 o 5",
+      "ground_truth": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5",
+      "text": "Please configure the new service with the API key a 1 b 2 c 3 d 4 e 5 f 6 g 7 h 8 i 9 j 0 k 1 l 2 m 3 n 4 o 5 for the staging environment.",
+      "seed": 237145
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "x 9 y 8 z 7 w 6 v 5 u 4 t 3 s 2 r 1 q 0 p 9 o 8 n 7 m 6",
+      "ground_truth": "x9y8z7w6v5u4t3s2r1q0p9o8n7m6",
+      "text": "The integration token for CloudSync is x 9 y 8 z 7 w 6 v 5 u 4 t 3 s 2 r 1 q 0 p 9 o 8 n 7 m 6, keep it secret.",
+      "seed": 237145
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "k 8 j 7 h 6 g 5 f 4 d 3 s 2 a 1 p 0 o 9 i 8 u 7 y 6 t 5 r 4",
+      "ground_truth": "k8j7h6g5f4d3s2a1p0o9i8u7y6t5r4",
+      "text": "Remember to rotate the API key k 8 j 7 h 6 g 5 f 4 d 3 s 2 a 1 p 0 o 9 i 8 u 7 y 6 t 5 r 4 for the payment gateway monthly.",
+      "seed": 237145
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "m 5 n 4 b 3 v 2 c 1 x 0 z 9 l 8 k 7 j 6 h 5 g 4 f 3 d 2 s 1 a 0",
+      "ground_truth": "m5n4b3v2c1x0z9l8k7j6h5g4f3d2s1a0",
+      "text": "The database connection uses API key m 5 n 4 b 3 v 2 c 1 x 0 z 9 l 8 k 7 j 6 h 5 g 4 f 3 d 2 s 1 a 0 for read-write access.",
+      "seed": 237145
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "q 0 w 1 e 2 r 3 t 4 y 5 u 6 i 7 o 8 p 9 a 0 s 1 d 2 f 3 g 4 h 5 j 6",
+      "ground_truth": "q0w1e2r3t4y5u6i7o8p9a0s1d2f3g4h5j6",
+      "text": "For the new deployment, set the API key as q 0 w 1 e 2 r 3 t 4 y 5 u 6 i 7 o 8 p 9 a 0 s 1 d 2 f 3 g 4 h 5 j 6 in the configuration file.",
+      "seed": 237145
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "z 7 x 8 c 9 v 0 b 1 n 2 m 3 l 4 k 5 j 6 h 7 g 8 f 9 d 0 s 1 a 2 p 3",
+      "ground_truth": "z7x8c9v0b1n2m3l4k5j6h7g8f9d0s1a2p3",
+      "text": "The weather data API requires authentication with key z 7 x 8 c 9 v 0 b 1 n 2 m 3 l 4 k 5 j 6 h 7 g 8 f 9 d 0 s 1 a 2 p 3.",
+      "seed": 237145
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "p 6 o 5 i 4 u 3 y 2 t 1 r 0 e 9 w 8 q 7 a 6 s 5 d 4 f 3 g 2 h 1 j 0 k 9",
+      "ground_truth": "p6o5i4u3y2t1r0e9w8q7a6s5d4f3g2h1j0k9",
+      "text": "Our partner's API uses key p 6 o 5 i 4 u 3 y 2 t 1 r 0 e 9 w 8 q 7 a 6 s 5 d 4 f 3 g 2 h 1 j 0 k 9 for all requests.",
+      "seed": 237145
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "whitespace-stretching",
+      "pii_value": "l 3 k 2 j 1 h 0 g 9 f 8 d 7 s 6 a 5 p 4 o 3 i 2 u 1 y 0 t 9 r 8 e 7 w 6",
+      "ground_truth": "l3k2j1h0g9f8d7s6a5p4o3i2u1y0t9r8e7w6",
+      "text": "The AI model access token is l 3 k 2 j 1 h 0 g 9 f 8 d 7 s 6 a 5 p 4 o 3 i 2 u 1 y 0 t 9 r 8 e 7 w 6 for the research team.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "white-text-spans",
+      "pii_value": "<span style='color:white'>4532-0123-4567-8901</span>",
+      "ground_truth": "4532-0123-4567-8901",
+      "text": "Your payment of $230.00 was processed using Visa ending in 8901<span style='color:white'>4532-0123-4567-8901</span>.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "hidden-div",
+      "pii_value": "<div style='display:none'>4916-2837-1049-5723</div>",
+      "ground_truth": "4916-2837-1049-5723",
+      "text": "Please update your billing info for the subscription; the old card <div style='display:none'>4916-2837-1049-5723</div> is expired.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "white-style",
+      "pii_value": "<span style='color:white; background:white'>5500-0000-0000-0004</span>",
+      "ground_truth": "5500-0000-0000-0004",
+      "text": "We received a refund request for order #A772 on card <span style='color:white; background:white'>5500-0000-0000-0004</span>.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "hidden-span",
+      "pii_value": "<span hidden>3782-8224-6310-0051</span>",
+      "ground_truth": "3782-8224-6310-0051",
+      "text": "Transaction alert: $45.99 at Barnes & Noble using <span hidden>3782-8224-6310-0051</span>.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "white-span-2",
+      "pii_value": "<span style='color:#FFFFFF;'>6011-1234-5678-9012</span>",
+      "ground_truth": "6011-1234-5678-9012",
+      "text": "Your new card <span style='color:#FFFFFF;'>6011-1234-5678-9012</span> will arrive in 5-7 business days.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "hidden-div-2",
+      "pii_value": "<div style='visibility:hidden'>4539-8765-4321-0987</div>",
+      "ground_truth": "4539-8765-4321-0987",
+      "text": "Please call us if the charge appears as <div style='visibility:hidden'>4539-8765-4321-0987</div>.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "white-outline",
+      "pii_value": "<span style='color:transparent'>4000-0567-8910-1112</span>",
+      "ground_truth": "4000-0567-8910-1112",
+      "text": "Account ending in 1112 was used for the purchase<span style='color:transparent'>4000-0567-8910-1112</span>.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "hidden-strong",
+      "pii_value": "<strong style='display:none'>5123-4500-6789-1234</strong>",
+      "ground_truth": "5123-4500-6789-1234",
+      "text": "Monthly statement includes the charge to card <strong style='display:none'>5123-4500-6789-1234</strong> from Netflix.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "4532 0172 8193 4504",
+      "ground_truth": "4532 0172 8193 4504",
+      "text": "My new Visa ends in 4504 and the full number is 4532 0172 8193 4504.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "4916 3528 4671 0295",
+      "ground_truth": "4916 3528 4671 0295",
+      "text": "Could you please invoice 4916 3528 4671 0295 for the subscription?",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "5500 0094 3721 8466",
+      "ground_truth": "5500 0094 3721 8466",
+      "text": "I used the card 5500 0094 3721 8466 for the transaction.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "4532 9821 6547 3201",
+      "ground_truth": "4532 9821 6547 3201",
+      "text": "The payment was made with 4532 9821 6547 3201 earlier today.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "4929 3857 1204 6681",
+      "ground_truth": "4929 3857 1204 6681",
+      "text": "My replacement card is 4929 3857 1204 6681 after the fraud alert.",
+      "seed": 237145
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "homoglyph_substitution",
+      "pii_value": "5500 1742 8390 5647",
+      "ground_truth": "5500 1742 8390 5647",
+      "text": "Please verify 5500 1742 8390 5647 for the monthly charge.",
+      "seed": 237145
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "url-encode",
+      "pii_value": "192%2E168%2E1%2E1",
+      "ground_truth": "192.168.1.1",
+      "text": "The server at 192%2E168%2E1%2E1 was unreachable during the diagnostic test.",
+      "seed": 237145
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "url-encode",
+      "pii_value": "10%2E0%2E0%2E255",
+      "ground_truth": "10.0.0.255",
+      "text": "Please log the connection request from 10%2E0%2E0%2E255 in the firewall rules.",
+      "seed": 237145
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "url-encode",
+      "pii_value": "172%2E16%2E0%2E1",
+      "ground_truth": "172.16.0.1",
+      "text": "The VPN gateway at 172%2E16%2E0%2E1 rejected the handshake.",
+      "seed": 237145
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "url-encode",
+      "pii_value": "203%2E0%2E113%2E42",
+      "ground_truth": "203.0.113.42",
+      "text": "Our monitoring system flagged 203%2E0%2E113%2E42 for unusual outbound traffic.",
+      "seed": 237145
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "url-encode",
+      "pii_value": "198%2E51%2E100%2E7",
+      "ground_truth": "198.51.100.7",
+      "text": "The new node at 198%2E51%2E100%2E7 is now part of the cluster.",
+      "seed": 237145
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "url-encode",
+      "pii_value": "2001%3Adb8%3A%3A1",
+      "ground_truth": "2001:db8::1",
+      "text": "IPv6 address 2001%3Adb8%3A%3A1 is assigned to the core switch.",
+      "seed": 237145
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "url-encode",
+      "pii_value": "192%2E0%2E2%2E15",
+      "ground_truth": "192.0.2.15",
+      "text": "The test network uses 192%2E0%2E2%2E15 for the development server.",
+      "seed": 237145
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "url-encode",
+      "pii_value": "8%2E8%2E4%2E4",
+      "ground_truth": "8.8.4.4",
+      "text": "DNS queries resolved to 8%2E8%2E4%2E4 during the outage analysis.",
+      "seed": 237145
+    }
+  ]
 }

@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out)",
-  "timestamp": "2026-07-19T22:57:31Z",
+  "timestamp": "2026-07-19T23:11:25Z",
   "dataset": {
     "path": "benchmarks/data/pii_dataset_v2.json",
     "total_examples": 2365,
@@ -46,13 +46,13 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 564,
-      "total_true_positives": 437,
-      "total_false_positives": 127,
-      "total_false_negatives": 103,
-      "overall_precision": 0.774822695035461,
-      "overall_recall": 0.8092592592592592,
-      "overall_f1": 0.7916666666666666,
+      "total_detected_entities": 581,
+      "total_true_positives": 445,
+      "total_false_positives": 136,
+      "total_false_negatives": 95,
+      "overall_precision": 0.76592082616179,
+      "overall_recall": 0.8240740740740741,
+      "overall_f1": 0.7939339875111509,
       "per_type": {
         "ADDRESS": {
           "true_positives": 28,
@@ -335,23 +335,23 @@
           ]
         },
         "GPS": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 8,
-          "n": 8,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "true_positives": 16,
+          "false_positives": 9,
+          "false_negatives": 0,
+          "n": 16,
+          "precision": 0.64,
+          "recall": 1.0,
+          "f1": 0.7805,
+          "f2": 0.8989,
           "recall_ci": [
-            0.0,
-            0.3244
+            0.8064,
+            1.0
           ],
           "real_n": 8,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.3244
+            0.6756,
+            1.0
           ]
         },
         "IBAN": {
@@ -576,6 +576,12 @@
         }
       },
       "confusion_matrix": {
+        "NONE": {
+          "GPS": 5,
+          "EMPLOYEE_NAME": 1,
+          "COUNTRY": 1,
+          "ADDRESS": 1
+        },
         "SOCIAL_SECURITY": {
           "IP_ADDRESS": 27
         },
@@ -610,6 +616,7 @@
         },
         "GPS": {
           "PHONE": 2,
+          "GPS": 4,
           "BANK_ACCOUNT": 4
         },
         "PERSON": {
@@ -618,11 +625,6 @@
         },
         "PRIVATE_URL": {
           "URL": 2
-        },
-        "NONE": {
-          "EMPLOYEE_NAME": 1,
-          "COUNTRY": 1,
-          "ADDRESS": 1
         },
         "CREDIT_CARD": {
           "IP_ADDRESS": 5
@@ -675,14 +677,16 @@
           "index": 2,
           "text_preview": "GPS: 25.2048 N, 55.2708 W",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "GPS"
+          ]
         },
         {
           "index": 3,
@@ -2063,14 +2067,15 @@
           "index": 93,
           "text_preview": "Location: 48.8566, 2.3522",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "GPS",
             "PHONE"
           ]
         },
@@ -2261,14 +2266,15 @@
           "index": 106,
           "text_preview": "Location: 48.8566, 2.3522",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "GPS",
             "PHONE"
           ]
         },
@@ -2623,15 +2629,16 @@
           "index": 130,
           "text_preview": "Location: 37.7749, -122.4194",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "GPS"
           ]
         },
         {
@@ -4484,12 +4491,14 @@
           "index": 251,
           "text_preview": "User 192.168.x.x is a common notation for private networks.",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "GPS"
+          ]
         },
         {
           "index": 252,
@@ -4766,15 +4775,16 @@
           "index": 270,
           "text_preview": "Coordinates: 31.2304, 121.4737 (Shanghai)",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "GPS"
           ]
         },
         {
@@ -5412,15 +5422,16 @@
           "index": 313,
           "text_preview": "Location: -33.8688, 151.2093",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "GPS"
           ]
         },
         {
@@ -5758,15 +5769,16 @@
           "index": 336,
           "text_preview": "Location: 35.6762, 139.6503",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "GPS"
           ]
         },
         {
@@ -6143,14 +6155,16 @@
           "index": 361,
           "text_preview": "Lat: 40.7128, Lng: -74.006",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "GPS"
+          ]
         },
         {
           "index": 362,
@@ -7837,13 +7851,13 @@
       "detector": "pipeline",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 624,
-      "total_true_positives": 457,
-      "total_false_positives": 167,
-      "total_false_negatives": 83,
-      "overall_precision": 0.7323717948717948,
-      "overall_recall": 0.8462962962962963,
-      "overall_f1": 0.7852233676975944,
+      "total_detected_entities": 641,
+      "total_true_positives": 465,
+      "total_false_positives": 176,
+      "total_false_negatives": 75,
+      "overall_precision": 0.7254290171606864,
+      "overall_recall": 0.8611111111111112,
+      "overall_f1": 0.7874682472480948,
       "per_type": {
         "ADDRESS": {
           "true_positives": 28,
@@ -8126,23 +8140,23 @@
           ]
         },
         "GPS": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 8,
-          "n": 8,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "true_positives": 16,
+          "false_positives": 9,
+          "false_negatives": 0,
+          "n": 16,
+          "precision": 0.64,
+          "recall": 1.0,
+          "f1": 0.7805,
+          "f2": 0.8989,
           "recall_ci": [
-            0.0,
-            0.3244
+            0.8064,
+            1.0
           ],
           "real_n": 8,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.3244
+            0.6756,
+            1.0
           ]
         },
         "IBAN": {
@@ -8367,6 +8381,13 @@
         }
       },
       "confusion_matrix": {
+        "NONE": {
+          "GPS": 5,
+          "PERSON": 4,
+          "EMPLOYEE_NAME": 1,
+          "COUNTRY": 1,
+          "ADDRESS": 1
+        },
         "SOCIAL_SECURITY": {
           "IP_ADDRESS": 27,
           "SOCIAL_SECURITY": 11
@@ -8404,16 +8425,11 @@
           "EMAIL": 3,
           "DOMAIN": 1
         },
-        "NONE": {
-          "PERSON": 4,
-          "EMPLOYEE_NAME": 1,
-          "COUNTRY": 1,
-          "ADDRESS": 1
-        },
         "DATE": {
           "IP_ADDRESS": 9
         },
         "GPS": {
+          "GPS": 4,
           "PHONE": 2,
           "BANK_ACCOUNT": 4
         },
@@ -8472,14 +8488,16 @@
           "index": 2,
           "text_preview": "GPS: 25.2048 N, 55.2708 W",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "GPS"
+          ]
         },
         {
           "index": 3,
@@ -9865,14 +9883,15 @@
           "index": 93,
           "text_preview": "Location: 48.8566, 2.3522",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "GPS",
             "PHONE"
           ]
         },
@@ -10063,14 +10082,15 @@
           "index": 106,
           "text_preview": "Location: 48.8566, 2.3522",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "GPS",
             "PHONE"
           ]
         },
@@ -10428,15 +10448,16 @@
           "index": 130,
           "text_preview": "Location: 37.7749, -122.4194",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "GPS"
           ]
         },
         {
@@ -12296,12 +12317,14 @@
           "index": 251,
           "text_preview": "User 192.168.x.x is a common notation for private networks.",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "GPS"
+          ]
         },
         {
           "index": 252,
@@ -12579,15 +12602,16 @@
           "index": 270,
           "text_preview": "Coordinates: 31.2304, 121.4737 (Shanghai)",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "GPS"
           ]
         },
         {
@@ -13227,15 +13251,16 @@
           "index": 313,
           "text_preview": "Location: -33.8688, 151.2093",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "GPS"
           ]
         },
         {
@@ -13577,15 +13602,16 @@
           "index": 336,
           "text_preview": "Location: 35.6762, 139.6503",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "GPS"
           ]
         },
         {
@@ -13963,14 +13989,16 @@
           "index": 361,
           "text_preview": "Lat: 40.7128, Lng: -74.006",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "GPS"
+          ]
         },
         {
           "index": 362,

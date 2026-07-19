@@ -1,0 +1,1714 @@
+{
+  "version": "6.0.0",
+  "description": "Adversarial PII dataset v6 — DeepSeek (fallback), seed 69897, 26 entity types, 10 new strategies (different from v4 and v5).",
+  "seed": 69897,
+  "model": "/model",
+  "api_base": "http://100.114.42.73:8000/v1",
+  "total_examples": 208,
+  "entity_types": [
+    "IBAN",
+    "DOMAIN",
+    "COMPANY",
+    "CUSTOMER_NAME",
+    "PHONE",
+    "SSH_KEY",
+    "PROJECT_NAME",
+    "CITY",
+    "FILE_PATH",
+    "CREDIT_CARD",
+    "API_KEY",
+    "COUNTRY",
+    "IP_ADDRESS",
+    "DATABASE_URL",
+    "PERSON",
+    "DATE",
+    "URL",
+    "PRIVATE_URL",
+    "EMPLOYEE_NAME",
+    "BANK_ACCOUNT",
+    "GPS",
+    "ADDRESS",
+    "EMAIL",
+    "SOCIAL_SECURITY",
+    "PASSPORT",
+    "JWT"
+  ],
+  "obfuscation_strategies": [
+    "JavaScript unicode escapes",
+    "octal escapes",
+    "ANSI escape sequence wrapping",
+    "zip code reversal",
+    "fractional spacing",
+    "unicode normalization attacks",
+    "nested encoding",
+    "staggered capitalization with digit substitution",
+    "HTML hex entity",
+    "broken encoding tokens"
+  ],
+  "examples": [
+    {
+      "type": "IBAN",
+      "strategy": "javascript-unicode-escapes",
+      "pii_value": "\\u0049\\u0054\\u0036\\u0030\\u0058\\u0030\\u0035\\u0034\\u0032\\u0033\\u0031\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0036\\u0031\\u0032\\u0032",
+      "ground_truth": "IT60X054231000000006122",
+      "text": "Please remit payment to account \\u0049\\u0054\\u0036\\u0030\\u0058\\u0030\\u0035\\u0034\\u0032\\u0033\\u0031\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0036\\u0031\\u0032\\u0032.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "javascript-unicode-escapes",
+      "pii_value": "\\u0047\\u0042\\u0038\\u0032\\u0057\\u0045\\u0053\\u0045\\u0034\\u0030\\u0034\\u0032\\u0034\\u0032\\u0035\\u0036\\u0033\\u0038\\u0037\\u0034\\u0030\\u0031",
+      "ground_truth": "GB82WESE40424256387401",
+      "text": "For international transfer, use \\u0047\\u0042\\u0038\\u0032\\u0057\\u0045\\u0053\\u0045\\u0034\\u0030\\u0034\\u0032\\u0034\\u0032\\u0035\\u0036\\u0033\\u0038\\u0037\\u0034\\u0030\\u0031 as the IBAN.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "javascript-unicode-escapes",
+      "pii_value": "\\u0044\\u0045\\u0037\\u0035\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038\\u0039\\u0030\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037",
+      "ground_truth": "DE7512345678901234567",
+      "text": "Our German branch uses IBAN \\u0044\\u0045\\u0037\\u0035\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038\\u0039\\u0030\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037 for all transactions.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "javascript-unicode-escapes",
+      "pii_value": "\\u0046\\u0052\\u0037\\u0036\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038\\u0039\\u0030\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038\\u0039",
+      "ground_truth": "FR761234567890123456789",
+      "text": "The French supplier requested payment to \\u0046\\u0052\\u0037\\u0036\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038\\u0039\\u0030\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038\\u0039.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "javascript-unicode-escapes",
+      "pii_value": "\\u0045\\u0053\\u0039\\u0031\\u0032\\u0031\\u0030\\u0030\\u0030\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038\\u0039\\u0030\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038",
+      "ground_truth": "ES91210003456789012345678",
+      "text": "Please confirm the Spanish IBAN: \\u0045\\u0053\\u0039\\u0031\\u0032\\u0031\\u0030\\u0030\\u0030\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038\\u0039\\u0030\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "javascript-unicode-escapes",
+      "pii_value": "\\u004e\\u004c\\u0033\\u0039\\u0041\\u0042\\u004e\\u0043\\u0030\\u0034\\u0033\\u0036\\u0032\\u0033\\u0031\\u0033\\u0035\\u0036",
+      "ground_truth": "NL39ABNC0436231356",
+      "text": "The Dutch account has IBAN \\u004e\\u004c\\u0033\\u0039\\u0041\\u0042\\u004e\\u0043\\u0030\\u0034\\u0033\\u0036\\u0032\\u0033\\u0031\\u0033\\u0035\\u0036 on file.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "javascript-unicode-escapes",
+      "pii_value": "\\u0043\\u0048\\u0035\\u0036\\u0030\\u0034\\u0038\\u0033\\u0038\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0031\\u0037\\u0036\\u0035\\u0032",
+      "ground_truth": "CH560483800000017652",
+      "text": "For the Swiss payment, use \\u0043\\u0048\\u0035\\u0036\\u0030\\u0034\\u0038\\u0033\\u0038\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0031\\u0037\\u0036\\u0035\\u0032 as IBAN.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "javascript-unicode-escapes",
+      "pii_value": "\\u0042\\u0045\\u0036\\u0038\\u0035\\u0030\\u0034\\u0038\\u0033\\u0038\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0031\\u0037\\u0036\\u0035\\u0032",
+      "ground_truth": "BE685048380000017652",
+      "text": "Our Belgian partner provided IBAN \\u0042\\u0045\\u0036\\u0038\\u0035\\u0030\\u0034\\u0038\\u0033\\u0038\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0031\\u0037\\u0036\\u0035\\u0032 for the invoice.",
+      "seed": 69897
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "zip-code-reversal",
+      "pii_value": "79896.com",
+      "ground_truth": "69897.com",
+      "text": "The registration confirmation was sent to support@79896.com.",
+      "seed": 69897
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "zip-code-reversal",
+      "pii_value": "01773.net",
+      "ground_truth": "37710.net",
+      "text": "Please update your DNS settings for mail.01773.net.",
+      "seed": 69897
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "zip-code-reversal",
+      "pii_value": "45271.org",
+      "ground_truth": "17254.org",
+      "text": "The company's internal wiki is hosted at wiki.45271.org.",
+      "seed": 69897
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "zip-code-reversal",
+      "pii_value": "83061.io",
+      "ground_truth": "16038.io",
+      "text": "All developer tools are accessible via dev.83061.io.",
+      "seed": 69897
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "zip-code-reversal",
+      "pii_value": "20589.info",
+      "ground_truth": "98502.info",
+      "text": "The client portal can be accessed at portal.20589.info.",
+      "seed": 69897
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "zip-code-reversal",
+      "pii_value": "64923.biz",
+      "ground_truth": "32946.biz",
+      "text": "Our e-commerce platform runs on shop.64923.biz.",
+      "seed": 69897
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "zip-code-reversal",
+      "pii_value": "81405.co",
+      "ground_truth": "50418.co",
+      "text": "The API endpoint is located at api.81405.co.",
+      "seed": 69897
+    },
+    {
+      "type": "DOMAIN",
+      "strategy": "zip-code-reversal",
+      "pii_value": "37046.app",
+      "ground_truth": "64073.app",
+      "text": "Test results are available for download at results.37046.app.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "T3sL4",
+      "ground_truth": "Tesla",
+      "text": "I bought shares in T3sL4 last quarter after reading their earnings report.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "G00gl3",
+      "ground_truth": "Google",
+      "text": "The G00gl3 internship program is highly competitive this year.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "M1cr0s0ft",
+      "ground_truth": "Microsoft",
+      "text": "Our office just upgraded to M1cr0s0ft 365 for better collaboration.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "Amaz0n",
+      "ground_truth": "Amazon",
+      "text": "I returned a faulty package to Amaz0n and got a refund within a week.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "F4c3b00k",
+      "ground_truth": "Facebook",
+      "text": "The new F4c3b00k interface has been met with mixed reviews.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "N3tfl1x",
+      "ground_truth": "Netflix",
+      "text": "We canceled our N3tfl1x subscription after the price hike.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "B3rksh1r3",
+      "ground_truth": "Berkshire",
+      "text": "B3rksh1r3 Hathaway's annual meeting drew thousands of investors.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "P4yp4l",
+      "ground_truth": "PayPal",
+      "text": "I used P4yp4l to send money to my friend in Canada.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "unicode-normalization",
+      "pii_value": "Café Luxe",
+      "ground_truth": "Café Luxe",
+      "text": "I visited Café Luxe downtown for their famous espresso blend.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "unicode-normalization",
+      "pii_value": "Müller & Söhne",
+      "ground_truth": "Müller & Söhne",
+      "text": "Müller & Söhne has been our trusted supplier for decades.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "unicode-normalization",
+      "pii_value": "Réséau Global",
+      "ground_truth": "Réséau Global",
+      "text": "They partnered with Réséau Global to expand their network infrastructure.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "unicode-normalization",
+      "pii_value": "Größe Tech",
+      "ground_truth": "Größe Tech",
+      "text": "The new office lease was signed by Größe Tech this morning.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "unicode-normalization",
+      "pii_value": "Étoile Finance",
+      "ground_truth": "Étoile Finance",
+      "text": "Our quarterly report was audited by Étoile Finance last week.",
+      "seed": 69897
+    },
+    {
+      "type": "COMPANY",
+      "strategy": "unicode-normalization",
+      "pii_value": "Zuñiga Corp",
+      "ground_truth": "Zuñiga Corp",
+      "text": "Zuñiga Corp announced a merger with a competitor yesterday.",
+      "seed": 69897
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "unicode-normalization",
+      "pii_value": "Jöhan Müller",
+      "ground_truth": "Johan Muller",
+      "text": "The order was processed for Jöhan Müller on Monday.",
+      "seed": 69897
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "unicode-normalization",
+      "pii_value": "Sofía Ríos",
+      "ground_truth": "Sofia Rios",
+      "text": "Please deliver the package to Sofía Ríos at her office.",
+      "seed": 69897
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "unicode-normalization",
+      "pii_value": "René Lévesque",
+      "ground_truth": "Rene Levesque",
+      "text": "René Lévesque was the last to sign the contract.",
+      "seed": 69897
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "unicode-normalization",
+      "pii_value": "Mónica Sánchez",
+      "ground_truth": "Monica Sanchez",
+      "text": "Mónica Sánchez requested a callback this afternoon.",
+      "seed": 69897
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "unicode-normalization",
+      "pii_value": "François Dubois",
+      "ground_truth": "Francois Dubois",
+      "text": "The invoice was emailed to François Dubois yesterday.",
+      "seed": 69897
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "unicode-normalization",
+      "pii_value": "Zoë Barbieri",
+      "ground_truth": "Zoe Barbieri",
+      "text": "Zoë Barbieri confirmed the reservation for two.",
+      "seed": 69897
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "unicode-normalization",
+      "pii_value": "José Núñez",
+      "ground_truth": "Jose Nunez",
+      "text": "José Núñez visited the store to pick up his order.",
+      "seed": 69897
+    },
+    {
+      "type": "CUSTOMER_NAME",
+      "strategy": "unicode-normalization",
+      "pii_value": "Chloë Müller",
+      "ground_truth": "Chloe Mueller",
+      "text": "Chloë Müller has been our client since 2019.",
+      "seed": 69897
+    },
+    {
+      "type": "PHONE",
+      "strategy": "nested-encoding",
+      "pii_value": "JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVE",
+      "ground_truth": "+1-555-234-9876",
+      "text": "The contact number provided was JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVE for the emergency line.",
+      "seed": 69897
+    },
+    {
+      "type": "PHONE",
+      "strategy": "nested-encoding",
+      "pii_value": "JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVF",
+      "ground_truth": "+44-20-7946-0123",
+      "text": "Please reach me at JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVF if you have updates.",
+      "seed": 69897
+    },
+    {
+      "type": "PHONE",
+      "strategy": "nested-encoding",
+      "pii_value": "JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVG",
+      "ground_truth": "+49-30-1234-5678",
+      "text": "I noted the encoded string JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVG from the voicemail.",
+      "seed": 69897
+    },
+    {
+      "type": "PHONE",
+      "strategy": "nested-encoding",
+      "pii_value": "JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVH",
+      "ground_truth": "+81-3-4567-8901",
+      "text": "Could you decode JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVH to call the Tokyo office?",
+      "seed": 69897
+    },
+    {
+      "type": "PHONE",
+      "strategy": "nested-encoding",
+      "pii_value": "JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVJ",
+      "ground_truth": "+91-22-3344-5566",
+      "text": "The support team asked me to use JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVJ for the Mumbai hotline.",
+      "seed": 69897
+    },
+    {
+      "type": "PHONE",
+      "strategy": "nested-encoding",
+      "pii_value": "JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVK",
+      "ground_truth": "+61-2-9876-5432",
+      "text": "Her new number is encoded as JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVK in the file.",
+      "seed": 69897
+    },
+    {
+      "type": "PHONE",
+      "strategy": "nested-encoding",
+      "pii_value": "JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVL",
+      "ground_truth": "+33-1-2345-6789",
+      "text": "Please update the record with JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVL for the Paris contact.",
+      "seed": 69897
+    },
+    {
+      "type": "PHONE",
+      "strategy": "nested-encoding",
+      "pii_value": "JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVM",
+      "ground_truth": "+1-416-555-0198",
+      "text": "During the meeting, they shared JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVM as the callback number.",
+      "seed": 69897
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "broken encoding tokens",
+      "pii_value": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClB%U0040example%U0040.com",
+      "ground_truth": "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClB@example.com",
+      "text": "The deployment team used the key ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQClB%U0040example%U0040.com for server access.",
+      "seed": 69897
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "broken encoding tokens",
+      "pii_value": "SHA256:%U0040xK8Vp7jZ9qW2rF1mT4nL6cH3bG5dE8sA0",
+      "ground_truth": "SHA256:@xK8Vp7jZ9qW2rF1mT4nL6cH3bG5dE8sA0",
+      "text": "I copied the fingerprint SHA256:%U0040xK8Vp7jZ9qW2rF1mT4nL6cH3bG5dE8sA0 from the host key verification.",
+      "seed": 69897
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "broken encoding tokens",
+      "pii_value": "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBF%U0040m3Y9hK7wR2pL5nX1cJ8vQ4sA0dG6tU",
+      "ground_truth": "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBF@m3Y9hK7wR2pL5nX1cJ8vQ4sA0dG6tU",
+      "text": "Please update the authorized_keys file with ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBF%U0040m3Y9hK7wR2pL5nX1cJ8vQ4sA0dG6tU for the new server.",
+      "seed": 69897
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "broken encoding tokens",
+      "pii_value": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK%U0040z8X9pL2mN4qR6tV7wB1cH3jF5kD0sA",
+      "ground_truth": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK@z8X9pL2mN4qR6tV7wB1cH3jF5kD0sA",
+      "text": "The system logged ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK%U0040z8X9pL2mN4qR6tV7wB1cH3jF5kD0sA during the connection attempt.",
+      "seed": 69897
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "broken encoding tokens",
+      "pii_value": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCyR%U0040example%U0040.org",
+      "ground_truth": "AAAAB3NzaC1yc2EAAAADAQABAAABAQCyR@example.org",
+      "text": "Remember to whitelist AAAAB3NzaC1yc2EAAAADAQABAAABAQCyR%U0040example%U0040.org in the SSH config.",
+      "seed": 69897
+    },
+    {
+      "type": "SSH_KEY",
+      "strategy": "broken encoding tokens",
+      "pii_value": "SHA256:%U0040aB3cD4eF5gH6iJ7kL8mN9oP0qR1sT2uV3wX4yZ5",
+      "ground_truth": "SHA256:@aB3cD4eF5gH6iJ7kL8mN9oP0qR1sT2uV3wX4yZ5",
+      "text": "The host key fingerprint SHA256:%U0040aB3cD4eF5gH6iJ7kL8mN9oP0qR1sT2uV3wX4yZ5 did not match any known keys.",
+      "seed": 69897
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "broken encoding tokens",
+      "pii_value": "%U004E%U0065%U006F%U006E",
+      "ground_truth": "Neon",
+      "text": "The team discussed the final deliverables for the %U004E%U0065%U006F%U006E project during the standup.",
+      "seed": 69897
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "broken encoding tokens",
+      "pii_value": "%U0043%U0061%U0073%U0063%U0061%U0064%U0065",
+      "ground_truth": "Cascade",
+      "text": "I need to update the documentation for %U0043%U0061%U0073%U0063%U0061%U0064%U0065 before the sprint review.",
+      "seed": 69897
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "broken encoding tokens",
+      "pii_value": "%U0050%U0068%U0061%U006E%U0074%U006F%U006D",
+      "ground_truth": "Phantom",
+      "text": "Our deployment pipeline is currently blocked due to an issue with %U0050%U0068%U0061%U006E%U0074%U006F%U006D.",
+      "seed": 69897
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "broken encoding tokens",
+      "pii_value": "%U0056%U0065%U006C%U006F%U006E%U0061",
+      "ground_truth": "Velona",
+      "text": "Can you share the latest metrics dashboard for %U0056%U0065%U006C%U006F%U006E%U0061?",
+      "seed": 69897
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "broken encoding tokens",
+      "pii_value": "%U0041%U0072%U0063%U0061%U006E%U0075%U006D",
+      "ground_truth": "Arcanum",
+      "text": "The architecture review for %U0041%U0072%U0063%U0061%U006E%U0075%U006D is scheduled for next Tuesday.",
+      "seed": 69897
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "broken encoding tokens",
+      "pii_value": "%U0053%U006F%U006C%U0061%U0072%U0069%U0073",
+      "ground_truth": "Solaris",
+      "text": "Make sure to push the latest changes to the %U0053%U006F%U006C%U0061%U0072%U0069%U0073 repository.",
+      "seed": 69897
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "broken encoding tokens",
+      "pii_value": "%U004E%U0075%U0062%U0069%U0073",
+      "ground_truth": "Nubis",
+      "text": "The QA team reported a critical bug in %U004E%U0075%U0062%U0069%U0073 that needs immediate attention.",
+      "seed": 69897
+    },
+    {
+      "type": "PROJECT_NAME",
+      "strategy": "broken encoding tokens",
+      "pii_value": "%U004F%U0072%U0069%U006F%U006E",
+      "ground_truth": "Orion",
+      "text": "We will demo %U004F%U0072%U0069%U006F%U006E to the stakeholders on Friday afternoon.",
+      "seed": 69897
+    },
+    {
+      "type": "CITY",
+      "strategy": "short-name",
+      "pii_value": "&#x4d;&#x69;&#x61;&#x6d;&#x69;",
+      "ground_truth": "Miami",
+      "text": "The conference was held in &#x4d;&#x69;&#x61;&#x6d;&#x69; last summer.",
+      "seed": 69897
+    },
+    {
+      "type": "CITY",
+      "strategy": "short-name",
+      "pii_value": "&#x44;&#x65;&#x6e;&#x76;&#x65;&#x72;",
+      "ground_truth": "Denver",
+      "text": "I flew into &#x44;&#x65;&#x6e;&#x76;&#x65;&#x72; for the hiking trip.",
+      "seed": 69897
+    },
+    {
+      "type": "CITY",
+      "strategy": "short-name",
+      "pii_value": "&#x53;&#x65;&#x61;&#x74;&#x74;&#x6c;&#x65;",
+      "ground_truth": "Seattle",
+      "text": "The rain in &#x53;&#x65;&#x61;&#x74;&#x74;&#x6c;&#x65; is famous.",
+      "seed": 69897
+    },
+    {
+      "type": "CITY",
+      "strategy": "short-name",
+      "pii_value": "&#x50;&#x68;&#x6f;&#x65;&#x6e;&#x69;&#x78;",
+      "ground_truth": "Phoenix",
+      "text": "Her new job is based in &#x50;&#x68;&#x6f;&#x65;&#x6e;&#x69;&#x78;.",
+      "seed": 69897
+    },
+    {
+      "type": "CITY",
+      "strategy": "short-name",
+      "pii_value": "&#x41;&#x74;&#x6c;&#x61;&#x6e;&#x74;&#x61;",
+      "ground_truth": "Atlanta",
+      "text": "We stopped in &#x41;&#x74;&#x6c;&#x61;&#x6e;&#x74;&#x61; for a layover.",
+      "seed": 69897
+    },
+    {
+      "type": "CITY",
+      "strategy": "short-name",
+      "pii_value": "&#x50;&#x6f;&#x72;&#x74;&#x6c;&#x61;&#x6e;&#x64;",
+      "ground_truth": "Portland",
+      "text": "The food scene in &#x50;&#x6f;&#x72;&#x74;&#x6c;&#x61;&#x6e;&#x64; is incredible.",
+      "seed": 69897
+    },
+    {
+      "type": "CITY",
+      "strategy": "short-name",
+      "pii_value": "&#x4e;&#x61;&#x73;&#x68;&#x76;&#x69;&#x6c;&#x6c;&#x65;",
+      "ground_truth": "Nashville",
+      "text": "He moved to &#x4e;&#x61;&#x73;&#x68;&#x76;&#x69;&#x6c;&#x6c;&#x65; to pursue music.",
+      "seed": 69897
+    },
+    {
+      "type": "CITY",
+      "strategy": "short-name",
+      "pii_value": "&#x4f;&#x72;&#x6c;&#x61;&#x6e;&#x64;&#x6f;",
+      "ground_truth": "Orlando",
+      "text": "The family vacation was in &#x4f;&#x72;&#x6c;&#x61;&#x6e;&#x64;&#x6f; visiting theme parks.",
+      "seed": 69897
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "fractional-spacing",
+      "pii_value": "/h o m e / u s e r / d o c s / r e p o r t . p d f",
+      "ground_truth": "/home/user/docs/report.pdf",
+      "text": "I saved the financial analysis as /h o m e / u s e r / d o c s / r e p o r t . p d f on the secure server.",
+      "seed": 69897
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "fractional-spacing",
+      "pii_value": "/v a r / l o g / s y s t e m . l o g",
+      "ground_truth": "/var/log/system.log",
+      "text": "The debug output was redirected to /v a r / l o g / s y s t e m . l o g for analysis.",
+      "seed": 69897
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "fractional-spacing",
+      "pii_value": "C : \\ U s e r s \\ a d m i n \\ b a c k u p \\ d a t a . z i p",
+      "ground_truth": "C:\\Users\\admin\\backup\\data.zip",
+      "text": "Please extract the archive from C : \\ U s e r s \\ a d m i n \\ b a c k u p \\ d a t a . z i p to restore the project.",
+      "seed": 69897
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "fractional-spacing",
+      "pii_value": "/e t c / n g i n x / s i t e s - a v a i l a b l e / d e f a u l t",
+      "ground_truth": "/etc/nginx/sites-available/default",
+      "text": "The web server configuration is stored at /e t c / n g i n x / s i t e s - a v a i l a b l e / d e f a u l t.",
+      "seed": 69897
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "fractional-spacing",
+      "pii_value": "/d a t a / p r o j e c t s / 2 0 2 4 / Q 4 / r e s u l t s . c s v",
+      "ground_truth": "/data/projects/2024/Q4/results.csv",
+      "text": "Export the quarterly metrics to /d a t a / p r o j e c t s / 2 0 2 4 / Q 4 / r e s u l t s . c s v.",
+      "seed": 69897
+    },
+    {
+      "type": "FILE_PATH",
+      "strategy": "fractional-spacing",
+      "pii_value": "/u s r / l o c a l / b i n / c u s t o m _ s c r i p t . s h",
+      "ground_truth": "/usr/local/bin/custom_script.sh",
+      "text": "Run the deployment tool located at /u s r / l o c a l / b i n / c u s t o m _ s c r i p t . s h to initialize the environment.",
+      "seed": 69897
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "fractional spacing",
+      "pii_value": "4 0 1 2 8 8 8 8 8 8 8 8 1 8 8 1",
+      "ground_truth": "4012888888881881",
+      "text": "My backup card is 4 0 1 2 8 8 8 8 8 8 8 8 1 8 8 1 in case the main one fails.",
+      "seed": 69897
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "fractional spacing",
+      "pii_value": "5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5",
+      "ground_truth": "5555555555555555",
+      "text": "Please enter 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 5 for the test payment.",
+      "seed": 69897
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "fractional spacing",
+      "pii_value": "3 7 8 2 8 2 2 4 6 3 1 0 0 0 5 1",
+      "ground_truth": "3782822463100051",
+      "text": "Use the Amex card 3 7 8 2 8 2 2 4 6 3 1 0 0 0 5 1 for the hotel booking.",
+      "seed": 69897
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "fractional spacing",
+      "pii_value": "6 0 1 1 1 1 1 1 1 1 1 1 1 1 7 9",
+      "ground_truth": "6011111111111179",
+      "text": "Discover card 6 0 1 1 1 1 1 1 1 1 1 1 1 1 7 9 is saved in my wallet.",
+      "seed": 69897
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "fractional spacing",
+      "pii_value": "4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2",
+      "ground_truth": "4222222222222222",
+      "text": "The Visa card 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 was used for the subscription.",
+      "seed": 69897
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "fractional spacing",
+      "pii_value": "6 3 0 4 9 0 0 0 0 0 0 0 0 0 0 5",
+      "ground_truth": "6304900000000005",
+      "text": "My debit card ends with 6 3 0 4 9 0 0 0 0 0 0 0 0 0 0 5 and is a Maestro.",
+      "seed": 69897
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "fractional spacing",
+      "pii_value": "3 5 3 0 1 1 1 3 3 0 0 0 0 0 0 2",
+      "ground_truth": "3530111330000002",
+      "text": "For the flight, enter 3 5 3 0 1 1 1 3 3 0 0 0 0 0 0 2 as the JCB card number.",
+      "seed": 69897
+    },
+    {
+      "type": "CREDIT_CARD",
+      "strategy": "fractional spacing",
+      "pii_value": "4 9 1 7 3 0 0 0 0 0 0 0 0 0 8 0",
+      "ground_truth": "4917300000000080",
+      "text": "The virtual card 4 9 1 7 3 0 0 0 0 0 0 0 0 0 8 0 is active for one-time use.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "Ainadnatsuj",
+      "ground_truth": "Japan",
+      "text": "The embassy is located in Ainadnatsuj near the port.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "Yrtnuoc Ycnalb",
+      "ground_truth": "Country Blank",
+      "text": "She moved to Yrtnuoc Ycnalb for the job.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "Ailartsua",
+      "ground_truth": "Australia",
+      "text": "My brother lives in Ailartsua now.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "Ecnafra",
+      "ground_truth": "France",
+      "text": "We traveled to Ecnafra last summer.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "Ynamreg",
+      "ground_truth": "Germany",
+      "text": "Her ancestors came from Ynamreg.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "Yratil Tneuqesnoc",
+      "ground_truth": "Country Consequit",
+      "text": "The flight to Yratil Tneuqesnoc was delayed.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "Acinagam",
+      "ground_truth": "Magacin",
+      "text": "He bought property in Acinagam.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "Ekauq Esoh",
+      "ground_truth": "Country House",
+      "text": "The package was sent to Ekauq Esoh.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "C4n4d4",
+      "ground_truth": "Canada",
+      "text": "We received a package postmarked from C4n4d4 yesterday.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "Br4z1l",
+      "ground_truth": "Brazil",
+      "text": "The carnival in Br4z1l is famous worldwide.",
+      "seed": 69897
+    },
+    {
+      "type": "COUNTRY",
+      "strategy": "short-name",
+      "pii_value": "1nd14",
+      "ground_truth": "India",
+      "text": "He booked a flight to 1nd14 for the summer.",
+      "seed": 69897
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "192.168.1.l00",
+      "ground_truth": "192.168.1.100",
+      "text": "The server log shows an anomalous connection from 192.168.1.l00 at 3 AM.",
+      "seed": 69897
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "10.0.0.2S5",
+      "ground_truth": "10.0.0.255",
+      "text": "Please whitelist the IP 10.0.0.2S5 for internal testing.",
+      "seed": 69897
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "172.16.0.l0l",
+      "ground_truth": "172.16.0.101",
+      "text": "Our subnet includes the address 172.16.0.l0l for the new router.",
+      "seed": 69897
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "8.8.8.8B",
+      "ground_truth": "8.8.8.88",
+      "text": "The DNS server was set to 8.8.8.8B temporarily during troubleshooting.",
+      "seed": 69897
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "200l:db8:85a3::8a2e:370:7334",
+      "ground_truth": "2001:db8:85a3::8a2e:370:7334",
+      "text": "The IPv6 address 200l:db8:85a3::8a2e:370:7334 was used in the test environment.",
+      "seed": 69897
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "192.168.l.50S",
+      "ground_truth": "192.168.1.505",
+      "text": "Access was denied from IP 192.168.l.50S due to policy restrictions.",
+      "seed": 69897
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "l0.10.0.l00",
+      "ground_truth": "10.10.0.100",
+      "text": "The printer is assigned to l0.10.0.l00 on the office network.",
+      "seed": 69897
+    },
+    {
+      "type": "IP_ADDRESS",
+      "strategy": "staggered capitalization with digit substitution",
+      "pii_value": "fe80::l%eth0",
+      "ground_truth": "fe80::1%eth0",
+      "text": "The link-local address fe80::l%eth0 was active on the interface.",
+      "seed": 69897
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "unicode-normalization",
+      "pii_value": "postgresql://admín:passwörd@db.example.com:5432/écommerce",
+      "ground_truth": "postgresql://admin:password@db.example.com:5432/ecommerce",
+      "text": "The backup script failed because it tried to connect using postgresql://admín:passwörd@db.example.com:5432/écommerce, which returned a charset error.",
+      "seed": 69897
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "unicode-normalization",
+      "pii_value": "mysql://höst:üser@192.168.1.50:3306/cañdídate",
+      "ground_truth": "mysql://host:user@192.168.1.50:3306/candidate",
+      "text": "After the migration, our new staging environment uses mysql://höst:üser@192.168.1.50:3306/cañdídate but the old config still points to the old database.",
+      "seed": 69897
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "unicode-normalization",
+      "pii_value": "mongodb://ädmin:ässétß@mongo-cluster.example.com:27017/projëct",
+      "ground_truth": "mongodb://admin:assetss@mongo-cluster.example.com:27017/project",
+      "text": "Please update the credentials in the deployment file: the current entry mongodb://ädmin:ässétß@mongo-cluster.example.com:27017/projëct will not work with our standard password rules.",
+      "seed": 69897
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "unicode-normalization",
+      "pii_value": "sqlite:///dätä/cûstömër.db",
+      "ground_truth": "sqlite:///data/customer.db",
+      "text": "The developer forgot that the local SQLite path uses NFC characters like in sqlite:///dätä/cûstömër.db, causing inconsistencies when deployed on Linux.",
+      "seed": 69897
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "unicode-normalization",
+      "pii_value": "postgresql://örder:tràckîng@warehouse.example.com:5432/lögistics",
+      "ground_truth": "postgresql://order:tracking@warehouse.example.com:5432/logistics",
+      "text": "When the team tried to access the warehouse database via postgresql://örder:tràckîng@warehouse.example.com:5432/lögistics, the connection pool exhausted due to repeated handshake failures.",
+      "seed": 69897
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "unicode-normalization",
+      "pii_value": "mysql://rëpört:änalýtics@10.0.0.5:3306/sälés_2024",
+      "ground_truth": "mysql://report:analytics@10.0.0.5:3306/sales_2024",
+      "text": "You'll need to decode the escaped characters in mysql://rëpört:änalýtics@10.0.0.5:3306/sälés_2024 before running the integration tests.",
+      "seed": 69897
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "unicode-normalization",
+      "pii_value": "mongodb://fïlter:ëncrýpt@prod-db.example.com:27017/hëalth",
+      "ground_truth": "mongodb://filter:encrypt@prod-db.example.com:27017/health",
+      "text": "Our automated scanner flagged mongodb://fïlter:ëncrýpt@prod-db.example.com:27017/hëalth as a potential security risk due to the unusual Unicode characters in the string.",
+      "seed": 69897
+    },
+    {
+      "type": "DATABASE_URL",
+      "strategy": "unicode-normalization",
+      "pii_value": "postgresql://àuth:ßéssïon@auth-db.example.com:5432/sécurïty",
+      "ground_truth": "postgresql://auth:bession@auth-db.example.com:5432/security",
+      "text": "The legacy configuration file accidentally contained postgresql://àuth:ßéssïon@auth-db.example.com:5432/sécurïty, which broke the authentication service after the NFKC normalization step.",
+      "seed": 69897
+    },
+    {
+      "type": "PERSON",
+      "strategy": "nested-encoding",
+      "pii_value": "JTJGVSUyRnd3dy5leGFtcGxlLmNvbSUyRg==",
+      "ground_truth": "Maria Hernandez",
+      "text": "The email from JTJGVSUyRnd3dy5leGFtcGxlLmNvbSUyRg== was flagged as suspicious.",
+      "seed": 69897
+    },
+    {
+      "type": "PERSON",
+      "strategy": "nested-encoding",
+      "pii_value": "JTJGdXNlciUyRmRhbmllbC5sZXdpcyUyRg==",
+      "ground_truth": "Daniel Lewis",
+      "text": "Please forward the report to JTJGdXNlciUyRmRhbmllbC5sZXdpcyUyRg== for review.",
+      "seed": 69897
+    },
+    {
+      "type": "PERSON",
+      "strategy": "nested-encoding",
+      "pii_value": "JTJGcGVvcGxlJTJGc29maWEuZ3VhcmRpYW5vJTJG",
+      "ground_truth": "Sofia Guardiano",
+      "text": "The application was submitted by JTJGcGVvcGxlJTJGc29maWEuZ3VhcmRpYW5vJTJG.",
+      "seed": 69897
+    },
+    {
+      "type": "PERSON",
+      "strategy": "nested-encoding",
+      "pii_value": "JTJGbWFuYWdlciUyRmthcmVuLm1hcnRpbmV6JTJG",
+      "ground_truth": "Karen Martinez",
+      "text": "JTJGbWFuYWdlciUyRmthcmVuLm1hcnRpbmV6JTJG is the new project lead.",
+      "seed": 69897
+    },
+    {
+      "type": "PERSON",
+      "strategy": "nested-encoding",
+      "pii_value": "JTJGY29udGFjdHMlMkZhbWFuZGEuZmlzaGVyJTJG",
+      "ground_truth": "Amanda Fisher",
+      "text": "The contract was signed by JTJGY29udGFjdHMlMkZhbWFuZGEuZmlzaGVyJTJG yesterday.",
+      "seed": 69897
+    },
+    {
+      "type": "PERSON",
+      "strategy": "nested-encoding",
+      "pii_value": "JTJGdXNlcnMlMkZyb2JlcnRvLmplbmtpbnMlMkY=",
+      "ground_truth": "Roberto Jenkins",
+      "text": "Access credentials for JTJGdXNlcnMlMkZyb2JlcnRvLmplbmtpbnMlMkY= need to be reset.",
+      "seed": 69897
+    },
+    {
+      "type": "PERSON",
+      "strategy": "nested-encoding",
+      "pii_value": "JTJGY2xpZW50cyUyRm5lbGx5LmNvcm5lbGl1cyUyRg==",
+      "ground_truth": "Nelly Cornelius",
+      "text": "The feedback form was sent to JTJGY2xpZW50cyUyRm5lbGx5LmNvcm5lbGl1cyUyRg==.",
+      "seed": 69897
+    },
+    {
+      "type": "PERSON",
+      "strategy": "nested-encoding",
+      "pii_value": "JTJGZGlyZWN0b3J5JTJGcGFtZWxhLmR1cmFuJTJG",
+      "ground_truth": "Pamela Duran",
+      "text": "Please update the directory listing for JTJGZGlyZWN0b3J5JTJGcGFtZWxhLmR1cmFuJTJG.",
+      "seed": 69897
+    },
+    {
+      "type": "URL",
+      "strategy": "broken encoding tokens",
+      "pii_value": "http://www.ex%U0061mple.net/login",
+      "ground_truth": "http://www.example.net/login",
+      "text": "The phishing link http://www.ex%U0061mple.net/login was flagged by the security team.",
+      "seed": 69897
+    },
+    {
+      "type": "URL",
+      "strategy": "broken encoding tokens",
+      "pii_value": "https://api.d%U0061taserver.com/v2/users",
+      "ground_truth": "https://api.dataserver.com/v2/users",
+      "text": "Please verify the endpoint https://api.d%U0061taserver.com/v2/users before deployment.",
+      "seed": 69897
+    },
+    {
+      "type": "URL",
+      "strategy": "broken encoding tokens",
+      "pii_value": "ftp://f%U0069leshare.org/reports/q1.pdf",
+      "ground_truth": "ftp://fileshare.org/reports/q1.pdf",
+      "text": "The ftp link ftp://f%U0069leshare.org/reports/q1.pdf is inaccessible due to authentication issues.",
+      "seed": 69897
+    },
+    {
+      "type": "URL",
+      "strategy": "broken encoding tokens",
+      "pii_value": "http://secure-p%U0061yments.com/checkout",
+      "ground_truth": "http://secure-payments.com/checkout",
+      "text": "Customers reported the URL http://secure-p%U0061yments.com/checkout as redirecting to a malicious site.",
+      "seed": 69897
+    },
+    {
+      "type": "URL",
+      "strategy": "broken encoding tokens",
+      "pii_value": "https://m%U0061il.hubspot.com/inbox",
+      "ground_truth": "https://mail.hubspot.com/inbox",
+      "text": "The support ticket referenced https://m%U0061il.hubspot.com/inbox but the link was broken.",
+      "seed": 69897
+    },
+    {
+      "type": "URL",
+      "strategy": "broken encoding tokens",
+      "pii_value": "http://w%U0077w.opensource.org/license",
+      "ground_truth": "http://www.opensource.org/license",
+      "text": "The documentation link http://w%U0077w.opensource.org/license needs to be updated.",
+      "seed": 69897
+    },
+    {
+      "type": "URL",
+      "strategy": "broken encoding tokens",
+      "pii_value": "https://st%U0061ging.app.test.com/api/status",
+      "ground_truth": "https://staging.app.test.com/api/status",
+      "text": "The staging environment URL https://st%U0061ging.app.test.com/api/status returned a 500 error.",
+      "seed": 69897
+    },
+    {
+      "type": "URL",
+      "strategy": "broken encoding tokens",
+      "pii_value": "ftp://d%U0061ta-bank.eu/transfers/2024",
+      "ground_truth": "ftp://data-bank.eu/transfers/2024",
+      "text": "The file transfer using ftp://d%U0061ta-bank.eu/transfers/2024 failed due to an invalid encoding.",
+      "seed": 69897
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "short-name",
+      "pii_value": "\\115\\141\\162\\153\\157\\166",
+      "ground_truth": "Markov",
+      "text": "The coding challenge was solved by \\115\\141\\162\\153\\157\\166 last week.",
+      "seed": 69897
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "short-name",
+      "pii_value": "\\120\\141\\166\\145\\154",
+      "ground_truth": "Pavel",
+      "text": "Please forward the quarterly report to \\120\\141\\166\\145\\154.",
+      "seed": 69897
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "short-name",
+      "pii_value": "\\111\\162\\151\\156\\141",
+      "ground_truth": "Irina",
+      "text": "The new design was presented by \\111\\162\\151\\156\\141 at the meeting.",
+      "seed": 69897
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "short-name",
+      "pii_value": "\\104\\155\\151\\164\\162\\171",
+      "ground_truth": "Dmitry",
+      "text": "\\104\\155\\151\\164\\162\\171 requested access to the server logs.",
+      "seed": 69897
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "short-name",
+      "pii_value": "\\116\\141\\164\\141\\154\\151\\145",
+      "ground_truth": "Natalie",
+      "text": "The audit trail shows \\116\\141\\164\\141\\154\\151\\145 made the final edit.",
+      "seed": 69897
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "short-name",
+      "pii_value": "\\123\\145\\162\\147\\145\\171",
+      "ground_truth": "Sergey",
+      "text": "Contact \\123\\145\\162\\147\\145\\171 if you need help with the database.",
+      "seed": 69897
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "short-name",
+      "pii_value": "\\117\\154\\147\\141",
+      "ground_truth": "Olga",
+      "text": "The security badge for \\117\\154\\147\\141 needs to be reissued.",
+      "seed": 69897
+    },
+    {
+      "type": "EMPLOYEE_NAME",
+      "strategy": "short-name",
+      "pii_value": "\\126\\151\\153\\164\\157\\162",
+      "ground_truth": "Viktor",
+      "text": "The deployment was managed by \\126\\151\\153\\164\\157\\162 from the infrastructure team.",
+      "seed": 69897
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "fractional-spacing",
+      "pii_value": "8 2 9 0 3 1 7 4",
+      "ground_truth": "82903174",
+      "text": "Please transfer the bonus to account number 8 2 9 0 3 1 7 4 at First Federal.",
+      "seed": 69897
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "fractional-spacing",
+      "pii_value": "4 5 6 1 2 3 8 9",
+      "ground_truth": "45612389",
+      "text": "My savings account 4 5 6 1 2 3 8 9 was used for the deposit.",
+      "seed": 69897
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "fractional-spacing",
+      "pii_value": "1 0 2 7 6 5 4 3",
+      "ground_truth": "10276543",
+      "text": "Could you confirm the routing for account 1 0 2 7 6 5 4 3?",
+      "seed": 69897
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "fractional-spacing",
+      "pii_value": "9 3 8 2 1 4 0 6",
+      "ground_truth": "93821406",
+      "text": "The invoice should be paid to account 9 3 8 2 1 4 0 6 at Liberty Bank.",
+      "seed": 69897
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "fractional-spacing",
+      "pii_value": "5 7 4 0 9 8 2 1",
+      "ground_truth": "57409821",
+      "text": "Attach the statement for account 5 7 4 0 9 8 2 1 to your tax return.",
+      "seed": 69897
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "fractional-spacing",
+      "pii_value": "2 6 1 8 3 7 0 5",
+      "ground_truth": "26183705",
+      "text": "Refunds will go to account 2 6 1 8 3 7 0 5 starting next week.",
+      "seed": 69897
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "fractional-spacing",
+      "pii_value": "7 0 3 9 4 2 6 8",
+      "ground_truth": "70394268",
+      "text": "The system flagged account 7 0 3 9 4 2 6 8 for unusual activity.",
+      "seed": 69897
+    },
+    {
+      "type": "BANK_ACCOUNT",
+      "strategy": "fractional-spacing",
+      "pii_value": "6 4 9 5 1 0 3 7",
+      "ground_truth": "64951037",
+      "text": "Send the wire transfer to account 6 4 9 5 1 0 3 7 in Zurich.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "java-unicode-escapes",
+      "pii_value": "\\u0034\\u0030\\u002e\\u0037\\u0031\\u0032\\u0038\\u002c\\u002d\\u0037\\u0034\\u002e\\u0030\\u0030\\u0036\\u0033",
+      "ground_truth": "40.7128,-74.0063",
+      "text": "The meeting point was at \\u0034\\u0030\\u002e\\u0037\\u0031\\u0032\\u0038\\u002c\\u002d\\u0037\\u0034\\u002e\\u0030\\u0030\\u0036\\u0033 near the waterfront.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "java-unicode-escapes",
+      "pii_value": "\\u0033\\u0034\\u002e\\u0030\\u0035\\u0032\\u0032\\u002c\\u002d\\u0031\\u0031\\u0038\\u002e\\u0032\\u0034\\u0033\\u0037",
+      "ground_truth": "34.0522,-118.2437",
+      "text": "Our hike started at \\u0033\\u0034\\u002e\\u0030\\u0035\\u0032\\u0032\\u002c\\u002d\\u0031\\u0031\\u0038\\u002e\\u0032\\u0034\\u0033\\u0037 along the trail.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "java-unicode-escapes",
+      "pii_value": "\\u0034\\u0031\\u002e\\u0038\\u0037\\u0038\\u0031\\u002c\\u002d\\u0038\\u0037\\u002e\\u0036\\u0032\\u0039\\u0038",
+      "ground_truth": "41.8781,-87.6298",
+      "text": "The delivery address was \\u0034\\u0031\\u002e\\u0038\\u0037\\u0038\\u0031\\u002c\\u002d\\u0038\\u0037\\u002e\\u0036\\u0032\\u0039\\u0038 in the downtown area.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "java-unicode-escapes",
+      "pii_value": "\\u0032\\u0035\\u002e\\u0037\\u0036\\u0031\\u0037\\u002c\\u002d\\u0038\\u0030\\u002e\\u0031\\u0039\\u0031\\u0038",
+      "ground_truth": "25.7617,-80.1918",
+      "text": "I parked at \\u0032\\u0035\\u002e\\u0037\\u0036\\u0031\\u0037\\u002c\\u002d\\u0038\\u0030\\u002e\\u0031\\u0039\\u0031\\u0038 near the beach entrance.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "java-unicode-escapes",
+      "pii_value": "\\u0033\\u0039\\u002e\\u0037\\u0033\\u0039\\u0032\\u002c\\u002d\\u0031\\u0030\\u0034\\u002e\\u0039\\u0038\\u0034\\u0030",
+      "ground_truth": "39.7392,-104.9840",
+      "text": "The landmark is located at \\u0033\\u0039\\u002e\\u0037\\u0033\\u0039\\u0032\\u002c\\u002d\\u0031\\u0030\\u0034\\u002e\\u0039\\u0038\\u0034\\u0030 according to the map.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "java-unicode-escapes",
+      "pii_value": "\\u0033\\u0037\\u002e\\u0037\\u0037\\u0034\\u0039\\u002c\\u002d\\u0031\\u0032\\u0032\\u002e\\u0034\\u0031\\u0039\\u0034",
+      "ground_truth": "37.7749,-122.4194",
+      "text": "Our rendezvous point was \\u0033\\u0037\\u002e\\u0037\\u0037\\u0034\\u0039\\u002c\\u002d\\u0031\\u0032\\u0032\\u002e\\u0034\\u0031\\u0039\\u0034 on the pier.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "java-unicode-escapes",
+      "pii_value": "\\u0033\\u0038\\u002e\\u0039\\u0030\\u0037\\u0032\\u002c\\u002d\\u0037\\u0037\\u002e\\u0030\\u0033\\u0036\\u0039",
+      "ground_truth": "38.9072,-77.0369",
+      "text": "I recorded the coordinates \\u0033\\u0038\\u002e\\u0039\\u0030\\u0037\\u0032\\u002c\\u002d\\u0037\\u0037\\u002e\\u0030\\u0033\\u0036\\u0039 for the monument.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "java-unicode-escapes",
+      "pii_value": "\\u0034\\u0037\\u002e\\u0036\\u0030\\u0036\\u0032\\u002c\\u002d\\u0031\\u0032\\u0032\\u002e\\u0033\\u0033\\u0032\\u0031",
+      "ground_truth": "47.6062,-122.3321",
+      "text": "The coffee shop near \\u0034\\u0037\\u002e\\u0036\\u0030\\u0036\\u0032\\u002c\\u002d\\u0031\\u0032\\u0032\\u002e\\u0033\\u0033\\u0032\\u0031 was always busy.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "zip code reversal",
+      "pii_value": "41.40338, 2.17403",
+      "ground_truth": "41.40338, 2.17403",
+      "text": "The restaurant's GPS coordinates are 41.40338, 2.17403 for accurate navigation.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "zip code reversal",
+      "pii_value": "34.0522, -118.2437",
+      "ground_truth": "34.0522, -118.2437",
+      "text": "Can you verify the GPS reading 34.0522, -118.2437 from the device?",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "zip code reversal",
+      "pii_value": "51.5074, -0.1278",
+      "ground_truth": "51.5074, -0.1278",
+      "text": "Our meeting point is at 51.5074, -0.1278 near the park.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "zip code reversal",
+      "pii_value": "35.6895, 139.6917",
+      "ground_truth": "35.6895, 139.6917",
+      "text": "Please log the GPS coordinates 35.6895, 139.6917 for the delivery.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "zip code reversal",
+      "pii_value": "-33.8688, 151.2093",
+      "ground_truth": "-33.8688, 151.2093",
+      "text": "The incident occurred at GPS location -33.8688, 151.2093.",
+      "seed": 69897
+    },
+    {
+      "type": "GPS",
+      "strategy": "zip code reversal",
+      "pii_value": "40.7128, -74.0060",
+      "ground_truth": "40.7128, -74.0060",
+      "text": "I sent the coordinates 40.7128, -74.0060 in the message earlier.",
+      "seed": 69897
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "zip code reversal",
+      "pii_value": "742 Elm Street, Springfield, IL 97234",
+      "ground_truth": "742 Elm Street, Springfield, IL 27934",
+      "text": "The package was delivered to 742 Elm Street, Springfield, IL 97234 yesterday.",
+      "seed": 69897
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "zip code reversal",
+      "pii_value": "1589 Oak Avenue, Portland, OR 02691",
+      "ground_truth": "1589 Oak Avenue, Portland, OR 19620",
+      "text": "Please update the records for 1589 Oak Avenue, Portland, OR 02691.",
+      "seed": 69897
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "zip code reversal",
+      "pii_value": "453 Maple Drive, Denver, CO 90814",
+      "ground_truth": "453 Maple Drive, Denver, CO 41809",
+      "text": "The invoice shows 453 Maple Drive, Denver, CO 90814 as the billing address.",
+      "seed": 69897
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "zip code reversal",
+      "pii_value": "21 Cedar Lane, Austin, TX 45068",
+      "ground_truth": "21 Cedar Lane, Austin, TX 86054",
+      "text": "She moved into 21 Cedar Lane, Austin, TX 45068 last month.",
+      "seed": 69897
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "zip code reversal",
+      "pii_value": "889 Birch Street, Miami, FL 62130",
+      "ground_truth": "889 Birch Street, Miami, FL 03126",
+      "text": "The new restaurant opened at 889 Birch Street, Miami, FL 62130.",
+      "seed": 69897
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "zip code reversal",
+      "pii_value": "376 Pine Road, Seattle, WA 13980",
+      "ground_truth": "376 Pine Road, Seattle, WA 08931",
+      "text": "The tenant at 376 Pine Road, Seattle, WA 13980 filed a complaint.",
+      "seed": 69897
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "zip code reversal",
+      "pii_value": "1200 Walnut Court, Chicago, IL 67541",
+      "ground_truth": "1200 Walnut Court, Chicago, IL 14576",
+      "text": "They scheduled a viewing at 1200 Walnut Court, Chicago, IL 67541.",
+      "seed": 69897
+    },
+    {
+      "type": "ADDRESS",
+      "strategy": "zip code reversal",
+      "pii_value": "5 Willow Way, Phoenix, AZ 81203",
+      "ground_truth": "5 Willow Way, Phoenix, AZ 30218",
+      "text": "The GPS coordinates for 5 Willow Way, Phoenix, AZ 81203 are incorrect.",
+      "seed": 69897
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "staggered-capitalization-digit-substitution",
+      "pii_value": "M4rY.J0n3s@mai1.c0m",
+      "ground_truth": "mary.jones@mail.com",
+      "text": "Please forward the report to M4rY.J0n3s@mai1.c0m for review.",
+      "seed": 69897
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "staggered-capitalization-digit-substitution",
+      "pii_value": "J0hN.D03@w0rk.n3t",
+      "ground_truth": "john.doe@work.net",
+      "text": "The system flagged J0hN.D03@w0rk.n3t as a potential duplicate.",
+      "seed": 69897
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "staggered-capitalization-digit-substitution",
+      "pii_value": "S4r4h.L3w1s@gm41l.c0m",
+      "ground_truth": "sarah.lewis@gmail.com",
+      "text": "I sent the invoice to S4r4h.L3w1s@gm41l.c0m yesterday.",
+      "seed": 69897
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "staggered-capitalization-digit-substitution",
+      "pii_value": "M1k3.Br0wn@y4h00.c0m",
+      "ground_truth": "mike.brown@yahoo.com",
+      "text": "Could you update M1k3.Br0wn@y4h00.c0m on the project status?",
+      "seed": 69897
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "staggered-capitalization-digit-substitution",
+      "pii_value": "L1zA.P3r3z@c0mp4ny.0rg",
+      "ground_truth": "liza.perez@company.org",
+      "text": "The notification was sent to L1zA.P3r3z@c0mp4ny.0rg by mistake.",
+      "seed": 69897
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "staggered-capitalization-digit-substitution",
+      "pii_value": "D4v1d.L33@un1v.3du",
+      "ground_truth": "david.lee@univ.edu",
+      "text": "Access credentials for D4v1d.L33@un1v.3du were reset.",
+      "seed": 69897
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "staggered-capitalization-digit-substitution",
+      "pii_value": "K4t3.W1ll14ms@m41n.c0m",
+      "ground_truth": "kate.williams@main.com",
+      "text": "The phishing attempt targeted K4t3.W1ll14ms@m41n.c0m with a fake login page.",
+      "seed": 69897
+    },
+    {
+      "type": "EMAIL",
+      "strategy": "staggered-capitalization-digit-substitution",
+      "pii_value": "T0m.H4rr1s@w3b.c0",
+      "ground_truth": "tom.harris@web.co",
+      "text": "Please verify the account associated with T0m.H4rr1s@w3b.c0.",
+      "seed": 69897
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "unicode-normalization-attack",
+      "pii_value": "9876-5̂-4321",
+      "ground_truth": "987-65-4321",
+      "text": "The client's file listed their SSN as 9876-5̂-4321, but the dash was actually a combining circumflex.",
+      "seed": 69897
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "unicode-normalization-attack",
+      "pii_value": "456-78-9́123",
+      "ground_truth": "456-78-9123",
+      "text": "She wrote her social security number as 456-78-9̃123, using a combining tilde over the nine.",
+      "seed": 69897
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "unicode-normalization-attack",
+      "pii_value": "123-4̅-6789",
+      "ground_truth": "123-45-6789",
+      "text": "The form had 123-4̄-6789 for the SSN, where the five was replaced by a combining macron.",
+      "seed": 69897
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "unicode-normalization-attack",
+      "pii_value": "321-54-7̆78",
+      "ground_truth": "321-54-7678",
+      "text": "They noted the SSN as 321-54-7̆678, using a combining breve over the seventh digit.",
+      "seed": 69897
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "unicode-normalization-attack",
+      "pii_value": "654-3̂-2109",
+      "ground_truth": "654-32-2109",
+      "text": "Her number appeared as 654-3̂-2109, with a circumflex replacing the second digit of the middle group.",
+      "seed": 69897
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "unicode-normalization-attack",
+      "pii_value": "789-0̈-1234",
+      "ground_truth": "789-01-1234",
+      "text": "The database entry showed 789-0̈-1234, where the one was obscured by a combining diaeresis.",
+      "seed": 69897
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "unicode-normalization-attack",
+      "pii_value": "234-56-7̈01",
+      "ground_truth": "234-56-7801",
+      "text": "In the report, the SSN was given as 234-56-7̧01, with a combining cedilla under the eight.",
+      "seed": 69897
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "unicode-normalization-attack",
+      "pii_value": "876-54-3̂́",
+      "ground_truth": "876-54-3321",
+      "text": "The document listed the number as 876-54-3̂́, using both circumflex and acute combining marks.",
+      "seed": 69897
+    },
+    {
+      "type": "SOCIAL_SECURITY",
+      "strategy": "nested encoding",
+      "pii_value": "JTQ4JTlCJTUzJTVBJTdCJTVDJTdCJTVFJTQ4",
+      "ground_truth": "481-27-8934",
+      "text": "The file noted the SSN was JTQ4JTlCJTUzJTVBJTdCJTVDJTdCJTVFJTQ4, but I think it's for a different person.",
+      "seed": 69897
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "nested encoding",
+      "pii_value": "JTVCJTVCJTdCJTIyJTdBJTIyJTVEJTVDJTVD",
+      "ground_truth": "AB123456",
+      "text": "My passport number is JTVCJTVCJTdCJTIyJTdBJTIyJTVEJTVDJTVD, but you'll need to decode it to get the actual value.",
+      "seed": 69897
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "nested encoding",
+      "pii_value": "JTdCJTIyJTdCJTIyJTdCJTIyJTdC",
+      "ground_truth": "CD789012",
+      "text": "The courier mentioned the package reference JTdCJTIyJTdCJTIyJTdCJTIyJTdC for the passport delivery.",
+      "seed": 69897
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "nested encoding",
+      "pii_value": "JTIyJTdCJTIyJTdCJTIyJTdCJTIy",
+      "ground_truth": "EF345678",
+      "text": "Please verify the encoded string JTIyJTdCJTIyJTdCJTIyJTdCJTIy in the system corresponds to my passport.",
+      "seed": 69897
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "nested encoding",
+      "pii_value": "JTVCJTIyJTVCJTIyJTVCJTIyJTVC",
+      "ground_truth": "GH901234",
+      "text": "The form instructed me to enter JTVCJTIyJTVCJTIyJTVCJTIyJTVC as the passport number for security reasons.",
+      "seed": 69897
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "nested encoding",
+      "pii_value": "JTdCJTVCJTdCJTVCJTdCJTVCJTdC",
+      "ground_truth": "IJ567890",
+      "text": "I received an email with JTdCJTVCJTdCJTVCJTdCJTVCJTdC, which is supposedly my passport code.",
+      "seed": 69897
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "nested encoding",
+      "pii_value": "JTIyJTdCJTIyJTVCJTIyJTdCJTIy",
+      "ground_truth": "KL123456",
+      "text": "The database shows the passport identifier as JTIyJTdCJTIyJTVCJTIyJTdCJTIy for the applicant.",
+      "seed": 69897
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "nested encoding",
+      "pii_value": "JTVCJTdCJTVCJTdCJTVCJTdCJTVC",
+      "ground_truth": "MN789012",
+      "text": "During the check-in, they asked for JTVCJTdCJTVCJTdCJTVCJTdCJTVC, but I had to explain it's encoded.",
+      "seed": 69897
+    },
+    {
+      "type": "PASSPORT",
+      "strategy": "nested encoding",
+      "pii_value": "JTdCJTIyJTVCJTIyJTdCJTIyJTVC",
+      "ground_truth": "OP345678",
+      "text": "The support ticket includes JTdCJTIyJTVCJTIyJTdCJTIyJTVC as the passport number for the lost document case.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "short-name",
+      "pii_value": "DE89 3704 0044 0532 0130 0́0",
+      "ground_truth": "DE89370400440532013000",
+      "text": "Please transfer the funds to IBAN DE89 3704 0044 0532 0130 0́0 using the standard NFC.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "short-name",
+      "pii_value": "FR76 3000 6000 0112 3456 7890 1́89",
+      "ground_truth": "FR7630006000011234567890189",
+      "text": "The supplier's invoice lists FR76 3000 6000 0112 3456 7890 1́89 as their bank account.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "short-name",
+      "pii_value": "GB29 NWBK 6016 1331 9268 1́9",
+      "ground_truth": "GB29NWBK60161331926819",
+      "text": "Can you confirm the IBAN GB29 NWBK 6016 1331 9268 1́9 is correct for the refund?",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "short-name",
+      "pii_value": "IT60 X054 2811 1010 0000 0123 4́56",
+      "ground_truth": "IT60X0542811101000000123456",
+      "text": "Our office in Milan uses IBAN IT60 X054 2811 1010 0000 0123 4́56 for payments.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "short-name",
+      "pii_value": "ES91 2100 0418 4502 0005 1332 5́7",
+      "ground_truth": "ES912100041845020005133257",
+      "text": "For the Spanish client, the IBAN is ES91 2100 0418 4502 0005 1332 5́7.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "short-name",
+      "pii_value": "DE44 5001 0517 5407 3249 3́1",
+      "ground_truth": "DE44500105175407324931",
+      "text": "Please update the system with IBAN DE44 5001 0517 5407 3249 3́1 for the new account.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "short-name",
+      "pii_value": "FR14 2004 1010 0505 0001 3́9 M02",
+      "ground_truth": "FR14200410100505000139M02",
+      "text": "The IBAN FR14 2004 1010 0505 0001 3́9 M02 was sent via encrypted email.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "short-name",
+      "pii_value": "GB15 ABBY 0901 2345 6789 1́2",
+      "ground_truth": "GB15ABBY09012345678912",
+      "text": "Check the validity of IBAN GB15 ABBY 0901 2345 6789 1́2 before initiating the wire.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "short-name",
+      "pii_value": "IT31 L030 0203 2800 0004 0002 6́78",
+      "ground_truth": "IT31L0300203280000040002678",
+      "text": "The rental contract specifies IBAN IT31 L030 0203 2800 0004 0002 6́78.",
+      "seed": 69897
+    },
+    {
+      "type": "IBAN",
+      "strategy": "short-name",
+      "pii_value": "ES76 0049 1500 0512 3456 7890 1́2",
+      "ground_truth": "ES760049150005123456789012",
+      "text": "IBAN ES76 0049 1500 0512 3456 7890 1́2 belongs to the Madrid branch.",
+      "seed": 69897
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "unicode-normalization",
+      "pii_value": "sk-1A2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P7Q8R9S0T1U2V3W4X5Y6Z7A8B9C0D1E",
+      "ground_truth": "sk-1A2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P7Q8R9S0T1U2V3W4X5Y6Z7A8B9C0D1E",
+      "text": "The deployment requires the API key sk-1A2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P7Q8R9S0T1U2V3W4X5Y6Z7A8B9C0D1E to authenticate requests.",
+      "seed": 69897
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "unicode-normalization",
+      "pii_value": "aBcD1234EfGh5678IjKl9012MnOp3456QrSt7890UvWx1234YzAb5678CdEf",
+      "ground_truth": "aBcD1234EfGh5678IjKl9012MnOp3456QrSt7890UvWx1234YzAb5678CdEf",
+      "text": "Your account API key aBcD1234EfGh5678IjKl9012MnOp3456QrSt7890UvWx1234YzAb5678CdEf has been rotated for security.",
+      "seed": 69897
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "unicode-normalization",
+      "pii_value": "LmNoPqRsTuVwXyZ0123456789AbCdEfGhIjKlMnOpQrStUvWxYz123456",
+      "ground_truth": "LmNoPqRsTuVwXyZ0123456789AbCdEfGhIjKlMnOpQrStUvWxYz123456",
+      "text": "Please include the API key LmNoPqRsTuVwXyZ0123456789AbCdEfGhIjKlMnOpQrStUvWxYz123456 in the Authorization header.",
+      "seed": 69897
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "unicode-normalization",
+      "pii_value": "GhIjKlMnOpQrStUvWxYzAbCdEf0123456789GhIjKlMnOpQrStUvWxYz",
+      "ground_truth": "GhIjKlMnOpQrStUvWxYzAbCdEf0123456789GhIjKlMnOpQrStUvWxYz",
+      "text": "The API key GhIjKlMnOpQrStUvWxYzAbCdEf0123456789GhIjKlMnOpQrStUvWxYz is used for production environment.",
+      "seed": 69897
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "unicode-normalization",
+      "pii_value": "9012AbCdEfGhIjKlMnOpQrStUvWxYz3456789012AbCdEfGhIjKlMnOp",
+      "ground_truth": "9012AbCdEfGhIjKlMnOpQrStUvWxYz3456789012AbCdEfGhIjKlMnOp",
+      "text": "Generate a new API key 9012AbCdEfGhIjKlMnOpQrStUvWxYz3456789012AbCdEfGhIjKlMnOp for the staging server.",
+      "seed": 69897
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "unicode-normalization",
+      "pii_value": "QrStUvWxYzAbCdEfGhIjKlMnOp1234567890QrStUvWxYzAbCdEfGhIj",
+      "ground_truth": "QrStUvWxYzAbCdEfGhIjKlMnOp1234567890QrStUvWxYzAbCdEfGhIj",
+      "text": "Revoke the old API key QrStUvWxYzAbCdEfGhIjKlMnOp1234567890QrStUvWxYzAbCdEfGhIj and issue a new one.",
+      "seed": 69897
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "unicode-normalization",
+      "pii_value": "KlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz1234567890AbCd",
+      "ground_truth": "KlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz1234567890AbCd",
+      "text": "The API key KlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz1234567890AbCd grants access to the reporting module.",
+      "seed": 69897
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "unicode-normalization",
+      "pii_value": "EfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz90123456",
+      "ground_truth": "EfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz90123456",
+      "text": "Verify the API key EfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz90123456 before enabling the service.",
+      "seed": 69897
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "unicode-normalization",
+      "pii_value": "7890AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWx",
+      "ground_truth": "7890AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWx",
+      "text": "The sandbox API key 7890AbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWx is only for testing.",
+      "seed": 69897
+    },
+    {
+      "type": "API_KEY",
+      "strategy": "unicode-normalization",
+      "pii_value": "YzAbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz01",
+      "ground_truth": "YzAbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz01",
+      "text": "Store the API key YzAbCdEfGhIjKlMnOpQrStUvWxYzAbCdEfGhIjKlMnOpQrStUvWxYz01 in a secure vault.",
+      "seed": 69897
+    }
+  ]
+}

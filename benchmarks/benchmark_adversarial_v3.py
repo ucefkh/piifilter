@@ -109,7 +109,7 @@ def detect_raw_regex(text: str, patterns: list[tuple[EntityType, re.Pattern[str]
 
 def detect_full_pipeline(text: str, patterns: list[tuple[EntityType, re.Pattern[str], float]]) -> list[dict[str, Any]]:
     deob = Deobfuscator()
-    text, _log = deob(text)
+    text, _log, _meta = deob(text)
     entities: list[dict[str, Any]] = []
     seen_intervals: list[tuple[int, int]] = []
     for entity_type, pattern, score in patterns:
