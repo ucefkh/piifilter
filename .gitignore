@@ -42,3 +42,5 @@ _sanity.py
 _verify_*.py
 test_import*.py
 check_*.py
+_diag*.py
+_debug*.py
