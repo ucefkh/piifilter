@@ -12,6 +12,7 @@ from typing import Any, Pattern
 from piifilter.interfaces.detector import Detector
 from piifilter.session import Session
 from piifilter.shared.models import DetectedEntity, EntityType
+from piifilter.shared.deobfuscator import Deobfuscator
 
 from . import patterns
 
@@ -32,6 +33,7 @@ class RegexDetector(Detector):
 
     def __init__(self) -> None:
         self._patterns: list[tuple[EntityType, Pattern[str], float]] = self._compile()
+        self._deobfuscator = Deobfuscator()
         self._name = "regex"
         self._version = "2.0.0"
 
@@ -56,10 +58,15 @@ class RegexDetector(Detector):
     async def detect(self, text: str, *, language: str | None = None) -> list[dict[str, Any]]:
         """Detect PII entities in *text*.
 
-        Implements the core ``Detector`` interface method.
+        Text is first run through the deobfuscation preprocessor
+        (NFKC normalize, unwrap [at]/[dot], HTML entities, zero-width
+        chars, fullwidth ASCII, unicode escapes) then regex patterns
+        are applied against the cleaned text.
+
         Returns a list of dicts with keys: text, type, start, end, score, detector.
         """
-        entities = self._run_patterns(text)
+        cleaned, _log = self._deobfuscator(text)
+        entities = self._run_patterns(cleaned)
         return [
             {
                 "text": e.value,
@@ -77,10 +84,14 @@ class RegexDetector(Detector):
     async def detect_session(self, session: Session) -> list[DetectedEntity]:
         """Run compiled regex patterns on ``session.prompt``.
 
+        Text is first run through the deobfuscation preprocessor
+        (NFKC normalize, [at]/[dot], HTML entities, zero-width, etc.).
+
         Returns a list of ``DetectedEntity`` instances sorted by start position.
         Shortcut that bypasses the dict conversion of ``detect(text)``.
         """
-        return self._run_patterns(session.prompt)
+        cleaned, _log = self._deobfuscator(session.prompt)
+        return self._run_patterns(cleaned)
 
     # ── Entity listing ──────────────────────────────────────────────
 

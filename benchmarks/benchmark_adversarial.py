@@ -28,6 +28,7 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT / "plugins" / "detector-regex" / "src"))
 from piifilter_detector_regex.patterns import PATTERN_DEFS
 from piifilter.shared.models import EntityType, DetectedEntity
+from piifilter.shared.deobfuscator import Deobfuscator
 
 # ── Obfuscation technique helpers ──────────────────────────────────────────
 
@@ -86,7 +87,14 @@ def luhn_valid(digits: str) -> bool:
 
 
 def detect_all(text: str, patterns: list[tuple[EntityType, re.Pattern[str], float]]) -> list[dict[str, Any]]:
-    """Run all patterns against text with overlap dedup and Luhn validation."""
+    """Run all patterns against text with overlap dedup and Luhn validation.
+
+    Text is first deobfuscated (NFKC normalize, [at]/[dot], HTML entities,
+    zero-width, fullwidth, unicode escapes) before regex matching.
+    """
+    deob = Deobfuscator()
+    text, _log = deob(text)
+
     entities: list[dict[str, Any]] = []
     seen_intervals: list[tuple[int, int]] = []
 

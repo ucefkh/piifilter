@@ -132,7 +132,17 @@ class FilterPipeline:
         # covers this span, skip lower-priority ones.
         # But if a lower-priority entity has a DIFFERENT type and is NOT
         # fully contained by the same-type interval, keep it.
+        # Cross-type suppression: Presidio PERSON detections that overlap
+        # with structural entity types (FILE_PATH, URL, EMAIL, etc.) are
+        # likely NER noise from structured fields — suppress them to
+        # preserve PERSON precision.
+        _PERSON_CROSS_SUPPRESS_TYPES = {
+            "FILE_PATH", "URL", "DOMAIN", "EMAIL", "IP_ADDRESS",
+            "API_KEY", "JWT", "SSH_KEY", "DATABASE_URL", "PRIVATE_URL",
+            "CREDIT_CARD", "SOCIAL_SECURITY", "PASSPORT", "IBAN",
+        }
         seen_intervals: dict[str, list[tuple[int, int]]] = {}
+        all_interval_map: dict[str, list[tuple[int, int]]] = {}
         deduped = []
         for e in all_entities:
             if isinstance(e, dict):
@@ -141,10 +151,27 @@ class FilterPipeline:
             else:
                 et = e.type.value if hasattr(e.type, 'value') else str(e.type)
                 estart, eend = e.start, e.end
+
+            # Cross-type suppression: PERSON from NER that overlaps with
+            # a structural entity type is likely noise.
+            if et == "PERSON":
+                overlaps_structural = False
+                for stype in _PERSON_CROSS_SUPPRESS_TYPES:
+                    s_intervals = all_interval_map.get(stype, [])
+                    for s, e2 in s_intervals:
+                        if not (eend <= s or estart >= e2):
+                            overlaps_structural = True
+                            break
+                    if overlaps_structural:
+                        break
+                if overlaps_structural:
+                    continue
+
             intervals = seen_intervals.get(et, [])
             contained = any(s <= estart and eend <= e2 for s, e2 in intervals)
             if not contained:
                 seen_intervals.setdefault(et, []).append((estart, eend))
+                all_interval_map.setdefault(et, []).append((estart, eend))
                 deduped.append(e)
 
         deduped.sort(key=lambda e: e.get("start") if isinstance(e, dict) else e.start)

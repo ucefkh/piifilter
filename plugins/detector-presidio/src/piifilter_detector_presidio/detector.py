@@ -52,13 +52,13 @@ PRESIDIO_TYPE_MAP: dict[str, EntityType] = {
     "IP_ADDRESS": EntityType.IP_ADDRESS,
     # Credentials
     "API_KEY": EntityType.API_KEY,
-    # Person — REMOVED from Presidio mapping because:
-    #   1. The regex detector already catches PERSON with recall=1.0 and precision=0.75
-    #   2. Presidio PERSON adds ~26 false positives (precision drops to 0.41) with zero
-    #      additional true positives
-    #   3. CUSTOMER_NAME/EMPLOYEE_NAME patterns cover named-person-in-context cases
-    # See: benchmarks/recall-results.json
-    # "PERSON": EntityType.PERSON,
+    # Person — re-enabled with high confidence threshold.
+    # Regex PERSON has precision=1.0 but recall=0.718 on the held-out set.
+    # Presidio NER catches full names regex misses (e.g. "Alice Johnson")
+    # but generates false positives on common words at low confidence.
+    # A higher confidence floor (0.85 vs 0.75 for other entities) prunes
+    # those FPs while retaining most true-positive NER detections.
+    "PERSON": EntityType.PERSON,
 }
 
 PRESIDIO_KNOWN_ENTITIES: set[str] = set(PRESIDIO_TYPE_MAP.keys())
@@ -67,6 +67,10 @@ PRESIDIO_KNOWN_ENTITIES: set[str] = set(PRESIDIO_TYPE_MAP.keys())
 # This aggressively prunes the many low-confidence false positives
 # that presidio's NER produces for generic text.
 _MIN_SCORE: float = 0.75
+# Higher confidence threshold for NER-based PERSON detection.
+# Presidio's NER fires on common nouns and sentence fragments at low confidence;
+# requiring >= 0.85 excludes most false positives while keeping real names.
+_PERSON_MIN_SCORE: float = 0.85
 
 
 _PRIVATE_URL_PREFIXES = (
@@ -128,7 +132,9 @@ def _presidio_to_entity_type(
     category).
     """
     # Hard score floor — drop everything below the threshold.
-    if score < _MIN_SCORE:
+    # PERSON uses a higher threshold to prune NER false positives.
+    threshold = _PERSON_MIN_SCORE if presidio_type == "PERSON" else _MIN_SCORE
+    if score < threshold:
         return None
 
     # Special handling: URL → PRIVATE_URL only for private URLs.

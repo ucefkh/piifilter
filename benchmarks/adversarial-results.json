@@ -2,9 +2,9 @@
   "summary": {
     "overall": {
       "total_examples": 117,
-      "detected": 49,
-      "missed": 68,
-      "detection_rate": 41.9
+      "detected": 74,
+      "missed": 43,
+      "detection_rate": 63.2
     },
     "by_category": {
       "Homoglyph emails": {
@@ -16,29 +16,18 @@
       },
       "Zero-width chars": {
         "total": 8,
-        "detected": 4,
-        "missed": 4,
-        "detection_rate": 50.0,
-        "missed_examples": [
-          "Multiple ZWSP throughout",
-          "ZWJ in SSN",
-          "ZWNJ in phone",
-          "ZWSP in IP"
-        ]
+        "detected": 8,
+        "missed": 0,
+        "detection_rate": 100.0,
+        "missed_examples": []
       },
       "[at]/[dot] formats": {
         "total": 9,
-        "detected": 0,
-        "missed": 9,
-        "detection_rate": 0.0,
+        "detected": 6,
+        "missed": 3,
+        "detection_rate": 66.7,
         "missed_examples": [
-          "email [at]",
-          "email (at) (dot)",
-          "email {at} {dot}",
           "email AT DOT",
-          "email [@] [.]",
-          "email <at> <dot>",
-          "email [ät] [döt]",
           "email at&t-style",
           "email dot dash"
         ]
@@ -58,11 +47,12 @@
       },
       "SSN segmented": {
         "total": 7,
-        "detected": 1,
-        "missed": 6,
-        "detection_rate": 14.3,
+        "detected": 0,
+        "missed": 7,
+        "detection_rate": 0.0,
         "missed_examples": [
           "SSN with spaces",
+          "SSN with NBSP",
           "SSN with tabs",
           "SSN with multiple spaces",
           "SSN with underscores",
@@ -85,13 +75,12 @@
       },
       "CC with spaces": {
         "total": 9,
-        "detected": 6,
-        "missed": 3,
-        "detection_rate": 66.7,
+        "detected": 7,
+        "missed": 2,
+        "detection_rate": 77.8,
         "missed_examples": [
           "CC with dots",
-          "CC with underscores",
-          "CC with thin spaces"
+          "CC with underscores"
         ]
       },
       "Encoded (base64/rot13)": {
@@ -110,17 +99,10 @@
       },
       "HTML entities": {
         "total": 6,
-        "detected": 0,
-        "missed": 6,
-        "detection_rate": 0.0,
-        "missed_examples": [
-          "email &#64; &#46;",
-          "all chars as entities",
-          "hex entities email",
-          "SSN as entities",
-          "IP as entities",
-          "phone as entities"
-        ]
+        "detected": 6,
+        "missed": 0,
+        "detection_rate": 100.0,
+        "missed_examples": []
       },
       "Split across tokens": {
         "total": 9,
@@ -139,39 +121,29 @@
       },
       "URL encoding": {
         "total": 5,
-        "detected": 3,
-        "missed": 2,
-        "detection_rate": 60.0,
-        "missed_examples": [
-          "email full encoded domain",
-          "IP with %2E"
-        ]
+        "detected": 5,
+        "missed": 0,
+        "detection_rate": 100.0,
+        "missed_examples": []
       },
       "Unicode tricks": {
         "total": 9,
-        "detected": 1,
-        "missed": 8,
-        "detection_rate": 11.1,
+        "detected": 7,
+        "missed": 2,
+        "detection_rate": 77.8,
         "missed_examples": [
-          "en-dash SSN",
-          "em-dash SSN",
-          "full-width email",
-          "email with soft hyphen",
-          "phone with en-dashes",
           "SSN with figure spaces",
-          "SSN with punctuation space",
-          "half-width Roman email"
+          "SSN with punctuation space"
         ]
       },
       "Comments/injection": {
         "total": 12,
-        "detected": 9,
-        "missed": 3,
-        "detection_rate": 75.0,
+        "detected": 10,
+        "missed": 2,
+        "detection_rate": 83.3,
         "missed_examples": [
           "HTML comment in SSN",
-          "JS comment in phone",
-          "JSON escaped \\u0040"
+          "JS comment in phone"
         ]
       },
       "Reversed/mirrored": {
@@ -303,7 +275,7 @@
       "detections": [
         {
           "type": "EMAIL",
-          "value": "ohn@example.com",
+          "value": "john@example.com",
           "score": 0.9
         }
       ]
@@ -315,9 +287,9 @@
       "detected": true,
       "detections": [
         {
-          "type": "DOMAIN",
-          "value": "example.com",
-          "score": 0.75
+          "type": "EMAIL",
+          "value": "bob@example.com",
+          "score": 0.9
         }
       ]
     },
@@ -328,9 +300,9 @@
       "detected": true,
       "detections": [
         {
-          "type": "DOMAIN",
-          "value": "mple.com",
-          "score": 0.75
+          "type": "EMAIL",
+          "value": "user@example.com",
+          "score": 0.9
         }
       ]
     },
@@ -342,7 +314,7 @@
       "detections": [
         {
           "type": "EMAIL",
-          "value": "ice@acme.com",
+          "value": "alice@acme.com",
           "score": 0.9
         }
       ]
@@ -351,50 +323,92 @@
       "category": "Zero-width chars",
       "label": "Multiple ZWSP throughout",
       "text": "Email: t\\u200be\\u200bs\\u200bt\\u200b@\\u200bt\\u200be\\u200bs\\u200bt\\u200b.\\u200bc\\u200bo\\u200bm",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "test@test.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Zero-width chars",
       "label": "ZWJ in SSN",
       "text": "SSN: 12\\u200d3-45-6789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Zero-width chars",
       "label": "ZWNJ in phone",
       "text": "Phone: +1-555-12\\u200c3-4567",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "PHONE",
+          "value": " +1-555-123-4567",
+          "score": 0.88
+        }
+      ]
     },
     {
       "category": "Zero-width chars",
       "label": "ZWSP in IP",
       "text": "IP: 192\\u200b.168\\u200b.1\\u200b.1",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "[at]/[dot] formats",
       "label": "email [at]",
       "text": "john[at]gmail[dot]com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@gmail.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "[at]/[dot] formats",
       "label": "email (at) (dot)",
       "text": "john(at)gmail(dot)com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@gmail.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "[at]/[dot] formats",
       "label": "email {at} {dot}",
       "text": "john{at}gmail{dot}com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@gmail.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "[at]/[dot] formats",
@@ -407,22 +421,40 @@
       "category": "[at]/[dot] formats",
       "label": "email [@] [.]",
       "text": "john[@]gmail[.]com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@gmail.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "[at]/[dot] formats",
       "label": "email <at> <dot>",
       "text": "john<at>gmail<dot>com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@gmail.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "[at]/[dot] formats",
       "label": "email [ät] [döt]",
       "text": "john[ät]example[döt]com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "[at]/[dot] formats",
@@ -484,14 +516,8 @@
       "category": "SSN segmented",
       "label": "SSN with NBSP",
       "text": "SSN: 123\\xa045\\xa06789",
-      "detected": true,
-      "detections": [
-        {
-          "type": "SOCIAL_SECURITY",
-          "value": "123 45 6789",
-          "score": 0.9
-        }
-      ]
+      "detected": false,
+      "detections": []
     },
     {
       "category": "SSN segmented",
@@ -659,8 +685,14 @@
       "category": "CC with spaces",
       "label": "CC with thin spaces",
       "text": "Credit card: 4111\\u20091111\\u20091111\\u20091111",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111 1111 1111 1111",
+          "score": 0.85
+        }
+      ]
     },
     {
       "category": "Encoded (base64/rot13)",
@@ -773,43 +805,79 @@
       "category": "HTML entities",
       "label": "email &#64; &#46;",
       "text": "john&#64;example&#46;com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "HTML entities",
       "label": "all chars as entities",
       "text": "&#106;&#111;&#104;&#110;&#64;&#101;&#120;&#97;&#109;&#112;&#108;&#101;&#46;&#99;&#111;&#109;",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "HTML entities",
       "label": "hex entities email",
       "text": "john&#x40;example&#x2E;com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "HTML entities",
       "label": "SSN as entities",
       "text": "&#49;&#50;&#51;&#45;&#52;&#53;&#45;&#54;&#55;&#56;&#57;",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "HTML entities",
       "label": "IP as entities",
       "text": "&#49;&#57;&#50;&#46;&#49;&#54;&#56;&#46;&#49;&#46;&#49;",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "HTML entities",
       "label": "phone as entities",
       "text": "&#43;&#49;&#45;&#53;&#53;&#53;&#45;&#49;&#50;&#51;&#45;&#52;&#53;&#54;&#55;",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "PHONE",
+          "value": "+1-555-123-4567",
+          "score": 0.88
+        }
+      ]
     },
     {
       "category": "Split across tokens",
@@ -893,9 +961,9 @@
       "detected": true,
       "detections": [
         {
-          "type": "DOMAIN",
-          "value": "40example.com",
-          "score": 0.75
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
         }
       ]
     },
@@ -903,8 +971,14 @@
       "category": "URL encoding",
       "label": "email full encoded domain",
       "text": "john%40example%2Ecom",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "URL encoding",
@@ -914,8 +988,8 @@
       "detections": [
         {
           "type": "PHONE",
-          "value": "555-123-4567",
-          "score": 0.85
+          "value": "+1-555-123-4567",
+          "score": 0.88
         }
       ]
     },
@@ -927,7 +1001,7 @@
       "detections": [
         {
           "type": "DOMAIN",
-          "value": "2540example.com",
+          "value": "40example.com",
           "score": 0.75
         }
       ]
@@ -936,8 +1010,14 @@
       "category": "URL encoding",
       "label": "IP with %2E",
       "text": "192%2E168%2E1%2E1",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.1",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
@@ -956,36 +1036,66 @@
       "category": "Unicode tricks",
       "label": "en-dash SSN",
       "text": "123–45–6789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
       "label": "em-dash SSN",
       "text": "123—45—6789",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "123-45-6789",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
       "label": "full-width email",
       "text": "full-width: ａｌｉｃｅ＠ａｃｍｅ．ｃｏｍ",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "alice@acme.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
       "label": "email with soft hyphen",
       "text": "john\\xad@example\\xad.com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
       "label": "phone with en-dashes",
       "text": "+1–555–123–4567",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "PHONE",
+          "value": "+1-555-123-4567",
+          "score": 0.88
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
@@ -1005,8 +1115,14 @@
       "category": "Unicode tricks",
       "label": "half-width Roman email",
       "text": "john＠example．com",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Comments/injection",
@@ -1091,8 +1207,14 @@
       "category": "Comments/injection",
       "label": "JSON escaped \\u0040",
       "text": "john\\u0040example\\u002Ecom",
-      "detected": false,
-      "detections": []
+      "detected": true,
+      "detections": [
+        {
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
+        }
+      ]
     },
     {
       "category": "Comments/injection",
