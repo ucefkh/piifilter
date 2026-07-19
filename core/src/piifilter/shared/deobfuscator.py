@@ -301,7 +301,6 @@ class Deobfuscator:
         text = re.sub(r"@\s+", "@", text)
         text = re.sub(r"\s+\.\s+", ".", text)
         text = re.sub(r"\s+\.", ".", text)
-        text = re.sub(r"\.\s+", ".", text)
         if text != original:
             log.append({
                 "transform": "at_dot",
@@ -325,7 +324,6 @@ class Deobfuscator:
         text = re.sub(r"@\s+", "@", text)
         text = re.sub(r"\s+\.\s+", ".", text)
         text = re.sub(r"\s+\.", ".", text)
-        text = re.sub(r"\.\s+", ".", text)
         if text != original:
             log.append({
                 "transform": "html_entities",

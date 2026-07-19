@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set)",
-  "timestamp": "2026-07-19T21:27:32Z",
+  "timestamp": "2026-07-19T21:29:37Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
@@ -39,13 +39,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 233,
-      "total_true_positives": 204,
-      "total_false_positives": 29,
-      "total_false_negatives": 8,
-      "overall_precision": 0.8755364806866953,
-      "overall_recall": 0.9622641509433962,
-      "overall_f1": 0.9168539325842697,
+      "total_detected_entities": 229,
+      "total_true_positives": 205,
+      "total_false_positives": 24,
+      "total_false_negatives": 7,
+      "overall_precision": 0.8951965065502183,
+      "overall_recall": 0.9669811320754716,
+      "overall_f1": 0.9297052154195011,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -129,13 +129,13 @@
         },
         "COMPANY": {
           "true_positives": 8,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 8,
-          "precision": 0.8,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6756,
             1.0
@@ -229,13 +229,13 @@
         },
         "DOMAIN": {
           "true_positives": 16,
-          "false_positives": 5,
+          "false_positives": 2,
           "false_negatives": 1,
           "n": 17,
-          "precision": 0.7619,
+          "precision": 0.8889,
           "recall": 0.9412,
-          "f1": 0.8421,
-          "f2": 0.8989,
+          "f1": 0.9143,
+          "f2": 0.9302,
           "recall_ci": [
             0.7302,
             0.9895
@@ -408,23 +408,23 @@
           ]
         },
         "PERSON": {
-          "true_positives": 16,
+          "true_positives": 18,
           "false_positives": 1,
-          "false_negatives": 1,
-          "n": 17,
-          "precision": 0.9412,
-          "recall": 0.9412,
-          "f1": 0.9412,
-          "f2": 0.9412,
+          "false_negatives": 0,
+          "n": 18,
+          "precision": 0.9474,
+          "recall": 1.0,
+          "f1": 0.973,
+          "f2": 0.989,
           "recall_ci": [
-            0.7302,
-            0.9895
+            0.8241,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.8889,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.565,
-            0.9801
+            0.7008,
+            1.0
           ]
         },
         "PHONE": {
@@ -543,10 +543,6 @@
         }
       },
       "confusion_matrix": {
-        "COMPANY": {
-          "COMPANY": 2,
-          "DOMAIN": 2
-        },
         "ADDRESS": {
           "CITY": 1,
           "COUNTRY": 1
@@ -569,9 +565,6 @@
         "DOMAIN": {
           "URL": 1
         },
-        "PERSON": {
-          "DOMAIN": 1
-        },
         "CITY": {
           "CITY": 1
         },
@@ -584,9 +577,9 @@
           "index": 0,
           "text_preview": "Hi, I'm Alice Johnson from Acme Corp. Email: alice@acme.com Phone: +1-555-123-45",
           "expected": 4,
-          "detected": 6,
+          "detected": 4,
           "true_positives": 4,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -596,7 +589,6 @@
           ],
           "detected_types": [
             "COMPANY",
-            "DOMAIN",
             "EMAIL",
             "PERSON",
             "PHONE"
@@ -838,9 +830,9 @@
           "index": 16,
           "text_preview": "Our customer Jane Smith from Widgets Inc. wants her data removed.",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -848,8 +840,7 @@
           ],
           "detected_types": [
             "COMPANY",
-            "CUSTOMER_NAME",
-            "DOMAIN"
+            "CUSTOMER_NAME"
           ]
         },
         {
@@ -1307,9 +1298,9 @@
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
           "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COMPANY",
@@ -1318,7 +1309,7 @@
           "detected_types": [
             "CITY",
             "COMPANY",
-            "DOMAIN"
+            "PERSON"
           ]
         },
         {
@@ -2836,13 +2827,13 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 250,
-      "total_true_positives": 203,
-      "total_false_positives": 47,
-      "total_false_negatives": 9,
-      "overall_precision": 0.812,
-      "overall_recall": 0.9575471698113207,
-      "overall_f1": 0.8787878787878788,
+      "total_detected_entities": 244,
+      "total_true_positives": 204,
+      "total_false_positives": 40,
+      "total_false_negatives": 8,
+      "overall_precision": 0.8360655737704918,
+      "overall_recall": 0.9622641509433962,
+      "overall_f1": 0.8947368421052632,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -2926,13 +2917,13 @@
         },
         "COMPANY": {
           "true_positives": 8,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 8,
-          "precision": 0.8,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6756,
             1.0
@@ -3026,13 +3017,13 @@
         },
         "DOMAIN": {
           "true_positives": 16,
-          "false_positives": 5,
+          "false_positives": 2,
           "false_negatives": 1,
           "n": 17,
-          "precision": 0.7619,
+          "precision": 0.8889,
           "recall": 0.9412,
-          "f1": 0.8421,
-          "f2": 0.8989,
+          "f1": 0.9143,
+          "f2": 0.9302,
           "recall_ci": [
             0.7302,
             0.9895
@@ -3046,13 +3037,13 @@
         },
         "EMAIL": {
           "true_positives": 80,
-          "false_positives": 9,
+          "false_positives": 7,
           "false_negatives": 2,
           "n": 82,
-          "precision": 0.8989,
+          "precision": 0.9195,
           "recall": 0.9756,
-          "f1": 0.9357,
-          "f2": 0.9592,
+          "f1": 0.9467,
+          "f2": 0.9639,
           "recall_ci": [
             0.9154,
             0.9933
@@ -3205,23 +3196,23 @@
           ]
         },
         "PERSON": {
-          "true_positives": 14,
+          "true_positives": 16,
           "false_positives": 5,
-          "false_negatives": 2,
-          "n": 16,
-          "precision": 0.7368,
-          "recall": 0.875,
-          "f1": 0.8,
-          "f2": 0.8434,
+          "false_negatives": 1,
+          "n": 17,
+          "precision": 0.7619,
+          "recall": 0.9412,
+          "f1": 0.8421,
+          "f2": 0.8989,
           "recall_ci": [
-            0.6398,
-            0.965
+            0.7302,
+            0.9895
           ],
           "real_n": 9,
-          "real_recall": 0.7778,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.4526,
-            0.9368
+            0.565,
+            0.9801
           ]
         },
         "PHONE": {
@@ -3340,14 +3331,6 @@
         }
       },
       "confusion_matrix": {
-        "COMPANY": {
-          "COMPANY": 2,
-          "DOMAIN": 2
-        },
-        "EMAIL": {
-          "EMAIL": 5,
-          "DOMAIN": 2
-        },
         "ADDRESS": {
           "CITY": 1,
           "PERSON": 1,
@@ -3377,14 +3360,15 @@
         "IP_ADDRESS": {
           "IP_ADDRESS": 2
         },
-        "PERSON": {
-          "DOMAIN": 1
-        },
         "CITY": {
           "CITY": 1
         },
         "PHONE": {
           "PHONE": 2
+        },
+        "EMAIL": {
+          "EMAIL": 3,
+          "DOMAIN": 2
         }
       },
       "example_results": [
@@ -3392,9 +3376,9 @@
           "index": 0,
           "text_preview": "Hi, I'm Alice Johnson from Acme Corp. Email: alice@acme.com Phone: +1-555-123-45",
           "expected": 4,
-          "detected": 7,
+          "detected": 4,
           "true_positives": 4,
-          "false_positives": 3,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -3404,7 +3388,6 @@
           ],
           "detected_types": [
             "COMPANY",
-            "DOMAIN",
             "EMAIL",
             "PERSON",
             "PHONE"
@@ -3646,9 +3629,9 @@
           "index": 16,
           "text_preview": "Our customer Jane Smith from Widgets Inc. wants her data removed.",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -3656,8 +3639,7 @@
           ],
           "detected_types": [
             "COMPANY",
-            "CUSTOMER_NAME",
-            "DOMAIN"
+            "CUSTOMER_NAME"
           ]
         },
         {
@@ -4116,9 +4098,9 @@
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
           "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COMPANY",
@@ -4127,7 +4109,7 @@
           "detected_types": [
             "CITY",
             "COMPANY",
-            "DOMAIN"
+            "PERSON"
           ]
         },
         {
@@ -5499,9 +5481,9 @@
           "index": 140,
           "text_preview": "CSS: '. alice@acme.com' is a quoted email",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"

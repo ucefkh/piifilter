@@ -389,6 +389,6 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # keyword must immediately precede a capitalized two-word phrase.
     # Low confidence to avoid FPs on "from New York", "from Boston" etc.
     # Avoid matching inside parentheticals like "(famous from Finding Nemo)"
-    ("COMPANY", r"(?<!\w)(?<!\()(?:from)\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))\b", 0.50),
+    ("COMPANY", r"(?<!\w)(?<!\()(?:from)\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
 
 ]
