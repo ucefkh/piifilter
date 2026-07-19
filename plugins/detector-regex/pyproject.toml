@@ -8,7 +8,7 @@ version = "2.0.0"
 description = "Regex-based PII detector plugin for PIIFilter"
 requires-python = ">=3.11"
 dependencies = [
-    "piifilter-core",
+    "piifilter",
 ]
 
 [project.entry-points."piifilter.plugins"]

@@ -18,6 +18,7 @@ from piifilter.pipeline import FilterPipeline
 from piifilter.config import FilterConfig
 from piifilter.registry.registry import PluginRegistry
 from piifilter.events.bus import EventBus, PipelineEvent
+from piifilter.telemetry import telemetry, get_stats
 
 __version__ = "0.1.0"
 
@@ -28,4 +29,6 @@ __all__ = [
     "PluginRegistry",
     "EventBus",
     "PipelineEvent",
+    "telemetry",
+    "get_stats",
 ]

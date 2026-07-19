@@ -7,15 +7,17 @@ Patterns are defined in the companion ``patterns.py`` module.
 from __future__ import annotations
 
 import re
+import time
 from typing import Any, Pattern
 
 from piifilter.interfaces.detector import Detector
 from piifilter.session import Session
 from piifilter.shared.models import DetectedEntity, EntityType
 from piifilter.shared.deobfuscator import Deobfuscator
+from piifilter.telemetry import telemetry
 
 from . import patterns
-from . import patterns
+
 
 
 class RegexDetector(Detector):
@@ -61,21 +63,37 @@ class RegexDetector(Detector):
 
         Text is first run through the deobfuscation preprocessor
         (NFKC normalize, unwrap [at]/[dot], HTML entities, zero-width
-        chars, fullwidth ASCII, unicode escapes) then regex patterns
+        chars, fullwidth ASCII, unicode escapes) then inner-separator
+        stripping collapses obfuscated numeric spans, then regex patterns
         are applied against the cleaned text.
 
-        Returns a list of dicts with keys: text, type, start, end, score, detector.
+        IMPORTANT: GPS patterns are run on the deobfuscated-but-not-stripped
+        text because inner-separator stripping destroys decimal places in
+        coordinate values (e.g. 40.7128 -> 407128), making GPS undetectable.
         """
-        cleaned, _log = self._deobfuscator(text)
-        entities, cc_ssn_spans = self._run_patterns(cleaned)
+        t0 = time.monotonic()
+        cleaned, _log, text_for_gps = self._deobfuscator(text)
+        # Run GPS patterns BEFORE inner-separator stripping (dots are essential
+        # for GPS coordinate matching — stripping would destroy them).
+        gps_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.GPS})
+        # Now strip inner separators and run remaining patterns
+        stripped = Deobfuscator._strip_inner_separators(cleaned)
+        entities, cc_ssn_spans = self._run_patterns(stripped)
         # Structural recall pass: Luhn check on ALL 13-19 digit runs
         # and SSN validator on ALL exactly-9-digit runs not already matched.
-        luhn_found = self._run_luhn_on_numeric_runs(cleaned, cc_ssn_spans)
+        luhn_found = self._run_luhn_on_numeric_runs(stripped, cc_ssn_spans)
         entities.extend(luhn_found)
-        ssn_found = self._validate_ssn_runs(cleaned, cc_ssn_spans)
+        ssn_found = self._validate_ssn_runs(stripped, cc_ssn_spans)
         entities.extend(ssn_found)
+        # Merge GPS entities (from pre-strip text) with the rest (from stripped text)
+        # GPS entities from pre-strip text use original positions in pre-strip text,
+        # which matches the original unsplit position in the raw text after deobfuscation.
+        entities.extend(gps_entities)
         entities.sort(key=lambda e: e.start)
-        return [
+        elapsed = time.monotonic() - t0
+
+        # ── Telemetry hook ──────────────────────────────────────────
+        result = [
             {
                 "text": e.value,
                 "type": e.entity_type.value,
@@ -86,6 +104,8 @@ class RegexDetector(Detector):
             }
             for e in entities
         ]
+        telemetry.record(elapsed=elapsed, detections=result, transforms=_log)
+        return result
 
     # ── Session-based detection ──────────────────────────────────────
 
@@ -93,18 +113,22 @@ class RegexDetector(Detector):
         """Run compiled regex patterns on ``session.prompt``.
 
         Text is first run through the deobfuscation preprocessor
-        (NFKC normalize, [at]/[dot], HTML entities, zero-width, etc.).
+        (NFKC normalize, [at]/[dot], HTML entities, zero-width, etc.)
+        then inner-separator stripping collapses obfuscated numeric spans.
 
-        Returns a list of ``DetectedEntity`` instances sorted by start position.
-        Shortcut that bypasses the dict conversion of ``detect(text)``.
+        IMPORTANT: GPS patterns are run on pre-strip text (see detect() docs).
         """
-        cleaned, _log = self._deobfuscator(session.prompt)
-        entities, cc_ssn_spans = self._run_patterns(cleaned)
+        cleaned, _log, text_for_gps = self._deobfuscator(session.prompt)
+        # GPS: run on pre-strip text so decimal places survive
+        gps_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.GPS})
+        stripped = Deobfuscator._strip_inner_separators(cleaned)
+        entities, cc_ssn_spans = self._run_patterns(stripped)
         # Structural recall pass
-        luhn_found = self._run_luhn_on_numeric_runs(cleaned, cc_ssn_spans)
+        luhn_found = self._run_luhn_on_numeric_runs(stripped, cc_ssn_spans)
         entities.extend(luhn_found)
-        ssn_found = self._validate_ssn_runs(cleaned, cc_ssn_spans)
+        ssn_found = self._validate_ssn_runs(stripped, cc_ssn_spans)
         entities.extend(ssn_found)
+        entities.extend(gps_entities)
         entities.sort(key=lambda e: e.start)
         return entities
 
@@ -134,34 +158,64 @@ class RegexDetector(Detector):
             compiled.append((entity_type, pattern, score))
         return compiled
 
-    @staticmethod
-    def _luhn_valid(digits: str) -> bool:
-        """Validate a digit string using the Luhn algorithm (ISO/IEC 7812).
-
-        Returns True if the checksum passes. Requires at least 13 digits
-        (the minimum length for a real credit card number).
-        """
-        nums = [int(d) for d in digits if d.isdigit()]
-        if len(nums) < 13:
+    @classmethod
+    def _luhn_check(cls, digits: str) -> bool:
+        """Standard Luhn algorithm. Returns True if check digit passes."""
+        if not digits.isdigit() or len(digits) < 13 or len(digits) > 19:
             return False
-        # Double every second digit from the right (starting at the
-        # second-to-last position, i.e. index len-2, then len-4, …)
-        for i in range(len(nums) - 2, -1, -2):
-            nums[i] *= 2
-            if nums[i] > 9:
-                nums[i] -= 9
-        return sum(nums) % 10 == 0
+        total = 0
+        reverse = digits[::-1]
+        for i, c in enumerate(reverse):
+            n = ord(c) - 48
+            if i % 2 == 1:
+                n *= 2
+                if n > 9:
+                    n -= 9
+            total += n
+        return total % 10 == 0
 
-    def _run_patterns(self, text: str) -> list[DetectedEntity]:
+    @staticmethod
+    def _ssn_area_group_serial_valid(ssn_digits: str) -> bool:
+        """Validate a 9-digit string using SSN area/group/serial rules.
+
+        Validates that:
+          - Area (first 3 digits): != '000', != '666', not in range '900'-'999'
+          - Group (middle 2 digits): != '00'
+          - Serial (last 4 digits): != '0000'
+
+        Returns True if all checks pass.
+        """
+        if len(ssn_digits) != 9 or not ssn_digits.isdigit():
+            return False
+        area = ssn_digits[:3]
+        group = ssn_digits[3:5]
+        serial = ssn_digits[5:]
+        return (
+            area != "000"
+            and area != "666"
+            and not ("900" <= area <= "999")
+            and group != "00"
+            and serial != "0000"
+        )
+
+    def _run_patterns(self, text: str) -> tuple[list[DetectedEntity], set[tuple[int, int]]]:
         """Run all compiled patterns against *text* with basic overlap dedup.
 
         CREDIT_CARD matches are validated with the Luhn algorithm: if the
         matched text contains 13+ digits that fail the checksum the match
         is discarded, eliminating false positives from random 16-digit
         numbers and IBAN trailing segments.
+
+        Returns
+        -------
+        (entities, cc_ssn_spans)
+            entities — list of detected entities sorted by start position.
+            cc_ssn_spans — set of (start, end) intervals for every CREDIT_CARD
+            and SOCIAL_SECURITY match found by patterns (used by structural
+            recall validators to avoid double-counting).
         """
         if not text:
-            return []
+            return [], set()
 
         entities: list[DetectedEntity] = []
         seen_intervals: list[tuple[int, int]] = []
@@ -182,7 +236,7 @@ class RegexDetector(Detector):
                 # digit content fails the checksum.
                 if entity_type == EntityType.CREDIT_CARD:
                     digits = "".join(c for c in match.group() if c.isdigit())
-                    if len(digits) >= 13 and not self._luhn_valid(digits):
+                    if len(digits) >= 13 and not self._luhn_check(digits):
                         continue
 
                 entities.append(
@@ -198,7 +252,138 @@ class RegexDetector(Detector):
                 seen_intervals.append((start, end))
 
         entities.sort(key=lambda e: e.start)
-        return entities
+
+        # Build set of (start, end) intervals for CC/SSN matches only —
+        # used by structural validators to avoid double-counting.
+        cc_ssn_spans: set[tuple[int, int]] = {
+            (e.start, e.end)
+            for e in entities
+            if e.entity_type in (EntityType.CREDIT_CARD, EntityType.SOCIAL_SECURITY)
+        }
+
+        return entities, cc_ssn_spans
+
+    def _run_patterns_for_type(
+        self, text: str, entity_types: set[EntityType]
+    ) -> tuple[list[DetectedEntity], set[tuple[int, int]]]:
+        """Run only patterns matching *entity_types* against *text*.
+
+        Used for types whose patterns must be run on the pre-strip text
+        (before inner-separator stripping destroys key characters like dots).
+        Currently used for GPS coordinates.
+
+        Returns
+        -------
+        (entities, cc_ssn_spans)
+        """
+        if not text:
+            return [], set()
+        entities: list[DetectedEntity] = []
+        seen_intervals: list[tuple[int, int]] = []
+
+        for entity_type, pattern, score in self._patterns:
+            if entity_type not in entity_types:
+                continue
+            for match in pattern.finditer(text):
+                start, end = match.start(), match.end()
+                if start == end:
+                    continue
+                if any(s <= start and end <= e for s, e in seen_intervals):
+                    continue
+                entities.append(
+                    DetectedEntity(
+                        entity_type=entity_type,
+                        value=match.group(),
+                        start=start,
+                        end=end,
+                        confidence=score,
+                        detector="regex",
+                    )
+                )
+                seen_intervals.append((start, end))
+
+        entities.sort(key=lambda e: e.start)
+        cc_ssn_spans: set[tuple[int, int]] = set()
+        return entities, cc_ssn_spans
+
+    def _run_luhn_on_numeric_runs(
+        self, text: str, covered_spans: set[tuple[int, int]]
+    ) -> list[DetectedEntity]:
+        """Scan for all 13-19 consecutive digit runs not already covered by
+        a pattern match and emit CREDIT_CARD at confidence 0.95 if Luhn passes.
+
+        This is a structural recall safety net: after separator-stripping
+        (done by the deobfuscator), any CC format variant reduces to a bare
+        digit run that this method can catch. Only fires when the span was
+        NOT already detected by a pattern match.
+        """
+        found: list[DetectedEntity] = []
+        # Match 13-19 consecutive digits
+        for m in re.finditer(r"\b\d{13,19}\b", text):
+            start, end = m.start(), m.end()
+            digits = m.group()
+
+            # Skip if already covered by a pattern match
+            if any(s <= start and end <= e for s, e in covered_spans):
+                continue
+
+            if self._luhn_check(digits):
+                found.append(
+                    DetectedEntity(
+                        entity_type=EntityType.CREDIT_CARD,
+                        value=digits,
+                        start=start,
+                        end=end,
+                        confidence=0.95,
+                        detector="regex",
+                    )
+                )
+        return found
+
+    @staticmethod
+    def _validate_ssn_runs(
+        text: str, covered_spans: set[tuple[int, int]]
+    ) -> list[DetectedEntity]:
+        """Scan for all exactly-9 consecutive digit runs not already covered
+        by a pattern match and emit SOCIAL_SECURITY at confidence 0.95 if
+        area/group/serial validation passes.
+
+        Validation rules (from SSA):
+          - Area (first 3 digits): not 000, not 666, not 900-999
+          - Group (middle 2 digits): not 00
+          - Serial (last 4 digits): not 0000
+        """
+        found: list[DetectedEntity] = []
+        for m in re.finditer(r"(?<!\d)\d{9}(?!\d)", text):
+            start, end = m.start(), m.end()
+            digits = m.group()
+
+            # Skip if already covered by a pattern match
+            if any(s <= start and end <= e for s, e in covered_spans):
+                continue
+
+            area = int(digits[0:3])
+            group = int(digits[3:5])
+            serial = int(digits[5:9])
+
+            if area == 0 or area == 666 or area >= 900:
+                continue
+            if group == 0:
+                continue
+            if serial == 0:
+                continue
+
+            found.append(
+                DetectedEntity(
+                    entity_type=EntityType.SOCIAL_SECURITY,
+                    value=digits,
+                    start=start,
+                    end=end,
+                    confidence=0.95,
+                    detector="regex",
+                )
+            )
+        return found
 
 
 def _resolve_entity_type(name: str) -> EntityType:

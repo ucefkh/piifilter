@@ -2,27 +2,21 @@
   "summary": {
     "overall": {
       "total_examples": 201,
-      "full_pipeline_detected": 88,
-      "full_pipeline_rate": 43.8,
+      "full_pipeline_detected": 113,
+      "full_pipeline_rate": 56.2,
       "raw_regex_detected": 57,
       "raw_regex_rate": 28.4,
-      "deobfuscation_improvement": 15.4
+      "deobfuscation_improvement": 27.9
     },
     "by_category": {
       "Punctuation-stuffed": {
         "total": 14,
-        "full_pipeline_detected": 0,
-        "full_pipeline_rate": 0.0,
+        "full_pipeline_detected": 6,
+        "full_pipeline_rate": 42.9,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 0.0,
+        "improvement": 42.9,
         "missed_examples": [
-          "DATE:punct-stuff",
-          "DATE:punct-stuff",
-          "DATE:punct-stuff",
-          "DATE:punct-stuff",
-          "DATE:punct-stuff",
-          "DATE:punct-stuff",
           "DATE:punct-stuff",
           "DATE:punct-stuff",
           "PROJECT_NAME:punctuation-stuffed",
@@ -53,26 +47,25 @@
       },
       "L33tspeak": {
         "total": 14,
-        "full_pipeline_detected": 12,
-        "full_pipeline_rate": 85.7,
+        "full_pipeline_detected": 11,
+        "full_pipeline_rate": 78.6,
         "raw_regex_detected": 12,
         "raw_regex_rate": 85.7,
-        "improvement": 0.0,
+        "improvement": -7.1,
         "missed_examples": [
+          "SSH_KEY:l33tspeak",
           "SSH_KEY:l33tspeak",
           "SSH_KEY:l33tspeak"
         ]
       },
       "Double encoding": {
         "total": 15,
-        "full_pipeline_detected": 3,
-        "full_pipeline_rate": 20.0,
+        "full_pipeline_detected": 5,
+        "full_pipeline_rate": 33.3,
         "raw_regex_detected": 3,
         "raw_regex_rate": 20.0,
-        "improvement": 0.0,
+        "improvement": 13.3,
         "missed_examples": [
-          "FILE_PATH:double-encoding",
-          "FILE_PATH:double-encoding",
           "FILE_PATH:double-encoding",
           "FILE_PATH:double-encoding",
           "FILE_PATH:double-encoding",
@@ -83,6 +76,226 @@
           "COMPANY:double-encoding",
           "COMPANY:double-encoding",
           "COMPANY:double-encoding"
+        ]
+      },
+      "Hexadecimal encoding": {
+        "total": 16,
+        "full_pipeline_detected": 16,
+        "full_pipeline_rate": 100.0,
+        "raw_regex_detected": 4,
+        "raw_regex_rate": 25.0,
+        "improvement": 75.0,
+        "missed_examples": []
+      },
+      "Binary encoding": {
+        "total": 6,
+        "full_pipeline_detected": 1,
+        "full_pipeline_rate": 16.7,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 16.7,
+        "missed_examples": [
+          "CREDIT_CARD:binary-8bit",
+          "CREDIT_CARD:binary-8bit",
+          "CREDIT_CARD:binary-8bit",
+          "CREDIT_CARD:binary-8bit",
+          "CREDIT_CARD:binary-8bit"
+        ]
+      },
+      "Reversed words": {
+        "total": 16,
+        "full_pipeline_detected": 1,
+        "full_pipeline_rate": 6.2,
+        "raw_regex_detected": 1,
+        "raw_regex_rate": 6.2,
+        "improvement": 0.0,
+        "missed_examples": [
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "EMAIL:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words",
+          "PERSON:reversed-words"
+        ]
+      },
+      "CamelCase split": {
+        "total": 12,
+        "full_pipeline_detected": 11,
+        "full_pipeline_rate": 91.7,
+        "raw_regex_detected": 12,
+        "raw_regex_rate": 100.0,
+        "improvement": -8.3,
+        "missed_examples": [
+          "BANK_ACCOUNT:camelCase_split"
+        ]
+      },
+      "Case-shifted": {
+        "total": 10,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 40.0,
+        "raw_regex_detected": 4,
+        "raw_regex_rate": 40.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted"
+        ]
+      },
+      "Pig-latin style": {
+        "total": 7,
+        "full_pipeline_detected": 6,
+        "full_pipeline_rate": 85.7,
+        "raw_regex_detected": 1,
+        "raw_regex_rate": 14.3,
+        "improvement": 71.4,
+        "missed_examples": [
+          "IP_ADDRESS:pig-latin-ip"
+        ]
+      },
+      "Unicode fractions": {
+        "total": 24,
+        "full_pipeline_detected": 16,
+        "full_pipeline_rate": 66.7,
+        "raw_regex_detected": 2,
+        "raw_regex_rate": 8.3,
+        "improvement": 58.3,
+        "missed_examples": [
+          "SOCIAL_SECURITY:unicode-superscript-subscript",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions",
+          "CUSTOMER_NAME:unicode-fractions"
+        ]
+      },
+      "XML escaping": {
+        "total": 4,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 100.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 100.0,
+        "missed_examples": []
+      },
+      "ZWJ interleaving": {
+        "total": 8,
+        "full_pipeline_detected": 8,
+        "full_pipeline_rate": 100.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 100.0,
+        "missed_examples": []
+      },
+      "Syllabic split": {
+        "total": 10,
+        "full_pipeline_detected": 10,
+        "full_pipeline_rate": 100.0,
+        "raw_regex_detected": 4,
+        "raw_regex_rate": 40.0,
+        "improvement": 60.0,
+        "missed_examples": []
+      },
+      "Morse code": {
+        "total": 23,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "URL:morse-code",
+          "EMPLOYEE_NAME:morse-code",
+          "EMPLOYEE_NAME:morse-code",
+          "EMPLOYEE_NAME:morse-code",
+          "EMPLOYEE_NAME:morse-code",
+          "EMPLOYEE_NAME:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code"
+        ]
+      },
+      "Circular-shifted": {
+        "total": 6,
+        "full_pipeline_detected": 6,
+        "full_pipeline_rate": 100.0,
+        "raw_regex_detected": 6,
+        "raw_regex_rate": 100.0,
+        "improvement": 0.0,
+        "missed_examples": []
+      }
+    },
+    "by_type": {
+      "DATE": {
+        "total": 18,
+        "full_pipeline_detected": 6,
+        "full_pipeline_rate": 33.3,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 33.3,
+        "missed_examples": [
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code"
+        ]
+      },
+      "PRIVATE_URL": {
+        "total": 14,
+        "full_pipeline_detected": 14,
+        "full_pipeline_rate": 100.0,
+        "raw_regex_detected": 14,
+        "raw_regex_rate": 100.0,
+        "improvement": 0.0,
+        "missed_examples": []
+      },
+      "FILE_PATH": {
+        "total": 8,
+        "full_pipeline_detected": 5,
+        "full_pipeline_rate": 62.5,
+        "raw_regex_detected": 3,
+        "raw_regex_rate": 37.5,
+        "improvement": 25.0,
+        "missed_examples": [
+          "FILE_PATH:double-encoding",
+          "FILE_PATH:double-encoding",
+          "FILE_PATH:double-encoding"
         ]
       },
       "CREDIT_CARD": {
@@ -101,11 +314,11 @@
         ]
       },
       "EMAIL": {
-        "total": 8,
-        "full_pipeline_detected": 0,
-        "full_pipeline_rate": 0.0,
-        "raw_regex_detected": 0,
-        "raw_regex_rate": 0.0,
+        "total": 14,
+        "full_pipeline_detected": 6,
+        "full_pipeline_rate": 42.9,
+        "raw_regex_detected": 6,
+        "raw_regex_rate": 42.9,
         "improvement": 0.0,
         "missed_examples": [
           "EMAIL:reversed-words",
@@ -118,79 +331,34 @@
           "EMAIL:reversed-words"
         ]
       },
-      "CamelCase split": {
-        "total": 6,
-        "full_pipeline_detected": 6,
-        "full_pipeline_rate": 100.0,
-        "raw_regex_detected": 6,
-        "raw_regex_rate": 100.0,
-        "improvement": 0.0,
-        "missed_examples": []
-      },
-      "Case-shifted": {
-        "total": 10,
-        "full_pipeline_detected": 4,
-        "full_pipeline_rate": 40.0,
-        "raw_regex_detected": 4,
-        "raw_regex_rate": 40.0,
-        "improvement": 0.0,
-        "missed_examples": [
-          "CITY:case-shifted",
-          "CITY:case-shifted",
-          "CITY:case-shifted",
-          "CITY:case-shifted",
-          "CITY:case-shifted",
-          "CITY:case-shifted"
-        ]
-      },
       "IP_ADDRESS": {
-        "total": 6,
-        "full_pipeline_detected": 1,
-        "full_pipeline_rate": 16.7,
-        "raw_regex_detected": 1,
-        "raw_regex_rate": 16.7,
-        "improvement": 0.0,
+        "total": 10,
+        "full_pipeline_detected": 9,
+        "full_pipeline_rate": 90.0,
+        "raw_regex_detected": 5,
+        "raw_regex_rate": 50.0,
+        "improvement": 40.0,
         "missed_examples": [
-          "IP_ADDRESS:pig-latin-ip",
-          "IP_ADDRESS:pig-latin-ip",
-          "IP_ADDRESS:pig-latin-ip",
-          "IP_ADDRESS:pig-latin-ip",
           "IP_ADDRESS:pig-latin-ip"
         ]
       },
       "PHONE": {
         "total": 12,
-        "full_pipeline_detected": 3,
-        "full_pipeline_rate": 25.0,
+        "full_pipeline_detected": 12,
+        "full_pipeline_rate": 100.0,
         "raw_regex_detected": 1,
         "raw_regex_rate": 8.3,
-        "improvement": 16.7,
-        "missed_examples": [
-          "PHONE:unicode-fractions",
-          "PHONE:unicode-fractions",
-          "PHONE:unicode-fractions",
-          "PHONE:unicode-fractions",
-          "PHONE:unicode-fractions",
-          "PHONE:unicode-fractions",
-          "PHONE:unicode-fractions",
-          "PHONE:xml-escape",
-          "PHONE:xml-escape"
-        ]
+        "improvement": 91.7,
+        "missed_examples": []
       },
       "PASSPORT": {
         "total": 14,
-        "full_pipeline_detected": 9,
-        "full_pipeline_rate": 64.3,
+        "full_pipeline_detected": 14,
+        "full_pipeline_rate": 100.0,
         "raw_regex_detected": 1,
         "raw_regex_rate": 7.1,
-        "improvement": 57.1,
-        "missed_examples": [
-          "PASSPORT:syllabic-split",
-          "PASSPORT:syllabic-split",
-          "PASSPORT:syllabic-split",
-          "PASSPORT:syllabic-split",
-          "PASSPORT:syllabic-split"
-        ]
+        "improvement": 92.9,
+        "missed_examples": []
       },
       "URL": {
         "total": 14,
@@ -212,12 +380,78 @@
       },
       "SOCIAL_SECURITY": {
         "total": 8,
-        "full_pipeline_detected": 8,
-        "full_pipeline_rate": 100.0,
+        "full_pipeline_detected": 7,
+        "full_pipeline_rate": 87.5,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 100.0,
-        "missed_examples": []
+        "improvement": 87.5,
+        "missed_examples": [
+          "SOCIAL_SECURITY:unicode-superscript-subscript"
+        ]
+      },
+      "PROJECT_NAME": {
+        "total": 6,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "PROJECT_NAME:punctuation-stuffed",
+          "PROJECT_NAME:punctuation-stuffed",
+          "PROJECT_NAME:punctuation-stuffed",
+          "PROJECT_NAME:punctuation-stuffed",
+          "PROJECT_NAME:punctuation-stuffed",
+          "PROJECT_NAME:punctuation-stuffed"
+        ]
+      },
+      "DOMAIN": {
+        "total": 8,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution",
+          "DOMAIN:emoji-substitution"
+        ]
+      },
+      "SSH_KEY": {
+        "total": 8,
+        "full_pipeline_detected": 5,
+        "full_pipeline_rate": 62.5,
+        "raw_regex_detected": 6,
+        "raw_regex_rate": 75.0,
+        "improvement": -12.5,
+        "missed_examples": [
+          "SSH_KEY:l33tspeak",
+          "SSH_KEY:l33tspeak",
+          "SSH_KEY:l33tspeak"
+        ]
+      },
+      "COMPANY": {
+        "total": 7,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding",
+          "COMPANY:double-encoding"
+        ]
       },
       "GPS": {
         "total": 8,
@@ -256,6 +490,22 @@
           "BANK_ACCOUNT:camelCase_split"
         ]
       },
+      "CITY": {
+        "total": 6,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 0.0,
+        "missed_examples": [
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted",
+          "CITY:case-shifted"
+        ]
+      },
       "COUNTRY": {
         "total": 1,
         "full_pipeline_detected": 1,
@@ -284,14 +534,12 @@
       },
       "IBAN": {
         "total": 4,
-        "full_pipeline_detected": 3,
-        "full_pipeline_rate": 75.0,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 100.0,
         "raw_regex_detected": 3,
         "raw_regex_rate": 75.0,
-        "improvement": 0.0,
-        "missed_examples": [
-          "IBAN:syllabic-split"
-        ]
+        "improvement": 25.0,
+        "missed_examples": []
       },
       "EMPLOYEE_NAME": {
         "total": 5,
@@ -307,26 +555,6 @@
           "EMPLOYEE_NAME:morse-code",
           "EMPLOYEE_NAME:morse-code"
         ]
-      },
-      "DATE": {
-        "total": 10,
-        "full_pipeline_detected": 0,
-        "full_pipeline_rate": 0.0,
-        "raw_regex_detected": 0,
-        "raw_regex_rate": 0.0,
-        "improvement": 0.0,
-        "missed_examples": [
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code",
-          "DATE:morse-code"
-        ]
       }
     }
   },
@@ -339,8 +567,14 @@
       "text": "Her birth date was recorded as 1..9..8..5..--..0..4..--..1..5 on the medical form.",
       "ground_truth": "1985-04-15",
       "pii_value": "1..9..8..5..--..0..4..--..1..5",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "19850415",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -365,8 +599,14 @@
       "text": "The holiday party is scheduled for 1..2../..2..5../..1..9..9..9;; in the main hall.",
       "ground_truth": "12/25/1999",
       "pii_value": "1..2../..2..5../..1..9..9..9;;",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "12251999",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -378,8 +618,14 @@
       "text": "Your membership expires on 2..0..2..3..--..1..1..--..3..0 according to the records.",
       "ground_truth": "2023-11-30",
       "pii_value": "2..0..2..3..--..1..1..--..3..0",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "20231130",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -404,8 +650,14 @@
       "text": "Valentine's Day in 1..9..9..0..--..0..2..--..1..4 was a Wednesday.",
       "ground_truth": "1990-02-14",
       "pii_value": "1..9..9..0..--..0..2..--..1..4",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "19900214",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -417,8 +669,14 @@
       "text": "The project deadline was changed to 1..1../..2..2../..2..0..0..5 per the manager.",
       "ground_truth": "11/22/2005",
       "pii_value": "1..1../..2..2../..2..0..0..5",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "11222005",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -430,8 +688,14 @@
       "text": "School started on 2..0..1..0..--..0..9..--..0..1 that year.",
       "ground_truth": "2010-09-01",
       "pii_value": "2..0..1..0..--..0..9..--..0..1",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "20100901",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -472,7 +736,7 @@
       "full_detections": [
         {
           "type": "PERSON",
-          "value": "http://192",
+          "value": "http://1921681100",
           "score": 0.85
         }
       ],
@@ -522,7 +786,7 @@
       "full_detections": [
         {
           "type": "PERSON",
-          "value": "http://10",
+          "value": "http://10002",
           "score": 0.85
         }
       ],
@@ -572,7 +836,7 @@
       "full_detections": [
         {
           "type": "PERSON",
-          "value": "http://172",
+          "value": "http://1721605",
           "score": 0.85
         }
       ],
@@ -622,7 +886,7 @@
       "full_detections": [
         {
           "type": "PERSON",
-          "value": "http://192",
+          "value": "http://192168501",
           "score": 0.85
         }
       ],
@@ -646,9 +910,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "PRIVATE_URL",
-          "value": "http://192.168.1.100/4dm1n",
-          "score": 0.9
+          "type": "PERSON",
+          "value": "http://19216811004dm1n",
+          "score": 0.85
         }
       ],
       "raw_regex_detected": true,
@@ -696,9 +960,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "PRIVATE_URL",
-          "value": "http://10.0.0.5/conflg/backup",
-          "score": 0.9
+          "type": "PERSON",
+          "value": "http://10005/conflg/backup",
+          "score": 0.85
         }
       ],
       "raw_regex_detected": true,
@@ -721,9 +985,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "PRIVATE_URL",
-          "value": "https://192.168.50.10/53cur3/portal",
-          "score": 0.9
+          "type": "PERSON",
+          "value": "https://192168501053cur3/portal",
+          "score": 0.85
         }
       ],
       "raw_regex_detected": true,
@@ -746,9 +1010,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "PRIVATE_URL",
-          "value": "http://172.16.0.20/7e57/3nv",
-          "score": 0.9
+          "type": "PERSON",
+          "value": "http://172160207e573nv",
+          "score": 0.85
         }
       ],
       "raw_regex_detected": true,
@@ -832,8 +1096,14 @@
       "text": "The backup archive was saved to D:\\%25%34%34%25%36%31%25%37%34%25%36%31\\backup.zip.",
       "ground_truth": "D:\\ProjectX\\backup.zip",
       "pii_value": "D:\\%25%34%34%25%36%31%25%37%34%25%36%31\\backup.zip",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "44617461",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -847,6 +1117,11 @@
       "pii_value": "/opt/%25%32%35%25%33%32%25%33%30%25%32%35%25%33%32%25%33%30/bin/script.sh",
       "full_pipeline_detected": true,
       "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "253230253230",
+          "score": 0.6
+        },
         {
           "type": "DOMAIN",
           "value": "script.sh",
@@ -901,6 +1176,11 @@
           "type": "FILE_PATH",
           "value": "/var/log",
           "score": 0.9
+        },
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "25323024302530313233",
+          "score": 0.55
         }
       ],
       "raw_regex_detected": true,
@@ -920,13 +1200,19 @@
       "text": "The video file is stored in E:\\%25%32%35%25%33%32%25%33%35%25%33%33%25%36%35%25%37%32\\media\\video.mp4.",
       "ground_truth": "E:\\%25%32%35%25%33%32%25%33%35%25%33%33\\media\\video.mp4",
       "pii_value": "E:\\%25%32%35%25%33%32%25%33%35%25%33%33%25%36%35%25%37%32\\media\\video.mp4",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "253235336572",
+          "score": 0.6
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Hexadecimal encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "hex-escape",
       "label": "CREDIT_CARD:hex-escape",
@@ -945,7 +1231,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Hexadecimal encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "hex-escape",
       "label": "CREDIT_CARD:hex-escape",
@@ -964,7 +1250,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Hexadecimal encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "hex-escape",
       "label": "CREDIT_CARD:hex-escape",
@@ -983,7 +1269,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Hexadecimal encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "hex-escape",
       "label": "CREDIT_CARD:hex-escape",
@@ -1002,7 +1288,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Hexadecimal encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "hex-escape",
       "label": "CREDIT_CARD:hex-escape",
@@ -1021,7 +1307,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Hexadecimal encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "hex-escape",
       "label": "CREDIT_CARD:hex-escape",
@@ -1040,7 +1326,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Hexadecimal encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "hex-escape",
       "label": "CREDIT_CARD:hex-escape",
@@ -1059,7 +1345,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Hexadecimal encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "hex-escape",
       "label": "CREDIT_CARD:hex-escape",
@@ -1078,7 +1364,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Binary encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "binary-8bit",
       "label": "CREDIT_CARD:binary-8bit",
@@ -1091,7 +1377,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Binary encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "binary-8bit",
       "label": "CREDIT_CARD:binary-8bit",
@@ -1104,7 +1390,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Binary encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "binary-8bit",
       "label": "CREDIT_CARD:binary-8bit",
@@ -1117,7 +1403,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Binary encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "binary-8bit",
       "label": "CREDIT_CARD:binary-8bit",
@@ -1130,7 +1416,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Binary encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "binary-8bit",
       "label": "CREDIT_CARD:binary-8bit",
@@ -1143,7 +1429,7 @@
       "raw_detections": []
     },
     {
-      "category": "CREDIT_CARD",
+      "category": "Binary encoding",
       "entity_type": "CREDIT_CARD",
       "strategy": "binary-8bit",
       "label": "CREDIT_CARD:binary-8bit",
@@ -1162,7 +1448,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMAIL",
+      "category": "Reversed words",
       "entity_type": "EMAIL",
       "strategy": "reversed-words",
       "label": "EMAIL:reversed-words",
@@ -1175,7 +1461,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMAIL",
+      "category": "Reversed words",
       "entity_type": "EMAIL",
       "strategy": "reversed-words",
       "label": "EMAIL:reversed-words",
@@ -1188,7 +1474,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMAIL",
+      "category": "Reversed words",
       "entity_type": "EMAIL",
       "strategy": "reversed-words",
       "label": "EMAIL:reversed-words",
@@ -1201,7 +1487,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMAIL",
+      "category": "Reversed words",
       "entity_type": "EMAIL",
       "strategy": "reversed-words",
       "label": "EMAIL:reversed-words",
@@ -1214,7 +1500,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMAIL",
+      "category": "Reversed words",
       "entity_type": "EMAIL",
       "strategy": "reversed-words",
       "label": "EMAIL:reversed-words",
@@ -1227,7 +1513,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMAIL",
+      "category": "Reversed words",
       "entity_type": "EMAIL",
       "strategy": "reversed-words",
       "label": "EMAIL:reversed-words",
@@ -1240,7 +1526,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMAIL",
+      "category": "Reversed words",
       "entity_type": "EMAIL",
       "strategy": "reversed-words",
       "label": "EMAIL:reversed-words",
@@ -1253,7 +1539,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMAIL",
+      "category": "Reversed words",
       "entity_type": "EMAIL",
       "strategy": "reversed-words",
       "label": "EMAIL:reversed-words",
@@ -1427,8 +1713,8 @@
       "full_detections": [
         {
           "type": "IP_ADDRESS",
-          "value": "172.16.254.1",
-          "score": 0.9
+          "value": "172162541",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": true,
@@ -1452,8 +1738,8 @@
       "full_detections": [
         {
           "type": "IP_ADDRESS",
-          "value": "203.0.113.42",
-          "score": 0.9
+          "value": "203011342",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": true,
@@ -1477,8 +1763,8 @@
       "full_detections": [
         {
           "type": "IP_ADDRESS",
-          "value": "192.0.2.88",
-          "score": 0.9
+          "value": "1920288",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": true,
@@ -1502,8 +1788,8 @@
       "full_detections": [
         {
           "type": "IP_ADDRESS",
-          "value": "198.51.100.7",
-          "score": 0.9
+          "value": "198511007",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": true,
@@ -1516,86 +1802,110 @@
       ]
     },
     {
-      "category": "IP_ADDRESS",
+      "category": "Pig-latin style",
       "entity_type": "IP_ADDRESS",
       "strategy": "pig-latin-ip",
       "label": "IP_ADDRESS:pig-latin-ip",
       "text": "The server at 720.861.323.015 is blocking my requests.",
       "ground_truth": "207.168.233.150",
       "pii_value": "720.861.323.015",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "72086132315",
+          "score": 0.6
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "IP_ADDRESS",
+      "category": "Pig-latin style",
       "entity_type": "IP_ADDRESS",
       "strategy": "pig-latin-ip",
       "label": "IP_ADDRESS:pig-latin-ip",
       "text": "Please connect to 249.532.761.108 instead of the old gateway.",
       "ground_truth": "492.325.617.801",
       "pii_value": "249.532.761.108",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "249532761108",
+          "score": 0.6
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "IP_ADDRESS",
+      "category": "Pig-latin style",
       "entity_type": "IP_ADDRESS",
       "strategy": "pig-latin-ip",
       "label": "IP_ADDRESS:pig-latin-ip",
       "text": "I traced the attack back to 318.942.576.064 in the logs.",
       "ground_truth": "183.429.765.406",
       "pii_value": "318.942.576.064",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "31894257664",
+          "score": 0.6
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "IP_ADDRESS",
+      "category": "Pig-latin style",
       "entity_type": "IP_ADDRESS",
       "strategy": "pig-latin-ip",
       "label": "IP_ADDRESS:pig-latin-ip",
       "text": "Our DNS resolves to 606.213.857.492 for that subdomain.",
       "ground_truth": "066.123.587.924",
       "pii_value": "606.213.857.492",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "606213857492",
+          "score": 0.6
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "IP_ADDRESS",
+      "category": "Pig-latin style",
       "entity_type": "IP_ADDRESS",
       "strategy": "pig-latin-ip",
       "label": "IP_ADDRESS:pig-latin-ip",
       "text": "Whitelist 845.390.127.569 in the firewall rules.",
       "ground_truth": "458.903.271.695",
       "pii_value": "845.390.127.569",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "845390127569",
+          "score": 0.6
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "IP_ADDRESS",
+      "category": "Pig-latin style",
       "entity_type": "IP_ADDRESS",
       "strategy": "pig-latin-ip",
       "label": "IP_ADDRESS:pig-latin-ip",
       "text": "The IPv6 node at cafe:b100:0000:0000:0000:00ff:00fe:baef needs reconfiguration.",
       "ground_truth": "feac:0b10:0000:0000:0000:ff00:fe00:baef",
       "pii_value": "cafe:b100:0000:0000:0000:00ff:00fe:baef",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "cafe:b100:0000:0000:0000:00ff:00fe:baef",
-          "score": 0.88
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -1606,59 +1916,88 @@
       ]
     },
     {
-      "category": "PHONE",
+      "category": "Unicode fractions",
       "entity_type": "PHONE",
       "strategy": "unicode-fractions",
       "label": "PHONE:unicode-fractions",
       "text": "You can reach Maria at +34 9⅓2 ½8 ⅔ 2½ for tour arrangements.",
       "ground_truth": "+34 932 18 23 25",
       "pii_value": "+34 9⅓2 ½8 ⅔ 2½",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "+34913212823212",
+          "score": 0.8
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PHONE",
+      "category": "Unicode fractions",
       "entity_type": "PHONE",
       "strategy": "unicode-fractions",
       "label": "PHONE:unicode-fractions",
       "text": "Call Luis at +1 (⅔½) 4⅓9-⅓⅓½ for tech support.",
       "ground_truth": "+1 (235) 419-1335",
       "pii_value": "+1 (⅔½) 4⅓9-⅓⅓½",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "+123124139131312",
+          "score": 0.8
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "123124139131312",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PHONE",
+      "category": "Unicode fractions",
       "entity_type": "PHONE",
       "strategy": "unicode-fractions",
       "label": "PHONE:unicode-fractions",
       "text": "Please notify +44 ⅓½⅔ ⅔½ ⅔⅓ if delayed.",
       "ground_truth": "+44 135 25 23",
       "pii_value": "+44 ⅓½⅔ ⅔½ ⅔⅓",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "4413122323122313",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PHONE",
+      "category": "Unicode fractions",
       "entity_type": "PHONE",
       "strategy": "unicode-fractions",
       "label": "PHONE:unicode-fractions",
       "text": "Herr Schmidt confirmed +49 ⅓½¼ 4⅓½ ¼⅓ as his emergency number.",
       "ground_truth": "+49 1325 4135 13",
       "pii_value": "+49 ⅓½¼ 4⅓½ ¼⅓",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "49131214413121413",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PHONE",
+      "category": "Unicode fractions",
       "entity_type": "PHONE",
       "strategy": "unicode-fractions",
       "label": "PHONE:unicode-fractions",
@@ -1671,6 +2010,11 @@
           "type": "PERSON",
           "value": "Dr. Owens",
           "score": 0.85
+        },
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "611312122314131312",
+          "score": 0.55
         }
       ],
       "raw_regex_detected": true,
@@ -1683,72 +2027,102 @@
       ]
     },
     {
-      "category": "PHONE",
+      "category": "Unicode fractions",
       "entity_type": "PHONE",
       "strategy": "unicode-fractions",
       "label": "PHONE:unicode-fractions",
       "text": "Please forward to +33 ⅔½⅔ ¼⅓ ½⅔ for billing inquiries.",
       "ground_truth": "+33 235 13 18",
       "pii_value": "+33 ⅔½⅔ ¼⅓ ½⅔",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "3323122314131223",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PHONE",
+      "category": "Unicode fractions",
       "entity_type": "PHONE",
       "strategy": "unicode-fractions",
       "label": "PHONE:unicode-fractions",
       "text": "Yuki can be contacted at +81 ⅓½-⅔½¼-¼⅓ during office hours.",
       "ground_truth": "+81 13-2325-13",
       "pii_value": "+81 ⅓½-⅔½¼-¼⅓",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "8113122312141413",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PHONE",
+      "category": "Unicode fractions",
       "entity_type": "PHONE",
       "strategy": "unicode-fractions",
       "label": "PHONE:unicode-fractions",
       "text": "The contract specifies +86 ⅔½⅓ ⅓⅔ ½¼ as Wang Li's direct line.",
       "ground_truth": "+86 231 13 18",
       "pii_value": "+86 ⅔½⅓ ⅓⅔ ½¼",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "8623121313231214",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PHONE",
+      "category": "XML escaping",
       "entity_type": "PHONE",
       "strategy": "xml-escape",
       "label": "PHONE:xml-escape",
       "text": "Please reach out to our support line at +1 (555) &lt;span&gt;123-4567&lt;/span&gt; for urgent assistance.",
       "ground_truth": "+1 (555) 123-4567",
       "pii_value": "+1 (555) &lt;span&gt;123-4567&lt;/span&gt;",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "1234567",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PHONE",
+      "category": "XML escaping",
       "entity_type": "PHONE",
       "strategy": "xml-escape",
       "label": "PHONE:xml-escape",
       "text": "Maria mentioned her direct line is +1 (312) &amp;apos;555-0199&amp;apos; for project inquiries.",
       "ground_truth": "+1 (312) '555-0199'",
       "pii_value": "+1 (312) &amp;apos;555-0199&amp;apos;",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "5550199",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PHONE",
+      "category": "XML escaping",
       "entity_type": "PHONE",
       "strategy": "xml-escape",
       "label": "PHONE:xml-escape",
@@ -1767,7 +2141,7 @@
       "raw_detections": []
     },
     {
-      "category": "PHONE",
+      "category": "XML escaping",
       "entity_type": "PHONE",
       "strategy": "xml-escape",
       "label": "PHONE:xml-escape",
@@ -1786,7 +2160,7 @@
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "ZWJ interleaving",
       "entity_type": "PASSPORT",
       "strategy": "zwj-interleaving",
       "label": "PASSPORT:zwj-interleaving",
@@ -1805,7 +2179,7 @@
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "ZWJ interleaving",
       "entity_type": "PASSPORT",
       "strategy": "zwj-interleaving",
       "label": "PASSPORT:zwj-interleaving",
@@ -1824,7 +2198,7 @@
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "ZWJ interleaving",
       "entity_type": "PASSPORT",
       "strategy": "zwj-interleaving",
       "label": "PASSPORT:zwj-interleaving",
@@ -1843,7 +2217,7 @@
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "ZWJ interleaving",
       "entity_type": "PASSPORT",
       "strategy": "zwj-interleaving",
       "label": "PASSPORT:zwj-interleaving",
@@ -1862,7 +2236,7 @@
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "ZWJ interleaving",
       "entity_type": "PASSPORT",
       "strategy": "zwj-interleaving",
       "label": "PASSPORT:zwj-interleaving",
@@ -1881,7 +2255,7 @@
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "ZWJ interleaving",
       "entity_type": "PASSPORT",
       "strategy": "zwj-interleaving",
       "label": "PASSPORT:zwj-interleaving",
@@ -1900,7 +2274,7 @@
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "ZWJ interleaving",
       "entity_type": "PASSPORT",
       "strategy": "zwj-interleaving",
       "label": "PASSPORT:zwj-interleaving",
@@ -1919,7 +2293,7 @@
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "ZWJ interleaving",
       "entity_type": "PASSPORT",
       "strategy": "zwj-interleaving",
       "label": "PASSPORT:zwj-interleaving",
@@ -1938,46 +2312,64 @@
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "Syllabic split",
       "entity_type": "PASSPORT",
       "strategy": "syllabic-split",
       "label": "PASSPORT:syllabic-split",
       "text": "My British passport number is GB-7 8 4-1 0 2-5 6-L, and I need to renew it soon.",
       "ground_truth": "GB78410256L",
       "pii_value": "GB-7 8 4-1 0 2-5 6-L",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "78410256",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "Syllabic split",
       "entity_type": "PASSPORT",
       "strategy": "syllabic-split",
       "label": "PASSPORT:syllabic-split",
       "text": "The flight attendant asked to see my passport, which has the number DE-9 3 6-4 5 7-8 2-J.",
       "ground_truth": "DE93645782J",
       "pii_value": "DE-9 3 6-4 5 7-8 2-J",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "93645782",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "Syllabic split",
       "entity_type": "PASSPORT",
       "strategy": "syllabic-split",
       "label": "PASSPORT:syllabic-split",
       "text": "Please update my profile with the French passport number FR-2 1 0-8 6 3-5 7-N.",
       "ground_truth": "FR21086357N",
       "pii_value": "FR-2 1 0-8 6 3-5 7-N",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "21086357",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "Syllabic split",
       "entity_type": "PASSPORT",
       "strategy": "syllabic-split",
       "label": "PASSPORT:syllabic-split",
@@ -1995,6 +2387,11 @@
           "type": "COUNTRY",
           "value": "US",
           "score": 0.8
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "50291837",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": true,
@@ -2012,33 +2409,45 @@
       ]
     },
     {
-      "category": "PASSPORT",
+      "category": "Syllabic split",
       "entity_type": "PASSPORT",
       "strategy": "syllabic-split",
       "label": "PASSPORT:syllabic-split",
       "text": "For the visa application, they requested my Canadian passport number CA-7 4 1-3 0 9-5 6-K.",
       "ground_truth": "CA74130956K",
       "pii_value": "CA-7 4 1-3 0 9-5 6-K",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "74130956",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "PASSPORT",
+      "category": "Syllabic split",
       "entity_type": "PASSPORT",
       "strategy": "syllabic-split",
       "label": "PASSPORT:syllabic-split",
       "text": "The hotel requires a copy of my Australian passport, number AU-8 3 2-6 7 1-4 0-Q.",
       "ground_truth": "AU83267140Q",
       "pii_value": "AU-8 3 2-6 7 1-4 0-Q",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "83267140",
+          "score": 0.65
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "URL",
+      "category": "Morse code",
       "entity_type": "URL",
       "strategy": "morse-code",
       "label": "URL:morse-code",
@@ -2051,7 +2460,7 @@
       "raw_detections": []
     },
     {
-      "category": "URL",
+      "category": "Morse code",
       "entity_type": "URL",
       "strategy": "morse-code",
       "label": "URL:morse-code",
@@ -2064,7 +2473,7 @@
       "raw_detections": []
     },
     {
-      "category": "URL",
+      "category": "Morse code",
       "entity_type": "URL",
       "strategy": "morse-code",
       "label": "URL:morse-code",
@@ -2077,7 +2486,7 @@
       "raw_detections": []
     },
     {
-      "category": "URL",
+      "category": "Morse code",
       "entity_type": "URL",
       "strategy": "morse-code",
       "label": "URL:morse-code",
@@ -2090,7 +2499,7 @@
       "raw_detections": []
     },
     {
-      "category": "URL",
+      "category": "Morse code",
       "entity_type": "URL",
       "strategy": "morse-code",
       "label": "URL:morse-code",
@@ -2103,7 +2512,7 @@
       "raw_detections": []
     },
     {
-      "category": "URL",
+      "category": "Morse code",
       "entity_type": "URL",
       "strategy": "morse-code",
       "label": "URL:morse-code",
@@ -2116,7 +2525,7 @@
       "raw_detections": []
     },
     {
-      "category": "URL",
+      "category": "Morse code",
       "entity_type": "URL",
       "strategy": "morse-code",
       "label": "URL:morse-code",
@@ -2129,7 +2538,7 @@
       "raw_detections": []
     },
     {
-      "category": "URL",
+      "category": "Morse code",
       "entity_type": "URL",
       "strategy": "morse-code",
       "label": "URL:morse-code",
@@ -2142,7 +2551,7 @@
       "raw_detections": []
     },
     {
-      "category": "URL",
+      "category": "Circular-shifted",
       "entity_type": "URL",
       "strategy": "circ-shift-in-segment",
       "label": "URL:circ-shift-in-segment",
@@ -2167,7 +2576,7 @@
       ]
     },
     {
-      "category": "URL",
+      "category": "Circular-shifted",
       "entity_type": "URL",
       "strategy": "circ-shift-in-segment",
       "label": "URL:circ-shift-in-segment",
@@ -2192,7 +2601,7 @@
       ]
     },
     {
-      "category": "URL",
+      "category": "Circular-shifted",
       "entity_type": "URL",
       "strategy": "circ-shift-in-segment",
       "label": "URL:circ-shift-in-segment",
@@ -2217,7 +2626,7 @@
       ]
     },
     {
-      "category": "URL",
+      "category": "Circular-shifted",
       "entity_type": "URL",
       "strategy": "circ-shift-in-segment",
       "label": "URL:circ-shift-in-segment",
@@ -2242,7 +2651,7 @@
       ]
     },
     {
-      "category": "URL",
+      "category": "Circular-shifted",
       "entity_type": "URL",
       "strategy": "circ-shift-in-segment",
       "label": "URL:circ-shift-in-segment",
@@ -2267,7 +2676,7 @@
       ]
     },
     {
-      "category": "URL",
+      "category": "Circular-shifted",
       "entity_type": "URL",
       "strategy": "circ-shift-in-segment",
       "label": "URL:circ-shift-in-segment",
@@ -2292,7 +2701,7 @@
       ]
     },
     {
-      "category": "SOCIAL_SECURITY",
+      "category": "Unicode fractions",
       "entity_type": "SOCIAL_SECURITY",
       "strategy": "unicode-superscript-subscript",
       "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
@@ -2302,16 +2711,16 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "563-28-9412",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "563289412",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "SOCIAL_SECURITY",
+      "category": "Unicode fractions",
       "entity_type": "SOCIAL_SECURITY",
       "strategy": "unicode-superscript-subscript",
       "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
@@ -2321,35 +2730,29 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "389-56-0174",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "389560174",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "SOCIAL_SECURITY",
+      "category": "Unicode fractions",
       "entity_type": "SOCIAL_SECURITY",
       "strategy": "unicode-superscript-subscript",
       "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
       "text": "Submit the W-2 with the employee identifier ⁰⁹²-⁴⁷-⁶⁸¹³ attached.",
       "ground_truth": "092-47-6813",
       "pii_value": "⁰⁹²-⁴⁷-⁶⁸¹³",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "SOCIAL_SECURITY",
-          "value": "092-47-6813",
-          "score": 0.9
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "SOCIAL_SECURITY",
+      "category": "Unicode fractions",
       "entity_type": "SOCIAL_SECURITY",
       "strategy": "unicode-superscript-subscript",
       "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
@@ -2360,7 +2763,7 @@
       "full_detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN is 716-03-2598",
+          "value": "SSN is 716032598",
           "score": 0.95
         }
       ],
@@ -2368,7 +2771,7 @@
       "raw_detections": []
     },
     {
-      "category": "SOCIAL_SECURITY",
+      "category": "Unicode fractions",
       "entity_type": "SOCIAL_SECURITY",
       "strategy": "unicode-superscript-subscript",
       "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
@@ -2378,16 +2781,16 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "430-98-7621",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "430987621",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "SOCIAL_SECURITY",
+      "category": "Unicode fractions",
       "entity_type": "SOCIAL_SECURITY",
       "strategy": "unicode-superscript-subscript",
       "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
@@ -2397,16 +2800,16 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "287-15-6930",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "287156930",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "SOCIAL_SECURITY",
+      "category": "Unicode fractions",
       "entity_type": "SOCIAL_SECURITY",
       "strategy": "unicode-superscript-subscript",
       "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
@@ -2416,16 +2819,16 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "651-42-0873",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "651420873",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "SOCIAL_SECURITY",
+      "category": "Unicode fractions",
       "entity_type": "SOCIAL_SECURITY",
       "strategy": "unicode-superscript-subscript",
       "label": "SOCIAL_SECURITY:unicode-superscript-subscript",
@@ -2435,9 +2838,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "908-76-3145",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "908763145",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": false,
@@ -2636,14 +3039,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
-          "value": "4b:cd:3f:12:90:56:78:9a",
-          "score": 0.88
-        },
-        {
-          "type": "IP_ADDRESS",
-          "value": "bc:de:f0:12:34:56:78:90",
-          "score": 0.88
+          "type": "PHONE",
+          "value": "01234567890",
+          "score": 0.6
         }
       ],
       "raw_regex_detected": true,
@@ -2672,13 +3070,13 @@
       "full_detections": [
         {
           "type": "IP_ADDRESS",
-          "value": "3c:7c:d3:4b:1f:90:a6:be",
+          "value": "3c:7c:deab:1f:90:a6:be:cf",
           "score": 0.88
         },
         {
-          "type": "IP_ADDRESS",
-          "value": "cf:de:01:23:45:67:89:ab",
-          "score": 0.88
+          "type": "PHONE",
+          "value": "0123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -2706,9 +3104,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
-          "value": "12:34:56:78:9a:bc:de:f0",
-          "score": 0.88
+          "type": "PHONE",
+          "value": "3123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -2745,13 +3143,13 @@
       "full_detections": [
         {
           "type": "IP_ADDRESS",
-          "value": "3c:7c:d3:4b:1f:90:a6:be",
+          "value": "3c:7c:deab:1f:90:a6:be:cf",
           "score": 0.88
         },
         {
-          "type": "IP_ADDRESS",
-          "value": "cf:de:01:23:45:67:89:ab",
-          "score": 0.88
+          "type": "PHONE",
+          "value": "0123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -2776,14 +3174,8 @@
       "text": "The fingerprint for the new node is 5HH-2 3d25519 K3Y F1ng3rpr1n7: b0:0b:15:4:bl:4ck:12:34:56:78:9a:bc:de:f0.",
       "ground_truth": "SSH-2 Ed25519 KEY Fingerprint: b0:0b:15:4:bl:4ck:12:34:56:78:9a:bc:de:f0",
       "pii_value": "5HH-2 3d25519 K3Y F1ng3rpr1n7: b0:0b:15:4:bl:4ck:12:34:56:78:9a:bc:de:f0",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "12:34:56:78:9a:bc:de:f0",
-          "score": 0.88
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -2804,9 +3196,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
-          "value": "12:34:56:78:9a:bc:de:f0",
-          "score": 0.88
+          "type": "PHONE",
+          "value": "3123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -2923,7 +3315,7 @@
       "raw_detections": []
     },
     {
-      "category": "GPS",
+      "category": "Hexadecimal encoding",
       "entity_type": "GPS",
       "strategy": "hex-escape",
       "label": "GPS:hex-escape",
@@ -2933,16 +3325,16 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "GPS",
-          "value": "39.742651, -104.990283",
-          "score": 0.88
+          "type": "BANK_ACCOUNT",
+          "value": "39742651104990283",
+          "score": 0.55
         }
       ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "GPS",
+      "category": "Hexadecimal encoding",
       "entity_type": "GPS",
       "strategy": "hex-escape",
       "label": "GPS:hex-escape",
@@ -2952,21 +3344,16 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "GPS",
-          "value": "coordinates 48.856610",
-          "score": 0.9
-        },
-        {
-          "type": "GPS",
-          "value": "48.856610, 2.351004",
-          "score": 0.88
+          "type": "BANK_ACCOUNT",
+          "value": "488566102351004",
+          "score": 0.55
         }
       ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "GPS",
+      "category": "Hexadecimal encoding",
       "entity_type": "GPS",
       "strategy": "hex-escape",
       "label": "GPS:hex-escape",
@@ -2976,16 +3363,16 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "GPS",
-          "value": "34.052235, -118.243685",
-          "score": 0.88
+          "type": "BANK_ACCOUNT",
+          "value": "34052235118243685",
+          "score": 0.55
         }
       ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "GPS",
+      "category": "Hexadecimal encoding",
       "entity_type": "GPS",
       "strategy": "hex-escape",
       "label": "GPS:hex-escape",
@@ -2995,9 +3382,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "GPS",
-          "value": "51.507351, -0.127758",
-          "score": 0.88
+          "type": "BANK_ACCOUNT",
+          "value": "515073510127758",
+          "score": 0.55
         },
         {
           "type": "CITY",
@@ -3015,7 +3402,7 @@
       ]
     },
     {
-      "category": "GPS",
+      "category": "Hexadecimal encoding",
       "entity_type": "GPS",
       "strategy": "hex-escape",
       "label": "GPS:hex-escape",
@@ -3025,9 +3412,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "GPS",
-          "value": "35.689500, 139.710390",
-          "score": 0.88
+          "type": "BANK_ACCOUNT",
+          "value": "35689500139710390",
+          "score": 0.55
         },
         {
           "type": "CITY",
@@ -3045,7 +3432,7 @@
       ]
     },
     {
-      "category": "GPS",
+      "category": "Hexadecimal encoding",
       "entity_type": "GPS",
       "strategy": "hex-escape",
       "label": "GPS:hex-escape",
@@ -3055,16 +3442,16 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "GPS",
-          "value": "40.712775, -74.005975",
-          "score": 0.88
+          "type": "BANK_ACCOUNT",
+          "value": "4071277574005975",
+          "score": 0.55
         }
       ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "GPS",
+      "category": "Hexadecimal encoding",
       "entity_type": "GPS",
       "strategy": "hex-escape",
       "label": "GPS:hex-escape",
@@ -3074,9 +3461,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "GPS",
-          "value": "25.034280, 121.564510",
-          "score": 0.88
+          "type": "BANK_ACCOUNT",
+          "value": "25034280121564510",
+          "score": 0.55
         },
         {
           "type": "CITY",
@@ -3094,7 +3481,7 @@
       ]
     },
     {
-      "category": "GPS",
+      "category": "Hexadecimal encoding",
       "entity_type": "GPS",
       "strategy": "hex-escape",
       "label": "GPS:hex-escape",
@@ -3104,9 +3491,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "GPS",
-          "value": "-33.868600, 151.209900",
-          "score": 0.88
+          "type": "BANK_ACCOUNT",
+          "value": "33868600151209900",
+          "score": 0.55
         },
         {
           "type": "CITY",
@@ -3124,7 +3511,7 @@
       ]
     },
     {
-      "category": "PERSON",
+      "category": "Reversed words",
       "entity_type": "PERSON",
       "strategy": "reversed-words",
       "label": "PERSON:reversed-words",
@@ -3137,7 +3524,7 @@
       "raw_detections": []
     },
     {
-      "category": "PERSON",
+      "category": "Reversed words",
       "entity_type": "PERSON",
       "strategy": "reversed-words",
       "label": "PERSON:reversed-words",
@@ -3150,7 +3537,7 @@
       "raw_detections": []
     },
     {
-      "category": "PERSON",
+      "category": "Reversed words",
       "entity_type": "PERSON",
       "strategy": "reversed-words",
       "label": "PERSON:reversed-words",
@@ -3163,7 +3550,7 @@
       "raw_detections": []
     },
     {
-      "category": "PERSON",
+      "category": "Reversed words",
       "entity_type": "PERSON",
       "strategy": "reversed-words",
       "label": "PERSON:reversed-words",
@@ -3176,7 +3563,7 @@
       "raw_detections": []
     },
     {
-      "category": "PERSON",
+      "category": "Reversed words",
       "entity_type": "PERSON",
       "strategy": "reversed-words",
       "label": "PERSON:reversed-words",
@@ -3189,7 +3576,7 @@
       "raw_detections": []
     },
     {
-      "category": "PERSON",
+      "category": "Reversed words",
       "entity_type": "PERSON",
       "strategy": "reversed-words",
       "label": "PERSON:reversed-words",
@@ -3214,7 +3601,7 @@
       ]
     },
     {
-      "category": "PERSON",
+      "category": "Reversed words",
       "entity_type": "PERSON",
       "strategy": "reversed-words",
       "label": "PERSON:reversed-words",
@@ -3227,7 +3614,7 @@
       "raw_detections": []
     },
     {
-      "category": "PERSON",
+      "category": "Reversed words",
       "entity_type": "PERSON",
       "strategy": "reversed-words",
       "label": "PERSON:reversed-words",
@@ -3240,7 +3627,7 @@
       "raw_detections": []
     },
     {
-      "category": "BANK_ACCOUNT",
+      "category": "CamelCase split",
       "entity_type": "BANK_ACCOUNT",
       "strategy": "camelCase_split",
       "label": "BANK_ACCOUNT:camelCase_split",
@@ -3259,7 +3646,7 @@
       ]
     },
     {
-      "category": "BANK_ACCOUNT",
+      "category": "CamelCase split",
       "entity_type": "BANK_ACCOUNT",
       "strategy": "camelCase_split",
       "label": "BANK_ACCOUNT:camelCase_split",
@@ -3269,9 +3656,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
-          "value": "31926819",
-          "score": 0.65
+          "type": "IBAN",
+          "value": "GB29 NWBK 60163131926819",
+          "score": 0.85
         }
       ],
       "raw_regex_detected": true,
@@ -3284,7 +3671,7 @@
       ]
     },
     {
-      "category": "BANK_ACCOUNT",
+      "category": "CamelCase split",
       "entity_type": "BANK_ACCOUNT",
       "strategy": "camelCase_split",
       "label": "BANK_ACCOUNT:camelCase_split",
@@ -3309,7 +3696,7 @@
       ]
     },
     {
-      "category": "BANK_ACCOUNT",
+      "category": "CamelCase split",
       "entity_type": "BANK_ACCOUNT",
       "strategy": "camelCase_split",
       "label": "BANK_ACCOUNT:camelCase_split",
@@ -3334,7 +3721,7 @@
       ]
     },
     {
-      "category": "BANK_ACCOUNT",
+      "category": "CamelCase split",
       "entity_type": "BANK_ACCOUNT",
       "strategy": "camelCase_split",
       "label": "BANK_ACCOUNT:camelCase_split",
@@ -3359,7 +3746,7 @@
       ]
     },
     {
-      "category": "BANK_ACCOUNT",
+      "category": "CamelCase split",
       "entity_type": "BANK_ACCOUNT",
       "strategy": "camelCase_split",
       "label": "BANK_ACCOUNT:camelCase_split",
@@ -3472,7 +3859,7 @@
       "raw_detections": []
     },
     {
-      "category": "COUNTRY",
+      "category": "Pig-latin style",
       "entity_type": "COUNTRY",
       "strategy": "pig-latin",
       "label": "COUNTRY:pig-latin",
@@ -3491,7 +3878,7 @@
       "raw_detections": []
     },
     {
-      "category": "CUSTOMER_NAME",
+      "category": "Unicode fractions",
       "entity_type": "CUSTOMER_NAME",
       "strategy": "unicode-fractions",
       "label": "CUSTOMER_NAME:unicode-fractions",
@@ -3504,7 +3891,7 @@
       "raw_detections": []
     },
     {
-      "category": "CUSTOMER_NAME",
+      "category": "Unicode fractions",
       "entity_type": "CUSTOMER_NAME",
       "strategy": "unicode-fractions",
       "label": "CUSTOMER_NAME:unicode-fractions",
@@ -3517,7 +3904,7 @@
       "raw_detections": []
     },
     {
-      "category": "CUSTOMER_NAME",
+      "category": "Unicode fractions",
       "entity_type": "CUSTOMER_NAME",
       "strategy": "unicode-fractions",
       "label": "CUSTOMER_NAME:unicode-fractions",
@@ -3530,7 +3917,7 @@
       "raw_detections": []
     },
     {
-      "category": "CUSTOMER_NAME",
+      "category": "Unicode fractions",
       "entity_type": "CUSTOMER_NAME",
       "strategy": "unicode-fractions",
       "label": "CUSTOMER_NAME:unicode-fractions",
@@ -3543,7 +3930,7 @@
       "raw_detections": []
     },
     {
-      "category": "CUSTOMER_NAME",
+      "category": "Unicode fractions",
       "entity_type": "CUSTOMER_NAME",
       "strategy": "unicode-fractions",
       "label": "CUSTOMER_NAME:unicode-fractions",
@@ -3568,7 +3955,7 @@
       ]
     },
     {
-      "category": "CUSTOMER_NAME",
+      "category": "Unicode fractions",
       "entity_type": "CUSTOMER_NAME",
       "strategy": "unicode-fractions",
       "label": "CUSTOMER_NAME:unicode-fractions",
@@ -3581,7 +3968,7 @@
       "raw_detections": []
     },
     {
-      "category": "CUSTOMER_NAME",
+      "category": "Unicode fractions",
       "entity_type": "CUSTOMER_NAME",
       "strategy": "unicode-fractions",
       "label": "CUSTOMER_NAME:unicode-fractions",
@@ -3594,7 +3981,7 @@
       "raw_detections": []
     },
     {
-      "category": "CUSTOMER_NAME",
+      "category": "Unicode fractions",
       "entity_type": "CUSTOMER_NAME",
       "strategy": "unicode-fractions",
       "label": "CUSTOMER_NAME:unicode-fractions",
@@ -3607,7 +3994,7 @@
       "raw_detections": []
     },
     {
-      "category": "IBAN",
+      "category": "Syllabic split",
       "entity_type": "IBAN",
       "strategy": "syllabic-split",
       "label": "IBAN:syllabic-split",
@@ -3617,8 +4004,8 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "PHONE",
-          "value": "6016-1331-9268-19",
+          "type": "BANK_ACCOUNT",
+          "value": "60161331926819",
           "score": 0.55
         }
       ],
@@ -3632,7 +4019,7 @@
       ]
     },
     {
-      "category": "IBAN",
+      "category": "Syllabic split",
       "entity_type": "IBAN",
       "strategy": "syllabic-split",
       "label": "IBAN:syllabic-split",
@@ -3642,9 +4029,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "BANK_ACCOUNT",
-          "value": "3704004405320130",
-          "score": 0.55
+          "type": "IBAN",
+          "value": "DE89370400440532013000",
+          "score": 0.85
         }
       ],
       "raw_regex_detected": true,
@@ -3657,20 +4044,26 @@
       ]
     },
     {
-      "category": "IBAN",
+      "category": "Syllabic split",
       "entity_type": "IBAN",
       "strategy": "syllabic-split",
       "label": "IBAN:syllabic-split",
       "text": "For the Dutch refund, process it to NL91-ABNA-0417-1643-00.",
       "ground_truth": "NL91ABNA0417164300",
       "pii_value": "NL91-ABNA-0417-1643-00",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "0417164300",
+          "score": 0.5
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
     {
-      "category": "IBAN",
+      "category": "Syllabic split",
       "entity_type": "IBAN",
       "strategy": "syllabic-split",
       "label": "IBAN:syllabic-split",
@@ -3680,9 +4073,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "BANK_ACCOUNT",
-          "value": "0002012312345678",
-          "score": 0.55
+          "type": "IBAN",
+          "value": "PT50000201231234567890154",
+          "score": 0.85
         }
       ],
       "raw_regex_detected": true,
@@ -3695,7 +4088,7 @@
       ]
     },
     {
-      "category": "EMPLOYEE_NAME",
+      "category": "Morse code",
       "entity_type": "EMPLOYEE_NAME",
       "strategy": "morse-code",
       "label": "EMPLOYEE_NAME:morse-code",
@@ -3708,7 +4101,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMPLOYEE_NAME",
+      "category": "Morse code",
       "entity_type": "EMPLOYEE_NAME",
       "strategy": "morse-code",
       "label": "EMPLOYEE_NAME:morse-code",
@@ -3721,7 +4114,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMPLOYEE_NAME",
+      "category": "Morse code",
       "entity_type": "EMPLOYEE_NAME",
       "strategy": "morse-code",
       "label": "EMPLOYEE_NAME:morse-code",
@@ -3734,7 +4127,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMPLOYEE_NAME",
+      "category": "Morse code",
       "entity_type": "EMPLOYEE_NAME",
       "strategy": "morse-code",
       "label": "EMPLOYEE_NAME:morse-code",
@@ -3747,7 +4140,7 @@
       "raw_detections": []
     },
     {
-      "category": "EMPLOYEE_NAME",
+      "category": "Morse code",
       "entity_type": "EMPLOYEE_NAME",
       "strategy": "morse-code",
       "label": "EMPLOYEE_NAME:morse-code",
@@ -3760,7 +4153,7 @@
       "raw_detections": []
     },
     {
-      "category": "DATE",
+      "category": "Morse code",
       "entity_type": "DATE",
       "strategy": "morse-code",
       "label": "DATE:morse-code",
@@ -3773,7 +4166,7 @@
       "raw_detections": []
     },
     {
-      "category": "DATE",
+      "category": "Morse code",
       "entity_type": "DATE",
       "strategy": "morse-code",
       "label": "DATE:morse-code",
@@ -3786,7 +4179,7 @@
       "raw_detections": []
     },
     {
-      "category": "DATE",
+      "category": "Morse code",
       "entity_type": "DATE",
       "strategy": "morse-code",
       "label": "DATE:morse-code",
@@ -3799,7 +4192,7 @@
       "raw_detections": []
     },
     {
-      "category": "DATE",
+      "category": "Morse code",
       "entity_type": "DATE",
       "strategy": "morse-code",
       "label": "DATE:morse-code",
@@ -3812,7 +4205,7 @@
       "raw_detections": []
     },
     {
-      "category": "DATE",
+      "category": "Morse code",
       "entity_type": "DATE",
       "strategy": "morse-code",
       "label": "DATE:morse-code",
@@ -3825,7 +4218,7 @@
       "raw_detections": []
     },
     {
-      "category": "DATE",
+      "category": "Morse code",
       "entity_type": "DATE",
       "strategy": "morse-code",
       "label": "DATE:morse-code",
@@ -3838,7 +4231,7 @@
       "raw_detections": []
     },
     {
-      "category": "DATE",
+      "category": "Morse code",
       "entity_type": "DATE",
       "strategy": "morse-code",
       "label": "DATE:morse-code",
@@ -3851,7 +4244,7 @@
       "raw_detections": []
     },
     {
-      "category": "DATE",
+      "category": "Morse code",
       "entity_type": "DATE",
       "strategy": "morse-code",
       "label": "DATE:morse-code",
@@ -3864,7 +4257,7 @@
       "raw_detections": []
     },
     {
-      "category": "DATE",
+      "category": "Morse code",
       "entity_type": "DATE",
       "strategy": "morse-code",
       "label": "DATE:morse-code",
@@ -3877,7 +4270,7 @@
       "raw_detections": []
     },
     {
-      "category": "DATE",
+      "category": "Morse code",
       "entity_type": "DATE",
       "strategy": "morse-code",
       "label": "DATE:morse-code",

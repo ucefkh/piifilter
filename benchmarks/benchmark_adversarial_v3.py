@@ -276,6 +276,29 @@ def run_benchmark(dataset_path: str) -> dict[str, Any]:
     overall_full = sum(1 for r in results if r["full_pipeline_detected"])
     overall_raw = sum(1 for r in results if r["raw_regex_detected"])
 
+    # Build per-type summary (entity type)
+    type_groups: dict[str, list[dict[str, Any]]] = {}
+    for r in results:
+        etype = r["entity_type"]
+        type_groups.setdefault(etype, []).append(r)
+
+    type_summary: dict[str, dict[str, Any]] = {}
+    for etype, ers in type_groups.items():
+        total = len(ers)
+        full = sum(1 for e in ers if e["full_pipeline_detected"])
+        raw = sum(1 for e in ers if e["raw_regex_detected"])
+        type_summary[etype] = {
+            "total": total,
+            "full_pipeline_detected": full,
+            "full_pipeline_rate": round(full / total * 100, 1),
+            "raw_regex_detected": raw,
+            "raw_regex_rate": round(raw / total * 100, 1),
+            "improvement": round((full - raw) / total * 100, 1),
+            "missed_examples": [
+                r["label"] for r in ers if not r["full_pipeline_detected"]
+            ],
+        }
+
     return {
         "summary": {
             "overall": {
@@ -287,6 +310,7 @@ def run_benchmark(dataset_path: str) -> dict[str, Any]:
                 "deobfuscation_improvement": round((overall_full - overall_raw) / overall_total * 100, 1),
             },
             "by_category": category_summary,
+            "by_type": type_summary,
         },
         "entries": results,
     }
@@ -299,6 +323,7 @@ def print_summary(data: dict[str, Any]) -> None:
         return
     overall = summary["overall"]
     by_cat = summary["by_category"]
+    by_type = summary.get("by_type", {})
 
     print("=" * 100)
     print("  ADVERSARIAL V3 BENCHMARK — Fresh Dataset (Independent from Training)")
@@ -310,8 +335,10 @@ def print_summary(data: dict[str, Any]) -> None:
     print(f"  Deobfuscation improvement  : +{overall['deobfuscation_improvement']}%")
     print()
 
-    # Main comparison table
-    print(f"  {'Category':40s} {'Total':>5s} {'Full Pipe':>10s} {'Raw':>5s} {'Gain':>6s} {'Bar':>10s}")
+    # ── Per-strategy category table ──
+    print("  ── By Obfuscation Strategy ──")
+    print()
+    print(f"  {'Strategy':40s} {'Total':>5s} {'Full Pipe':>10s} {'Raw':>5s} {'Gain':>6s} {'Bar':>10s}")
     print(f"  {'─'*40} {'─'*5} {'─'*10} {'─'*5} {'─'*6} {'─'*10}")
     for cat_name in sorted(by_cat.keys()):
         c = by_cat[cat_name]
@@ -324,6 +351,21 @@ def print_summary(data: dict[str, Any]) -> None:
 
     print()
     print(f"  {'OVERALL':40s} {overall['total_examples']:5d} {overall['full_pipeline_rate']:>7.1f}%  {overall['raw_regex_rate']:>4.1f}% +{overall['deobfuscation_improvement']:.1f}%")
+    print()
+
+    # ── Per-entity-type table ──
+    print("  ── By Entity Type ──")
+    print()
+    print(f"  {'Entity Type':24s} {'Total':>5s} {'Full Pipe':>10s} {'Raw':>5s} {'Gain':>6s} {'Bar':>10s}")
+    print(f"  {'─'*24} {'─'*5} {'─'*10} {'─'*5} {'─'*6} {'─'*10}")
+    for etype in sorted(by_type.keys()):
+        c = by_type[etype]
+        full_pct = c["full_pipeline_rate"]
+        raw_pct = c["raw_regex_rate"]
+        bar = "█" * int(full_pct / 10) + "░" * (10 - int(full_pct / 10))
+        gain = f"+{c['improvement']:.1f}%" if c["improvement"] > 0 else (
+            " " if c["improvement"] == 0 else f"{c['improvement']:.1f}%")
+        print(f"  {etype:24s} {c['total']:5d} {full_pct:>7.1f}%  {raw_pct:>4.1f}% {gain:>6s} {bar:>10s}")
     print()
 
     # Category-level gains

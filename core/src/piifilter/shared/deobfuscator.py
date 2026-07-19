@@ -5,23 +5,24 @@ can match them. NFKC normalization is applied first, then pattern transforms.
 
 Transforms implemented:
 1. NFKC normalization (Unicode normalization form KC)
-2. [at]/[dot] → @/.  (bracket, paren, angle, brace variants, with/without spaces)
-3. HTML entities → decoded characters (&#NNN; and &#xHH; for ASCII printable)
-4. Zero-width characters removed (ZWSP, ZWNJ, ZWJ)
-5. Unicode dashes → standard hyphen-minus
-6. Soft hyphens removed
-7. Fullwidth ASCII (FF01-FF5E) → standard ASCII
-8. Unicode escape sequences (\\uXXXX) → actual characters
-9. URL percent-encoding (%XX) decoded for PII-relevant chars (@, ., -, _, etc.)
-10. Spoken numbers → digits (one→1, two→2, etc.) for phone/SSN/ip patterns
-11. Hex escape sequences (\\xHH → char) [NEW: Transform A]
-12. Binary 8-bit decoding [NEW: Transform B]
-13. Unicode fractions → decimals [NEW: Transform C]
-14. Extended l33tspeak decoding [NEW: Transform D]
-15. Morse code decoding [NEW: Transform E]
-16. XML numeric escape decoder [NEW: Transform F]
-17. Punctuation-stuffing remover [NEW: Transform G]
-18. Pig latin decoder [NEW: Transform H]
+2. Inner-separator stripping (collapse non-alpha chars between digits)
+3. [at]/[dot] → @/.  (bracket, paren, angle, brace variants, with/without spaces)
+4. HTML entities → decoded characters (&#NNN; and &#xHH; for ASCII printable)
+5. Zero-width characters removed (ZWSP, ZWNJ, ZWJ)
+6. Unicode dashes → standard hyphen-minus
+7. Soft hyphens removed
+8. Fullwidth ASCII (FF01-FF5E) → standard ASCII
+9. Unicode escape sequences (\\uXXXX) → actual characters
+10. URL percent-encoding (%XX) decoded for PII-relevant chars (@, ., -, _, etc.)
+11. Spoken numbers → digits (one→1, two→2, etc.) for phone/SSN/ip patterns
+12. Hex escape sequences (\\xHH → char) [NEW: Transform A]
+13. Binary 8-bit decoding [NEW: Transform B]
+14. Unicode fractions → decimals [NEW: Transform C]
+15. Extended l33tspeak decoding [NEW: Transform D]
+16. Morse code decoding [NEW: Transform E]
+17. XML numeric escape decoder [NEW: Transform F]
+18. Punctuation-stuffing remover [NEW: Transform G]
+19. Pig latin decoder [NEW: Transform H]
 """
 
 from __future__ import annotations
@@ -210,6 +211,11 @@ class Deobfuscator:
         text = self._cleanup_dash_spaces(text, log)
         text = self._collapse_ip_spaces(text, log)
         text = self._collapse_digit_spaces(text, log)
+        # Save a copy of the text before _strip_non_alpha_seps destroys
+        # decimal separators in GPS coordinates. This pre-strip text
+        # is used by the detector for GPS pattern matching.
+        text_for_gps = text
+        text = self._strip_non_alpha_seps(text, log)
         text = self._decode_hex(text, log)
         text = self._decode_base64(text, log)
         text = self._extract_area_serial(text, log)
@@ -219,7 +225,7 @@ class Deobfuscator:
         text = self._decode_morse(text, log)
         text = self._remove_punctuation_stuffing(text, log)
         text = self._decode_pig_latin(text, log)
-        return text, log
+        return text, log, text_for_gps
 
     # ── 1. NFKC normalization ──────────────────────────────────────────
 

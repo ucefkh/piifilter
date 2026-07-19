@@ -243,13 +243,19 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("IP_ADDRESS", r"\b(?:[1-9]\d{6,9})\b", 0.65),
 
     # ── GPS ──────────────────────────────────────────────────────────
-    ("GPS", r"\b(?:lat|lng|lon|latitude|longitude|coordinates?|coords?|gps)\s*[:=]?\s*[-+]?\d{1,3}\.\d+(?:\s*°)?", 0.90),
-    ("GPS", r"[-+]?\d{1,2}\.\d{4,}\s*[,;]\s*[-+]?\d{1,3}\.\d{4,}", 0.88),
-    ("GPS", r"[-+]?\d{1,2}\.\d+\s*°?\s*[NS]\s*[,;]?\s*[-+]?\d{1,3}\.\d+\s*°?\s*[EW]", 0.85),
-    # Individual decimal coordinates — match after keyword: "Coordinates: 40.7128"
-    ("GPS", r"(?i)(?:lat|lng|lon|latitude|longitude|coordinates|coord|gps)\s*[:=]\s*[-+]?\d{1,3}\.\d{4,}", 0.88),
-    # Individual numbers that are clearly coordinates (2-digit integer part, 4+ decimal places)
-    ("GPS", r"(?<!\d)(?<!\d\.)[-+]?\d{1,2}\.\d{4,}(?!\d)", 0.70),
+    # Full coordinate pair after keyword label: "lat/lng/coordinates/gps: value1, value2"
+    # Handles 3-digit integer parts (longitude -122) and 2+ decimal places
+    ("GPS", r"\b(?:lat|lng|lon|latitude|longitude|coordinates?|coords?|gps|location)\s*[:=]?\s*[-+]?\d{1,3}\.\d{2,}", 0.90),
+    # Comma/semicolon-separated coordinate pairs: "40.7128, -74.0060" or "52.52, 13.405"
+    # Relaxed: 2+ decimal places, 1-3 digit integer part (longitudes up to 180)
+    ("GPS", r"[-+]?\d{1,3}\.\d{2,}\s*[,;]\s*[-+]?\d{1,3}\.\d{2,}(?!\.\d)", 0.88),
+    ("GPS", r"[-+]?\d{1,3}\.\d+\s*°?\s*[NS]\s*[,;]?\s*[-+]?\d{1,3}\.\d+\s*°?\s*[EW]", 0.85),
+    # Individual decimal coordinates — match after keyword: "Coordinates: 40.7128" or "Location: 37.7749"
+    ("GPS", r"(?i)(?:lat|lng|lon|latitude|longitude|coordinates|coord|gps|location)\s*[:=]\s*[-+]?\d{1,3}\.\d{2,}", 0.88),
+    # Individual numbers that are clearly coordinates (1-3 digit integer part, 2+ decimal places)
+    # Catches longitudes like -122.4194 and values like 52.52 or 13.405 with fewer decimals
+    # Excludes IP address fragments (e.g. "192.168" in "192.168.1.1") and prices ("$3.50")
+    ("GPS", r"(?<!\d)(?<!\d\.)(?<!\$)[-+]?\d{1,3}\.\d{2,}(?!\.\d)(?!\d)", 0.70),
 
     # ── FILE_PATH ────────────────────────────────────────────────────
     ("FILE_PATH", r"(?<!\/)/(?:[a-zA-Z0-9._-]+/){3,}[a-zA-Z0-9._-]*(?!\w)", 0.85),
