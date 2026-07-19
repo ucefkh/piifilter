@@ -232,7 +232,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("FILE_PATH", r"(?<!\w)(?:[A-Za-z]:\\[a-zA-Z0-9._\\ -]+)(?!\w)", 0.90),
 
     # ── DOMAIN ───────────────────────────────────────────────────────
-    ("DOMAIN", r"\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b", 0.75),
+    # Negative lookahead (?!@) avoids matching email local-parts (e.g. "bob.smith" before @).
+    # File extensions like .yaml, .log, .json, .pdf etc. are excluded from matching
+    # by requiring that the TLD part not be a common file extension.
+    ("DOMAIN", r"\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b(?!@)(?<!\.yaml)(?<!\.json)(?<!\.xml)(?<!\.toml)(?<!\.ini)(?<!\.cfg)(?<!\.conf)(?<!\.log)(?<!\.txt)(?<!\.md)(?<!\.rst)(?<!\.html)(?<!\.css)(?<!\.js)(?<!\.ts)(?<!\.py)(?<!\.rb)(?<!\.java)(?<!\.cpp)(?<!\.c)(?<!\.h)(?<!\.go)(?<!\.rs)(?<!\.php)(?<!\.sql)(?<!\.db)(?<!\.pdf)(?<!\.doc)(?<!\.docx)(?<!\.xls)(?<!\.xlsx)(?<!\.ppt)(?<!\.pptx)(?<!\.png)(?<!\.jpg)(?<!\.jpeg)(?<!\.gif)(?<!\.svg)(?<!\.ico)(?<!\.zip)(?<!\.tar)(?<!\.gz)(?<!\.tgz)(?<!\.bz2)(?<!\.xz)(?<!\.7z)(?<!\.lock)(?<!\.env)", 0.75),
 
     # ── PASSPORT ─────────────────────────────────────────────────────
     ("PASSPORT", r"(?i)(?:^|\s)(?:passport)\s*(?:number|no|#)?\s*:?\s*[A-Z]{0,2}\d{6,9}\b", 0.85),
@@ -361,7 +364,9 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Context-prefixed single-word company names: "works at X", "Invoice from X",
     # "Signed by X", "X is the vendor", "Company: X", "regarding X"
     # Requires the company word to be capitalized, 3+ letters long.
-    ("COMPANY", r"(?i)(?:(?:work|works)\s+at|Invoice\s+from|Signed\s+by|regarding)\s+(?:(?:the|our)\s+)?(?-i:[A-Z])[a-z]{3,}(?:(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]{2,})?)\b", 0.65),
+    # Negative lookahead avoids matching when followed by Inc/Corp/LLC etc.
+    # (those are already caught by the higher-confidence patterns).
+    ("COMPANY", r"(?i)(?:(?:work|works)\s+at|Invoice\s+from|Signed\s+by|regarding)\s+(?:(?:the|our)\s+)?(?-i:[A-Z])[a-z]{3,}(?:(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]{2,}))?\b", 0.65),
     # "Company: X" / "Vendor: X" / "Organization: X" prefix — NOT "Client:" which
     # often precedes a person name.
     ("COMPANY", r"(?i)(?:Company|Vendor|Organization)\s*[：:]\s*(?:(?:the|our)\s+)?(?-i:[A-Z])[a-z]{2,}(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]+)?\b", 0.70),
@@ -374,7 +379,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # well-known companies. These are high-precision names that don't
     # require context keywords. Only include names that are unlikely to
     # be common person names or other false positives.
-    ("COMPANY", r"\b(?:Meta|Apple|Google|Amazon|Microsoft|Netflix|Spotify|Tesla|SpaceX|Intel|IBM|Oracle|SAP|Adobe|Salesforce|Uber|Airbnb|Lyft|Pinterest|Snapchat|TikTok|Zoom|Slack|GitHub|GitLab|Atlassian|Shopify|Twilio|Stripe|Square|PayPal|Venmo|Coinbase|Palantir|Snowflake|Datadog|MongoDB|Databricks|HashiCorp|Canva|Figma|Notion|Linear|Vercel|Netlify|DigitalOcean|Heroku|Alibaba|Tencent|Baidu|Samsung|Sony|Nintendo|Honda|Toyota|BMW|Mercedes|Audi|Volkswagen|Porsche|Ferrari|McLaren|Boeing|Raytheon|Nestle|Pepsi|Pfizer|Moderna|Novartis|Roche|Merck|Sanofi|Bayer|Siemens|Bosch|Philips|Xerox|Cisco|Dell|Lenovo|Asus|Acer|Huawei|Xiaomi|Oppo|Vivo|OnePlus|Nokia|Ericsson|Qualcomm|Broadcom|AMD|Nvidia|Micron|Seagate|DoorDash|Instacart|Roblox|Unity|Capcom|Sega|Ubisoft|Activision|Blizzard|Mitsubishi|Canon|Panasonic|Sharp|Toshiba|Hitachi|Fujitsu|Nikon|Ricoh|Epson|Logitech|GoPro|Fitbit|Roku|Dropbox|Evernote|Trello|Asana|Monday|Zendesk|HubSpot|Mailchimp|Wix|Squarespace|Weebly|Godaddy|Namecheap|Cloudflare|Fastly|Akamai|Okta|CrowdStrike|Palo Alto|Fortinet|Splunk|New Relic|Sumo Logic|Elastic|Confluent|HashiCorp|Hugging Face|OpenAI|Anthropic|Cohere|Stability AI|Midjourney|Runway)\b", 0.75),
+    ("COMPANY", r"\b(?:Meta|Apple|Google|Amazon|Microsoft|Netflix|Spotify|Tesla|SpaceX|Intel|IBM|SAP|Adobe|Salesforce|Uber|Airbnb|Lyft|Pinterest|Snapchat|TikTok|Zoom|Slack|GitHub|GitLab|Atlassian|Shopify|Twilio|Stripe|Square|PayPal|Venmo|Coinbase|Palantir|Snowflake|Datadog|Databricks|HashiCorp|Canva|Figma|Notion|Linear|Vercel|Netlify|DigitalOcean|Heroku|Alibaba|Tencent|Baidu|Samsung|Sony|Nintendo|Honda|Toyota|BMW|Mercedes|Audi|Volkswagen|Porsche|Ferrari|McLaren|Boeing|Raytheon|Nestle|Pepsi|Pfizer|Moderna|Novartis|Roche|Merck|Sanofi|Bayer|Siemens|Bosch|Philips|Xerox|Cisco|Dell|Lenovo|Asus|Acer|Huawei|Xiaomi|Oppo|Vivo|OnePlus|Nokia|Ericsson|Qualcomm|Broadcom|AMD|Nvidia|Micron|Seagate|DoorDash|Instacart|Roblox|Unity|Capcom|Sega|Ubisoft|Activision|Blizzard|Mitsubishi|Canon|Panasonic|Sharp|Toshiba|Hitachi|Fujitsu|Nikon|Ricoh|Epson|Logitech|GoPro|Fitbit|Roku|Dropbox|Evernote|Trello|Asana|Monday|Zendesk|HubSpot|Mailchimp|Wix|Squarespace|Weebly|Godaddy|Namecheap|Cloudflare|Fastly|Akamai|Okta|CrowdStrike|Palo Alto|Fortinet|Splunk|New Relic|Sumo Logic|Elastic|Confluent|HashiCorp|Hugging Face|OpenAI|Anthropic|Cohere|Stability AI|Midjourney|Runway)\b", 0.75),
     # Two-word explicit known companies (with spaces in name)
     ("COMPANY", r"\b(?:Wells Fargo|Bank of America|Coca-Cola|Procter & Gamble|Johnson & Johnson|Morgan Stanley|Credit Suisse|Deutsche Bank|Goldman Sachs|Hewlett Packard|Hewlett-Packard|Lockheed Martin|Northrop Grumman|Electronic Arts|Take-Two Interactive|Square Enix|Bandai Namco|Western Digital|General Electric|General Motors|Ford Motor|Berkshire Hathaway|McKinsey & Company|Boston Consulting|Bain & Company|Deloitte Consulting|PricewaterhouseCoopers|Ernst & Young|KPMG|Accenture|Walmart|Target|Costco|Home Depot|Lowe's|Best Buy|McDonald's|Burger King|Wendy's|KFC|Taco Bell|Pizza Hut|Domino's|Subway|Starbucks|Dunkin'|Chipotle|Panera|Whole Foods|Trader Joe's|Aldi|Lidl|Carrefour|Tesco|Sainsbury's|John Lewis)\b", 0.80),
     # Catch compound company names like LexCorp, Oscorp, OpenCorp, etc.

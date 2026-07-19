@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set)",
-  "timestamp": "2026-07-19T21:09:34Z",
+  "timestamp": "2026-07-19T21:27:32Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
@@ -39,13 +39,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 236,
+      "total_detected_entities": 233,
       "total_true_positives": 204,
-      "total_false_positives": 32,
+      "total_false_positives": 29,
       "total_false_negatives": 8,
-      "overall_precision": 0.864406779661017,
+      "overall_precision": 0.8755364806866953,
       "overall_recall": 0.9622641509433962,
-      "overall_f1": 0.9107142857142857,
+      "overall_f1": 0.9168539325842697,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -129,13 +129,13 @@
         },
         "COMPANY": {
           "true_positives": 8,
-          "false_positives": 4,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 8,
-          "precision": 0.6667,
+          "precision": 0.8,
           "recall": 1.0,
-          "f1": 0.8,
-          "f2": 0.9091,
+          "f1": 0.8889,
+          "f2": 0.9524,
           "recall_ci": [
             0.6756,
             1.0
@@ -229,13 +229,13 @@
         },
         "DOMAIN": {
           "true_positives": 16,
-          "false_positives": 6,
+          "false_positives": 5,
           "false_negatives": 1,
           "n": 17,
-          "precision": 0.7273,
+          "precision": 0.7619,
           "recall": 0.9412,
-          "f1": 0.8205,
-          "f2": 0.8889,
+          "f1": 0.8421,
+          "f2": 0.8989,
           "recall_ci": [
             0.7302,
             0.9895
@@ -552,7 +552,6 @@
           "COUNTRY": 1
         },
         "NONE": {
-          "COMPANY": 2,
           "CITY": 1,
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
@@ -565,8 +564,7 @@
           "SOCIAL_SECURITY": 3,
           "IP_ADDRESS": 1,
           "JWT": 1,
-          "CREDIT_CARD": 1,
-          "DOMAIN": 1
+          "CREDIT_CARD": 1
         },
         "DOMAIN": {
           "URL": 1
@@ -1023,15 +1021,14 @@
           "index": 27,
           "text_preview": "MongoDB: mongodb://admin:secret@mongo-prod.internal:27017/sales",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "COMPANY",
             "DATABASE_URL"
           ]
         },
@@ -1568,15 +1565,14 @@
           "index": 62,
           "text_preview": "Oracle: oracle://scott:tiger@oracle.internal:1521/XEPDB1",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "COMPANY",
             "DATABASE_URL"
           ]
         },
@@ -2675,15 +2671,14 @@
           "index": 139,
           "text_preview": "Reversed: moc.elpmaxe@nhoj (decodes to john@example.com)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN",
             "EMAIL"
           ]
         },
@@ -2841,13 +2836,13 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 253,
+      "total_detected_entities": 250,
       "total_true_positives": 203,
-      "total_false_positives": 50,
+      "total_false_positives": 47,
       "total_false_negatives": 9,
-      "overall_precision": 0.8023715415019763,
+      "overall_precision": 0.812,
       "overall_recall": 0.9575471698113207,
-      "overall_f1": 0.8731182795698925,
+      "overall_f1": 0.8787878787878788,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -2931,13 +2926,13 @@
         },
         "COMPANY": {
           "true_positives": 8,
-          "false_positives": 4,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 8,
-          "precision": 0.6667,
+          "precision": 0.8,
           "recall": 1.0,
-          "f1": 0.8,
-          "f2": 0.9091,
+          "f1": 0.8889,
+          "f2": 0.9524,
           "recall_ci": [
             0.6756,
             1.0
@@ -3031,13 +3026,13 @@
         },
         "DOMAIN": {
           "true_positives": 16,
-          "false_positives": 6,
+          "false_positives": 5,
           "false_negatives": 1,
           "n": 17,
-          "precision": 0.7273,
+          "precision": 0.7619,
           "recall": 0.9412,
-          "f1": 0.8205,
-          "f2": 0.8889,
+          "f1": 0.8421,
+          "f2": 0.8989,
           "recall_ci": [
             0.7302,
             0.9895
@@ -3362,7 +3357,6 @@
           "CREDIT_CARD": 4
         },
         "NONE": {
-          "COMPANY": 2,
           "CITY": 1,
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
@@ -3375,8 +3369,7 @@
           "SOCIAL_SECURITY": 3,
           "IP_ADDRESS": 1,
           "JWT": 1,
-          "CREDIT_CARD": 2,
-          "DOMAIN": 1
+          "CREDIT_CARD": 2
         },
         "DOMAIN": {
           "URL": 1
@@ -3836,15 +3829,14 @@
           "index": 27,
           "text_preview": "MongoDB: mongodb://admin:secret@mongo-prod.internal:27017/sales",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "COMPANY",
             "DATABASE_URL"
           ]
         },
@@ -4382,15 +4374,14 @@
           "index": 62,
           "text_preview": "Oracle: oracle://scott:tiger@oracle.internal:1521/XEPDB1",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "COMPANY",
             "DATABASE_URL"
           ]
         },
@@ -5493,15 +5484,14 @@
           "index": 139,
           "text_preview": "Reversed: moc.elpmaxe@nhoj (decodes to john@example.com)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN",
             "EMAIL"
           ]
         },
