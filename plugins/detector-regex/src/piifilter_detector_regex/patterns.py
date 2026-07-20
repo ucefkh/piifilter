@@ -439,7 +439,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # industry words like Motors, Airlines, Foods, etc.) or the first word is
     # a company keyword (e.g., Acme, Widgets type prefixes).
     # This avoids matching common name phrases, address components, project names, etc.
-    ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+(?:Technologies|Tech|Systems|Software|Solutions|Group|Partners|Holdings|Enterprises|Ventures|Industries|Global|International|Digital|Media|Networks|Services|Consulting|Associates|Motors|Airlines|Foods|Pharma|Bio|Labs|Works|Studios|Games|Health|Energy|Power|Capital|Finance|Insurance|Logistics|Transport|Retail|Electric|Chemical|Materials|Mining|Oil|Gas|Water|Telecom|Interactive|Cloud|Data|AI|Robotics|Research)\b", 0.55),
+    ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+(?:Technologies|Tech|Systems|Software|Solutions|Group|Partners|Holdings|Enterprises|Ventures|Industries|Global|International|Digital|Media|Networks|Services|Consulting|Associates|Motors|Airlines|Foods|Pharma|Bio|Labs|Works|Studios|Games|Health|Energy|Power|Capital|Finance|Insurance|Logistics|Transport|Retail|Electric|Chemical|Materials|Mining|Oil|Gas|Water|Telecom|Interactive|Cloud|Data|AI|Robotics)\b", 0.55),
     # Context-prefixed single-word company names: "works at X", "Invoice from X",
     # "Signed by X", "X is the vendor", "Company: X", "regarding X"
     # Requires the company word to be capitalized, 3+ letters long.
@@ -468,6 +468,6 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # keyword must immediately precede a capitalized two-word phrase.
     # Low confidence to avoid FPs on "from New York", "from Boston" etc.
     # Avoid matching inside parentheticals like "(famous from Finding Nemo)"
-    ("COMPANY", r"(?<!\w)(?<!\()(?:from)\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
+    ("COMPANY", r"(?<!\w)(?<!\()(?:from)\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s*(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
 
 ]
