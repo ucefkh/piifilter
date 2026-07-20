@@ -445,6 +445,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PROJECT_NAME", r"(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\s+milestone\s+due\b", 0.70),
     # "X is in development / in maintenance"
     ("PROJECT_NAME", r"(?i)(?-i:[A-Z])[a-zA-Z]+(?:\s+(?-i:[A-Z])[a-zA-Z]+)?\s+is\s+in\s+(?:development|maintenance|maint)\b", 0.65),
+    # Lowercase "project/initiative" + capitalized name (no colon needed)
+    # Catches: "for project Vulcan", "- project Pandorica", "for project Last Centurion",
+    # "for the project Vulcan" (with optional article between keyword and name).
+    # Must come AFTER uppercase Project patterns so the narrower uppercase match wins dedup.
+    ("PROJECT_NAME", r"(?i)\b(?:project|initiative|campaign|program)\s+(?:(?:the|our|this|that|a|an)\s+)?(?-i:[A-Z])[a-zA-Z0-9]+(?:\s+(?-i:[A-Z])[a-zA-Z0-9]+)*\b", 0.85),
 
     # ── ADDRESS ──────────────────────────────────────────────────────
             # Standard address: "N Street Name St/Rd/Ave/etc."

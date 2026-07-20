@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
-  "timestamp": "2026-07-20T06:13:23Z",
+  "timestamp": "2026-07-20T06:29:43Z",
   "arbitration": {
     "enabled": true
   },
@@ -8,7 +8,7 @@
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
     "test_examples": 125,
-    "total_entities": 167,
+    "total_entities": 166,
     "entity_types": [
       "ADDRESS",
       "API_KEY",
@@ -46,32 +46,32 @@
     "regex": {
       "detector": "regex",
       "total_examples": 125,
-      "total_expected_entities": 167,
-      "total_detected_entities": 184,
-      "total_true_positives": 161,
+      "total_expected_entities": 166,
+      "total_detected_entities": 185,
+      "total_true_positives": 162,
       "total_false_positives": 23,
-      "total_false_negatives": 6,
-      "overall_precision": 0.875,
-      "overall_recall": 0.9640718562874252,
-      "overall_f1": 0.9173789173789174,
+      "total_false_negatives": 4,
+      "overall_precision": 0.8756756756756757,
+      "overall_recall": 0.9759036144578314,
+      "overall_f1": 0.923076923076923,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 3,
+          "true_positives": 2,
           "false_positives": 1,
           "false_negatives": 0,
-          "n": 3,
-          "precision": 0.75,
+          "n": 2,
+          "precision": 0.6667,
           "recall": 1.0,
-          "f1": 0.8571,
-          "f2": 0.9375,
+          "f1": 0.8,
+          "f2": 0.9091,
           "recall_ci": [
-            0.4385,
+            0.3424,
             1.0
           ],
-          "real_n": 3,
+          "real_n": 2,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.4385,
+            0.3424,
             1.0
           ]
         },
@@ -116,23 +116,23 @@
           ]
         },
         "CITY": {
-          "true_positives": 4,
+          "true_positives": 3,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "n": 4,
-          "precision": 0.8,
-          "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "precision": 0.75,
+          "recall": 0.75,
+          "f1": 0.75,
+          "f2": 0.75,
           "recall_ci": [
-            0.5101,
-            1.0
+            0.3006,
+            0.9544
           ],
           "real_n": 4,
-          "real_recall": 1.0,
+          "real_recall": 0.75,
           "real_recall_ci": [
-            0.5101,
-            1.0
+            0.3006,
+            0.9544
           ]
         },
         "COMPANY": {
@@ -476,23 +476,23 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 4,
+          "true_positives": 7,
           "false_positives": 0,
-          "false_negatives": 3,
+          "false_negatives": 0,
           "n": 7,
           "precision": 1.0,
-          "recall": 0.5714,
-          "f1": 0.7273,
-          "f2": 0.625,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.2505,
-            0.8418
+            0.6457,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.5714,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.2505,
-            0.8418
+            0.6457,
+            1.0
           ]
         },
         "SOCIAL_SECURITY": {
@@ -938,17 +938,17 @@
         },
         {
           "index": 23,
-          "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
+          "text_preview": "Country: Switzerland has 4 official languages.",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS"
+            "COUNTRY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "COUNTRY"
           ]
         },
         {
@@ -1125,14 +1125,15 @@
         },
         {
           "index": 36,
-          "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
-          "expected": 1,
+          "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
+          "expected": 2,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ],
           "detected_types": [
             "ADDRESS"
@@ -1232,16 +1233,18 @@
         },
         {
           "index": 43,
-          "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
-          "expected": 6,
-          "detected": 6,
-          "true_positives": 6,
+          "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
+            "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "CITY",
             "COUNTRY"
           ]
         },
@@ -1294,16 +1297,17 @@
           "index": 47,
           "text_preview": "Please add employee David Tennant to the access list for project Galactic.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -1503,10 +1507,10 @@
           "index": 61,
           "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
@@ -1514,7 +1518,8 @@
           ],
           "detected_types": [
             "CUSTOMER_NAME",
-            "EMAIL"
+            "EMAIL",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -1537,21 +1542,17 @@
         },
         {
           "index": 63,
-          "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
-          "expected": 3,
-          "detected": 3,
-          "true_positives": 3,
+          "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS",
-            "CITY",
-            "COUNTRY"
+            "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY",
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
@@ -1784,10 +1785,10 @@
           "index": 80,
           "text_preview": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME",
@@ -1795,7 +1796,8 @@
           ],
           "detected_types": [
             "EMAIL",
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -2156,18 +2158,16 @@
         },
         {
           "index": 106,
-          "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
+          "expected": 6,
+          "detected": 6,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CITY",
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -2443,32 +2443,32 @@
     "pipeline-arbitration": {
       "detector": "pipeline-arbitration",
       "total_examples": 125,
-      "total_expected_entities": 167,
-      "total_detected_entities": 173,
-      "total_true_positives": 155,
+      "total_expected_entities": 166,
+      "total_detected_entities": 174,
+      "total_true_positives": 156,
       "total_false_positives": 18,
-      "total_false_negatives": 12,
-      "overall_precision": 0.8959537572254336,
-      "overall_recall": 0.9281437125748503,
-      "overall_f1": 0.911764705882353,
+      "total_false_negatives": 10,
+      "overall_precision": 0.896551724137931,
+      "overall_recall": 0.9397590361445783,
+      "overall_f1": 0.9176470588235293,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 3,
+          "true_positives": 2,
           "false_positives": 1,
           "false_negatives": 0,
-          "n": 3,
-          "precision": 0.75,
+          "n": 2,
+          "precision": 0.6667,
           "recall": 1.0,
-          "f1": 0.8571,
-          "f2": 0.9375,
+          "f1": 0.8,
+          "f2": 0.9091,
           "recall_ci": [
-            0.4385,
+            0.3424,
             1.0
           ],
-          "real_n": 3,
+          "real_n": 2,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.4385,
+            0.3424,
             1.0
           ]
         },
@@ -2513,23 +2513,23 @@
           ]
         },
         "CITY": {
-          "true_positives": 4,
+          "true_positives": 3,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "n": 4,
-          "precision": 0.8,
-          "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "precision": 0.75,
+          "recall": 0.75,
+          "f1": 0.75,
+          "f2": 0.75,
           "recall_ci": [
-            0.5101,
-            1.0
+            0.3006,
+            0.9544
           ],
           "real_n": 4,
-          "real_recall": 1.0,
+          "real_recall": 0.75,
           "real_recall_ci": [
-            0.5101,
-            1.0
+            0.3006,
+            0.9544
           ]
         },
         "COMPANY": {
@@ -2873,23 +2873,23 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 4,
+          "true_positives": 7,
           "false_positives": 0,
-          "false_negatives": 3,
+          "false_negatives": 0,
           "n": 7,
           "precision": 1.0,
-          "recall": 0.5714,
-          "f1": 0.7273,
-          "f2": 0.625,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.2505,
-            0.8418
+            0.6457,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.5714,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.2505,
-            0.8418
+            0.6457,
+            1.0
           ]
         },
         "SOCIAL_SECURITY": {
@@ -3325,17 +3325,17 @@
         },
         {
           "index": 23,
-          "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
+          "text_preview": "Country: Switzerland has 4 official languages.",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS"
+            "COUNTRY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "COUNTRY"
           ]
         },
         {
@@ -3512,14 +3512,15 @@
         },
         {
           "index": 36,
-          "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
-          "expected": 1,
+          "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
+          "expected": 2,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ],
           "detected_types": [
             "ADDRESS"
@@ -3618,16 +3619,18 @@
         },
         {
           "index": 43,
-          "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
-          "expected": 6,
-          "detected": 6,
-          "true_positives": 6,
+          "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
+            "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "CITY",
             "COUNTRY"
           ]
         },
@@ -3680,16 +3683,17 @@
           "index": 47,
           "text_preview": "Please add employee David Tennant to the access list for project Galactic.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -3888,10 +3892,10 @@
           "index": 61,
           "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
@@ -3899,7 +3903,8 @@
           ],
           "detected_types": [
             "CUSTOMER_NAME",
-            "EMAIL"
+            "EMAIL",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -3922,21 +3927,17 @@
         },
         {
           "index": 63,
-          "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
-          "expected": 3,
-          "detected": 3,
-          "true_positives": 3,
+          "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS",
-            "CITY",
-            "COUNTRY"
+            "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY",
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
@@ -4171,10 +4172,10 @@
           "index": 80,
           "text_preview": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME",
@@ -4182,7 +4183,8 @@
           ],
           "detected_types": [
             "EMAIL",
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -4543,18 +4545,16 @@
         },
         {
           "index": 106,
-          "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
+          "expected": 6,
+          "detected": 6,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CITY",
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -4829,32 +4829,32 @@
     "pipeline-raw": {
       "detector": "pipeline-raw",
       "total_examples": 125,
-      "total_expected_entities": 167,
-      "total_detected_entities": 196,
-      "total_true_positives": 160,
+      "total_expected_entities": 166,
+      "total_detected_entities": 197,
+      "total_true_positives": 161,
       "total_false_positives": 36,
-      "total_false_negatives": 7,
-      "overall_precision": 0.8163265306122449,
-      "overall_recall": 0.9580838323353293,
-      "overall_f1": 0.8815426997245179,
+      "total_false_negatives": 5,
+      "overall_precision": 0.817258883248731,
+      "overall_recall": 0.9698795180722891,
+      "overall_f1": 0.8870523415977961,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 3,
+          "true_positives": 2,
           "false_positives": 1,
           "false_negatives": 0,
-          "n": 3,
-          "precision": 0.75,
+          "n": 2,
+          "precision": 0.6667,
           "recall": 1.0,
-          "f1": 0.8571,
-          "f2": 0.9375,
+          "f1": 0.8,
+          "f2": 0.9091,
           "recall_ci": [
-            0.4385,
+            0.3424,
             1.0
           ],
-          "real_n": 3,
+          "real_n": 2,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.4385,
+            0.3424,
             1.0
           ]
         },
@@ -4899,23 +4899,23 @@
           ]
         },
         "CITY": {
-          "true_positives": 4,
+          "true_positives": 3,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "n": 4,
-          "precision": 0.8,
-          "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "precision": 0.75,
+          "recall": 0.75,
+          "f1": 0.75,
+          "f2": 0.75,
           "recall_ci": [
-            0.5101,
-            1.0
+            0.3006,
+            0.9544
           ],
           "real_n": 4,
-          "real_recall": 1.0,
+          "real_recall": 0.75,
           "real_recall_ci": [
-            0.5101,
-            1.0
+            0.3006,
+            0.9544
           ]
         },
         "COMPANY": {
@@ -5259,23 +5259,23 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 4,
+          "true_positives": 7,
           "false_positives": 0,
-          "false_negatives": 3,
+          "false_negatives": 0,
           "n": 7,
           "precision": 1.0,
-          "recall": 0.5714,
-          "f1": 0.7273,
-          "f2": 0.625,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.2505,
-            0.8418
+            0.6457,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.5714,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.2505,
-            0.8418
+            0.6457,
+            1.0
           ]
         },
         "SOCIAL_SECURITY": {
@@ -5354,9 +5354,6 @@
         "SOCIAL_SECURITY": {
           "SOCIAL_SECURITY": 2
         },
-        "ADDRESS": {
-          "PERSON": 1
-        },
         "CREDIT_CARD": {
           "CREDIT_CARD": 4
         },
@@ -5369,6 +5366,9 @@
         },
         "IP_ADDRESS": {
           "IP_ADDRESS": 2
+        },
+        "ADDRESS": {
+          "PERSON": 1
         },
         "PRIVATE_URL": {
           "URL": 1,
@@ -5731,17 +5731,17 @@
         },
         {
           "index": 23,
-          "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
+          "text_preview": "Country: Switzerland has 4 official languages.",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS"
+            "COUNTRY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "COUNTRY"
           ]
         },
         {
@@ -5918,18 +5918,18 @@
         },
         {
           "index": 36,
-          "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
-          "expected": 1,
-          "detected": 2,
+          "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
+          "expected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 0,
+          "false_positives": 0,
+          "false_negatives": 1,
           "expected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "PERSON"
+            "ADDRESS"
           ]
         },
         {
@@ -6025,16 +6025,18 @@
         },
         {
           "index": 43,
-          "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
-          "expected": 6,
-          "detected": 6,
-          "true_positives": 6,
+          "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
+            "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "CITY",
             "COUNTRY"
           ]
         },
@@ -6087,16 +6089,17 @@
           "index": 47,
           "text_preview": "Please add employee David Tennant to the access list for project Galactic.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -6296,10 +6299,10 @@
           "index": 61,
           "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
@@ -6307,7 +6310,8 @@
           ],
           "detected_types": [
             "CUSTOMER_NAME",
-            "EMAIL"
+            "EMAIL",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -6330,21 +6334,18 @@
         },
         {
           "index": 63,
-          "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
-          "expected": 3,
-          "detected": 3,
-          "true_positives": 3,
-          "false_positives": 0,
+          "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
+          "expected": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS",
-            "CITY",
-            "COUNTRY"
+            "ADDRESS"
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "COUNTRY"
+            "PERSON"
           ]
         },
         {
@@ -6579,10 +6580,10 @@
           "index": 80,
           "text_preview": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME",
@@ -6590,7 +6591,8 @@
           ],
           "detected_types": [
             "EMAIL",
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -6951,18 +6953,16 @@
         },
         {
           "index": 106,
-          "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
+          "expected": 6,
+          "detected": 6,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CITY",
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY",
             "COUNTRY"
           ]
         },
