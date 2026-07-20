@@ -536,17 +536,36 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         ("ADDRESS", r"\bP\.?\s*O\.?\s+Box\s+\d+\b", 0.85),
         ("ADDRESS", r"\b(?:Suite|Apt|Unit|Building)\s+#?\d+[A-Za-z]?\b", 0.80),
 
-    # ── CITY ─────────────────────────────────────────────────────────
-    # City in population context: "X (37M), Y (32M)" — match just the city name before the parenthetical
-    # Must come before broader keyword-prefixed patterns so the narrower match wins dedup.
-    ("CITY", r"\b[A-Z][a-z]+(?=\s*\(\d+\s*M\))", 0.55),
-    # City after "of" keyword - use lookbehind so "of " isn't part of the match.
-    # Must come before keyword-prefixed patterns so the narrower match wins.
-    ("CITY", r"(?i)(?<=of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam|Latin)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
-    ("CITY", r"(?i)(?<=city of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
-    # Cities followed by comma + known country — use positive lookahead so match is JUST the city name
-    # Exclude country names from the city position to avoid COUNTRY→CITY confusion
-    ("CITY", r"\b(?!(?:Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Indonesia|Malaysia|Singapore|New Zealand|Greece|Finland|Hungary|Romania|Ukraine)\b)[A-Z][a-z]+(?:[ -]+[A-Z][a-z]+)?(?=\s*,\s*(?:Germany|France|Italy|Spain|UK|England|USA|US|China|Japan|India|Brazil|Canada|Australia)\b)", 0.70),
+    # ── COUNTRY ──────────────────────────────────────────────────────
+        # IMPORTANT: COUNTRY must come BEFORE CITY so that higher-confidence (0.80)
+        # country matches take priority over lower-confidence (0.50) city matches
+        # for words that are both countries and potential city names.
+        # Full country names — unambiguous, high confidence.
+        ("COUNTRY", r"\b(?:United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|Israel|Greece|Finland|Hungary|Romania|Ukraine|USA)\b", 0.80),
+        # Short abbreviations (US, UK, UAE) — more FP-prone.
+        # Negative lookbehind guards against parenthetical asides like "(UK mobile)", "(US dollars)".
+        ("COUNTRY", r"(?<![\(\)])\b(?:US|UK|UAE)\b", 0.70),
+        # "Czech Republic" — full country name
+        ("COUNTRY", r"\bCzech\s+Republic\b", 0.80),
+        # Adjective/native forms of country names — lower confidence since these
+        # can also be languages.
+        ("COUNTRY", r"\bGerman\b", 0.70),
+        # Native-language country names e.g. Italia for Italy
+        ("COUNTRY", r"\bItalia\b", 0.70),
+        # "England" as a country name (part of UK but commonly used)
+        ("COUNTRY", r"\bEngland\b", 0.70),
+
+        # ── CITY ─────────────────────────────────────────────────────────
+        # City in population context: "X (37M), Y (32M)" — match just the city name before the parenthetical
+        # Must come before broader keyword-prefixed patterns so the narrower match wins dedup.
+        ("CITY", r"\b[A-Z][a-z]+(?=\s*\(\d+\s*M\))", 0.55),
+        # City after "of" keyword - use lookbehind so "of " isn't part of the match.
+        # Must come before keyword-prefixed patterns so the narrower match wins.
+        ("CITY", r"(?i)(?<=of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam|Latin)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
+        ("CITY", r"(?i)(?<=city of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
+        # Cities followed by comma + known country — use positive lookahead so match is JUST the city name
+        # Exclude country names from the city position to avoid COUNTRY->CITY confusion
+        ("CITY", r"\b(?!(?:Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Indonesia|Malaysia|Singapore|New Zealand|Greece|Finland|Hungary|Romania|Ukraine)\b)[A-Z][a-z]+(?:[ -]+[A-Z][a-z]+)?(?=\s*,\s*(?:Germany|France|Italy|Spain|UK|England|USA|US|China|Japan|India|Brazil|Canada|Australia)\b)", 0.70),
     # City after "works at X in City" or "based in City" using lookbehind for "in "
         # Fixed-width lookbehind prevents keyword from being part of the match span.
         # Comprehensive negative lookahead blocks all common UI/technical/role/department
@@ -577,15 +596,6 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # City before UK postcode: "City, POSTCODE" — e.g. "London, SW1A 2AA", "Manchester, M1 1AE"
     # The postcode format is strongly discriminative; blocked list prevents common nouns from matching.
     ("CITY", r"\b(?!(?:Office|Offices|Suite|Room|Rm|Floor|Fl|Dept|Department|Building|Bldg|Center|Centre|Institute|School|College|University|Hospital|Hotel|Church|Bank|Store|Shop|Market|Mall|Club|House|Home|Lab|Laboratory|Studio|Factory|Warehouse|Station|Terminal|Airport|Port|Dock|Marina|Resort|Spa|Garden|Park|Zoo|Museum|Gallery|Theater|Theatre|Cinema|Stadium|Arena|Gym|Cafe|Bar|Pub|Restaurant|Bakery|Pharmacy|Clinic|January|February|March|April|May|June|July|August|September|October|November|December|Spring|Summer|Autumn|Winter|Red|Blue|Green|Yellow|Black|White|Gray|Grey|Brown|Orange|Purple|Pink|Violet|Indigo|Gold|Silver|Bronze|Platinum|Diamond|Ruby|Emerald|Sapphire|Jade|Coral|Ivory|Azure|Crimson|Scarlet|Mathematics|Physics|Chemistry|Biology|Geology|Astronomy|Economics|Philosophy|Psychology|Sociology|Literature|Geography|Politics|Law|Engineering|Computing|Medicine|Nursing|Pharmacy|Dentistry|Architecture|Business|Finance|Accounting|Marketing|Design|Education|Training|Learning|Teaching|Coaching|Mentoring|Consulting|Planning|Strategy|Operations|Logistics|Procurement|Desk|Lab|Workshop|Institute|Academy|School|College|University|Department|Division|Section|Unit|Team|Group|Committee|Council|Board|Authority|Agency|Bureau|Ministry|Commission|Foundation|Association|Society|Union|League|Club|Config|Configuration|Settings|Options|Preferences|Admin|Administrator|System|Dashboard|Profile|Account|General|Security|Network|Users|Groups|Roles|Permissions|Logs|Backup|Notifications|Integrations|Plugins|Extensions|Appearance|Layout|Theme|Support|Manager|Management|Report|Reports|Analytics|Statistics|Overview|Summary|Details|Editor|Viewer|Designer|Developer|Engineer|Moderator|Contributor|Maintenance|Upgrade|Update|Installation|Deployment|Release|Version|Testing|Review|Approval|Approved|Rejected|Pending|Status|Progress|Complete|Finished|Canceled|Failed|Error|Warning|Info|Success|Critical|Alert|Debug|Trace|Monitor|Metrics|Logging|Audit|Access|Control|Policy|Rule|Rules|Template|Templates|Workflow|Pipeline|Queue|Schedule|Calendar|Agenda|Invoice|Order|Transaction|Payment|Shipping|Billing|Tax|Nature|Science|General|Practice|Theory|Process|Public|Private|Common|Research|Development|Text|Mode|Here|There|This|That|These|Those|The|A|An|All|Some|Many|Both|Each|Every|Few|More|Most|Other|Such|Same|Just|Also|Very|Too|Quite|Well|Now|Then|Than|Into|Upon|Under|Over|Again|Before|After|Until|During|Since|About|Between|Through|Because|North|South|East|West|Northeast|Northwest|Southeast|Southwest|Northern|Southern|Eastern|Western|Central|Upper|Lower|Mid|Inner|Outer|Forward|Backward|Upward|Downward|Internal|External|Left|Right|Top|Bottom|Front|Back|Side|End|Edge|Corner|Middle|Heart|Core|Base|Basis|Ground|Floor|Level|Layer|Tier|Phase|Stage|Step|Point|Spot|Site|Area|Zone|Sector|Region|District|Quarter|Block|Lot|Plot|Field|Track|Line|Row|Column|Node|End|Location|Place|Space|Mark|Sign|Symbol|Icon|Logo|Image|Picture|Photo|Graphic|Art|Design|Pattern|Model|Style|Type|Form|Kind|Sort|Class|Category|Set|Series|Range|Scale|Rate|Degree|Grade|Rank|Status|State|Condition|Position|Role|Function|Task|Job|Work|Duty|Charge|Mission|Operation|Action|Activity|Process|Procedure|Method|Approach|Technique|System|Scheme|Plan|Program|Project|Initiative|Campaign|Drive|Push|Effort|Attempt|Try|Trial|Test|Experiment|Study|Survey|Poll|Census|Count|Tally|Total|Sum|Amount|Number|Figure|Digit|Value|Quantity|Measure|Metric|Index|Indicator|Test|Assessment|Evaluation|Judgment|Rating|Score|Grade|Mark|Label|Brand|Tag|Title|Term|Source|Origin|Root|Cause|Reason|Basis|Ground|Foundation|Path|Route|Course|Channel|Track|Lane|Alley|Passage|Corridor|Hall|Window|Gate|Entrance|Exit|Door|Wall|Ceiling|Roof|Capacity|Size|Dimension|Length|Width|Height|Depth|Breadth|Span|Range|Scope|Extent|Scale|Standard|Norm|Criterion|Benchmark|Baseline|Threshold|Cutoff|Meeting|Conference|Summit|Forum|Seminar|Workshop|Symposium|Convention|Congress|Assembly|Gathering|Meetup|Event|Function|Gala|Ceremony|Tradition|Custom|Convention|Practice|Norm|Standard|Rule|Code|Law|Regulation|Statute|Ordinance|Decree|Edict|Mandate|Order|Command|Instruction|Direction|Guideline|Requirement|Specification|Protocol|Procedure|Policy|Principle|Doctrine|Tenet|Maxim|Axiom|Truth|Fact|Reality|Certainty|Absolute|Given|Constant|Variable|Parameter|Factor|Element|Component|Part|Piece|Segment|Section|Portion|Fraction|Division|Subdivision|Category|Class|Group|Set|Collection|Assembly|Cluster|Batch|Bunch|Pack|Bundle|Stack|Heap|Pile|Mass|Volume|Bulk|Majority|Minority|Plurality|Multitude|Array|Range|Variety|Diversity|Selection|Choice|Option|Alternative|Possibility|Opportunity|Chance|Risk|Threat|Danger|Hazard|Peril|Jeopardy|Crisis|Emergency|Disaster|Catastrophe|Calamity|Tragedy|Accident|Incident|Occurrence|Happening|Phenomenon|Situation|Circumstance|Condition|Context|Environment|Setting|Atmosphere|Ambiance|Mood|Tone|Feeling|Sense|Impression|Effect|Impact|Influence|Result|Outcome|Consequence|Product|Fruit|Reward|Benefit|Gain|Profit|Advantage|Edge|Lead|Headway|Progress|Advancement|Development|Evolution|Growth|Expansion|Extension|Enlargement|Increase|Rise|Surge|Boost|Jump|Leap|Bound|Spurt|Burst|Flash|Blast|Explosion|Eruption|Outburst|Outbreak|Epidemic|Pandemic|Plague|Scourge|Curse|Avenue|Ave|Street|St|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|Way|Place|Pl|Court|Ct|Square|Sq|Circle|Cir|Park|Pkwy|Parkway|Highway|Hwy)\b)[A-Z][a-z]{2,}(?=\s*,\s*[A-Z]{1,2}\d{1,2}[A-Z]?\s+\d[A-Z]{2}\b)", 0.55),
-
-    # ── COUNTRY ──────────────────────────────────────────────────────
-    # Full country names — unambiguous, high confidence.
-    ("COUNTRY", r"\b(?:United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|Israel|Greece|Finland|Hungary|Romania|Ukraine|USA)\b", 0.80),
-    # Short abbreviations (US, UK, UAE) — more FP-prone.
-    # Negative lookbehind guards against parenthetical asides like "(UK mobile)", "(US dollars)".
-    ("COUNTRY", r"(?<![\()])\b(?:US|UK|UAE)\b", 0.70),
-    # "Czech Republic" — full country name
-    ("COUNTRY", r"\bCzech\s+Republic\b", 0.80),
 
     # ── DOMAIN ───────────────────────────────────────────────────────
     # DOMAIN comes AFTER URL, DATABASE_URL, PRIVATE_URL, and EMAIL so that

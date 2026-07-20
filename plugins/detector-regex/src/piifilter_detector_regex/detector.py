@@ -776,8 +776,19 @@ class RegexDetector(Detector):
                             # This new match starts well before the contained match —
                             # it's likely a keyword extension. Skip it.
                             continue
-                    # Otherwise (cross-type or exact-same-span), the new context-keyword
-                    # match is more specific — replace the contained matches.
+                    else:
+                        # Cross-type containment: prefer the higher-confidence match.
+                        # The contained match(es) may have higher confidence (e.g. COUNTRY 0.80
+                        # inside CITY 0.40), in which case we should keep them and skip the
+                        # lower-confidence broader match. Only replace if the NEW match has
+                        # higher (or equal) confidence than ALL contained matches.
+                        old_max_conf = max(entities[i].confidence for i, _ in contained_by_new)
+                        if score < old_max_conf:
+                            # New match has lower confidence than contained match(es) —
+                            # keep the high-confidence narrower match and skip.
+                            continue
+                    # Otherwise (cross-type with higher/new confidence, or exact-same-span),
+                    # the new context-keyword match is more specific — replace.
                     for i, _ in reversed(contained_by_new):
                         entities.pop(i)
                         seen_intervals.pop(i)
