@@ -550,8 +550,18 @@ class RegexDetector(Detector):
                 if start == end:
                     continue
 
-                # Skip if fully contained in an already-found match
-                if any(s <= start and end <= e for s, e in seen_intervals):
+                # Skip if fully contained in an already-found match.
+                # Cross-type containment is normally filtered (e.g., an untyped
+                # match inside an EMAIL is noise), but some specific type pairs
+                # are legitimate — e.g. PERSON inside EMAIL (CJK name before @).
+                if any(
+                    s <= start and end <= e
+                    for i, (s, e) in enumerate(seen_intervals)
+                    if not (
+                        entities[i].entity_type == EntityType.EMAIL
+                        and entity_type == EntityType.PERSON
+                    )
+                ):
                     continue
 
                 # NEW: If this match CONTAINS an already-found match, prefer the narrower
@@ -590,15 +600,17 @@ class RegexDetector(Detector):
                     digits = "".join(c for c in match.group() if c.isdigit())
                     # Masked-card guard: if the digit portion is <= 6 chars
                     # (e.g. ****-****-****-1111 has only "1111") then the
-                    # entity is clearly a redacted/masked card — suppress it
-                    # because the benchmark considers masked PII as already
-                    # anonymized. Mask patterns (score < 0.75) produce these.
+                    # entity is a redacted/masked card with only last-4 visible.
+                    # Only suppress ALL-ZERO placeholders (e.g. XXXX-XXXX-XXXX-0000,
+                    # ****-****-****-0000) that are test/default values.
+                    # Non-zero visible digits like 1111, 0004 are real card references
+                    # and should still be detected.
                     if len(digits) <= 6 and score < 0.80:
-                        # Only suppress if the non-digit portion contains
-                        # mask markers like X, *, #, or bullet chars
                         non_digits = "".join(c for c in match.group() if not c.isdigit())
                         if any(m in non_digits for m in ("X", "*", "#", "\u2022", "\u25CF")):
-                            continue
+                            # Only suppress if visible digits are all zeros (placeholder)
+                            if all(d == "0" for d in digits):
+                                continue
                     if len(digits) >= 13 and not self._luhn_check(digits):
                         continue
 

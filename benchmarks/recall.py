@@ -583,9 +583,27 @@ async def make_pipeline_adapter(shared_presidio: DetectorAdapter | None = None) 
                 if len(tokens) > 1 and all(t in _COMMON_WORDS for t in tokens):
                     continue
 
+                # 5. "Person: X <non-name-verb>" guard: suppress presidio
+                #    PERSON that follows "Person:" and is followed by a
+                #    known non-name continuation word (researcher, etc.).
+                before_span = text[max(0, start-15):start].lower()
+                after_text = text[end:end+20].strip().lower().split()
+                if after_text:
+                    first_word_after = after_text[0].rstrip(".,;:!?")
+                    _PERSON_NONAME_CONTINUATIONS = {
+                        "researcher", "published", "found", "said", "says",
+                        "reported", "announced", "discovered", "created",
+                        "designed", "developed", "invented", "wrote",
+                    }
+                    if "person:" in before_span and \
+                       first_word_after in _PERSON_NONAME_CONTINUATIONS:
+                        continue
+
             # Cross-type suppression: PERSON from NER that overlaps with
             # a structural entity type is likely noise.
-            if et == "PERSON":
+            # Only suppress Presidio PERSON — regex PERSON may legitimately
+            # overlap with EMAIL (e.g. CJK name before @).
+            if et == "PERSON" and detector == "presidio":
                 overlaps_structural = False
                 for stype in _PERSON_CROSS_SUPPRESS_TYPES:
                     s_intervals = all_interval_map.get(stype, [])
@@ -737,7 +755,12 @@ async def evaluate_detector(detector_name: str, dataset: list[LabeledExample],
             det_end = det.get("end", 0)
             det_text = det.get("value", "")
 
-            matched = False
+            # Many-to-one matching: a single detection can match MULTIPLE
+            # golden entities if it overlaps them all (e.g. arbitrator
+            # merges overlapping spans into one wider entity).  This fixes
+            # the common case where "40.7128, -74.0060" is merged into a
+            # single entity but the golden labels have two separate entities.
+            matched_any = False
             for ei, ee in enumerate(expected_entities):
                 if expected_matched[ei]:
                     continue
@@ -753,11 +776,12 @@ async def evaluate_detector(detector_name: str, dataset: list[LabeledExample],
 
                 if type_match and span_match:
                     expected_matched[ei] = True
-                    detected_matched[di] = True
-                    matched = True
-                    break
+                    matched_any = True
 
-            if not matched:
+            if matched_any:
+                detected_matched[di] = True
+
+            if not matched_any:
                 # Record confusion: what was expected at this span vs what was detected
                 # Find expected entity at this location
                 found_expected = None

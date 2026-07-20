@@ -151,14 +151,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         ("CREDIT_CARD", r"(?i)\b(?:Visa|Mastercard|Master Card|Amex|American Express|Discover|Diners|JCB)\s+ending\s+in\s+\d{4}\b", 0.75),
 
     # ── EMAIL ────────────────────────────────────────────────────────
-    # Local part: word chars, dots, +, -, *, percent-encoded chars, quotable specials
-    # Domain: word chars and hyphens (no underscore for domain)
-    # TLD: word chars, dots and hyphens (for multi-level TLDs like .co.uk)
-    ("EMAIL", r"\b[\w.+*-]+@[\w-]+\.[\w.-]+\b", 0.90),
-    # Catch star-obfuscated emails where only * and first/last letter remains
-    # e.g. j**n@example.com, s***t@company.com — pattern above catches these now
-    # but this lower-confidence fallback catches edge cases with longer stars
-    ("EMAIL", r"\b[\w.*]{2,}@[\w.-]+\.[\w.-]+\b", 0.85),
+        # Local part: word chars, dots, +, -, *, percent-encoded chars, quotable specials
+        # Domain: word chars and hyphens (no underscore for domain)
+        # TLD: word chars, dots and hyphens (for multi-level TLDs like .co.uk)
+        ("EMAIL", r"\b[\w.+*-]+@[\w-]+\.[\w.-]+\b", 0.90),
+        # Catch star-obfuscated emails where only * and first/last letter remains
+        # e.g. j**n@example.com, s***t@company.com — pattern above catches these now
+        # but this lower-confidence fallback catches edge cases with longer stars
+        ("EMAIL", r"\b[\w.*]{2,}@[\w.-]+\.[\w.-]+\b", 0.85),
 
     # ── API_KEY ──────────────────────────────────────────────────────
     ("API_KEY", r"\b(?:sk-|pk-|api[-_]?key|token|secret)[-_]?[a-zA-Z0-9_\-]{16,64}\b", 0.95),
@@ -356,7 +356,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PERSON", r"(?i)\b(?:اتصل)\s+بـ?\s*[\u0600-\u06ff\u0750-\u077f]{3,}\b", 0.80),
     ("PERSON", r"(?i)\b(?:اسم|اسمي)\s+[\u0600-\u06ff]+\b", 0.80),
     # Japanese: CJK name followed by の (possessive) or さん (honorific)
-    ("PERSON", r"[\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{2,4}(?:の|さん)\b", 0.70),
+        # NOTE: No \\b at end. Python's \\b treats CJK chars as \\w chars, so
+        # there's no boundary between の and any following CJK/Hiragana/Katakana
+        # character.  Instead we use a negative lookahead that blocks only when
+        # followed by a literal Latin letter or digit (not hiragana/katakana).
+        ("PERSON", r"[\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{2,4}(?:\u306e|\u3055\u3093)(?![a-zA-Z0-9])", 0.70),
     # Greek alphabet names (O + name pattern for "O Γιώργος")
     ("PERSON", r"(?i)\bO\s+[\u0370-\u03ff]+\b", 0.70),
     # Any non-Latin name caught by context + multiple non-Latin word chars
@@ -365,9 +369,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Require at least 3+ consecutive non-Latin chars to avoid matching
     # short prefixes that aren't names
     # Exclude Arabic prefix words that aren't names themselves (اتصل = contact, etc.)
-    # IMPORTANT: negative lookahead must come BEFORE \s* so that backtracking
-    # doesn't bypass it by leaving a space character at the lookahead position.
-    ("PERSON", r"(?i)(?:(?<=Russian:)|(?<=Arabic:)|(?<=Japanese:)|(?<=Greek:)|(?<=Unicode))(?!(?:\s*اتصل|\s*بـ))\s*(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{3,}(?:\s+(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]*)?\b", 0.70),
+    # IMPORTANT: negative lookahead must come BEFORE \\s* so that backtracking
+        # doesn't bypass it by leaving a space character at the lookahead position.
+        # CRITICAL: The continuation character class must NOT include Latin letters
+        # (a-z0-9) to avoid greedily eating email prefixes, verbs, and particles.
+        ("PERSON", r"(?i)(?:(?<=Russian:)|(?<=Arabic:)|(?<=Japanese:)|(?<=Greek:)|(?<=Unicode))(?!(?:\s*اتصل|\s*بـ))\s*(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{3,}(?:\s+(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]*)?\b", 0.70),
     # "Signed/from/by/preposition + Name" — strong signal for person names
     # Requires TWO capitalized words (first + last name) to avoid matching
     # single-word company names like "signed by Google"

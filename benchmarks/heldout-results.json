@@ -1,27 +1,32 @@
 {
   "title": "Held-Out Adversarial Benchmark Report",
-  "timestamp": "2026-07-20T01:02:31.978624",
+  "timestamp": "2026-07-20T08:44:33.972574",
   "train_benchmark": {
     "label": "v1 benchmark (original)",
-    "full_pipeline_rate": 82.9,
-    "raw_regex_rate": 51.3
+    "full_pipeline_rate": 78.6,
+    "raw_regex_rate": 52.1
   },
   "holdout_datasets": [
     {
       "label": "v4 (DeepSeek, seed_A, 10 strategies)",
       "total": 260,
-      "full_pipeline": 115,
-      "full_pipeline_rate": 44.2,
-      "raw_regex": 96,
-      "raw_regex_rate": 36.9,
-      "improvement": 7.3,
+      "full_pipeline": 132,
+      "full_pipeline_rate": 50.8,
+      "raw_regex": 98,
+      "raw_regex_rate": 37.7,
+      "improvement": 13.1,
       "entries": [
         {
           "text": "Our team is excited to launch P\\u200br\\u200bo\\u200bj\\u200be\\u200bc\\u200bt\\u200b \\u200bA\\u200bl\\u200bp\\u200bh\\u200ba next quarter.",
           "entity_type": "PROJECT_NAME",
           "strategy": "zero-width-char-insertion",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "PROJECT_NAME",
+              "value": "Project Alpha"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -29,8 +34,13 @@
           "text": "The coding sprint focuses on O\\u200bp\\u200be\\u200br\\u200ba\\u200bt\\u200bi\\u200bo\\u200bn\\u200b \\u200bN\\u200be\\u200bt\\u200bs\\u200bt\\u200bo\\u200br\\u200bm deliverables.",
           "entity_type": "PROJECT_NAME",
           "strategy": "zero-width-char-insertion",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "PROJECT_NAME",
+              "value": "Operation Netstorm"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -83,13 +93,8 @@
           "text": "The merger was named C\\u200ba\\u200bs\\u200bc\\u200ba\\u200bd\\u200be\\u200b \\u200bC\\u200bi\\u200bt\\u200by internally.",
           "entity_type": "PROJECT_NAME",
           "strategy": "zero-width-char-insertion",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "CITY",
-              "value": "cITY internally"
-            }
-          ],
+          "full_pipeline_detected": false,
+          "full_detections": [],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -97,8 +102,13 @@
           "text": "The team has been working on Cebwrpg Nerqn for several months now.",
           "entity_type": "PROJECT_NAME",
           "strategy": "ROT13",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "PROJECT_NAME",
+              "value": "working on Cebwrpg Nerqn"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -129,12 +139,17 @@
           "text": "The results from Oynpx Ebpx were presented at the conference yesterday.",
           "entity_type": "PROJECT_NAME",
           "strategy": "ROT13",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "PERSON",
+              "value": "from Oynpx Ebpx"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "COMPANY",
+              "type": "PERSON",
               "value": "from Oynpx Ebpx"
             }
           ]
@@ -370,12 +385,20 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "PERSON",
+              "value": "Tom Chen"
+            },
+            {
               "type": "SOCIAL_SECURITY",
               "value": "SSN 555123456"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
+            {
+              "type": "PERSON",
+              "value": "Tom Chen"
+            },
             {
               "type": "PHONE",
               "value": "555   12   3456"
@@ -429,6 +452,10 @@
             {
               "type": "IP_ADDRESS",
               "value": "777331111"
+            },
+            {
+              "type": "EMPLOYEE_NAME",
+              "value": "employee David Kim"
             }
           ],
           "raw_regex_detected": true,
@@ -822,21 +849,36 @@
           "text": "I met Ljsb Nbsb at the conference yesterday.",
           "entity_type": "PERSON",
           "strategy": "character_displacement_+1_ascii",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "PERSON",
+              "value": "met Ljsb Nbsb at"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "PERSON",
+              "value": "met Ljsb Nbsb at"
+            }
+          ]
         },
         {
           "text": "The email from Qbsf Mfbs was about the project deadline.",
           "entity_type": "PERSON",
           "strategy": "character_displacement_+1_ascii",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "PERSON",
+              "value": "from Qbsf Mfbs"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "COMPANY",
+              "type": "PERSON",
               "value": "from Qbsf Mfbs"
             }
           ]
@@ -854,8 +896,13 @@
           "text": "Dr. Wjmibn Dpmmjot will be speaking at the seminar.",
           "entity_type": "PERSON",
           "strategy": "character_displacement_+1_ascii",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "PERSON",
+              "value": "Dr. Wjmibn Dpmmjot"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -868,10 +915,20 @@
           "text": "The report was written by Ybsj Mfz.",
           "entity_type": "PERSON",
           "strategy": "character_displacement_+1_ascii",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "PERSON",
+              "value": "by Ybsj Mfz"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "PERSON",
+              "value": "by Ybsj Mfz"
+            }
+          ]
         },
         {
           "text": "I had lunch with Dfodz Tufqifot last Tuesday.",
@@ -886,10 +943,20 @@
           "text": "The new policy was drafted by Gbjmf Zboh.",
           "entity_type": "PERSON",
           "strategy": "character_displacement_+1_ascii",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "PERSON",
+              "value": "by Gbjmf Zboh"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "PERSON",
+              "value": "by Gbjmf Zboh"
+            }
+          ]
         },
         {
           "text": "Idbsmft Ivst is the head of the marketing department.",
@@ -1032,6 +1099,10 @@
           "strategy": "mirrored_brackets",
           "full_pipeline_detected": true,
           "full_detections": [
+            {
+              "type": "EMPLOYEE_NAME",
+              "value": "colleague Sarah"
+            },
             {
               "type": "API_KEY",
               "value": "AAAABeNzaClyc2EAAAADAQABAAABAQD"
@@ -1349,6 +1420,10 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "PERSON",
+              "value": "Dr. Patel"
+            },
+            {
               "type": "PHONE",
               "value": "+919876543210"
             }
@@ -1475,6 +1550,10 @@
             {
               "type": "JWT",
               "value": "eyJzdWIiOiIxMjMoNTYeODkwIiwibmFtZSI6IkFudG9uaWbgR2FyY2lhIno//dGhpcyBpcyBhIGZha2Ugc2lnbmFodXJl"
+            },
+            {
+              "type": "PROJECT_NAME",
+              "value": "assigned to Antonio Garcia"
             }
           ],
           "raw_regex_detected": true,
@@ -1498,6 +1577,10 @@
             {
               "type": "JWT",
               "value": "eyJpceMiOiJsb2NhbGhvceQiLCJzdWIiOiJlbWlseSseaWxzb2aiLCJpYXQiOjEeMDksOTksOTl9//c2lnbl9kYXRh"
+            },
+            {
+              "type": "PERSON",
+              "value": "by Emily Wilson"
             }
           ],
           "raw_regex_detected": true,
@@ -1505,6 +1588,10 @@
             {
               "type": "JWT",
               "value": "eyJpc3MiOiJsb2NhbGhvc3QiLCJzdWIiOiJlbWlseS53aWxzb24iLCJpYXQiOjE3MDk5OTk5OTl9//c2lnbl9kYXRh"
+            },
+            {
+              "type": "PERSON",
+              "value": "by Emily Wilson"
             }
           ]
         },
@@ -1779,6 +1866,10 @@
             },
             {
               "type": "IP_ADDRESS",
+              "value": "192.168.1.100"
+            },
+            {
+              "type": "IP_ADDRESS",
               "value": "8 0 8 0"
             }
           ]
@@ -1811,6 +1902,10 @@
             {
               "type": "PERSON",
               "value": "http://100053000"
+            },
+            {
+              "type": "IP_ADDRESS",
+              "value": "100053000"
             }
           ],
           "raw_regex_detected": true,
@@ -1818,6 +1913,10 @@
             {
               "type": "PRIVATE_URL",
               "value": "http://10.0.0.5"
+            },
+            {
+              "type": "IP_ADDRESS",
+              "value": "10.0.0.5"
             },
             {
               "type": "IP_ADDRESS",
@@ -1857,6 +1956,10 @@
             {
               "type": "PERSON",
               "value": "http://172160205000"
+            },
+            {
+              "type": "PHONE",
+              "value": "172160205000"
             }
           ],
           "raw_regex_detected": true,
@@ -1864,6 +1967,10 @@
             {
               "type": "PRIVATE_URL",
               "value": "http://172.16.0.20"
+            },
+            {
+              "type": "IP_ADDRESS",
+              "value": "172.16.0.20"
             },
             {
               "type": "IP_ADDRESS",
@@ -1910,6 +2017,10 @@
             {
               "type": "PRIVATE_URL",
               "value": "http://192.168.50.10"
+            },
+            {
+              "type": "IP_ADDRESS",
+              "value": "192.168.50.10"
             },
             {
               "type": "IP_ADDRESS",
@@ -1984,14 +2095,14 @@
           "full_detections": [
             {
               "type": "CITY",
-              "value": "in dECEMBER"
+              "value": "December"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "CITY",
-              "value": "in December"
+              "value": "December"
             }
           ]
         },
@@ -2035,8 +2146,13 @@
           "text": "Please update your records to reflect 15%20Maple%20Drive as the new office location.",
           "entity_type": "ADDRESS",
           "strategy": "url_encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "15 Maple Drive"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -2044,8 +2160,13 @@
           "text": "Her childhood home at 88%20Willow%20Lane was sold last week.",
           "entity_type": "ADDRESS",
           "strategy": "url_encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "88 Willow Lane"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -2053,8 +2174,13 @@
           "text": "He requested a refund be sent to 321%20Oak%20Avenue.",
           "entity_type": "ADDRESS",
           "strategy": "url_encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "321 Oak Avenue"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -2062,8 +2188,13 @@
           "text": "The invoice listed 50%20Cedar%20Court as the billing address.",
           "entity_type": "ADDRESS",
           "strategy": "url_encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "50 Cedar Court"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -2071,8 +2202,13 @@
           "text": "I need to verify the residence at 99%20Pine%20Street for the background check.",
           "entity_type": "ADDRESS",
           "strategy": "url_encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "99 Pine Street"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -2080,8 +2216,13 @@
           "text": "The warranty card was mailed to 777%20Birch%20Boulevard.",
           "entity_type": "ADDRESS",
           "strategy": "url_encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "777 Birch Boulevard"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -2089,8 +2230,13 @@
           "text": "Their store at 12%20Elm%20Road is closed for renovations.",
           "entity_type": "ADDRESS",
           "strategy": "url_encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "12 Elm Road"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -2125,8 +2271,13 @@
           "text": "He lives at 999 Cedar C//ourt in the suburbs of Chicago.",
           "entity_type": "ADDRESS",
           "strategy": "slash-encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Chicago"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -2148,20 +2299,10 @@
           "text": "Please forward the quarterly report to Bmjt in accounting.",
           "entity_type": "EMPLOYEE_NAME",
           "strategy": "character-displacement",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "CITY",
-              "value": "in accounting"
-            }
-          ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "CITY",
-              "value": "in accounting"
-            }
-          ]
+          "full_pipeline_detected": false,
+          "full_detections": [],
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "The new hire Dboe jdf will be joining the team on Monday.",
@@ -2208,8 +2349,13 @@
           "text": "The IT support ticket has been assigned to Nfmb.",
           "entity_type": "EMPLOYEE_NAME",
           "strategy": "character-displacement",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "PROJECT_NAME",
+              "value": "assigned to Nfmb"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -2522,6 +2668,10 @@
           "strategy": "mirrored_brackets",
           "full_pipeline_detected": true,
           "full_detections": [
+            {
+              "type": "PERSON",
+              "value": "Mr. Weber"
+            },
             {
               "type": "IBAN",
               "value": "DE02500105175407324911"
@@ -3022,14 +3172,14 @@
             },
             {
               "type": "CITY",
-              "value": "in tOKYO"
+              "value": "Tokyo"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "CITY",
-              "value": "in Tokyo"
+              "value": "Tokyo"
             }
           ]
         },
@@ -3045,14 +3195,14 @@
             },
             {
               "type": "CITY",
-              "value": "in mOSCOW"
+              "value": "Moscow"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "CITY",
-              "value": "in Moscow"
+              "value": "Moscow"
             }
           ]
         },
@@ -3068,14 +3218,14 @@
             },
             {
               "type": "CITY",
-              "value": "in mUMBAI"
+              "value": "Mumbai"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "CITY",
-              "value": "in Mumbai"
+              "value": "Mumbai"
             }
           ]
         },
@@ -3165,8 +3315,13 @@
           "text": "The AI model access token is l 3 k 2 j 1 h 0 g 9 f 8 d 7 s 6 a 5 p 4 o 3 i 2 u 1 y 0 t 9 r 8 e 7 w 6 for the research team.",
           "entity_type": "API_KEY",
           "strategy": "whitespace-stretching",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "COMPANY",
+              "value": "The AI"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -3182,12 +3337,20 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CREDIT_CARD",
+              "value": "Visa ending in 8901"
+            },
+            {
               "type": "BANK_ACCOUNT",
               "value": "4532012345678901"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
+            {
+              "type": "CREDIT_CARD",
+              "value": "Visa ending in 8901"
+            },
             {
               "type": "PHONE",
               "value": "4532-0123-4567-8901"
@@ -3317,6 +3480,14 @@
             {
               "type": "BANK_ACCOUNT",
               "value": "5123450067891234"
+            },
+            {
+              "type": "COMPANY",
+              "value": "from Netflix"
+            },
+            {
+              "type": "COMPANY",
+              "value": "Netflix"
             }
           ],
           "raw_regex_detected": true,
@@ -3324,6 +3495,10 @@
             {
               "type": "PHONE",
               "value": "5123-4500-6789-1234"
+            },
+            {
+              "type": "COMPANY",
+              "value": "from Netflix"
             },
             {
               "type": "COMPANY",
@@ -3532,11 +3707,11 @@
     {
       "label": "v5 (DeepSeek, seed_B, 10 strategies)",
       "total": 238,
-      "full_pipeline": 49,
-      "full_pipeline_rate": 20.6,
+      "full_pipeline": 57,
+      "full_pipeline_rate": 23.9,
       "raw_regex": 57,
       "raw_regex_rate": 23.9,
-      "improvement": -3.4,
+      "improvement": 0.0,
       "entries": [
         {
           "text": "The report was uploaded to ｵﾌｲﾜｳ｡ｹﾞﾑ for further analysis.",
@@ -3803,22 +3978,13 @@
           "text": "Our field agent reported the suspect's last known location as `40.7128° N, 74.0060° W` in the city center.",
           "entity_type": "GPS",
           "strategy": "backtick-wrapping",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "CITY",
-              "value": "city center"
-            }
-          ],
+          "full_pipeline_detected": false,
+          "full_detections": [],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "GPS",
               "value": "40.7128° N, 74.0060° W"
-            },
-            {
-              "type": "CITY",
-              "value": "city center"
             }
           ]
         },
@@ -4251,7 +4417,7 @@
           "full_detections": [
             {
               "type": "FILE_PATH",
-              "value": "D:\\Projects\\Client\\Apex sOLUTIONS\\CONTRACT_V2.DOCX"
+              "value": "D:\\Projects\\Client\\Apex Solutions\\contract_v2.docx"
             }
           ],
           "raw_regex_detected": true,
@@ -4516,8 +4682,13 @@
           "text": "New York sales can be reached by calling &#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#50;&#49;&#50;&#51;&#52;&#53;&#54;&#55;&#56;.",
           "entity_type": "PHONE",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "New York"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -4736,6 +4907,10 @@
             {
               "type": "CREDIT_CARD",
               "value": "credit card 3530111333300000"
+            },
+            {
+              "type": "CREDIT_CARD",
+              "value": "3530111333300000"
             }
           ],
           "raw_regex_detected": true,
@@ -4743,6 +4918,10 @@
             {
               "type": "CREDIT_CARD",
               "value": "credit card 3530111333300000"
+            },
+            {
+              "type": "CREDIT_CARD",
+              "value": "3530111333300000"
             }
           ]
         },
@@ -4837,14 +5016,14 @@
           "full_detections": [
             {
               "type": "CITY",
-              "value": "in tOKYO"
+              "value": "Tokyo"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "CITY",
-              "value": "in Tokyo"
+              "value": "Tokyo"
             }
           ]
         },
@@ -5416,14 +5595,14 @@
           "full_detections": [
             {
               "type": "CITY",
-              "value": "in jANUARY"
+              "value": "January"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "CITY",
-              "value": "in January"
+              "value": "January"
             }
           ]
         },
@@ -5485,8 +5664,13 @@
           "text": "The package was delivered to &#55;&#52;&#50;&#32;&#76;&#97;&#117;&#114;&#101;&#108;&#32;&#68;&#114;&#105;&#118;&#101; this morning.",
           "entity_type": "ADDRESS",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "742 Laurel Drive"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -5494,8 +5678,13 @@
           "text": "Please update my file to reflect &#49;&#56;&#57;&#32;&#66;&#105;&#114;&#99;&#104;&#32;&#76;&#97;&#110;&#101; as my new address.",
           "entity_type": "ADDRESS",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "189 Birch Lane"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -5503,8 +5692,13 @@
           "text": "The office is located at &#56;&#51;&#54;&#32;&#69;&#108;&#109;&#32;&#83;&#116;&#114;&#101;&#101;&#116; near the park.",
           "entity_type": "ADDRESS",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "836 Elm Street"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -5512,8 +5706,13 @@
           "text": "She moved into a new apartment at &#50;&#55;&#49;&#48;&#32;&#79;&#97;&#107;&#32;&#65;&#118;&#101;&#110;&#117;&#101; last week.",
           "entity_type": "ADDRESS",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "2710 Oak Avenue"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -5521,8 +5720,13 @@
           "text": "The old farmhouse at &#49;&#50;&#51;&#32;&#80;&#105;&#110;&#101;&#32;&#82;&#111;&#97;&#100; has been renovated.",
           "entity_type": "ADDRESS",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "123 Pine Road"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -5530,8 +5734,13 @@
           "text": "The gala invitation listed &#57;&#56;&#55;&#52;&#32;&#87;&#97;&#108;&#110;&#117;&#116;&#32;&#67;&#111;&#117;&#114;&#116; as the venue.",
           "entity_type": "ADDRESS",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "9874 Walnut Court"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -5539,8 +5748,13 @@
           "text": "The courier left the package at &#50;&#50;&#55;&#32;&#67;&#101;&#100;&#97;&#114;&#32;&#66;&#108;&#118;&#100; by the front door.",
           "entity_type": "ADDRESS",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "227 Cedar Blvd"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -5548,8 +5762,13 @@
           "text": "They just bought a house at &#51;&#54;&#49;&#53;&#32;&#80;&#114;&#97;&#105;&#114;&#105;&#101;&#32;&#68;&#114;&#105;&#118;&#101; with a big backyard.",
           "entity_type": "ADDRESS",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "3615 Prairie Drive"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -6239,11 +6458,11 @@
     {
       "label": "v6 (3rd generator, seed_C, 10 strategies)",
       "total": 208,
-      "full_pipeline": 95,
-      "full_pipeline_rate": 45.7,
-      "raw_regex": 99,
-      "raw_regex_rate": 47.6,
-      "improvement": -1.9,
+      "full_pipeline": 109,
+      "full_pipeline_rate": 52.4,
+      "raw_regex": 92,
+      "raw_regex_rate": 44.2,
+      "improvement": 8.2,
       "entries": [
         {
           "text": "Please remit payment to account \\u0049\\u0054\\u0036\\u0030\\u0058\\u0030\\u0035\\u0034\\u0032\\u0033\\u0031\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0036\\u0031\\u0032\\u0032.",
@@ -6522,8 +6741,13 @@
           "text": "The G00gl3 internship program is highly competitive this year.",
           "entity_type": "COMPANY",
           "strategy": "staggered capitalization with digit substitution",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "COMPANY",
+              "value": "Google"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -6540,8 +6764,13 @@
           "text": "I returned a faulty package to Amaz0n and got a refund within a week.",
           "entity_type": "COMPANY",
           "strategy": "staggered capitalization with digit substitution",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "COMPANY",
+              "value": "Amazon"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -6580,14 +6809,14 @@
           "full_detections": [
             {
               "type": "CITY",
-              "value": "in cANADA"
+              "value": "Canada"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "CITY",
-              "value": "in Canada"
+              "value": "Canada"
             }
           ]
         },
@@ -6802,7 +7031,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "u0040.COM"
+              "value": "U0040.com"
             }
           ],
           "raw_regex_detected": true,
@@ -6858,7 +7087,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "u0040.ORG"
+              "value": "U0040.org"
             }
           ],
           "raw_regex_detected": true,
@@ -6995,7 +7224,11 @@
           "full_detections": [
             {
               "type": "CITY",
-              "value": "in pHOENIX"
+              "value": "based in Phoenix"
+            },
+            {
+              "type": "CITY",
+              "value": "Phoenix"
             }
           ],
           "raw_regex_detected": false,
@@ -7348,8 +7581,13 @@
           "text": "The embassy is located in Ainadnatsuj near the port.",
           "entity_type": "COUNTRY",
           "strategy": "short-name",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "located in Ainadnatsuj"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -7371,8 +7609,13 @@
           "text": "My brother lives in Ailartsua now.",
           "entity_type": "COUNTRY",
           "strategy": "short-name",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "lives in Ailartsua"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -7394,10 +7637,20 @@
           "text": "Her ancestors came from Ynamreg.",
           "entity_type": "COUNTRY",
           "strategy": "short-name",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "COMPANY",
+              "value": "from Ynamreg"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "COMPANY",
+              "value": "from Ynamreg"
+            }
+          ]
         },
         {
           "text": "The flight to Yratil Tneuqesnoc was delayed.",
@@ -7416,14 +7669,14 @@
           "full_detections": [
             {
               "type": "CITY",
-              "value": "in aCINAGAM"
+              "value": "Acinagam"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "CITY",
-              "value": "in Acinagam"
+              "value": "Acinagam"
             }
           ]
         },
@@ -7440,8 +7693,13 @@
           "text": "We received a package postmarked from C4n4d4 yesterday.",
           "entity_type": "COUNTRY",
           "strategy": "short-name",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "COUNTRY",
+              "value": "Canada"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -7521,13 +7779,18 @@
           "text": "Access was denied from IP 192.168.l.50S due to policy restrictions.",
           "entity_type": "IP_ADDRESS",
           "strategy": "staggered capitalization with digit substitution",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "COMPANY",
+              "value": "from IP"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "GPS",
-              "value": "192.168"
+              "type": "COMPANY",
+              "value": "from IP"
             }
           ]
         },
@@ -7790,7 +8053,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "uOO6LMPLE.NET"
+              "value": "Uoo6lmple.net"
             }
           ],
           "raw_regex_detected": true,
@@ -7817,7 +8080,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "uOO6LTASERVER.COM"
+              "value": "Uoo6ltaserver.com"
             }
           ],
           "raw_regex_detected": true,
@@ -7840,11 +8103,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "uOO69LESHARE.ORG"
-            },
-            {
-              "type": "DOMAIN",
-              "value": "Q1.PDF"
+              "value": "Uoo69leshare.org"
             }
           ],
           "raw_regex_detected": true,
@@ -7867,7 +8126,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "uOO6LYMENTS.COM"
+              "value": "Uoo6lyments.com"
             }
           ],
           "raw_regex_detected": true,
@@ -7890,7 +8149,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "u0061IL.HUBSPOT.COM"
+              "value": "U0061il.hubspot.com"
             }
           ],
           "raw_regex_detected": true,
@@ -7913,7 +8172,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "u0077W.OPENSOURCE.ORG"
+              "value": "U0077w.opensource.org"
             }
           ],
           "raw_regex_detected": true,
@@ -7936,7 +8195,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "uOO6LGING.APP.TEST.COM"
+              "value": "Uoo6lging.app.test.com"
             }
           ],
           "raw_regex_detected": true,
@@ -7955,7 +8214,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "u0061TA-BANK.EU"
+              "value": "U0061ta-bank.eu"
             }
           ],
           "raw_regex_detected": true,
@@ -7977,13 +8236,8 @@
               "value": "115141162153157166"
             }
           ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "PHONE",
-              "value": "162\\153\\157\\166"
-            }
-          ]
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "Please forward the quarterly report to \\120\\141\\166\\145\\154.",
@@ -7996,13 +8250,8 @@
               "value": "120141166145154"
             }
           ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "PHONE",
-              "value": "141\\166\\145\\154"
-            }
-          ]
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "The new design was presented by \\111\\162\\151\\156\\141 at the meeting.",
@@ -8015,13 +8264,8 @@
               "value": "111162151156141"
             }
           ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "PHONE",
-              "value": "162\\151\\156\\141"
-            }
-          ]
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "\\104\\155\\151\\164\\162\\171 requested access to the server logs.",
@@ -8034,13 +8278,8 @@
               "value": "104155151164162171"
             }
           ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "PHONE",
-              "value": "151\\164\\162\\171"
-            }
-          ]
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "The audit trail shows \\116\\141\\164\\141\\154\\151\\145 made the final edit.",
@@ -8048,13 +8287,8 @@
           "strategy": "short-name",
           "full_pipeline_detected": false,
           "full_detections": [],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "PHONE",
-              "value": "141\\154\\151\\145"
-            }
-          ]
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "Contact \\123\\145\\162\\147\\145\\171 if you need help with the database.",
@@ -8067,13 +8301,8 @@
               "value": "123145162147145171"
             }
           ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "PHONE",
-              "value": "162\\147\\145\\171"
-            }
-          ]
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "The security badge for \\117\\154\\147\\141 needs to be reissued.",
@@ -8086,13 +8315,8 @@
               "value": "117154147141"
             }
           ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "PHONE",
-              "value": "117\\154\\147\\141"
-            }
-          ]
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "The deployment was managed by \\126\\151\\153\\164\\157\\162 from the infrastructure team.",
@@ -8105,13 +8329,8 @@
               "value": "126151153164157162"
             }
           ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "PHONE",
-              "value": "153\\164\\157\\162"
-            }
-          ]
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "Please transfer the bonus to account number 8\\u20052\\u200a9\\u20050\\u200a3\\u20051\\u200a7\\u20054 at First Federal.",
@@ -8286,7 +8505,7 @@
             },
             {
               "type": "CITY",
-              "value": "in zURICH"
+              "value": "Zurich"
             }
           ],
           "raw_regex_detected": true,
@@ -8301,7 +8520,7 @@
             },
             {
               "type": "CITY",
-              "value": "in Zurich"
+              "value": "Zurich"
             }
           ]
         },
@@ -8547,8 +8766,13 @@
           "text": "The package was delivered to 742 Elm Street, Springfield, IL 97234 yesterday.",
           "entity_type": "ADDRESS",
           "strategy": "zip code reversal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "742 Elm Street, Springfield, IL 97234"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -8561,8 +8785,13 @@
           "text": "Please update the records for 1589 Oak Avenue, Portland, OR 02691.",
           "entity_type": "ADDRESS",
           "strategy": "zip code reversal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "1589 Oak Avenue, Portland, OR 02691"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -8575,8 +8804,13 @@
           "text": "The invoice shows 453 Maple Drive, Denver, CO 90814 as the billing address.",
           "entity_type": "ADDRESS",
           "strategy": "zip code reversal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "453 Maple Drive, Denver, CO 90814"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -8589,8 +8823,13 @@
           "text": "She moved into 21 Cedar Lane, Austin, TX 45068 last month.",
           "entity_type": "ADDRESS",
           "strategy": "zip code reversal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "21 Cedar Lane, Austin, TX 45068"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -8603,8 +8842,13 @@
           "text": "The new restaurant opened at 889 Birch Street, Miami, FL 62130.",
           "entity_type": "ADDRESS",
           "strategy": "zip code reversal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "889 Birch Street, Miami, FL 62130"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -8617,8 +8861,13 @@
           "text": "The tenant at 376 Pine Road, Seattle, WA 13980 filed a complaint.",
           "entity_type": "ADDRESS",
           "strategy": "zip code reversal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "376 Pine Road, Seattle, WA 13980"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -8631,8 +8880,13 @@
           "text": "They scheduled a viewing at 1200 Walnut Court, Chicago, IL 67541.",
           "entity_type": "ADDRESS",
           "strategy": "zip code reversal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "ADDRESS",
+              "value": "1200 Walnut Court, Chicago, IL 67541"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -9288,11 +9542,11 @@
   ],
   "combined_held_out": {
     "total_examples": 706,
-    "full_pipeline_detected": 259,
-    "full_pipeline_rate": 36.7,
-    "raw_regex_detected": 252,
-    "raw_regex_rate": 35.7,
-    "deobfuscation_improvement": 1.0
+    "full_pipeline_detected": 298,
+    "full_pipeline_rate": 42.2,
+    "raw_regex_detected": 247,
+    "raw_regex_rate": 35.0,
+    "deobfuscation_improvement": 7.2
   },
-  "generalization_gap": 46.1
+  "generalization_gap": 36.2
 }
