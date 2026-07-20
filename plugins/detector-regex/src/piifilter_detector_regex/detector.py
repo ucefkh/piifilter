@@ -97,6 +97,8 @@ class RegexDetector(Detector):
         #           collapses "1, 10117" into "110117", destroying the pattern.
         #           US-style addresses (e.g. "123 Maple Drive") work fine on stripped
         #           text, so pre-strip address entities are merged and deduped.
+        # PRIVATE_URL — contains dotted IP addresses (127.0.0.1, 10.x.x.x, etc.)
+        #           that inner-separator stripping destroys.
         gps_entities, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.GPS}
         )
@@ -111,6 +113,9 @@ class RegexDetector(Detector):
         )
         address_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.ADDRESS}
+        )
+        private_url_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.PRIVATE_URL}
         )
         # Filter pre-strip phone entities: keep only low-FP-risk patterns.
         # - CJK-context phones (电话/電話) are always kept — these are unambiguous.
@@ -151,13 +156,47 @@ class RegexDetector(Detector):
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
-        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS) with the rest (from stripped text)
+        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS + PRIVATE_URL) with the rest (from stripped text)
         entities.extend(gps_entities)
         entities.extend(date_entities)
         entities.extend(ip_entities)
         entities.extend(phone_entities_presistrip)
         entities.extend(address_entities_presistrip)
+        entities.extend(private_url_entities_presistrip)
         entities.sort(key=lambda e: e.start)
+
+        # ── Cross-type dedup: suppress pre-strip PRIVATE_URL entities ──
+        # that are contained within DATABASE_URL or URL entities (from
+        # stripped text). When a PRIVATE_URL like "db.internal:5432/production"
+        # is a substring of "postgresql://admin:***@db.internal:5432/production"
+        # (DATABASE_URL), the broader type is more specific and the private-
+        # hostname match is noise.
+        url_substring_types = {EntityType.DATABASE_URL, EntityType.URL, EntityType.PRIVATE_URL}
+        private_url_substrings: list[str] = []
+        for e in entities:
+            if e.entity_type == EntityType.PRIVATE_URL:
+                # Check if any DATABASE_URL/URL contains this match as substring
+                is_contained = False
+                for other in entities:
+                    if other is e and other.entity_type == EntityType.PRIVATE_URL:
+                        continue
+                    if other.entity_type in url_substring_types:
+                        # Use value-based containment since coordinates may differ
+                        if e.value in other.value and len(e.value) < len(other.value):
+                            is_contained = True
+                            break
+                if not is_contained:
+                    private_url_substrings.append(e.value)
+
+        # Now apply: only keep PRIVATE_URL entities that are not contained
+        filtered_entities: list[DetectedEntity] = []
+        for e in entities:
+            if e.entity_type == EntityType.PRIVATE_URL:
+                if e.value in private_url_substrings:
+                    filtered_entities.append(e)
+            else:
+                filtered_entities.append(e)
+        entities = filtered_entities
 
         # ── Cross-type dedup: low-confidence PHONE entities that overlap with ──
         # IPs, GPS, or DATE entities on the ORIGINAL text. After stripping,
@@ -220,7 +259,7 @@ class RegexDetector(Detector):
         IMPORTANT: GPS patterns are run on pre-strip text (see detect() docs).
         """
         cleaned, _log, text_for_gps = self._deobfuscator(session.prompt)
-        # Pre-strip patterns: GPS, DATE, IP, PHONE, ADDRESS — these need dots/slashes/dashes
+        # Pre-strip patterns: GPS, DATE, IP, PHONE, ADDRESS, PRIVATE_URL — these need dots/slashes/dashes
         # /commas to survive, which _strip_inner_separators destroys.
         gps_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.GPS})
         date_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.DATE})
@@ -239,6 +278,9 @@ class RegexDetector(Detector):
         address_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.ADDRESS}
         )
+        private_url_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.PRIVATE_URL}
+        )
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
         # Build comprehensive covered spans to prevent Luhn/SSN validators
@@ -256,7 +298,41 @@ class RegexDetector(Detector):
         entities.extend(ip_entities)
         entities.extend(phone_entities_presistrip)
         entities.extend(address_entities_presistrip)
+        entities.extend(private_url_entities_presistrip)
         entities.sort(key=lambda e: e.start)
+
+        # ── Cross-type dedup: suppress pre-strip PRIVATE_URL entities ──
+        # that are contained within DATABASE_URL or URL entities (from
+        # stripped text). When a PRIVATE_URL like "db.internal:5432/production"
+        # is a substring of "postgresql://admin:***@db.internal:5432/production"
+        # (DATABASE_URL), the broader type is more specific and the private-
+        # hostname match is noise.
+        url_substring_types = {EntityType.DATABASE_URL, EntityType.URL, EntityType.PRIVATE_URL}
+        private_url_substrings: list[str] = []
+        for e in entities:
+            if e.entity_type == EntityType.PRIVATE_URL:
+                # Check if any DATABASE_URL/URL contains this match as substring
+                is_contained = False
+                for other in entities:
+                    if other is e and other.entity_type == EntityType.PRIVATE_URL:
+                        continue
+                    if other.entity_type in url_substring_types:
+                        # Use value-based containment since coordinates may differ
+                        if e.value in other.value and len(e.value) < len(other.value):
+                            is_contained = True
+                            break
+                if not is_contained:
+                    private_url_substrings.append(e.value)
+
+        # Now apply: only keep PRIVATE_URL entities that are not contained
+        filtered_entities: list[DetectedEntity] = []
+        for e in entities:
+            if e.entity_type == EntityType.PRIVATE_URL:
+                if e.value in private_url_substrings:
+                    filtered_entities.append(e)
+            else:
+                filtered_entities.append(e)
+        entities = filtered_entities
 
         # ── Cross-type PHONE dedup (same as detect() — see notes there) ──
         entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities, phone_entities_presistrip)

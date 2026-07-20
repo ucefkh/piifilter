@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set)",
-  "timestamp": "2026-07-20T02:22:26Z",
+  "timestamp": "2026-07-20T04:06:22Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
@@ -39,13 +39,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 228,
-      "total_true_positives": 202,
+      "total_detected_entities": 231,
+      "total_true_positives": 205,
       "total_false_positives": 26,
-      "total_false_negatives": 10,
-      "overall_precision": 0.8859649122807017,
-      "overall_recall": 0.9528301886792453,
-      "overall_f1": 0.9181818181818182,
+      "total_false_negatives": 7,
+      "overall_precision": 0.8874458874458875,
+      "overall_recall": 0.9669811320754716,
+      "overall_f1": 0.925507900677201,
       "per_type": {
         "ADDRESS": {
           "true_positives": 8,
@@ -169,13 +169,13 @@
         },
         "CREDIT_CARD": {
           "true_positives": 12,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 1,
           "n": 13,
-          "precision": 0.8571,
+          "precision": 0.9231,
           "recall": 0.9231,
-          "f1": 0.8889,
-          "f2": 0.9091,
+          "f1": 0.9231,
+          "f2": 0.9231,
           "recall_ci": [
             0.6669,
             0.9863
@@ -408,63 +408,63 @@
           ]
         },
         "PERSON": {
-          "true_positives": 16,
+          "true_positives": 18,
           "false_positives": 1,
-          "false_negatives": 1,
-          "n": 17,
-          "precision": 0.9412,
-          "recall": 0.9412,
-          "f1": 0.9412,
-          "f2": 0.9412,
+          "false_negatives": 0,
+          "n": 18,
+          "precision": 0.9474,
+          "recall": 1.0,
+          "f1": 0.973,
+          "f2": 0.989,
           "recall_ci": [
-            0.7302,
-            0.9895
+            0.8241,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.8889,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.565,
-            0.9801
+            0.7008,
+            1.0
           ]
         },
         "PHONE": {
-          "true_positives": 26,
-          "false_positives": 2,
-          "false_negatives": 2,
-          "n": 28,
-          "precision": 0.9286,
-          "recall": 0.9286,
-          "f1": 0.9286,
-          "f2": 0.9286,
+          "true_positives": 28,
+          "false_positives": 3,
+          "false_negatives": 1,
+          "n": 29,
+          "precision": 0.9032,
+          "recall": 0.9655,
+          "f1": 0.9333,
+          "f2": 0.9524,
           "recall_ci": [
-            0.7735,
-            0.9802
+            0.8282,
+            0.9939
           ],
           "real_n": 15,
-          "real_recall": 0.8667,
+          "real_recall": 0.9333,
           "real_recall_ci": [
-            0.6212,
-            0.9626
+            0.7018,
+            0.9881
           ]
         },
         "PRIVATE_URL": {
-          "true_positives": 12,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "n": 13,
-          "precision": 1.0,
-          "recall": 0.9231,
-          "f1": 0.96,
-          "f2": 0.9375,
+          "true_positives": 14,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 14,
+          "precision": 0.9333,
+          "recall": 1.0,
+          "f1": 0.9655,
+          "f2": 0.9859,
           "recall_ci": [
-            0.6669,
-            0.9863
+            0.7847,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "PROJECT_NAME": {
@@ -489,13 +489,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 14,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 14,
-          "precision": 0.875,
+          "precision": 0.9333,
           "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "f1": 0.9655,
+          "f2": 0.9859,
           "recall_ci": [
             0.7847,
             1.0
@@ -554,10 +554,10 @@
           "URL": 1,
           "PERSON": 1,
           "API_KEY": 1,
-          "CREDIT_CARD": 2,
           "SOCIAL_SECURITY": 1,
           "EMAIL": 3,
-          "JWT": 1
+          "JWT": 1,
+          "CREDIT_CARD": 1
         },
         "PRIVATE_URL": {
           "URL": 1,
@@ -567,14 +567,16 @@
           "URL": 1
         },
         "IP_ADDRESS": {
-          "IP_ADDRESS": 2,
-          "SOCIAL_SECURITY": 1
+          "IP_ADDRESS": 2
         },
         "CITY": {
           "CITY": 1
         },
         "PHONE": {
-          "PHONE": 1
+          "PHONE": 2
+        },
+        "DATABASE_URL": {
+          "PRIVATE_URL": 1
         },
         "EMAIL": {
           "DOMAIN": 1
@@ -1127,10 +1129,10 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 3,
-          "true_positives": 1,
+          "detected": 4,
+          "true_positives": 2,
           "false_positives": 2,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
@@ -1159,16 +1161,17 @@
           "index": 36,
           "text_preview": "Our CEO Bob Smith (bob@company.com) approved the merger.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "PERSON"
           ]
         },
         {
@@ -1383,10 +1386,10 @@
           "index": 50,
           "text_preview": "Phone: +1-212-555-0198 and (415) 555-2671 and 555-123-4567",
           "expected": 3,
-          "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "detected": 5,
+          "true_positives": 3,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
@@ -1563,15 +1566,16 @@
           "index": 62,
           "text_preview": "Oracle: oracle://scott:tiger@oracle.internal:1521/XEPDB1",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -1828,16 +1832,15 @@
           "index": 79,
           "text_preview": "The server at 10.0.0.1 handles requests from 192.168.1.50 to 172.16.0.10",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS",
-            "SOCIAL_SECURITY"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -2299,13 +2302,12 @@
           "index": 112,
           "text_preview": "Partially redacted: My credit card is ****-****-****-1111 and SSN is ***-**-6789",
           "expected": 0,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -2834,13 +2836,13 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 246,
-      "total_true_positives": 202,
-      "total_false_positives": 44,
-      "total_false_negatives": 10,
-      "overall_precision": 0.8211382113821138,
-      "overall_recall": 0.9528301886792453,
-      "overall_f1": 0.8820960698689957,
+      "total_detected_entities": 244,
+      "total_true_positives": 204,
+      "total_false_positives": 40,
+      "total_false_negatives": 8,
+      "overall_precision": 0.8360655737704918,
+      "overall_recall": 0.9622641509433962,
+      "overall_f1": 0.8947368421052632,
       "per_type": {
         "ADDRESS": {
           "true_positives": 8,
@@ -2964,13 +2966,13 @@
         },
         "CREDIT_CARD": {
           "true_positives": 12,
-          "false_positives": 7,
+          "false_positives": 6,
           "false_negatives": 1,
           "n": 13,
-          "precision": 0.6316,
+          "precision": 0.6667,
           "recall": 0.9231,
-          "f1": 0.75,
-          "f2": 0.8451,
+          "f1": 0.7742,
+          "f2": 0.8571,
           "recall_ci": [
             0.6669,
             0.9863
@@ -3223,43 +3225,43 @@
           ]
         },
         "PHONE": {
-          "true_positives": 26,
-          "false_positives": 8,
-          "false_negatives": 2,
-          "n": 28,
-          "precision": 0.7647,
-          "recall": 0.9286,
-          "f1": 0.8387,
-          "f2": 0.8904,
+          "true_positives": 28,
+          "false_positives": 5,
+          "false_negatives": 1,
+          "n": 29,
+          "precision": 0.8485,
+          "recall": 0.9655,
+          "f1": 0.9032,
+          "f2": 0.9396,
           "recall_ci": [
-            0.7735,
-            0.9802
+            0.8282,
+            0.9939
           ],
           "real_n": 15,
-          "real_recall": 0.8667,
+          "real_recall": 0.9333,
           "real_recall_ci": [
-            0.6212,
-            0.9626
+            0.7018,
+            0.9881
           ]
         },
         "PRIVATE_URL": {
-          "true_positives": 12,
-          "false_positives": 0,
-          "false_negatives": 1,
-          "n": 13,
-          "precision": 1.0,
-          "recall": 0.9231,
-          "f1": 0.96,
-          "f2": 0.9375,
+          "true_positives": 14,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 14,
+          "precision": 0.9333,
+          "recall": 1.0,
+          "f1": 0.9655,
+          "f2": 0.9859,
           "recall_ci": [
-            0.6669,
-            0.9863
+            0.7847,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "PROJECT_NAME": {
@@ -3284,13 +3286,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 14,
-          "false_positives": 4,
+          "false_positives": 3,
           "false_negatives": 0,
           "n": 14,
-          "precision": 0.7778,
+          "precision": 0.8235,
           "recall": 1.0,
-          "f1": 0.875,
-          "f2": 0.9459,
+          "f1": 0.9032,
+          "f2": 0.9589,
           "recall_ci": [
             0.7847,
             1.0
@@ -3346,16 +3348,16 @@
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
-          "PHONE": 2,
+          "PHONE": 1,
           "ADDRESS": 1,
           "PERSON": 3,
           "GPS": 1,
           "URL": 1,
           "API_KEY": 1,
-          "CREDIT_CARD": 3,
           "SOCIAL_SECURITY": 1,
           "EMAIL": 3,
-          "JWT": 1
+          "JWT": 1,
+          "CREDIT_CARD": 2
         },
         "SOCIAL_SECURITY": {
           "SOCIAL_SECURITY": 2
@@ -3368,8 +3370,7 @@
           "URL": 1
         },
         "IP_ADDRESS": {
-          "IP_ADDRESS": 2,
-          "SOCIAL_SECURITY": 1
+          "IP_ADDRESS": 2
         },
         "ADDRESS": {
           "PERSON": 1
@@ -3378,7 +3379,10 @@
           "CITY": 1
         },
         "PHONE": {
-          "PHONE": 6
+          "PHONE": 4
+        },
+        "DATABASE_URL": {
+          "PRIVATE_URL": 1
         },
         "EMAIL": {
           "EMAIL": 2,
@@ -3932,10 +3936,10 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 3,
-          "true_positives": 1,
+          "detected": 4,
+          "true_positives": 2,
           "false_positives": 2,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
@@ -4191,9 +4195,9 @@
           "text_preview": "Phone: +1-212-555-0198 and (415) 555-2671 and 555-123-4567",
           "expected": 3,
           "detected": 5,
-          "true_positives": 2,
-          "false_positives": 3,
-          "false_negatives": 1,
+          "true_positives": 3,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
@@ -4370,15 +4374,16 @@
           "index": 62,
           "text_preview": "Oracle: oracle://scott:tiger@oracle.internal:1521/XEPDB1",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "DATABASE_URL"
           ],
           "detected_types": [
-            "DATABASE_URL"
+            "DATABASE_URL",
+            "PRIVATE_URL"
           ]
         },
         {
@@ -4635,16 +4640,15 @@
           "index": 79,
           "text_preview": "The server at 10.0.0.1 handles requests from 192.168.1.50 to 172.16.0.10",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS",
-            "SOCIAL_SECURITY"
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4850,9 +4854,9 @@
           "index": 94,
           "text_preview": "User typed a phone-like number: 123-456-7890 but this is not a real phone.",
           "expected": 0,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
@@ -5107,13 +5111,12 @@
           "index": 112,
           "text_preview": "Partially redacted: My credit card is ****-****-****-1111 and SSN is ***-**-6789",
           "expected": 0,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -5597,9 +5600,9 @@
           "index": 147,
           "text_preview": "Phone: +1–555–123–4567 (en-dashes instead of hyphens)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
