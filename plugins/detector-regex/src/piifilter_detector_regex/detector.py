@@ -642,20 +642,26 @@ class RegexDetector(Detector):
                 # digit content fails the checksum.
                 if entity_type == EntityType.CREDIT_CARD:
                     digits = "".join(c for c in match.group() if c.isdigit())
-                    # Masked-card guard: if the digit portion is <= 6 chars
-                    # (e.g. ****-****-****-1111 has only "1111") then the
-                    # entity is a redacted/masked card with only last-4 visible.
-                    # Only suppress ALL-ZERO placeholders (e.g. XXXX-XXXX-XXXX-0000,
-                    # ****-****-****-0000) that are test/default values.
-                    # Non-zero visible digits like 1111, 0004 are real card references
-                    # and should still be detected.
-                    if len(digits) <= 6 and score < 0.80:
-                        non_digits = "".join(c for c in match.group() if not c.isdigit())
-                        if any(m in non_digits for m in ("X", "*", "#", "\u2022", "\u25CF")):
-                            # Only suppress if visible digits are all zeros (placeholder)
-                            if all(d == "0" for d in digits):
-                                continue
+                    # Masked-card guard: if the non-digit portion is purely mask
+                    # characters (X, *, #, bullets), this is a redacted/reference-only
+                    # masked card. Suppress it regardless of visible digits — the
+                    # last-4 visible digits are not the full CC number and don't
+                    # need PII protection.
+                    non_digits = "".join(c for c in match.group() if not c.isdigit())
+                    if len(digits) <= 6 and all(
+                        c in ("X", "*", "#", "\u2022", "\u25CF") or c.isspace() or c in "-. "
+                        for c in non_digits
+                    ):
+                        # This is a masked/redacted card — suppress entirely.
+                        continue
                     if len(digits) >= 13 and not self._luhn_check(digits):
+                        continue
+
+                # Masked-SSN guard: suppress SSN patterns where the value contains
+                # mask characters (X, *). These are redacted references like
+                # ***-**-6789 or XXX-XX-9074 — not real PII.
+                if entity_type == EntityType.SOCIAL_SECURITY:
+                    if "X" in match.group().upper() or "*" in match.group() or "#" in match.group() or "\u2022" in match.group() or "\u25CF" in match.group():
                         continue
 
                 # Numeric validation for decimal IP: ensure value is in valid

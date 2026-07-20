@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
-  "timestamp": "2026-07-20T09:06:56Z",
+  "timestamp": "2026-07-20T09:08:46Z",
   "arbitration": {
     "enabled": true
   },
@@ -8,7 +8,7 @@
     "path": "benchmarks/data/pii_dataset_v2.json",
     "total_examples": 2365,
     "test_examples": 473,
-    "total_entities": 539,
+    "total_entities": 540,
     "entity_types": [
       "ADDRESS",
       "API_KEY",
@@ -48,33 +48,33 @@
     "regex": {
       "detector": "regex",
       "total_examples": 473,
-      "total_expected_entities": 539,
-      "total_detected_entities": 561,
-      "total_true_positives": 496,
-      "total_false_positives": 65,
-      "total_false_negatives": 43,
-      "overall_precision": 0.8841354723707665,
-      "overall_recall": 0.9202226345083488,
-      "overall_f1": 0.9018181818181817,
+      "total_expected_entities": 540,
+      "total_detected_entities": 559,
+      "total_true_positives": 493,
+      "total_false_positives": 66,
+      "total_false_negatives": 47,
+      "overall_precision": 0.8819320214669052,
+      "overall_recall": 0.912962962962963,
+      "overall_f1": 0.8971792538671519,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 17,
+          "true_positives": 16,
           "false_positives": 1,
           "false_negatives": 2,
-          "n": 19,
-          "precision": 0.9444,
-          "recall": 0.8947,
-          "f1": 0.9189,
-          "f2": 0.9043,
+          "n": 18,
+          "precision": 0.9412,
+          "recall": 0.8889,
+          "f1": 0.9143,
+          "f2": 0.8989,
           "recall_ci": [
-            0.6861,
-            0.9706
+            0.672,
+            0.969
           ],
-          "real_n": 19,
-          "real_recall": 0.8947,
+          "real_n": 18,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.6861,
-            0.9706
+            0.672,
+            0.969
           ]
         },
         "API_KEY": {
@@ -118,23 +118,23 @@
           ]
         },
         "CITY": {
-          "true_positives": 4,
+          "true_positives": 5,
           "false_positives": 14,
-          "false_negatives": 5,
+          "false_negatives": 4,
           "n": 9,
-          "precision": 0.2222,
-          "recall": 0.4444,
-          "f1": 0.2963,
-          "f2": 0.3704,
+          "precision": 0.2632,
+          "recall": 0.5556,
+          "f1": 0.3571,
+          "f2": 0.4545,
           "recall_ci": [
-            0.1888,
-            0.7334
+            0.2666,
+            0.8112
           ],
           "real_n": 9,
-          "real_recall": 0.4444,
+          "real_recall": 0.5556,
           "real_recall_ci": [
-            0.1888,
-            0.7334
+            0.2666,
+            0.8112
           ]
         },
         "COMPANY": {
@@ -198,22 +198,22 @@
           ]
         },
         "CUSTOMER_NAME": {
-          "true_positives": 6,
+          "true_positives": 7,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 6,
+          "n": 7,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.6097,
+            0.6457,
             1.0
           ],
-          "real_n": 6,
+          "real_n": 7,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6097,
+            0.6457,
             1.0
           ]
         },
@@ -278,42 +278,42 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 107,
+          "true_positives": 108,
           "false_positives": 0,
           "false_negatives": 2,
-          "n": 109,
+          "n": 110,
           "precision": 1.0,
-          "recall": 0.9817,
-          "f1": 0.9907,
-          "f2": 0.9853,
+          "recall": 0.9818,
+          "f1": 0.9908,
+          "f2": 0.9854,
           "recall_ci": [
-            0.9356,
+            0.9361,
             0.995
           ],
-          "real_n": 109,
-          "real_recall": 0.9817,
+          "real_n": 110,
+          "real_recall": 0.9818,
           "real_recall_ci": [
-            0.9356,
+            0.9361,
             0.995
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 6,
-          "false_positives": 0,
+          "true_positives": 5,
+          "false_positives": 1,
           "false_negatives": 0,
-          "n": 6,
-          "precision": 1.0,
+          "n": 5,
+          "precision": 0.8333,
           "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "f1": 0.9091,
+          "f2": 0.9615,
           "recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ],
-          "real_n": 6,
+          "real_n": 5,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ]
         },
@@ -498,37 +498,37 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 5,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 5,
+          "n": 6,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ],
-          "real_n": 5,
+          "real_n": 6,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 38,
+          "true_positives": 33,
           "false_positives": 1,
-          "false_negatives": 7,
+          "false_negatives": 12,
           "n": 45,
-          "precision": 0.9744,
-          "recall": 0.8444,
-          "f1": 0.9048,
-          "f2": 0.8676,
+          "precision": 0.9706,
+          "recall": 0.7333,
+          "f1": 0.8354,
+          "f2": 0.771,
           "recall_ci": [
-            0.7122,
-            0.9225
+            0.5896,
+            0.8404
           ],
           "real_n": 19,
           "real_recall": 0.8947,
@@ -581,6 +581,7 @@
       "confusion_matrix": {
         "NONE": {
           "GPS": 4,
+          "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
           "ADDRESS": 1
         },
@@ -1087,16 +1088,14 @@
           "index": 30,
           "text_preview": "Encoded: ***-**-9284",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 31,
@@ -1559,16 +1558,14 @@
           "index": 61,
           "text_preview": "Raw: SSN 7XX-XX-7533",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 62,
@@ -1682,7 +1679,7 @@
         },
         {
           "index": 69,
-          "text_preview": "Employee: Kai Harris",
+          "text_preview": "Team member Michael Flores",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -2500,16 +2497,14 @@
           "index": 123,
           "text_preview": "Data: XXX-XX-3011",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 124,
@@ -2724,7 +2719,7 @@
         },
         {
           "index": 138,
-          "text_preview": "User Lena Thomas ordered",
+          "text_preview": "Customer name: Yara Davis",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -3281,17 +3276,19 @@
         },
         {
           "index": 174,
-          "text_preview": "Staff: Tina Gonzalez",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
+          "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
+          "expected": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4139,16 +4136,20 @@
         },
         {
           "index": 230,
-          "text_preview": "Project Nebula starts next quarter",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL",
             "PROJECT_NAME"
           ]
         },
@@ -4169,7 +4170,7 @@
         },
         {
           "index": 232,
-          "text_preview": "Staff: Hugo Lee",
+          "text_preview": "Staff: Dalia Scott",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -4589,16 +4590,14 @@
           "index": 260,
           "text_preview": "Obfuscated social_security: SSN 6XX-XX-6653",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 261,
@@ -4937,7 +4936,7 @@
         },
         {
           "index": 283,
-          "text_preview": "Customer name: Cheng Martinez",
+          "text_preview": "Client: Wei Lopez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -5232,16 +5231,18 @@
         },
         {
           "index": 303,
-          "text_preview": "Our Amsterdam office",
+          "text_preview": "Dubai headquarters",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 304,
@@ -5780,17 +5781,17 @@
         },
         {
           "index": 339,
-          "text_preview": "Client: Wei Lopez",
+          "text_preview": "Working on Moonlight",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CUSTOMER_NAME"
+            "PROJECT_NAME"
           ],
           "detected_types": [
-            "CUSTOMER_NAME"
+            "PROJECT_NAME"
           ]
         },
         {
@@ -5887,7 +5888,7 @@
         },
         {
           "index": 346,
-          "text_preview": "Customer name: Hiro Clark",
+          "text_preview": "Customer: Tariq Martin",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -5934,18 +5935,16 @@
         },
         {
           "index": 349,
-          "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "text_preview": "I live in Mumbai",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
             "CITY"
           ]
         },
@@ -6262,7 +6261,7 @@
         },
         {
           "index": 370,
-          "text_preview": "Project Pandorica is in development",
+          "text_preview": "Project Orion is in development",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -6350,7 +6349,7 @@
         },
         {
           "index": 376,
-          "text_preview": "Project Orion starts next quarter",
+          "text_preview": "Working on Omega Protocol",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -6518,7 +6517,7 @@
         },
         {
           "index": 387,
-          "text_preview": "Customer name: Yara Davis",
+          "text_preview": "Customer name: Cheng Martinez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -6724,7 +6723,7 @@
         },
         {
           "index": 401,
-          "text_preview": "Customer: Tariq Martin",
+          "text_preview": "User Lena Thomas ordered",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -6947,7 +6946,7 @@
         },
         {
           "index": 416,
-          "text_preview": "Working on Project Phoenix",
+          "text_preview": "Working on Project Aurora",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -7202,19 +7201,17 @@
         },
         {
           "index": 433,
-          "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "text_preview": "Team member Val Patel",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ]
         },
         {
@@ -7675,16 +7672,14 @@
           "index": 464,
           "text_preview": "Encoded: XXX-XX-6789",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 465,
@@ -7703,17 +7698,17 @@
         },
         {
           "index": 466,
-          "text_preview": "Team member Victor Hernandez",
+          "text_preview": "Customer name: Hiro Clark",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME"
+            "CUSTOMER_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "CUSTOMER_NAME"
           ]
         },
         {
@@ -7816,33 +7811,33 @@
     "pipeline-arbitration": {
       "detector": "pipeline-arbitration",
       "total_examples": 473,
-      "total_expected_entities": 539,
-      "total_detected_entities": 559,
-      "total_true_positives": 497,
-      "total_false_positives": 62,
-      "total_false_negatives": 42,
-      "overall_precision": 0.889087656529517,
-      "overall_recall": 0.922077922077922,
-      "overall_f1": 0.9052823315118398,
+      "total_expected_entities": 540,
+      "total_detected_entities": 557,
+      "total_true_positives": 494,
+      "total_false_positives": 63,
+      "total_false_negatives": 46,
+      "overall_precision": 0.8868940754039497,
+      "overall_recall": 0.9148148148148149,
+      "overall_f1": 0.9006381039197812,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 17,
+          "true_positives": 16,
           "false_positives": 1,
           "false_negatives": 2,
-          "n": 19,
-          "precision": 0.9444,
-          "recall": 0.8947,
-          "f1": 0.9189,
-          "f2": 0.9043,
+          "n": 18,
+          "precision": 0.9412,
+          "recall": 0.8889,
+          "f1": 0.9143,
+          "f2": 0.8989,
           "recall_ci": [
-            0.6861,
-            0.9706
+            0.672,
+            0.969
           ],
-          "real_n": 19,
-          "real_recall": 0.8947,
+          "real_n": 18,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.6861,
-            0.9706
+            0.672,
+            0.969
           ]
         },
         "API_KEY": {
@@ -7886,23 +7881,23 @@
           ]
         },
         "CITY": {
-          "true_positives": 4,
+          "true_positives": 5,
           "false_positives": 14,
-          "false_negatives": 5,
+          "false_negatives": 4,
           "n": 9,
-          "precision": 0.2222,
-          "recall": 0.4444,
-          "f1": 0.2963,
-          "f2": 0.3704,
+          "precision": 0.2632,
+          "recall": 0.5556,
+          "f1": 0.3571,
+          "f2": 0.4545,
           "recall_ci": [
-            0.1888,
-            0.7334
+            0.2666,
+            0.8112
           ],
           "real_n": 9,
-          "real_recall": 0.4444,
+          "real_recall": 0.5556,
           "real_recall_ci": [
-            0.1888,
-            0.7334
+            0.2666,
+            0.8112
           ]
         },
         "COMPANY": {
@@ -7966,22 +7961,22 @@
           ]
         },
         "CUSTOMER_NAME": {
-          "true_positives": 6,
+          "true_positives": 7,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 6,
+          "n": 7,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.6097,
+            0.6457,
             1.0
           ],
-          "real_n": 6,
+          "real_n": 7,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6097,
+            0.6457,
             1.0
           ]
         },
@@ -8046,42 +8041,42 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 107,
+          "true_positives": 108,
           "false_positives": 0,
           "false_negatives": 2,
-          "n": 109,
+          "n": 110,
           "precision": 1.0,
-          "recall": 0.9817,
-          "f1": 0.9907,
-          "f2": 0.9853,
+          "recall": 0.9818,
+          "f1": 0.9908,
+          "f2": 0.9854,
           "recall_ci": [
-            0.9356,
+            0.9361,
             0.995
           ],
-          "real_n": 109,
-          "real_recall": 0.9817,
+          "real_n": 110,
+          "real_recall": 0.9818,
           "real_recall_ci": [
-            0.9356,
+            0.9361,
             0.995
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 6,
-          "false_positives": 0,
+          "true_positives": 5,
+          "false_positives": 1,
           "false_negatives": 0,
-          "n": 6,
-          "precision": 1.0,
+          "n": 5,
+          "precision": 0.8333,
           "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "f1": 0.9091,
+          "f2": 0.9615,
           "recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ],
-          "real_n": 6,
+          "real_n": 5,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ]
         },
@@ -8266,37 +8261,37 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 5,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 5,
+          "n": 6,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ],
-          "real_n": 5,
+          "real_n": 6,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 39,
+          "true_positives": 34,
           "false_positives": 1,
-          "false_negatives": 6,
+          "false_negatives": 11,
           "n": 45,
-          "precision": 0.975,
-          "recall": 0.8667,
-          "f1": 0.9176,
-          "f2": 0.8864,
+          "precision": 0.9714,
+          "recall": 0.7556,
+          "f1": 0.85,
+          "f2": 0.7907,
           "recall_ci": [
-            0.7382,
-            0.9374
+            0.6133,
+            0.8576
           ],
           "real_n": 19,
           "real_recall": 0.8947,
@@ -8361,6 +8356,7 @@
         },
         "NONE": {
           "PERSON": 4,
+          "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
           "ADDRESS": 1,
           "GPS": 1
@@ -8849,16 +8845,14 @@
           "index": 30,
           "text_preview": "Encoded: ***-**-9284",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 31,
@@ -9323,16 +9317,14 @@
           "index": 61,
           "text_preview": "Raw: SSN 7XX-XX-7533",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 62,
@@ -9446,7 +9438,7 @@
         },
         {
           "index": 69,
-          "text_preview": "Employee: Kai Harris",
+          "text_preview": "Team member Michael Flores",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -10265,16 +10257,14 @@
           "index": 123,
           "text_preview": "Data: XXX-XX-3011",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 124,
@@ -10490,7 +10480,7 @@
         },
         {
           "index": 138,
-          "text_preview": "User Lena Thomas ordered",
+          "text_preview": "Customer name: Yara Davis",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -11048,17 +11038,19 @@
         },
         {
           "index": 174,
-          "text_preview": "Staff: Tina Gonzalez",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
+          "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
+          "expected": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ]
         },
         {
@@ -11906,16 +11898,20 @@
         },
         {
           "index": 230,
-          "text_preview": "Project Nebula starts next quarter",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL",
             "PROJECT_NAME"
           ]
         },
@@ -11936,7 +11932,7 @@
         },
         {
           "index": 232,
-          "text_preview": "Staff: Hugo Lee",
+          "text_preview": "Staff: Dalia Scott",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -12356,16 +12352,14 @@
           "index": 260,
           "text_preview": "Obfuscated social_security: SSN 6XX-XX-6653",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 261,
@@ -12704,7 +12698,7 @@
         },
         {
           "index": 283,
-          "text_preview": "Customer name: Cheng Martinez",
+          "text_preview": "Client: Wei Lopez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -12999,16 +12993,18 @@
         },
         {
           "index": 303,
-          "text_preview": "Our Amsterdam office",
+          "text_preview": "Dubai headquarters",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 304,
@@ -13548,17 +13544,17 @@
         },
         {
           "index": 339,
-          "text_preview": "Client: Wei Lopez",
+          "text_preview": "Working on Moonlight",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CUSTOMER_NAME"
+            "PROJECT_NAME"
           ],
           "detected_types": [
-            "CUSTOMER_NAME"
+            "PROJECT_NAME"
           ]
         },
         {
@@ -13655,7 +13651,7 @@
         },
         {
           "index": 346,
-          "text_preview": "Customer name: Hiro Clark",
+          "text_preview": "Customer: Tariq Martin",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -13702,18 +13698,16 @@
         },
         {
           "index": 349,
-          "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "text_preview": "I live in Mumbai",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
             "CITY"
           ]
         },
@@ -14030,7 +14024,7 @@
         },
         {
           "index": 370,
-          "text_preview": "Project Pandorica is in development",
+          "text_preview": "Project Orion is in development",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -14118,7 +14112,7 @@
         },
         {
           "index": 376,
-          "text_preview": "Project Orion starts next quarter",
+          "text_preview": "Working on Omega Protocol",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -14286,7 +14280,7 @@
         },
         {
           "index": 387,
-          "text_preview": "Customer name: Yara Davis",
+          "text_preview": "Customer name: Cheng Martinez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -14492,7 +14486,7 @@
         },
         {
           "index": 401,
-          "text_preview": "Customer: Tariq Martin",
+          "text_preview": "User Lena Thomas ordered",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -14715,7 +14709,7 @@
         },
         {
           "index": 416,
-          "text_preview": "Working on Project Phoenix",
+          "text_preview": "Working on Project Aurora",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -14970,19 +14964,17 @@
         },
         {
           "index": 433,
-          "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "text_preview": "Team member Val Patel",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ]
         },
         {
@@ -15445,16 +15437,14 @@
           "index": 464,
           "text_preview": "Encoded: XXX-XX-6789",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 465,
@@ -15473,17 +15463,17 @@
         },
         {
           "index": 466,
-          "text_preview": "Team member Victor Hernandez",
+          "text_preview": "Customer name: Hiro Clark",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME"
+            "CUSTOMER_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "CUSTOMER_NAME"
           ]
         },
         {
@@ -15587,33 +15577,33 @@
     "pipeline-raw": {
       "detector": "pipeline-raw",
       "total_examples": 473,
-      "total_expected_entities": 539,
-      "total_detected_entities": 598,
-      "total_true_positives": 497,
-      "total_false_positives": 101,
-      "total_false_negatives": 42,
-      "overall_precision": 0.8311036789297659,
-      "overall_recall": 0.922077922077922,
-      "overall_f1": 0.8742304309586633,
+      "total_expected_entities": 540,
+      "total_detected_entities": 596,
+      "total_true_positives": 494,
+      "total_false_positives": 102,
+      "total_false_negatives": 46,
+      "overall_precision": 0.8288590604026845,
+      "overall_recall": 0.9148148148148149,
+      "overall_f1": 0.8697183098591548,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 17,
+          "true_positives": 16,
           "false_positives": 1,
           "false_negatives": 2,
-          "n": 19,
-          "precision": 0.9444,
-          "recall": 0.8947,
-          "f1": 0.9189,
-          "f2": 0.9043,
+          "n": 18,
+          "precision": 0.9412,
+          "recall": 0.8889,
+          "f1": 0.9143,
+          "f2": 0.8989,
           "recall_ci": [
-            0.6861,
-            0.9706
+            0.672,
+            0.969
           ],
-          "real_n": 19,
-          "real_recall": 0.8947,
+          "real_n": 18,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.6861,
-            0.9706
+            0.672,
+            0.969
           ]
         },
         "API_KEY": {
@@ -15657,23 +15647,23 @@
           ]
         },
         "CITY": {
-          "true_positives": 4,
+          "true_positives": 5,
           "false_positives": 14,
-          "false_negatives": 5,
+          "false_negatives": 4,
           "n": 9,
-          "precision": 0.2222,
-          "recall": 0.4444,
-          "f1": 0.2963,
-          "f2": 0.3704,
+          "precision": 0.2632,
+          "recall": 0.5556,
+          "f1": 0.3571,
+          "f2": 0.4545,
           "recall_ci": [
-            0.1888,
-            0.7334
+            0.2666,
+            0.8112
           ],
           "real_n": 9,
-          "real_recall": 0.4444,
+          "real_recall": 0.5556,
           "real_recall_ci": [
-            0.1888,
-            0.7334
+            0.2666,
+            0.8112
           ]
         },
         "COMPANY": {
@@ -15737,22 +15727,22 @@
           ]
         },
         "CUSTOMER_NAME": {
-          "true_positives": 6,
+          "true_positives": 7,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 6,
+          "n": 7,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.6097,
+            0.6457,
             1.0
           ],
-          "real_n": 6,
+          "real_n": 7,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6097,
+            0.6457,
             1.0
           ]
         },
@@ -15817,42 +15807,42 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 107,
+          "true_positives": 108,
           "false_positives": 3,
           "false_negatives": 2,
-          "n": 109,
-          "precision": 0.9727,
-          "recall": 0.9817,
-          "f1": 0.9772,
-          "f2": 0.9799,
+          "n": 110,
+          "precision": 0.973,
+          "recall": 0.9818,
+          "f1": 0.9774,
+          "f2": 0.98,
           "recall_ci": [
-            0.9356,
+            0.9361,
             0.995
           ],
-          "real_n": 109,
-          "real_recall": 0.9817,
+          "real_n": 110,
+          "real_recall": 0.9818,
           "real_recall_ci": [
-            0.9356,
+            0.9361,
             0.995
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 6,
-          "false_positives": 0,
+          "true_positives": 5,
+          "false_positives": 1,
           "false_negatives": 0,
-          "n": 6,
-          "precision": 1.0,
+          "n": 5,
+          "precision": 0.8333,
           "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "f1": 0.9091,
+          "f2": 0.9615,
           "recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ],
-          "real_n": 6,
+          "real_n": 5,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ]
         },
@@ -16037,37 +16027,37 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 5,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 5,
+          "n": 6,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ],
-          "real_n": 5,
+          "real_n": 6,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 39,
+          "true_positives": 34,
           "false_positives": 12,
-          "false_negatives": 6,
+          "false_negatives": 11,
           "n": 45,
-          "precision": 0.7647,
-          "recall": 0.8667,
-          "f1": 0.8125,
-          "f2": 0.8442,
+          "precision": 0.7391,
+          "recall": 0.7556,
+          "f1": 0.7473,
+          "f2": 0.7522,
           "recall_ci": [
-            0.7382,
-            0.9374
+            0.6133,
+            0.8576
           ],
           "real_n": 19,
           "real_recall": 0.8947,
@@ -16121,6 +16111,7 @@
         "NONE": {
           "GPS": 4,
           "PERSON": 4,
+          "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
           "ADDRESS": 1
         },
@@ -16635,16 +16626,14 @@
           "index": 30,
           "text_preview": "Encoded: ***-**-9284",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 31,
@@ -17109,16 +17098,14 @@
           "index": 61,
           "text_preview": "Raw: SSN 7XX-XX-7533",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 62,
@@ -17232,7 +17219,7 @@
         },
         {
           "index": 69,
-          "text_preview": "Employee: Kai Harris",
+          "text_preview": "Team member Michael Flores",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -18051,16 +18038,14 @@
           "index": 123,
           "text_preview": "Data: XXX-XX-3011",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 124,
@@ -18276,7 +18261,7 @@
         },
         {
           "index": 138,
-          "text_preview": "User Lena Thomas ordered",
+          "text_preview": "Customer name: Yara Davis",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -18834,17 +18819,19 @@
         },
         {
           "index": 174,
-          "text_preview": "Staff: Tina Gonzalez",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
+          "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
+          "expected": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ]
         },
         {
@@ -19692,16 +19679,20 @@
         },
         {
           "index": 230,
-          "text_preview": "Project Nebula starts next quarter",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL",
             "PROJECT_NAME"
           ]
         },
@@ -19722,7 +19713,7 @@
         },
         {
           "index": 232,
-          "text_preview": "Staff: Hugo Lee",
+          "text_preview": "Staff: Dalia Scott",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -20142,16 +20133,14 @@
           "index": 260,
           "text_preview": "Obfuscated social_security: SSN 6XX-XX-6653",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 261,
@@ -20490,7 +20479,7 @@
         },
         {
           "index": 283,
-          "text_preview": "Customer name: Cheng Martinez",
+          "text_preview": "Client: Wei Lopez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -20785,16 +20774,18 @@
         },
         {
           "index": 303,
-          "text_preview": "Our Amsterdam office",
+          "text_preview": "Dubai headquarters",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 304,
@@ -21334,17 +21325,17 @@
         },
         {
           "index": 339,
-          "text_preview": "Client: Wei Lopez",
+          "text_preview": "Working on Moonlight",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CUSTOMER_NAME"
+            "PROJECT_NAME"
           ],
           "detected_types": [
-            "CUSTOMER_NAME"
+            "PROJECT_NAME"
           ]
         },
         {
@@ -21441,7 +21432,7 @@
         },
         {
           "index": 346,
-          "text_preview": "Customer name: Hiro Clark",
+          "text_preview": "Customer: Tariq Martin",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -21488,18 +21479,16 @@
         },
         {
           "index": 349,
-          "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "text_preview": "I live in Mumbai",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
             "CITY"
           ]
         },
@@ -21816,7 +21805,7 @@
         },
         {
           "index": 370,
-          "text_preview": "Project Pandorica is in development",
+          "text_preview": "Project Orion is in development",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -21904,7 +21893,7 @@
         },
         {
           "index": 376,
-          "text_preview": "Project Orion starts next quarter",
+          "text_preview": "Working on Omega Protocol",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -22072,7 +22061,7 @@
         },
         {
           "index": 387,
-          "text_preview": "Customer name: Yara Davis",
+          "text_preview": "Customer name: Cheng Martinez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -22278,7 +22267,7 @@
         },
         {
           "index": 401,
-          "text_preview": "Customer: Tariq Martin",
+          "text_preview": "User Lena Thomas ordered",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -22501,7 +22490,7 @@
         },
         {
           "index": 416,
-          "text_preview": "Working on Project Phoenix",
+          "text_preview": "Working on Project Aurora",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -22756,19 +22745,17 @@
         },
         {
           "index": 433,
-          "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
-          "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "text_preview": "Team member Val Patel",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ]
         },
         {
@@ -23231,16 +23218,14 @@
           "index": 464,
           "text_preview": "Encoded: XXX-XX-6789",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 465,
@@ -23259,17 +23244,17 @@
         },
         {
           "index": 466,
-          "text_preview": "Team member Victor Hernandez",
+          "text_preview": "Customer name: Hiro Clark",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME"
+            "CUSTOMER_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "CUSTOMER_NAME"
           ]
         },
         {
