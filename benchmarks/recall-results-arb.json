@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T19:42:26Z",
+  "timestamp": "2026-07-20T20:37:36Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 229,
+      "total_detected_entities": 226,
       "total_true_positives": 215,
-      "total_false_positives": 14,
+      "total_false_positives": 11,
       "total_false_negatives": 3,
-      "overall_precision": 0.9388646288209607,
+      "overall_precision": 0.9513274336283186,
       "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9619686800894853,
+      "overall_f1": 0.9684684684684686,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -367,14 +367,14 @@
         },
         "IP_ADDRESS": {
           "true_positives": 14,
-          "false_positives": 3,
+          "false_positives": 1,
           "false_negatives": 1,
           "n": 15,
           "n_total": 15,
-          "precision": 0.8235,
+          "precision": 0.9333,
           "recall": 0.9333,
-          "f1": 0.875,
-          "f2": 0.9091,
+          "f1": 0.9333,
+          "f2": 0.9333,
           "recall_ci": [
             0.7018,
             0.9881
@@ -586,7 +586,7 @@
         },
         "URL": {
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 0,
           "n_total": 0,
@@ -604,9 +604,6 @@
         "ADDRESS": {
           "CITY": 1
         },
-        "PRIVATE_URL": {
-          "URL": 1
-        },
         "NONE": {
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
@@ -615,9 +612,6 @@
           "MASKED_SSN": 1,
           "EMAIL": 2,
           "IP_ADDRESS": 1
-        },
-        "IP_ADDRESS": {
-          "IP_ADDRESS": 2
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -1175,16 +1169,15 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "PRIVATE_URL",
-            "URL"
+            "PRIVATE_URL"
           ]
         },
         {
@@ -1322,9 +1315,9 @@
           "index": 43,
           "text_preview": "Compressed IPv6: 2001:db8::1 and fe80::1",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
@@ -2885,13 +2878,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 212,
+      "total_detected_entities": 211,
       "total_true_positives": 201,
-      "total_false_positives": 14,
+      "total_false_positives": 13,
       "total_false_negatives": 17,
-      "overall_precision": 0.9348837209302325,
+      "overall_precision": 0.9392523364485982,
       "overall_recall": 0.9220183486238532,
-      "overall_f1": 0.928406466512702,
+      "overall_f1": 0.9305555555555555,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -3429,7 +3422,7 @@
         },
         "URL": {
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 0,
           "n_total": 0,
@@ -3444,9 +3437,6 @@
         }
       },
       "confusion_matrix": {
-        "PRIVATE_URL": {
-          "URL": 1
-        },
         "NONE": {
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
@@ -4010,16 +4000,15 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "PRIVATE_URL",
-            "URL"
+            "PRIVATE_URL"
           ]
         },
         {
@@ -5715,13 +5704,13 @@
       "detector": "pipeline-raw",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 245,
+      "total_detected_entities": 242,
       "total_true_positives": 215,
-      "total_false_positives": 30,
+      "total_false_positives": 27,
       "total_false_negatives": 3,
-      "overall_precision": 0.8775510204081632,
+      "overall_precision": 0.8884297520661157,
       "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9287257019438445,
+      "overall_f1": 0.9347826086956522,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -6040,14 +6029,14 @@
         },
         "IP_ADDRESS": {
           "true_positives": 14,
-          "false_positives": 3,
+          "false_positives": 1,
           "false_negatives": 1,
           "n": 15,
           "n_total": 15,
-          "precision": 0.8235,
+          "precision": 0.9333,
           "recall": 0.9333,
-          "f1": 0.875,
-          "f2": 0.9091,
+          "f1": 0.9333,
+          "f2": 0.9333,
           "recall_ci": [
             0.7018,
             0.9881
@@ -6259,7 +6248,7 @@
         },
         "URL": {
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 0,
           "n_total": 0,
@@ -6284,9 +6273,6 @@
         "SOCIAL_SECURITY": {
           "SOCIAL_SECURITY": 2
         },
-        "PRIVATE_URL": {
-          "URL": 1
-        },
         "NONE": {
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
@@ -6297,9 +6283,6 @@
           "MASKED_SSN": 1,
           "EMAIL": 3,
           "IP_ADDRESS": 1
-        },
-        "IP_ADDRESS": {
-          "IP_ADDRESS": 2
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -6863,16 +6846,15 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "PRIVATE_URL",
-            "URL"
+            "PRIVATE_URL"
           ]
         },
         {
@@ -7010,9 +6992,9 @@
           "index": 43,
           "text_preview": "Compressed IPv6: 2001:db8::1 and fe80::1",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"

@@ -306,9 +306,18 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Full IPv6 (7 colons, 8 groups): 2001:0db8:85a3:0000:0000:8a2e:0370:7334
     ("IP_ADDRESS", r"\b(?:[0-9a-fA-F]{1,4}:){7}[0-9a-fA-F]{1,4}\b", 0.88),
     # IPv6 with single :: anywhere
-    ("IP_ADDRESS", r"\b(?:(?:[0-9a-fA-F]{1,4}:){1,7}:|:(?::[0-9a-fA-F]{1,4}){1,7})\b", 0.88),
+    # IMPORTANT: The trailing-:: branch (X:X::) was removed because it only
+    # produces FPs on compressed IPv6 addresses like 2001:db8::1 where \b
+    # between :: (non-word) and 1 (word) matches the partial address.
+    # The compressed IPv6 pattern below handles full addresses correctly.
+    # The leading-:: branch uses start/space anchor to catch ::1, ::ff00:42,
+    # etc. without matching ::1 as a substring inside larger addresses.
+    ("IP_ADDRESS", r"(?:^|(?<=\s)):(?::[0-9a-fA-F]{1,4})+(?=\s|\Z)", 0.88),
     # IPv6 loopback: ::1
-        ("IP_ADDRESS", r"(?:(?<=\s)|(?<=\A)|(?<=:))::1(?:(?=\s)|(?=\Z))", 0.90),
+        # IMPORTANT: Use (?<=[^0-9a-fA-F]:) instead of (?<=:) to avoid matching
+        # ::1 as a substring inside larger IPv6 addresses like 2001:db8::1
+        # (the compressed IPv6 pattern already catches those).
+        ("IP_ADDRESS", r"(?:(?<=\s)|(?<=\A)|(?<=[^0-9a-fA-F]:))::1(?:(?=\s)|(?=\Z))", 0.90),
         # IPv6 unspecified: :: — require at least one adjacent word char or space boundary
         ("IP_ADDRESS", r"(?:^::(?=\w)|(?<=\w)::(?=\s|$)|(?<=\s)::(?=\w|\s))", 0.85),
         # IPv6 embedded IPv4: ::ffff:192.168.1.1 or ::192.168.1.1

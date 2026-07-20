@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-off)",
-  "timestamp": "2026-07-20T19:42:38Z",
+  "timestamp": "2026-07-20T20:35:30Z",
   "arbitration": {
     "enabled": false
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 229,
+      "total_detected_entities": 228,
       "total_true_positives": 215,
-      "total_false_positives": 14,
+      "total_false_positives": 13,
       "total_false_negatives": 3,
-      "overall_precision": 0.9388646288209607,
+      "overall_precision": 0.9429824561403509,
       "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9619686800894853,
+      "overall_f1": 0.9641255605381166,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -586,7 +586,7 @@
         },
         "URL": {
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 0,
           "n_total": 0,
@@ -603,9 +603,6 @@
       "confusion_matrix": {
         "ADDRESS": {
           "CITY": 1
-        },
-        "PRIVATE_URL": {
-          "URL": 1
         },
         "NONE": {
           "FILE_PATH": 1,
@@ -1175,16 +1172,15 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "PRIVATE_URL",
-            "URL"
+            "PRIVATE_URL"
           ]
         },
         {
@@ -2885,13 +2881,13 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 245,
+      "total_detected_entities": 244,
       "total_true_positives": 215,
-      "total_false_positives": 30,
+      "total_false_positives": 29,
       "total_false_negatives": 3,
-      "overall_precision": 0.8775510204081632,
+      "overall_precision": 0.8811475409836066,
       "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9287257019438445,
+      "overall_f1": 0.9307359307359306,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -3429,7 +3425,7 @@
         },
         "URL": {
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 0,
           "n_total": 0,
@@ -3453,9 +3449,6 @@
         },
         "SOCIAL_SECURITY": {
           "SOCIAL_SECURITY": 2
-        },
-        "PRIVATE_URL": {
-          "URL": 1
         },
         "NONE": {
           "FILE_PATH": 1,
@@ -4033,16 +4026,15 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "PRIVATE_URL",
-            "URL"
+            "PRIVATE_URL"
           ]
         },
         {
