@@ -677,6 +677,42 @@ class Arbitrator:
                 intervals.append((e.start, e.end))
                 deduped.append(e)
 
+        # ── DOMAIN containment rule ──────────────────────────────────────────
+        # DOMAIN spans that are fully contained within higher-specificity spans
+        # (EMAIL, URL, PRIVATE_URL, DATABASE_URL, IP_ADDRESS, FILE_PATH) are
+        # almost always false positives — the domain fragment was already captured
+        # by the more specific entity type. Drop the DOMAIN span entirely.
+        _DOMAIN_CONTAINER_TYPES = {
+            EntityType.EMAIL,
+            EntityType.URL,
+            EntityType.PRIVATE_URL,
+            EntityType.DATABASE_URL,
+            EntityType.IP_ADDRESS,
+            EntityType.FILE_PATH,
+        }
+
+        # Collect all container spans (start, end) for fast lookup
+        container_intervals: list[tuple[int, int]] = []
+        for e in deduped:
+            if e.entity_type in _DOMAIN_CONTAINER_TYPES:
+                container_intervals.append((e.start, e.end))
+
+        if container_intervals:
+            filtered: list[DetectedEntity] = []
+            for e in deduped:
+                if e.entity_type != EntityType.DOMAIN:
+                    filtered.append(e)
+                    continue
+                # Check if this DOMAIN span is contained within any container span
+                contained = any(
+                    cs <= e.start and e.end <= ce
+                    for cs, ce in container_intervals
+                )
+                if not contained:
+                    filtered.append(e)
+                # else: drop the DOMAIN span — it's an FP
+            deduped = filtered
+
         deduped.sort(key=lambda e: e.start)
         return deduped
 
