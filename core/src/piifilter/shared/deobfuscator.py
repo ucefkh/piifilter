@@ -1370,7 +1370,15 @@ class Deobfuscator:
             if first.islower() and upper >= 2 and upper >= lower:
                 return True
             # For a word starting upper: if upper < lower it's shifted
+            # HOWEVER: a word starting upper with all rest lowercase (like "Hello")
+            # is NORMAL capitalization — NOT case-shifted. Only flag if there are
+            # interior uppercase letters (mixed case like "hELLO" after swap).
             if first.isupper() and lower >= 2 and lower > upper:
+                # Check if there are ANY uppercase letters AFTER the first position.
+                # If not (e.g., "Hello" → only first upper), this is normal, not shifted.
+                rest_upper = sum(1 for c in word[1:] if c.isupper())
+                if rest_upper == 0:
+                    return False  # Normal capitalization (e.g., "Hello", "World")
                 return True
             # Word with all letters the 'wrong' case: all upper or all lower
             if upper == len(letters) and first.isupper():

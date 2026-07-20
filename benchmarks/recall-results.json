@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set)",
-  "timestamp": "2026-07-20T00:02:36Z",
+  "timestamp": "2026-07-20T00:18:32Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
@@ -39,32 +39,32 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 193,
-      "total_true_positives": 158,
-      "total_false_positives": 35,
-      "total_false_negatives": 54,
-      "overall_precision": 0.8186528497409327,
-      "overall_recall": 0.7452830188679245,
-      "overall_f1": 0.7802469135802469,
+      "total_detected_entities": 242,
+      "total_true_positives": 197,
+      "total_false_positives": 45,
+      "total_false_negatives": 15,
+      "overall_precision": 0.8140495867768595,
+      "overall_recall": 0.9292452830188679,
+      "overall_f1": 0.8678414096916299,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "n": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "true_positives": 6,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "n": 7,
+          "precision": 0.8571,
+          "recall": 0.8571,
+          "f1": 0.8571,
+          "f2": 0.8571,
           "recall_ci": [
-            0.0,
-            0.4899
+            0.4869,
+            0.9743
           ],
           "real_n": 4,
-          "real_recall": 0.0,
+          "real_recall": 0.75,
           "real_recall_ci": [
-            0.0,
-            0.4899
+            0.3006,
+            0.9544
           ]
         },
         "API_KEY": {
@@ -108,63 +108,63 @@
           ]
         },
         "CITY": {
-          "true_positives": 10,
-          "false_positives": 1,
-          "false_negatives": 3,
-          "n": 13,
-          "precision": 0.9091,
-          "recall": 0.7692,
-          "f1": 0.8333,
-          "f2": 0.7937,
+          "true_positives": 14,
+          "false_positives": 3,
+          "false_negatives": 1,
+          "n": 15,
+          "precision": 0.8235,
+          "recall": 0.9333,
+          "f1": 0.875,
+          "f2": 0.9091,
           "recall_ci": [
-            0.4974,
-            0.9182
+            0.7018,
+            0.9881
           ],
           "real_n": 8,
-          "real_recall": 0.625,
+          "real_recall": 0.875,
           "real_recall_ci": [
-            0.3057,
-            0.8632
+            0.5291,
+            0.9776
           ]
         },
         "COMPANY": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "n": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "true_positives": 8,
+          "false_positives": 4,
+          "false_negatives": 0,
+          "n": 8,
+          "precision": 0.6667,
+          "recall": 1.0,
+          "f1": 0.8,
+          "f2": 0.9091,
           "recall_ci": [
-            0.0,
-            0.4899
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.4899
+            0.5101,
+            1.0
           ]
         },
         "COUNTRY": {
-          "true_positives": 0,
-          "false_positives": 2,
-          "false_negatives": 9,
-          "n": 9,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "true_positives": 18,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 18,
+          "precision": 0.9474,
+          "recall": 1.0,
+          "f1": 0.973,
+          "f2": 0.989,
           "recall_ci": [
-            0.0,
-            0.2992
+            0.8241,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.2992
+            0.7008,
+            1.0
           ]
         },
         "CREDIT_CARD": {
@@ -188,23 +188,23 @@
           ]
         },
         "CUSTOMER_NAME": {
-          "true_positives": 0,
+          "true_positives": 10,
           "false_positives": 0,
-          "false_negatives": 5,
-          "n": 5,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "false_negatives": 0,
+          "n": 10,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            -0.0,
-            0.4345
+            0.7225,
+            1.0
           ],
           "real_n": 5,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            -0.0,
-            0.4345
+            0.5655,
+            1.0
           ]
         },
         "DATABASE_URL": {
@@ -268,23 +268,23 @@
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 6,
-          "n": 6,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "true_positives": 12,
+          "false_positives": 2,
+          "false_negatives": 0,
+          "n": 12,
+          "precision": 0.8571,
+          "recall": 1.0,
+          "f1": 0.9231,
+          "f2": 0.9677,
           "recall_ci": [
-            0.0,
-            0.3903
+            0.7575,
+            1.0
           ],
           "real_n": 6,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.3903
+            0.6097,
+            1.0
           ]
         },
         "FILE_PATH": {
@@ -408,23 +408,23 @@
           ]
         },
         "PERSON": {
-          "true_positives": 14,
-          "false_positives": 1,
-          "false_negatives": 2,
-          "n": 16,
-          "precision": 0.9333,
-          "recall": 0.875,
-          "f1": 0.9032,
-          "f2": 0.8861,
+          "true_positives": 16,
+          "false_positives": 3,
+          "false_negatives": 1,
+          "n": 17,
+          "precision": 0.8421,
+          "recall": 0.9412,
+          "f1": 0.8889,
+          "f2": 0.9195,
           "recall_ci": [
-            0.6398,
-            0.965
+            0.7302,
+            0.9895
           ],
           "real_n": 9,
-          "real_recall": 0.7778,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.4526,
-            0.9368
+            0.565,
+            0.9801
           ]
         },
         "PHONE": {
@@ -468,23 +468,23 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 0,
+          "true_positives": 18,
           "false_positives": 1,
-          "false_negatives": 9,
-          "n": 9,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "false_negatives": 0,
+          "n": 18,
+          "precision": 0.9474,
+          "recall": 1.0,
+          "f1": 0.973,
+          "f2": 0.989,
           "recall_ci": [
-            0.0,
-            0.2992
+            0.8241,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.2992
+            0.7008,
+            1.0
           ]
         },
         "SOCIAL_SECURITY": {
@@ -543,6 +543,9 @@
         }
       },
       "confusion_matrix": {
+        "COMPANY": {
+          "COMPANY": 4
+        },
         "BANK_ACCOUNT": {
           "PHONE": 1,
           "CREDIT_CARD": 1
@@ -550,17 +553,19 @@
         "DATABASE_URL": {
           "PRIVATE_URL": 6
         },
-        "PRIVATE_URL": {
-          "URL": 1,
-          "IP_ADDRESS": 1
+        "EMPLOYEE_NAME": {
+          "EMPLOYEE_NAME": 1
         },
-        "DOMAIN": {
-          "URL": 1
+        "CITY": {
+          "CITY": 2
         },
         "NONE": {
+          "CITY": 1,
           "FILE_PATH": 1,
+          "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
           "PHONE": 1,
+          "ADDRESS": 1,
           "GPS": 1,
           "URL": 1,
           "PERSON": 1,
@@ -570,6 +575,13 @@
           "EMAIL": 3,
           "JWT": 1
         },
+        "PRIVATE_URL": {
+          "URL": 1,
+          "IP_ADDRESS": 1
+        },
+        "DOMAIN": {
+          "URL": 1
+        },
         "PROJECT_NAME": {
           "PROJECT_NAME": 1
         },
@@ -577,11 +589,8 @@
           "IP_ADDRESS": 2,
           "SOCIAL_SECURITY": 1
         },
-        "ADDRESS": {
-          "COUNTRY": 1
-        },
-        "CITY": {
-          "CITY": 1
+        "PERSON": {
+          "PERSON": 2
         },
         "PHONE": {
           "PHONE": 2
@@ -595,10 +604,10 @@
           "index": 0,
           "text_preview": "Hi, I'm Alice Johnson from Acme Corp. Email: alice@acme.com Phone: +1-555-123-45",
           "expected": 4,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 5,
+          "true_positives": 4,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "EMAIL",
@@ -606,7 +615,9 @@
             "PHONE"
           ],
           "detected_types": [
+            "COMPANY",
             "EMAIL",
+            "PERSON",
             "PHONE"
           ]
         },
@@ -614,28 +625,33 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "ADDRESS"
+          ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY",
+            "COUNTRY"
+          ]
         },
         {
           "index": 3,
@@ -826,51 +842,58 @@
           "index": 15,
           "text_preview": "Project: Project Phoenix is our codename for the new ERP rollout.",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PROJECT_NAME"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PROJECT_NAME"
+          ]
         },
         {
           "index": 16,
           "text_preview": "Our customer Jane Smith from Widgets Inc. wants her data removed.",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "CUSTOMER_NAME"
           ],
-          "detected_types": []
+          "detected_types": [
+            "COMPANY",
+            "CUSTOMER_NAME"
+          ]
         },
         {
           "index": 17,
           "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 1,
           "expected_types": [
             "EMPLOYEE_NAME",
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "EMPLOYEE_NAME"
+          ]
         },
         {
           "index": 18,
           "text_preview": "Contact me at bob.smith@example.org or call +44 20 7946 0958 for the project Vul",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PHONE",
@@ -878,66 +901,76 @@
           ],
           "detected_types": [
             "EMAIL",
-            "PHONE"
+            "PHONE",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 19,
           "text_preview": "The best customer we have is Clara Oswald and she works at Data Corp.",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "CUSTOMER_NAME"
           ],
-          "detected_types": []
+          "detected_types": [
+            "COMPANY",
+            "CUSTOMER_NAME"
+          ]
         },
         {
           "index": 20,
           "text_preview": "Please add employee David Tennant to the access list for project Galactic.",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
             "PROJECT_NAME"
           ],
-          "detected_types": []
+          "detected_types": [
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
+          ]
         },
         {
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "ADDRESS"
+          ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY"
+            "CITY",
+            "COUNTRY"
           ]
         },
         {
@@ -1036,14 +1069,15 @@
           "index": 29,
           "text_preview": "Coordinates: 48.8566 N, 2.3522 E is the center of Paris",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
@@ -1196,15 +1230,16 @@
           "index": 39,
           "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "EMPLOYEE_NAME",
             "IP_ADDRESS"
           ]
         },
@@ -1212,15 +1247,16 @@
           "index": 40,
           "text_preview": "Customer: Martha Jones (martha.jones@bigpharma.com) order #ORD-001",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL"
           ],
           "detected_types": [
+            "CUSTOMER_NAME",
             "EMAIL"
           ]
         },
@@ -1228,10 +1264,10 @@
           "index": 41,
           "text_preview": "Project Nebula starts Q1 and Project Orion is in maintenance mode.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "PROJECT_NAME"
           ],
@@ -1274,24 +1310,24 @@
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "COUNTRY"
+            "ADDRESS"
           ]
         },
         {
           "index": 45,
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 5,
+          "true_positives": 3,
+          "false_positives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COMPANY",
@@ -1299,6 +1335,7 @@
           ],
           "detected_types": [
             "CITY",
+            "COMPANY",
             "PERSON"
           ]
         },
@@ -1321,14 +1358,16 @@
           "index": 47,
           "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
           "expected": 6,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 6,
+          "true_positives": 6,
           "false_positives": 0,
-          "false_negatives": 6,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "COUNTRY"
+          ]
         },
         {
           "index": 48,
@@ -1651,43 +1690,46 @@
           "index": 69,
           "text_preview": "Employee: Rose Tyler (rose@torchwood.xyz), employee: Jack Harkness (jack@torchwo",
           "expected": 4,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 4,
+          "true_positives": 4,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "EMPLOYEE_NAME"
           ]
         },
         {
           "index": 70,
           "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "EMAIL"
+            "CUSTOMER_NAME",
+            "EMAIL",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 71,
           "text_preview": "Contact person: Donna Noble (donna@temp-services.co.uk). Project Bad Wolf is GO.",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
@@ -1695,7 +1737,8 @@
           ],
           "detected_types": [
             "EMAIL",
-            "PERSON"
+            "PERSON",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -1778,27 +1821,31 @@
           "index": 77,
           "text_preview": "City: The population of Mumbai is over 20 million.",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 78,
           "text_preview": "Country: Switzerland has 4 official languages.",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "COUNTRY"
+          ]
         },
         {
           "index": 79,
@@ -1926,34 +1973,38 @@
           "index": 87,
           "text_preview": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 88,
           "text_preview": "Customer: River Song (river@library.silence) - project Impossible Astronaut",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "EMAIL"
+            "CUSTOMER_NAME",
+            "EMAIL",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -2028,12 +2079,14 @@
           "index": 95,
           "text_preview": "My street is 123 Main Street, not 123 Main St.",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "ADDRESS"
+          ]
         },
         {
           "index": 96,
@@ -2804,32 +2857,32 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 223,
-      "total_true_positives": 160,
-      "total_false_positives": 63,
-      "total_false_negatives": 52,
-      "overall_precision": 0.7174887892376681,
-      "overall_recall": 0.7547169811320755,
-      "overall_f1": 0.735632183908046,
+      "total_detected_entities": 258,
+      "total_true_positives": 198,
+      "total_false_positives": 60,
+      "total_false_negatives": 14,
+      "overall_precision": 0.7674418604651163,
+      "overall_recall": 0.9339622641509434,
+      "overall_f1": 0.8425531914893617,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "n": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "true_positives": 6,
+          "false_positives": 1,
+          "false_negatives": 1,
+          "n": 7,
+          "precision": 0.8571,
+          "recall": 0.8571,
+          "f1": 0.8571,
+          "f2": 0.8571,
           "recall_ci": [
-            0.0,
-            0.4899
+            0.4869,
+            0.9743
           ],
           "real_n": 4,
-          "real_recall": 0.0,
+          "real_recall": 0.75,
           "real_recall_ci": [
-            0.0,
-            0.4899
+            0.3006,
+            0.9544
           ]
         },
         "API_KEY": {
@@ -2873,63 +2926,63 @@
           ]
         },
         "CITY": {
-          "true_positives": 10,
-          "false_positives": 1,
-          "false_negatives": 3,
-          "n": 13,
-          "precision": 0.9091,
-          "recall": 0.7692,
-          "f1": 0.8333,
-          "f2": 0.7937,
+          "true_positives": 14,
+          "false_positives": 3,
+          "false_negatives": 1,
+          "n": 15,
+          "precision": 0.8235,
+          "recall": 0.9333,
+          "f1": 0.875,
+          "f2": 0.9091,
           "recall_ci": [
-            0.4974,
-            0.9182
+            0.7018,
+            0.9881
           ],
           "real_n": 8,
-          "real_recall": 0.625,
+          "real_recall": 0.875,
           "real_recall_ci": [
-            0.3057,
-            0.8632
+            0.5291,
+            0.9776
           ]
         },
         "COMPANY": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 4,
-          "n": 4,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "true_positives": 8,
+          "false_positives": 3,
+          "false_negatives": 0,
+          "n": 8,
+          "precision": 0.7273,
+          "recall": 1.0,
+          "f1": 0.8421,
+          "f2": 0.9302,
           "recall_ci": [
-            0.0,
-            0.4899
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.4899
+            0.5101,
+            1.0
           ]
         },
         "COUNTRY": {
-          "true_positives": 0,
-          "false_positives": 2,
-          "false_negatives": 9,
-          "n": 9,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "true_positives": 18,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 18,
+          "precision": 0.9474,
+          "recall": 1.0,
+          "f1": 0.973,
+          "f2": 0.989,
           "recall_ci": [
-            0.0,
-            0.2992
+            0.8241,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.2992
+            0.7008,
+            1.0
           ]
         },
         "CREDIT_CARD": {
@@ -2953,23 +3006,23 @@
           ]
         },
         "CUSTOMER_NAME": {
-          "true_positives": 0,
+          "true_positives": 10,
           "false_positives": 0,
-          "false_negatives": 5,
-          "n": 5,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "false_negatives": 0,
+          "n": 10,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            -0.0,
-            0.4345
+            0.7225,
+            1.0
           ],
           "real_n": 5,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            -0.0,
-            0.4345
+            0.5655,
+            1.0
           ]
         },
         "DATABASE_URL": {
@@ -3033,23 +3086,23 @@
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 6,
-          "n": 6,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "true_positives": 12,
+          "false_positives": 2,
+          "false_negatives": 0,
+          "n": 12,
+          "precision": 0.8571,
+          "recall": 1.0,
+          "f1": 0.9231,
+          "f2": 0.9677,
           "recall_ci": [
-            0.0,
-            0.3903
+            0.7575,
+            1.0
           ],
           "real_n": 6,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.3903
+            0.6097,
+            1.0
           ]
         },
         "FILE_PATH": {
@@ -3174,13 +3227,13 @@
         },
         "PERSON": {
           "true_positives": 16,
-          "false_positives": 15,
+          "false_positives": 5,
           "false_negatives": 1,
           "n": 17,
-          "precision": 0.5161,
+          "precision": 0.7619,
           "recall": 0.9412,
-          "f1": 0.6667,
-          "f2": 0.8081,
+          "f1": 0.8421,
+          "f2": 0.8989,
           "recall_ci": [
             0.7302,
             0.9895
@@ -3233,23 +3286,23 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 0,
+          "true_positives": 18,
           "false_positives": 1,
-          "false_negatives": 9,
-          "n": 9,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "false_negatives": 0,
+          "n": 18,
+          "precision": 0.9474,
+          "recall": 1.0,
+          "f1": 0.973,
+          "f2": 0.989,
           "recall_ci": [
-            0.0,
-            0.2992
+            0.8241,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.2992
+            0.7008,
+            1.0
           ]
         },
         "SOCIAL_SECURITY": {
@@ -3308,6 +3361,9 @@
         }
       },
       "confusion_matrix": {
+        "COMPANY": {
+          "COMPANY": 3
+        },
         "BANK_ACCOUNT": {
           "PHONE": 1,
           "CREDIT_CARD": 1
@@ -3318,11 +3374,27 @@
         "DATABASE_URL": {
           "PRIVATE_URL": 6
         },
-        "CUSTOMER_NAME": {
-          "PERSON": 4
-        },
         "EMPLOYEE_NAME": {
-          "PERSON": 6
+          "EMPLOYEE_NAME": 1
+        },
+        "CITY": {
+          "CITY": 2
+        },
+        "NONE": {
+          "CITY": 1,
+          "FILE_PATH": 1,
+          "EMPLOYEE_NAME": 1,
+          "COUNTRY": 1,
+          "PHONE": 2,
+          "ADDRESS": 1,
+          "PERSON": 3,
+          "GPS": 1,
+          "URL": 1,
+          "API_KEY": 1,
+          "CREDIT_CARD": 4,
+          "SOCIAL_SECURITY": 1,
+          "EMAIL": 3,
+          "JWT": 1
         },
         "SOCIAL_SECURITY": {
           "SOCIAL_SECURITY": 2
@@ -3334,19 +3406,6 @@
         "DOMAIN": {
           "URL": 1
         },
-        "NONE": {
-          "FILE_PATH": 1,
-          "PERSON": 4,
-          "COUNTRY": 1,
-          "PHONE": 2,
-          "GPS": 1,
-          "URL": 1,
-          "API_KEY": 1,
-          "CREDIT_CARD": 4,
-          "SOCIAL_SECURITY": 1,
-          "EMAIL": 3,
-          "JWT": 1
-        },
         "PROJECT_NAME": {
           "PROJECT_NAME": 1
         },
@@ -3355,11 +3414,10 @@
           "SOCIAL_SECURITY": 1
         },
         "ADDRESS": {
-          "PERSON": 1,
-          "COUNTRY": 1
+          "PERSON": 1
         },
-        "CITY": {
-          "CITY": 1
+        "PERSON": {
+          "PERSON": 1
         },
         "PHONE": {
           "PHONE": 6
@@ -3374,10 +3432,10 @@
           "index": 0,
           "text_preview": "Hi, I'm Alice Johnson from Acme Corp. Email: alice@acme.com Phone: +1-555-123-45",
           "expected": 4,
-          "detected": 3,
-          "true_positives": 3,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 5,
+          "true_positives": 4,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "EMAIL",
@@ -3385,6 +3443,7 @@
             "PHONE"
           ],
           "detected_types": [
+            "COMPANY",
             "EMAIL",
             "PERSON",
             "PHONE"
@@ -3394,28 +3453,33 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "ADDRESS"
+          ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY",
+            "COUNTRY"
+          ]
         },
         {
           "index": 3,
@@ -3606,29 +3670,32 @@
           "index": 15,
           "text_preview": "Project: Project Phoenix is our codename for the new ERP rollout.",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PROJECT_NAME"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PROJECT_NAME"
+          ]
         },
         {
           "index": 16,
           "text_preview": "Our customer Jane Smith from Widgets Inc. wants her data removed.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "CUSTOMER_NAME"
           ],
           "detected_types": [
-            "PERSON"
+            "COMPANY",
+            "CUSTOMER_NAME"
           ]
         },
         {
@@ -3636,25 +3703,25 @@
           "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
           "expected": 2,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 2,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "EMPLOYEE_NAME",
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "PERSON"
+            "EMPLOYEE_NAME"
           ]
         },
         {
           "index": 18,
           "text_preview": "Contact me at bob.smith@example.org or call +44 20 7946 0958 for the project Vul",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PHONE",
@@ -3662,70 +3729,76 @@
           ],
           "detected_types": [
             "EMAIL",
-            "PHONE"
+            "PHONE",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 19,
           "text_preview": "The best customer we have is Clara Oswald and she works at Data Corp.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "CUSTOMER_NAME"
           ],
           "detected_types": [
-            "PERSON"
+            "COMPANY",
+            "CUSTOMER_NAME"
           ]
         },
         {
           "index": 20,
           "text_preview": "Please add employee David Tennant to the access list for project Galactic.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "PERSON"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "ADDRESS"
+          ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY"
+            "CITY",
+            "COUNTRY"
           ]
         },
         {
@@ -3824,14 +3897,15 @@
           "index": 29,
           "text_preview": "Coordinates: 48.8566 N, 2.3522 E is the center of Paris",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
@@ -3986,16 +4060,16 @@
           "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
           "expected": 2,
           "detected": 3,
-          "true_positives": 1,
-          "false_positives": 2,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "IP_ADDRESS",
-            "PERSON"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ]
         },
         {
@@ -4003,26 +4077,26 @@
           "text_preview": "Customer: Martha Jones (martha.jones@bigpharma.com) order #ORD-001",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "CUSTOMER_NAME",
+            "EMAIL"
           ]
         },
         {
           "index": 41,
           "text_preview": "Project Nebula starts Q1 and Project Orion is in maintenance mode.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "PROJECT_NAME"
           ],
@@ -4065,14 +4139,14 @@
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
           "detected": 2,
-          "true_positives": 0,
-          "false_positives": 2,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "COUNTRY",
+            "ADDRESS",
             "PERSON"
           ]
         },
@@ -4080,10 +4154,10 @@
           "index": 45,
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COMPANY",
@@ -4091,6 +4165,7 @@
           ],
           "detected_types": [
             "CITY",
+            "COMPANY",
             "PERSON"
           ]
         },
@@ -4113,14 +4188,16 @@
           "index": 47,
           "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
           "expected": 6,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 6,
+          "true_positives": 6,
           "false_positives": 0,
-          "false_negatives": 6,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "COUNTRY"
+          ]
         },
         {
           "index": 48,
@@ -4444,44 +4521,45 @@
           "text_preview": "Employee: Rose Tyler (rose@torchwood.xyz), employee: Jack Harkness (jack@torchwo",
           "expected": 4,
           "detected": 4,
-          "true_positives": 2,
-          "false_positives": 2,
-          "false_negatives": 2,
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME"
           ],
           "detected_types": [
             "EMAIL",
-            "PERSON"
+            "EMPLOYEE_NAME"
           ]
         },
         {
           "index": 70,
           "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
+            "CUSTOMER_NAME",
             "EMAIL",
-            "PERSON"
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 71,
           "text_preview": "Contact person: Donna Noble (donna@temp-services.co.uk). Project Bad Wolf is GO.",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
@@ -4489,7 +4567,8 @@
           ],
           "detected_types": [
             "EMAIL",
-            "PERSON"
+            "PERSON",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -4572,27 +4651,31 @@
           "index": 77,
           "text_preview": "City: The population of Mumbai is over 20 million.",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 78,
           "text_preview": "Country: Switzerland has 4 official languages.",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "COUNTRY"
+          ]
         },
         {
           "index": 79,
@@ -4720,10 +4803,10 @@
           "index": 87,
           "text_preview": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 2,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME",
@@ -4731,24 +4814,27 @@
           ],
           "detected_types": [
             "EMAIL",
-            "PERSON"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 88,
           "text_preview": "Customer: River Song (river@library.silence) - project Impossible Astronaut",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "EMAIL"
+            "CUSTOMER_NAME",
+            "EMAIL",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -4823,12 +4909,14 @@
           "index": 95,
           "text_preview": "My street is 123 Main Street, not 123 Main St.",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "ADDRESS"
+          ]
         },
         {
           "index": 96,
