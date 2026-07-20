@@ -2,11 +2,11 @@
   "summary": {
     "overall": {
       "total_examples": 201,
-      "full_pipeline_detected": 106,
-      "full_pipeline_rate": 52.7,
-      "raw_regex_detected": 57,
-      "raw_regex_rate": 28.4,
-      "deobfuscation_improvement": 24.4
+      "full_pipeline_detected": 116,
+      "full_pipeline_rate": 57.7,
+      "raw_regex_detected": 59,
+      "raw_regex_rate": 29.4,
+      "deobfuscation_improvement": 28.4
     },
     "by_category": {
       "Punctuation-stuffed": {
@@ -66,21 +66,16 @@
       },
       "Double encoding": {
         "total": 15,
-        "full_pipeline_detected": 5,
-        "full_pipeline_rate": 33.3,
-        "raw_regex_detected": 3,
-        "raw_regex_rate": 20.0,
-        "improvement": 13.3,
+        "full_pipeline_detected": 10,
+        "full_pipeline_rate": 66.7,
+        "raw_regex_detected": 2,
+        "raw_regex_rate": 13.3,
+        "improvement": 53.3,
         "missed_examples": [
           "FILE_PATH:double-encoding",
           "FILE_PATH:double-encoding",
           "FILE_PATH:double-encoding",
-          "COMPANY:double-encoding",
-          "COMPANY:double-encoding",
-          "COMPANY:double-encoding",
-          "COMPANY:double-encoding",
-          "COMPANY:double-encoding",
-          "COMPANY:double-encoding",
+          "FILE_PATH:double-encoding",
           "COMPANY:double-encoding"
         ]
       },
@@ -110,17 +105,16 @@
       },
       "Reversed words": {
         "total": 16,
-        "full_pipeline_detected": 4,
-        "full_pipeline_rate": 25.0,
+        "full_pipeline_detected": 5,
+        "full_pipeline_rate": 31.2,
         "raw_regex_detected": 1,
         "raw_regex_rate": 6.2,
-        "improvement": 18.8,
+        "improvement": 25.0,
         "missed_examples": [
           "EMAIL:reversed-words",
           "EMAIL:reversed-words",
           "EMAIL:reversed-words",
           "EMAIL:reversed-words",
-          "PERSON:reversed-words",
           "PERSON:reversed-words",
           "PERSON:reversed-words",
           "PERSON:reversed-words",
@@ -132,14 +126,12 @@
       },
       "CamelCase split": {
         "total": 12,
-        "full_pipeline_detected": 11,
-        "full_pipeline_rate": 91.7,
+        "full_pipeline_detected": 12,
+        "full_pipeline_rate": 100.0,
         "raw_regex_detected": 12,
         "raw_regex_rate": 100.0,
-        "improvement": -8.3,
-        "missed_examples": [
-          "BANK_ACCOUNT:camelCase_split"
-        ]
+        "improvement": 0.0,
+        "missed_examples": []
       },
       "Case-shifted": {
         "total": 10,
@@ -160,25 +152,24 @@
       },
       "Pig-latin style": {
         "total": 7,
-        "full_pipeline_detected": 5,
-        "full_pipeline_rate": 71.4,
+        "full_pipeline_detected": 6,
+        "full_pipeline_rate": 85.7,
         "raw_regex_detected": 1,
         "raw_regex_rate": 14.3,
-        "improvement": 57.1,
+        "improvement": 71.4,
         "missed_examples": [
-          "IP_ADDRESS:pig-latin-ip",
-          "COUNTRY:pig-latin"
+          "IP_ADDRESS:pig-latin-ip"
         ]
       },
       "Unicode fractions": {
         "total": 24,
         "full_pipeline_detected": 16,
         "full_pipeline_rate": 66.7,
-        "raw_regex_detected": 2,
-        "raw_regex_rate": 8.3,
-        "improvement": 58.3,
+        "raw_regex_detected": 3,
+        "raw_regex_rate": 12.5,
+        "improvement": 54.2,
         "missed_examples": [
-          "SOCIAL_SECURITY:unicode-superscript-subscript",
+          "CUSTOMER_NAME:unicode-fractions",
           "CUSTOMER_NAME:unicode-fractions",
           "CUSTOMER_NAME:unicode-fractions",
           "CUSTOMER_NAME:unicode-fractions",
@@ -190,14 +181,12 @@
       },
       "XML escaping": {
         "total": 4,
-        "full_pipeline_detected": 0,
-        "full_pipeline_rate": 0.0,
-        "raw_regex_detected": 0,
-        "raw_regex_rate": 0.0,
+        "full_pipeline_detected": 2,
+        "full_pipeline_rate": 50.0,
+        "raw_regex_detected": 2,
+        "raw_regex_rate": 50.0,
         "improvement": 0.0,
         "missed_examples": [
-          "PHONE:xml-escape",
-          "PHONE:xml-escape",
           "PHONE:xml-escape",
           "PHONE:xml-escape"
         ]
@@ -302,12 +291,13 @@
       },
       "FILE_PATH": {
         "total": 8,
-        "full_pipeline_detected": 5,
-        "full_pipeline_rate": 62.5,
-        "raw_regex_detected": 3,
-        "raw_regex_rate": 37.5,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 50.0,
+        "raw_regex_detected": 2,
+        "raw_regex_rate": 25.0,
         "improvement": 25.0,
         "missed_examples": [
+          "FILE_PATH:double-encoding",
           "FILE_PATH:double-encoding",
           "FILE_PATH:double-encoding",
           "FILE_PATH:double-encoding"
@@ -356,14 +346,12 @@
       },
       "PHONE": {
         "total": 12,
-        "full_pipeline_detected": 8,
-        "full_pipeline_rate": 66.7,
-        "raw_regex_detected": 1,
-        "raw_regex_rate": 8.3,
-        "improvement": 58.3,
+        "full_pipeline_detected": 10,
+        "full_pipeline_rate": 83.3,
+        "raw_regex_detected": 5,
+        "raw_regex_rate": 41.7,
+        "improvement": 41.7,
         "missed_examples": [
-          "PHONE:xml-escape",
-          "PHONE:xml-escape",
           "PHONE:xml-escape",
           "PHONE:xml-escape"
         ]
@@ -396,14 +384,12 @@
       },
       "SOCIAL_SECURITY": {
         "total": 8,
-        "full_pipeline_detected": 7,
-        "full_pipeline_rate": 87.5,
+        "full_pipeline_detected": 8,
+        "full_pipeline_rate": 100.0,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 87.5,
-        "missed_examples": [
-          "SOCIAL_SECURITY:unicode-superscript-subscript"
-        ]
+        "improvement": 100.0,
+        "missed_examples": []
       },
       "PROJECT_NAME": {
         "total": 6,
@@ -454,18 +440,12 @@
       },
       "COMPANY": {
         "total": 7,
-        "full_pipeline_detected": 0,
-        "full_pipeline_rate": 0.0,
+        "full_pipeline_detected": 6,
+        "full_pipeline_rate": 85.7,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 0.0,
+        "improvement": 85.7,
         "missed_examples": [
-          "COMPANY:double-encoding",
-          "COMPANY:double-encoding",
-          "COMPANY:double-encoding",
-          "COMPANY:double-encoding",
-          "COMPANY:double-encoding",
-          "COMPANY:double-encoding",
           "COMPANY:double-encoding"
         ]
       },
@@ -480,13 +460,12 @@
       },
       "PERSON": {
         "total": 8,
-        "full_pipeline_detected": 0,
-        "full_pipeline_rate": 0.0,
+        "full_pipeline_detected": 1,
+        "full_pipeline_rate": 12.5,
         "raw_regex_detected": 1,
         "raw_regex_rate": 12.5,
-        "improvement": -12.5,
+        "improvement": 0.0,
         "missed_examples": [
-          "PERSON:reversed-words",
           "PERSON:reversed-words",
           "PERSON:reversed-words",
           "PERSON:reversed-words",
@@ -498,14 +477,12 @@
       },
       "BANK_ACCOUNT": {
         "total": 6,
-        "full_pipeline_detected": 5,
-        "full_pipeline_rate": 83.3,
+        "full_pipeline_detected": 6,
+        "full_pipeline_rate": 100.0,
         "raw_regex_detected": 6,
         "raw_regex_rate": 100.0,
-        "improvement": -16.7,
-        "missed_examples": [
-          "BANK_ACCOUNT:camelCase_split"
-        ]
+        "improvement": 0.0,
+        "missed_examples": []
       },
       "CITY": {
         "total": 6,
@@ -525,23 +502,22 @@
       },
       "COUNTRY": {
         "total": 1,
+        "full_pipeline_detected": 1,
+        "full_pipeline_rate": 100.0,
+        "raw_regex_detected": 0,
+        "raw_regex_rate": 0.0,
+        "improvement": 100.0,
+        "missed_examples": []
+      },
+      "CUSTOMER_NAME": {
+        "total": 8,
         "full_pipeline_detected": 0,
         "full_pipeline_rate": 0.0,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
         "improvement": 0.0,
         "missed_examples": [
-          "COUNTRY:pig-latin"
-        ]
-      },
-      "CUSTOMER_NAME": {
-        "total": 8,
-        "full_pipeline_detected": 1,
-        "full_pipeline_rate": 12.5,
-        "raw_regex_detected": 1,
-        "raw_regex_rate": 12.5,
-        "improvement": 0.0,
-        "missed_examples": [
+          "CUSTOMER_NAME:unicode-fractions",
           "CUSTOMER_NAME:unicode-fractions",
           "CUSTOMER_NAME:unicode-fractions",
           "CUSTOMER_NAME:unicode-fractions",
@@ -721,6 +697,11 @@
           "type": "PERSON",
           "value": "http://1921681100",
           "score": 0.85
+        },
+        {
+          "type": "PHONE",
+          "value": "1921681100",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -871,6 +852,11 @@
           "type": "PERSON",
           "value": "http://192168501",
           "score": 0.85
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "192168501",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -896,6 +882,11 @@
           "type": "PERSON",
           "value": "http://19216811004dm1n",
           "score": 0.85
+        },
+        {
+          "type": "PHONE",
+          "value": "19216811004",
+          "score": 0.6
         }
       ],
       "raw_regex_detected": true,
@@ -903,6 +894,11 @@
         {
           "type": "PRIVATE_URL",
           "value": "http://192.168.1.100/4dm1n",
+          "score": 0.9
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.1.100",
           "score": 0.9
         }
       ]
@@ -954,6 +950,11 @@
           "type": "PRIVATE_URL",
           "value": "http://10.0.0.5/c0nf1g/b4ckup",
           "score": 0.9
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "10.0.0.5",
+          "score": 0.9
         }
       ]
     },
@@ -971,6 +972,11 @@
           "type": "PERSON",
           "value": "https://192168501053cur3/portal",
           "score": 0.85
+        },
+        {
+          "type": "PHONE",
+          "value": "192168501053",
+          "score": 0.6
         }
       ],
       "raw_regex_detected": true,
@@ -978,6 +984,11 @@
         {
           "type": "PRIVATE_URL",
           "value": "https://192.168.50.10/53cur3/p0r7al",
+          "score": 0.9
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.50.10",
           "score": 0.9
         }
       ]
@@ -1004,6 +1015,11 @@
           "type": "PRIVATE_URL",
           "value": "http://172.16.0.20/7e57/3nv",
           "score": 0.9
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "172.16.0.20",
+          "score": 0.9
         }
       ]
     },
@@ -1019,7 +1035,7 @@
       "full_detections": [
         {
           "type": "PERSON",
-          "value": "https://lntranet.whltelabel.company/4ud17",
+          "value": "https://1n7r4n3t.whltelabel.company/4ud17",
           "score": 0.85
         }
       ],
@@ -1057,7 +1073,7 @@
       "full_detections": [
         {
           "type": "FILE_PATH",
-          "value": "c:\\sESP.\\CONFIG.INI.",
+          "value": "C:\\Sesp.\\config.ini.",
           "score": 0.9
         }
       ],
@@ -1089,7 +1105,7 @@
       "full_detections": [
         {
           "type": "FILE_PATH",
-          "value": "d:\\dATA\\BACKUP.ZIP.",
+          "value": "D:\\Data\\backup.zip.",
           "score": 0.9
         }
       ],
@@ -1104,22 +1120,10 @@
       "text": "Run the script from /opt/%25%32%35%25%33%32%25%33%30%25%32%35%25%33%32%25%33%30/bin/script.sh to start the service.",
       "ground_truth": "/opt/%%20/bin/script.sh",
       "pii_value": "/opt/%25%32%35%25%33%32%25%33%30%25%32%35%25%33%32%25%33%30/bin/script.sh",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "DOMAIN",
-          "value": "script.sh",
-          "score": 0.75
-        }
-      ],
-      "raw_regex_detected": true,
-      "raw_detections": [
-        {
-          "type": "DOMAIN",
-          "value": "script.sh",
-          "score": 0.75
-        }
-      ]
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
     },
     {
       "category": "Double encoding",
@@ -1133,13 +1137,8 @@
       "full_detections": [
         {
           "type": "FILE_PATH",
-          "value": "c:\\uSERS\\",
+          "value": "C:\\Users\\",
           "score": 0.9
-        },
-        {
-          "type": "DOMAIN",
-          "value": "NOTE.TXT",
-          "score": 0.75
         }
       ],
       "raw_regex_detected": true,
@@ -1222,6 +1221,11 @@
           "type": "CREDIT_CARD",
           "value": "card 4532145678901234",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4532145678901234",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": false,
@@ -1714,7 +1718,7 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
+          "type": "SOCIAL_SECURITY",
           "value": "172162541",
           "score": 0.5
         }
@@ -1739,7 +1743,7 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
+          "type": "SOCIAL_SECURITY",
           "value": "203011342",
           "score": 0.5
         }
@@ -1783,7 +1787,7 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
+          "type": "SOCIAL_SECURITY",
           "value": "198511007",
           "score": 0.5
         }
@@ -1922,13 +1926,24 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
+          "type": "PERSON",
+          "value": "reach Maria at",
+          "score": 0.7
+        },
+        {
           "type": "PHONE",
           "value": "+34913212823212",
           "score": 0.8
         }
       ],
-      "raw_regex_detected": false,
-      "raw_detections": []
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "reach Maria at",
+          "score": 0.7
+        }
+      ]
     },
     {
       "category": "Unicode fractions",
@@ -1984,13 +1999,24 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
+          "type": "PERSON",
+          "value": "Herr Schmidt",
+          "score": 0.55
+        },
+        {
           "type": "BANK_ACCOUNT",
           "value": "49131214413121413",
           "score": 0.55
         }
       ],
-      "raw_regex_detected": false,
-      "raw_detections": []
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PERSON",
+          "value": "Herr Schmidt",
+          "score": 0.55
+        }
+      ]
     },
     {
       "category": "Unicode fractions",
@@ -2002,6 +2028,11 @@
       "pii_value": "+61 ⅓½ ½⅔ ¼⅓ ⅓½",
       "full_pipeline_detected": true,
       "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "Dr. Owens",
+          "score": 0.85
+        },
         {
           "type": "BANK_ACCOUNT",
           "value": "611312122314131312",
@@ -2108,10 +2139,22 @@
       "text": "The Berlin team uses +49 &amp;quot;30&amp;quot; 1234 5678 for vendor communications.",
       "ground_truth": "+49 \"30\" 1234 5678",
       "pii_value": "+49 &amp;quot;30&amp;quot; 1234 5678",
-      "full_pipeline_detected": false,
-      "full_detections": [],
-      "raw_regex_detected": false,
-      "raw_detections": []
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "CITY",
+          "value": "Berlin",
+          "score": 0.75
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "CITY",
+          "value": "Berlin",
+          "score": 0.75
+        }
+      ]
     },
     {
       "category": "XML escaping",
@@ -2121,10 +2164,22 @@
       "text": "Our Sydney warehouse can be reached at +61 &lt;b&gt;2&lt;/b&gt; 9876 5432 for delivery scheduling.",
       "ground_truth": "+61 2 9876 5432",
       "pii_value": "+61 &lt;b&gt;2&lt;/b&gt; 9876 5432",
-      "full_pipeline_detected": false,
-      "full_detections": [],
-      "raw_regex_detected": false,
-      "raw_detections": []
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "CITY",
+          "value": "Sydney",
+          "score": 0.75
+        }
+      ],
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "CITY",
+          "value": "Sydney",
+          "score": 0.75
+        }
+      ]
     },
     {
       "category": "ZWJ interleaving",
@@ -2330,12 +2385,12 @@
         {
           "type": "COUNTRY",
           "value": "US",
-          "score": 0.8
+          "score": 0.7
         },
         {
           "type": "COUNTRY",
           "value": "US",
-          "score": 0.8
+          "score": 0.7
         }
       ],
       "raw_regex_detected": true,
@@ -2343,12 +2398,12 @@
         {
           "type": "COUNTRY",
           "value": "US",
-          "score": 0.8
+          "score": 0.7
         },
         {
           "type": "COUNTRY",
           "value": "US",
-          "score": 0.8
+          "score": 0.7
         }
       ]
     },
@@ -2524,6 +2579,11 @@
           "type": "DOMAIN",
           "value": "WWW.GRAPHOPHONE.US",
           "score": 0.75
+        },
+        {
+          "type": "COUNTRY",
+          "value": "US",
+          "score": 0.7
         }
       ],
       "raw_regex_detected": false,
@@ -2690,7 +2750,7 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
+          "type": "SOCIAL_SECURITY",
           "value": "563289412",
           "score": 0.5
         }
@@ -2709,7 +2769,7 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
+          "type": "SOCIAL_SECURITY",
           "value": "389560174",
           "score": 0.5
         }
@@ -2725,8 +2785,14 @@
       "text": "Submit the W-2 with the employee identifier ⁰⁹²-⁴⁷-⁶⁸¹³ attached.",
       "ground_truth": "092-47-6813",
       "pii_value": "⁰⁹²-⁴⁷-⁶⁸¹³",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "092476813",
+          "score": 0.5
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2760,7 +2826,7 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
+          "type": "SOCIAL_SECURITY",
           "value": "430987621",
           "score": 0.5
         }
@@ -2779,7 +2845,7 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
+          "type": "SOCIAL_SECURITY",
           "value": "287156930",
           "score": 0.5
         }
@@ -2798,7 +2864,7 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
+          "type": "SOCIAL_SECURITY",
           "value": "651420873",
           "score": 0.5
         }
@@ -2817,7 +2883,7 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "IP_ADDRESS",
+          "type": "SOCIAL_SECURITY",
           "value": "908763145",
           "score": 0.5
         }
@@ -3049,7 +3115,7 @@
       "full_detections": [
         {
           "type": "IP_ADDRESS",
-          "value": "3c:7c:deab:1f:90:a6:be:cf",
+          "value": "3c:7c:d34b:1f:90:a6:be:cf",
           "score": 0.88
         },
         {
@@ -3122,7 +3188,7 @@
       "full_detections": [
         {
           "type": "IP_ADDRESS",
-          "value": "3c:7c:deab:1f:90:a6:be:cf",
+          "value": "3c:7c:d34b:1f:90:a6:be:cf",
           "score": 0.88
         },
         {
@@ -3210,8 +3276,14 @@
       "text": "Please send the invoice to Globex%25Corporation for the monthly retainer.",
       "ground_truth": "Globex Corporation",
       "pii_value": "Globex%25Corporation",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "COMPANY",
+          "value": "Globex Corporation",
+          "score": 0.8
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -3223,8 +3295,19 @@
       "text": "The merger with Wayne%25Enterprises%25Ltd was announced in the quarterly report.",
       "ground_truth": "Wayne Enterprises Ltd",
       "pii_value": "Wayne%25Enterprises%25Ltd",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "COMPANY",
+          "value": "Wayne Enterprises Ltd",
+          "score": 0.8
+        },
+        {
+          "type": "COMPANY",
+          "value": "Enterprises Ltd",
+          "score": 0.8
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -3236,8 +3319,19 @@
       "text": "We are migrating our servers to Cyberdyne%25Systems%25Inc infrastructure.",
       "ground_truth": "Cyberdyne Systems Inc",
       "pii_value": "Cyberdyne%25Systems%25Inc",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "COMPANY",
+          "value": "Cyberdyne Systems Inc",
+          "score": 0.8
+        },
+        {
+          "type": "COMPANY",
+          "value": "Systems Inc",
+          "score": 0.8
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -3262,8 +3356,14 @@
       "text": "Umbrella%25Corp%25%28Biotech%29 is sponsoring the research conference.",
       "ground_truth": "Umbrella Corp (Biotech)",
       "pii_value": "Umbrella%25Corp%25%28Biotech%29",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "COMPANY",
+          "value": "Umbrella Corp",
+          "score": 0.8
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -3275,8 +3375,19 @@
       "text": "After the audit, Soylent%25Corporation%25LLC revised their compliance policy.",
       "ground_truth": "Soylent Corporation LLC",
       "pii_value": "Soylent%25Corporation%25LLC",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "COMPANY",
+          "value": "Soylent Corporation",
+          "score": 0.8
+        },
+        {
+          "type": "COMPANY",
+          "value": "Soylent Corporation LLC",
+          "score": 0.8
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -3288,8 +3399,14 @@
       "text": "The new test facility was built by Aperture%25Science%25%2C%25Inc for government contracts.",
       "ground_truth": "Aperture Science, Inc",
       "pii_value": "Aperture%25Science%25%2C%25Inc",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PERSON",
+          "value": "by Aperture Science",
+          "score": 0.6
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -3367,16 +3484,16 @@
         },
         {
           "type": "CITY",
-          "value": "in lONDON",
-          "score": 0.5
+          "value": "London",
+          "score": 0.75
         }
       ],
       "raw_regex_detected": true,
       "raw_detections": [
         {
           "type": "CITY",
-          "value": "in London",
-          "score": 0.5
+          "value": "London",
+          "score": 0.75
         }
       ]
     },
@@ -3397,16 +3514,16 @@
         },
         {
           "type": "CITY",
-          "value": "in tOKYO",
-          "score": 0.5
+          "value": "Tokyo",
+          "score": 0.75
         }
       ],
       "raw_regex_detected": true,
       "raw_detections": [
         {
           "type": "CITY",
-          "value": "in Tokyo",
-          "score": 0.5
+          "value": "Tokyo",
+          "score": 0.75
         }
       ]
     },
@@ -3446,16 +3563,16 @@
         },
         {
           "type": "CITY",
-          "value": "in tAIPEI",
-          "score": 0.5
+          "value": "Taipei",
+          "score": 0.75
         }
       ],
       "raw_regex_detected": true,
       "raw_detections": [
         {
           "type": "CITY",
-          "value": "in Taipei",
-          "score": 0.5
+          "value": "Taipei",
+          "score": 0.75
         }
       ]
     },
@@ -3476,16 +3593,16 @@
         },
         {
           "type": "CITY",
-          "value": "in sYDNEY",
-          "score": 0.5
+          "value": "Sydney",
+          "score": 0.75
         }
       ],
       "raw_regex_detected": true,
       "raw_detections": [
         {
           "type": "CITY",
-          "value": "in Sydney",
-          "score": 0.5
+          "value": "Sydney",
+          "score": 0.75
         }
       ]
     },
@@ -3562,8 +3679,14 @@
       "text": "The IT ticket was assigned to Jones David this morning.",
       "ground_truth": "David Jones",
       "pii_value": "Jones David",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PROJECT_NAME",
+          "value": "assigned to Jones David",
+          "score": 0.7
+        }
+      ],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -3607,14 +3730,25 @@
       "text": "Please route the commission to account US12 345 67 89 1011 2141 for the Q2 payout.",
       "ground_truth": "US12345678910112141",
       "pii_value": "US12 345 67 89 1011 2141",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "IBAN",
+          "value": "US12345678910112141",
+          "score": 0.75
+        }
+      ],
       "raw_regex_detected": true,
       "raw_detections": [
         {
           "type": "PHONE",
           "value": "345 67 89 1011",
           "score": 0.6
+        },
+        {
+          "type": "PHONE",
+          "value": "67 89 1011 2141",
+          "score": 0.55
         }
       ]
     },
@@ -3645,6 +3779,11 @@
           "type": "PHONE",
           "value": "16 31 31 9268",
           "score": 0.6
+        },
+        {
+          "type": "PHONE",
+          "value": "31 31 9268 19",
+          "score": 0.55
         }
       ]
     },
@@ -3736,7 +3875,7 @@
         {
           "type": "COUNTRY",
           "value": "UAE",
-          "score": 0.8
+          "score": 0.7
         },
         {
           "type": "IBAN",
@@ -3749,7 +3888,7 @@
         {
           "type": "COUNTRY",
           "value": "UAE",
-          "score": 0.8
+          "score": 0.7
         },
         {
           "type": "IBAN",
@@ -3844,8 +3983,14 @@
       "text": "We're sourcing raw materials from a supplier in exicoMay to reduce costs.",
       "ground_truth": "Mexico",
       "pii_value": "exicoMay",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "COUNTRY",
+          "value": "Mexico",
+          "score": 0.8
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -3909,22 +4054,10 @@
       "text": "Our new partner is ⅔rd & Co., specializing in logistics.",
       "ground_truth": "2/3rd & Co.",
       "pii_value": "⅔rd & Co.",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "CITY",
-          "value": "in logistics",
-          "score": 0.5
-        }
-      ],
-      "raw_regex_detected": true,
-      "raw_detections": [
-        {
-          "type": "CITY",
-          "value": "in logistics",
-          "score": 0.5
-        }
-      ]
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
     },
     {
       "category": "Unicode fractions",
