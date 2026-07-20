@@ -1008,6 +1008,11 @@ class RegexDetector(Detector):
                         # Deployment context
                         "deploy", "deployment", "production",
                         "staging", "development", "env",
+                        # IT/network context — domains routinely appear after
+                        # IT abbreviations, network labels, and protocol names
+                        "it:", "network", "infrastructure",
+                        "protocol", "port", "proxy", "gateway",
+                        "firewall", "vpn", "ssh", "ftp", "smtp", "http",
                     )
                     has_domain_context = (
                         any(kw in context_before for kw in domain_context_keywords)
