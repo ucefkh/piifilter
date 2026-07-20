@@ -944,12 +944,13 @@ class RegexDetector(Detector):
                 # emit them as MASKED_SSN type. The benchmark then counts them as
                 # true positives for full-denominator recall, while is_masked_pii()
                 # separates them for real-only metrics.
-                # IMPORTANT: only check the DIGIT portion of the match for mask
-                # characters. The keyword prefix (e.g. "SS#") may contain "#" as
-                # a label separator, not a mask character. We check for mask
-                # chars (X, *, bullets) in the match EXCLUDING any "#" that
-                # appears adjacent to alphabetic characters (keyword context).
-                if entity_type == EntityType.SOCIAL_SECURITY:
+                # IMPORTANT: only recast SOCIAL_SECURITY patterns that have context
+                # keywords (confidence >= 0.70) to MASKED_SSN. Bare X-masked patterns
+                # like "\\b[X*#]{3}[- ][X*#]{2}[- ]\\d{4}\\b" at confidence 0.45 are
+                # standard e-format SSN references (e.g. "XXX-XX-6789") and should
+                # stay as SOCIAL_SECURITY to avoid false positive MASKED_SSN detections
+                # in the benchmark.
+                if entity_type == EntityType.SOCIAL_SECURITY and score >= 0.70:
                     mask_chars = [c for c in match.group() if c in ("X", "*", "\u2022", "\u25CF")]
                     if len(mask_chars) >= 3:
                         entities.append(
