@@ -561,6 +561,10 @@ class RegexDetector(Detector):
                         entities[i].entity_type == EntityType.EMAIL
                         and entity_type == EntityType.PERSON
                     )
+                    and not (
+                        entities[i].entity_type == EntityType.ADDRESS
+                        and entity_type == EntityType.CITY
+                    )
                 ):
                     continue
 

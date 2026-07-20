@@ -559,20 +559,72 @@ class Arbitrator:
         # 1. Cluster overlapping spans
         clusters = cluster_spans(spans, margin=self.config.overlap_margin)
 
-        # 2. Fuse each cluster
+        # 2. Fuse each cluster — split semantically distinct types that overlap
         fused_list: list[FusedEvidence] = []
         for cluster in clusters:
             if not cluster:
                 continue
-            fuse = fuse_cluster(
-                cluster,
-                text=text,
-                detector_weights=self.config.detector_weights,
-                use_calibrated=self.config.use_calibrated_model,
-            )
-            # Apply min confidence threshold
-            if fuse.confidence >= self.config.min_cluster_confidence:
-                fused_list.append(fuse)
+
+            # Detect clusters with cross-type overlaps where types have
+            # different span positions (e.g. CITY inside ADDRESS).
+            # The detector already produces both entity types — the arbitrator
+            # should preserve them when they resolve to different types.
+            types_in = set()
+            for cs in cluster:
+                et = cs.entity_type if isinstance(cs.entity_type, EntityType) else EntityType(cs.entity_type)
+                types_in.add(et)
+
+            if len(types_in) > 1:
+                # Check if spans are identical across types — if every span
+                # at every type covers the exact same interval, it's a
+                # genuine type conflict to resolve (single fused entity).
+                # If spans differ (e.g. ADDRESS 12-47 + CITY 31-37),
+                # they are semantically distinct and should coexist.
+                spans_by_type: dict[EntityType, set[tuple[int, int]]] = {}
+                for cs in cluster:
+                    et = cs.entity_type if isinstance(cs.entity_type, EntityType) else EntityType(cs.entity_type)
+                    spans_by_type.setdefault(et, set()).add((cs.start, cs.end))
+
+                # If all types share the EXACT same spans, fuse normally
+                all_span_set = set()
+                for et_spans in spans_by_type.values():
+                    all_span_set.update(et_spans)
+
+                if len(all_span_set) == 1:
+                    # All spans are identical — genuine type conflict, fuse
+                    fuse = fuse_cluster(
+                        cluster,
+                        text=text,
+                        detector_weights=self.config.detector_weights,
+                        use_calibrated=self.config.use_calibrated_model,
+                    )
+                    if fuse.confidence >= self.config.min_cluster_confidence:
+                        fused_list.append(fuse)
+                else:
+                    # Different spans per type — preserve each type separately
+                    for et in types_in:
+                        sub_cluster = [cs for cs in cluster 
+                                       if (cs.entity_type if isinstance(cs.entity_type, EntityType) else EntityType(cs.entity_type)) == et]
+                        if not sub_cluster:
+                            continue
+                        sub_fuse = fuse_cluster(
+                            sub_cluster,
+                            text=text,
+                            detector_weights=self.config.detector_weights,
+                            use_calibrated=self.config.use_calibrated_model,
+                        )
+                        if sub_fuse.confidence >= self.config.min_cluster_confidence:
+                            fused_list.append(sub_fuse)
+            else:
+                # Single type — standard fuse
+                fuse = fuse_cluster(
+                    cluster,
+                    text=text,
+                    detector_weights=self.config.detector_weights,
+                    use_calibrated=self.config.use_calibrated_model,
+                )
+                if fuse.confidence >= self.config.min_cluster_confidence:
+                    fused_list.append(fuse)
 
         # Sort by position
         fused_list.sort(key=lambda f: (f.start, f.end))

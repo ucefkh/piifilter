@@ -39,6 +39,12 @@
           "value": "350 Fifth Avenue, New York, NY 10118",
           "start": 17,
           "end": 53
+        },
+        {
+          "type": "CITY",
+          "value": "New York",
+          "start": 35,
+          "end": 43
         }
       ]
     },
@@ -367,6 +373,12 @@
           "value": "10 Downing Street, London, SW1A 2AA",
           "start": 12,
           "end": 47
+        },
+        {
+          "type": "CITY",
+          "value": "London",
+          "start": 31,
+          "end": 37
         }
       ]
     },
