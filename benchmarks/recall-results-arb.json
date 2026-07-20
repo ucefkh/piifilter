@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T10:05:48Z",
+  "timestamp": "2026-07-20T10:11:46Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 232,
+      "total_detected_entities": 231,
       "total_true_positives": 209,
-      "total_false_positives": 23,
+      "total_false_positives": 22,
       "total_false_negatives": 4,
-      "overall_precision": 0.9008620689655172,
+      "overall_precision": 0.9047619047619048,
       "overall_recall": 0.9812206572769953,
-      "overall_f1": 0.9393258426966293,
+      "overall_f1": 0.9414414414414415,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -136,14 +136,14 @@
         },
         "COMPANY": {
           "true_positives": 4,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
           "n_total": 4,
-          "precision": 0.8,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5101,
             1.0
@@ -608,7 +608,6 @@
           "COUNTRY": 1,
           "PHONE": 1,
           "ADDRESS": 1,
-          "COMPANY": 1,
           "URL": 1,
           "API_KEY": 1,
           "MASKED_CC": 1,
@@ -2182,14 +2181,12 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "COMPANY"
-          ]
+          "detected_types": []
         },
         {
           "index": 102,
@@ -2892,13 +2889,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 227,
+      "total_detected_entities": 226,
       "total_true_positives": 209,
-      "total_false_positives": 22,
+      "total_false_positives": 21,
       "total_false_negatives": 4,
-      "overall_precision": 0.9047619047619048,
+      "overall_precision": 0.908695652173913,
       "overall_recall": 0.9812206572769953,
-      "overall_f1": 0.9414414414414415,
+      "overall_f1": 0.9435665914221218,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -2986,14 +2983,14 @@
         },
         "COMPANY": {
           "true_positives": 4,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
           "n_total": 4,
-          "precision": 0.8,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5101,
             1.0
@@ -3458,7 +3455,6 @@
           "COUNTRY": 1,
           "PHONE": 1,
           "ADDRESS": 1,
-          "COMPANY": 1,
           "PERSON": 1,
           "URL": 1,
           "API_KEY": 1,
@@ -5033,13 +5029,12 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 0,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "COMPANY",
             "PERSON"
           ]
         },
@@ -5746,13 +5741,13 @@
       "detector": "pipeline-raw",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 247,
+      "total_detected_entities": 246,
       "total_true_positives": 209,
-      "total_false_positives": 38,
+      "total_false_positives": 37,
       "total_false_negatives": 4,
-      "overall_precision": 0.8461538461538461,
+      "overall_precision": 0.8495934959349594,
       "overall_recall": 0.9812206572769953,
-      "overall_f1": 0.908695652173913,
+      "overall_f1": 0.9106753812636166,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -5840,14 +5835,14 @@
         },
         "COMPANY": {
           "true_positives": 4,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
           "n_total": 4,
-          "precision": 0.8,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5101,
             1.0
@@ -6315,7 +6310,6 @@
           "COUNTRY": 1,
           "PHONE": 1,
           "ADDRESS": 1,
-          "COMPANY": 1,
           "PERSON": 1,
           "URL": 1,
           "API_KEY": 1,
@@ -7901,13 +7895,12 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 0,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "COMPANY",
             "PERSON"
           ]
         },

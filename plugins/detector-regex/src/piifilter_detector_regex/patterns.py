@@ -634,7 +634,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("COMPANY", r"(?i)from\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s*(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
     # Single-word company name after "from" — known brand names that won't be confused with cities.
     # Supports hyphenated company names like "Weyland-Yutani".
-    ("COMPANY", r"(?i)from\s+(?-i:[A-Z])[a-z]+(?:[-][A-Z][a-z]+)?\b(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|BV|NV|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|and|the|of|in|at|on|for|with|from|is|was|has|had|have|not|by|to))\b", 0.55),
+    ("COMPANY", r"(?i)from\s+(?-i:[A-Z])[a-z]+(?:[-][A-Z][a-z]+)?\b(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|BV|NV|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|and|the|of|in|at|on|for|with|from|is|was|has|had|have|not|by|to))\b(?![^(]*\))", 0.55),
     # Single-word company name after "regarding" — catch brands and hyphenated names
     ("COMPANY", r"(?i)regarding\s+(?-i:[A-Z])[a-z]{2,}(?:[-][A-Z][a-z]+)?\b", 0.55),
 

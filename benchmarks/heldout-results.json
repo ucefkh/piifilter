@@ -1,6 +1,6 @@
 {
   "title": "Held-Out Adversarial Benchmark Report",
-  "timestamp": "2026-07-20T11:05:29.600579",
+  "timestamp": "2026-07-20T11:09:19.409292",
   "train_benchmark": {
     "label": "v1 benchmark (original)",
     "full_pipeline_rate": 78.6,
