@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T11:41:49Z",
+  "timestamp": "2026-07-20T12:00:36Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 229,
-      "total_true_positives": 206,
-      "total_false_positives": 23,
-      "total_false_negatives": 7,
-      "overall_precision": 0.8995633187772926,
-      "overall_recall": 0.9671361502347418,
-      "overall_f1": 0.9321266968325792,
+      "total_detected_entities": 232,
+      "total_true_positives": 208,
+      "total_false_positives": 24,
+      "total_false_negatives": 5,
+      "overall_precision": 0.896551724137931,
+      "overall_recall": 0.9765258215962441,
+      "overall_f1": 0.9348314606741573,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -114,24 +114,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 6,
-          "false_positives": 2,
-          "false_negatives": 3,
+          "true_positives": 8,
+          "false_positives": 3,
+          "false_negatives": 1,
           "n": 9,
           "n_total": 9,
-          "precision": 0.75,
-          "recall": 0.6667,
-          "f1": 0.7059,
-          "f2": 0.6818,
+          "precision": 0.7273,
+          "recall": 0.8889,
+          "f1": 0.8,
+          "f2": 0.8511,
           "recall_ci": [
-            0.3542,
-            0.8794
+            0.565,
+            0.9801
           ],
           "real_n": 9,
-          "real_recall": 0.6667,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.3542,
-            0.8794
+            0.565,
+            0.9801
           ]
         },
         "COMPANY": {
@@ -623,6 +623,9 @@
           "API_KEY": 1,
           "IP_ADDRESS": 2
         },
+        "ADDRESS": {
+          "CITY": 1
+        },
         "PHONE": {
           "PHONE": 2
         },
@@ -659,31 +662,33 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "CITY",
             "COUNTRY"
           ]
         },
@@ -1342,15 +1347,16 @@
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
@@ -2888,13 +2894,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 217,
-      "total_true_positives": 201,
-      "total_false_positives": 20,
-      "total_false_negatives": 12,
-      "overall_precision": 0.9095022624434389,
-      "overall_recall": 0.9436619718309859,
-      "overall_f1": 0.9262672811059909,
+      "total_detected_entities": 219,
+      "total_true_positives": 202,
+      "total_false_positives": 21,
+      "total_false_negatives": 11,
+      "overall_precision": 0.905829596412556,
+      "overall_recall": 0.9483568075117371,
+      "overall_f1": 0.926605504587156,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -2960,24 +2966,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 8,
+          "true_positives": 2,
+          "false_positives": 2,
+          "false_negatives": 7,
           "n": 9,
           "n_total": 9,
           "precision": 0.5,
-          "recall": 0.1111,
-          "f1": 0.1818,
-          "f2": 0.1316,
+          "recall": 0.2222,
+          "f1": 0.3077,
+          "f2": 0.25,
           "recall_ci": [
-            0.0199,
-            0.435
+            0.0632,
+            0.5474
           ],
           "real_n": 9,
-          "real_recall": 0.1111,
+          "real_recall": 0.2222,
           "real_recall_ci": [
-            0.0199,
-            0.435
+            0.0632,
+            0.5474
           ]
         },
         "COMPANY": {
@@ -3469,6 +3475,9 @@
         "IP_ADDRESS": {
           "API_KEY": 1
         },
+        "ADDRESS": {
+          "CITY": 1
+        },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
         },
@@ -3502,16 +3511,17 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
@@ -4184,15 +4194,16 @@
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
@@ -5729,13 +5740,13 @@
       "detector": "pipeline-raw",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 244,
-      "total_true_positives": 206,
-      "total_false_positives": 38,
-      "total_false_negatives": 7,
-      "overall_precision": 0.8442622950819673,
-      "overall_recall": 0.9671361502347418,
-      "overall_f1": 0.901531728665208,
+      "total_detected_entities": 247,
+      "total_true_positives": 208,
+      "total_false_positives": 39,
+      "total_false_negatives": 5,
+      "overall_precision": 0.8421052631578947,
+      "overall_recall": 0.9765258215962441,
+      "overall_f1": 0.9043478260869565,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -5801,24 +5812,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 6,
-          "false_positives": 2,
-          "false_negatives": 3,
+          "true_positives": 8,
+          "false_positives": 3,
+          "false_negatives": 1,
           "n": 9,
           "n_total": 9,
-          "precision": 0.75,
-          "recall": 0.6667,
-          "f1": 0.7059,
-          "f2": 0.6818,
+          "precision": 0.7273,
+          "recall": 0.8889,
+          "f1": 0.8,
+          "f2": 0.8511,
           "recall_ci": [
-            0.3542,
-            0.8794
+            0.565,
+            0.9801
           ],
           "real_n": 9,
-          "real_recall": 0.6667,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.3542,
-            0.8794
+            0.565,
+            0.9801
           ]
         },
         "COMPANY": {
@@ -6318,7 +6329,8 @@
           "IP_ADDRESS": 2
         },
         "ADDRESS": {
-          "PERSON": 1
+          "PERSON": 1,
+          "CITY": 1
         },
         "PHONE": {
           "PHONE": 4
@@ -6360,31 +6372,33 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "CITY",
             "COUNTRY"
           ]
         },
@@ -7043,15 +7057,16 @@
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
             "ADDRESS",
+            "CITY",
             "PERSON"
           ]
         },
