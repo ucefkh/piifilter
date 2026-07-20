@@ -17,6 +17,7 @@ import asyncio
 import json
 import math
 import random
+import re
 import sys
 import time
 from collections import defaultdict
@@ -652,18 +653,26 @@ async def make_pipeline_adapter(shared_presidio: DetectorAdapter | None = None) 
                     if overlaps_structural:
                         continue
                 # 7. Value-based content check: if the Presidio PERSON value
-                #    appears as a word inside any regex name-type value already
-                #    in deduped, suppress it.  Catches cases like Presidio
-                #    detecting "John" as PERSON in "(employee John)" while
-                #    regex already caught "employee named John" as
-                #    EMPLOYEE_NAME.  Spans don't overlap but content matches.
+                #    appears as a whole word (not substring) inside any regex
+                #    name-type value already in deduped, suppress it. Uses
+                #    word-boundary matching to avoid false matches like
+                #    "John" matching "Johnson" or "Maple" matching "Maple Drive".
+                #    Catches cases like Presidio detecting "John" as PERSON
+                #    in "(employee John)" while regex already caught
+                #    "employee named John" as EMPLOYEE_NAME. Spans don't
+                #    overlap but content matches.
                 if evalue.strip():
                     evalue_lower = evalue.strip().lower()
                     for de in deduped:
                         det = de.get("entity_type", "")
                         if det in _PERSON_CROSS_SUPPRESS_TYPES:
                             de_value = de.get("value", "").lower()
-                            if evalue_lower in de_value:
+                            # Use regex word-boundary matching: \bJohn\b
+                            # matches "John" but not "Johnson"
+                            word_pattern = re.compile(
+                                r'\b' + re.escape(evalue_lower) + r'\b'
+                            )
+                            if word_pattern.search(de_value):
                                 overlaps_structural = True
                                 break
                         if overlaps_structural:
