@@ -185,6 +185,33 @@ class RegexDetector(Detector):
         entities.extend(city_entities_presistrip)
         entities.sort(key=lambda e: e.start)
 
+        # ── Strip keyword prefixes from CITY entity spans ───────────────
+        # Several CITY patterns include keyword prefixes (e.g. "located in Berlin",
+        # "city pop: Tokyo") in the match span. This results in incorrect span
+        # boundaries that the benchmark (label-aligned matching) flags as false
+        # positives. We strip these prefixes and adjust the span positions.
+        _CITY_PREFIX_PATTERN = re.compile(
+            r"^(?i:(?:"
+            r"based\s+in|located\s+in|situated\s+in|lives?\s+in|lived\s+in|living\s+in"
+            r"|city(?:\s+(?:of|pop:?|population:?))?"
+            r"|town(?:\s+(?:of|pop:?|population:?))?"
+            r"|works?\s+(?:at\s+\S+\s+)?in"
+            r"|visiting"
+            r"|our\s+|their\s+"
+            r"))\s*:?\s*",
+        )
+        for e in entities:
+            if e.entity_type != EntityType.CITY:
+                continue
+            m = _CITY_PREFIX_PATTERN.match(e.value)
+            if m:
+                prefix = m.group()
+                prefix_len = len(prefix)
+                e.value = e.value[prefix_len:]
+                e.start += prefix_len
+                # Recalculate end from adjusted start
+                e.end = e.start + len(e.value)
+
         # ── Cross-type dedup: suppress pre-strip PRIVATE_URL entities ──
         # that are contained within DATABASE_URL or URL entities (from
         # stripped text). When a PRIVATE_URL like "db.internal:5432/production"
@@ -300,6 +327,23 @@ class RegexDetector(Detector):
                 deduped.append(e)
         deduped.sort(key=lambda e: e.start)
         entities = deduped
+
+        # ── Cross-type dedup: suppress JWT entities that are preceded by ──
+        # demonstration/description contexts like "JWT-like", "example JWT",
+        # or "sample JWT". These indicate the text is describing a JWT format,
+        # not leaking a real token. Check the text before each JWT match on
+        # the original (cleaned) text.
+        for e in list(entities):
+            if e.entity_type == EntityType.JWT:
+                # Check 60 chars before the match in the cleaned text
+                before = cleaned[max(0, e.start - 60):e.start].lower()
+                _JWT_DEMO_KEYWORDS = (
+                    "jwt-like", "jwt like", "example jwt", "sample jwt",
+                    "jwt format", "jwt example", "demo jwt", "like a jwt",
+                    "mock jwt", "test jwt",
+                )
+                if any(kw in before for kw in _JWT_DEMO_KEYWORDS):
+                    entities.remove(e)
 
         elapsed = time.monotonic() - t0
 
@@ -447,6 +491,18 @@ class RegexDetector(Detector):
                 deduped.append(e)
         deduped.sort(key=lambda e: e.start)
         entities = deduped
+
+        # ── Suppress JWT entities in demonstration/description contexts ──
+        for e in list(entities):
+            if e.entity_type == EntityType.JWT:
+                before = cleaned[max(0, e.start - 60):e.start].lower()
+                _JWT_DEMO_KEYWORDS = (
+                    "jwt-like", "jwt like", "example jwt", "sample jwt",
+                    "jwt format", "jwt example", "demo jwt", "like a jwt",
+                    "mock jwt", "test jwt",
+                )
+                if any(kw in before for kw in _JWT_DEMO_KEYWORDS):
+                    entities.remove(e)
 
         return entities
 
