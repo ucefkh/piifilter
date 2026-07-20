@@ -76,8 +76,8 @@ class RegexDetector(Detector):
 
         # ── Pre-strip patterns ─────────────────────────────────────────
         # These entity types MUST run on deobfuscated-but-NOT-stripped text
-        # because _strip_inner_separators removes dots, dashes, slashes, and
-        # other separators that are essential for pattern matching.
+        # because _strip_inner_separators removes dots, dashes, slashes,
+        # commas, and other separators that are essential for pattern matching.
         #
         # GPS    — dots in coordinates (e.g. 40.7128) are destroyed by stripping
         # DATE   — "/" and "-" in dates (12/31/2025, 2024-01-15) are destroyed
@@ -92,6 +92,11 @@ class RegexDetector(Detector):
         #           patterns are run pre-strip because other phone patterns without
         #           CJK context produce too many false positives on dotted IPs,
         #           dates, and numeric sequences that happen to match phone formats.
+        # ADDRESS — European-style addresses like "Unter den Linden 1, 10117 Berlin"
+        #           rely on a comma between the street number and postcode. Stripping
+        #           collapses "1, 10117" into "110117", destroying the pattern.
+        #           US-style addresses (e.g. "123 Maple Drive") work fine on stripped
+        #           text, so pre-strip address entities are merged and deduped.
         gps_entities, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.GPS}
         )
@@ -103,6 +108,9 @@ class RegexDetector(Detector):
         )
         phone_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.PHONE}
+        )
+        address_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.ADDRESS}
         )
         # Only keep CJK-context phone entities pre-strip; non-CJK phone patterns
         # (like bare 3-3-4 format) produce too many FPs on dotted IPs and dates.
@@ -130,11 +138,12 @@ class RegexDetector(Detector):
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
-        # Merge pre-strip entities (GPS + DATE + IP + PHONE) with the rest (from stripped text)
+        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS) with the rest (from stripped text)
         entities.extend(gps_entities)
         entities.extend(date_entities)
         entities.extend(ip_entities)
         entities.extend(phone_entities_presistrip)
+        entities.extend(address_entities_presistrip)
         entities.sort(key=lambda e: e.start)
 
         # ── Cross-type dedup: low-confidence PHONE entities that overlap with ──
@@ -149,8 +158,10 @@ class RegexDetector(Detector):
         # fully contained within a higher-confidence entity of the same type.
         # This prevents pre-strip phone matches (with CJK keyword) from being
         # duplicated by bare-digit phone matches on the stripped text.
+        # Also prefers longer spans at the same confidence level (e.g. a full
+        # address with postcode over a partial match without postcode).
         deduped: list[DetectedEntity] = []
-        for e in sorted(entities, key=lambda x: (-x.confidence, x.start)):
+        for e in sorted(entities, key=lambda x: (-x.confidence, -(x.end - x.start), x.start)):
             if not any(
                 d.entity_type == e.entity_type
                 and d.start <= e.start and e.end <= d.end
@@ -190,8 +201,8 @@ class RegexDetector(Detector):
         IMPORTANT: GPS patterns are run on pre-strip text (see detect() docs).
         """
         cleaned, _log, text_for_gps = self._deobfuscator(session.prompt)
-        # Pre-strip patterns: GPS, DATE, IP, PHONE — these need dots/slashes/dashes
-        # to survive, which _strip_inner_separators destroys.
+        # Pre-strip patterns: GPS, DATE, IP, PHONE, ADDRESS — these need dots/slashes/dashes
+        # /commas to survive, which _strip_inner_separators destroys.
         gps_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.GPS})
         date_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.DATE})
         ip_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.IP_ADDRESS})
@@ -203,6 +214,9 @@ class RegexDetector(Detector):
             e for e in phone_entities_presistrip
             if any(cjk in e.value for cjk in ("电话", "電話", "電話は", "电话是"))
         ]
+        address_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.ADDRESS}
+        )
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
         # Build comprehensive covered spans to prevent Luhn/SSN validators
@@ -219,6 +233,7 @@ class RegexDetector(Detector):
         entities.extend(date_entities)
         entities.extend(ip_entities)
         entities.extend(phone_entities_presistrip)
+        entities.extend(address_entities_presistrip)
         entities.sort(key=lambda e: e.start)
 
         # ── Cross-type PHONE dedup (same as detect() — see notes there) ──
@@ -226,7 +241,7 @@ class RegexDetector(Detector):
 
         # ── Same-type dedup (see detect() for details) ──
         deduped: list[DetectedEntity] = []
-        for e in sorted(entities, key=lambda x: (-x.confidence, x.start)):
+        for e in sorted(entities, key=lambda x: (-x.confidence, -(x.end - x.start), x.start)):
             if not any(
                 d.entity_type == e.entity_type
                 and d.start <= e.start and e.end <= d.end
@@ -530,8 +545,9 @@ class RegexDetector(Detector):
         """Run only patterns matching *entity_types* against *text*.
 
         Used for types whose patterns must be run on the pre-strip text
-        (before inner-separator stripping destroys key characters like dots).
-        Currently used for GPS, DATE, and IP_ADDRESS.
+        (before inner-separator stripping destroys key characters like dots,
+        commas, or dashes).
+        Currently used for GPS, DATE, IP_ADDRESS, PHONE (CJK-only), and ADDRESS.
 
         For IP_ADDRESS on pre-strip text, context guards prevent the
         dotted-decimal pattern from firing on non-IP dotted numerics:

@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set)",
-  "timestamp": "2026-07-20T02:06:28Z",
+  "timestamp": "2026-07-20T02:22:26Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
@@ -39,32 +39,32 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 227,
-      "total_true_positives": 201,
+      "total_detected_entities": 228,
+      "total_true_positives": 202,
       "total_false_positives": 26,
-      "total_false_negatives": 11,
-      "overall_precision": 0.8854625550660793,
-      "overall_recall": 0.9481132075471698,
-      "overall_f1": 0.9157175398633257,
+      "total_false_negatives": 10,
+      "overall_precision": 0.8859649122807017,
+      "overall_recall": 0.9528301886792453,
+      "overall_f1": 0.9181818181818182,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 6,
+          "true_positives": 8,
           "false_positives": 1,
-          "false_negatives": 1,
-          "n": 7,
-          "precision": 0.8571,
-          "recall": 0.8571,
-          "f1": 0.8571,
-          "f2": 0.8571,
+          "false_negatives": 0,
+          "n": 8,
+          "precision": 0.8889,
+          "recall": 1.0,
+          "f1": 0.9412,
+          "f2": 0.9756,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.75,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.3006,
-            0.9544
+            0.5101,
+            1.0
           ]
         },
         "API_KEY": {
@@ -940,16 +940,17 @@
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "ADDRESS",
             "CITY",
             "COUNTRY"
           ]
@@ -2833,32 +2834,32 @@
       "detector": "pipeline",
       "total_examples": 150,
       "total_expected_entities": 212,
-      "total_detected_entities": 245,
-      "total_true_positives": 201,
+      "total_detected_entities": 246,
+      "total_true_positives": 202,
       "total_false_positives": 44,
-      "total_false_negatives": 11,
-      "overall_precision": 0.8204081632653061,
-      "overall_recall": 0.9481132075471698,
-      "overall_f1": 0.8796498905908096,
+      "total_false_negatives": 10,
+      "overall_precision": 0.8211382113821138,
+      "overall_recall": 0.9528301886792453,
+      "overall_f1": 0.8820960698689957,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 6,
+          "true_positives": 8,
           "false_positives": 1,
-          "false_negatives": 1,
-          "n": 7,
-          "precision": 0.8571,
-          "recall": 0.8571,
-          "f1": 0.8571,
-          "f2": 0.8571,
+          "false_negatives": 0,
+          "n": 8,
+          "precision": 0.8889,
+          "recall": 1.0,
+          "f1": 0.9412,
+          "f2": 0.9756,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.75,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.3006,
-            0.9544
+            0.5101,
+            1.0
           ]
         },
         "API_KEY": {
@@ -3744,16 +3745,17 @@
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "ADDRESS",
             "CITY",
             "COUNTRY"
           ]
