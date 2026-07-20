@@ -101,11 +101,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("CREDIT_CARD", r"(?:[X*#]{4}[- ]){3}\d{4}\b", 0.70),
     # Same with bullet characters (U+2022, U+25CF): ••••-••••-••••-1111
     ("CREDIT_CARD", r"(?:[\u2022\u25CF]{4}[- ]){3}\d{4}\b", 0.70),
-    # Context-prefixed masked CC: "Credit card: XXXX-XXXX-XXXX-1234"
-    ("CREDIT_CARD", r"(?i)(?:credit\s*card|cc|card)\s*:?\s*(?:number\s+)?(?:is\s+)?(?:[X*#]{4}[- ]){3}\d{4}\b", 0.65),
+    # Context-prefixed masked CC: "Credit card: XXXX-XXXX-XXXX-1234" — lookbehind keeps context out of span
+    ("CREDIT_CARD", r"(?i)(?:(?:credit\s*card|cc|card)\s*:?\s*(?:number\s+)?(?:is\s+)?)(?:[X*#]{4}[- ]){3}\d{4}\b", 0.65),
     # Context-based masked reference: "masked card: ****-****-****-0004"
-    ("CREDIT_CARD", r"(?i)(?:mask|redact|obfuscat|hidden)[a-z]*\s*(?:credit|cc|card)\s*:?\s*(?:[X*#]{4}[- ]){3}\d{4}\b", 0.60),
-    ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
+    ("CREDIT_CARD", r"(?i)(?:(?:mask|redact|obfuscat|hidden)[a-z]*\s*(?:credit|cc|card)\s*:?\s*)(?:[X*#]{4}[- ]){3}\d{4}\b", 0.60),
     # Standard 4-4-4-4 format with single dashes or single spaces
     ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{4}\b(?![ -]\d{2,4})", 0.85),
     # 4-4-4-4 with multi-space gaps (double spaces, etc.)
@@ -134,8 +133,6 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)(?<![A-Za-z])(?<!\d{4}[- ])\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b(?![- ]\d{2,4})(?!\s*\d{2,4})", 0.65),
     # Low confidence: 4-4-4-2..4 with multi-space gaps (e.g. "3782  8224  6310  005")
     ("CREDIT_CARD", r"\b\d{4}[ -]{2,}\d{4}[ -]{2,}\d{4}[ -]{2,}\d{2,4}\b", 0.65),
-    # Continuous 16-digit credit card numbers (no dashes) — keyword-prefixed
-    ("CREDIT_CARD", r"(?i)(?:credit\s*card|cc|card\s+#?)\b\s*\d{16}\b", 0.80),
     # IIN-prefixed 16-digit numbers: known card issuer prefixes
     ("CREDIT_CARD", r"\b(?:4\d{3}|5[1-5]\d{2}|6\d{3}|3[47]\d{2})\d{12}\b", 0.80),
     # Generic 16-digit number — low confidence (Luhn gate filters FPs).
@@ -143,6 +140,13 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Catch-all for continuous 13-19 digit numbers that are Luhn-valid.
     # Lower confidence since no format hint — relies on Luhn gate.
     ("CREDIT_CARD", r"\b\d{13,19}\b", 0.65),
+    # Context-prefixed CC: "Credit card: 4111111111111111" — placed last so bare
+    # CC patterns fire first and the broader context-prefixed match is skipped
+    # by the same-type containment check.
+    ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
+    # Continuous 16-digit credit card numbers (no dashes) — keyword-prefixed
+    # Must come AFTER the bare IIN-prefix pattern so the narrower match wins.
+    ("CREDIT_CARD", r"(?i)(?:credit\s*card|cc|card\s+#?)\b\s*\d{16}\b", 0.80),
 
     # ── EMAIL ────────────────────────────────────────────────────────
     # Local part: word chars, dots, +, -, *, percent-encoded chars, quotable specials
