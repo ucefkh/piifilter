@@ -562,6 +562,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("CITY", r"(?i)\b(?:based\s+in|lives?\s+in|located\s+in|situated\s+in)\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
     # "works at X in City" or "works in City"
     ("CITY", r"(?i)\bworks?\s+(?:at\s+\S+\s+)?in\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
+    # "visiting City" — travel/destination context indicates a city
+    ("CITY", r"(?i)\bvisiting\s+(?-i:[A-Z])[a-z]{2,}(?:[ -]+(?-i:[A-Z])[a-z]{2,})?\b", 0.60),
+    # "City headquarters/office/plant" — city name before location type
+    ("CITY", r"\b(?!(?:Our|Their|My|Your|His|Her|Its|The|This|That|These|Those|All|Some|Many|Both|Each|Every|Few|More|Most|Other|Such|Same|Just|Also|Very|Too|Quite|Well|Now|Here|There|Then|Than|Into|Upon|Under|Over|Again|Before|After|Until|During|Since|About|Between|Through|Because|Office|Offices|Headquarters|Facility|Plant|Branch|Street|St|Road|Rd|Avenue|Ave|Drive|Dr|Lane|Ln|Boulevard|Blvd|Way|Place|Pl|Court|Ct|Square|Sq|Circle|Cir|Park|Pkwy|Highway|Hwy|Suite|Ste|Room|Rm|Floor|Fl|Dept|Department|Building|Bldg|Center|Centre|Institute|School|College|University|Hospital|Hotel|Church|Bank|Store|Shop|Market|Mall|Hotel|Club|House|Home|Lab|Laboratory|Studio|Office|Factory|Warehouse|Station|Terminal|Airport|Port|Dock|Marina|Resort|Spa|Garden|Park|Zoo|Museum|Gallery|Theater|Theatre|Cinema|Stadium|Arena|Gym|Spa|Salon|Spa|Cafe|Bar|Pub|Restaurant|Bakery|Pharmacy|Clinic|Hospital|Dental|Optical|Veterinary|Animal|Pet|Grocery|Market|Store|Shop|Boutique|Salon|Spa|Nail|Barber|Tailor|Cleaner|Laundry|Repair|Garage|Service|Center|Centre|Depot|Hub|Node|Site|Location|Venue|Place|Area|Zone|Region|District)\b)[A-Z][a-z]{2,}(?:[ -]+[A-Z][a-z]{2,})?\s+(?:headquarters|office|offices|facility|facilities|plant)\b", 0.55),
+    # "Our/Their City office" — possessive before city before location
+    ("CITY", r"(?i)\b(?:our|their)\s+(?!Office|Offices|Headquarters|Facility|Plant|Branch)(?-i:[A-Z])[a-z]{2,}(?:[ -]+(?-i:[A-Z])[a-z]{2,})?\s+(?:office|offices|headquarters|facility|plant|branch)\b", 0.55),
     # (Standalone city patterns removed — they generated too many FPs with P=0.263.
         #  Only context-gated patterns (based in, lives in, located in, city of, etc.)
         #  are retained for higher precision.)

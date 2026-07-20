@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T11:03:32Z",
+  "timestamp": "2026-07-20T11:41:49Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 232,
-      "total_true_positives": 210,
-      "total_false_positives": 22,
-      "total_false_negatives": 3,
-      "overall_precision": 0.9051724137931034,
-      "overall_recall": 0.9859154929577465,
-      "overall_f1": 0.9438202247191011,
+      "total_detected_entities": 229,
+      "total_true_positives": 206,
+      "total_false_positives": 23,
+      "total_false_negatives": 7,
+      "overall_precision": 0.8995633187772926,
+      "overall_recall": 0.9671361502347418,
+      "overall_f1": 0.9321266968325792,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -114,24 +114,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 9,
-          "false_positives": 1,
-          "false_negatives": 0,
+          "true_positives": 6,
+          "false_positives": 2,
+          "false_negatives": 3,
           "n": 9,
           "n_total": 9,
-          "precision": 0.9,
-          "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "precision": 0.75,
+          "recall": 0.6667,
+          "f1": 0.7059,
+          "f2": 0.6818,
           "recall_ci": [
-            0.7008,
-            1.0
+            0.3542,
+            0.8794
           ],
           "real_n": 9,
-          "real_recall": 1.0,
+          "real_recall": 0.6667,
           "real_recall_ci": [
-            0.7008,
-            1.0
+            0.3542,
+            0.8794
           ]
         },
         "COMPANY": {
@@ -240,24 +240,24 @@
           ]
         },
         "DOMAIN": {
-          "true_positives": 9,
+          "true_positives": 8,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "n": 9,
           "n_total": 9,
-          "precision": 0.9,
-          "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "precision": 0.8889,
+          "recall": 0.8889,
+          "f1": 0.8889,
+          "f2": 0.8889,
           "recall_ci": [
-            0.7008,
-            1.0
+            0.565,
+            0.9801
           ],
           "real_n": 9,
-          "real_recall": 1.0,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.7008,
-            1.0
+            0.565,
+            0.9801
           ]
         },
         "EMAIL": {
@@ -602,7 +602,7 @@
       },
       "confusion_matrix": {
         "NONE": {
-          "CITY": 1,
+          "CITY": 2,
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
@@ -659,33 +659,31 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -979,17 +977,16 @@
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -1231,17 +1228,16 @@
           "index": 37,
           "text_preview": "IT: www.example.com, support@help.io, 192.168.0.1, and /tmp/test/data/cache.log",
           "expected": 3,
-          "detected": 4,
-          "true_positives": 3,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN",
             "EMAIL",
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "DOMAIN",
             "EMAIL",
             "FILE_PATH",
             "IP_ADDRESS"
@@ -1901,14 +1897,15 @@
           "index": 80,
           "text_preview": "Phone: +49 30 12345678 (Berlin office)",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
+            "CITY",
             "PHONE"
           ]
         },
@@ -2891,13 +2888,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 227,
-      "total_true_positives": 210,
-      "total_false_positives": 21,
-      "total_false_negatives": 3,
-      "overall_precision": 0.9090909090909091,
-      "overall_recall": 0.9859154929577465,
-      "overall_f1": 0.9459459459459459,
+      "total_detected_entities": 217,
+      "total_true_positives": 201,
+      "total_false_positives": 20,
+      "total_false_negatives": 12,
+      "overall_precision": 0.9095022624434389,
+      "overall_recall": 0.9436619718309859,
+      "overall_f1": 0.9262672811059909,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -2963,24 +2960,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 9,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 8,
           "n": 9,
           "n_total": 9,
-          "precision": 0.9,
-          "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "precision": 0.5,
+          "recall": 0.1111,
+          "f1": 0.1818,
+          "f2": 0.1316,
           "recall_ci": [
-            0.7008,
-            1.0
+            0.0199,
+            0.435
           ],
           "real_n": 9,
-          "real_recall": 1.0,
+          "real_recall": 0.1111,
           "real_recall_ci": [
-            0.7008,
-            1.0
+            0.0199,
+            0.435
           ]
         },
         "COMPANY": {
@@ -3089,24 +3086,24 @@
           ]
         },
         "DOMAIN": {
-          "true_positives": 9,
+          "true_positives": 8,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "n": 9,
           "n_total": 9,
-          "precision": 0.9,
-          "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "precision": 0.8889,
+          "recall": 0.8889,
+          "f1": 0.8889,
+          "f2": 0.8889,
           "recall_ci": [
-            0.7008,
-            1.0
+            0.565,
+            0.9801
           ],
           "real_n": 9,
-          "real_recall": 1.0,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.7008,
-            1.0
+            0.565,
+            0.9801
           ]
         },
         "EMAIL": {
@@ -3309,14 +3306,14 @@
         },
         "PERSON": {
           "true_positives": 9,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.8182,
+          "precision": 0.9,
           "recall": 1.0,
-          "f1": 0.9,
-          "f2": 0.9574,
+          "f1": 0.9474,
+          "f2": 0.9783,
           "recall_ci": [
             0.7008,
             1.0
@@ -3450,10 +3447,13 @@
         }
       },
       "confusion_matrix": {
+        "PRIVATE_URL": {
+          "URL": 1
+        },
         "NONE": {
-          "CITY": 1,
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
+          "CITY": 1,
           "COUNTRY": 1,
           "PHONE": 1,
           "ADDRESS": 1,
@@ -3466,14 +3466,8 @@
           "SOCIAL_SECURITY": 1,
           "JWT": 1
         },
-        "PRIVATE_URL": {
-          "URL": 1
-        },
         "IP_ADDRESS": {
           "API_KEY": 1
-        },
-        "ADDRESS": {
-          "PERSON": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -3508,33 +3502,31 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -3828,17 +3820,16 @@
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -3954,15 +3945,14 @@
           "index": 29,
           "text_preview": "Coordinates: 48.8566 N, 2.3522 E is the center of Paris",
           "expected": 2,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "CITY",
             "GPS"
           ]
         },
@@ -4080,17 +4070,16 @@
           "index": 37,
           "text_preview": "IT: www.example.com, support@help.io, 192.168.0.1, and /tmp/test/data/cache.log",
           "expected": 3,
-          "detected": 4,
-          "true_positives": 3,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN",
             "EMAIL",
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "DOMAIN",
             "EMAIL",
             "FILE_PATH",
             "IP_ADDRESS"
@@ -4195,33 +4184,31 @@
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "PERSON"
+            "ADDRESS"
           ]
         },
         {
           "index": 45,
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
-          "detected": 3,
-          "true_positives": 3,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY",
             "COMPANY",
             "PERSON"
           ],
           "detected_types": [
-            "CITY",
             "COMPANY",
             "PERSON"
           ]
@@ -4230,16 +4217,14 @@
           "index": 46,
           "text_preview": "City pop: Tokyo (37M), Delhi (32M), Shanghai (28M)",
           "expected": 3,
-          "detected": 3,
-          "true_positives": 3,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 3,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 47,
@@ -4706,16 +4691,14 @@
           "index": 77,
           "text_preview": "City: The population of Mumbai is over 20 million.",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 78,
@@ -4751,14 +4734,15 @@
           "index": 80,
           "text_preview": "Phone: +49 30 12345678 (Berlin office)",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
+            "CITY",
             "PHONE"
           ]
         },
@@ -5745,13 +5729,13 @@
       "detector": "pipeline-raw",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 247,
-      "total_true_positives": 210,
-      "total_false_positives": 37,
-      "total_false_negatives": 3,
-      "overall_precision": 0.8502024291497976,
-      "overall_recall": 0.9859154929577465,
-      "overall_f1": 0.9130434782608695,
+      "total_detected_entities": 244,
+      "total_true_positives": 206,
+      "total_false_positives": 38,
+      "total_false_negatives": 7,
+      "overall_precision": 0.8442622950819673,
+      "overall_recall": 0.9671361502347418,
+      "overall_f1": 0.901531728665208,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -5817,24 +5801,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 9,
-          "false_positives": 1,
-          "false_negatives": 0,
+          "true_positives": 6,
+          "false_positives": 2,
+          "false_negatives": 3,
           "n": 9,
           "n_total": 9,
-          "precision": 0.9,
-          "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "precision": 0.75,
+          "recall": 0.6667,
+          "f1": 0.7059,
+          "f2": 0.6818,
           "recall_ci": [
-            0.7008,
-            1.0
+            0.3542,
+            0.8794
           ],
           "real_n": 9,
-          "real_recall": 1.0,
+          "real_recall": 0.6667,
           "real_recall_ci": [
-            0.7008,
-            1.0
+            0.3542,
+            0.8794
           ]
         },
         "COMPANY": {
@@ -5943,24 +5927,24 @@
           ]
         },
         "DOMAIN": {
-          "true_positives": 9,
+          "true_positives": 8,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "n": 9,
           "n_total": 9,
-          "precision": 0.9,
-          "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "precision": 0.8889,
+          "recall": 0.8889,
+          "f1": 0.8889,
+          "f2": 0.8889,
           "recall_ci": [
-            0.7008,
-            1.0
+            0.565,
+            0.9801
           ],
           "real_n": 9,
-          "real_recall": 1.0,
+          "real_recall": 0.8889,
           "real_recall_ci": [
-            0.7008,
-            1.0
+            0.565,
+            0.9801
           ]
         },
         "EMAIL": {
@@ -6308,7 +6292,7 @@
           "CREDIT_CARD": 5
         },
         "NONE": {
-          "CITY": 1,
+          "CITY": 2,
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
@@ -6376,33 +6360,31 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -6696,17 +6678,16 @@
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -6948,17 +6929,16 @@
           "index": 37,
           "text_preview": "IT: www.example.com, support@help.io, 192.168.0.1, and /tmp/test/data/cache.log",
           "expected": 3,
-          "detected": 4,
-          "true_positives": 3,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN",
             "EMAIL",
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "DOMAIN",
             "EMAIL",
             "FILE_PATH",
             "IP_ADDRESS"
@@ -7619,14 +7599,15 @@
           "index": 80,
           "text_preview": "Phone: +49 30 12345678 (Berlin office)",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
+            "CITY",
             "PHONE"
           ]
         },

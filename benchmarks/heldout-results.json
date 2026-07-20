@@ -1,6 +1,6 @@
 {
   "title": "Held-Out Adversarial Benchmark Report",
-  "timestamp": "2026-07-20T11:09:19.409292",
+  "timestamp": "2026-07-20T12:36:25.758116",
   "train_benchmark": {
     "label": "v1 benchmark (original)",
     "full_pipeline_rate": 78.6,
@@ -10,10 +10,10 @@
     {
       "label": "v4 (DeepSeek, seed_A, 10 strategies)",
       "total": 260,
-      "full_pipeline": 132,
-      "full_pipeline_rate": 50.8,
-      "raw_regex": 98,
-      "raw_regex_rate": 37.7,
+      "full_pipeline": 125,
+      "full_pipeline_rate": 48.1,
+      "raw_regex": 91,
+      "raw_regex_rate": 35.0,
       "improvement": 13.1,
       "entries": [
         {
@@ -2402,14 +2402,14 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "jjj.cnegaref.pbz"
+              "value": "cnegaref.pbz"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "DOMAIN",
-              "value": "jjj.cnegaref.pbz"
+              "value": "cnegaref.pbz"
             }
           ]
         },
@@ -2417,134 +2417,64 @@
           "text": "Please upload your file to uggcf://erohfg.zp using the admin credentials.",
           "entity_type": "URL",
           "strategy": "ROT13",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "erohfg.zp"
-            }
-          ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "erohfg.zp"
-            }
-          ]
+          "full_pipeline_detected": false,
+          "full_detections": [],
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "Access your account at uggcf://obbyxvat.arg/ybatva to verify transactions.",
           "entity_type": "URL",
           "strategy": "ROT13",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "obbyxvat.arg"
-            }
-          ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "obbyxvat.arg"
-            }
-          ]
+          "full_pipeline_detected": false,
+          "full_detections": [],
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "The server migration guide is at uggcf://qngnyvfu.vasb/frphe.",
           "entity_type": "URL",
           "strategy": "ROT13",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "qngnyvfu.vasb"
-            }
-          ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "qngnyvfu.vasb"
-            }
-          ]
+          "full_pipeline_detected": false,
+          "full_detections": [],
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "Our new product details are published on uggcf://zryybjerny.bet/ynoryf.",
           "entity_type": "URL",
           "strategy": "ROT13",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "zryybjerny.bet"
-            }
-          ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "zryybjerny.bet"
-            }
-          ]
+          "full_pipeline_detected": false,
+          "full_detections": [],
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "Submit your feedback through uggcf://erobggyr.pbz to help improve services.",
           "entity_type": "URL",
           "strategy": "ROT13",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "erobggyr.pbz"
-            }
-          ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "erobggyr.pbz"
-            }
-          ]
+          "full_pipeline_detected": false,
+          "full_detections": [],
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "The bulk upload endpoint is uggcf://pubypbire.pb/vzcbeg for large datasets.",
           "entity_type": "URL",
           "strategy": "ROT13",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "pubypbire.pb"
-            }
-          ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "pubypbire.pb"
-            }
-          ]
+          "full_pipeline_detected": false,
+          "full_detections": [],
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "Developers should check the API docs at uggcf://fbegsz.cntrf/nplag before integration.",
           "entity_type": "URL",
           "strategy": "ROT13",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "fbegsz.cntrf"
-            }
-          ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "DOMAIN",
-              "value": "fbegsz.cntrf"
-            }
-          ]
+          "full_pipeline_detected": false,
+          "full_detections": [],
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "Please transfer the payment to the account DE89 3704 0044 0532 0130 ][00 provided by Mrs. Müller.",
@@ -3721,9 +3651,9 @@
       "total": 238,
       "full_pipeline": 72,
       "full_pipeline_rate": 30.3,
-      "raw_regex": 57,
-      "raw_regex_rate": 23.9,
-      "improvement": 6.3,
+      "raw_regex": 56,
+      "raw_regex_rate": 23.5,
+      "improvement": 6.7,
       "entries": [
         {
           "text": "The report was uploaded to ｵﾌｲﾜｳ｡ｹﾞﾑ for further analysis.",
@@ -4732,21 +4662,12 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "CITY",
-              "value": "New York"
-            },
-            {
               "type": "API_KEY",
               "value": "4141414141414141212345678"
             }
           ],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "CITY",
-              "value": "New York"
-            }
-          ]
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "For the project dashboard, please visit iinnttrraanneett..ccoorrpp--eexxpp..llooccaall//kkooookkmmoonnsseerrvviiccee.",
@@ -9638,11 +9559,11 @@
   ],
   "combined_held_out": {
     "total_examples": 706,
-    "full_pipeline_detected": 314,
-    "full_pipeline_rate": 44.5,
-    "raw_regex_detected": 247,
-    "raw_regex_rate": 35.0,
-    "deobfuscation_improvement": 9.5
+    "full_pipeline_detected": 307,
+    "full_pipeline_rate": 43.5,
+    "raw_regex_detected": 239,
+    "raw_regex_rate": 33.9,
+    "deobfuscation_improvement": 9.6
   },
-  "generalization_gap": 33.9
+  "generalization_gap": 34.8
 }
