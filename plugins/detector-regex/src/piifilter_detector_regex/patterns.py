@@ -168,13 +168,13 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Covers: sk-xxx, pk-xxx, api_key_xxx, api-xxx, api_xxx, key_xxx, token_xxx, secret_xxx
     # Real-world vendor prefixes: GitHub (ghp_, gho_, ghu_, ghs_, ghr_),
     # Slack (xoxb-, xoxp-), Stripe (rk_live_, rk_test_), webhook secrets (whsec_)
-    ("API_KEY", r"\b(?i)(?:sk[-_]|pk[-_]|gh[opusr]_|xox[bp]-|rk_(?:live|test)_|whsec_)[a-zA-Z0-9_\-]{16,64}\b", 0.95),
+    ("API_KEY", r"(?i)\b(?:sk[-_]|pk[-_]|gh[opusr]_|xox[bp]-|rk_(?:live|test)_|whsec_)[a-zA-Z0-9_\-]{16,64}\b", 0.95),
     ("API_KEY", r"\b(?:api[-_]?key|api[-_])[a-zA-Z0-9_\-]{16,64}\b", 0.95),
-    ("API_KEY", r"\b(?i)(?:token|secret|key)[-_]?[a-zA-Z0-9_\-]{16,64}\b", 0.95),
+    ("API_KEY", r"(?i)\b(?:token|secret|key)[-_]?[a-zA-Z0-9_\-]{16,64}\b", 0.95),
     # Level 2 — keyword prefix before colon/space then key body
     # Catches "Key: key_xxx", "secret: api_xxx", "Auth: key_xxx", "Token: pk_xxx"
     # where the prefix is separated from the key value by ": "
-    ("API_KEY", r"\b(?:key|token|secret|auth|api)\s*:\s*(?:sk-|pk-|gh[opusr]_|xox[bp]-|rk_(?:live|test)_|whsec_|api[-_]|key[-_]|secret[-_])[a-zA-Z0-9_\-]{16,64}\b", 0.90),
+    ("API_KEY", r"(?i)\b(?:key|token|secret|auth|api)\s*:\s*(?:sk[-_]|pk[-_]|gh[opusr]_|xox[bp]-|rk_(?:live|test)_|whsec_|api[-_]|key[-_]|secret[-_])[a-zA-Z0-9_\-]{16,64}\b", 0.90),
     # Level 3 — base64-looking runs adjacent to key/token/secret context (forward OR backward)
     ("API_KEY", r"\b(?:[A-Za-z0-9+/=]{20,})\b(?=.*(?:key|token|secret))", 0.90),
     ("API_KEY", r"(?<!\w)(?:[A-Za-z0-9+/=]{24,})(?!\w)", 0.50),
