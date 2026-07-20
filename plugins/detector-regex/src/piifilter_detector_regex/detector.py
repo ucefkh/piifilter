@@ -277,8 +277,10 @@ class RegexDetector(Detector):
         # bare-digit phone patterns (e.g. 10-digit continuous) can match the
         # digit-run remains of a dotted IP (e.g. 47.94.124.103 → 4794124103).
         # We detect this by checking if the phone's pure-digit value matches
-        # the pure-digit value of a pre-strip IP/GPS/DATE entity.
-        entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities, phone_entities_presistrip)
+        # the pure-digit value of a pre-strip IP/GPS/DATE/structural entity.
+        # also pass other_entities=entities so that CC/SSN/IBAN/Bank/API_KEY
+        # matches from stripped text are used to suppress overlapping phones.
+        entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities, phone_entities_presistrip, other_entities=entities)
 
         # ── Cross-type dedup: SOCIAL_SECURITY entities whose digit run ──
         # matches a pre-strip IP, GPS, or DATE entity. When dotted IPs
@@ -467,7 +469,7 @@ class RegexDetector(Detector):
             entities = filtered
 
         # ── Cross-type PHONE dedup (same as detect() — see notes there) ──
-        entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities, phone_entities_presistrip)
+        entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities, phone_entities_presistrip, other_entities=entities)
 
         # ── Cross-type SSN dedup: filter out SSN matches that overlap ──
         # with IP/GPS/DATE entities by digit content (see detect() notes).
@@ -656,25 +658,29 @@ class RegexDetector(Detector):
         gps_entities: list[DetectedEntity],
         date_entities: list[DetectedEntity],
         phone_presistrip: list[DetectedEntity] | None = None,
+        other_entities: list[DetectedEntity] | None = None,
     ) -> list[DetectedEntity]:
         """Remove low-confidence PHONE entities whose digit content matches
-        an IP, GPS, DATE, or already-detected pre-strip PHONE entity.
+        an IP, GPS, DATE, already-detected pre-strip PHONE entity, or other
+        structural entity types (CREDIT_CARD, SOCIAL_SECURITY, IBAN,
+        BANK_ACCOUNT, API_KEY, DATABASE_URL).
 
         After inner-separator stripping, bare-digit phone patterns can
-        match the residue of dotted IPs (e.g. 47.94.124.103 → 4794124103).
-        Since pre-strip entities use original-text coordinates and stripped
-        entities use stripped-text coordinates, we match by digit content
-        rather than position.
+        match the residue of dotted IPs (e.g. 47.94.124.103 -> 4794124103)
+        or the digit content of CC/SSN/IBAN/Bank numbers. Since pre-strip
+        entities use original-text coordinates and stripped entities use
+        stripped-text coordinates, we match by digit content rather than
+        position.
 
         Pre-strip phone entities (those detected before inner-separator
         stripping preserves the original separator format) are never
-        suppressed by this filter — they are more accurate than the
+        suppressed by this filter -- they are more accurate than the
         bare-digit matches found on stripped text.
         """
         if not entities:
             return entities
 
-        # Build lookup: pure-digit string → set of entity types it came from
+        # Build lookup: pure-digit string -> set of source labels
         pre_strip_digits: dict[str, set[str]] = {}
         for src_label, src_list in [
             ("ip", ip_entities),
@@ -687,20 +693,35 @@ class RegexDetector(Detector):
                 if sd:
                     pre_strip_digits.setdefault(sd, set()).add(src_label)
 
+        # Also build digit lookup for other structural types (CC, SSN, IBAN, etc.)
+        # These come from stripped-text entities in the main entities list.
+        structural_types = {
+            EntityType.CREDIT_CARD,
+            EntityType.SOCIAL_SECURITY,
+            EntityType.IBAN,
+            EntityType.BANK_ACCOUNT,
+            EntityType.API_KEY,
+            EntityType.DATABASE_URL,
+        }
+        if other_entities:
+            for se in other_entities:
+                if se.entity_type in structural_types:
+                    sd = "".join(c for c in se.value if c.isdigit())
+                    if sd:
+                        pre_strip_digits.setdefault(sd, set()).add("structural")
+
         filtered: list[DetectedEntity] = []
         for e in entities:
             if e.entity_type == EntityType.PHONE and e.confidence <= 0.75:
                 ed = "".join(c for c in e.value if c.isdigit())
                 if ed:
-                    # Check if this is a pre-strip phone entity — never suppress those
+                    # Check if this is a pre-strip phone entity -- never suppress those
                     # (they were detected on the original text with proper separators)
                     if "phone_pst" in pre_strip_digits.get(ed, set()):
                         filtered.append(e)
                         continue
                     # Check if the phone digit content either matches or
-                    # contains a pre-strip entity's digit content (e.g. IP
-                    # "192.168.1.1" + suffix "/16" → phone "1921681116"
-                    # contains IP digits "19216811").
+                    # contains a pre-strip/structural entity's digit content.
                     skip = False
                     for psd in pre_strip_digits:
                         if psd in ed or ed in psd:
@@ -708,7 +729,7 @@ class RegexDetector(Detector):
                             break
                     if skip:
                         # This phone match overlaps with (or is contained
-                        # by) a pre-strip IP/GPS/date entity — suppress it.
+                        # by) a pre-strip IP/GPS/date/structural entity -- suppress it.
                         continue
             filtered.append(e)
         return filtered

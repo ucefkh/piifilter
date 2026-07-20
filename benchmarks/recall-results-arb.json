@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T15:34:39Z",
+  "timestamp": "2026-07-20T17:00:17Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 235,
+      "total_detected_entities": 233,
       "total_true_positives": 215,
-      "total_false_positives": 20,
+      "total_false_positives": 18,
       "total_false_negatives": 3,
-      "overall_precision": 0.9148936170212766,
+      "overall_precision": 0.9227467811158798,
       "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9492273730684327,
+      "overall_f1": 0.9534368070953437,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -115,14 +115,14 @@
         },
         "CITY": {
           "true_positives": 14,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 14,
           "n_total": 14,
-          "precision": 0.875,
+          "precision": 0.9333,
           "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "f1": 0.9655,
+          "f2": 0.9859,
           "recall_ci": [
             0.7847,
             1.0
@@ -388,14 +388,14 @@
         },
         "JWT": {
           "true_positives": 5,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 5,
           "n_total": 5,
-          "precision": 0.8333,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5655,
             1.0
@@ -601,9 +601,6 @@
         }
       },
       "confusion_matrix": {
-        "CITY": {
-          "CITY": 1
-        },
         "ADDRESS": {
           "CITY": 1
         },
@@ -619,7 +616,6 @@
           "MASKED_CC": 1,
           "MASKED_SSN": 1,
           "SOCIAL_SECURITY": 1,
-          "JWT": 1,
           "EMAIL": 2
         },
         "IP_ADDRESS": {
@@ -998,9 +994,9 @@
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 5,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -2467,14 +2463,12 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "JWT"
-          ]
+          "detected_types": []
         },
         {
           "index": 122,
@@ -2900,13 +2894,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 228,
+      "total_detected_entities": 227,
       "total_true_positives": 215,
-      "total_false_positives": 17,
+      "total_false_positives": 16,
       "total_false_negatives": 3,
-      "overall_precision": 0.9267241379310345,
+      "overall_precision": 0.9307359307359307,
       "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9555555555555556,
+      "overall_f1": 0.9576837416481069,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -3246,14 +3240,14 @@
         },
         "JWT": {
           "true_positives": 5,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 5,
           "n_total": 5,
-          "precision": 0.8333,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5655,
             1.0
@@ -3475,8 +3469,7 @@
           "MASKED_CC": 1,
           "MASKED_SSN": 1,
           "EMAIL": 3,
-          "SOCIAL_SECURITY": 1,
-          "JWT": 1
+          "SOCIAL_SECURITY": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -5320,14 +5313,12 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "JWT"
-          ]
+          "detected_types": []
         },
         {
           "index": 122,
@@ -5753,13 +5744,13 @@
       "detector": "pipeline-raw",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 250,
+      "total_detected_entities": 248,
       "total_true_positives": 215,
-      "total_false_positives": 35,
+      "total_false_positives": 33,
       "total_false_negatives": 3,
-      "overall_precision": 0.86,
+      "overall_precision": 0.8669354838709677,
       "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9188034188034189,
+      "overall_f1": 0.9227467811158799,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -5826,14 +5817,14 @@
         },
         "CITY": {
           "true_positives": 14,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 14,
           "n_total": 14,
-          "precision": 0.875,
+          "precision": 0.9333,
           "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "f1": 0.9655,
+          "f2": 0.9859,
           "recall_ci": [
             0.7847,
             1.0
@@ -6099,14 +6090,14 @@
         },
         "JWT": {
           "true_positives": 5,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 5,
           "n_total": 5,
-          "precision": 0.8333,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5655,
             1.0
@@ -6315,9 +6306,6 @@
         "CREDIT_CARD": {
           "CREDIT_CARD": 5
         },
-        "CITY": {
-          "CITY": 1
-        },
         "ADDRESS": {
           "CITY": 1,
           "PERSON": 1
@@ -6338,8 +6326,7 @@
           "MASKED_CC": 1,
           "MASKED_SSN": 1,
           "EMAIL": 3,
-          "SOCIAL_SECURITY": 1,
-          "JWT": 1
+          "SOCIAL_SECURITY": 1
         },
         "IP_ADDRESS": {
           "IP_ADDRESS": 2
@@ -6721,9 +6708,9 @@
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 5,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -8194,14 +8181,12 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "JWT"
-          ]
+          "detected_types": []
         },
         {
           "index": 122,
