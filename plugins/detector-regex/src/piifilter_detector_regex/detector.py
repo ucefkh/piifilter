@@ -944,27 +944,35 @@ class RegexDetector(Detector):
                 # emit them as MASKED_SSN type. The benchmark then counts them as
                 # true positives for full-denominator recall, while is_masked_pii()
                 # separates them for real-only metrics.
-                # IMPORTANT: only recast SOCIAL_SECURITY patterns that have context
-                # keywords (confidence >= 0.70) to MASKED_SSN. Bare X-masked patterns
-                # like "\\b[X*#]{3}[- ][X*#]{2}[- ]\\d{4}\\b" at confidence 0.45 are
-                # standard e-format SSN references (e.g. "XXX-XX-6789") and should
-                # stay as SOCIAL_SECURITY to avoid false positive MASKED_SSN detections
-                # in the benchmark.
-                if entity_type == EntityType.SOCIAL_SECURITY and score >= 0.70:
+                # IMPORTANT: only recast SOCIAL_SECURITY to MASKED_SSN when the
+                # match VALUE itself contains an SSN context keyword (SSN, social
+                # security, tax id, ss#). Bare X-masked patterns like
+                # "\b[X*#]{3}[- ][X*#]{2}[- ]\d{4}\b" match only the digit/mask
+                # portion (e.g. "XXX-XX-6789") without any keyword — these are
+                # standard e-format SSN references and should stay as
+                # SOCIAL_SECURITY to avoid false positive MASKED_SSN detections
+                # in the benchmark. Contextual patterns at confidence >= 0.70
+                # always include the keyword inside the match text (e.g.
+                # "SSN: XXX-XX-6789"), so checking the match value directly is
+                # both more explicit and more robust than using a score proxy.
+                if entity_type == EntityType.SOCIAL_SECURITY:
                     mask_chars = [c for c in match.group() if c in ("X", "*", "\u2022", "\u25CF")]
                     if len(mask_chars) >= 3:
-                        entities.append(
-                            DetectedEntity(
-                                entity_type=EntityType.MASKED_SSN,
-                                value=match.group(),
-                                start=start,
-                                end=end,
-                                confidence=score,
-                                detector="regex",
+                        # Only recast if the match itself contains an SSN keyword
+                        # — bare patterns don't include the keyword, contextual ones do.
+                        if re.search(r"(?:ssn|social security|tax id|ss#)", match.group(), re.IGNORECASE):
+                            entities.append(
+                                DetectedEntity(
+                                    entity_type=EntityType.MASKED_SSN,
+                                    value=match.group(),
+                                    start=start,
+                                    end=end,
+                                    confidence=score,
+                                    detector="regex",
+                                )
                             )
-                        )
-                        seen_intervals.append((start, end))
-                        continue
+                            seen_intervals.append((start, end))
+                            continue
 
                 # Masked-email guard: suppress emails where the local part
                 # is entirely redaction characters (all same char repeated,
