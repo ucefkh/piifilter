@@ -112,11 +112,24 @@ class RegexDetector(Detector):
         address_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.ADDRESS}
         )
-        # Only keep CJK-context phone entities pre-strip; non-CJK phone patterns
-        # (like bare 3-3-4 format) produce too many FPs on dotted IPs and dates.
+        # Filter pre-strip phone entities: keep only low-FP-risk patterns.
+        # - CJK-context phones (电话/電話) are always kept — these are unambiguous.
+        # - International +-prefix phones at confidence >= 0.80 are kept — these
+        #   have proper format with separators (e.g. "+1-555-123-4567") and are
+        #   very unlikely to be IP/date FPs. This fixes cases like URL-decoded
+        #   phones (%2B1-555-123-4567) where the pre-strip text preserves the
+        #   format that inner-separator stripping would destroy.
+        # - Non-CJK/non-plus phones at confidence >= 0.70 are kept — these are
+        #   standard 3-3-4 format (e.g. "555-123-4567") or parenthesized area
+        #   codes that have correct span positions on the original text. Their
+        #   presence in the pre-strip list causes _filter_phone_overlap to
+        #   suppress the lower-confidence stripped duplicate, which has wrong
+        #   span positions due to inner-separator stripping.
         phone_entities_presistrip = [
             e for e in phone_entities_presistrip
             if any(cjk in e.value for cjk in ("电话", "電話", "電話は", "电话是"))
+            or (e.confidence >= 0.80 and "+" in e.value)
+            or e.confidence >= 0.70
         ]
 
         # ── Now strip inner separators for structural patterns ──────────
@@ -215,10 +228,13 @@ class RegexDetector(Detector):
         phone_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.PHONE}
         )
-        # Only keep CJK-context phone entities pre-strip (see detect() for rationale)
+        # Filter pre-strip phone entities: keep CJK, +-prefixed, or >=0.70
+        # confidence patterns (see detect() for rationale).
         phone_entities_presistrip = [
             e for e in phone_entities_presistrip
             if any(cjk in e.value for cjk in ("电话", "電話", "電話は", "电话是"))
+            or (e.confidence >= 0.80 and "+" in e.value)
+            or e.confidence >= 0.70
         ]
         address_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.ADDRESS}
