@@ -327,17 +327,20 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PERSON", r"\b(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.85),
     # "I'm/My name is/Call me + Name"
     # Require 2+ chars after initial capital to catch 3-letter names like "Bob", "Tom"
-    ("PERSON", r"(?i)(?:\bmy name is|\bI'm|\bcall me|\bname is)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,}){0,2}\b", 0.80),
+    # Denylist blocks common non-name capitalized words
+    ("PERSON", r"(?i)(?:\bmy name is|\bI'm|\bcall me|\bname is)\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,}){0,2}\b", 0.80),
     # "ROLE + Name" — exclude common role/researcher-type words after the name
     # Require 2+ chars after initial capital to match names like "Bob" (B+ob=2 lowercase)
     # with lower confidence; avoids missing 3-letter names like "Bob", "Tom", "Sam"
-    ("PERSON", r"(?i)\b(?:ceo|cfo|cto|president|director|founder|owner)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.70),
+    # Denylist blocks common non-name capitalized words
+    ("PERSON", r"(?i)\b(?:ceo|cfo|cto|president|director|founder|owner)\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.70),
     # "Person:" prefix — handle titles like Dr., Mr. — require at least one real name word
     # Negative lookahead blocks words like "researcher", "published", "from", "at" that are common role/context words
     # Also blocks common non-person continuations: addresses, company suffixes, job titles
     ("PERSON", r"(?i)\bPerson:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?(?:\s+(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?){0,1}(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those|Inc|Corp|LLC|Ltd|Limited|GmbH|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd))(?:[.]?)\b", 0.80),
     # "Contact person:" / "Contact name:"
-    ("PERSON", r"(?i)\bContact\s+(?:person|name):\s*(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.80),
+    # Denylist blocks common non-name capitalized words
+    ("PERSON", r"(?i)\bContact\s+(?:person|name):\s*(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.80),
     # Unicode/Non-Latin names — matched by context keywords (CJK + common non-Latin alphabet names)
     # CJK: keyword 用户/联系人/姓名 directly followed by name (no colon needed)
     # Exclude common technical terms that look like capitalized names (Postgresql, Admin, Root, etc.)
@@ -381,14 +384,16 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Exclude "from" followed by geographic terms (city/country)
     # Negative lookahead on: company suffixes, geographic roles, job titles
     # Second name word must not be a company suffix (Corp, Inc, etc.)
-    ("PERSON", r"(?i)\b(?:Signed|signed)\s+by\s+(?-i:[A-Z])[a-z]{2,}\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA)[A-Z])[a-z]{2,}(?!\s+(?:researcher|published|from|at|in|of|the|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln))\b", 0.78),
+    # First name word denylist blocks common non-name capitalized words
+    ("PERSON", r"(?i)\b(?:Signed|signed)\s+by\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile)[A-Z])[a-z]{2,}\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA)[A-Z])[a-z]{2,}(?!\s+(?:researcher|published|from|at|in|of|the|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln))\b", 0.78),
     # "from Name" — Name must be two capitalized words (first + last) to avoid
     # matching city names or single-word entities. Lower confidence since
     # "from" can precede companies, cities, and countries.
     # Explicitly exclude known two-word city names (New York, Los Angeles, etc.)
     # Second name word must not be a company suffix
     # Negative lookahead blocks parenthetical media references: "from Finding Nemo)"
-    ("PERSON", r"(?i)\bfrom\s+(?-i:(?!New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Buenos)[A-Z][a-z]{2,})\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|and|or|the|Street|St|Avenue|Ave|Road|Rd)[A-Z])[a-z]{2,}\b(?![^(]*\))", 0.65),
+    # First name word denylist blocks both city names and common non-name capitalized words
+    ("PERSON", r"(?i)\bfrom\s+(?-i:(?!New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Buenos|Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile)[A-Z][a-z]{2,})\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|and|or|the|Street|St|Avenue|Ave|Road|Rd)[A-Z])[a-z]{2,}\b(?![^(]*\))", 0.65),
     # "by Name" — two-word capitalized name after "by"
     # Excludes geographic continuations (cities, countries) and company suffixes
     # Second name word must not be a company suffix

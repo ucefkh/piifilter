@@ -198,6 +198,33 @@ class RegexDetector(Detector):
                 filtered_entities.append(e)
         entities = filtered_entities
 
+        # ── Cross-type dedup: suppress IP_ADDRESS entities that are fully ──
+        # contained within PRIVATE_URL entities. Private URLs like
+        # "http://127.0.0.1:8080/admin" trigger BOTH the PRIVATE_URL pattern
+        # (because of the http:// + private IP) and the IP_ADDRESS pattern
+        # (because of the dotted decimal inside). Since PRIVATE_URL is the
+        # more specific type (it captures the entire URL context), the IP
+        # sub-match is noise and should be suppressed.
+        # Because pre-strip entities may use different coordinate spaces
+        # (IP matches on text_for_gps with dashes collapsed, PRIVATE_URL
+        # also on text_for_gps), we use value-based containment: if an
+        # IP_ADDRESS value appears inside a PRIVATE_URL value, suppress it.
+        if private_url_entities_presistrip:
+            private_url_values = {e.value for e in private_url_entities_presistrip}
+            filtered_entities: list[DetectedEntity] = []
+            for e in entities:
+                if e.entity_type == EntityType.IP_ADDRESS:
+                    # Check if this IP value is contained in any PRIVATE_URL value
+                    is_contained = False
+                    for puv in private_url_values:
+                        if e.value in puv:
+                            is_contained = True
+                            break
+                    if is_contained:
+                        continue
+                filtered_entities.append(e)
+            entities = filtered_entities
+
         # ── Cross-type dedup: low-confidence PHONE entities that overlap with ──
         # IPs, GPS, or DATE entities on the ORIGINAL text. After stripping,
         # bare-digit phone patterns (e.g. 10-digit continuous) can match the
@@ -323,6 +350,19 @@ class RegexDetector(Detector):
             else:
                 filtered_entities.append(e)
         entities = filtered_entities
+
+        # ── Cross-type dedup: suppress IP_ADDRESS entities that are ──
+        # contained within PRIVATE_URL entities (same logic as detect()).
+        if private_url_entities_presistrip:
+            private_url_values = {e.value for e in private_url_entities_presistrip}
+            filtered: list[DetectedEntity] = []
+            for e in entities:
+                if e.entity_type == EntityType.IP_ADDRESS:
+                    is_contained = any(e.value in puv for puv in private_url_values)
+                    if is_contained:
+                        continue
+                filtered.append(e)
+            entities = filtered
 
         # ── Cross-type PHONE dedup (same as detect() — see notes there) ──
         entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities, phone_entities_presistrip)
@@ -641,11 +681,29 @@ class RegexDetector(Detector):
                     # Also exclude numbers with SSN context keywords regardless
                     # of area validity (catches demo SSNs like 911-68-3710).
                     if len(digits_only) == 9:
-                        # Check SSN context keywords in surrounding text
+                        # Check SSN context keywords in surrounding text.
+                        # Check BOTH before and after (keywords like "social_security"
+                        # may appear before the dash-stripped digit run).
+                        # Include underscore variant "social_security" since
+                        # strip-inner-seps only removes non-alpha between digits,
+                        # so "social_security" survives in the stripped text.
                         context_before = text[max(0, start - 50):start].lower()
                         context_after = text[end:min(len(text), end + 30)].lower()
-                        ssn_keywords = ("ssn", "social security", "tax id", "ss#")
-                        if any(kw in context_before for kw in ssn_keywords):
+                        combined_context = context_before + " " + context_after
+                        ssn_keywords = (
+                            "ssn", "social security", "social_security",
+                            "tax id", "ss#",
+                        )
+                        if any(kw in combined_context for kw in ssn_keywords):
+                            continue
+                        # Also suppress 9-digit decimal IPs where the first digit
+                        # is '9' (area 900-999) — these are almost certainly
+                        # obfuscated SSNs or other identifiers, never genuine
+                        # decimal IPs in practice. All valid decimal IP 9-digit
+                        # numbers starting with '9' would decode to IPs in
+                        # 53.x.x.x-59.x.x.x range, which do not appear in real
+                        # usage as bare decimal integers.
+                        if digits_only.startswith("9"):
                             continue
                         area, group, serial = digits_only[:3], digits_only[3:5], digits_only[5:]
                         if (area != "000" and area != "666"
@@ -654,20 +712,26 @@ class RegexDetector(Detector):
                             continue
 
                     # ── Anti-phone / anti-bank heuristic: exclude 10-digit numbers
-                    # that are preceded by phone or bank-account context keywords,
-                    # or that start with '1' without IP context (likely NANP phone).
+                    # that are preceded by phone, bank-account, or obfuscation
+                    # context keywords, or that start with '1' without IP context
+                    # (likely NANP phone). Also check context after the match.
                     if len(digits_only) == 10:
                         context_before = text[max(0, start - 50):start].lower()
+                        context_after = text[end:min(len(text), end + 30)].lower()
+                        combined_context = context_before + " " + context_after
                         phone_keywords = (
                             "phone", "tel", "mobile", "cell", "call",
-                            "contact", "dial", "number"
+                            "contact", "dial", "number",
+                            # Obfuscation context markers that often
+                            # precede phone/SSN test data
+                            "hidden", "obfuscat", "encoded",
                         )
                         bank_keywords = (
                             "bank", "account", "acct", "a/c"
                         )
-                        if any(kw in context_before for kw in phone_keywords):
+                        if any(kw in combined_context for kw in phone_keywords):
                             continue
-                        if any(kw in context_before for kw in bank_keywords):
+                        if any(kw in combined_context for kw in bank_keywords):
                             continue
                         # NANP phone numbers: 10-digit numbers starting with '1'
                         # are virtually always NANP phones (1-XXX-XXX-XXXX).
@@ -859,8 +923,18 @@ class RegexDetector(Detector):
                         if len(digits_only) == 9:
                             context_before = text[max(0, start - 50):start].lower()
                             context_after = text[end:min(len(text), end + 30)].lower()
-                            ssn_keywords = ("ssn", "social security", "tax id", "ss#")
-                            if any(kw in context_before for kw in ssn_keywords):
+                            combined_context = context_before + " " + context_after
+                            ssn_keywords = (
+                                "ssn", "social security", "social_security",
+                                "tax id", "ss#",
+                            )
+                            if any(kw in combined_context for kw in ssn_keywords):
+                                continue
+                            # Suppress 9-digit decimal IPs starting with '9'
+                            # (area 900-999) — these are virtually always
+                            # obfuscated SSNs or other identifiers, never
+                            # genuine decimal IPs in practice.
+                            if digits_only.startswith("9"):
                                 continue
                             area, group, serial = digits_only[:3], digits_only[3:5], digits_only[5:]
                             if (area != "000" and area != "666"

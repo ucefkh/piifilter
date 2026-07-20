@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
-  "timestamp": "2026-07-20T09:02:01Z",
+  "timestamp": "2026-07-20T09:06:56Z",
   "arbitration": {
     "enabled": true
   },
@@ -49,13 +49,13 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 566,
+      "total_detected_entities": 561,
       "total_true_positives": 496,
-      "total_false_positives": 70,
+      "total_false_positives": 65,
       "total_false_negatives": 43,
-      "overall_precision": 0.8763250883392226,
+      "overall_precision": 0.8841354723707665,
       "overall_recall": 0.9202226345083488,
-      "overall_f1": 0.897737556561086,
+      "overall_f1": 0.9018181818181817,
       "per_type": {
         "ADDRESS": {
           "true_positives": 17,
@@ -379,13 +379,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 45,
-          "false_positives": 7,
+          "false_positives": 2,
           "false_negatives": 1,
           "n": 46,
-          "precision": 0.8654,
+          "precision": 0.9574,
           "recall": 0.9783,
-          "f1": 0.9184,
-          "f2": 0.9534,
+          "f1": 0.9677,
+          "f2": 0.974,
           "recall_ci": [
             0.8866,
             0.9962
@@ -588,9 +588,6 @@
           "DOMAIN": 5,
           "JWT": 2
         },
-        "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 3
-        },
         "ADDRESS": {
           "COUNTRY": 4,
           "CITY": 12
@@ -612,8 +609,7 @@
           "BANK_ACCOUNT": 1
         },
         "PRIVATE_URL": {
-          "URL": 2,
-          "IP_ADDRESS": 2
+          "URL": 2
         },
         "COUNTRY": {
           "COMPANY": 1,
@@ -1241,16 +1237,14 @@
           "index": 40,
           "text_preview": "Obfuscated social_security: 911 68 3710 (segmented)",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 41,
@@ -3118,15 +3112,14 @@
           "index": 163,
           "text_preview": "Local: http://127.0.0.1:8080/api",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -3994,16 +3987,14 @@
           "index": 220,
           "text_preview": "Hidden field: 996 29 8532 (segmented)",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 221,
@@ -4393,15 +4384,14 @@
           "index": 246,
           "text_preview": "Local: http://127.0.0.1:5000/admin",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -6289,16 +6279,14 @@
           "index": 371,
           "text_preview": "Data: 9 3 4 4 3 6 9 5 8",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 372,
@@ -7829,13 +7817,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 564,
+      "total_detected_entities": 559,
       "total_true_positives": 497,
-      "total_false_positives": 67,
+      "total_false_positives": 62,
       "total_false_negatives": 42,
-      "overall_precision": 0.8812056737588653,
+      "overall_precision": 0.889087656529517,
       "overall_recall": 0.922077922077922,
-      "overall_f1": 0.9011786038077968,
+      "overall_f1": 0.9052823315118398,
       "per_type": {
         "ADDRESS": {
           "true_positives": 17,
@@ -8159,13 +8147,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 45,
-          "false_positives": 5,
+          "false_positives": 0,
           "false_negatives": 1,
           "n": 46,
-          "precision": 0.9,
+          "precision": 1.0,
           "recall": 0.9783,
-          "f1": 0.9375,
-          "f2": 0.9615,
+          "f1": 0.989,
+          "f2": 0.9825,
           "recall_ci": [
             0.8866,
             0.9962
@@ -8363,9 +8351,6 @@
           "DOMAIN": 5,
           "JWT": 2
         },
-        "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 3
-        },
         "ADDRESS": {
           "COUNTRY": 4,
           "CITY": 12,
@@ -8389,8 +8374,7 @@
           "BANK_ACCOUNT": 1
         },
         "PRIVATE_URL": {
-          "URL": 2,
-          "IP_ADDRESS": 2
+          "URL": 2
         },
         "COUNTRY": {
           "COMPANY": 1,
@@ -9015,15 +8999,14 @@
           "index": 40,
           "text_preview": "Obfuscated social_security: 911 68 3710 (segmented)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -10895,15 +10878,14 @@
           "index": 163,
           "text_preview": "Local: http://127.0.0.1:8080/api",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -11772,16 +11754,14 @@
           "index": 220,
           "text_preview": "Hidden field: 996 29 8532 (segmented)",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 221,
@@ -12171,15 +12151,14 @@
           "index": 246,
           "text_preview": "Local: http://127.0.0.1:5000/admin",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -14068,16 +14047,14 @@
           "index": 371,
           "text_preview": "Data: 9 3 4 4 3 6 9 5 8",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 372,
@@ -15611,13 +15588,13 @@
       "detector": "pipeline-raw",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 603,
+      "total_detected_entities": 598,
       "total_true_positives": 497,
-      "total_false_positives": 106,
+      "total_false_positives": 101,
       "total_false_negatives": 42,
-      "overall_precision": 0.824212271973466,
+      "overall_precision": 0.8311036789297659,
       "overall_recall": 0.922077922077922,
-      "overall_f1": 0.8704028021015764,
+      "overall_f1": 0.8742304309586633,
       "per_type": {
         "ADDRESS": {
           "true_positives": 17,
@@ -15941,13 +15918,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 45,
-          "false_positives": 8,
+          "false_positives": 3,
           "false_negatives": 1,
           "n": 46,
-          "precision": 0.8491,
+          "precision": 0.9375,
           "recall": 0.9783,
-          "f1": 0.9091,
-          "f2": 0.9494,
+          "f1": 0.9574,
+          "f2": 0.9698,
           "recall_ci": [
             0.8866,
             0.9962
@@ -16160,10 +16137,6 @@
           "DOMAIN": 5,
           "JWT": 2
         },
-        "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 3,
-          "SOCIAL_SECURITY": 11
-        },
         "ADDRESS": {
           "COUNTRY": 4,
           "CITY": 12,
@@ -16176,6 +16149,9 @@
           "EMAIL": 3,
           "DOMAIN": 1
         },
+        "SOCIAL_SECURITY": {
+          "SOCIAL_SECURITY": 11
+        },
         "GPS": {
           "GPS": 4,
           "BANK_ACCOUNT": 4
@@ -16184,8 +16160,7 @@
           "PHONE": 3
         },
         "PRIVATE_URL": {
-          "URL": 2,
-          "IP_ADDRESS": 2
+          "URL": 2
         },
         "COUNTRY": {
           "COMPANY": 1,
@@ -16810,15 +16785,14 @@
           "index": 40,
           "text_preview": "Obfuscated social_security: 911 68 3710 (segmented)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "SOCIAL_SECURITY"
           ]
         },
@@ -18690,15 +18664,14 @@
           "index": 163,
           "text_preview": "Local: http://127.0.0.1:8080/api",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -19567,16 +19540,14 @@
           "index": 220,
           "text_preview": "Hidden field: 996 29 8532 (segmented)",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 221,
@@ -19966,15 +19937,14 @@
           "index": 246,
           "text_preview": "Local: http://127.0.0.1:5000/admin",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -21863,16 +21833,14 @@
           "index": 371,
           "text_preview": "Data: 9 3 4 4 3 6 9 5 8",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "IP_ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 372,

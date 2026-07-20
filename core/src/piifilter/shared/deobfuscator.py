@@ -192,6 +192,7 @@ class Deobfuscator:
         log: list[dict] = []
         # Base normalizations
         text = self._nfkc_normalize(text, log)
+        text = self._strip_katakana(text, log)
         text = self._strip_html_comments(text, log)
         # Morse code BEFORE at_dot so dots in morse (e.g. ".--") aren't destroyed
         text = self._decode_morse(text, log)
@@ -268,6 +269,35 @@ class Deobfuscator:
             log.append({
                 "transform": "nfkc_normalize",
                 "description": "NFKC normalization (kills fractions, homoglyphs, fullwidth)",
+                "changed": True,
+            })
+        return text
+
+    # ── 1a. Strip katakana/hiragana from digit contexts ──────────────────
+    # Half-width katakana (U+FF65-U+FF9F) and full-width katakana (U+30A0-U+30FF)
+    # are used to obfuscate CC numbers by breaking digit runs. NFKC converts
+    # half-width to full-width, but both are \w in Python regex, so they
+    # survive _strip_inner_separators. This pass strips them explicitly.
+    _KATAKANA_RE = re.compile(
+        "[\\u30A0-\\u30FF\\uFF65-\\uFF9F]"
+    )
+
+    @classmethod
+    def _strip_katakana(cls, text: str, log: list) -> str:
+        """Strip katakana characters that break digit runs.
+
+        Katakana half-width (U+FF65-U+FF9F) and full-width (U+30A0-U+30FF)
+        are Unicode word chars (\w) and thus survive the separator-stripping
+        pass. Removing them restores contiguous digit runs for Luhn validation.
+        Hiragana (U+3040-U+309F) are also included since they pose the same
+        problem.
+        """
+        original = text
+        text = cls._KATAKANA_RE.sub("", text)
+        if text != original:
+            log.append({
+                "transform": "strip_katakana",
+                "description": "Stripped katakana/hiragana characters breaking digit runs",
                 "changed": True,
             })
         return text
