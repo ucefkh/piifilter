@@ -192,6 +192,11 @@ class Deobfuscator:
         log: list[dict] = []
         # Base normalizations
         text = self._nfkc_normalize(text, log)
+        # NEW: Cyrillic homoglyph → digit normalization (after NFKC)
+        # Cyrillic letters that visually resemble digits are mapped to their
+        # ASCII digit equivalents. NFKC does NOT handle these because they're
+        # distinct Unicode code points with no compatibility mapping.
+        text = self._normalize_cyrillic_digit_homoglyphs(text, log)
         text = self._strip_katakana(text, log)
         text = self._strip_html_comments(text, log)
         # Morse code BEFORE at_dot so dots in morse (e.g. ".--") aren't destroyed
@@ -269,6 +274,37 @@ class Deobfuscator:
             log.append({
                 "transform": "nfkc_normalize",
                 "description": "NFKC normalization (kills fractions, homoglyphs, fullwidth)",
+                "changed": True,
+            })
+        return text
+
+    # ── 0b. Cyrillic digit homoglyph normalization ──────────────────────
+    # Cyrillic letters that visually resemble digits are used in homoglyph
+    # attacks to bypass PII detection (e.g. Ӧ instead of 5 in phone numbers).
+    # NFKC does NOT convert these because they have no compatibility mapping.
+    # Map them to their visually-similar ASCII digit equivalents.
+    _CYRILLIC_DIGIT_MAP = str.maketrans({
+        # Cyrillic letters that look like digits
+        '\u04E6': '5',  # Ӧ (Cyrillic Oe) → 5
+        '\u04E7': '5',  # ӧ (Cyrillic small oe) → 5
+        '\u0405': '6',  # Ѕ (Cyrillic Dze) → 6 (like S, but some Cyrillic fonts render like 6)
+        '\u0455': '6',  # ѕ (Cyrillic small dze) → 6
+        '\u0417': '3',  # З (Cyrillic Ze) → 3
+        '\u0437': '3',  # з (Cyrillic small ze) → 3
+        # Note: Latin letters that look like digits (O→0, l→1, S→5) are NOT
+        # mapped here since they'd cause massive FPs in normal Latin text.
+        # Cyrillic letters are safer to map since they're uncommon in typical
+        # PII-laden text and are almost always intentional obfuscation.
+    })
+
+    @classmethod
+    def _normalize_cyrillic_digit_homoglyphs(cls, text: str, log: list) -> str:
+        original = text
+        text = text.translate(cls._CYRILLIC_DIGIT_MAP)
+        if text != original:
+            log.append({
+                "transform": "cyrillic_homoglyph_normalize",
+                "description": "Cyrillic digit homoglyphs → ASCII digits",
                 "changed": True,
             })
         return text

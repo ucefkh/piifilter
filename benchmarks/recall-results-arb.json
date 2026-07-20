@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T10:11:46Z",
+  "timestamp": "2026-07-20T11:03:32Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 231,
-      "total_true_positives": 209,
+      "total_detected_entities": 232,
+      "total_true_positives": 210,
       "total_false_positives": 22,
-      "total_false_negatives": 4,
-      "overall_precision": 0.9047619047619048,
-      "overall_recall": 0.9812206572769953,
-      "overall_f1": 0.9414414414414415,
+      "total_false_negatives": 3,
+      "overall_precision": 0.9051724137931034,
+      "overall_recall": 0.9859154929577465,
+      "overall_f1": 0.9438202247191011,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -480,24 +480,24 @@
           ]
         },
         "PHONE": {
-          "true_positives": 14,
+          "true_positives": 15,
           "false_positives": 3,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.8235,
-          "recall": 0.9333,
-          "f1": 0.875,
-          "f2": 0.9091,
+          "precision": 0.8333,
+          "recall": 1.0,
+          "f1": 0.9091,
+          "f2": 0.9615,
           "recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ],
           "real_n": 15,
-          "real_recall": 0.9333,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ]
         },
         "PRIVATE_URL": {
@@ -2754,14 +2754,16 @@
           "index": 141,
           "text_preview": "Phone: +1-555-123-4Ӧ97 (Cyrillic Ҧ instead of 5)",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PHONE"
+          ]
         },
         {
           "index": 142,
@@ -2889,13 +2891,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 226,
-      "total_true_positives": 209,
+      "total_detected_entities": 227,
+      "total_true_positives": 210,
       "total_false_positives": 21,
-      "total_false_negatives": 4,
-      "overall_precision": 0.908695652173913,
-      "overall_recall": 0.9812206572769953,
-      "overall_f1": 0.9435665914221218,
+      "total_false_negatives": 3,
+      "overall_precision": 0.9090909090909091,
+      "overall_recall": 0.9859154929577465,
+      "overall_f1": 0.9459459459459459,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -3327,24 +3329,24 @@
           ]
         },
         "PHONE": {
-          "true_positives": 14,
+          "true_positives": 15,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.9333,
-          "recall": 0.9333,
-          "f1": 0.9333,
-          "f2": 0.9333,
+          "precision": 0.9375,
+          "recall": 1.0,
+          "f1": 0.9677,
+          "f2": 0.9868,
           "recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ],
           "real_n": 15,
-          "real_recall": 0.9333,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ]
         },
         "PRIVATE_URL": {
@@ -5606,14 +5608,16 @@
           "index": 141,
           "text_preview": "Phone: +1-555-123-4Ӧ97 (Cyrillic Ҧ instead of 5)",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PHONE"
+          ]
         },
         {
           "index": 142,
@@ -5741,13 +5745,13 @@
       "detector": "pipeline-raw",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 246,
-      "total_true_positives": 209,
+      "total_detected_entities": 247,
+      "total_true_positives": 210,
       "total_false_positives": 37,
-      "total_false_negatives": 4,
-      "overall_precision": 0.8495934959349594,
-      "overall_recall": 0.9812206572769953,
-      "overall_f1": 0.9106753812636166,
+      "total_false_negatives": 3,
+      "overall_precision": 0.8502024291497976,
+      "overall_recall": 0.9859154929577465,
+      "overall_f1": 0.9130434782608695,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -6179,24 +6183,24 @@
           ]
         },
         "PHONE": {
-          "true_positives": 14,
+          "true_positives": 15,
           "false_positives": 5,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.7368,
-          "recall": 0.9333,
-          "f1": 0.8235,
-          "f2": 0.8861,
+          "precision": 0.75,
+          "recall": 1.0,
+          "f1": 0.8571,
+          "f2": 0.9375,
           "recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ],
           "real_n": 15,
-          "real_recall": 0.9333,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ]
         },
         "PRIVATE_URL": {
@@ -8472,14 +8476,16 @@
           "index": 141,
           "text_preview": "Phone: +1-555-123-4Ӧ97 (Cyrillic Ҧ instead of 5)",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PHONE"
+          ]
         },
         {
           "index": 142,
