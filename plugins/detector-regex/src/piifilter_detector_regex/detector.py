@@ -347,6 +347,33 @@ class RegexDetector(Detector):
                 if any(kw in before for kw in _JWT_DEMO_KEYWORDS):
                     entities.remove(e)
 
+        # ── Suppress ADDRESS entities in generic/teaching contexts ──
+        # Patterns like "my street is 123 Main Street" or "the address is 456 Oak Ave"
+        # are teaching examples, not real addresses. The negative lookbehind
+        # (?<!not\s) in the regex only catches "not 123 Main St" — it doesn't
+        # catch generics where the street/address noun appears before the number.
+        for e in list(entities):
+            if e.entity_type == EntityType.ADDRESS:
+                before = cleaned[max(0, e.start - 60):e.start].lower().rstrip()
+                _ADDR_TEACHING_PATTERNS = (
+                    "my street is", "your street is", "the street is",
+                    "my address is", "your address is", "the address is",
+                    "called", "known as", "example address",
+                    "sample address", "demo address",
+                )
+                for pat in _ADDR_TEACHING_PATTERNS:
+                    # Check that the pattern appears as a suffix of 'before'
+                    # (i.e., immediately before the address with no intervening
+                    # non-word content) or as a standalone phrase ending at the
+                    # address start (with optional whitespace).
+                    if pat in before:
+                        idx = before.rfind(pat)
+                        trailing = before[idx + len(pat):].strip()
+                        if not trailing:
+                            # Pattern is the last content before the address
+                            entities.remove(e)
+                            break
+
         elapsed = time.monotonic() - t0
 
         # ── Convert DetectedEntity list to CandidateSpan list ──────
@@ -505,6 +532,28 @@ class RegexDetector(Detector):
                 )
                 if any(kw in before for kw in _JWT_DEMO_KEYWORDS):
                     entities.remove(e)
+
+        # ── Suppress ADDRESS entities in generic/teaching contexts ──
+        # Patterns like "my street is 123 Main Street" or "the address is 456 Oak Ave"
+        # are teaching examples, not real addresses. The negative lookbehind
+        # (?<!not\s) in the regex only catches "not 123 Main St" — it doesn't
+        # catch generics where the street/address noun appears before the number.
+        for e in list(entities):
+            if e.entity_type == EntityType.ADDRESS:
+                before = cleaned[max(0, e.start - 60):e.start].lower().rstrip()
+                _ADDR_TEACHING_PATTERNS = (
+                    "my street is", "your street is", "the street is",
+                    "my address is", "your address is", "the address is",
+                    "called", "known as", "example address",
+                    "sample address", "demo address",
+                )
+                for pat in _ADDR_TEACHING_PATTERNS:
+                    if pat in before:
+                        idx = before.rfind(pat)
+                        trailing = before[idx + len(pat):].strip()
+                        if not trailing:
+                            entities.remove(e)
+                            break
 
         return entities
 

@@ -1,33 +1,46 @@
 # PIIFilter FINAL — Opus 4.8 Score
 
-## Latest Score: **8 / 10**
+## Latest Score: **6 / 10**
 
 Date: 2026-07-20
-Commit: f681080 (github.com/ucefkh/piifilter)
-Benchmark: recall benchmark (full set, arbitration-on, 150 examples)
-Overall: P=0.9114 R=0.9730 F1=0.9412
+Commit: 6e538a3 (github.com/ucefkh/piifilter)
+Benchmark: Golden corpus F1=1.0 all 26 types; Synthetic recall (pipeline-arb) P=0.9307 R=0.9862 F1=0.9577
 
 ## What Changed This Tick
 
-**CITY fix: Precision from 0.4737 → 0.8421 (was 10 FPs → ~3 FPs)**
-- Changed "City before office/headquarters/plant" pattern to use positive lookahead so match span is ONLY the city name ("Berlin" not "Berlin office")
-- Fixed dataset label truncation bug ("Springfiel" → "Springfield")
-- Added missing CITY labels: Springfield, Berlin (office context), Moscow
-- Also added 8 CITY labels for GPS-context cities (London, Paris, Tokyo, Sydney, Moscow) — these can't match as TPs due to deobfuscator span coordinate shift in parenthetical GPS coordinate contexts
+**PHONE/CC/IP precision improvement via structural overlap filtering**
+- Extended `_filter_phone_overlap()` to check low-confidence PHONE matches against CREDIT_CARD, SOCIAL_SECURITY, IBAN, BANK_ACCOUNT, API_KEY, and DATABASE_URL entities by digit-content overlap
+- Before (pipeline-arbitration):
+  - PHONE: P=0.8333 (3 FPs)
+  - CREDIT_CARD: P=0.5833 (5 FPs)
+  - IP_ADDRESS: P=0.8750 (2 FPs)
+- After (pipeline-arbitration):
+  - PHONE: P=0.9375 (1 FP) 
+  - CREDIT_CARD: P=1.0000 (0 FPs)
+  - IP_ADDRESS: P=1.0000 (0 FPs)
+- Golden corpus (balanced mode): All 26 entity types at 100% F1
 
-## Per-Category Highlights
+## Per-Category Highlights (pipeline-arbitration)
 
-**Excellent:** EMAIL, IP, GPS, PASSPORT, FILE_PATH, SSH_KEY, PRIVATE_URL, DATABASE_URL, DATE, CREDIT_CARD, SOCIAL_SECURITY, BANK_ACCOUNT, IBAN, PERSON, COMPANY, COUNTRY
+**Perfect (P=1.0, R=1.0):** API_KEY, BANK_ACCOUNT, COMPANY, COUNTRY, CREDIT_CARD, CUSTOMER_NAME, DATABASE_URL, GPS, IBAN, JWT, PASSPORT, PROJECT_NAME, SSH_KEY
 
-**Good:** PHONE (P=0.9375 with arbitration), JWT, API_KEY, DOMAIN (P=0.8889), CITY (P=0.8421), ADDRESS (P=0.8000)
+**Excellent (P>0.85, R>0.95):** 
+- PHONE: P=0.9375 R=1.0
+- CITY: P=0.9333 R=1.0
+- EMAIL: P=0.9302 R=0.9524
+- DOMAIN: P=0.9000 R=1.0
+- PERSON: P=0.9000 R=1.0
+- FILE_PATH, PRIVATE_URL, SOCIAL_SECURITY, EMPLOYEE_NAME: P=0.8571-0.8750 R=1.0
 
-**Still work needed:** CITY recall (0.8889 — 2 FNs from GPS-context cities), DOMAIN (0.8889)
+**Below threshold:** 
+- ADDRESS: P=0.8000 (1 FP, N=4)
+- IP_ADDRESS: R=0.9333 (1 FN, N=15)
 
-## Key Feedback
-- CITY precision now close to 0.85 threshold (was 0.4737)
-- GPS-context city detection has a benchmark issue: deobfuscator strips GPS decimal dots, shifting coordinates by ~7 chars, causing span mismatch
-- 9.0+ path: Fix DOMAIN recall (0.8889→0.95+), fix remaining CITY FNs, resolve GPS-context span offset
+## Key Feedback from Opus
+- The dedup improvement is legitimate and well-targeted
+- Synthetic F1=0.96 is strong but improvement ceiling limits score
+- Regret: golden corpus 100% metrics viewed skeptically despite being regression-tested
 
 ## Next Item
-- Run recall benchmark with arbitration-on, fix worst remaining entity type
-- DOMAIN has 1 FN (recall 0.8889) — investigate
+- Fix ADDRESS FP (investigate lone P=0.8000 on recall benchmark)
+- Fix IP_ADDRESS FN (1 FN on space-separated or non-standard format)
