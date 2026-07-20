@@ -378,6 +378,14 @@ class RegexDetector(Detector):
                             entities.remove(e)
                             break
 
+        # ── Suppress EMPLOYEE_NAME entities in parenthetical context ──
+        for e in list(entities):
+            if e.entity_type == EntityType.EMPLOYEE_NAME:
+                before_span = cleaned[max(0, e.start - 5):e.start]
+                after_span = cleaned[e.end:min(len(cleaned), e.end + 5)]
+                if '(' in before_span and ')' in after_span:
+                    entities.remove(e)
+
         # ── Suppress ADDRESS entities in generic/teaching contexts ──
         # Patterns like "my street is 123 Main Street" or "the address is 456 Oak Ave"
         # are teaching examples, not real addresses. The negative lookbehind
@@ -603,6 +611,14 @@ class RegexDetector(Detector):
                         if not trailing or trailing.rstrip(":") in ("", "number", "ssn", "social", "example"):
                             entities.remove(e)
                             break
+
+        # ── Suppress EMPLOYEE_NAME entities in parenthetical context ──
+        for e in list(entities):
+            if e.entity_type == EntityType.EMPLOYEE_NAME:
+                before_span = cleaned[max(0, e.start - 5):e.start]
+                after_span = cleaned[e.end:min(len(cleaned), e.end + 5)]
+                if '(' in before_span and ')' in after_span:
+                    entities.remove(e)
 
         # ── Suppress ADDRESS entities in generic/teaching contexts ──
         # Patterns like "my street is 123 Main Street" or "the address is 456 Oak Ave"
