@@ -153,9 +153,13 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # 2-digit-pair paired spacing for 15-digit (Amex): "37 82 82 24 63 10 00 5"
     ("CREDIT_CARD", r"\b\d{2}(?: \d{2}){6} \d{1,2}\b", 0.75),
     # 4-4-4-2..4 with any combination of space/dot/dash separators — broad catch-all
-    ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)\b\d{4}[ .-]+\d{4}[ .-]+\d{4}[ .-]+\d{2,4}\b", 0.65),
+    # Negative lookbehind guards against matching IBAN substrings (e.g. "0044 0532 0130 00" within
+    # "DE89 3704 0044 0532 0130 00") by checking for an IBAN-like prefix before the preceding
+    # 4-digit group. Covers both IBAN formats: "DE89 3704 ..." and "NWBK 6016 ..." and "X054 2811...".
+    ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)(?<!\d{4}\s)(?<![A-Z0-9]{4}\s)\b\d{4}[ .-]+\d{4}[ .-]+\d{4}[ .-]+\d{2,4}\b", 0.65),
     # Low confidence: 4-4-4-2..4 pattern with single dash/space
-    ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)(?<![A-Za-z])(?<!\d{4}[- ])\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b(?![- ]\d{2,4})(?!\s*\d{2,4})", 0.65),
+    # IBAN lookbehind: block matches preceded by "[A-Z0-9]{4} " (IBAN bank code segment)
+    ("CREDIT_CARD", r"(?<![A-Z]{2}\d{2}\s)(?<![A-Za-z])(?<!\d{4}[- ])(?<![A-Z0-9]{4}\s)\b\d{4}[- ]\d{4}[- ]\d{4}[- ]\d{2,4}\b(?![- ]\d{2,4})(?!\s*\d{2,4})", 0.65),
     # Low confidence: 4-4-4-2..4 with multi-space gaps (e.g. "3782  8224  6310  005")
     ("CREDIT_CARD", r"\b\d{4}[ -]{2,}\d{4}[ -]{2,}\d{4}[ -]{2,}\d{2,4}\b", 0.65),
     # IIN-prefixed 16-digit numbers: known card issuer prefixes
@@ -331,11 +335,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("GPS", r"[-+]?\d{1,3}\.\d+\s*°?\s*[NS]\s*[,;]?\s*[-+]?\d{1,3}\.\d+\s*°?\s*[EW]", 0.85),
     # Individual decimal coordinates — match after keyword: "Coordinates: 40.7128" or "Location: 37.7749"
     ("GPS", r"(?i)(?:lat|lng|lon|latitude|longitude|coordinates|coord|gps|location)\s*[:=]\s*[-+]?\d{1,3}\.\d{2,}", 0.88),
-    # Individual numbers that are clearly coordinates (1-3 digit integer part, 2+ decimal places)
-    # Catches longitudes like -122.4194 and values like 52.52 or 13.405 with fewer decimals
-    # Excludes IP address fragments (e.g. "192.168" in "192.168.1.1") and prices ("$3.50")
-    # Excludes phone fragments like "555.2671" (3-digit + dot + 4-digit = phone-like)
-    ("GPS", r"(?<!\d)(?<!\d\.)(?<!\$)(?<!\d{3}\.)[-+]?\d{1,3}\.\d{3,}(?!\.\d)(?!\.\w)(?!\d)", 0.55),
+    # Bare decimal coordinate — ONLY match if preceded by GPS keyword with just a space separator (no colon).
+    # This catches "lat 40.7128" (space-only) while avoiding false positives on non-GPS decimals like
+    # "3.14159" (pi), "1.234" (time), "0.5678" (value), etc.
+    ("GPS", r"(?i)\b(?:lat|lng|lon|latitude|longitude|coordinates?|coord|gps|location)\s+[-+]?\d{1,3}\.\d{2,}(?!\.\d)(?!\.\w)", 0.55),
 
     # ── FILE_PATH ────────────────────────────────────────────────────
     ("FILE_PATH", r"(?<!\/)/(?:[a-zA-Z0-9._-]+/){3,}[a-zA-Z0-9._-]*(?!\w)", 0.85),
