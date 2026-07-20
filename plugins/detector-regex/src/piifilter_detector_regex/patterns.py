@@ -352,7 +352,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PERSON", r"(?i)\b(?:contact|user|person|connect|reach)\s+(?:is|name)\s+[\u0400-\u04ff]+\b", 0.75),
     # Arabic script names — handle بـ prefix (U+0628 + optional tatweel U+0640)
     # Exclude standalone بـ without a following name
-    ("PERSON", r"(?i)\b(?:اتصل)\s+بـ?\s*[\u0600-\u06ff]{2,}\b", 0.80),
+    # Require 3+ Arabic chars after the name to avoid matching just the prefix
+    ("PERSON", r"(?i)\b(?:اتصل)\s+بـ?\s*[\u0600-\u06ff\u0750-\u077f]{3,}\b", 0.80),
     ("PERSON", r"(?i)\b(?:اسم|اسمي)\s+[\u0600-\u06ff]+\b", 0.80),
     # Japanese: CJK name followed by の (possessive) or さん (honorific)
     ("PERSON", r"[\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{2,4}(?:の|さん)\b", 0.70),
@@ -363,8 +364,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Non-Latin names after language labels — use lookbehind so match starts at the name
     # Require at least 3+ consecutive non-Latin chars to avoid matching
     # short prefixes that aren't names
-    # Exclude Arabic prefix words that aren't names themselves
-    ("PERSON", r"(?i)(?:(?<=Russian:)|(?<=Arabic:)|(?<=Japanese:)|(?<=Greek:)|(?<=Unicode))\s*(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{3,}(?:\s+(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]*)?\b", 0.70),
+    # Exclude Arabic prefix words that aren't names themselves (اتصل = contact, etc.)
+    # IMPORTANT: negative lookahead must come BEFORE \s* so that backtracking
+    # doesn't bypass it by leaving a space character at the lookahead position.
+    ("PERSON", r"(?i)(?:(?<=Russian:)|(?<=Arabic:)|(?<=Japanese:)|(?<=Greek:)|(?<=Unicode))(?!(?:\s*اتصل|\s*بـ))\s*(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{3,}(?:\s+(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]*)?\b", 0.70),
     # "Signed/from/by/preposition + Name" — strong signal for person names
     # Requires TWO capitalized words (first + last name) to avoid matching
     # single-word company names like "signed by Google"
@@ -378,7 +381,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # "from" can precede companies, cities, and countries.
     # Explicitly exclude known two-word city names (New York, Los Angeles, etc.)
     # Second name word must not be a company suffix
-    ("PERSON", r"(?i)\bfrom\s+(?-i:(?!New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Buenos)[A-Z][a-z]{2,})\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|and|or|the|Street|St|Avenue|Ave|Road|Rd)[A-Z])[a-z]{2,}\b", 0.65),
+    # Negative lookahead blocks parenthetical media references: "from Finding Nemo)"
+    ("PERSON", r"(?i)\bfrom\s+(?-i:(?!New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Buenos)[A-Z][a-z]{2,})\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|and|or|the|Street|St|Avenue|Ave|Road|Rd)[A-Z])[a-z]{2,}\b(?![^(]*\))", 0.65),
     # "by Name" — two-word capitalized name after "by"
     # Excludes geographic continuations (cities, countries) and company suffixes
     # Second name word must not be a company suffix
@@ -401,7 +405,9 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Exclude common UI/technical words that could follow these labels
     ("PERSON", r"(?i)\b(?:Manager|Supervisor|Coordinator|Lead|Admin|HR\s+rep)\s*:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof)\s+)?(?-i:(?!Settings|Config|Options|Admin|Dashboard|Profile|Account|General|System|Network|Security|Users|Roles|Permissions|Logs|Backup|Notifications|Integrations|Plugins|Extensions|Appearance|Layout|Theme)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.75),
     # "Employee Name" — capitalized name after "Employee" (complements EMPLOYEE_NAME type)
-    ("PERSON", r"(?i)\bEmployee\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?(?!\s+(?:name|ID|id|number))\b", 0.65),
+    # Negative lookahead blocks two-word names (those are EMPLOYEE_NAME territory) and
+    # parenthetical references (e.g. "(famous from Employee Training)").
+    ("PERSON", r"(?i)\bEmployee\s+(?-i:(?!from|of|at\b)[A-Z])[a-z]{2,}(?!\s+(?-i:[A-Z])[a-z]{2,})(?!\s+(?:name|ID|id|number))\b(?!\s*\))", 0.65),
     # "Signed, Name" — comma after signed, then capitalized name
     ("PERSON", r"(?i)\bsigned[-,]\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.72),
     # Bare "FirstName LastName" at sentence start or after period/newline — capture the

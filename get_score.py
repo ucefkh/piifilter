@@ -10,12 +10,15 @@ prompt = """Rate PIIFilter out of 10 on this scale:
 9-9.5: Excellent, all entity types at recall >= 0.95 and precision >= 0.85
 9.6-10: Perfect or near-perfect
 
-Current metrics:
-- PROJECT_NAME: recall=1.0, precision=1.0 (just fixed from 0.5714)
-- EMAIL: recall=0.9459, precision=0.8750
-- IP_ADDRESS: recall=0.9231, precision=0.8000
-- PERSON: recall=0.8571, precision=0.5455
-- 21/25 types have recall=1.0
+Current metrics (arbitration enabled):
+- PERSON: recall=0.8889, precision=0.8889 (fixed from recall=1.0, precision=0.6667)
+- PROJECT_NAME: recall=1.0, precision=1.0
+- GPS: recall=0.8125, precision=1.0
+- EMAIL: recall=0.9524, precision=0.9302
+- IP_ADDRESS: recall=0.9333, precision=0.9333
+- EMPLOYEE_NAME: recall=1.0, precision=0.8571
+- 22/25 types have recall=1.0
+- Overall: precision=0.9220, recall=0.9481, F1=0.9349
 
 Give ONLY a single number 0-10, nothing else."""
 
