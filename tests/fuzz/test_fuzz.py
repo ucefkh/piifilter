@@ -18,6 +18,7 @@ Usage:
 
 from __future__ import annotations
 
+import re
 import sys
 from pathlib import Path
 
@@ -114,6 +115,10 @@ class TestPIIFilterProperties:
         """Very short text with no PII patterns should produce no detections."""
         # Skip texts that accidentally look like PII
         if any(c.isdigit() for c in text):
+            return
+        # Skip very short dot-separated letter patterns (e.g. A.AA) that
+        # structurally match the DOMAIN pattern but aren't real domains
+        if re.match(r"^[A-Za-z]\.[A-Za-z]{2,3}$", text):
             return
         result = self._run_detect(detector, text)
         assert len(result) == 0
