@@ -307,8 +307,6 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # URL comes AFTER PRIVATE_URL so that the more specific PRIVATE_URL
     # match takes priority when both match the same span.
     ("URL", r"\bhttps?://[\w./?=&%-]+(?:\.[\w./?=&%-]+)*\b", 0.85),
-    # www. prefixed URLs without protocol
-    ("URL", r"\bwww\.[\w./?=&%-]+\.[\w]{2,}(?:/[\w./?=&%-]*)?\b", 0.80),
 
     # ── PASSPORT ─────────────────────────────────────────────────────
     ("PASSPORT", r"(?i)(?:^|\s)(?:passport)\s*(?:number|no|#)?\s*:?\s*[A-Z]{0,2}\d{6,9}\b", 0.85),
