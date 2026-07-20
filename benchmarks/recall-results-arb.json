@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T13:31:56Z",
+  "timestamp": "2026-07-20T15:34:39Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 233,
-      "total_true_positives": 213,
+      "total_detected_entities": 235,
+      "total_true_positives": 215,
       "total_false_positives": 20,
-      "total_false_negatives": 5,
-      "overall_precision": 0.9141630901287554,
-      "overall_recall": 0.9770642201834863,
-      "overall_f1": 0.9445676274944567,
+      "total_false_negatives": 3,
+      "overall_precision": 0.9148936170212766,
+      "overall_recall": 0.9862385321100917,
+      "overall_f1": 0.9492273730684327,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -114,24 +114,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 13,
+          "true_positives": 14,
           "false_positives": 2,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 14,
           "n_total": 14,
-          "precision": 0.8667,
-          "recall": 0.9286,
-          "f1": 0.8966,
-          "f2": 0.9155,
+          "precision": 0.875,
+          "recall": 1.0,
+          "f1": 0.9333,
+          "f2": 0.9722,
           "recall_ci": [
-            0.6853,
-            0.9873
+            0.7847,
+            1.0
           ],
           "real_n": 14,
-          "real_recall": 0.9286,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.6853,
-            0.9873
+            0.7847,
+            1.0
           ]
         },
         "COMPANY": {
@@ -240,24 +240,24 @@
           ]
         },
         "DOMAIN": {
-          "true_positives": 8,
+          "true_positives": 9,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.8889,
-          "recall": 0.8889,
-          "f1": 0.8889,
-          "f2": 0.8889,
+          "precision": 0.9,
+          "recall": 1.0,
+          "f1": 0.9474,
+          "f2": 0.9783,
           "recall_ci": [
-            0.565,
-            0.9801
+            0.7008,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.8889,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.565,
-            0.9801
+            0.7008,
+            1.0
           ]
         },
         "EMAIL": {
@@ -601,6 +601,9 @@
         }
       },
       "confusion_matrix": {
+        "CITY": {
+          "CITY": 1
+        },
         "ADDRESS": {
           "CITY": 1
         },
@@ -624,9 +627,6 @@
         },
         "PHONE": {
           "PHONE": 2
-        },
-        "GPS": {
-          "CITY": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -998,9 +998,9 @@
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 4,
+          "detected": 5,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -1232,16 +1232,17 @@
           "index": 37,
           "text_preview": "IT: www.example.com, support@help.io, 192.168.0.1, and /tmp/test/data/cache.log",
           "expected": 3,
-          "detected": 3,
-          "true_positives": 2,
+          "detected": 4,
+          "true_positives": 3,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "EMAIL",
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "DOMAIN",
             "EMAIL",
             "FILE_PATH",
             "IP_ADDRESS"
@@ -1502,9 +1503,9 @@
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 6,
           "detected": 6,
-          "true_positives": 5,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 6,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "GPS"
@@ -2899,13 +2900,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 227,
-      "total_true_positives": 213,
-      "total_false_positives": 18,
-      "total_false_negatives": 5,
-      "overall_precision": 0.922077922077922,
-      "overall_recall": 0.9770642201834863,
-      "overall_f1": 0.9487750556792872,
+      "total_detected_entities": 228,
+      "total_true_positives": 215,
+      "total_false_positives": 17,
+      "total_false_negatives": 3,
+      "overall_precision": 0.9267241379310345,
+      "overall_recall": 0.9862385321100917,
+      "overall_f1": 0.9555555555555556,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -2971,24 +2972,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 13,
-          "false_positives": 2,
-          "false_negatives": 1,
+          "true_positives": 14,
+          "false_positives": 1,
+          "false_negatives": 0,
           "n": 14,
           "n_total": 14,
-          "precision": 0.8667,
-          "recall": 0.9286,
-          "f1": 0.8966,
-          "f2": 0.9155,
+          "precision": 0.9333,
+          "recall": 1.0,
+          "f1": 0.9655,
+          "f2": 0.9859,
           "recall_ci": [
-            0.6853,
-            0.9873
+            0.7847,
+            1.0
           ],
           "real_n": 14,
-          "real_recall": 0.9286,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.6853,
-            0.9873
+            0.7847,
+            1.0
           ]
         },
         "COMPANY": {
@@ -3097,24 +3098,24 @@
           ]
         },
         "DOMAIN": {
-          "true_positives": 8,
+          "true_positives": 9,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.8889,
-          "recall": 0.8889,
-          "f1": 0.8889,
-          "f2": 0.8889,
+          "precision": 0.9,
+          "recall": 1.0,
+          "f1": 0.9474,
+          "f2": 0.9783,
           "recall_ci": [
-            0.565,
-            0.9801
+            0.7008,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.8889,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.565,
-            0.9801
+            0.7008,
+            1.0
           ]
         },
         "EMAIL": {
@@ -3476,9 +3477,6 @@
           "EMAIL": 3,
           "SOCIAL_SECURITY": 1,
           "JWT": 1
-        },
-        "GPS": {
-          "CITY": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -4084,16 +4082,17 @@
           "index": 37,
           "text_preview": "IT: www.example.com, support@help.io, 192.168.0.1, and /tmp/test/data/cache.log",
           "expected": 3,
-          "detected": 3,
-          "true_positives": 2,
+          "detected": 4,
+          "true_positives": 3,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "EMAIL",
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "DOMAIN",
             "EMAIL",
             "FILE_PATH",
             "IP_ADDRESS"
@@ -4354,9 +4353,9 @@
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 6,
           "detected": 6,
-          "true_positives": 5,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 6,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "GPS"
@@ -5754,13 +5753,13 @@
       "detector": "pipeline-raw",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 248,
-      "total_true_positives": 213,
+      "total_detected_entities": 250,
+      "total_true_positives": 215,
       "total_false_positives": 35,
-      "total_false_negatives": 5,
-      "overall_precision": 0.8588709677419355,
-      "overall_recall": 0.9770642201834863,
-      "overall_f1": 0.9141630901287553,
+      "total_false_negatives": 3,
+      "overall_precision": 0.86,
+      "overall_recall": 0.9862385321100917,
+      "overall_f1": 0.9188034188034189,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -5826,24 +5825,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 13,
+          "true_positives": 14,
           "false_positives": 2,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 14,
           "n_total": 14,
-          "precision": 0.8667,
-          "recall": 0.9286,
-          "f1": 0.8966,
-          "f2": 0.9155,
+          "precision": 0.875,
+          "recall": 1.0,
+          "f1": 0.9333,
+          "f2": 0.9722,
           "recall_ci": [
-            0.6853,
-            0.9873
+            0.7847,
+            1.0
           ],
           "real_n": 14,
-          "real_recall": 0.9286,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.6853,
-            0.9873
+            0.7847,
+            1.0
           ]
         },
         "COMPANY": {
@@ -5952,24 +5951,24 @@
           ]
         },
         "DOMAIN": {
-          "true_positives": 8,
+          "true_positives": 9,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.8889,
-          "recall": 0.8889,
-          "f1": 0.8889,
-          "f2": 0.8889,
+          "precision": 0.9,
+          "recall": 1.0,
+          "f1": 0.9474,
+          "f2": 0.9783,
           "recall_ci": [
-            0.565,
-            0.9801
+            0.7008,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.8889,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.565,
-            0.9801
+            0.7008,
+            1.0
           ]
         },
         "EMAIL": {
@@ -6316,6 +6315,9 @@
         "CREDIT_CARD": {
           "CREDIT_CARD": 5
         },
+        "CITY": {
+          "CITY": 1
+        },
         "ADDRESS": {
           "CITY": 1,
           "PERSON": 1
@@ -6344,9 +6346,6 @@
         },
         "PHONE": {
           "PHONE": 4
-        },
-        "GPS": {
-          "CITY": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -6722,9 +6721,9 @@
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 4,
+          "detected": 5,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -6956,16 +6955,17 @@
           "index": 37,
           "text_preview": "IT: www.example.com, support@help.io, 192.168.0.1, and /tmp/test/data/cache.log",
           "expected": 3,
-          "detected": 3,
-          "true_positives": 2,
+          "detected": 4,
+          "true_positives": 3,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "DOMAIN",
             "EMAIL",
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "DOMAIN",
             "EMAIL",
             "FILE_PATH",
             "IP_ADDRESS"
@@ -7227,9 +7227,9 @@
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 6,
           "detected": 6,
-          "true_positives": 5,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 6,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "GPS"

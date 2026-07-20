@@ -117,7 +117,10 @@ class RegexDetector(Detector):
         private_url_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.PRIVATE_URL}
         )
-        # Filter pre-strip phone entities: keep only low-FP-risk patterns.
+        # ── CITY (pre-strip) — correct span positions after GPS dot removal
+        city_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.CITY}
+        )
         # - CJK-context phones (电话/電話) are always kept — these are unambiguous.
         # - International +-prefix phones at confidence >= 0.80 are kept — these
         #   have proper format with separators (e.g. "+1-555-123-4567") and are
@@ -143,6 +146,11 @@ class RegexDetector(Detector):
         # already destroyed dotted-decimal format.
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
+        # Remove CITY entities from stripped-text results — they have wrong
+        # span positions due to inner-separator stripping. CITY is detected
+        # on pre-strip text (below) for correct positions.
+        # Note: must also remove from cc_ssn_spans (CITY isn't CC/SSN, so no-op).
+        entities = [e for e in entities if e.entity_type != EntityType.CITY]
         # Build a comprehensive set of covered spans from ALL entity types found
         # by _run_patterns, not just CC/SSN. This prevents the structural recall
         # validators from re-adding a CREDIT_CARD match that was replaced by a
@@ -167,13 +175,14 @@ class RegexDetector(Detector):
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
-        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS + PRIVATE_URL) with the rest (from stripped text)
+        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS + PRIVATE_URL + CITY) with the rest (from stripped text)
         entities.extend(gps_entities)
         entities.extend(date_entities)
         entities.extend(ip_entities)
         entities.extend(phone_entities_presistrip)
         entities.extend(address_entities_presistrip)
         entities.extend(private_url_entities_presistrip)
+        entities.extend(city_entities_presistrip)
         entities.sort(key=lambda e: e.start)
 
         # ── Cross-type dedup: suppress pre-strip PRIVATE_URL entities ──
@@ -333,8 +342,15 @@ class RegexDetector(Detector):
         private_url_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.PRIVATE_URL}
         )
+        # ── CITY (pre-strip) — correct span positions after GPS dot removal
+        city_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.CITY}
+        )
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
+        # Remove CITY entities from stripped-text results — they have wrong
+        # span positions due to inner-separator stripping.
+        entities = [e for e in entities if e.entity_type != EntityType.CITY]
         # Build comprehensive covered spans to prevent Luhn/SSN validators
         # from re-detecting digit runs already covered by non-CC/SSN types.
         all_spans: set[tuple[int, int]] = {
@@ -358,7 +374,7 @@ class RegexDetector(Detector):
         entities.extend(phone_entities_presistrip)
         entities.extend(address_entities_presistrip)
         entities.extend(private_url_entities_presistrip)
-        entities.sort(key=lambda e: e.start)
+        entities.extend(city_entities_presistrip)
 
         # ── Cross-type dedup: suppress pre-strip PRIVATE_URL entities ──
         # that are contained within DATABASE_URL or URL entities (from
