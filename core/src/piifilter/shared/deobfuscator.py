@@ -978,8 +978,10 @@ class Deobfuscator:
 
     # Pattern: quoted strings joined by +
     # e.g. '"john" + "@" + "example" + "." + "com"'
+    # e.g. "'john' + '@' + 'example' + '.' + 'com'"
+    # Supports both single and double quotes (must be consistent within a match)
     _CONCAT_RE = re.compile(
-        r'(?:"([^"]*)"\s*\+\s*)+"([^"]*)"'
+        r"""(?:(?P<q>['"])[^'"]*(?P=q)\s*\+\s*)+(?P<q2>['"])[^'"]*(?P=q2)"""
     )
 
     # Pattern: f-string-like reconstruction
@@ -1018,8 +1020,8 @@ class Deobfuscator:
         # 1. Concat pattern: extract all quoted segments joined by +
         def _rebuild_concat(m: re.Match[str]) -> str:
             full = m.group(0)
-            # Extract all quoted strings
-            parts = re.findall(r'"([^"]*)"', full)
+            # Extract all quoted strings (single or double)
+            parts = re.findall(r"""["']([^"']*)["']""", full)
             return "".join(parts)
 
         text = cls._CONCAT_RE.sub(_rebuild_concat, text)
