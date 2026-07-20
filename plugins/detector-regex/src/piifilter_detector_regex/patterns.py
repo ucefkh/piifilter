@@ -582,11 +582,25 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # that otherwise have no keyword context. Uses a whitelist of ~35 major world cities
     # with a stative-verb lookahead to avoid matching names/enumerations.
     ("CITY", r"\b(?:Paris|London|Berlin|Tokyo|Beijing|Delhi|Moscow|Rome|Madrid|Oslo|Stockholm|Helsinki|Copenhagen|Amsterdam|Brussels|Vienna|Prague|Warsaw|Budapest|Dublin|Lisbon|Athens|Seoul|Bangkok|Jakarta|Hanoi|Dubai|Istanbul|Cairo|Jerusalem|Riyadh|Singapore|Manila|Kuala Lumpur)(?=\s+(?:has|is|was|lies|sits|became|remains|serves|boasts|encompasses|covers|spans|welcomes|hosts|attracts))", 0.65),
+    # Very conservative standalone city before comma + known country: "Paris, France", "London, UK"
+        # Very low confidence since this could be a named entity in other forms.
+        ("CITY", r"\b[A-Z][a-z]{2,}(?:[ -]+[A-Z][a-z]{2,})?(?=\s*,\s*(?:France|Germany|Italy|Spain|UK|England|USA|Japan|China|India|Brazil|Canada|Australia|Russia|Egypt|Turkey|Greece|Poland|Sweden|Norway|Netherlands|Belgium|Austria|Switzerland|Ireland|Portugal|Denmark|Finland|Thailand|Vietnam|Mexico|Argentina|Colombia|Chile|South Africa|Nigeria|Kenya|New Zealand|Singapore|Malaysia|Indonesia|Philippines|South Korea|Saudi Arabia|UAE|Israel|Czech|Hungary|Romania|Ukraine))", 0.35),
+    # Very conservative standalone city followed by geographic stative verbs: "Paris is...", "Berlin lies..."
+        # Narrow scope — only matches when followed by "is", "was", "has", "lies", "located", "situated".
+        # Low confidence (0.30) to avoid FPs from other capitalized entities.
+        ("CITY", r"\b[A-Z][a-z]{2,}(?:[ -]+[A-Z][a-z]{2,})?(?=\s+(?:is|was|has|lies|located|situated|became|remains|sits|boasts))\b", 0.30),
     # (Standalone non-context city patterns removed — they generated too many FPs with P=0.263.
         #  These new patterns above add specific, well-guarded contexts only.)
 
     # ── COUNTRY ──────────────────────────────────────────────────────
-    ("COUNTRY", r"\b(?:USA|US(?:A)?|UK|United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|UAE|Israel|Greece|Czech|Finland|Hungary|Romania|Ukraine)\b", 0.80),
+    # Full country names — unambiguous, high confidence.
+    ("COUNTRY", r"\b(?:United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|Israel|Greece|Finland|Hungary|Romania|Ukraine|USA)\b", 0.80),
+    # Short abbreviations (US, UK, UAE) — more FP-prone.
+    # Negative lookbehind guards against parenthetical asides like "(UK mobile)", "(US dollars)".
+    # Also guards against "Czech" used as language/ethnicity.
+    ("COUNTRY", r"(?<![(])\b(?:US|UK|UAE)\b(?!(?:\s+(?:mobile|cell|phone|dollars?|currency|version|market|based|standard|customer|support|office)))", 0.70),
+    # "Czech Republic" — full country name
+    ("COUNTRY", r"\bCzech\s+Republic\b", 0.80),
 
     # ── DOMAIN ───────────────────────────────────────────────────────
     # DOMAIN comes AFTER URL, DATABASE_URL, PRIVATE_URL, and EMAIL so that

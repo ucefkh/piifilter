@@ -852,8 +852,8 @@ class Arbitrator:
             if e.entity_type in _CITY_GEO_TYPES:
                 geo_intervals.append((e.start - 15, e.end + 15))
 
-        # Filter: low-confidence CITY spans (< 0.50) that lack a geo neighbor are dropped
-        _CITY_GEO_CONFIDENCE_THRESHOLD = 0.50
+        # Filter: low-confidence CITY spans (< 0.25) that lack a geo neighbor are dropped
+        _CITY_GEO_CONFIDENCE_THRESHOLD = 0.25
         filtered_by_geo: list[DetectedEntity] = []
         for e in deduped:
             if e.entity_type != EntityType.CITY:
