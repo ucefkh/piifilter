@@ -363,6 +363,40 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # short prefixes that aren't names
     # Exclude Arabic prefix words that aren't names themselves
     ("PERSON", r"(?i)(?:(?<=Russian:)|(?<=Arabic:)|(?<=Japanese:)|(?<=Greek:)|(?<=Unicode))\s*(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]{3,}(?:\s+(?-i:[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff])[a-z0-9\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u309f\u30a0-\u30ff]*)?\b", 0.70),
+    # "Signed/from/by/preposition + Name" — strong signal for person names
+    # Exclude "from" followed by known company-like words (corp, inc, ltd, etc.)
+    # Exclude "from" followed by geographic terms (city/country)
+    # Negative lookahead on: company suffixes, geographic roles, job titles
+    ("PERSON", r"(?i)\b(?:Signed|signed)\s+by\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|researcher|published|from|at|in|of|the|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln))\b", 0.78),
+    # "from Name" — Name must be two capitalized words (first + last) to avoid
+    # matching city names or single-word entities. Lower confidence since
+    # "from" can precede companies, cities, and countries.
+    ("PERSON", r"(?i)\bfrom\s+(?-i:[A-Z])[a-z]{2,}\s+(?-i:[A-Z])[a-z]{2,}(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|and|or|the|Street|St|Avenue|Ave|Road|Rd))\b", 0.65),
+    # "by Name" — two-word capitalized name after "by"
+    # Excludes geographic continuations (cities, countries) and company suffixes
+    ("PERSON", r"(?i)\bby\s+(?-i:[A-Z])[a-z]{2,}\s+(?-i:[A-Z])[a-z]{2,}(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|and|or|the|Street|St|Avenue|Ave|Road|Rd|Drive|Dr))\b", 0.60),
+    # "contact/reach/met/spoke/talked + Name" — verb of communication + person
+    # Both single-name (contact Robert) and full-name (contact Alice Smith) supported
+    ("PERSON", r"(?i)\b(?:contact|reach|met|meet)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?(?!\s+(?:about|with|at|in|the|Inc|Corp|LLC))\b", 0.70),
+    # "spoke with / talked to / introduced to + Name"
+    # Two+ word capitalized name required to avoid FPs on common words
+    ("PERSON", r"(?i)\b(?:spoke\s+with|talked\s+to|introduc(?:ed|ing)\s+(?:you\s+)?to|got\s+to\s+know)\s+(?-i:[A-Z])[a-z]{2,}\s+(?-i:[A-Z])[a-z]{2,}\b", 0.68),
+    # "introducing / please welcome / meet our new hire / say hello to + Name"
+    ("PERSON", r"(?i)\b(?:introducing|please\s+welcome|meet\s+(?:our\s+)?(?:new\s+)?(?:hire|teammate|colleague|team\s+member)|say\s+hello\s+to|shoutout\s+to)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.68),
+    # "regarding Name" — two capitalized words after regarding
+    ("PERSON", r"(?i)\bregarding\s+(?-i:[A-Z])[a-z]{2,}\s+(?-i:[A-Z])[a-z]{2,}(?!\s+(?:Inc|Corp|LLC))\b", 0.55),
+    # "Manager: / Supervisor:" prefix patterns
+    ("PERSON", r"(?i)\b(?:Manager|Supervisor|Coordinator|Lead|Admin|HR\s+rep)\s*:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof)\s+)?(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.75),
+    # "Employee Name" — capitalized name after "Employee" (complements EMPLOYEE_NAME type)
+    ("PERSON", r"(?i)\bEmployee\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?(?!\s+(?:name|ID|id|number))\b", 0.65),
+    # "Signed, Name" — comma after signed, then capitalized name
+    ("PERSON", r"(?i)\bsigned[-,]\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.72),
+    # Bare "FirstName LastName" at sentence start or after period/newline — capture the
+    # first two capitalized words. Exclude common sentence-starting words, company suffixes,
+    # and known non-person entities. Very carefully limited to avoid FPs.
+    # Negative lookahead blocks: company words, role/job words, sentence particles,
+    # geographic names, known non-person sentence starters, and common 2-word phrases.
+    ("PERSON", r"(?:^|\.\s+)(?-i:[A-Z])[a-z]{2,}\s+(?-i:[A-Z])[a-z]{2,}(?=\s+(?:approved|confirmed|requested|signed|said|reported|joined|left|called|sent|wrote|emailed|asked|answered|explained|mentioned|noted|added|replied|checked|updated|created|started|finished|completed|submitted|reviewed))", 0.55),
 
     # ── CUSTOMER_NAME ────────────────────────────────────────────────
     ("CUSTOMER_NAME", r"(?i)\b(?:customer|client)\s+(?:name\s+)?(?:is\s+)?(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
