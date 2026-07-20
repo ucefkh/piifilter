@@ -136,7 +136,7 @@ def detect_full_pipeline(text: str, patterns: list[tuple[EntityType, re.Pattern[
     deobfuscator → regex patterns → Luhn validation.
     """
     deob = Deobfuscator()
-    text, _log = deob(text)
+    text, _log, _text_for_gps = deob(text)
 
     entities: list[dict[str, Any]] = []
     seen_intervals: list[tuple[int, int]] = []

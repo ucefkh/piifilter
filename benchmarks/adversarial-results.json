@@ -2,11 +2,11 @@
   "summary": {
     "overall": {
       "total_examples": 117,
-      "full_pipeline_detected": 97,
-      "full_pipeline_rate": 82.9,
-      "raw_regex_detected": 60,
-      "raw_regex_rate": 51.3,
-      "deobfuscation_improvement": 31.6
+      "full_pipeline_detected": 92,
+      "full_pipeline_rate": 78.6,
+      "raw_regex_detected": 61,
+      "raw_regex_rate": 52.1,
+      "deobfuscation_improvement": 26.5
     },
     "by_category": {
       "Homoglyph emails": {
@@ -20,12 +20,14 @@
       },
       "Zero-width chars": {
         "total": 8,
-        "full_pipeline_detected": 8,
-        "full_pipeline_rate": 100.0,
+        "full_pipeline_detected": 7,
+        "full_pipeline_rate": 87.5,
         "raw_regex_detected": 4,
         "raw_regex_rate": 50.0,
-        "improvement": 50.0,
-        "missed_examples": []
+        "improvement": 37.5,
+        "missed_examples": [
+          "ZWSP in IP"
+        ]
       },
       "[at]/[dot] formats": {
         "total": 9,
@@ -62,13 +64,14 @@
       },
       "IP as text": {
         "total": 5,
-        "full_pipeline_detected": 1,
-        "full_pipeline_rate": 20.0,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 20.0,
+        "improvement": 0.0,
         "missed_examples": [
           "IP spoken simple",
+          "IP spoken with \"point\"",
           "IP spoken full",
           "IP verbally",
           "IPv6 spoken (abbreviated)"
@@ -85,68 +88,72 @@
       },
       "Encoded (base64/rot13)": {
         "total": 11,
-        "full_pipeline_detected": 5,
-        "full_pipeline_rate": 45.5,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 36.4,
         "raw_regex_detected": 5,
         "raw_regex_rate": 45.5,
-        "improvement": 0.0,
+        "improvement": -9.1,
         "missed_examples": [
           "base64 email",
           "base64 SSN",
           "base64 phone",
           "base64 IP",
           "base64 credit card",
-          "base64 full address"
+          "base64 full address",
+          "rot13 IP"
         ]
       },
       "HTML entities": {
         "total": 6,
-        "full_pipeline_detected": 6,
-        "full_pipeline_rate": 100.0,
+        "full_pipeline_detected": 5,
+        "full_pipeline_rate": 83.3,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 100.0,
-        "missed_examples": []
+        "improvement": 83.3,
+        "missed_examples": [
+          "IP as entities"
+        ]
       },
       "Split across tokens": {
         "total": 9,
-        "full_pipeline_detected": 8,
-        "full_pipeline_rate": 88.9,
+        "full_pipeline_detected": 7,
+        "full_pipeline_rate": 77.8,
         "raw_regex_detected": 2,
         "raw_regex_rate": 22.2,
-        "improvement": 66.7,
+        "improvement": 55.6,
         "missed_examples": [
+          "IP split +",
           "email with / concatenation"
         ]
       },
       "URL encoding": {
         "total": 5,
-        "full_pipeline_detected": 5,
-        "full_pipeline_rate": 100.0,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 80.0,
         "raw_regex_detected": 3,
         "raw_regex_rate": 60.0,
-        "improvement": 40.0,
-        "missed_examples": []
+        "improvement": 20.0,
+        "missed_examples": [
+          "IP with %2E"
+        ]
       },
       "Unicode tricks": {
         "total": 9,
         "full_pipeline_detected": 9,
         "full_pipeline_rate": 100.0,
-        "raw_regex_detected": 4,
-        "raw_regex_rate": 44.4,
-        "improvement": 55.6,
+        "raw_regex_detected": 6,
+        "raw_regex_rate": 66.7,
+        "improvement": 33.3,
         "missed_examples": []
       },
       "Comments/injection": {
         "total": 12,
-        "full_pipeline_detected": 11,
-        "full_pipeline_rate": 91.7,
+        "full_pipeline_detected": 12,
+        "full_pipeline_rate": 100.0,
         "raw_regex_detected": 9,
         "raw_regex_rate": 75.0,
-        "improvement": 16.7,
-        "missed_examples": [
-          "JS comment in phone"
-        ]
+        "improvement": 25.0,
+        "missed_examples": []
       },
       "Reversed/mirrored": {
         "total": 4,
@@ -157,29 +164,30 @@
         "improvement": 0.0,
         "missed_examples": [
           "email reversed",
-          "phone reversed"
+          "IP reversed"
         ]
       },
       "Mixed case tricks": {
         "total": 6,
-        "full_pipeline_detected": 4,
-        "full_pipeline_rate": 66.7,
+        "full_pipeline_detected": 5,
+        "full_pipeline_rate": 83.3,
         "raw_regex_detected": 5,
         "raw_regex_rate": 83.3,
-        "improvement": -16.7,
+        "improvement": 0.0,
         "missed_examples": [
-          "IP with octal-like",
           "SSN with letters inserted"
         ]
       },
       "Whitespace tricks": {
         "total": 5,
-        "full_pipeline_detected": 5,
-        "full_pipeline_rate": 100.0,
-        "raw_regex_detected": 5,
-        "raw_regex_rate": 100.0,
+        "full_pipeline_detected": 4,
+        "full_pipeline_rate": 80.0,
+        "raw_regex_detected": 4,
+        "raw_regex_rate": 80.0,
         "improvement": 0.0,
-        "missed_examples": []
+        "missed_examples": [
+          "IP with leading zeros"
+        ]
       }
     }
   },
@@ -438,7 +446,7 @@
       "full_detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123-45-6789",
+          "value": "SSN: 123456789",
           "score": 0.95
         }
       ],
@@ -453,8 +461,8 @@
       "full_detections": [
         {
           "type": "PHONE",
-          "value": " +1-555-123-4567",
-          "score": 0.88
+          "value": "+15551234567",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": false,
@@ -464,14 +472,8 @@
       "category": "Zero-width chars",
       "label": "ZWSP in IP",
       "text": "IP: 192\\u200b.168\\u200b.1\\u200b.1",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -612,8 +614,8 @@
       "full_detections": [
         {
           "type": "IP_ADDRESS",
-          "value": "6.7.8.9",
-          "score": 0.9
+          "value": "123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -627,8 +629,8 @@
       "full_detections": [
         {
           "type": "IP_ADDRESS",
-          "value": "1.2.3.45",
-          "score": 0.9
+          "value": "123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -669,7 +671,7 @@
       "full_detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123-45-6789",
+          "value": "SSN: 123456789",
           "score": 0.95
         }
       ],
@@ -690,7 +692,7 @@
       "full_detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123-45-6789",
+          "value": "SSN: 123456789",
           "score": 0.95
         }
       ],
@@ -711,7 +713,7 @@
       "full_detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123-45-6789",
+          "value": "SSN: 123456789",
           "score": 0.95
         }
       ],
@@ -732,7 +734,7 @@
       "full_detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123-45-6789",
+          "value": "SSN: 123456789",
           "score": 0.95
         }
       ],
@@ -753,7 +755,7 @@
       "full_detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123-45-6789",
+          "value": "SSN: 123456789",
           "score": 0.95
         }
       ],
@@ -768,7 +770,7 @@
       "full_detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN:  123-45-6789",
+          "value": "SSN:  123456789",
           "score": 0.95
         }
       ],
@@ -789,7 +791,7 @@
       "full_detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123-45-6789",
+          "value": "SSN: 123456789",
           "score": 0.95
         }
       ],
@@ -815,14 +817,8 @@
       "category": "IP as text",
       "label": "IP spoken with \"point\"",
       "text": "one nine two point one six eight point one point one",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -863,6 +859,11 @@
           "type": "CREDIT_CARD",
           "value": "CC: 4111111111111111",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111111111111111",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -884,6 +885,11 @@
           "type": "CREDIT_CARD",
           "value": "credit card number: 4111111111111111",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111111111111111",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -905,6 +911,11 @@
           "type": "CREDIT_CARD",
           "value": "CC: 4111111111111111",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111111111111111",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -926,6 +937,11 @@
           "type": "CREDIT_CARD",
           "value": "CC: 4111111111111111",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111111111111111",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": false,
@@ -941,6 +957,11 @@
           "type": "CREDIT_CARD",
           "value": "CC: 4111111111111111",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111111111111111",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -962,6 +983,11 @@
           "type": "CREDIT_CARD",
           "value": "CC: 4111111111111111",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111111111111111",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -970,6 +996,11 @@
           "type": "CREDIT_CARD",
           "value": "CC: 4111111111111111",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111111111111111",
+          "score": 0.8
         }
       ]
     },
@@ -983,6 +1014,11 @@
           "type": "CREDIT_CARD",
           "value": "CC: 378282246310005",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "378282246310005",
+          "score": 0.65
         }
       ],
       "raw_regex_detected": true,
@@ -1009,6 +1045,11 @@
           "type": "CREDIT_CARD",
           "value": "cc #: 4111111111111111",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111111111111111",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -1030,6 +1071,11 @@
           "type": "CREDIT_CARD",
           "value": "Credit card: 4111111111111111",
           "score": 0.9
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4111111111111111",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -1103,7 +1149,7 @@
       "full_detections": [
         {
           "type": "EMAIL",
-          "value": "wbua@rknzcyr.pbz",
+          "value": "john@example.com",
           "score": 0.9
         }
       ],
@@ -1123,9 +1169,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "SSN: 123-45-6789",
-          "score": 0.95
+          "type": "IP_ADDRESS",
+          "value": "123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -1145,8 +1191,8 @@
       "full_detections": [
         {
           "type": "CREDIT_CARD",
-          "value": "CC: 4111111111111111",
-          "score": 0.9
+          "value": "4111111111111111",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -1166,8 +1212,8 @@
       "full_detections": [
         {
           "type": "PHONE",
-          "value": " +1-555-123-4567",
-          "score": 0.88
+          "value": "+15551234567",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -1183,14 +1229,8 @@
       "category": "Encoded (base64/rot13)",
       "label": "rot13 IP",
       "text": "rot13 IP: 192.168.1.1",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -1252,9 +1292,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -1264,14 +1304,8 @@
       "category": "HTML entities",
       "label": "IP as entities",
       "text": "&#49;&#57;&#50;&#46;&#49;&#54;&#56;&#46;&#49;&#46;&#49;",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1283,8 +1317,8 @@
       "full_detections": [
         {
           "type": "PHONE",
-          "value": "+1-555-123-4567",
-          "score": 0.88
+          "value": "+15551234567",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": false,
@@ -1330,14 +1364,8 @@
       "category": "Split across tokens",
       "label": "IP split +",
       "text": "\"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1348,9 +1376,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -1364,8 +1392,8 @@
       "full_detections": [
         {
           "type": "PHONE",
-          "value": "+1-555-123-4567",
-          "score": 0.88
+          "value": "+15551234567",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": false,
@@ -1475,8 +1503,8 @@
       "full_detections": [
         {
           "type": "PHONE",
-          "value": "+1-555-123-4567",
-          "score": 0.88
+          "value": "+15551234567",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -1495,9 +1523,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "DOMAIN",
-          "value": "40example.com",
-          "score": 0.75
+          "type": "EMAIL",
+          "value": "john@example.com",
+          "score": 0.9
         }
       ],
       "raw_regex_detected": true,
@@ -1513,14 +1541,8 @@
       "category": "URL encoding",
       "label": "IP with %2E",
       "text": "192%2E168%2E1%2E1",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1552,13 +1574,19 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "123456789",
+          "score": 0.5
         }
       ],
-      "raw_regex_detected": false,
-      "raw_detections": []
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PHONE",
+          "value": "123–45–6789",
+          "score": 0.55
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
@@ -1567,13 +1595,19 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "123456789",
+          "score": 0.5
         }
       ],
-      "raw_regex_detected": false,
-      "raw_detections": []
+      "raw_regex_detected": true,
+      "raw_detections": [
+        {
+          "type": "PHONE",
+          "value": "123—45—6789",
+          "score": 0.55
+        }
+      ]
     },
     {
       "category": "Unicode tricks",
@@ -1613,8 +1647,8 @@
       "full_detections": [
         {
           "type": "PHONE",
-          "value": "+1-555-123-4567",
-          "score": 0.88
+          "value": "+15551234567",
+          "score": 0.8
         }
       ],
       "raw_regex_detected": true,
@@ -1633,9 +1667,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -1654,9 +1688,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -1711,9 +1745,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": false,
@@ -1744,8 +1778,14 @@
       "category": "Comments/injection",
       "label": "JS comment in phone",
       "text": "+1-555-/* */123-4567",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "+15551234567",
+          "score": 0.8
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1924,14 +1964,8 @@
       "category": "Reversed/mirrored",
       "label": "IP reversed",
       "text": "1.1.168.192",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "1.1.168.192",
-          "score": 0.9
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -1945,8 +1979,14 @@
       "category": "Reversed/mirrored",
       "label": "phone reversed",
       "text": "7654-321-555-1+",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "PHONE",
+          "value": "76543215551",
+          "score": 0.6
+        }
+      ],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -1957,9 +1997,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "9876-54-321",
-          "score": 0.75
+          "type": "IP_ADDRESS",
+          "value": "987654321",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -1979,7 +2019,7 @@
       "full_detections": [
         {
           "type": "EMAIL",
-          "value": "John.Example@Gmail.Com",
+          "value": "jOHN.eXAMPLE@gMAIL.cOM",
           "score": 0.9
         }
       ],
@@ -2017,8 +2057,14 @@
       "category": "Mixed case tricks",
       "label": "IP with octal-like",
       "text": "0300.0250.0001.0001",
-      "full_pipeline_detected": false,
-      "full_detections": [],
+      "full_pipeline_detected": true,
+      "full_detections": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "0300025000010001",
+          "score": 0.55
+        }
+      ],
       "raw_regex_detected": true,
       "raw_detections": [
         {
@@ -2087,7 +2133,7 @@
       "full_detections": [
         {
           "type": "SOCIAL_SECURITY",
-          "value": "SSN: 000-00-0000",
+          "value": "SSN: 000000000",
           "score": 0.95
         }
       ],
@@ -2107,9 +2153,9 @@
       "full_pipeline_detected": true,
       "full_detections": [
         {
-          "type": "SOCIAL_SECURITY",
-          "value": "123-45-6789",
-          "score": 0.9
+          "type": "IP_ADDRESS",
+          "value": "123456789",
+          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -2167,22 +2213,10 @@
       "category": "Whitespace tricks",
       "label": "IP with leading zeros",
       "text": "192.168.001.001",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.1.1",
-          "score": 0.9
-        }
-      ],
-      "raw_regex_detected": true,
-      "raw_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "192.168.001.001",
-          "score": 0.9
-        }
-      ]
+      "full_pipeline_detected": false,
+      "full_detections": [],
+      "raw_regex_detected": false,
+      "raw_detections": []
     }
   ]
 }
