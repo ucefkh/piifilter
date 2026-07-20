@@ -302,8 +302,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("IP_ADDRESS", r"\b(?:(?:[0-9a-fA-F]{1,4}:){1,7}:|:(?::[0-9a-fA-F]{1,4}){1,7})\b", 0.88),
     # IPv6 loopback: ::1
         ("IP_ADDRESS", r"(?:(?<=\s)|(?<=\A)|(?<=:))::1(?:(?=\s)|(?=\Z))", 0.90),
-        # IPv6 unspecified: ::
-        ("IP_ADDRESS", r"(?:(?<=\s)|(?<=\A))::(?:(?=\s)|(?=\Z))", 0.85),
+        # IPv6 unspecified: :: — require at least one adjacent word char or space boundary
+        ("IP_ADDRESS", r"(?:^::(?=\w)|(?<=\w)::(?=\s|$)|(?<=\s)::(?=\w|\s))", 0.85),
         # IPv6 embedded IPv4: ::ffff:192.168.1.1 or ::192.168.1.1
         # Uses lookbehind for left boundary since ::ffff: starts with colon
         ("IP_ADDRESS", r"(?:(?<=\s)|(?<=\A)|(?<=:))(?:[0-9a-fA-F]{1,4}:)*(?::(?:ffff:)?)?(?:(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(?:25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\b", 0.88),

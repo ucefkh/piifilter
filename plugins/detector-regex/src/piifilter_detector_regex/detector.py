@@ -347,6 +347,28 @@ class RegexDetector(Detector):
                 if any(kw in before for kw in _JWT_DEMO_KEYWORDS):
                     entities.remove(e)
 
+        # ── Suppress SSN entities in demo/teaching/example contexts ──
+        # Patterns like "SSN-like: 987654321", "example SSN: 123-45-6789",
+        # or "not an SSN: 987654321" are describing examples, not real SSNs.
+        for e in list(entities):
+            if e.entity_type == EntityType.SOCIAL_SECURITY:
+                before = cleaned[max(0, e.start - 70):e.start].lower().rstrip()
+                _SSN_DEMO_KEYWORDS = (
+                    "ssn-like", "ssn like", "like an ssn",
+                    "example ssn", "sample ssn", "demo ssn",
+                    "not a real ssn", "not an ssn",
+                    "ssn example", "social security example",
+                    "like a social security",
+                    "mock ssn", "fake ssn",
+                )
+                for pat in _SSN_DEMO_KEYWORDS:
+                    if pat in before:
+                        idx = before.rfind(pat)
+                        trailing = before[idx + len(pat):].strip()
+                        if not trailing or trailing.rstrip(":") in ("", "number", "ssn", "social", "example"):
+                            entities.remove(e)
+                            break
+
         # ── Suppress ADDRESS entities in generic/teaching contexts ──
         # Patterns like "my street is 123 Main Street" or "the address is 456 Oak Ave"
         # are teaching examples, not real addresses. The negative lookbehind
@@ -362,24 +384,14 @@ class RegexDetector(Detector):
                     "sample address", "demo address",
                 )
                 for pat in _ADDR_TEACHING_PATTERNS:
-                    # Check that the pattern appears as a suffix of 'before'
-                    # (i.e., immediately before the address with no intervening
-                    # non-word content) or as a standalone phrase ending at the
-                    # address start (with optional whitespace).
                     if pat in before:
                         idx = before.rfind(pat)
                         trailing = before[idx + len(pat):].strip()
                         if not trailing:
-                            # Pattern is the last content before the address
                             entities.remove(e)
                             break
 
         # ── Suppress PHONE entities in demo/teaching/non-real contexts ──
-        # Patterns like "phone-like number: 123-456-7890" or "not a real phone: 555-123-4567"
-        # are explicitly describing non-real phone numbers. The text says they're
-        # not real, so we should not flag them.
-        # IMPORTANT: PHONE entities come from pre-strip text (text_for_gps), so
-        # we must use text_for_gps for the before-context check, not cleaned.
         for e in list(entities):
             if e.entity_type == EntityType.PHONE:
                 before = text_for_gps[max(0, e.start - 70):e.start].lower().rstrip()
@@ -395,11 +407,6 @@ class RegexDetector(Detector):
                     if pat in before:
                         idx = before.rfind(pat)
                         trailing = before[idx + len(pat):].strip()
-                        # Allow colon and "number" variants between the context
-                        # keyword and the phone number, e.g.:
-                        #   "phone-like number: 123-456-7890"
-                        #   "not a real phone: 555-123-4567"
-                        #   "example phone: 123-456-7890"
                         if not trailing or trailing.rstrip(":") in ("", "number", "phone", "num", "tel"):
                             entities.remove(e)
                             break
@@ -562,6 +569,26 @@ class RegexDetector(Detector):
                 )
                 if any(kw in before for kw in _JWT_DEMO_KEYWORDS):
                     entities.remove(e)
+
+        # ── Suppress SSN entities in demo/teaching/example contexts ──
+        for e in list(entities):
+            if e.entity_type == EntityType.SOCIAL_SECURITY:
+                before = cleaned[max(0, e.start - 70):e.start].lower().rstrip()
+                _SSN_DEMO_KEYWORDS = (
+                    "ssn-like", "ssn like", "like an ssn",
+                    "example ssn", "sample ssn", "demo ssn",
+                    "not a real ssn", "not an ssn",
+                    "ssn example", "social security example",
+                    "like a social security",
+                    "mock ssn", "fake ssn",
+                )
+                for pat in _SSN_DEMO_KEYWORDS:
+                    if pat in before:
+                        idx = before.rfind(pat)
+                        trailing = before[idx + len(pat):].strip()
+                        if not trailing or trailing.rstrip(":") in ("", "number", "ssn", "social", "example"):
+                            entities.remove(e)
+                            break
 
         # ── Suppress ADDRESS entities in generic/teaching contexts ──
         # Patterns like "my street is 123 Main Street" or "the address is 456 Oak Ave"
