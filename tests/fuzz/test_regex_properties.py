@@ -58,10 +58,10 @@ def _span_to_dict(span) -> dict:
     """Normalize a CandidateSpan dataclass to a plain dict."""
     return {
         "type": span.entity_type.value,
-        "value": span.value,
+        "text": span.text,
         "start": span.start,
         "end": span.end,
-        "score": span.confidence,
+        "score": span.raw_score,
     }
 
 
