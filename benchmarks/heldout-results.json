@@ -1,6 +1,6 @@
 {
   "title": "Held-Out Adversarial Benchmark Report",
-  "timestamp": "2026-07-20T08:44:33.972574",
+  "timestamp": "2026-07-20T10:39:53.154959",
   "train_benchmark": {
     "label": "v1 benchmark (original)",
     "full_pipeline_rate": 78.6,
@@ -1697,7 +1697,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJoeXAiOiJKVlQiLCJhbGciOiJIUzIlNiJ9.eyJzdWIiOiIxMjMoNTYeODkwIno.subject.issuer.autho.com"
+              "value": "subject.issuer.autho.com"
             }
           ],
           "raw_regex_detected": true,
@@ -1708,7 +1708,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.subject.issuer.auth0.com"
+              "value": "subject.issuer.auth0.com"
             }
           ]
         },
@@ -1724,7 +1724,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJoeXAiOiJKVlQiLCJhbGciOiJIUzIlNiJ9.eyJzdWIiOiIxMjMoNTYeODkwIno.admin.company.net"
+              "value": "admin.company.net"
             }
           ],
           "raw_regex_detected": true,
@@ -1735,7 +1735,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.admin.company.net"
+              "value": "admin.company.net"
             }
           ]
         },
@@ -1751,7 +1751,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJoeXAiOiJKVlQiLCJhbGciOiJIUzIlNiJ9.eyJzdWIiOiIxMjMoNTYeODkwIno.system.corp"
+              "value": "system.corp"
             }
           ],
           "raw_regex_detected": true,
@@ -1762,7 +1762,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.system.corp"
+              "value": "system.corp"
             }
           ]
         },
@@ -1778,7 +1778,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJoeXAiOiJKVlQiLCJhbGciOiJIUzIlNiJ9.eyJzdWIiOiIxMjMoNTYeODkwIno.service.net"
+              "value": "service.net"
             }
           ],
           "raw_regex_detected": true,
@@ -1789,7 +1789,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.service.net"
+              "value": "service.net"
             }
           ]
         },
@@ -1805,7 +1805,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJoeXAiOiJKVlQiLCJhbGciOiJIUzIlNiJ9.eyJzdWIiOiIxMjMoNTYeODkwIno.token.client"
+              "value": "token.client"
             }
           ],
           "raw_regex_detected": true,
@@ -1816,7 +1816,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.token.client"
+              "value": "token.client"
             }
           ]
         },
@@ -1832,7 +1832,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJoeXAiOiJKVlQiLCJhbGciOiJIUzIlNiJ9.eyJzdWIiOiIxMjMoNTYeODkwIno.resource.backend"
+              "value": "resource.backend"
             }
           ],
           "raw_regex_detected": true,
@@ -1843,7 +1843,7 @@
             },
             {
               "type": "DOMAIN",
-              "value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjM0NTY3ODkwIn0.resource.backend"
+              "value": "resource.backend"
             }
           ]
         },
@@ -3707,11 +3707,11 @@
     {
       "label": "v5 (DeepSeek, seed_B, 10 strategies)",
       "total": 238,
-      "full_pipeline": 57,
-      "full_pipeline_rate": 23.9,
+      "full_pipeline": 72,
+      "full_pipeline_rate": 30.3,
       "raw_regex": 57,
       "raw_regex_rate": 23.9,
-      "improvement": 0.0,
+      "improvement": 6.3,
       "entries": [
         {
           "text": "The report was uploaded to ｵﾌｲﾜｳ｡ｹﾞﾑ for further analysis.",
@@ -4619,8 +4619,13 @@
           "text": "Please contact our London office at &#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#50;&#55;&#56;&#55;&#54;&#53;&#52;&#51;&#50;&#49; for international inquiries.",
           "entity_type": "PHONE",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "API_KEY",
+              "value": "4444444444444442787654321"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4628,8 +4633,13 @@
           "text": "Our toll-free number is &#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#56;&#48;&#48;&#49;&#50;&#51;&#52;&#53;&#54; for customer support.",
           "entity_type": "PHONE",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "API_KEY",
+              "value": "4141414141414141800123456"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4637,8 +4647,13 @@
           "text": "You can reach the Munich office at &#52;&#57;&#32;&#52;&#57;&#32;&#52;&#57;&#32;&#52;&#57;&#32;&#52;&#57;&#32;&#52;&#57;&#32;&#52;&#57;&#32;&#52;&#57;&#49;&#55;&#54;&#51;&#50;&#49;&#56;&#55;&#54; for bookings.",
           "entity_type": "PHONE",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "API_KEY",
+              "value": "4949494949494949176321876"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4646,8 +4661,13 @@
           "text": "Dial &#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#52;&#48;&#50;&#51;&#52;&#53;&#54;&#55;&#56; for our Prague-based team.",
           "entity_type": "PHONE",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "API_KEY",
+              "value": "4242424242424242402345678"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4655,8 +4675,13 @@
           "text": "Our Paris headquarters can be reached at &#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#57;&#48;&#49;&#50;&#51;&#52;&#53;&#54;&#55;.",
           "entity_type": "PHONE",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "API_KEY",
+              "value": "4343434343434343901234567"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4664,8 +4689,13 @@
           "text": "The event line is &#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#50;&#48;&#55;&#52;&#57;&#56;&#51;&#50;&#49; for RSVPs.",
           "entity_type": "PHONE",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "API_KEY",
+              "value": "4444444444444444207498321"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4673,8 +4703,13 @@
           "text": "Stockholm support at &#52;&#54;&#32;&#52;&#54;&#32;&#52;&#54;&#32;&#52;&#54;&#32;&#52;&#54;&#32;&#52;&#54;&#32;&#52;&#54;&#32;&#52;&#54;&#56;&#48;&#49;&#50;&#51;&#52;&#53;&#54;&#55; is available 24/7.",
           "entity_type": "PHONE",
           "strategy": "html-entity-decimal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "API_KEY",
+              "value": "4646464646464646801234567"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4687,6 +4722,10 @@
             {
               "type": "CITY",
               "value": "New York"
+            },
+            {
+              "type": "API_KEY",
+              "value": "4141414141414141212345678"
             }
           ],
           "raw_regex_detected": true,
@@ -4773,8 +4812,13 @@
           "text": "Please charge the order to my card ending in 4539ｱ1788ｲ6919981.",
           "entity_type": "CREDIT_CARD",
           "strategy": "half-width katakana",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CREDIT_CARD",
+              "value": "453917886919981"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4782,8 +4826,13 @@
           "text": "I entered the number 5555ｳ3334ｴ1234567 for the subscription.",
           "entity_type": "CREDIT_CARD",
           "strategy": "half-width katakana",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "BANK_ACCOUNT",
+              "value": "555533341234567"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4791,8 +4840,13 @@
           "text": "My Visa card 4024ｵ0071ｶ1234560 should be on file.",
           "entity_type": "CREDIT_CARD",
           "strategy": "half-width katakana",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "BANK_ACCOUNT",
+              "value": "402400711234560"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4800,8 +4854,13 @@
           "text": "The payment failed for card 5105ｷ1051ｸ9876543.",
           "entity_type": "CREDIT_CARD",
           "strategy": "half-width katakana",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "BANK_ACCOUNT",
+              "value": "510510519876543"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4809,8 +4868,13 @@
           "text": "Could you check the transaction on 4532ｹ1495ｺ2345678?",
           "entity_type": "CREDIT_CARD",
           "strategy": "half-width katakana",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "BANK_ACCOUNT",
+              "value": "453214952345678"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4818,8 +4882,13 @@
           "text": "I used 4916ｻ3210ｼ8765432 for the online purchase.",
           "entity_type": "CREDIT_CARD",
           "strategy": "half-width katakana",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "BANK_ACCOUNT",
+              "value": "491632108765432"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4827,8 +4896,13 @@
           "text": "Refund to card 4556ｽ7890ｾ3456789 was processed.",
           "entity_type": "CREDIT_CARD",
           "strategy": "half-width katakana",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "BANK_ACCOUNT",
+              "value": "455678903456789"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -4836,8 +4910,13 @@
           "text": "The card number 5405ｿ1234ｺ2345678 is linked to my account.",
           "entity_type": "CREDIT_CARD",
           "strategy": "half-width katakana",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "BANK_ACCOUNT",
+              "value": "540512342345678"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -6458,11 +6537,11 @@
     {
       "label": "v6 (3rd generator, seed_C, 10 strategies)",
       "total": 208,
-      "full_pipeline": 109,
-      "full_pipeline_rate": 52.4,
+      "full_pipeline": 110,
+      "full_pipeline_rate": 52.9,
       "raw_regex": 92,
       "raw_regex_rate": 44.2,
-      "improvement": 8.2,
+      "improvement": 8.7,
       "entries": [
         {
           "text": "Please remit payment to account \\u0049\\u0054\\u0036\\u0030\\u0058\\u0030\\u0035\\u0034\\u0032\\u0033\\u0031\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0036\\u0031\\u0032\\u0032.",
@@ -9421,8 +9500,13 @@
           "text": "The deployment requires the API key sk-1A2B3C4D5E6F7G8H9I0J1K2L3M4N5O6P7Q8R9S0T1U2V3W4X5Y6Z7A8B9C0D1E to authenticate requests.",
           "entity_type": "API_KEY",
           "strategy": "unicode-normalization",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "API_KEY",
+              "value": "SK-La2bEcAdSe6fTgBh9iOjLk2lEmAnSo6pTqBr9sOtLu2vEwAxSy6zTaBb9cOdLe"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -9542,11 +9626,11 @@
   ],
   "combined_held_out": {
     "total_examples": 706,
-    "full_pipeline_detected": 298,
-    "full_pipeline_rate": 42.2,
+    "full_pipeline_detected": 314,
+    "full_pipeline_rate": 44.5,
     "raw_regex_detected": 247,
     "raw_regex_rate": 35.0,
-    "deobfuscation_improvement": 7.2
+    "deobfuscation_improvement": 9.5
   },
-  "generalization_gap": 36.2
+  "generalization_gap": 33.9
 }

@@ -239,6 +239,14 @@ class RegexDetector(Detector):
         # can match the SSN validator even though it is clearly an IP.
         entities = self._filter_ssn_overlap(entities, ip_entities, gps_entities, date_entities)
 
+        # ── Cross-type dedup: BANK_ACCOUNT entities that overlap with ──
+        # pre-strip GPS entities. After separator stripping, coordinate
+        # pairs like "50.0000, 100.0000" collapse to "5000001000000",
+        # which matches the bare-digit BANK_ACCOUNT pattern (0.55).
+        # Suppress low-confidence BANK_ACCOUNT matches whose digit content
+        # is contained in or contains a pre-strip GPS entity's digit content.
+        entities = self._filter_bank_account_gps_overlap(entities, gps_entities)
+
         # ── Same-type dedup: remove entities of the same type whose spans are
         # fully contained within a higher-confidence entity of the same type.
         # This prevents pre-strip phone matches (with CJK keyword) from being
@@ -453,6 +461,83 @@ class RegexDetector(Detector):
         )
 
     @staticmethod
+    def _gps_coords_valid(match_text: str) -> bool:
+        """Validate a GPS coordinate match for realistic lat/lon ranges.
+
+        For coordinate pairs (comma/semicolon/cardinal-direction separated):
+          - First numeric value is LAT: requires [-90, 90]
+          - Second numeric value is LON: requires [-180, 180]
+          - At least one value must have >= 4 decimal places
+
+        For keyword-prefixed single values:
+          - lat/latitude/gps/coord prefix: value in [-90, 90]
+          - lon/lng/longitude prefix: value in [-180, 180]
+          - Both require >= 4 decimal places
+
+        For bare single values (lowest-confidence GPS pattern):
+          - Must be in [-90, 90] AND have >= 4 decimals
+        """
+        import re as _re
+
+        full_lower = match_text.lower()
+        nums = _re.findall(r"[-+]?\d+\.\d+", match_text)
+        if len(nums) < 1:
+            return False
+
+        try:
+            floats = [float(n) for n in nums]
+        except ValueError:
+            return False
+
+        has_precision = any(
+            len(n.split(".")[1]) >= 4
+            for n in nums if "." in n
+        )
+
+        # ── Single coordinate ─────────────────────────────────────────
+        if len(nums) == 1:
+            f = floats[0]
+            prefix = full_lower[:full_lower.find(nums[0].lower())].strip()
+
+            # Lon/lng/longitude context
+            if any(kw in prefix for kw in ("lon", "lng", "longitude")):
+                return -180.0 <= f <= 180.0 and has_precision
+
+            # Lat/latitude/gps/coords context
+            if any(kw in prefix for kw in ("lat", "latitude", "gps", "coordinates", "coord", "location")):
+                return -90.0 <= f <= 90.0 and has_precision
+
+            # Bare single value: must be lat-like
+            if not (-90.0 <= f <= 90.0):
+                return False
+            return has_precision
+
+        # ── Coordinate pairs (2+ numbers) ─────────────────────────────
+        # Check for comma/semicolon separator between numbers
+        has_proper_separator = bool(_re.search(r"\d\s*[,;]\s*", match_text))
+        # Also check for cardinal direction separator: N/S between numbers, E/W after
+        # e.g. "51.5074\u00b0 N, 0.1278\u00b0 W"
+        has_cardinal_sep = (
+            bool(_re.search(r"[NS]\s*[,;]?\s*[-+]?\d", match_text))
+            and bool(_re.search(r"\d\s*°?\s*[EW]", match_text))
+        )
+
+        if not (has_proper_separator or has_cardinal_sep):
+            return False
+
+        lat_val = floats[0]
+        lon_val = floats[1] if len(floats) >= 2 else floats[0]
+
+        if not (-90.0 <= lat_val <= 90.0):
+            return False
+        if not (-180.0 <= lon_val <= 180.0):
+            return False
+        if not has_precision:
+            return False
+
+        return True
+
+    @staticmethod
     def _filter_phone_overlap(
         entities: list[DetectedEntity],
         ip_entities: list[DetectedEntity],
@@ -553,6 +638,47 @@ class RegexDetector(Detector):
                     skip = False
                     for psd in pre_strip_digits:
                         if psd in ed or ed in psd:
+                            skip = True
+                            break
+                    if skip:
+                        continue
+            filtered.append(e)
+        return filtered
+
+    @staticmethod
+    def _filter_bank_account_gps_overlap(
+        entities: list[DetectedEntity],
+        gps_entities: list[DetectedEntity],
+    ) -> list[DetectedEntity]:
+        """Remove low-confidence BANK_ACCOUNT entities whose digit content
+        matches a pre-strip GPS entity.
+
+        After separator stripping, coordinate pairs like "50.0000, 100.0000"
+        collapse to "5000001000000" on stripped text, which the bare-digit
+        BANK_ACCOUNT pattern (0.55) then matches. Since the GPS detection
+        (on pre-strip text) is more accurate, suppress these FPs.
+        """
+        if not gps_entities or not entities:
+            return entities
+
+        # Build GPS digit content set
+        gps_digits = {
+            "".join(c for c in e.value if c.isdigit())
+            for e in gps_entities
+        }
+        if not gps_digits:
+            return entities
+
+        filtered: list[DetectedEntity] = []
+        for e in entities:
+            if e.entity_type == EntityType.BANK_ACCOUNT and e.confidence <= 0.65:
+                ed = "".join(c for c in e.value if c.isdigit())
+                if ed:
+                    # Check if this bank-account digit content overlaps
+                    # with any GPS digit content
+                    skip = False
+                    for gd in gps_digits:
+                        if gd in ed or ed in gd:
                             skip = True
                             break
                     if skip:
@@ -987,6 +1113,60 @@ class RegexDetector(Detector):
                             ip_context = text[max(0, start - 30):start].lower()
                             if digits_only.startswith("1") and "ip" not in ip_context:
                                 continue
+
+                # ── GPS range validation ──────────────────────────────────
+                # Validate coordinate pairs for realistic lat/lon ranges.
+                # Only applies to GPS patterns (which run on pre-strip text).
+                if entity_type == EntityType.GPS:
+                    match_text = match.group()
+                    if not self._gps_coords_valid(match_text):
+                        continue
+
+                # ── BANK_ACCOUNT context gate (bare-digit, low confidence) ──
+                # The 0.55 confidence pattern (\b\d{12,20}\b) matches any long
+                # digit run. Suppress low-confidence BANK_ACCOUNT unless a
+                # bank/account keyword appears in context, or the match is
+                # adjacent to an IBAN/CREDIT_CARD/ROUTING type keyword.
+                if entity_type == EntityType.BANK_ACCOUNT and score <= 0.65:
+                    context_before = text[max(0, start - 30):start].lower()
+                    context_after = text[end:min(len(text), end + 20)].lower()
+                    ba_keywords = ("bank", "account", "acct", "a/c", "iban",
+                                   "routing", "aba", "wire", "swift", "bic")
+                    has_ba_context = (
+                        any(kw in context_before for kw in ba_keywords)
+                        or any(kw in context_after for kw in ba_keywords)
+                    )
+                    if not has_ba_context:
+                        continue
+
+                # ── COUNTRY context gate ────────────────────────────────────
+                # Gazetteer-based country detection fires on ANY occurrence of
+                # a country name, even in non-country contexts (e.g. "Canada"
+                # in a brand name, "Turkey" as a food item). Suppress when the
+                # word appears without country-relevant context, or relegate
+                # to arbitration loss against ADDRESS/CITY.
+                if entity_type == EntityType.COUNTRY and score <= 0.80:
+                    context_before = text[max(0, start - 40):start].lower()
+                    context_after = text[end:min(len(text), end + 30)].lower()
+                    country_context = (
+                        "in " in context_before[-15:]
+                        or "from " in context_before[-15:]
+                        or "to " in context_before[-15:]
+                        or "of " in context_before[-15:]
+                        or "country" in context_before
+                        or "country" in context_after
+                        or "nationality" in context_before
+                        or "resident" in context_before
+                        or "citizen" in context_before
+                        or "based in" in context_before
+                        or "located in" in context_before
+                        or "address" in context_before
+                        or "address" in context_after
+                        # Comma before country often signals location context
+                        or context_before.strip().endswith(",")
+                    )
+                    if not country_context:
+                        continue
 
                 entities.append(
                     DetectedEntity(

@@ -660,3 +660,150 @@ class TestEdgeCases:
         assert len(entities) == 1
         assert entities[0].start == 0
         assert entities[0].end == 20
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# DOMAIN containment rule (arbitration precision fix)
+# ══════════════════════════════════════════════════════════════════════════════
+
+
+class TestDomainContainmentRule:
+    @pytest.mark.asyncio
+    async def test_domain_inside_email_is_dropped(self):
+        """DOMAIN inside EMAIL is a FP — the domain fragment was already caught."""
+        text = "contact user@example.com here"
+        raw = [
+            {"entity_type": "EMAIL", "start": 8, "end": 25, "score": 1.0, "detector": "regex"},
+            {"entity_type": "DOMAIN", "start": 13, "end": 25, "score": 0.75, "detector": "regex"},
+        ]
+        arb = Arbitrator()
+        entities = await arb.run(raw, text=text)
+        domain_entities = [e for e in entities if e.entity_type == EntityType.DOMAIN]
+        assert len(domain_entities) == 0, f"DOMAIN inside EMAIL should be dropped, got {len(domain_entities)}"
+        email_entities = [e for e in entities if e.entity_type == EntityType.EMAIL]
+        assert len(email_entities) >= 1, "EMAIL should still be emitted"
+
+    @pytest.mark.asyncio
+    async def test_domain_inside_url_is_dropped(self):
+        """DOMAIN inside URL is dropped."""
+        text = "visit https://example.com/path"
+        raw = [
+            {"entity_type": "URL", "start": 6, "end": 30, "score": 1.0, "detector": "regex"},
+            {"entity_type": "DOMAIN", "start": 15, "end": 28, "score": 0.75, "detector": "regex"},
+        ]
+        arb = Arbitrator()
+        entities = await arb.run(raw, text=text)
+        domain_entities = [e for e in entities if e.entity_type == EntityType.DOMAIN]
+        assert len(domain_entities) == 0
+
+    @pytest.mark.asyncio
+    async def test_domain_inside_ip_address_is_dropped(self):
+        """DOMAIN inside IP_ADDRESS is dropped."""
+        text = "server 10.0.0.1"
+        # IP 10.0.0.1 could also match DOMAIN as "0.1" — drop it
+        raw = [
+            {"entity_type": "IP_ADDRESS", "start": 7, "end": 15, "score": 1.0, "detector": "regex"},
+            {"entity_type": "DOMAIN", "start": 9, "end": 14, "score": 0.75, "detector": "regex"},
+        ]
+        arb = Arbitrator()
+        entities = await arb.run(raw, text=text)
+        domain_entities = [e for e in entities if e.entity_type == EntityType.DOMAIN]
+        assert len(domain_entities) == 0
+
+    @pytest.mark.asyncio
+    async def test_standalone_domain_is_preserved(self):
+        """DOMAIN not inside any higher-specificity span is preserved."""
+        text = "visit example.com for more info"
+        raw = [
+            {"entity_type": "DOMAIN", "start": 6, "end": 17, "score": 0.75, "detector": "regex"},
+        ]
+        arb = Arbitrator()
+        entities = await arb.run(raw, text=text)
+        domain_entities = [e for e in entities if e.entity_type == EntityType.DOMAIN]
+        assert len(domain_entities) == 1
+        assert domain_entities[0].value == "example.com"
+
+    @pytest.mark.asyncio
+    async def test_domain_inside_private_url_is_dropped(self):
+        """DOMAIN inside PRIVATE_URL is dropped."""
+        text = "connect to http://localhost:3000/api"
+        raw = [
+            {"entity_type": "PRIVATE_URL", "start": 11, "end": 32, "score": 1.0, "detector": "regex"},
+            {"entity_type": "DOMAIN", "start": 17, "end": 26, "score": 0.75, "detector": "regex"},
+        ]
+        arb = Arbitrator()
+        entities = await arb.run(raw, text=text)
+        domain_entities = [e for e in entities if e.entity_type == EntityType.DOMAIN]
+        assert len(domain_entities) == 0
+
+    @pytest.mark.asyncio
+    async def test_domain_inside_database_url_is_dropped(self):
+        """DOMAIN inside DATABASE_URL is dropped."""
+        text = "postgres://user:pass@db.internal:5432/mydb"
+        raw = [
+            {"entity_type": "DATABASE_URL", "start": 0, "end": 47, "score": 1.0, "detector": "regex"},
+            {"entity_type": "DOMAIN", "start": 20, "end": 31, "score": 0.75, "detector": "regex"},
+        ]
+        arb = Arbitrator()
+        entities = await arb.run(raw, text=text)
+        domain_entities = [e for e in entities if e.entity_type == EntityType.DOMAIN]
+        assert len(domain_entities) == 0
+
+    @pytest.mark.asyncio
+    async def test_domain_inside_file_path_is_dropped(self):
+        """DOMAIN inside FILE_PATH is dropped."""
+        text = "/home/user/project/config.yaml"
+        raw = [
+            {"entity_type": "FILE_PATH", "start": 0, "end": 31, "score": 1.0, "detector": "regex"},
+            {"entity_type": "DOMAIN", "start": 16, "end": 23, "score": 0.75, "detector": "regex"},
+        ]
+        arb = Arbitrator()
+        entities = await arb.run(raw, text=text)
+        domain_entities = [e for e in entities if e.entity_type == EntityType.DOMAIN]
+        assert len(domain_entities) == 0
+
+    @pytest.mark.asyncio
+    async def test_multiple_domains_email_context(self):
+        """Multiple DOMAIN fragments inside EMAIL all dropped."""
+        text = "emails: alice@example.com and bob@test.org"
+        raw = [
+            {"entity_type": "EMAIL", "start": 8, "end": 25, "score": 1.0, "detector": "regex"},
+            {"entity_type": "EMAIL", "start": 30, "end": 42, "score": 1.0, "detector": "regex"},
+            {"entity_type": "DOMAIN", "start": 14, "end": 25, "score": 0.75, "detector": "regex"},
+            {"entity_type": "DOMAIN", "start": 35, "end": 42, "score": 0.75, "detector": "regex"},
+        ]
+        arb = Arbitrator()
+        entities = await arb.run(raw, text=text)
+        domain_entities = [e for e in entities if e.entity_type == EntityType.DOMAIN]
+        assert len(domain_entities) == 0
+        email_entities = [e for e in entities if e.entity_type == EntityType.EMAIL]
+        assert len(email_entities) == 2
+
+    @pytest.mark.asyncio
+    async def test_domain_partially_overlapping_not_inside_is_preserved(self):
+        """DOMAIN overlapping but not fully contained by higher-specificity span is preserved."""
+        text = "connect to https://x.com/example.org"
+        # DOMAIN "example.org" (24-35) overlaps URL end but is NOT contained within it
+        raw = [
+            {"entity_type": "URL", "start": 11, "end": 26, "score": 1.0, "detector": "regex"},
+            {"entity_type": "DOMAIN", "start": 24, "end": 35, "score": 0.75, "detector": "regex"},
+        ]
+        arb = Arbitrator()
+        entities = await arb.run(raw, text=text)
+        domain_entities = [e for e in entities if e.entity_type == EntityType.DOMAIN]
+        # DOMAIN "example.org" extends past URL (URL ends at 26, DOMAIN ends at 35)
+        # So DOMAIN is NOT fully contained — it should be preserved
+        assert len(domain_entities) >= 1
+
+    @pytest.mark.asyncio
+    async def test_domain_without_container_span_is_kept(self):
+        """DOMAIN span with no container types present is kept unchanged."""
+        text = "visit example.com today"
+        raw = [
+            {"entity_type": "DOMAIN", "start": 6, "end": 17, "score": 0.75, "detector": "regex"},
+            {"entity_type": "PERSON", "start": 18, "end": 23, "score": 0.50, "detector": "regex"},
+        ]
+        arb = Arbitrator()
+        entities = await arb.run(raw, text=text)
+        domain_entities = [e for e in entities if e.entity_type == EntityType.DOMAIN]
+        assert len(domain_entities) == 1

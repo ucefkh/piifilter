@@ -87,6 +87,22 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # groupings that lookarounds may miss (e.g. when surrounded by spaces or punctuation).
         # Requires at least one separator between first two groups.
     ("SOCIAL_SECURITY", r"\b\d{4}[-\u00A0 ]\d{2}[-\u00A0 ]?\d{3,4}\b", 0.75),
+        # Bare 9-digit SSN (no separator) with area number validation.
+        # Area number (first 3 digits) must be 001-899, excluding 000 and 666.
+        # Uses a (?!...) negative lookahead to block invalid areas.
+        # Word boundaries prevent matching inside longer digit runs.
+        # Lower confidence (0.50) since no context keyword or formatting helps.
+    ("SOCIAL_SECURITY", r"\b(?!000|666)\d{3}(?!000|666)\d{6}\b", 0.50),
+        # Context-keyword-prefixed space-separated SSN: "Data: 911 68 3710", "Found: 996 29 8532", "Encoded: 354 29 2645"
+        # Also catches " (segmented)" suffix. Context words: Data, Found, Raw, Hidden field, Encoded, Obfuscated social_security
+        # This handles 3-2-4 groupings separated by single spaces.
+    ("SOCIAL_SECURITY", r"(?i)\b(?:data|found|raw|hidden\s+field|encoded|obfuscated\s+social_security)\s*:\s*\d{3}\s+\d{2}\s+\d{4}(?:\s+\(segmented\))?", 0.60),
+        # Abbreviated SSN formats with context keyword: "Found: 162-0-7302" (3-1-4), "Found: 837-26-720" (3-2-3)
+        # These have missing leading zeros in one group. Only match with context keyword to avoid FPs.
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#|data|found|raw|hidden\s+field)\s*:?\s*(?:is\s+)?\s*\d{3}-\d{1,2}-\d{3,4}\b", 0.70),
+        # Context-keyword-prefixed SSN with single spaces as separator between groups (3-2-4)
+        # Catches "Tax ID: 412 14 6394", "Social Security: 354 29 2645" and similar.
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{3}\s+\d{2}\s+\d{4}\b", 0.90),
 
     # ── IBAN ─────────────────────────────────────────────────────────
     # IBAN must come BEFORE CREDIT_CARD patterns since IBAN substrings (like
@@ -386,7 +402,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Greek alphabet names (O + name pattern for "O Γιώργος")
     ("PERSON", r"(?i)\bO\s+[\u0370-\u03ff]+\b", 0.70),
     # Any non-Latin name caught by context + multiple non-Latin word chars
-    ("PERSON", r"\b(?:name|email|phone|mail|contact|user)\s*[：:]\s*[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff]+\b", 0.65),
+        # IMPORTANT: Negative lookahead prevents matching when the non-Latin chars
+        # are the local-part of an email address (homoglyph obfuscation like
+        # "αӏісе@domain.com" where "αӏісе" uses Cyrillic homoglyphs to spell "alice").
+        # Also exclude matches followed by `@` (email address continuation) or by
+        # more Latin characters that would indicate email-part or password context.
+        ("PERSON", r"\b(?:name|email|phone|mail|contact|user)\s*[：:]\s*(?![\u0400-\u04ff\u0600-\u06ff]+@)[\u0400-\u04ff\u0600-\u06ff\u0370-\u03ff\u4e00-\u9fff]+\b(?!\s*@)", 0.65),
     # Non-Latin names after language labels — use lookbehind so match starts at the name
     # Require at least 3+ consecutive non-Latin chars to avoid matching
     # short prefixes that aren't names
@@ -555,7 +576,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # are NOT in the negative lookahead — those ARE legitimate domains that should
     # match (e.g. "google.com", "api.github.com"). Only ambiguous tokens that are
     # genuinely not domains (math, sin, and, the, etc.) are blocked.
-    ("DOMAIN", r"\b(?<!@)(?!(?:math|sin|cos|tan|log|exp|abs|min|max|sum|avg|and|the|this|that|for|with|from|have|has|had|not|are|was|were|can|will|its|our|their|my|your|his|her)\.[a-z]{2,}\b)(?!(?:eyJ)[a-zA-Z0-9]+\.[a-zA-Z0-9])(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b(?!:)(?!@)(?<!\.yaml)(?<!\.json)(?<!\.xml)(?<!\.toml)(?<!\.ini)(?<!\.cfg)(?<!\.conf)(?<!\.log)(?<!\.txt)(?<!\.md)(?<!\.rst)(?<!\.html)(?<!\.css)(?<!\.js)(?<!\.ts)(?<!\.py)(?<!\.rb)(?<!\.java)(?<!\.cpp)(?<!\.c)(?<!\.h)(?<!\.go)(?<!\.rs)(?<!\.php)(?<!\.sql)(?<!\.db)(?<!\.pdf)(?<!\.doc)(?<!\.docx)(?<!\.xls)(?<!\.xlsx)(?<!\.ppt)(?<!\.pptx)(?<!\.png)(?<!\.jpg)(?<!\.jpeg)(?<!\.gif)(?<!\.svg)(?<!\.ico)(?<!\.zip)(?<!\.tar)(?<!\.gz)(?<!\.tgz)(?<!\.bz2)(?<!\.xz)(?<!\.7z)(?<!\.lock)(?<!\.env)", 0.75),
+    ("DOMAIN", r"\b(?<!@)(?!(?:math|sin|cos|tan|log|exp|abs|min|max|sum|avg|and|the|this|that|for|with|from|have|has|had|not|are|was|were|can|will|its|our|their|my|your|his|her)\.[a-z]{2,}\b)(?!(?:eyJ|NiJ|nIJ|nIj)[a-zA-Z0-9]+\.[a-zA-Z0-9])(?![a-zA-Z0-9_-]{3,5}\.[a-zA-Z0-9_-]{25,}\.[a-zA-Z]{2,3}\b)(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b(?!:)(?!@)(?<!\.yaml)(?<!\.json)(?<!\.xml)(?<!\.toml)(?<!\.ini)(?<!\.cfg)(?<!\.conf)(?<!\.log)(?<!\.txt)(?<!\.md)(?<!\.rst)(?<!\.html)(?<!\.css)(?<!\.js)(?<!\.ts)(?<!\.py)(?<!\.rb)(?<!\.java)(?<!\.cpp)(?<!\.c)(?<!\.h)(?<!\.go)(?<!\.rs)(?<!\.php)(?<!\.sql)(?<!\.db)(?<!\.pdf)(?<!\.doc)(?<!\.docx)(?<!\.xls)(?<!\.xlsx)(?<!\.ppt)(?<!\.pptx)(?<!\.png)(?<!\.jpg)(?<!\.jpeg)(?<!\.gif)(?<!\.svg)(?<!\.ico)(?<!\.zip)(?<!\.tar)(?<!\.gz)(?<!\.tgz)(?<!\.bz2)(?<!\.xz)(?<!\.7z)(?<!\.lock)(?<!\.env)", 0.75),
 
     # ── COMPANY ──────────────────────────────────────────────────────
     ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|Incorporated|PLC|AG|SA|BV|NV)\.?\b", 0.80),
