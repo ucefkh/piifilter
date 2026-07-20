@@ -374,6 +374,36 @@ class RegexDetector(Detector):
                             entities.remove(e)
                             break
 
+        # ── Suppress PHONE entities in demo/teaching/non-real contexts ──
+        # Patterns like "phone-like number: 123-456-7890" or "not a real phone: 555-123-4567"
+        # are explicitly describing non-real phone numbers. The text says they're
+        # not real, so we should not flag them.
+        # IMPORTANT: PHONE entities come from pre-strip text (text_for_gps), so
+        # we must use text_for_gps for the before-context check, not cleaned.
+        for e in list(entities):
+            if e.entity_type == EntityType.PHONE:
+                before = text_for_gps[max(0, e.start - 70):e.start].lower().rstrip()
+                _PHONE_DEMO_KEYWORDS = (
+                    "phone-like", "phone like", "like a phone",
+                    "not a real phone", "not a phone",
+                    "not a real number",
+                    "example phone", "sample phone", "demo phone",
+                    "fake number", "fake phone",
+                    "not a real",
+                )
+                for pat in _PHONE_DEMO_KEYWORDS:
+                    if pat in before:
+                        idx = before.rfind(pat)
+                        trailing = before[idx + len(pat):].strip()
+                        # Allow colon and "number" variants between the context
+                        # keyword and the phone number, e.g.:
+                        #   "phone-like number: 123-456-7890"
+                        #   "not a real phone: 555-123-4567"
+                        #   "example phone: 123-456-7890"
+                        if not trailing or trailing.rstrip(":") in ("", "number", "phone", "num", "tel"):
+                            entities.remove(e)
+                            break
+
         elapsed = time.monotonic() - t0
 
         # ── Convert DetectedEntity list to CandidateSpan list ──────

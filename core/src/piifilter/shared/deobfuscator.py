@@ -245,6 +245,7 @@ class Deobfuscator:
         # Save a copy of the text before _strip_non_alpha_seps destroys
         # decimal separators in GPS coordinates. This pre-strip text
         # is used by the detector for GPS pattern matching.
+        text = self._reconstruct_split_tokens(text, log)
         text_for_gps = text
         text = self._strip_non_alpha_seps(text, log)
         text = self._decode_hex(text, log)
