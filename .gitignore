@@ -1,41 +1,11 @@
-# Python
+_*.py
+_get_score.py
 __pycache__/
-*.py[cod]
+*.pyc
+node_modules/
+dist/
 *.egg-info/
-.venv/
+.hermes/
+.hypothesis/
 .ruff_cache/
 .pytest_cache/
-*.pyc
-
-# Build
-dist/
-build/
-*.egg
-
-# IDE
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Hermes
-.hermes/
-
-# Environment
-.env
-.env.local
-
-# Node
-node_modules/
-
-# VSCode extension build output
-apps/vscode-extension/out/
-
-# Temp test files from subagents
-_*.py
-benchmarks/_*.py
-.hermes-tmp.*

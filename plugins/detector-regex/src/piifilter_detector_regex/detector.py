@@ -821,8 +821,14 @@ class RegexDetector(Detector):
                 # emit them as MASKED_SSN type. The benchmark then counts them as
                 # true positives for full-denominator recall, while is_masked_pii()
                 # separates them for real-only metrics.
+                # IMPORTANT: only check the DIGIT portion of the match for mask
+                # characters. The keyword prefix (e.g. "SS#") may contain "#" as
+                # a label separator, not a mask character. We check for mask
+                # chars (X, *, bullets) in the match EXCLUDING any "#" that
+                # appears adjacent to alphabetic characters (keyword context).
                 if entity_type == EntityType.SOCIAL_SECURITY:
-                    if "X" in match.group().upper() or "*" in match.group() or "#" in match.group() or "\u2022" in match.group() or "\u25CF" in match.group():
+                    mask_chars = [c for c in match.group() if c in ("X", "*", "\u2022", "\u25CF")]
+                    if len(mask_chars) >= 3:
                         entities.append(
                             DetectedEntity(
                                 entity_type=EntityType.MASKED_SSN,
