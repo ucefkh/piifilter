@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T17:17:27Z",
+  "timestamp": "2026-07-20T19:42:26Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 232,
+      "total_detected_entities": 229,
       "total_true_positives": 215,
-      "total_false_positives": 17,
+      "total_false_positives": 14,
       "total_false_negatives": 3,
-      "overall_precision": 0.9267241379310345,
+      "overall_precision": 0.9388646288209607,
       "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9555555555555556,
+      "overall_f1": 0.9619686800894853,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -241,14 +241,14 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.9,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7008,
             1.0
@@ -262,14 +262,14 @@
         },
         "EMAIL": {
           "true_positives": 40,
-          "false_positives": 2,
+          "false_positives": 3,
           "false_negatives": 2,
           "n": 42,
           "n_total": 42,
-          "precision": 0.9524,
+          "precision": 0.9302,
           "recall": 0.9524,
-          "f1": 0.9524,
-          "f2": 0.9524,
+          "f1": 0.9412,
+          "f2": 0.9479,
           "recall_ci": [
             0.8421,
             0.9868
@@ -367,14 +367,14 @@
         },
         "IP_ADDRESS": {
           "true_positives": 14,
-          "false_positives": 2,
+          "false_positives": 3,
           "false_negatives": 1,
           "n": 15,
           "n_total": 15,
-          "precision": 0.875,
+          "precision": 0.8235,
           "recall": 0.9333,
-          "f1": 0.9032,
-          "f2": 0.9211,
+          "f1": 0.875,
+          "f2": 0.9091,
           "recall_ci": [
             0.7018,
             0.9881
@@ -481,14 +481,14 @@
         },
         "PHONE": {
           "true_positives": 15,
-          "false_positives": 3,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.8333,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7961,
             1.0
@@ -544,14 +544,14 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 7,
           "n_total": 7,
-          "precision": 0.875,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6457,
             1.0
@@ -610,24 +610,20 @@
         "NONE": {
           "FILE_PATH": 1,
           "EMPLOYEE_NAME": 1,
-          "PHONE": 1,
           "URL": 1,
           "MASKED_CC": 1,
           "MASKED_SSN": 1,
-          "SOCIAL_SECURITY": 1,
-          "EMAIL": 2
+          "EMAIL": 2,
+          "IP_ADDRESS": 1
         },
         "IP_ADDRESS": {
           "IP_ADDRESS": 2
-        },
-        "PHONE": {
-          "PHONE": 2
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
         },
         "EMAIL": {
-          "DOMAIN": 1
+          "EMAIL": 1
         }
       },
       "example_results": [
@@ -1437,9 +1433,9 @@
           "index": 50,
           "text_preview": "Phone: +1-212-555-0198 and (415) 555-2671 and 555-123-4567",
           "expected": 3,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
@@ -2098,14 +2094,12 @@
           "index": 94,
           "text_preview": "User typed a phone-like number: 123-456-7890 but this is not a real phone.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "PHONE"
-          ]
+          "detected_types": []
         },
         {
           "index": 95,
@@ -2392,14 +2386,12 @@
           "index": 115,
           "text_preview": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 116,
@@ -2636,14 +2628,16 @@
           "index": 133,
           "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 134,
@@ -2882,7 +2876,7 @@
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "EMAIL"
           ]
         }
       ]
@@ -2891,13 +2885,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 226,
-      "total_true_positives": 215,
-      "total_false_positives": 15,
-      "total_false_negatives": 3,
-      "overall_precision": 0.9347826086956522,
-      "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9598214285714285,
+      "total_detected_entities": 212,
+      "total_true_positives": 201,
+      "total_false_positives": 14,
+      "total_false_negatives": 17,
+      "overall_precision": 0.9348837209302325,
+      "overall_recall": 0.9220183486238532,
+      "overall_f1": 0.928406466512702,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -2963,24 +2957,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 14,
-          "false_positives": 1,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 14,
           "n": 14,
           "n_total": 14,
-          "precision": 0.9333,
-          "recall": 1.0,
-          "f1": 0.9655,
-          "f2": 0.9859,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "f2": 0.0,
           "recall_ci": [
-            0.7847,
-            1.0
+            0.0,
+            0.2153
           ],
           "real_n": 14,
-          "real_recall": 1.0,
+          "real_recall": 0.0,
           "real_recall_ci": [
-            0.7847,
-            1.0
+            0.0,
+            0.2153
           ]
         },
         "COMPANY": {
@@ -3090,14 +3084,14 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.9,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7008,
             1.0
@@ -3111,14 +3105,14 @@
         },
         "EMAIL": {
           "true_positives": 40,
-          "false_positives": 3,
+          "false_positives": 4,
           "false_negatives": 2,
           "n": 42,
           "n_total": 42,
-          "precision": 0.9302,
+          "precision": 0.9091,
           "recall": 0.9524,
-          "f1": 0.9412,
-          "f2": 0.9479,
+          "f1": 0.9302,
+          "f2": 0.9434,
           "recall_ci": [
             0.8421,
             0.9868
@@ -3216,14 +3210,14 @@
         },
         "IP_ADDRESS": {
           "true_positives": 14,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "n": 15,
           "n_total": 15,
-          "precision": 1.0,
+          "precision": 0.9333,
           "recall": 0.9333,
-          "f1": 0.9655,
-          "f2": 0.9459,
+          "f1": 0.9333,
+          "f2": 0.9333,
           "recall_ci": [
             0.7018,
             0.9881
@@ -3393,14 +3387,14 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 7,
           "n_total": 7,
-          "precision": 0.875,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6457,
             1.0
@@ -3450,9 +3444,6 @@
         }
       },
       "confusion_matrix": {
-        "ADDRESS": {
-          "CITY": 1
-        },
         "PRIVATE_URL": {
           "URL": 1
         },
@@ -3465,13 +3456,13 @@
           "MASKED_CC": 1,
           "MASKED_SSN": 1,
           "EMAIL": 3,
-          "SOCIAL_SECURITY": 1
+          "IP_ADDRESS": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
         },
         "EMAIL": {
-          "DOMAIN": 1
+          "EMAIL": 1
         }
       },
       "example_results": [
@@ -3500,33 +3491,31 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -3820,27 +3809,26 @@
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 4,
-          "true_positives": 3,
-          "false_positives": 1,
-          "false_negatives": 0,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY",
@@ -3848,7 +3836,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "COUNTRY"
           ]
         },
@@ -4185,34 +4172,32 @@
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
           "index": 45,
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
-          "detected": 3,
-          "true_positives": 3,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY",
             "COMPANY",
             "PERSON"
           ],
           "detected_types": [
-            "CITY",
             "COMPANY",
             "PERSON"
           ]
@@ -4221,16 +4206,14 @@
           "index": 46,
           "text_preview": "City pop: Tokyo (37M), Delhi (32M), Shanghai (28M)",
           "expected": 3,
-          "detected": 3,
-          "true_positives": 3,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 3,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 47,
@@ -4281,7 +4264,7 @@
           "index": 50,
           "text_preview": "Phone: +1-212-555-0198 and (415) 555-2671 and 555-123-4567",
           "expected": 3,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 3,
           "false_positives": 0,
           "false_negatives": 0,
@@ -4341,16 +4324,15 @@
           "index": 54,
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 6,
-          "detected": 6,
-          "true_positives": 6,
+          "detected": 4,
+          "true_positives": 4,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 2,
           "expected_types": [
             "CITY",
             "GPS"
           ],
           "detected_types": [
-            "CITY",
             "GPS"
           ]
         },
@@ -4699,16 +4681,14 @@
           "index": 77,
           "text_preview": "City: The population of Mumbai is over 20 million.",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 78,
@@ -5021,15 +5001,14 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
           "detected_types": [
-            "CITY",
             "PERSON"
           ]
         },
@@ -5224,29 +5203,25 @@
           "index": 114,
           "text_preview": "Person: James researcher published his findings in Nature at London University.",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 115,
           "text_preview": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 116,
@@ -5483,14 +5458,16 @@
           "index": 133,
           "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 134,
@@ -5729,7 +5706,7 @@
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "EMAIL"
           ]
         }
       ]
@@ -5738,13 +5715,13 @@
       "detector": "pipeline-raw",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 247,
+      "total_detected_entities": 245,
       "total_true_positives": 215,
-      "total_false_positives": 32,
+      "total_false_positives": 30,
       "total_false_negatives": 3,
-      "overall_precision": 0.8704453441295547,
+      "overall_precision": 0.8775510204081632,
       "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9247311827956989,
+      "overall_f1": 0.9287257019438445,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -5937,14 +5914,14 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.9,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7008,
             1.0
@@ -5958,14 +5935,14 @@
         },
         "EMAIL": {
           "true_positives": 40,
-          "false_positives": 6,
+          "false_positives": 7,
           "false_negatives": 2,
           "n": 42,
           "n_total": 42,
-          "precision": 0.8696,
+          "precision": 0.8511,
           "recall": 0.9524,
-          "f1": 0.9091,
-          "f2": 0.9346,
+          "f1": 0.8989,
+          "f2": 0.9302,
           "recall_ci": [
             0.8421,
             0.9868
@@ -6063,14 +6040,14 @@
         },
         "IP_ADDRESS": {
           "true_positives": 14,
-          "false_positives": 2,
+          "false_positives": 3,
           "false_negatives": 1,
           "n": 15,
           "n_total": 15,
-          "precision": 0.875,
+          "precision": 0.8235,
           "recall": 0.9333,
-          "f1": 0.9032,
-          "f2": 0.9211,
+          "f1": 0.875,
+          "f2": 0.9091,
           "recall_ci": [
             0.7018,
             0.9881
@@ -6177,14 +6154,14 @@
         },
         "PHONE": {
           "true_positives": 15,
-          "false_positives": 5,
+          "false_positives": 3,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.75,
+          "precision": 0.8333,
           "recall": 1.0,
-          "f1": 0.8571,
-          "f2": 0.9375,
+          "f1": 0.9091,
+          "f2": 0.9615,
           "recall_ci": [
             0.7961,
             1.0
@@ -6240,14 +6217,14 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 7,
           "n_total": 7,
-          "precision": 0.7,
+          "precision": 0.7778,
           "recall": 1.0,
-          "f1": 0.8235,
-          "f2": 0.9211,
+          "f1": 0.875,
+          "f2": 0.9459,
           "recall_ci": [
             0.6457,
             1.0
@@ -6319,23 +6296,22 @@
           "MASKED_CC": 1,
           "MASKED_SSN": 1,
           "EMAIL": 3,
-          "SOCIAL_SECURITY": 1
+          "IP_ADDRESS": 1
         },
         "IP_ADDRESS": {
           "IP_ADDRESS": 2
         },
-        "PHONE": {
-          "PHONE": 4
-        },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
+        },
+        "PHONE": {
+          "PHONE": 2
         },
         "PERSON": {
           "EMAIL": 1
         },
         "EMAIL": {
-          "EMAIL": 2,
-          "DOMAIN": 1
+          "EMAIL": 3
         }
       },
       "example_results": [
@@ -7146,9 +7122,9 @@
           "index": 50,
           "text_preview": "Phone: +1-212-555-0198 and (415) 555-2671 and 555-123-4567",
           "expected": 3,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
@@ -8104,14 +8080,12 @@
           "index": 115,
           "text_preview": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 116,
@@ -8348,14 +8322,16 @@
           "index": 133,
           "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 134,
@@ -8594,7 +8570,7 @@
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "EMAIL"
           ]
         }
       ]

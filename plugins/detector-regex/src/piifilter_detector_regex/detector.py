@@ -1168,6 +1168,44 @@ class RegexDetector(Detector):
                     if len(digits) >= 13 and not self._luhn_check(digits):
                         continue
 
+                    # ── Non-CC context suppression ──────────────────────────
+                    # Suppress CREDIT_CARD matches when the preceding context
+                    # contains strong indicators that this is a bank account,
+                    # policy number, product code, tracking ID, or other
+                    # non-CC identifier. This targets Luhn-valid numbers
+                    # that appear in clearly non-CC contexts (e.g. "Bank:
+                    # 123456... and account: 876543...98765").
+                    if score <= 0.70 or (score <= 0.85 and len(digits) == 16):
+                        context_before = text[max(0, start - 60):start].lower().rstrip()
+                        # Strong non-CC keywords — numbers preceded by these
+                        # are almost certainly not credit cards.
+                        _NON_CC_KEYWORDS = (
+                            "bank", "account", "acct", "a/c",
+                            "policy", "tracking", "track",
+                            "product code", "product",
+                            "item #", "item number",
+                            "batch", "batch id",
+                            "reference", "ref:", "ref ",
+                            "order ", "order#", "order #",
+                            "transaction id", "txn",
+                            "id:", "id ", "id#", "id #",
+                            "number:", "number ",
+                            "code:", "code ",
+                        )
+                        if any(kw in context_before for kw in _NON_CC_KEYWORDS):
+                            # Double-check: only suppress if there is NOT also
+                            # a CC-associated keyword nearby (e.g. "credit card
+                            # account" should still detect the CC).
+                            _CC_KEYWORDS = (
+                                "credit card", "credit", "cc",
+                                "card number", "card no",
+                                "visa", "mastercard", "amex",
+                                "discover", "diners",
+                            )
+                            has_cc_context = any(kw in context_before for kw in _CC_KEYWORDS)
+                            if not has_cc_context:
+                                continue
+
                 # Masked-SSN guard: instead of suppressing masked SSNs entirely,
                 # emit them as MASKED_SSN type. The benchmark then counts them as
                 # true positives for full-denominator recall, while is_masked_pii()

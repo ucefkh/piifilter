@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-off)",
-  "timestamp": "2026-07-20T06:00:17Z",
+  "timestamp": "2026-07-20T19:42:38Z",
   "arbitration": {
     "enabled": false
   },
@@ -8,7 +8,7 @@
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
     "test_examples": 150,
-    "total_entities": 212,
+    "total_entities": 218,
     "entity_types": [
       "ADDRESS",
       "API_KEY",
@@ -41,24 +41,25 @@
     "regex": {
       "detector": "regex",
       "total_examples": 150,
-      "total_expected_entities": 212,
-      "total_detected_entities": 226,
-      "total_true_positives": 202,
-      "total_false_positives": 24,
-      "total_false_negatives": 10,
-      "overall_precision": 0.8938053097345132,
-      "overall_recall": 0.9528301886792453,
-      "overall_f1": 0.9223744292237442,
+      "total_expected_entities": 218,
+      "total_detected_entities": 229,
+      "total_true_positives": 215,
+      "total_false_positives": 14,
+      "total_false_negatives": 3,
+      "overall_precision": 0.9388646288209607,
+      "overall_recall": 0.9862385321100917,
+      "overall_f1": 0.9619686800894853,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
-          "precision": 0.8,
+          "n_total": 4,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5101,
             1.0
@@ -72,13 +73,14 @@
         },
         "API_KEY": {
           "true_positives": 5,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 5,
-          "precision": 0.8333,
+          "n_total": 5,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5655,
             1.0
@@ -95,6 +97,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
+          "n_total": 4,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -111,23 +114,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 7,
+          "true_positives": 14,
           "false_positives": 1,
-          "false_negatives": 1,
-          "n": 8,
-          "precision": 0.875,
-          "recall": 0.875,
-          "f1": 0.875,
-          "f2": 0.875,
+          "false_negatives": 0,
+          "n": 14,
+          "n_total": 14,
+          "precision": 0.9333,
+          "recall": 1.0,
+          "f1": 0.9655,
+          "f2": 0.9859,
           "recall_ci": [
-            0.5291,
-            0.9776
+            0.7847,
+            1.0
           ],
-          "real_n": 8,
-          "real_recall": 0.875,
+          "real_n": 14,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.5291,
-            0.9776
+            0.7847,
+            1.0
           ]
         },
         "COMPANY": {
@@ -135,6 +139,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
+          "n_total": 4,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -152,13 +157,14 @@
         },
         "COUNTRY": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.9,
+          "n_total": 9,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7008,
             1.0
@@ -175,6 +181,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 7,
+          "n_total": 7,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -195,6 +202,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 5,
+          "n_total": 5,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -215,6 +223,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 7,
+          "n_total": 7,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -232,13 +241,14 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.9,
+          "n_total": 9,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7008,
             1.0
@@ -255,6 +265,7 @@
           "false_positives": 3,
           "false_negatives": 2,
           "n": 42,
+          "n_total": 42,
           "precision": 0.9302,
           "recall": 0.9524,
           "f1": 0.9412,
@@ -275,6 +286,7 @@
           "false_positives": 1,
           "false_negatives": 0,
           "n": 6,
+          "n_total": 6,
           "precision": 0.8571,
           "recall": 1.0,
           "f1": 0.9231,
@@ -295,6 +307,7 @@
           "false_positives": 1,
           "false_negatives": 0,
           "n": 7,
+          "n_total": 7,
           "precision": 0.875,
           "recall": 1.0,
           "f1": 0.9333,
@@ -312,13 +325,14 @@
         },
         "GPS": {
           "true_positives": 16,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 16,
-          "precision": 0.9412,
+          "n_total": 16,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9697,
-          "f2": 0.9877,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.8064,
             1.0
@@ -335,6 +349,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
+          "n_total": 4,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -355,6 +370,7 @@
           "false_positives": 3,
           "false_negatives": 1,
           "n": 15,
+          "n_total": 15,
           "precision": 0.8235,
           "recall": 0.9333,
           "f1": 0.875,
@@ -372,13 +388,14 @@
         },
         "JWT": {
           "true_positives": 5,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 5,
-          "precision": 0.8333,
+          "n_total": 5,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5655,
             1.0
@@ -390,11 +407,42 @@
             1.0
           ]
         },
+        "MASKED_CC": {
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 0,
+          "n_total": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "f2": 0.0,
+          "recall_ci": [
+            0.0,
+            0.0
+          ]
+        },
+        "MASKED_SSN": {
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 0,
+          "n_total": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "f2": 0.0,
+          "recall_ci": [
+            0.0,
+            0.0
+          ]
+        },
         "PASSPORT": {
           "true_positives": 4,
           "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
+          "n_total": 4,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -412,13 +460,14 @@
         },
         "PERSON": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.9,
+          "n_total": 9,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7008,
             1.0
@@ -431,23 +480,24 @@
           ]
         },
         "PHONE": {
-          "true_positives": 14,
-          "false_positives": 3,
-          "false_negatives": 1,
+          "true_positives": 15,
+          "false_positives": 0,
+          "false_negatives": 0,
           "n": 15,
-          "precision": 0.8235,
-          "recall": 0.9333,
-          "f1": 0.875,
-          "f2": 0.9091,
+          "n_total": 15,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ],
           "real_n": 15,
-          "real_recall": 0.9333,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ]
         },
         "PRIVATE_URL": {
@@ -455,6 +505,7 @@
           "false_positives": 1,
           "false_negatives": 0,
           "n": 7,
+          "n_total": 7,
           "precision": 0.875,
           "recall": 1.0,
           "f1": 0.9333,
@@ -471,34 +522,36 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 4,
+          "true_positives": 9,
           "false_positives": 0,
-          "false_negatives": 5,
+          "false_negatives": 0,
           "n": 9,
+          "n_total": 9,
           "precision": 1.0,
-          "recall": 0.4444,
-          "f1": 0.6154,
-          "f2": 0.5,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.1888,
-            0.7334
+            0.7008,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.4444,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.1888,
-            0.7334
+            0.7008,
+            1.0
           ]
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 7,
-          "precision": 0.7778,
+          "n_total": 7,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.875,
-          "f2": 0.9459,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6457,
             1.0
@@ -515,6 +568,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
+          "n_total": 4,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -535,6 +589,7 @@
           "false_positives": 2,
           "false_negatives": 0,
           "n": 0,
+          "n_total": 0,
           "precision": 0.0,
           "recall": 0.0,
           "f1": 0.0,
@@ -546,36 +601,29 @@
         }
       },
       "confusion_matrix": {
-        "NONE": {
-          "CITY": 1,
-          "FILE_PATH": 1,
-          "EMPLOYEE_NAME": 1,
-          "COUNTRY": 1,
-          "PHONE": 1,
-          "ADDRESS": 1,
-          "GPS": 1,
-          "URL": 1,
-          "PERSON": 1,
-          "API_KEY": 1,
-          "SOCIAL_SECURITY": 2,
-          "EMAIL": 3,
-          "JWT": 1
+        "ADDRESS": {
+          "CITY": 1
         },
         "PRIVATE_URL": {
+          "URL": 1
+        },
+        "NONE": {
+          "FILE_PATH": 1,
+          "EMPLOYEE_NAME": 1,
           "URL": 1,
+          "MASKED_CC": 1,
+          "MASKED_SSN": 1,
+          "EMAIL": 2,
           "IP_ADDRESS": 1
         },
         "IP_ADDRESS": {
           "IP_ADDRESS": 2
         },
-        "PHONE": {
-          "PHONE": 2
-        },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
         },
         "EMAIL": {
-          "DOMAIN": 1
+          "EMAIL": 1
         }
       },
       "example_results": [
@@ -603,16 +651,18 @@
         {
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
@@ -869,10 +919,10 @@
           "index": 18,
           "text_preview": "Contact me at bob.smith@example.org or call +44 20 7946 0958 for the project Vul",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PHONE",
@@ -880,7 +930,8 @@
           ],
           "detected_types": [
             "EMAIL",
-            "PHONE"
+            "PHONE",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -904,41 +955,43 @@
           "index": 20,
           "text_preview": "Please add employee David Tennant to the access list for project Galactic.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -1045,15 +1098,14 @@
           "index": 29,
           "text_preview": "Coordinates: 48.8566 N, 2.3522 E is the center of Paris",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "CITY",
             "GPS"
           ]
         },
@@ -1123,15 +1175,14 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -1285,16 +1336,18 @@
         {
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
@@ -1380,9 +1433,9 @@
           "index": 50,
           "text_preview": "Phone: +1-212-555-0198 and (415) 555-2671 and 555-123-4567",
           "expected": 3,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
@@ -1439,15 +1492,17 @@
         {
           "index": 54,
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
-          "expected": 4,
-          "detected": 4,
-          "true_positives": 4,
+          "expected": 6,
+          "detected": 6,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
+            "CITY",
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
@@ -1683,10 +1738,10 @@
           "index": 70,
           "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
@@ -1694,7 +1749,8 @@
           ],
           "detected_types": [
             "CUSTOMER_NAME",
-            "EMAIL"
+            "EMAIL",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -1855,15 +1911,14 @@
           "index": 81,
           "text_preview": "Phone: 07700 900 123 (UK mobile)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "COUNTRY",
             "PHONE"
           ]
         },
@@ -1946,10 +2001,10 @@
           "index": 87,
           "text_preview": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME",
@@ -1957,17 +2012,18 @@
           ],
           "detected_types": [
             "EMAIL",
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 88,
           "text_preview": "Customer: River Song (river@library.silence) - project Impossible Astronaut",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
@@ -1975,7 +2031,8 @@
           ],
           "detected_types": [
             "CUSTOMER_NAME",
-            "EMAIL"
+            "EMAIL",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -2037,27 +2094,23 @@
           "index": 94,
           "text_preview": "User typed a phone-like number: 123-456-7890 but this is not a real phone.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "PHONE"
-          ]
+          "detected_types": []
         },
         {
           "index": 95,
           "text_preview": "My street is 123 Main Street, not 123 Main St.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 96,
@@ -2117,6 +2170,21 @@
         {
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "CITY"
+          ],
+          "detected_types": [
+            "CITY"
+          ]
+        },
+        {
+          "index": 102,
+          "text_preview": "User 192.168.x.x is a common notation for private networks.",
           "expected": 0,
           "detected": 0,
           "true_positives": 0,
@@ -2124,19 +2192,6 @@
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": []
-        },
-        {
-          "index": 102,
-          "text_preview": "User 192.168.x.x is a common notation for private networks.",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "GPS"
-          ]
         },
         {
           "index": 103,
@@ -2174,9 +2229,9 @@
           "index": 105,
           "text_preview": "Arabic: اتصل بـ أحمد على ahmed@example.sa أو +966 55 123 4567",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL",
@@ -2280,44 +2335,30 @@
           "index": 111,
           "text_preview": "Base64 encoded email: dGVzdEBleGFtcGxlLmNvbQ== looks like a token but its an ema",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "API_KEY"
-          ]
+          "detected_types": []
         },
         {
           "index": 112,
           "text_preview": "Partially redacted: My credit card is ****-****-****-1111 and SSN is ***-**-6789",
           "expected": 0,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "MASKED_CC",
+            "MASKED_SSN"
           ]
         },
         {
           "index": 113,
           "text_preview": "Redacted phone: XXX-XXX-7890 and email: xxxx@domain.com",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
-            "EMAIL"
-          ]
-        },
-        {
-          "index": 114,
-          "text_preview": "Person: James researcher published his findings in Nature at London University.",
           "expected": 0,
           "detected": 0,
           "true_positives": 0,
@@ -2327,17 +2368,30 @@
           "detected_types": []
         },
         {
+          "index": 114,
+          "text_preview": "Person: James researcher published his findings in Nature at London University.",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "CITY"
+          ],
+          "detected_types": [
+            "CITY"
+          ]
+        },
+        {
           "index": 115,
           "text_preview": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 116,
@@ -2398,14 +2452,12 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "JWT"
-          ]
+          "detected_types": []
         },
         {
           "index": 122,
@@ -2576,14 +2628,16 @@
           "index": 133,
           "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 134,
@@ -2694,14 +2748,16 @@
           "index": 141,
           "text_preview": "Phone: +1-555-123-4Ӧ97 (Cyrillic Ҧ instead of 5)",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PHONE"
+          ]
         },
         {
           "index": 142,
@@ -2820,7 +2876,7 @@
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "EMAIL"
           ]
         }
       ]
@@ -2828,24 +2884,25 @@
     "pipeline": {
       "detector": "pipeline",
       "total_examples": 150,
-      "total_expected_entities": 212,
-      "total_detected_entities": 239,
-      "total_true_positives": 201,
-      "total_false_positives": 38,
-      "total_false_negatives": 11,
-      "overall_precision": 0.8410041841004184,
-      "overall_recall": 0.9481132075471698,
-      "overall_f1": 0.8913525498891354,
+      "total_expected_entities": 218,
+      "total_detected_entities": 245,
+      "total_true_positives": 215,
+      "total_false_positives": 30,
+      "total_false_negatives": 3,
+      "overall_precision": 0.8775510204081632,
+      "overall_recall": 0.9862385321100917,
+      "overall_f1": 0.9287257019438445,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
-          "precision": 0.8,
+          "n_total": 4,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5101,
             1.0
@@ -2859,13 +2916,14 @@
         },
         "API_KEY": {
           "true_positives": 5,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 5,
-          "precision": 0.8333,
+          "n_total": 5,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5655,
             1.0
@@ -2882,6 +2940,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
+          "n_total": 4,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -2898,23 +2957,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 7,
+          "true_positives": 14,
           "false_positives": 1,
-          "false_negatives": 1,
-          "n": 8,
-          "precision": 0.875,
-          "recall": 0.875,
-          "f1": 0.875,
-          "f2": 0.875,
+          "false_negatives": 0,
+          "n": 14,
+          "n_total": 14,
+          "precision": 0.9333,
+          "recall": 1.0,
+          "f1": 0.9655,
+          "f2": 0.9859,
           "recall_ci": [
-            0.5291,
-            0.9776
+            0.7847,
+            1.0
           ],
-          "real_n": 8,
-          "real_recall": 0.875,
+          "real_n": 14,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.5291,
-            0.9776
+            0.7847,
+            1.0
           ]
         },
         "COMPANY": {
@@ -2922,6 +2982,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
+          "n_total": 4,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -2939,13 +3000,14 @@
         },
         "COUNTRY": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.9,
+          "n_total": 9,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7008,
             1.0
@@ -2962,6 +3024,7 @@
           "false_positives": 5,
           "false_negatives": 0,
           "n": 7,
+          "n_total": 7,
           "precision": 0.5833,
           "recall": 1.0,
           "f1": 0.7368,
@@ -2982,6 +3045,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 5,
+          "n_total": 5,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -3002,6 +3066,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 7,
+          "n_total": 7,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -3019,13 +3084,14 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.9,
+          "n_total": 9,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7008,
             1.0
@@ -3039,13 +3105,14 @@
         },
         "EMAIL": {
           "true_positives": 40,
-          "false_positives": 5,
+          "false_positives": 7,
           "false_negatives": 2,
           "n": 42,
-          "precision": 0.8889,
+          "n_total": 42,
+          "precision": 0.8511,
           "recall": 0.9524,
-          "f1": 0.9195,
-          "f2": 0.939,
+          "f1": 0.8989,
+          "f2": 0.9302,
           "recall_ci": [
             0.8421,
             0.9868
@@ -3062,6 +3129,7 @@
           "false_positives": 1,
           "false_negatives": 0,
           "n": 6,
+          "n_total": 6,
           "precision": 0.8571,
           "recall": 1.0,
           "f1": 0.9231,
@@ -3082,6 +3150,7 @@
           "false_positives": 1,
           "false_negatives": 0,
           "n": 7,
+          "n_total": 7,
           "precision": 0.875,
           "recall": 1.0,
           "f1": 0.9333,
@@ -3099,13 +3168,14 @@
         },
         "GPS": {
           "true_positives": 16,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 16,
-          "precision": 0.9412,
+          "n_total": 16,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9697,
-          "f2": 0.9877,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.8064,
             1.0
@@ -3122,6 +3192,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
+          "n_total": 4,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -3142,6 +3213,7 @@
           "false_positives": 3,
           "false_negatives": 1,
           "n": 15,
+          "n_total": 15,
           "precision": 0.8235,
           "recall": 0.9333,
           "f1": 0.875,
@@ -3159,13 +3231,14 @@
         },
         "JWT": {
           "true_positives": 5,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 5,
-          "precision": 0.8333,
+          "n_total": 5,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.5655,
             1.0
@@ -3177,11 +3250,42 @@
             1.0
           ]
         },
+        "MASKED_CC": {
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 0,
+          "n_total": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "f2": 0.0,
+          "recall_ci": [
+            0.0,
+            0.0
+          ]
+        },
+        "MASKED_SSN": {
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 0,
+          "n_total": 0,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "f2": 0.0,
+          "recall_ci": [
+            0.0,
+            0.0
+          ]
+        },
         "PASSPORT": {
           "true_positives": 4,
           "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
+          "n_total": 4,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -3198,43 +3302,45 @@
           ]
         },
         "PERSON": {
-          "true_positives": 8,
-          "false_positives": 4,
-          "false_negatives": 1,
+          "true_positives": 9,
+          "false_positives": 2,
+          "false_negatives": 0,
           "n": 9,
-          "precision": 0.6667,
-          "recall": 0.8889,
-          "f1": 0.7619,
-          "f2": 0.8333,
+          "n_total": 9,
+          "precision": 0.8182,
+          "recall": 1.0,
+          "f1": 0.9,
+          "f2": 0.9574,
           "recall_ci": [
-            0.565,
-            0.9801
+            0.7008,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.8889,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.565,
-            0.9801
+            0.7008,
+            1.0
           ]
         },
         "PHONE": {
-          "true_positives": 14,
-          "false_positives": 5,
-          "false_negatives": 1,
+          "true_positives": 15,
+          "false_positives": 3,
+          "false_negatives": 0,
           "n": 15,
-          "precision": 0.7368,
-          "recall": 0.9333,
-          "f1": 0.8235,
-          "f2": 0.8861,
+          "n_total": 15,
+          "precision": 0.8333,
+          "recall": 1.0,
+          "f1": 0.9091,
+          "f2": 0.9615,
           "recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ],
           "real_n": 15,
-          "real_recall": 0.9333,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ]
         },
         "PRIVATE_URL": {
@@ -3242,6 +3348,7 @@
           "false_positives": 1,
           "false_negatives": 0,
           "n": 7,
+          "n_total": 7,
           "precision": 0.875,
           "recall": 1.0,
           "f1": 0.9333,
@@ -3258,34 +3365,36 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 4,
+          "true_positives": 9,
           "false_positives": 0,
-          "false_negatives": 5,
+          "false_negatives": 0,
           "n": 9,
+          "n_total": 9,
           "precision": 1.0,
-          "recall": 0.4444,
-          "f1": 0.6154,
-          "f2": 0.5,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.1888,
-            0.7334
+            0.7008,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.4444,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.1888,
-            0.7334
+            0.7008,
+            1.0
           ]
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 4,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 7,
-          "precision": 0.6364,
+          "n_total": 7,
+          "precision": 0.7778,
           "recall": 1.0,
-          "f1": 0.7778,
-          "f2": 0.8974,
+          "f1": 0.875,
+          "f2": 0.9459,
           "recall_ci": [
             0.6457,
             1.0
@@ -3302,6 +3411,7 @@
           "false_positives": 0,
           "false_negatives": 0,
           "n": 4,
+          "n_total": 4,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
@@ -3322,6 +3432,7 @@
           "false_positives": 2,
           "false_negatives": 0,
           "n": 0,
+          "n_total": 0,
           "precision": 0.0,
           "recall": 0.0,
           "f1": 0.0,
@@ -3336,43 +3447,41 @@
         "CREDIT_CARD": {
           "CREDIT_CARD": 5
         },
-        "NONE": {
+        "ADDRESS": {
           "CITY": 1,
-          "FILE_PATH": 1,
-          "EMPLOYEE_NAME": 1,
-          "COUNTRY": 1,
-          "PHONE": 1,
-          "ADDRESS": 1,
-          "PERSON": 3,
-          "GPS": 1,
-          "URL": 1,
-          "API_KEY": 1,
-          "SOCIAL_SECURITY": 2,
-          "EMAIL": 3,
-          "JWT": 1
+          "PERSON": 1
         },
         "SOCIAL_SECURITY": {
           "SOCIAL_SECURITY": 2
         },
         "PRIVATE_URL": {
+          "URL": 1
+        },
+        "NONE": {
+          "FILE_PATH": 1,
+          "EMPLOYEE_NAME": 1,
+          "PHONE": 1,
+          "PERSON": 1,
           "URL": 1,
+          "MASKED_CC": 1,
+          "MASKED_SSN": 1,
+          "EMAIL": 3,
           "IP_ADDRESS": 1
         },
         "IP_ADDRESS": {
           "IP_ADDRESS": 2
         },
-        "ADDRESS": {
-          "PERSON": 1
-        },
-        "PHONE": {
-          "PHONE": 4
-        },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
         },
+        "PHONE": {
+          "PHONE": 2
+        },
+        "PERSON": {
+          "EMAIL": 1
+        },
         "EMAIL": {
-          "EMAIL": 2,
-          "DOMAIN": 1
+          "EMAIL": 3
         }
       },
       "example_results": [
@@ -3400,16 +3509,18 @@
         {
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
@@ -3666,10 +3777,10 @@
           "index": 18,
           "text_preview": "Contact me at bob.smith@example.org or call +44 20 7946 0958 for the project Vul",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PHONE",
@@ -3677,7 +3788,8 @@
           ],
           "detected_types": [
             "EMAIL",
-            "PHONE"
+            "PHONE",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -3701,41 +3813,43 @@
           "index": 20,
           "text_preview": "Please add employee David Tennant to the access list for project Galactic.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -3842,15 +3956,14 @@
           "index": 29,
           "text_preview": "Coordinates: 48.8566 N, 2.3522 E is the center of Paris",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "GPS"
           ],
           "detected_types": [
-            "CITY",
             "GPS"
           ]
         },
@@ -3920,15 +4033,14 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -4082,16 +4194,18 @@
         {
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
-          "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "expected": 2,
+          "detected": 3,
+          "true_positives": 2,
           "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ],
           "detected_types": [
             "ADDRESS",
+            "CITY",
             "PERSON"
           ]
         },
@@ -4178,9 +4292,9 @@
           "index": 50,
           "text_preview": "Phone: +1-212-555-0198 and (415) 555-2671 and 555-123-4567",
           "expected": 3,
-          "detected": 5,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
@@ -4237,15 +4351,17 @@
         {
           "index": 54,
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
-          "expected": 4,
-          "detected": 4,
-          "true_positives": 4,
+          "expected": 6,
+          "detected": 6,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
+            "CITY",
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
@@ -4481,10 +4597,10 @@
           "index": 70,
           "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
@@ -4492,7 +4608,8 @@
           ],
           "detected_types": [
             "CUSTOMER_NAME",
-            "EMAIL"
+            "EMAIL",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -4653,15 +4770,14 @@
           "index": 81,
           "text_preview": "Phone: 07700 900 123 (UK mobile)",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "COUNTRY",
             "PHONE"
           ]
         },
@@ -4744,10 +4860,10 @@
           "index": 87,
           "text_preview": "Employee: Mickey Smith (mickey@ctos.earth) for project Last Centurion",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "EMPLOYEE_NAME",
@@ -4755,17 +4871,18 @@
           ],
           "detected_types": [
             "EMAIL",
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "PROJECT_NAME"
           ]
         },
         {
           "index": 88,
           "text_preview": "Customer: River Song (river@library.silence) - project Impossible Astronaut",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CUSTOMER_NAME",
             "EMAIL",
@@ -4773,7 +4890,8 @@
           ],
           "detected_types": [
             "CUSTOMER_NAME",
-            "EMAIL"
+            "EMAIL",
+            "PROJECT_NAME"
           ]
         },
         {
@@ -4848,14 +4966,12 @@
           "index": 95,
           "text_preview": "My street is 123 Main Street, not 123 Main St.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 96,
@@ -4915,13 +5031,16 @@
         {
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
+          "expected": 1,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
           "false_negatives": 0,
-          "expected_types": [],
+          "expected_types": [
+            "CITY"
+          ],
           "detected_types": [
+            "CITY",
             "PERSON"
           ]
         },
@@ -4929,14 +5048,12 @@
           "index": 102,
           "text_preview": "User 192.168.x.x is a common notation for private networks.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "GPS"
-          ]
+          "detected_types": []
         },
         {
           "index": 103,
@@ -4974,9 +5091,9 @@
           "index": 105,
           "text_preview": "Arabic: اتصل بـ أحمد على ahmed@example.sa أو +966 55 123 4567",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL",
@@ -5012,10 +5129,10 @@
           "index": 107,
           "text_preview": "Japanese: 田中太郎のメールはtanaka@example.jp、電話は+81 90-1234-5678",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL",
             "PERSON",
@@ -5023,6 +5140,7 @@
           ],
           "detected_types": [
             "EMAIL",
+            "PERSON",
             "PHONE"
           ]
         },
@@ -5079,26 +5197,25 @@
           "index": 111,
           "text_preview": "Base64 encoded email: dGVzdEBleGFtcGxlLmNvbQ== looks like a token but its an ema",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "API_KEY"
-          ]
+          "detected_types": []
         },
         {
           "index": 112,
           "text_preview": "Partially redacted: My credit card is ****-****-****-1111 and SSN is ***-**-6789",
           "expected": 0,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "SOCIAL_SECURITY"
+            "MASKED_CC",
+            "MASKED_SSN"
           ]
         },
         {
@@ -5117,28 +5234,28 @@
         {
           "index": 114,
           "text_preview": "Person: James researcher published his findings in Nature at London University.",
-          "expected": 0,
+          "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
-          "expected_types": [],
+          "expected_types": [
+            "CITY"
+          ],
           "detected_types": [
-            "PERSON"
+            "CITY"
           ]
         },
         {
           "index": 115,
           "text_preview": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 116,
@@ -5199,14 +5316,12 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "JWT"
-          ]
+          "detected_types": []
         },
         {
           "index": 122,
@@ -5377,14 +5492,16 @@
           "index": 133,
           "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "IP_ADDRESS"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IP_ADDRESS"
+          ]
         },
         {
           "index": 134,
@@ -5495,14 +5612,16 @@
           "index": 141,
           "text_preview": "Phone: +1-555-123-4Ӧ97 (Cyrillic Ҧ instead of 5)",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PHONE"
+          ]
         },
         {
           "index": 142,
@@ -5621,7 +5740,7 @@
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "EMAIL"
           ]
         }
       ]
