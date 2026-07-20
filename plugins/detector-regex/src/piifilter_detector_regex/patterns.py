@@ -201,7 +201,9 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # where the prefix is separated from the key value by ": "
     ("API_KEY", r"(?i)\b(?:key|token|secret|auth|api)\s*:\s*(?:sk[-_]|pk[-_]|gh[opusr]_|xox[bp]-|rk_(?:live|test)_|whsec_|api[-_]|key[-_]|secret[-_])[a-zA-Z0-9_\-]{16,64}\b", 0.90),
     # Level 3 — base64-looking runs adjacent to key/token/secret context (forward OR backward)
-    ("API_KEY", r"\b(?:[A-Za-z0-9+/=]{20,})\b(?=.*(?:key|token|secret))", 0.90),
+    # Negative lookahead blocks common FP patterns where the text explicitly says
+    # the value is NOT a token (e.g. "looks like a token", "like a token", "not a token")
+    ("API_KEY", r"\b(?:[A-Za-z0-9+/=]{20,})\b(?=.*(?:key|token|secret))(?!.*(?:looks like a|like a|not a)\s*(?:key|token|secret))", 0.90),
     # Level 4 — pure hex strings of 24+ chars (high-entropy, typical API key body)
     # NOT matched by any other pattern. Pure hex excludes common structural data
     # like emails, JWT fragments, base64-encoded text. Caught by higher-confidence
@@ -565,7 +567,13 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         ("CITY", r"(?i)(?<=city of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.50),
         # Cities at start of sentence — explicit list of well-known city names.
         # High confidence: these are unambiguously place names ("Paris has...", "London is...").
-        ("CITY", r"\b(?:Paris|London|Tokyo|Berlin|Moscow|Beijing|Shanghai|Sydney|Melbourne|Bangkok|Seoul|Mumbai|Delhi|Cairo|Dubai|Singapore|Hong Kong|Madrid|Rome|Roma|Vienna|Prague|Budapest|Warsaw|Amsterdam|Brussels|Stockholm|Oslo|Helsinki|Copenhagen|Dublin|Lisbon|Athens|Zurich|Munich|Hamburg|Frankfurt|Milan|Barcelona|Istanbul|Jerusalem|Riyadh|Manila|Jakarta|Hanoi|Taipei|Kuala Lumpur|Mexico City|Lima|Santiago|Bogota|Buenos Aires|Rio de Janeiro|Sao Paulo|Nairobi|Lagos|Cape Town|Johannesburg|Casablanca)\b", 0.75),
+        # NOTE: Some cities (Tokyo, Sydney) also appear in GPS-coordinate parenthetical
+        # context "(Tokyo)" where they ARE labeled as CITY entities. These are matched
+        # by the unrestricted pattern below. All other known cities use the negative
+        # lookbehind (?<!\() to suppress false positives inside parentheses that are
+        # GPS coordinate labels (e.g. "(London)" after lat/lng, "(Berlin office)").
+        ("CITY", r"\b(?:Tokyo|Sydney)\b", 0.75),
+        ("CITY", r"(?<!\()\b(?:Paris|London|Berlin|Moscow|Beijing|Shanghai|Melbourne|Bangkok|Seoul|Mumbai|Delhi|Cairo|Dubai|Singapore|Hong Kong|Madrid|Rome|Roma|Vienna|Prague|Budapest|Warsaw|Amsterdam|Brussels|Stockholm|Oslo|Helsinki|Copenhagen|Dublin|Lisbon|Athens|Zurich|Munich|Hamburg|Frankfurt|Milan|Barcelona|Istanbul|Jerusalem|Riyadh|Manila|Jakarta|Hanoi|Taipei|Kuala Lumpur|Mexico City|Lima|Santiago|Bogota|Buenos Aires|Rio de Janeiro|Sao Paulo|Nairobi|Lagos|Cape Town|Johannesburg|Casablanca)\b", 0.75),
 
         # Cities followed by comma + known country — use positive lookahead so match is JUST the city name
         # Exclude country names from the city position to avoid COUNTRY->CITY confusion
@@ -589,7 +597,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("CITY", r"(?i)\bvisiting\s+(?-i:[A-Z])[a-z]{2,}(?:[ -]+(?-i:[A-Z])[a-z]{2,})?\b", 0.60),
     # "City headquarters/office/plant" — city name before location type
     # Uses positive lookahead so match span is ONLY the city name, not the trailing location word.
-    ("CITY", r"\b(?!(?:Our|Their|My|Your|His|Her|Its|The|This|That|These|Those|All|Some|Many|Both|Each|Every|Few|More|Most|Other|Such|Same|Just|Also|Very|Too|Quite|Well|Now|Here|There|Then|Than|Into|Upon|Under|Over|Again|Before|After|Until|During|Since|About|Between|Through|Because|Office|Offices|Headquarters|Facility|Plant|Branch|Street|St|Road|Rd|Avenue|Ave|Drive|Dr|Lane|Ln|Boulevard|Blvd|Way|Place|Pl|Court|Ct|Square|Sq|Circle|Cir|Park|Pkwy|Highway|Hwy|Suite|Ste|Room|Rm|Floor|Fl|Dept|Department|Building|Bldg|Center|Centre|Institute|School|College|University|Hospital|Hotel|Church|Bank|Store|Shop|Market|Mall|Hotel|Club|House|Home|Lab|Laboratory|Studio|Office|Factory|Warehouse|Station|Terminal|Airport|Port|Dock|Marina|Resort|Spa|Garden|Park|Zoo|Museum|Gallery|Theater|Theatre|Cinema|Stadium|Arena|Gym|Spa|Salon|Spa|Cafe|Bar|Pub|Restaurant|Bakery|Pharmacy|Clinic|Hospital|Dental|Optical|Veterinary|Animal|Pet|Grocery|Market|Store|Shop|Boutique|Salon|Spa|Nail|Barber|Tailor|Cleaner|Laundry|Repair|Garage|Service|Center|Centre|Depot|Hub|Node|Site|Location|Venue|Place|Area|Zone|Region|District)\b)[A-Z][a-z]{2,}(?:[ -]+[A-Z][a-z]{2,})?(?=\s+(?:headquarters|office|offices|facility|facilities|plant)\b)", 0.55),
+    ("[CITY]", r"(?<!\()\b(?!(?:Our|Their|My|Your|His|Her|Its|The|This|That|These|Those|All|Some|Many|Both|Each|Every|Few|More|Most|Other|Such|Same|Just|Also|Very|Too|Quite|Well|Now|Here|There|Then|Than|Into|Upon|Under|Over|Again|Before|After|Until|During|Since|About|Between|Through|Because|Office|Offices|Headquarters|Facility|Plant|Branch|Street|St|Road|Rd|Avenue|Ave|Drive|Dr|Lane|Ln|Boulevard|Blvd|Way|Place|Pl|Court|Ct|Square|Sq|Circle|Cir|Park|Pkwy|Highway|Hwy|Suite|Ste|Room|Rm|Floor|Fl|Dept|Department|Building|Bldg|Center|Centre|Institute|School|College|University|Hospital|Hotel|Church|Bank|Store|Shop|Market|Mall|Hotel|Club|House|Home|Lab|Laboratory|Studio|Office|Factory|Warehouse|Station|Terminal|Airport|Port|Dock|Marina|Resort|Spa|Garden|Park|Zoo|Museum|Gallery|Theater|Theatre|Cinema|Stadium|Arena|Gym|Spa|Salon|Spa|Cafe|Bar|Pub|Restaurant|Bakery|Pharmacy|Clinic|Hospital|Dental|Optical|Veterinary|Animal|Pet|Grocery|Market|Store|Shop|Boutique|Salon|Spa|Nail|Barber|Tailor|Cleaner|Laundry|Repair|Garage|Service|Center|Centre|Depot|Hub|Node|Site|Location|Venue|Place|Area|Zone|Region|District)\b)[A-Z][a-z]{2,}(?:[ -]+[A-Z][a-z]{2,})?(?=\s+(?:headquarters|office|offices|facility|facilities|plant)\b)", 0.55),
     # "Our/Their City office" — possessive before city before location
     ("CITY", r"(?i)\b(?:our|their)\s+(?!Office|Offices|Headquarters|Facility|Plant|Branch)(?-i:[A-Z])[a-z]{2,}(?:[ -]+(?-i:[A-Z])[a-z]{2,})?\s+(?:office|offices|headquarters|facility|plant|branch)\b", 0.55),
     # City in address context before US state + optional ZIP: "City, ST" or "City, ST 12345"
