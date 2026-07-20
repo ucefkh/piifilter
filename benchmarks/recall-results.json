@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set)",
-  "timestamp": "2026-07-20T01:28:37Z",
+  "timestamp": "2026-07-20T02:06:28Z",
   "dataset": {
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
@@ -40,12 +40,12 @@
       "total_examples": 150,
       "total_expected_entities": 212,
       "total_detected_entities": 227,
-      "total_true_positives": 199,
-      "total_false_positives": 28,
-      "total_false_negatives": 13,
-      "overall_precision": 0.8766519823788547,
-      "overall_recall": 0.9386792452830188,
-      "overall_f1": 0.9066059225512529,
+      "total_true_positives": 201,
+      "total_false_positives": 26,
+      "total_false_negatives": 11,
+      "overall_precision": 0.8854625550660793,
+      "overall_recall": 0.9481132075471698,
+      "overall_f1": 0.9157175398633257,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -88,23 +88,23 @@
           ]
         },
         "BANK_ACCOUNT": {
-          "true_positives": 4,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 2,
-          "n": 6,
+          "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
-          "recall": 0.6667,
-          "f1": 0.8,
-          "f2": 0.7143,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.3,
-            0.9032
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.5,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.15,
-            0.85
+            0.5101,
+            1.0
           ]
         },
         "CITY": {
@@ -169,13 +169,13 @@
         },
         "CREDIT_CARD": {
           "true_positives": 12,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 1,
           "n": 13,
-          "precision": 0.8,
+          "precision": 0.8571,
           "recall": 0.9231,
-          "f1": 0.8571,
-          "f2": 0.8955,
+          "f1": 0.8889,
+          "f2": 0.9091,
           "recall_ci": [
             0.6669,
             0.9863
@@ -429,13 +429,13 @@
         },
         "PHONE": {
           "true_positives": 26,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 2,
           "n": 28,
-          "precision": 0.8966,
+          "precision": 0.9286,
           "recall": 0.9286,
-          "f1": 0.9123,
-          "f2": 0.922,
+          "f1": 0.9286,
+          "f2": 0.9286,
           "recall_ci": [
             0.7735,
             0.9802
@@ -543,10 +543,6 @@
         }
       },
       "confusion_matrix": {
-        "BANK_ACCOUNT": {
-          "PHONE": 1,
-          "CREDIT_CARD": 1
-        },
         "NONE": {
           "CITY": 1,
           "FILE_PATH": 1,
@@ -643,16 +639,16 @@
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
-            "IBAN",
-            "PHONE"
+            "BANK_ACCOUNT",
+            "IBAN"
           ]
         },
         {
@@ -1727,15 +1723,14 @@
           "text_preview": "Bank: 1234567890123456 and account: 8765432109876543",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT",
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -2839,12 +2834,12 @@
       "total_examples": 150,
       "total_expected_entities": 212,
       "total_detected_entities": 245,
-      "total_true_positives": 199,
-      "total_false_positives": 46,
-      "total_false_negatives": 13,
-      "overall_precision": 0.8122448979591836,
-      "overall_recall": 0.9386792452830188,
-      "overall_f1": 0.8708971553610504,
+      "total_true_positives": 201,
+      "total_false_positives": 44,
+      "total_false_negatives": 11,
+      "overall_precision": 0.8204081632653061,
+      "overall_recall": 0.9481132075471698,
+      "overall_f1": 0.8796498905908096,
       "per_type": {
         "ADDRESS": {
           "true_positives": 6,
@@ -2887,23 +2882,23 @@
           ]
         },
         "BANK_ACCOUNT": {
-          "true_positives": 4,
+          "true_positives": 8,
           "false_positives": 0,
-          "false_negatives": 2,
-          "n": 6,
+          "false_negatives": 0,
+          "n": 8,
           "precision": 1.0,
-          "recall": 0.6667,
-          "f1": 0.8,
-          "f2": 0.7143,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.3,
-            0.9032
+            0.6756,
+            1.0
           ],
           "real_n": 4,
-          "real_recall": 0.5,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.15,
-            0.85
+            0.5101,
+            1.0
           ]
         },
         "CITY": {
@@ -2968,13 +2963,13 @@
         },
         "CREDIT_CARD": {
           "true_positives": 12,
-          "false_positives": 8,
+          "false_positives": 7,
           "false_negatives": 1,
           "n": 13,
-          "precision": 0.6,
+          "precision": 0.6316,
           "recall": 0.9231,
-          "f1": 0.7273,
-          "f2": 0.8333,
+          "f1": 0.75,
+          "f2": 0.8451,
           "recall_ci": [
             0.6669,
             0.9863
@@ -3228,13 +3223,13 @@
         },
         "PHONE": {
           "true_positives": 26,
-          "false_positives": 9,
+          "false_positives": 8,
           "false_negatives": 2,
           "n": 28,
-          "precision": 0.7429,
+          "precision": 0.7647,
           "recall": 0.9286,
-          "f1": 0.8254,
-          "f2": 0.8844,
+          "f1": 0.8387,
+          "f2": 0.8904,
           "recall_ci": [
             0.7735,
             0.9802
@@ -3342,10 +3337,6 @@
         }
       },
       "confusion_matrix": {
-        "BANK_ACCOUNT": {
-          "PHONE": 1,
-          "CREDIT_CARD": 1
-        },
         "CREDIT_CARD": {
           "CREDIT_CARD": 4
         },
@@ -3452,16 +3443,16 @@
           "text_preview": "My bank account is 123456789012 and my IBAN is DE89 3704 0044 0532 0130 00",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT",
             "IBAN"
           ],
           "detected_types": [
-            "IBAN",
-            "PHONE"
+            "BANK_ACCOUNT",
+            "IBAN"
           ]
         },
         {
@@ -4538,15 +4529,14 @@
           "text_preview": "Bank: 1234567890123456 and account: 8765432109876543",
           "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT",
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {

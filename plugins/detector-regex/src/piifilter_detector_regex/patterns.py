@@ -212,10 +212,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # Country code space-separated with dash in subgroups: "86 138-0013-8000"
         ("PHONE", r"\b\d{1,3}\s+\d{3}[–—−\-.]\d{3,4}[–—−\-.]\d{3,4}\b", 0.78),
         # Phone numbers after CJK 电话/電話 keywords (with unicode dash support)
-        # Supports formats: +86 138-0013-8000, +1-555-123-4567, +81 90-1234-5678
-        ("PHONE", r"(?i)(?:电话|電話)\+[\d–—−\-]+(?:[\s–—−\-]+\d[\d–—−\-]*){2,}\b", 0.85),
-        # CJK phone: 電話は+X XX-XXXX-XXXX (Japanese context, unicode dash support)
-        ("PHONE", r"(?i)(?:電話は|电话是|電話)\s*\+\d+[\s–—−\-]?\d+[\s–—−\-]?\d+[\s–—−\-]?\d+\b", 0.85),
+                # Supports formats: +86 138-0013-8000, +1-555-123-4567, +81 90-1234-5678
+                # Optional colon between keyword and number: 電話: +86 138-0013-8000
+                ("PHONE", r"(?i)(?:电话|電話)\s*:?\s*\+[\d–—−\-]+(?:[\s–—−\-]+\d[\d–—−\-]*){2,}\b", 0.85),
+                # CJK phone: 電話は+X XX-XXXX-XXXX (Japanese context, unicode dash support)
+                ("PHONE", r"(?i)(?:電話は|电话是|電話)\s*:?\s*\+\d+[\s–—−\-]?\d+[\s–—−\-]?\d+[\s–—−\-]?\d+\b", 0.85),
         # German format after Phone: — "+49 30 12345678"
         ("PHONE", r"(?i)\bPhone:\s*\+\d{1,3}\s+\d{2,4}\s+\d{5,10}\b", 0.80),
         # Universal variable-separator pattern: catch-all for phone-like sequences

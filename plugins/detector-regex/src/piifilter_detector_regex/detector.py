@@ -87,6 +87,11 @@ class RegexDetector(Detector):
         #             only the unreliable decimal-IP catch-all pattern (score 0.65)
         #             fires, producing false positives on SSN-like and date-like
         #             digit runs while missing real IPs entirely.
+        # PHONE (CJK-only) — CJK phone patterns (电话/電話 keyword prefixed) need
+        #           dashes and spaces to survive stripping. Only CJK-prefixed phone
+        #           patterns are run pre-strip because other phone patterns without
+        #           CJK context produce too many false positives on dotted IPs,
+        #           dates, and numeric sequences that happen to match phone formats.
         gps_entities, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.GPS}
         )
@@ -96,6 +101,15 @@ class RegexDetector(Detector):
         ip_entities, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.IP_ADDRESS}
         )
+        phone_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.PHONE}
+        )
+        # Only keep CJK-context phone entities pre-strip; non-CJK phone patterns
+        # (like bare 3-3-4 format) produce too many FPs on dotted IPs and dates.
+        phone_entities_presistrip = [
+            e for e in phone_entities_presistrip
+            if any(cjk in e.value for cjk in ("电话", "電話", "電話は", "电话是"))
+        ]
 
         # ── Now strip inner separators for structural patterns ──────────
         # After stripping, patterns like bare-digit CC, SSN, API keys, etc.
@@ -116,10 +130,11 @@ class RegexDetector(Detector):
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
-        # Merge pre-strip entities (GPS + DATE + IP) with the rest (from stripped text)
+        # Merge pre-strip entities (GPS + DATE + IP + PHONE) with the rest (from stripped text)
         entities.extend(gps_entities)
         entities.extend(date_entities)
         entities.extend(ip_entities)
+        entities.extend(phone_entities_presistrip)
         entities.sort(key=lambda e: e.start)
 
         # ── Cross-type dedup: low-confidence PHONE entities that overlap with ──
@@ -128,7 +143,23 @@ class RegexDetector(Detector):
         # digit-run remains of a dotted IP (e.g. 47.94.124.103 → 4794124103).
         # We detect this by checking if the phone's pure-digit value matches
         # the pure-digit value of a pre-strip IP/GPS/DATE entity.
-        entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities)
+        entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities, phone_entities_presistrip)
+
+        # ── Same-type dedup: remove entities of the same type whose spans are
+        # fully contained within a higher-confidence entity of the same type.
+        # This prevents pre-strip phone matches (with CJK keyword) from being
+        # duplicated by bare-digit phone matches on the stripped text.
+        deduped: list[DetectedEntity] = []
+        for e in sorted(entities, key=lambda x: (-x.confidence, x.start)):
+            if not any(
+                d.entity_type == e.entity_type
+                and d.start <= e.start and e.end <= d.end
+                and d is not e
+                for d in deduped
+            ):
+                deduped.append(e)
+        deduped.sort(key=lambda e: e.start)
+        entities = deduped
 
         elapsed = time.monotonic() - t0
 
@@ -159,11 +190,19 @@ class RegexDetector(Detector):
         IMPORTANT: GPS patterns are run on pre-strip text (see detect() docs).
         """
         cleaned, _log, text_for_gps = self._deobfuscator(session.prompt)
-        # Pre-strip patterns: GPS, DATE, IP — these need dots/slashes/dashes
+        # Pre-strip patterns: GPS, DATE, IP, PHONE — these need dots/slashes/dashes
         # to survive, which _strip_inner_separators destroys.
         gps_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.GPS})
         date_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.DATE})
         ip_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.IP_ADDRESS})
+        phone_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.PHONE}
+        )
+        # Only keep CJK-context phone entities pre-strip (see detect() for rationale)
+        phone_entities_presistrip = [
+            e for e in phone_entities_presistrip
+            if any(cjk in e.value for cjk in ("电话", "電話", "電話は", "电话是"))
+        ]
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
         # Build comprehensive covered spans to prevent Luhn/SSN validators
@@ -179,10 +218,24 @@ class RegexDetector(Detector):
         entities.extend(gps_entities)
         entities.extend(date_entities)
         entities.extend(ip_entities)
+        entities.extend(phone_entities_presistrip)
         entities.sort(key=lambda e: e.start)
 
         # ── Cross-type PHONE dedup (same as detect() — see notes there) ──
-        entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities)
+        entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities, phone_entities_presistrip)
+
+        # ── Same-type dedup (see detect() for details) ──
+        deduped: list[DetectedEntity] = []
+        for e in sorted(entities, key=lambda x: (-x.confidence, x.start)):
+            if not any(
+                d.entity_type == e.entity_type
+                and d.start <= e.start and e.end <= d.end
+                and d is not e
+                for d in deduped
+            ):
+                deduped.append(e)
+        deduped.sort(key=lambda e: e.start)
+        entities = deduped
 
         return entities
 
@@ -258,15 +311,21 @@ class RegexDetector(Detector):
         ip_entities: list[DetectedEntity],
         gps_entities: list[DetectedEntity],
         date_entities: list[DetectedEntity],
+        phone_presistrip: list[DetectedEntity] | None = None,
     ) -> list[DetectedEntity]:
         """Remove low-confidence PHONE entities whose digit content matches
-        an IP, GPS, or DATE entity from pre-strip detection.
+        an IP, GPS, DATE, or already-detected pre-strip PHONE entity.
 
         After inner-separator stripping, bare-digit phone patterns can
         match the residue of dotted IPs (e.g. 47.94.124.103 → 4794124103).
         Since pre-strip entities use original-text coordinates and stripped
         entities use stripped-text coordinates, we match by digit content
         rather than position.
+
+        Pre-strip phone entities (those detected before inner-separator
+        stripping preserves the original separator format) are never
+        suppressed by this filter — they are more accurate than the
+        bare-digit matches found on stripped text.
         """
         if not entities:
             return entities
@@ -277,6 +336,7 @@ class RegexDetector(Detector):
             ("ip", ip_entities),
             ("gps", gps_entities),
             ("date", date_entities),
+            ("phone_pst", phone_presistrip or []),
         ]:
             for se in src_list:
                 sd = "".join(c for c in se.value if c.isdigit())
@@ -288,6 +348,11 @@ class RegexDetector(Detector):
             if e.entity_type == EntityType.PHONE and e.confidence <= 0.75:
                 ed = "".join(c for c in e.value if c.isdigit())
                 if ed:
+                    # Check if this is a pre-strip phone entity — never suppress those
+                    # (they were detected on the original text with proper separators)
+                    if "phone_pst" in pre_strip_digits.get(ed, set()):
+                        filtered.append(e)
+                        continue
                     # Check if the phone digit content either matches or
                     # contains a pre-strip entity's digit content (e.g. IP
                     # "192.168.1.1" + suffix "/16" → phone "1921681116"
