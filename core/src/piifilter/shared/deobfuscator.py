@@ -23,6 +23,7 @@ Transforms implemented:
 17. XML numeric escape decoder [NEW: Transform F]
 18. Punctuation-stuffing remover [NEW: Transform G]
 19. Pig latin decoder [NEW: Transform H]
+20. ROT13/ROT-13 Caesar cipher decoding [NEW: Transform I]
 """
 
 from __future__ import annotations
@@ -171,6 +172,11 @@ class Deobfuscator:
     _UNICODE_ESC_4_RE = re.compile(rb"\\u([0-9a-fA-F]{4})")
     _UNICODE_ESC_8_RE = re.compile(rb"\\U([0-9a-fA-F]{8})")
 
+    # ── ROT13 marker regex ─────────────────────────────────────────
+    _ROT13_MARKER_RE = re.compile(
+        r"\b(?:(?:ROT|rot|Rot)[- ]?13|caesar|cipher)\b"
+    )
+
     def __call__(self, text: str) -> tuple[str, list[dict]]:
         """Apply all deobfuscation transforms.
 
@@ -242,6 +248,8 @@ class Deobfuscator:
         # stay as proper-case for reversed-name detection).
         text = self._decode_reversed_words(text, log)
         # NEW: Extended transforms — run late, after basic cleanup
+        # ROT13 must run BEFORE l33t_decode since l33t transforms "13" → "le"
+        text = self._decode_rot13(text, log)
         text = self._decode_l33t(text, log)
         text = self._remove_punctuation_stuffing(text, log)
         text = self._decode_pig_latin(text, log)
@@ -1327,7 +1335,42 @@ class Deobfuscator:
             })
         return text
 
-    # ── I. Case-shift swap ────────────────────────────────────────────
+    # ── I. ROT13 decoder ─────────────────────────────────────────
+    # Decode ROT13 (Caesar cipher with shift=13) obfuscated PII text
+    # (CC numbers, SSNs, etc. obfuscated with ROT13). Only fires
+    # when an explicit marker like "ROT13" or "caesar" is present.
+
+    @classmethod
+    def _decode_rot13(cls, text: str, log: list) -> str:
+        """Decode ROT13-obfuscated text when an explicit marker is present.
+
+        Only triggers when the text contains a ROT13/Caesar obfuscation
+        marker (e.g. "ROT13 CC: 4VVV..."). Applies ROT13 to the entire
+        text to decode the obfuscated content back to plaintext.
+        """
+        if not cls._ROT13_MARKER_RE.search(text):
+            return text
+
+        original = text
+
+        def _rot13_char(c: str) -> str:
+            if "a" <= c <= "z":
+                return chr((ord(c) - ord("a") + 13) % 26 + ord("a"))
+            if "A" <= c <= "Z":
+                return chr((ord(c) - ord("A") + 13) % 26 + ord("A"))
+            return c
+
+        text = "".join(_rot13_char(c) for c in text)
+
+        if text != original:
+            log.append({
+                "transform": "rot13",
+                "description": "Decoded ROT13 obfuscated text",
+                "changed": True,
+            })
+        return text
+
+    # ── J. Case-shift swap ────────────────────────────────────────────
     # Reverse the case of every ASCII letter (upper→lower, lower→upper)
     # Catches "case-shifted" obfuscation like nEW yORK → New York
 

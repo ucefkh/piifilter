@@ -1772,9 +1772,9 @@
       "entities": [
         {
           "type": "CREDIT_CARD",
-          "value": "4VVV-VVVV-VVVV-VVGK",
-          "start": 10,
-          "end": 29
+          "value": "4111-1111-1111-1111",
+          "start": 31,
+          "end": 50
         }
       ]
     },
