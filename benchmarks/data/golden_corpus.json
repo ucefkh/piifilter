@@ -1436,8 +1436,8 @@
         {
           "type": "DOMAIN",
           "value": "github.com",
-          "start": 18,
-          "end": 28
+          "start": 69,
+          "end": 79
         }
       ]
     },
@@ -1479,14 +1479,7 @@
     },
     {
       "text": "Contact: user: postgresql@localhost is the DB admin",
-      "entities": [
-        {
-          "type": "DOMAIN",
-          "value": "localhost",
-          "start": 26,
-          "end": 35
-        }
-      ]
+      "entities": []
     },
     {
       "text": "IBAN CH93 0076 2011 6238 5295 7 for Swiss account",
@@ -2035,12 +2028,6 @@
           "value": "admin@company.co.uk",
           "start": 18,
           "end": 37
-        },
-        {
-          "type": "DOMAIN",
-          "value": "company.co.uk",
-          "start": 24,
-          "end": 37
         }
       ]
     },
@@ -2307,12 +2294,6 @@
           "type": "EMAIL",
           "value": "test@test.com",
           "start": 7,
-          "end": 20
-        },
-        {
-          "type": "DOMAIN",
-          "value": "test.com",
-          "start": 12,
           "end": 20
         }
       ]
@@ -2601,12 +2582,6 @@
           "value": "https://jwks.example.com/certs",
           "start": 13,
           "end": 43
-        },
-        {
-          "type": "DOMAIN",
-          "value": "jwks.example.com",
-          "start": 21,
-          "end": 37
         }
       ]
     },
@@ -2770,12 +2745,6 @@
           "type": "EMAIL",
           "value": "HR@acme.com",
           "start": 21,
-          "end": 32
-        },
-        {
-          "type": "DOMAIN",
-          "value": "acme.com",
-          "start": 24,
           "end": 32
         }
       ]

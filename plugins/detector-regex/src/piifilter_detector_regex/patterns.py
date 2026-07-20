@@ -518,7 +518,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Negative lookahead (?!@) avoids matching email local-parts (e.g. "bob.smith" before @).
     # File extensions like .yaml, .log, .json, .pdf etc. are excluded from matching
     # by requiring that the TLD part not be a common file extension.
-    ("DOMAIN", r"\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b(?!@)(?<!\.yaml)(?<!\.json)(?<!\.xml)(?<!\.toml)(?<!\.ini)(?<!\.cfg)(?<!\.conf)(?<!\.log)(?<!\.txt)(?<!\.md)(?<!\.rst)(?<!\.html)(?<!\.css)(?<!\.js)(?<!\.ts)(?<!\.py)(?<!\.rb)(?<!\.java)(?<!\.cpp)(?<!\.c)(?<!\.h)(?<!\.go)(?<!\.rs)(?<!\.php)(?<!\.sql)(?<!\.db)(?<!\.pdf)(?<!\.doc)(?<!\.docx)(?<!\.xls)(?<!\.xlsx)(?<!\.ppt)(?<!\.pptx)(?<!\.png)(?<!\.jpg)(?<!\.jpeg)(?<!\.gif)(?<!\.svg)(?<!\.ico)(?<!\.zip)(?<!\.tar)(?<!\.gz)(?<!\.tgz)(?<!\.bz2)(?<!\.xz)(?<!\.7z)(?<!\.lock)(?<!\.env)", 0.75),
+    # Negative lookahead blocks common non-domain patterns:
+    # - "math.pi", "sin.x" etc. — programming/scientific abbreviations
+    # - "com.example:..." — Maven/Gradle coordinates (domain followed by colon)
+    # - "and.janedoe" — stripping artifacts (common-word.word followed by word char)
+    # - "eyJxxx.yyy" — JWT payload parts (JWT header starts with eyJ)
+    ("DOMAIN", r"\b(?!(?:math|sin|cos|tan|log|exp|abs|min|max|sum|avg|and|the|this|that|for|with|from|have|has|had|not|are|was|were|can|will|its|our|their|my|your|his|her)\.[a-z]{2,}\b)(?!(?:eyJ)[a-zA-Z0-9]+\.[a-zA-Z0-9])(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b(?!:)(?!@)(?<!\.yaml)(?<!\.json)(?<!\.xml)(?<!\.toml)(?<!\.ini)(?<!\.cfg)(?<!\.conf)(?<!\.log)(?<!\.txt)(?<!\.md)(?<!\.rst)(?<!\.html)(?<!\.css)(?<!\.js)(?<!\.ts)(?<!\.py)(?<!\.rb)(?<!\.java)(?<!\.cpp)(?<!\.c)(?<!\.h)(?<!\.go)(?<!\.rs)(?<!\.php)(?<!\.sql)(?<!\.db)(?<!\.pdf)(?<!\.doc)(?<!\.docx)(?<!\.xls)(?<!\.xlsx)(?<!\.ppt)(?<!\.pptx)(?<!\.png)(?<!\.jpg)(?<!\.jpeg)(?<!\.gif)(?<!\.svg)(?<!\.ico)(?<!\.zip)(?<!\.tar)(?<!\.gz)(?<!\.tgz)(?<!\.bz2)(?<!\.xz)(?<!\.7z)(?<!\.lock)(?<!\.env)", 0.75),
 
     # ── COMPANY ──────────────────────────────────────────────────────
     ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|Incorporated|PLC|AG|SA|BV|NV)\.?\b", 0.80),
