@@ -326,11 +326,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Title-prefixed — name must be 2+ chars, not a single letter
     ("PERSON", r"\b(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.85),
     # "I'm/My name is/Call me + Name"
-    # Require 3+ chars in each name word to avoid single-letter initials or short fragments
-    ("PERSON", r"(?i)(?:\bmy name is|\bI'm|\bcall me|\bname is)\s+(?-i:[A-Z])[a-z]{3,}(?:\s+(?-i:[A-Z])[a-z]{3,}){0,2}\b", 0.80),
+    # Require 2+ chars after initial capital to catch 3-letter names like "Bob", "Tom"
+    ("PERSON", r"(?i)(?:\bmy name is|\bI'm|\bcall me|\bname is)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,}){0,2}\b", 0.80),
     # "ROLE + Name" — exclude common role/researcher-type words after the name
-    # Require 3+ chars to avoid matching 2-letter initials; lower confidence
-    ("PERSON", r"(?i)\b(?:ceo|cfo|cto|president|director|founder|owner)\s+(?-i:[A-Z])[a-z]{3,}(?:\s+(?-i:[A-Z])[a-z]{3,})?\b", 0.70),
+    # Require 2+ chars after initial capital to match names like "Bob" (B+ob=2 lowercase)
+    # with lower confidence; avoids missing 3-letter names like "Bob", "Tom", "Sam"
+    ("PERSON", r"(?i)\b(?:ceo|cfo|cto|president|director|founder|owner)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.70),
     # "Person:" prefix — handle titles like Dr., Mr. — require at least one real name word
     # Negative lookahead blocks words like "researcher", "published", "from", "at" that are common role/context words
     # Also blocks common non-person continuations: addresses, company suffixes, job titles

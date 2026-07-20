@@ -154,6 +154,12 @@ class RegexDetector(Detector):
         # the pure-digit value of a pre-strip IP/GPS/DATE entity.
         entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities, phone_entities_presistrip)
 
+        # ── Cross-type dedup: SOCIAL_SECURITY entities whose digit run ──
+        # matches a pre-strip IP, GPS, or DATE entity. When dotted IPs
+        # like 192.168.1.50 are stripped to 192168150, the 9-digit run
+        # can match the SSN validator even though it is clearly an IP.
+        entities = self._filter_ssn_overlap(entities, ip_entities, gps_entities, date_entities)
+
         # ── Same-type dedup: remove entities of the same type whose spans are
         # fully contained within a higher-confidence entity of the same type.
         # This prevents pre-strip phone matches (with CJK keyword) from being
@@ -238,6 +244,10 @@ class RegexDetector(Detector):
 
         # ── Cross-type PHONE dedup (same as detect() — see notes there) ──
         entities = self._filter_phone_overlap(entities, ip_entities, gps_entities, date_entities, phone_entities_presistrip)
+
+        # ── Cross-type SSN dedup: filter out SSN matches that overlap ──
+        # with IP/GPS/DATE entities by digit content (see detect() notes).
+        entities = self._filter_ssn_overlap(entities, ip_entities, gps_entities, date_entities)
 
         # ── Same-type dedup (see detect() for details) ──
         deduped: list[DetectedEntity] = []
@@ -380,6 +390,50 @@ class RegexDetector(Detector):
                     if skip:
                         # This phone match overlaps with (or is contained
                         # by) a pre-strip IP/GPS/date entity — suppress it.
+                        continue
+            filtered.append(e)
+        return filtered
+
+    @staticmethod
+    def _filter_ssn_overlap(
+        entities: list[DetectedEntity],
+        ip_entities: list[DetectedEntity],
+        gps_entities: list[DetectedEntity],
+        date_entities: list[DetectedEntity],
+    ) -> list[DetectedEntity]:
+        """Remove SOCIAL_SECURITY entities whose digit content matches
+        a pre-strip IP, GPS, or DATE entity.
+
+        When dotted IPs like 192.168.1.50 are stripped to 192168150,
+        the 9-digit run can pass the SSN validator even though it is
+        clearly an IP address. This filter checks digit content overlap.
+        """
+        if not entities:
+            return entities
+
+        # Build lookup: pure-digit string → set of entity types
+        pre_strip_digits: dict[str, set[str]] = {}
+        for src_label, src_list in [
+            ("ip", ip_entities),
+            ("gps", gps_entities),
+            ("date", date_entities),
+        ]:
+            for se in src_list:
+                sd = "".join(c for c in se.value if c.isdigit())
+                if sd:
+                    pre_strip_digits.setdefault(sd, set()).add(src_label)
+
+        filtered: list[DetectedEntity] = []
+        for e in entities:
+            if e.entity_type == EntityType.SOCIAL_SECURITY:
+                ed = "".join(c for c in e.value if c.isdigit())
+                if ed:
+                    skip = False
+                    for psd in pre_strip_digits:
+                        if psd in ed or ed in psd:
+                            skip = True
+                            break
+                    if skip:
                         continue
             filtered.append(e)
         return filtered
