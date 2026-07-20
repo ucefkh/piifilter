@@ -186,7 +186,7 @@ def _normalize_entity(e: dict[str, Any] | Any) -> dict[str, Any]:
         "value": getattr(e, 'value', getattr(e, 'text', '')),
         "start": getattr(e, 'start', 0),
         "end": getattr(e, 'end', 0),
-        "score": getattr(e, 'confidence', getattr(e, 'score', 1.0)),
+        "score": getattr(e, 'raw_score', getattr(e, 'confidence', getattr(e, 'score', 1.0))),
     }
 
 

@@ -66,7 +66,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # Matches standard SSN formats: 123-45-6789 (hyphen) and 123\xa045\xa06789 (non-breaking space)
     ("SOCIAL_SECURITY", r"\b\d{3}[-\u00A0]\d{2}[-\u00A0]\d{4}\b", 0.90),
     # X-mask or star-mask in first 5 positions, last-4 digits visible
-    ("SOCIAL_SECURITY", r"[X*#]{3}[- ][X*#]{2}[- ]\d{4}", 0.70),
+    # NOTE: requires context keyword (SSN, social, etc.) for high confidence.
+    # Without context, confidence is 0.45 (below balanced default of 0.50) to avoid
+    # matching non-SSN context like "Full: XXX-XX-6789" or example descriptions.
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:\w+\s+)?[X*#]{3}[- ][X*#]{2}[- ]\d{4}\b", 0.70),
+    ("SOCIAL_SECURITY", r"\b[X*#]{3}[- ][X*#]{2}[- ]\d{4}\b", 0.45),
     # Same with bullet characters (U+2022, U+25CF): •••-••-9074
     ("SOCIAL_SECURITY", r"[\u2022\u25CF]{3}[- ][\u2022\u25CF]{2}[- ]\d{4}", 0.70),
     # Context-prefixed X-masked SSN: "SSN 9XX-XX-4321", "SSN 1XX-XX-6789" — first digit real, positions 2-5 masked
