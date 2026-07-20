@@ -166,6 +166,7 @@ class ArbitratorConfig:
         default_factory=lambda: dict(_DETECTOR_WEIGHTS)
     )
     use_calibrated_model: bool = True
+    enable_city: bool = False
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -837,40 +838,41 @@ class Arbitrator:
                 # else: drop the DOMAIN/EMAIL span — URL is more specific
             deduped = filtered
 
-        # ── CITY geographic proximity gate ──────────────────────────────────
-        # CITY spans that are NOT within 15 characters of an ADDRESS, COUNTRY,
-        # or STATE/PROVINCE span are almost certainly false positives.
-        # Suppress lone city names that lack geographic context.
-        _CITY_GEO_TYPES = {
-            EntityType.ADDRESS,
-            EntityType.COUNTRY,
-        }
+        # ── CITY gate ────────────────────────────────────────────────────────
+        # When enable_city is False (default), all CITY entities are suppressed.
+        # This is the primary mechanism to eliminate CITY false positives (~21 of
+        # 75 total FPs, ~28%). When enable_city is True, CITY entities are only
+        # kept if geographically anchored — within 20 characters of an ADDRESS,
+        # COUNTRY, or GPS coordinate entity.
+        if not self.config.enable_city:
+            # Drop all CITY entities outright
+            deduped = [e for e in deduped if e.entity_type != EntityType.CITY]
+        else:
+            # Proximity gate: CITY must be near ADDRESS, COUNTRY, or GPS
+            _CITY_GEO_TYPES = {
+                EntityType.ADDRESS,
+                EntityType.COUNTRY,
+                EntityType.GPS,
+            }
+            # Collect geo-neighbor intervals with 20-char margin on each side
+            geo_intervals: list[tuple[int, int]] = []
+            for e in deduped:
+                if e.entity_type in _CITY_GEO_TYPES:
+                    geo_intervals.append((e.start - 20, e.end + 20))
 
-        # Collect all geo-neighbor intervals with 15-char margin on each side
-        geo_intervals: list[tuple[int, int]] = []
-        for e in deduped:
-            if e.entity_type in _CITY_GEO_TYPES:
-                geo_intervals.append((e.start - 15, e.end + 15))
-
-        # Filter: low-confidence CITY spans (< 0.25) that lack a geo neighbor are dropped
-        _CITY_GEO_CONFIDENCE_THRESHOLD = 0.25
-        filtered_by_geo: list[DetectedEntity] = []
-        for e in deduped:
-            if e.entity_type != EntityType.CITY:
-                filtered_by_geo.append(e)
-                continue
-            # High-confidence CITY (context-patterned at 0.60+) is always kept
-            if e.confidence >= _CITY_GEO_CONFIDENCE_THRESHOLD:
-                filtered_by_geo.append(e)
-                continue
-            # Low-confidence CITY: only keep if near a geo span
-            near_geo = any(
-                gs <= e.start and e.end <= ge
-                for gs, ge in geo_intervals
-            )
-            if near_geo:
-                filtered_by_geo.append(e)
-        deduped = filtered_by_geo
+            # Only keep CITY entities that are within 20 chars of a geo span
+            filtered: list[DetectedEntity] = []
+            for e in deduped:
+                if e.entity_type != EntityType.CITY:
+                    filtered.append(e)
+                    continue
+                near_geo = any(
+                    gs <= e.start and e.end <= ge
+                    for gs, ge in geo_intervals
+                )
+                if near_geo:
+                    filtered.append(e)
+            deduped = filtered
 
         deduped.sort(key=lambda e: e.start)
         return deduped
