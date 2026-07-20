@@ -1404,78 +1404,55 @@ class Deobfuscator:
 
     # ── J. Reverse-words decoder ──────────────────────────────────────────
     # Detect email-like constructs with reversed domain segments and reversed
-    # local-part words (e.g., "gro.moc@olleh" → "hello@com.org"), as well
-    # as person names with reversed word order (e.g., "Doe Jane" → "Jane Doe").
+    # local-part words (e.g., "gro.moc@olleh" → "hello@com.org").
+    #
+    # NOTE: Reversed-name decoding (e.g. "Doe Jane" → "Jane Doe") is DISABLED
+    # because the simple regex ``\b([A-Z][a-z]+)\s+([A-Z][a-z]+)\b`` matched
+    # ANY two capitalized words — including correctly-ordered names like "Jane
+    # Smith" — and reversed them, destroying all PERSON / CUSTOMER_NAME /
+    # EMPLOYEE_NAME pattern detection. This caused 7+5 label collisions,
+    # zeroing recall on CUSTOMER_NAME and EMPLOYEE_NAME.
 
     _REVERSED_EMAIL_RE = re.compile(
-        r"(?<!\w)([a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)+)@([a-zA-Z0-9_]+(?:_[a-zA-Z0-9_]+)+)(?!\w)"
+            r"(?<!\w)([a-zA-Z0-9]+(?:\.[a-zA-Z0-9]+)+)@([a-zA-Z0-9_]+(?:_[a-zA-Z0-9_]+)+)(?!\w)"
     )
-
-    _REVERSED_NAME_RE = re.compile(
-        r"\b([A-Z][a-z]+)\s+([A-Z][a-z]+)\b"
-    )
-
-    # Common last-name tokens to avoid false-positives on non-obfuscated text
-    _REVERSED_NAME_SKIP = {
-        "the", "this", "that", "with", "from", "have", "been", "were",
-        "they", "what", "when", "where", "which", "their", "them",
-        "over", "into", "only", "also", "very", "just", "more",
-        "than", "then", "some", "such", "like", "about", "after",
-        "before", "between", "through", "during", "without",
-    }
 
     @classmethod
     def _decode_reversed_words(cls, text: str, log: list) -> str:
-        """Detect and decode reversed-word obfuscation patterns.
+            """Detect and decode reversed-word obfuscation patterns.
 
-        Handles two patterns:
-        1. Reversed email: domain segments reversed AND local-part words
-           reversed, e.g. "gro.moc@olleh_321_ydob_emosewa" →
-           "awesome_body_123_hello@com.org"
+            Only handles reversed-email patterns (domain segments reversed).
+            Reversed-name decoding is DISABLED — see module docstring.
 
-        2. Reversed names: "Doe Jane" → "Jane Doe"
+            Only fires when the reversal produces a detectable improvement
+            (email-like pattern for emails).
+            """
+            original = text
 
-        Only fires when the reversal produces a detectable improvement
-        (email-like pattern for emails, or known-word heuristic for names).
-        """
-        original = text
+            # ── Pattern 1: Reversed email ──
+            def _reverse_email(m: re.Match[str]) -> str:
+                domain_part = m.group(1)   # e.g. "gro.moc"
+                local_part = m.group(2)    # e.g. "olleh_321_ydob_emosewa"
 
-        # ── Pattern 1: Reversed email ──
-        def _reverse_email(m: re.Match[str]) -> str:
-            domain_part = m.group(1)   # e.g. "gro.moc"
-            local_part = m.group(2)    # e.g. "olleh_321_ydob_emosewa"
+                # Reverse domain: split by '.', reverse order
+                domain_segments = domain_part.split(".")
+                domain_segments.reverse()
+                recovered_domain = ".".join(domain_segments)
 
-            # Reverse domain: split by '.', reverse order
-            domain_segments = domain_part.split(".")
-            domain_segments.reverse()
-            recovered_domain = ".".join(domain_segments)
+                # Reverse local part: split by '_', reverse order, reverse each word
+                words = local_part.split("_")
+                words.reverse()
+                recovered_words = [w[::-1] for w in words]
+                recovered_local = "_".join(recovered_words)
 
-            # Reverse local part: split by '_', reverse order, reverse each word
-            words = local_part.split("_")
-            words.reverse()
-            recovered_words = [w[::-1] for w in words]
-            recovered_local = "_".join(recovered_words)
+                return f"{recovered_local}@{recovered_domain}"
 
-            return f"{recovered_local}@{recovered_domain}"
+            text = cls._REVERSED_EMAIL_RE.sub(_reverse_email, text)
 
-        text = cls._REVERSED_EMAIL_RE.sub(_reverse_email, text)
-
-        # ── Pattern 2: Reversed person name ──
-        def _reverse_name(m: re.Match[str]) -> str:
-            first = m.group(1)
-            second = m.group(2)
-            if first.lower() in cls._REVERSED_NAME_SKIP or second.lower() in cls._REVERSED_NAME_SKIP:
-                return m.group(0)
-            if len(first) < 3 or len(second) < 3:
-                return m.group(0)
-            return f"{second} {first}"
-
-        text = cls._REVERSED_NAME_RE.sub(_reverse_name, text)
-
-        if text != original:
-            log.append({
-                "transform": "reversed_words",
-                "description": "Decoded reversed-word obfuscation (email segments, person names)",
-                "changed": True,
-            })
-        return text
+            if text != original:
+                log.append({
+                    "transform": "reversed_words",
+                    "description": "Decoded reversed-word obfuscation (email segments only)",
+                    "changed": True,
+                })
+            return text

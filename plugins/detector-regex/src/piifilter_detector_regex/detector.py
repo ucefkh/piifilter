@@ -359,7 +359,12 @@ class RegexDetector(Detector):
 
         Used for types whose patterns must be run on the pre-strip text
         (before inner-separator stripping destroys key characters like dots).
-        Currently used for GPS coordinates.
+        Currently used for GPS, DATE, and IP_ADDRESS.
+
+        For IP_ADDRESS on pre-strip text, context guards prevent the
+        dotted-decimal pattern from firing on non-IP dotted numerics:
+        version numbers, dates, SSNs, phone numbers, and other numeric
+        sequences that happen to fall in valid IP octet ranges.
 
         Returns
         -------
@@ -379,6 +384,133 @@ class RegexDetector(Detector):
                     continue
                 if any(s <= start and end <= e for s, e in seen_intervals):
                     continue
+
+                # ── IP_ADDRESS context guards (pre-strip text) ──────────────
+                # Dotted-decimal IP patterns can falsely match version numbers,
+                # dates with dot separators, phone fragments, and SSN fragments.
+                # These guards run ONLY on pre-strip IP detection where the
+                # actual dotted format survives.
+                if entity_type == EntityType.IP_ADDRESS:
+                    ip_text = match.group()
+
+                    # --- Anti-date guard: skip if first two octets are valid
+                    # month/day (1-12/1-31), indicating a date like "12.31.2025"
+                    # or "3.14.1592" rather than an IP address.
+                    dots = ip_text.count(".")
+                    if dots >= 2:
+                        # Extract the first two dot-separated groups
+                        groups = ip_text.split(".")
+                        if len(groups) >= 2:
+                            try:
+                                first = int(groups[0])
+                                second = int(groups[1])
+                                # Month (1-12) + valid day (1-31) = very likely a date
+                                if 1 <= first <= 12 and 1 <= second <= 31:
+                                    # Only skip for standard dotted-decimal (4 groups),
+                                    # not for hex/octal/space-separated formats
+                                    if dots == 3:
+                                        continue
+                            except ValueError:
+                                pass
+
+                    # --- Semver / version number guard: skip if dotted groups
+                    # look like a semantic version (e.g. 1.2.3, 2.0.1, 10.0.0)
+                    # where ALL groups are small (< 256) and the first group
+                    # is a very small number typical of versions (< 10).
+                    if dots == 2:
+                        groups = ip_text.split(".")
+                        if len(groups) == 3:
+                            try:
+                                g = [int(x) for x in groups]
+                                # Common version pattern: major.minor.patch
+                                # where major < 10 and all groups < 256
+                                if g[0] <= 9 and all(0 <= x <= 255 for x in g):
+                                    continue
+                                # Also skip when first two octets are < 10 and
+                                # third < 256 — likely version or measurement
+                                if g[0] <= 5 and g[1] <= 99 and g[2] <= 255:
+                                    continue
+                            except ValueError:
+                                pass
+
+                    # --- Context keyword guard: check surrounding text for
+                    # non-IP context keywords that suggest this is SSN, phone,
+                    # or date data rather than an IP address.
+                    if dots == 3:
+                        context_before = text[max(0, start - 60):start].lower()
+                        context_after = text[end:min(len(text), end + 30)].lower()
+                        # Combine all non-IP keywords. Only skip if context
+                        # suggests non-IP data WITHOUT "ip" also in context
+                        # (e.g. "ip address: 192.168.1.1" should NOT be skipped).
+                        non_ip_keywords = (
+                            # SSN keywords
+                            "ssn", "social security", "tax id", "ss#",
+                            # Date keywords
+                            "date", "dob", "born", "expir", "updated",
+                            "valid until", "issued", "created on",
+                            # Phone keywords
+                            "phone", "tel", "mobile", "cell", "call",
+                            "contact", "dial", "number",
+                            # Bank keywords
+                            "bank", "account", "acct", "a/c",
+                            # Version/measurement keywords
+                            "version", "ver.", "v.", "release",
+                            "build", "rev", "revision",
+                        )
+                        any_non_ip = any(kw in context_before for kw in non_ip_keywords)
+                        any_non_ip_after = any(kw in context_after for kw in non_ip_keywords)
+                        has_ip_context = "ip" in context_before
+                        if any_non_ip and not has_ip_context:
+                            continue
+                        # Also skip if the text AFTER the match suggests date/version
+                        # (catches cases where context is before the IP pattern but
+                        # the surrounding text is not keyword-prefixed)
+                        if any_non_ip_after and not has_ip_context:
+                            continue
+
+                    # --- Decimal IP catch-all guard (score < 0.80):
+                    # Only emit low-confidence IP from pre-strip text if it
+                    # passes SSN, phone, and date validation (same as _run_patterns).
+                    if score < 0.80:
+                        # --- Numeric range validation ---
+                        digits_only = "".join(c for c in ip_text if c.isdigit())
+                        if len(digits_only) >= 7:
+                            try:
+                                ip_int = int(digits_only)
+                                if ip_int < 16777216 or ip_int > 4294967295:
+                                    continue
+                            except ValueError:
+                                continue
+
+                        # --- Anti-SSN heuristic ---
+                        if len(digits_only) == 9:
+                            context_before = text[max(0, start - 50):start].lower()
+                            context_after = text[end:min(len(text), end + 30)].lower()
+                            ssn_keywords = ("ssn", "social security", "tax id", "ss#")
+                            if any(kw in context_before for kw in ssn_keywords):
+                                continue
+                            area, group, serial = digits_only[:3], digits_only[3:5], digits_only[5:]
+                            if (area != "000" and area != "666"
+                                    and not ("900" <= area <= "999")
+                                    and group != "00" and serial != "0000"):
+                                continue
+
+                        # --- Anti-phone / anti-bank heuristic ---
+                        if len(digits_only) == 10:
+                            context_before = text[max(0, start - 50):start].lower()
+                            phone_keywords = (
+                                "phone", "tel", "mobile", "cell", "call",
+                                "contact", "dial", "number"
+                            )
+                            bank_keywords = ("bank", "account", "acct", "a/c")
+                            if any(kw in context_before for kw in phone_keywords):
+                                continue
+                            if any(kw in context_before for kw in bank_keywords):
+                                continue
+                            ip_context = text[max(0, start - 30):start].lower()
+                            if digits_only.startswith("1") and "ip" not in ip_context:
+                                continue
+
                 entities.append(
                     DetectedEntity(
                         entity_type=entity_type,

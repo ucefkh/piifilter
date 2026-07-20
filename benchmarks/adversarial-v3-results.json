@@ -2,21 +2,27 @@
   "summary": {
     "overall": {
       "total_examples": 201,
-      "full_pipeline_detected": 126,
-      "full_pipeline_rate": 62.7,
+      "full_pipeline_detected": 106,
+      "full_pipeline_rate": 52.7,
       "raw_regex_detected": 57,
       "raw_regex_rate": 28.4,
-      "deobfuscation_improvement": 34.3
+      "deobfuscation_improvement": 24.4
     },
     "by_category": {
       "Punctuation-stuffed": {
         "total": 14,
-        "full_pipeline_detected": 6,
-        "full_pipeline_rate": 42.9,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 42.9,
+        "improvement": 0.0,
         "missed_examples": [
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
           "DATE:punct-stuff",
           "DATE:punct-stuff",
           "PROJECT_NAME:punctuation-stuffed",
@@ -184,12 +190,14 @@
       },
       "XML escaping": {
         "total": 4,
-        "full_pipeline_detected": 2,
-        "full_pipeline_rate": 50.0,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 50.0,
+        "improvement": 0.0,
         "missed_examples": [
+          "PHONE:xml-escape",
+          "PHONE:xml-escape",
           "PHONE:xml-escape",
           "PHONE:xml-escape"
         ]
@@ -205,20 +213,26 @@
       },
       "Syllabic split": {
         "total": 10,
-        "full_pipeline_detected": 10,
-        "full_pipeline_rate": 100.0,
+        "full_pipeline_detected": 5,
+        "full_pipeline_rate": 50.0,
         "raw_regex_detected": 4,
         "raw_regex_rate": 40.0,
-        "improvement": 60.0,
-        "missed_examples": []
+        "improvement": 10.0,
+        "missed_examples": [
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split"
+        ]
       },
       "Morse code": {
         "total": 23,
-        "full_pipeline_detected": 14,
-        "full_pipeline_rate": 60.9,
+        "full_pipeline_detected": 7,
+        "full_pipeline_rate": 30.4,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 60.9,
+        "improvement": 30.4,
         "missed_examples": [
           "URL:morse-code",
           "EMPLOYEE_NAME:morse-code",
@@ -226,6 +240,13 @@
           "EMPLOYEE_NAME:morse-code",
           "EMPLOYEE_NAME:morse-code",
           "EMPLOYEE_NAME:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
           "DATE:morse-code",
           "DATE:morse-code",
           "DATE:morse-code"
@@ -244,14 +265,27 @@
     "by_type": {
       "DATE": {
         "total": 18,
-        "full_pipeline_detected": 13,
-        "full_pipeline_rate": 72.2,
+        "full_pipeline_detected": 0,
+        "full_pipeline_rate": 0.0,
         "raw_regex_detected": 0,
         "raw_regex_rate": 0.0,
-        "improvement": 72.2,
+        "improvement": 0.0,
         "missed_examples": [
           "DATE:punct-stuff",
           "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:punct-stuff",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
+          "DATE:morse-code",
           "DATE:morse-code",
           "DATE:morse-code",
           "DATE:morse-code"
@@ -322,24 +356,32 @@
       },
       "PHONE": {
         "total": 12,
-        "full_pipeline_detected": 10,
-        "full_pipeline_rate": 83.3,
+        "full_pipeline_detected": 8,
+        "full_pipeline_rate": 66.7,
         "raw_regex_detected": 1,
         "raw_regex_rate": 8.3,
-        "improvement": 75.0,
+        "improvement": 58.3,
         "missed_examples": [
+          "PHONE:xml-escape",
+          "PHONE:xml-escape",
           "PHONE:xml-escape",
           "PHONE:xml-escape"
         ]
       },
       "PASSPORT": {
         "total": 14,
-        "full_pipeline_detected": 14,
-        "full_pipeline_rate": 100.0,
+        "full_pipeline_detected": 9,
+        "full_pipeline_rate": 64.3,
         "raw_regex_detected": 1,
         "raw_regex_rate": 7.1,
-        "improvement": 92.9,
-        "missed_examples": []
+        "improvement": 57.1,
+        "missed_examples": [
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split",
+          "PASSPORT:syllabic-split"
+        ]
       },
       "URL": {
         "total": 14,
@@ -544,14 +586,8 @@
       "text": "Her birth date was recorded as 1..9..8..5..--..0..4..--..1..5 on the medical form.",
       "ground_truth": "1985-04-15",
       "pii_value": "1..9..8..5..--..0..4..--..1..5",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "19850415",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -576,14 +612,8 @@
       "text": "The holiday party is scheduled for 1..2../..2..5../..1..9..9..9;; in the main hall.",
       "ground_truth": "12/25/1999",
       "pii_value": "1..2../..2..5../..1..9..9..9;;",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "12251999",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -595,14 +625,8 @@
       "text": "Your membership expires on 2..0..2..3..--..1..1..--..3..0 according to the records.",
       "ground_truth": "2023-11-30",
       "pii_value": "2..0..2..3..--..1..1..--..3..0",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "20231130",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -627,14 +651,8 @@
       "text": "Valentine's Day in 1..9..9..0..--..0..2..--..1..4 was a Wednesday.",
       "ground_truth": "1990-02-14",
       "pii_value": "1..9..9..0..--..0..2..--..1..4",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "19900214",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -646,14 +664,8 @@
       "text": "The project deadline was changed to 1..1../..2..2../..2..0..0..5 per the manager.",
       "ground_truth": "11/22/2005",
       "pii_value": "1..1../..2..2../..2..0..0..5",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "11222005",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -665,14 +677,8 @@
       "text": "School started on 2..0..1..0..--..0..9..--..0..1 that year.",
       "ground_truth": "2010-09-01",
       "pii_value": "2..0..1..0..--..0..9..--..0..1",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "20100901",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2102,14 +2108,8 @@
       "text": "The Berlin team uses +49 &amp;quot;30&amp;quot; 1234 5678 for vendor communications.",
       "ground_truth": "+49 \"30\" 1234 5678",
       "pii_value": "+49 &amp;quot;30&amp;quot; 1234 5678",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "12345678",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2121,14 +2121,8 @@
       "text": "Our Sydney warehouse can be reached at +61 &lt;b&gt;2&lt;/b&gt; 9876 5432 for delivery scheduling.",
       "ground_truth": "+61 2 9876 5432",
       "pii_value": "+61 &lt;b&gt;2&lt;/b&gt; 9876 5432",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "98765432",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2292,14 +2286,8 @@
       "text": "My British passport number is GB-7 8 4-1 0 2-5 6-L, and I need to renew it soon.",
       "ground_truth": "GB78410256L",
       "pii_value": "GB-7 8 4-1 0 2-5 6-L",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "78410256",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2311,14 +2299,8 @@
       "text": "The flight attendant asked to see my passport, which has the number DE-9 3 6-4 5 7-8 2-J.",
       "ground_truth": "DE93645782J",
       "pii_value": "DE-9 3 6-4 5 7-8 2-J",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "93645782",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2330,14 +2312,8 @@
       "text": "Please update my profile with the French passport number FR-2 1 0-8 6 3-5 7-N.",
       "ground_truth": "FR21086357N",
       "pii_value": "FR-2 1 0-8 6 3-5 7-N",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "21086357",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2360,11 +2336,6 @@
           "type": "COUNTRY",
           "value": "US",
           "score": 0.8
-        },
-        {
-          "type": "IP_ADDRESS",
-          "value": "50291837",
-          "score": 0.5
         }
       ],
       "raw_regex_detected": true,
@@ -2389,14 +2360,8 @@
       "text": "For the visa application, they requested my Canadian passport number CA-7 4 1-3 0 9-5 6-K.",
       "ground_truth": "CA74130956K",
       "pii_value": "CA-7 4 1-3 0 9-5 6-K",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "74130956",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -2408,14 +2373,8 @@
       "text": "The hotel requires a copy of my Australian passport, number AU-8 3 2-6 7 1-4 0-Q.",
       "ground_truth": "AU83267140Q",
       "pii_value": "AU-8 3 2-6 7 1-4 0-Q",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "83267140",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -3656,11 +3615,6 @@
           "type": "PHONE",
           "value": "345 67 89 1011",
           "score": 0.6
-        },
-        {
-          "type": "PHONE",
-          "value": "67 89 1011 2141",
-          "score": 0.55
         }
       ]
     },
@@ -3683,14 +3637,14 @@
       "raw_regex_detected": true,
       "raw_detections": [
         {
-          "type": "PHONE",
+          "type": "IP_ADDRESS",
           "value": "60 16 31 31",
-          "score": 0.6
+          "score": 0.8
         },
         {
           "type": "PHONE",
-          "value": "31 31 9268 19",
-          "score": 0.55
+          "value": "16 31 31 9268",
+          "score": 0.6
         }
       ]
     },
@@ -4178,14 +4132,8 @@
       "text": "The project deadline is ..--- ----- ..--- ..... ----- ....- .---- ----- and we need to finalize the report by then.",
       "ground_truth": "2025-04-10",
       "pii_value": "..--- ----- ..--- ..... ----- ....- .---- -----",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "20250410",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4223,14 +4171,8 @@
       "text": "Please confirm the transaction date of ..--- ----- .---- ----- .---- ..--- ----- ..--- for the refund.",
       "ground_truth": "2010-12-02",
       "pii_value": "..--- ----- .---- ----- .---- ..--- ----- ..---",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "20101202",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4255,14 +4197,8 @@
       "text": "The metadata shows the event date as ..... .---- ...-- ----- ----- ----- ----- ----- which is probably corrupted.",
       "ground_truth": "13-00-0000",
       "pii_value": "..... .---- ...-- ----- ----- ----- ----- -----",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "51300000",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4274,14 +4210,8 @@
       "text": "The server logged the access date as ..--- ----- ..--- ....- ..... ----- ----- ..--- even though the month is impossible.",
       "ground_truth": "2024-50-02",
       "pii_value": "..--- ----- ..--- ....- ..... ----- ----- ..---",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "20245002",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4293,14 +4223,8 @@
       "text": "The license expiration is ..--- ----- ..--- ....- ..... ----- ----- ..--- July 3rd but this is odd.",
       "ground_truth": "7003-05-20",
       "pii_value": "--... ----- ----- ...-- ----- ..... ..--- -----",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "20245002",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4312,14 +4236,8 @@
       "text": "The research dataset includes a date field with ..... ..--- ..--- ..--- ----- ----- ----- ----- for missing records.",
       "ground_truth": "5222-00-00",
       "pii_value": "..... ..--- ..--- ..--- ----- ----- ----- -----",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "52220000",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     },
@@ -4331,14 +4249,8 @@
       "text": "The invoice date is ..--- ----- .---- ..... ...-- ----- .---- ----- which doesn't match the shipping date.",
       "ground_truth": "2015-30-10",
       "pii_value": "..--- ----- .---- ..... ...-- ----- .---- -----",
-      "full_pipeline_detected": true,
-      "full_detections": [
-        {
-          "type": "IP_ADDRESS",
-          "value": "20153010",
-          "score": 0.5
-        }
-      ],
+      "full_pipeline_detected": false,
+      "full_detections": [],
       "raw_regex_detected": false,
       "raw_detections": []
     }

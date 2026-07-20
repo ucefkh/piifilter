@@ -215,8 +215,9 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # "44 20 7946 0958", "966 55 123 4567", "49 30 12345678"
         # Must NOT match IBAN segments (preceded by 2 letters + 2 digits),
         # credit card numbers (4-4-4-4 patterns), or IP addresses.
-        # Negative lookahead excludes CC-like and IBAN-like patterns.
-        ("PHONE", r"\b(?!(?:IBAN|iban)\s)\d{1,4}\s+\d{2,4}(?:\s+\d{2,8}){1,2}\b", 0.60),
+        # Negative lookahead excludes CC-like, IBAN-like, and IP-like patterns.
+        # IP-like: 4 groups of 1-3 digits separated by spaces (e.g. "192 168 1 100").
+        ("PHONE", r"\b(?!(?:IBAN|iban)\s)(?!\d{1,3}\s+\d{1,3}\s+\d{1,3}\s+\d{1,3}\b)\d{1,4}\s+\d{2,4}(?:\s+\d{2,8}){1,2}\b", 0.60),
         # UK mobile format with parentheses: (077) 009-00123
         ("PHONE", r"\(\d{4,5}\)\s*\d{3}[–—−\-.]?\d{5}\b", 0.78),
         # Country code space-separated with dash in subgroups: "86 138-0013-8000"
@@ -229,12 +230,13 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # German format after Phone: — "+49 30 12345678"
         ("PHONE", r"(?i)\bPhone:\s*\+\d{1,3}\s+\d{2,4}\s+\d{5,10}\b", 0.80),
         # Universal variable-separator pattern: catch-all for phone-like sequences
-        # with at least 9 digits and mixed separators (dashes, dots, spaces)
-        # Uses negative lookahead to avoid matching:
-        #   - IP addresses (already covered by IP_ADDRESS patterns)
-        #   - Credit card 4-4-4-4 patterns (already covered by CREDIT_CARD)
-        #   - IBAN segments (preceded by 2-letter country code)
-        ("PHONE", r"(?!\d{1,3}(?:\.\d{1,3}){3}\b)(?![A-Z]{2}\d)\b\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]\d{2,4}[–—−\-.\s]?\d{2,4}\b(?![–—−\-.\s]?\d{2,4})", 0.55),
+                # with at least 9 digits and mixed separators (dashes, dots, spaces)
+                # Uses negative lookahead to avoid matching:
+                #   - IP addresses (already covered by IP_ADDRESS patterns)
+                #   - Credit card 4-4-4-4 patterns (already covered by CREDIT_CARD)
+                #   - IBAN segments (preceded by 2-letter country code)
+                #   - Space-separated 4-group IPs like "10 10 10 10", "192 168 1 100"
+                ("PHONE", r"(?!\d{1,3}(?:\.\d{1,3}){3}\b)(?!\d{1,3}\s+\d{1,3}\s+\d{1,3}\s+\d{1,3}\b)(?![A-Z]{2}\d)\b\d{2,4}[–—−\-.\\s]\d{2,4}[–—−\-.\\s]\d{2,4}[–—−\-.\\s]?\d{2,4}\b(?![–—−\-.\\s]?\d{2,4})", 0.55),
 
     # ── IP_ADDRESS ───────────────────────────────────────────────────
     # Standard dotted-decimal IPv4 with strict octet validation (0-255 per octet).
