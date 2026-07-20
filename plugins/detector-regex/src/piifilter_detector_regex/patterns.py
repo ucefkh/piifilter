@@ -38,18 +38,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Date after context keywords like "DOB is", "Date:", "Expires:", "Born:", "Updated:", "Valid until"
     ("DATE", r"(?i)(?:DOB|Date|Expires|Born|Updated|Valid\s+until)\s*:?\s*\d{1,2}[/-]\d{1,2}[/-]\d{2,4}\b", 0.85),
 
-    # ── PRIVATE_URL ──────────────────────────────────────────────────
-    ("PRIVATE_URL", r"\bhttps?://(?:localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)(?::\d+)?(?:/[^\s]*)?\b", 0.90),
-    ("PRIVATE_URL", r"\bhttps?://[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)?(?:/[^\s]*)?\b", 0.90),
-    ("PRIVATE_URL", r"\b[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)(?:/[^\s]*)?\b", 0.85),
-    # Bare internal hostname (no dot): http://internal:80/path
-    ("PRIVATE_URL", r"\bhttps?://(?:internal|localhost|db|api|app|backend|frontend|redis|postgres|mysql|rabbitmq)(?::\d+)?(?:/[^\s]*)?\b", 0.80),
-
-    # ── URL ──────────────────────────────────────────────────────────
-    # Full http/https URLs
-    ("URL", r"\bhttps?://[\w./?=&%-]+(?:\.[\w./?=&%-]+)*\b", 0.85),
-    # www. prefixed URLs without protocol
-    ("URL", r"\bwww\.[\w./?=&%-]+\.[\w]{2,}(?:/[\w./?=&%-]*)?\b", 0.80),
+    # ── DATABASE_URL ─────────────────────────────────────────────────
+    # MUST come before PRIVATE_URL so the broader DATABASE_URL match wins
+    # when a private hostname appears inside a DB connection string.
+    ("DATABASE_URL", r"\b(?:postgresql|postgres|mysql|mongodb|redis|sqlite|oracle|mssql)://\S+", 0.95),
 
     # ── JWT ──────────────────────────────────────────────────────────
     ("JWT", r"\beyJ[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\.[a-zA-Z0-9_-]+\b", 0.95),
@@ -60,9 +52,6 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("JWT", r"\beyJ[a-zA-Z0-9_-]+\.\.\.[a-zA-Z0-9_-]+\b", 0.85),
     # JWT that is essentially a base64 encoded payload (single segment, no dots)
     ("JWT", r"\beyJ[a-zA-Z0-9+/=_-]{20,}\b", 0.70),
-
-    # ── DATABASE_URL ─────────────────────────────────────────────────
-    ("DATABASE_URL", r"\b(?:postgresql|postgres|mysql|mongodb|redis|sqlite|oracle|mssql)://\S+", 0.95),
 
     # ── SSN ──────────────────────────────────────────────────────────
     # IMPORTANT ORDERING: More specific patterns (context-prefixed) must come
@@ -174,16 +163,16 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # Keyword-prefixed phone numbers (phone/tel/mobile/cell/call + number)
         # Must have at least 7 digits to avoid matching short sequences.
         # Negative lookahead avoids matching credit card numbers (4 groups of 4+ digits).
-        ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*\-?\s*(?!\d{4,}[–—−\-.\s]\d{4,}[–—−\-.\s]\d{4,})\+?[\d\(][\d\s\-\.\(\)]{7,20}\b", 0.90),
+        ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*\-?\s*(?!\d{4,}[–—−\-.\\s]\d{4,}[–—−\-.\\s]\d{4,})\+?[\d\(][\d\s\-\.,\)]{7,20}\b", 0.90),
         # International with + and unicode dashes: +1-555-123-4567, +1–555–123–4567, +1—555—123—4567, +1−555−123−4567
-        ("PHONE", r"(?:^|\s)\+\d{1,3}[–—−\-. ]\d{2,4}[–—−\-. ]\d{3,4}[–—−\-. ]\d{4}\b", 0.88),
+        ("PHONE", r"(?:^|\s)\+\d{1,3}[–—−\-\. ]\d{2,4}[–—−\-\. ]\d{3,4}[–—−\-\. ]\d{4}\b", 0.88),
         # International with + and spaces only (variable groupings): +44 20 7946 0958, +1 555 123 4567
         ("PHONE", r"(?:^|\s)\+\d{1,3}(?:\s+\d{2,4}){2,4}\b", 0.85),
         # International with +, country code 1 digit, spaced with optional unicode dashes inside
         ("PHONE", r"(?:^|\s)\+\d\s+\d{3}\s+\d{3}[–—−\-. ]?\d{2}[–—−\-. ]?\d{2}\b", 0.85),
         # International with + and mixed separators (any combo of dash types and spaces)
         ("PHONE", r"(?:^|\s)\+\d{1,3}[–—−\-.]\d{2,4}[–—−\-. ]\d{3,4}[–—−\-. ]?\d{3,4}\b", 0.85),
-        # Bare E.164 with + prefix: "+14085551212" style
+        # Bare E.164 with + prefix: "+140****1212" style
         ("PHONE", r"\+\d{7,15}\b", 0.80),
         # Parenthesized area code with separator: (415) 555–2671, (120) 625-59444
         ("PHONE", r"\(\d{3}\)\s*\d{3}[–—−\-.]\d{4,6}\b", 0.82),
@@ -236,7 +225,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
                 #   - Credit card 4-4-4-4 patterns (already covered by CREDIT_CARD)
                 #   - IBAN segments (preceded by 2-letter country code)
                 #   - Space-separated 4-group IPs like "10 10 10 10", "192 168 1 100"
-                ("PHONE", r"(?!\d{1,3}(?:\.\d{1,3}){3}\b)(?!\d{1,3}\s+\d{1,3}\s+\d{1,3}\s+\d{1,3}\b)(?![A-Z]{2}\d)\b\d{2,4}[–—−\-.\\s]\d{2,4}[–—−\-.\\s]\d{2,4}[–—−\-.\\s]?\d{2,4}\b(?![–—−\-.\\s]?\d{2,4})", 0.55),
+                ("PHONE", r"(?!\d{1,3}(?:\.\d{1,3}){3}\b)(?!\d{1,3}\s+\d{1,3}\s+\d{1,3}\s+\d{1,3}\b)(?![A-Z]{2}\d)\b\d{2,4}[–—−\-\.\\s]\d{2,4}[–—−\-\.\\s]\d{2,4}[–—−\-\.\\s]?\d{2,4}\b(?![–—−\-\.\\s]?\d{2,4})", 0.55),
 
     # ── IP_ADDRESS ───────────────────────────────────────────────────
     # Standard dotted-decimal IPv4 with strict octet validation (0-255 per octet).
@@ -297,11 +286,23 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("FILE_PATH", r"(?<!\/)/(?:home|var|etc|usr|opt|tmp|root|mnt|media|run|srv)/(?:[a-zA-Z0-9._-]+/?)+[a-zA-Z0-9._-]+(?!\w)", 0.90),
     ("FILE_PATH", r"(?<!\w)(?:[A-Za-z]:\\[a-zA-Z0-9._\\ -]+)(?!\w)", 0.90),
 
-    # ── DOMAIN ───────────────────────────────────────────────────────
-    # Negative lookahead (?!@) avoids matching email local-parts (e.g. "bob.smith" before @).
-    # File extensions like .yaml, .log, .json, .pdf etc. are excluded from matching
-    # by requiring that the TLD part not be a common file extension.
-    ("DOMAIN", r"\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b(?!@)(?<!\.yaml)(?<!\.json)(?<!\.xml)(?<!\.toml)(?<!\.ini)(?<!\.cfg)(?<!\.conf)(?<!\.log)(?<!\.txt)(?<!\.md)(?<!\.rst)(?<!\.html)(?<!\.css)(?<!\.js)(?<!\.ts)(?<!\.py)(?<!\.rb)(?<!\.java)(?<!\.cpp)(?<!\.c)(?<!\.h)(?<!\.go)(?<!\.rs)(?<!\.php)(?<!\.sql)(?<!\.db)(?<!\.pdf)(?<!\.doc)(?<!\.docx)(?<!\.xls)(?<!\.xlsx)(?<!\.ppt)(?<!\.pptx)(?<!\.png)(?<!\.jpg)(?<!\.jpeg)(?<!\.gif)(?<!\.svg)(?<!\.ico)(?<!\.zip)(?<!\.tar)(?<!\.gz)(?<!\.tgz)(?<!\.bz2)(?<!\.xz)(?<!\.7z)(?<!\.lock)(?<!\.env)", 0.75),
+    # ── PRIVATE_URL ──────────────────────────────────────────────────
+    # IMPORTANT: PRIVATE_URL comes AFTER DATABASE_URL so that broader
+    # DATABASE_URL matches take priority over private hostname substrings
+    # inside DB connection strings. URL comes AFTER PRIVATE_URL so the
+    # more specific private URL match takes priority over the generic URL.
+    ("PRIVATE_URL", r"\bhttps?://(?:localhost|127\.0\.0\.1|10\.\d+\.\d+\.\d+|172\.(?:1[6-9]|2\d|3[01])\.\d+\.\d+|192\.168\.\d+\.\d+)(?::\d+)?(?:/[^\s]*)?\b", 0.90),
+    ("PRIVATE_URL", r"\bhttps?://[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)?(?:/[^\s]*)?\b", 0.90),
+    ("PRIVATE_URL", r"\b[\w-]+\.(?:internal|local|private|corp|intranet)(?:\.[\w-]+)*(?::\d+)(?:/[^\s]*)?\b", 0.85),
+    # Bare internal hostname (no dot): http://internal:80/path
+    ("PRIVATE_URL", r"\bhttps?://(?:internal|localhost|db|api|app|backend|frontend|redis|postgres|mysql|rabbitmq)(?::\d+)?(?:/[^\s]*)?\b", 0.80),
+
+    # ── URL ──────────────────────────────────────────────────────────
+    # URL comes AFTER PRIVATE_URL so that the more specific PRIVATE_URL
+    # match takes priority when both match the same span.
+    ("URL", r"\bhttps?://[\w./?=&%-]+(?:\.[\w./?=&%-]+)*\b", 0.85),
+    # www. prefixed URLs without protocol
+    ("URL", r"\bwww\.[\w./?=&%-]+\.[\w]{2,}(?:/[\w./?=&%-]*)?\b", 0.80),
 
     # ── PASSPORT ─────────────────────────────────────────────────────
     ("PASSPORT", r"(?i)(?:^|\s)(?:passport)\s*(?:number|no|#)?\s*:?\s*[A-Z]{0,2}\d{6,9}\b", 0.85),
@@ -430,6 +431,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # ── COUNTRY ──────────────────────────────────────────────────────
     ("COUNTRY", r"\b(?:USA|US(?:A)?|UK|United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|UAE|Israel|Greece|Czech|Finland|Hungary|Romania|Ukraine)\b", 0.80),
 
+    # ── DOMAIN ───────────────────────────────────────────────────────
+    # DOMAIN comes AFTER URL, DATABASE_URL, PRIVATE_URL, and EMAIL so that
+    # domain substrings within those more specific types are deduped.
+    # Negative lookahead (?!@) avoids matching email local-parts (e.g. "bob.smith" before @).
+    # File extensions like .yaml, .log, .json, .pdf etc. are excluded from matching
+    # by requiring that the TLD part not be a common file extension.
+    ("DOMAIN", r"\b(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}\b(?!@)(?<!\.yaml)(?<!\.json)(?<!\.xml)(?<!\.toml)(?<!\.ini)(?<!\.cfg)(?<!\.conf)(?<!\.log)(?<!\.txt)(?<!\.md)(?<!\.rst)(?<!\.html)(?<!\.css)(?<!\.js)(?<!\.ts)(?<!\.py)(?<!\.rb)(?<!\.java)(?<!\.cpp)(?<!\.c)(?<!\.h)(?<!\.go)(?<!\.rs)(?<!\.php)(?<!\.sql)(?<!\.db)(?<!\.pdf)(?<!\.doc)(?<!\.docx)(?<!\.xls)(?<!\.xlsx)(?<!\.ppt)(?<!\.pptx)(?<!\.png)(?<!\.jpg)(?<!\.jpeg)(?<!\.gif)(?<!\.svg)(?<!\.ico)(?<!\.zip)(?<!\.tar)(?<!\.gz)(?<!\.tgz)(?<!\.bz2)(?<!\.xz)(?<!\.7z)(?<!\.lock)(?<!\.env)", 0.75),
+
     # ── COMPANY ──────────────────────────────────────────────────────
     ("COMPANY", r"\b(?:[A-Z][a-z]+)\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|Incorporated|PLC|AG|SA|BV|NV)\.?\b", 0.80),
     ("COMPANY", r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+)+\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|BV|NV)\.?\b", 0.80),
@@ -445,6 +454,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Requires the company word to be capitalized, 3+ letters long.
     # Negative lookahead avoids matching when followed by Inc/Corp/LLC etc.
     # (those are already caught by the higher-confidence patterns).
+    # NOTE: keyword prefix is matched as part of finditer() but the detector
+    # dedup will prefer the narrower "name only" match if that pattern fires first.
     ("COMPANY", r"(?i)(?:(?:work|works)\s+at|Invoice\s+from|Signed\s+by|regarding)\s+(?:(?:the|our)\s+)?(?-i:[A-Z])[a-z]{3,}(?:(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]{2,}))?\b", 0.65),
     # "Company: X" / "Vendor: X" / "Organization: X" prefix — NOT "Client:" which
     # often precedes a person name.
@@ -453,6 +464,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("COMPANY", r"(?-i:[A-Z])[a-z]{3,}(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]+)?\s+is\s+(?:the|our|a)\s+vendor\b", 0.65),
     # Two capitalized words acting as company name (no suffix needed) in
     # company context — preceded by known company keywords.
+    # NOTE: keyword prefix is matched as part of finditer() but the detector
+    # dedup will prefer the narrower "name only" match if that pattern fires first.
     ("COMPANY", r"(?i)(?:(?:work|works)\s+at|Invoice\s+from|Signed\s+by|regarding)\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)\b", 0.60),
     # Explicit known companies list — single-word brand names that are
     # well-known companies. These are high-precision names that don't
@@ -468,6 +481,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # keyword must immediately precede a capitalized two-word phrase.
     # Low confidence to avoid FPs on "from New York", "from Boston" etc.
     # Avoid matching inside parentheticals like "(famous from Finding Nemo)"
-    ("COMPANY", r"(?<!\w)(?<!\()(?:from)\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s*(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
+    # NOTE: "from" prefix is included in the match. The narrower company-only
+    # pattern fires separately (e.g. "Widgets Inc") so this is supplementary.
+    ("COMPANY", r"(?i)from\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s*(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
 
 ]

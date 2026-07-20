@@ -322,9 +322,34 @@ class RegexDetector(Detector):
                 if start == end:
                     continue
 
-                # Skip if fully contained in an already-found match of the same type
+                # Skip if fully contained in an already-found match
                 if any(s <= start and end <= e for s, e in seen_intervals):
                     continue
+
+                # NEW: If this match CONTAINS an already-found match, prefer the narrower
+                # match (better boundary precision). This prevents context-prefixed
+                # matches like "from Acme Corp" from surviving alongside "Acme Corp".
+                contained_by_new = [(i, (s, e)) for i, (s, e) in enumerate(seen_intervals)
+                                    if start <= s and e <= end]
+                if contained_by_new:
+                    # Replace the contained intervals with this new one if it represents
+                    # a genuinely different span (not just a keyword extension).
+                    # For context-prefixed patterns (keywords + company name), we prefer
+                    # the narrower match. But for cases like URL overlapping DOMAIN,
+                    # we prefer the broader match (handled by pattern ordering).
+                    # Heuristic: if the new match starts at least 2 chars before the
+                    # contained match, it's likely a keyword-prefixed pattern and should
+                    # be skipped (the narrower match is better).
+                    contained_start = min(s for _, (s, _) in contained_by_new)
+                    if start < contained_start - 1:
+                        # This new match starts well before the contained match —
+                        # it's likely a keyword extension. Skip it.
+                        continue
+                    # Otherwise, the new match is a genuine superset. Remove the
+                    # narrower matches and keep this broader one.
+                    for i, _ in reversed(contained_by_new):
+                        entities.pop(i)
+                        seen_intervals.pop(i)
 
                 # Luhn validation for CREDIT_CARD: discard matches whose
                 # digit content fails the checksum.
