@@ -227,28 +227,32 @@ class RegexDetector(Detector):
         # is a substring of "postgresql://admin:***@db.internal:5432/production"
         # (DATABASE_URL), the broader type is more specific and the private-
         # hostname match is noise.
-        url_substring_types = {EntityType.DATABASE_URL, EntityType.URL, EntityType.PRIVATE_URL}
-        private_url_substrings: list[str] = []
-        for e in entities:
-            if e.entity_type == EntityType.PRIVATE_URL:
-                # Check if any DATABASE_URL/URL contains this match as substring
-                is_contained = False
-                for other in entities:
-                    if other is e and other.entity_type == EntityType.PRIVATE_URL:
-                        continue
-                    if other.entity_type in url_substring_types:
-                        # Use value-based containment since coordinates may differ
-                        if e.value in other.value and len(e.value) < len(other.value):
-                            is_contained = True
-                            break
-                if not is_contained:
-                    private_url_substrings.append(e.value)
+        # Uses span-based containment: coordinates are from the same overall
+        # input text (text_for_gps for PRIVATE_URL, stripped for DATABASE_URL)
+        # and positions are consistent because inner-separator stripping does
+        # not shift non-separator chars.  This is more reliable than value-based
+        # containment, which can fail when deobfuscator transforms differ between
+        # the two paths (e.g. '1' → 'l' at the end of a URL path segment).
+        url_container_types = {EntityType.DATABASE_URL, EntityType.URL}
+        private_url_keep: set[int] = set()
+        for i, e in enumerate(entities):
+            if e.entity_type != EntityType.PRIVATE_URL:
+                continue
+            is_contained = False
+            for other in entities:
+                if other is e:
+                    continue
+                if other.entity_type in url_container_types:
+                    if other.start <= e.start and e.end <= other.end and len(e.value) < len(other.value):
+                        is_contained = True
+                        break
+            if not is_contained:
+                private_url_keep.add(i)
 
-        # Now apply: only keep PRIVATE_URL entities that are not contained
         filtered_entities: list[DetectedEntity] = []
-        for e in entities:
+        for i, e in enumerate(entities):
             if e.entity_type == EntityType.PRIVATE_URL:
-                if e.value in private_url_substrings:
+                if i in private_url_keep:
                     filtered_entities.append(e)
             else:
                 filtered_entities.append(e)
