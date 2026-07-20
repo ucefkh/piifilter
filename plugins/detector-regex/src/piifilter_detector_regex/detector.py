@@ -817,14 +817,29 @@ class RegexDetector(Detector):
                         pre_strip_digits.setdefault(sd, set()).add("structural")
 
         filtered: list[DetectedEntity] = []
+        # Build a set of pre-strip phone values for comparison
+        phone_pst_values = set()
+        if phone_presistrip:
+            phone_pst_values = {e.value for e in phone_presistrip}
+        
         for e in entities:
             if e.entity_type == EntityType.PHONE and e.confidence <= 0.75:
+                # If this entity is already in the pre-strip phone list, keep it
+                # (it has correct separator format from pre-strip detection)
+                if e.value in phone_pst_values:
+                    filtered.append(e)
+                    continue
+                    
                 ed = "".join(c for c in e.value if c.isdigit())
                 if ed:
-                    # Check if this is a pre-strip phone entity -- never suppress those
-                    # (they were detected on the original text with proper separators)
-                    if "phone_pst" in pre_strip_digits.get(ed, set()):
-                        filtered.append(e)
+                    # Check if a pre-strip phone entity has the same digit content.
+                    # If this is a bare-digit version from stripped text that overlaps
+                    # with a correctly-formatted pre-strip phone, suppress it.
+                    # Only suppress bare-digit entities (no separators in text) since
+                    # properly formatted phones from pre-strip detection are already
+                    # kept via the phone_pst_values check above.
+                    has_separator = any(c in e.value for c in ("-", ".", "(", ")", " ", "–", "—", "−"))
+                    if "phone_pst" in pre_strip_digits.get(ed, set()) and not has_separator:
                         continue
                     # Check if the phone digit content either matches or
                     # contains a pre-strip/structural entity's digit content.
