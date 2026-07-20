@@ -150,9 +150,20 @@ class RegexDetector(Detector):
         all_spans: set[tuple[int, int]] = {
             (e.start, e.end) for e in entities
         } | cc_ssn_spans
+        # Build a separate set of spans that are MASKED_SSN or MASKED_CC — these
+        # indicate the text looks obfuscated/masked but may actually contain a
+        # valid CC digit run that the Luhn safety net should still catch.
+        # E.g. "Encoded: 4111111111111111" gets caught by MASKED_SSN pattern
+        # preventing the Luhn safety net from finding the 16-digit run.
+        masked_penalty_spans: set[tuple[int, int]] = {
+            (e.start, e.end) for e in entities
+            if e.entity_type in (EntityType.MASKED_SSN, EntityType.MASKED_CC)
+        }
         # Structural recall pass: Luhn check on ALL 13-19 digit runs
         # and SSN validator on ALL exactly-9-digit runs not already matched.
-        luhn_found = self._run_luhn_on_numeric_runs(stripped, all_spans)
+        luhn_found = self._run_luhn_on_numeric_runs(
+            stripped, all_spans, masked_penalty_spans
+        )
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
@@ -313,8 +324,15 @@ class RegexDetector(Detector):
         all_spans: set[tuple[int, int]] = {
             (e.start, e.end) for e in entities
         } | cc_ssn_spans
+        # Build masked penalty spans (same rationale as detect())
+        masked_penalty_spans_session: set[tuple[int, int]] = {
+            (e.start, e.end) for e in entities
+            if e.entity_type in (EntityType.MASKED_SSN, EntityType.MASKED_CC)
+        }
         # Structural recall pass
-        luhn_found = self._run_luhn_on_numeric_runs(stripped, all_spans)
+        luhn_found = self._run_luhn_on_numeric_runs(
+            stripped, all_spans, masked_penalty_spans_session
+        )
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
@@ -1203,7 +1221,8 @@ class RegexDetector(Detector):
         return entities, cc_ssn_spans
 
     def _run_luhn_on_numeric_runs(
-        self, text: str, covered_spans: set[tuple[int, int]]
+        self, text: str, covered_spans: set[tuple[int, int]],
+        masked_penalty_spans: set[tuple[int, int]] | None = None,
     ) -> list[DetectedEntity]:
         """Scan for all 13-19 consecutive digit runs not already covered by
         a pattern match and emit CREDIT_CARD at confidence 0.95 if Luhn passes.
@@ -1212,8 +1231,16 @@ class RegexDetector(Detector):
         (done by the deobfuscator), any CC format variant reduces to a bare
         digit run that this method can catch. Only fires when the span was
         NOT already detected by a pattern match.
+
+        If *masked_penalty_spans* is provided, digit runs that are covered
+        by a MASKED_SSN or MASKED_CC span are NOT blocked — those masked
+        patterns may have greedily caught a CC digit run (e.g. "Encoded:
+        4111111111111111" matches MASKED_SSN due to the "Encoded:" keyword),
+        so we still want to emit a CREDIT_CARD for the same digits.
         """
         found: list[DetectedEntity] = []
+        if masked_penalty_spans is None:
+            masked_penalty_spans = set()
         # Match 13-19 consecutive digits
         for m in re.finditer(r"\b\d{13,19}\b", text):
             start, end = m.start(), m.end()
@@ -1221,7 +1248,15 @@ class RegexDetector(Detector):
 
             # Skip if already covered by a pattern match
             if any(s <= start and end <= e for s, e in covered_spans):
-                continue
+                # BUT: if the covering span is a masked/obfuscated type,
+                # the digit run may still be a real CC that needs detection.
+                # Check if there's a MASKED_SSN or MASKED_CC covering this.
+                covered_only_by_masked = any(
+                    s <= start and end <= e
+                    for s, e in masked_penalty_spans
+                )
+                if not covered_only_by_masked:
+                    continue
 
             if self._luhn_check(digits):
                 found.append(

@@ -1,6 +1,6 @@
 {
   "title": "Held-Out Adversarial Benchmark Report",
-  "timestamp": "2026-07-20T10:39:53.154959",
+  "timestamp": "2026-07-20T11:05:29.600579",
   "train_benchmark": {
     "label": "v1 benchmark (original)",
     "full_pipeline_rate": 78.6,
@@ -328,14 +328,14 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "987654321"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PHONE",
+              "type": "SOCIAL_SECURITY",
               "value": "987  65  4321"
             }
           ]
@@ -354,7 +354,11 @@
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PHONE",
+              "type": "SOCIAL_SECURITY",
+              "value": "SSN is 456   78   9012"
+            },
+            {
+              "type": "SOCIAL_SECURITY",
               "value": "456   78   9012"
             }
           ]
@@ -366,14 +370,14 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "321546789"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PHONE",
+              "type": "SOCIAL_SECURITY",
               "value": "321  54  6789"
             }
           ]
@@ -400,7 +404,11 @@
               "value": "Tom Chen"
             },
             {
-              "type": "PHONE",
+              "type": "SOCIAL_SECURITY",
+              "value": "SSN 555   12   3456"
+            },
+            {
+              "type": "SOCIAL_SECURITY",
               "value": "555   12   3456"
             }
           ]
@@ -412,14 +420,14 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "111223333"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PHONE",
+              "type": "SOCIAL_SECURITY",
               "value": "111  22  3333"
             }
           ]
@@ -431,14 +439,14 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "888990000"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PHONE",
+              "type": "SOCIAL_SECURITY",
               "value": "888   99   0000"
             }
           ]
@@ -450,7 +458,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "777331111"
             },
             {
@@ -461,7 +469,7 @@
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PHONE",
+              "type": "SOCIAL_SECURITY",
               "value": "777  33  1111"
             },
             {
@@ -484,7 +492,11 @@
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PHONE",
+              "type": "SOCIAL_SECURITY",
+              "value": "SSN is 444   55   6666"
+            },
+            {
+              "type": "SOCIAL_SECURITY",
               "value": "444   55   6666"
             }
           ]
@@ -510,7 +522,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "618392754"
             }
           ],
@@ -524,7 +536,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "490521873"
             }
           ],
@@ -566,7 +578,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "806173249"
             }
           ],
@@ -1904,7 +1916,7 @@
               "value": "http://100053000"
             },
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "100053000"
             }
           ],
@@ -3654,7 +3666,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "203011342"
             }
           ],
@@ -3668,7 +3680,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "198511007"
             }
           ],
@@ -5329,7 +5341,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "612832961"
             }
           ],
@@ -5343,7 +5355,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "738071728"
             }
           ],
@@ -5357,7 +5369,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "403269981"
             }
           ],
@@ -5371,7 +5383,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "891726418"
             }
           ],
@@ -5385,7 +5397,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "676093215"
             }
           ],
@@ -6107,7 +6119,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "172162541"
             }
           ],
@@ -9147,7 +9159,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "987654321"
             }
           ],
@@ -9161,7 +9173,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "456789123"
             }
           ],
@@ -9184,7 +9196,7 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "IP_ADDRESS",
+              "type": "SOCIAL_SECURITY",
               "value": "321547678"
             }
           ],
