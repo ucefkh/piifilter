@@ -10,15 +10,22 @@ prompt = """Rate PIIFilter out of 10 on this scale:
 9-9.5: Excellent, all entity types at recall >= 0.95 and precision >= 0.85
 9.6-10: Perfect or near-perfect
 
-Current metrics (arbitration enabled):
-- DOMAIN: recall=1.0, precision=0.9000 (FIXED this tick from recall=0.8889, precision=0.8000)
-- PERSON: recall=1.0, precision=0.8889
-- PROJECT_NAME: recall=1.0, precision=1.0
-- EMAIL: recall=0.9524, precision=0.9302
-- IP_ADDRESS: recall=0.9333, precision=1.0
-- PHONE: recall=0.9333, precision=0.9333
-- Overall: precision=0.9220, recall=0.9812, F1=0.9457
-- 23/25 entity types have recall=1.0
+Current metrics (pipeline-arbitration, held-out 20%, 473 test examples / 540 entities):
+- Overall: Precision=0.8929  Recall=0.9111  F1=0.9019
+- CC real recall: 0.9667 (29/30 real, masked excluded), precision: 0.9667
+- SSN real recall: 0.8947 (36 TP / 19 real, masked excluded), precision: 0.9730
+- DOMAIN: recall=1.0, precision=0.4688 (high FP from word-boundary regex)
+- CITY: recall=0.5556, precision=0.2632 (short names clash with common words)
+- GPS: recall=1.0, precision=1.0 (pipeline-arb)
+- BANK_ACCOUNT: recall=1.0, precision=0.8750
+- COUNTRY: recall=0.6667, precision=0.5455
+- EMAIL: recall=0.9818, precision=1.0
+- IP_ADDRESS: recall=0.9783, precision=1.0
+- PHONE: recall=0.9825, precision=1.0
+- PERSON: recall=1.0, precision=0.6842 (FP from name-like terms)
+- 12/26 entity types at recall=1.0, 9/26 at precision>=0.94
+- ADDRESS: recall=0.8889, precision=0.9412
+- URL: recall=0.6562, precision=0.9130
 
 Give ONLY a single number 0-10, nothing else."""
 
