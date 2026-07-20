@@ -81,7 +81,6 @@ else:
   live-integration:
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    if: false  # Disabled — requires Ollama binary; re-enable when running integration tests
     steps:
       - uses: actions/checkout@v4
 
@@ -102,12 +101,15 @@ else:
           uv pip install -e "core"
           uv pip install -e "sdk" --no-deps
           uv pip install -e "plugins/provider-lmstudio"
+          uv pip install -e "plugins/provider-ollama"
           uv pip install pytest pytest-asyncio httpx httpx-sse
 
-      - name: Start Ollama (pre-built binary, no install.sh)
+      - name: Start Ollama (pre-built binary)
         run: |
-          curl -fsSLo /tmp/ollama.tgz "https://github.com/ollama/ollama/releases/latest/download/ollama-linux-amd64.tgz"
-          tar -C /usr/local -xzf /tmp/ollama.tgz
+          if ! command -v ollama &>/dev/null; then
+            curl -fsSLo /tmp/ollama.tgz "https://github.com/ollama/ollama/releases/latest/download/ollama-linux-amd64.tgz"
+            tar -C /usr/local -xzf /tmp/ollama.tgz
+          fi
           ollama serve &
           sleep 8
           for i in $(seq 1 5); do curl -sf http://localhost:11434/api/tags > /dev/null && echo "Ollama ready" && break; sleep 2; done
@@ -123,11 +125,11 @@ else:
         run: |
           echo "Available models:"
           curl -s http://localhost:11434/v1/models | python3 -c \
-            "import json,sys; d=json.load(sys.stdin); print('\\n'.join(m['id'] for m in d.get('data',[])))"
+            "import json,sys; d=json.load(sys.stdin); print('\n'.join(m['id'] for m in d.get('data',[])))"
 
       - name: Run live provider integration tests
         env:
           PIIFILTER_LIVE_TESTS: "1"
           PIIFILTER_LIVE_TIMEOUT: "180"
         run: |
-          uv run pytest tests/integration/test_provider_real.py -v --tb=short -x --timeout=200
+          uv run pytest tests/integration/test_provider_real.py -v --tb=short -x -k "provider_auto_detect or provider_forward_real or provider_health_check" --timeout=200

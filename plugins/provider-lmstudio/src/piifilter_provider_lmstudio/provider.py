@@ -162,18 +162,23 @@ class LMStudioProvider(Provider):
         return []
 
     def _resolve_config(self, session: Session) -> None:
-        """Read endpoint and model from session config, preferring provider_config."""
+        """Read endpoint and model from session config, preferring provider_config.
+
+        Preserves any auto-detected endpoint/model that was found during
+        ``initialize()`` — only overrides when the session config provides
+        a *non-default* value.
+        """
         if session.provider_config is not None:
             cfg = session.provider_config
-            if cfg.endpoint:
+            if cfg.endpoint and cfg.endpoint != LM_STUDIO_ENDPOINT:
                 self._endpoint = cfg.endpoint
-            if cfg.default_model:
+            if cfg.default_model and cfg.default_model != DEFAULT_MODEL:
                 self._model = cfg.default_model
         else:
             provider_cfg = session.config.provider
-            if provider_cfg.default_model:
+            if provider_cfg.default_model and provider_cfg.default_model != DEFAULT_MODEL:
                 self._model = provider_cfg.default_model
-            if provider_cfg.endpoint:
+            if provider_cfg.endpoint and provider_cfg.endpoint != LM_STUDIO_ENDPOINT:
                 self._endpoint = provider_cfg.endpoint
 
     def _build_body(self, session: Session, prompt: str) -> dict[str, Any]:
