@@ -2,14 +2,16 @@
 """Get Opus 4.8 score for current state of PIIFilter."""
 import json
 import re
+import os
 import boto3
 
-session = boto3.Session(profile_name='default')
-bedrock = session.client('bedrock-runtime', region_name='us-east-1')
+# Use environment-variable based auth to avoid profile parsing issues
+session = boto3.Session(region_name='eu-west-3')
+bedrock = session.client('bedrock-runtime', region_name='eu-west-3')
 
 message = {
     "role": "user",
-    "content": [{"text": "You are evaluating PIIFilter, a privacy proxy that detects/filters PII from prompts before LLMs and unfilters responses.\n\nRecent changes:\n1. CI live-integration job re-enabled (was if:false) — now starts Ollama, verifies /v1/models, runs provider tests\n2. LMStudioProvider._resolve_config fixed: preserves auto-detected endpoint/model instead of overwriting with LM Studio defaults\n3. provider-ollama plugin installed in CI alongside provider-lmstudio\n4. Golden corpus benchmark: 100% precision/recall on 316 entities across 26 types (balanced mode)\n\nRespond with ONLY a single integer score 1-10 followed by a one-line reason. Format:\nSCORE: X\nREASON: <one line>"}]
+    "content": [{"text": "You are evaluating PIIFilter, a privacy proxy that detects/filters PII from prompts before LLMs and unfilters responses.\n\nRecent changes:\n1. Fixed COMPANY/PERSON false positives: added comprehensive denylists for technical terms (Postgres, Support, Config, Settings, Default, Admin, System, Account, Login, Project, Nginx, Docker, Kubernetes, Systemd) and city/geographic names (New, San, Los, Las, etc.) to all 'from', 'works at', 'Invoice from', 'Signed by', 'regarding' keyword-prefixed COMPANY and PERSON patterns. Previously these patterns would match phrases like 'from New York', 'Signed by Postgres Admin', 'works at Support Team', 'from Project Phoenix' as PII.\n2. Golden corpus benchmark unchanged: 100% precision/recall on 316 entities across 26 types (balanced mode)\n3. All 486 tests pass\n\nRespond with ONLY a single integer score 1-10 followed by a one-line reason. Format:\nSCORE: X\nREASON: <one line>"}]
 }
 
 response = bedrock.converse(

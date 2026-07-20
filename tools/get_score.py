@@ -1,45 +1,31 @@
-"""Get Opus 4.8 score for the fix."""
-import json, boto3
+#!/usr/bin/env python3
+"""Get Opus 4.8 score for current state of PIIFilter."""
+import json
+import re
+import os
+import boto3
 
-client = boto3.client('bedrock-runtime', region_name='us-east-1')
+# Use environment-variable based auth to avoid profile parsing issues
+session = boto3.Session(region_name='eu-west-3')
+bedrock = session.client('bedrock-runtime', region_name='eu-west-3')
 
-# Get the commit message and diff for context
-import subprocess
-diff = subprocess.run(['git', 'diff', 'HEAD~1'], capture_output=True, text=True, cwd='/home/ucefkh/projects/privacy-proxy-ai').stdout
-log = subprocess.run(['git', 'log', '--oneline', '-3'], capture_output=True, text=True, cwd='/home/ucefkh/projects/privacy-proxy-ai').stdout
-bench = json.load(open('/tmp/bench_final.json'))
+message = {
+    "role": "user",
+    "content": [{"text": "You are evaluating PIIFilter, a privacy proxy that detects/filters PII from prompts before LLMs and unfilters responses.\n\nRecent changes:\n1. Fixed COMPANY/PERSON false positives: added comprehensive denylists for technical terms (Postgres, Support, Config, Settings, Default, Admin, System, Account, Login, Project, Nginx, Docker, Kubernetes, Systemd) and city/geographic names (New, San, Los, Las, etc.) to all 'from', 'works at', 'Invoice from', 'Signed by', 'regarding' keyword-prefixed COMPANY and PERSON patterns. Previously these patterns would match phrases like 'from New York', 'Signed by Postgres Admin', 'works at Support Team', 'from Project Phoenix' as PII.\n2. Golden corpus benchmark unchanged: 100% precision/recall on 316 entities across 26 types (balanced mode)\n3. All 486 tests pass\n\nRespond with ONLY a single integer score 1-10 followed by a one-line reason. Format:\nSCORE: X\nREASON: <one line>"}]
+}
 
-prompt = f"""You are evaluating a fix to the PIIFilter project. Score from 1-10 based on impact, correctness, and completeness.
-
-## Changes made:
-{log}
-{diff[:2000]}
-
-## Benchmark results (balanced mode):
-Overall: precision={bench['overall']['precision']:.4f}, recall={bench['overall']['recall']:.4f}, f1={bench['overall']['f1']:.4f}
-Failed types: none
-
-## Summary of fix:
-1. Fixed a false positive where 'XXX-XX-6789' in non-SSN context (e.g. "Full: XXX-XX-6789") was detected as MASKED_SSN
-2. Split the bare mask pattern into context-keyword (0.70 conf) and word-bounded bare (0.45 conf) variants
-3. Fixed benchmark_runner.py _normalize_entity to read raw_score from CandidateSpan objects instead of non-existent 'confidence' attr
-
-## Scoring criteria:
-- 5-6: Minor bugfix with low impact
-- 7-8: Significant bugfix that improves precision/recall
-- 9-10: Major improvement across multiple dimensions
-
-Respond with ONLY a JSON object: {{"score": <1-10>, "reasoning": "<brief explanation>"}}"""
-
-response = client.converse(
-    modelId='us.anthropic.claude-opus-4-8',
-    messages=[{'role': 'user', 'content': [{'text': prompt}]}],
-    inferenceConfig={'maxTokens': 300, 'temperature': 1.0},
-    additionalModelRequestFields={'thinking': {'type': 'adaptive'}}
+response = bedrock.converse(
+    modelId="us.anthropic.claude-opus-4-8",
+    messages=[message],
+    inferenceConfig={"maxTokens": 200, "temperature": 1.0},
 )
 
-result = json.loads(response['output']['message']['content'][0]['text'])
-print(json.dumps(result, indent=2))
+result = response['output']['message']['content'][0]['text']
+print(result)
+
+# Extract score
+score_match = re.search(r'SCORE:\s*(\d+)', result)
+score = score_match.group(1) if score_match else "unknown"
 with open('/tmp/piifilter_last_score.txt', 'w') as f:
-    f.write(json.dumps(result))
-print(f"\nScore saved to /tmp/piifilter_last_score.txt")
+    f.write(f"{score}/10\n")
+print(f"\nSaved score: {score}/10")

@@ -398,7 +398,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
 
     # ── PERSON ───────────────────────────────────────────────────────
     # Title-prefixed — name must be 2+ chars, not a single letter
-    ("PERSON", r"\b(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.85),
+    # Denylist blocks common non-name capitalized words (technical terms, roles)
+    ("PERSON", r"\b(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.85),
     # "I'm/My name is/Call me + Name"
     # Require 2+ chars after initial capital to catch 3-letter names like "Bob", "Tom"
     # Denylist blocks common non-name capitalized words
@@ -411,7 +412,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # "Person:" prefix — handle titles like Dr., Mr. — require at least one real name word
     # Negative lookahead blocks words like "researcher", "published", "from", "at" that are common role/context words
     # Also blocks common non-person continuations: addresses, company suffixes, job titles
-    ("PERSON", r"(?i)\bPerson:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?(?:\s+(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?){0,1}(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those|Inc|Corp|LLC|Ltd|Limited|GmbH|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd))(?:[.]?)\b", 0.80),
+    # Denylist on the name part blocks common non-name capitalized words (technical terms)
+    ("PERSON", r"(?i)\bPerson:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?(?:\s+(?-i:[A-Z])[a-z]{2,}(?:[.']?[a-z]+)?){0,1}(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those|Inc|Corp|LLC|Ltd|Limited|GmbH|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd))(?:[.]?)\b", 0.80),
     # "Contact person:" / "Contact name:"
     # Denylist blocks common non-name capitalized words
     ("PERSON", r"(?i)\bContact\s+(?:person|name):\s*(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.80),
@@ -419,7 +421,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # CJK: keyword 用户/联系人/姓名 directly followed by name (no colon needed)
     # Exclude common technical terms that look like capitalized names (Postgresql, Admin, Root, etc.)
     # Also exclude company suffixes and address suffixes
-    ("PERSON", r"(?i)\b(?:contact|person)\s*[：:]\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those|Inc|Corp|LLC|Ltd|Limited|GmbH|Street|St|Avenue|Ave|Road|Rd))\b", 0.75),
+    # Denylist on the name part blocks common non-name capitalized words (technical terms)
+    ("PERSON", r"(?i)\b(?:contact|person)\s*[：:]\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}(?:\s+[A-Z][a-z]{2,})?(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those|Inc|Corp|LLC|Ltd|Limited|GmbH|Street|St|Avenue|Ave|Road|Rd))\b", 0.75),
     # user: prefix — more restrictive to avoid technical terms like 'user: postgresql'
     # Extended exclusion list for common non-person user labels; require 3+ chars in name
     ("PERSON", r"(?i)\buser\s*[：:](?!\s*(?:admin|root|postgres|postgresql|mysql|default|guest|test|anonymous|nobody|system|api|service|demo|readonly|backup|deploy|ci|cd|bot|monitor|agent|worker|dev|prod|staging|localhost|primary|secondary|nginx|git|www|web|app|db|redis|memcache|rabbitmq|elasticsearch|kibana|jenkins|docker|kubernetes|k8s|terraform|ansible|puppet|chef|vagrant|node|npm|yarn|pip|composer|gradle|go|rust|php|python|ruby|java|scala|kotlin|swift|flutter|react|angular|vue|svelte|nextjs|nuxt|gatsby|jekyll|hugo|django|flask|spring|rails|laravel|symfony|express|fastify|koa|hapi|socket|stream|event|queue|cache|search|index|proxy|gateway|firewall|vpn|ssh|ssl|tls|oauth|saml|ldap|kerberos))\s*[A-Z][a-z]{3,}(?:\s+[A-Z][a-z]{3,})?\b", 0.65),
@@ -480,17 +483,20 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # "contact/reach/met (with)/meet (with) + Name" — verb of communication + person
     # Both single-name (contact Robert) and full-name (contact Alice Smith) supported
     # "meet with" and "met with" are handled by the optional "with" between verb and name
-    # Name must be a capitalized word (not 'settings', 'config', etc.)
+    # Name must be a capitalized word (not 'settings', 'config', 'Postgres', etc.)
     # Negative lookahead blocks company suffixes, prepositions that start clauses,
-    # and non-name technical words.
-    ("PERSON", r"(?i)\b(?:contact|reach|met|meet)(?:\s+with)?\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?(?!\s+(?:about|with|in|the|Inc|Corp|LLC|Ltd|Limited|name|Settings|Config|Options))(?:\s+(?:at|on|for))?\b", 0.70),
+    # and non-name technical words. Denylist blocks technical terms on the name part.
+    ("PERSON", r"(?i)\b(?:contact|reach|met|meet)(?:\s+with)?\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?(?!\s+(?:about|with|in|the|Inc|Corp|LLC|Ltd|Limited|name|Settings|Config|Options))(?:\s+(?:at|on|for))?\b", 0.70),
     # "spoke with / talked to / introduced to / introduce you to + Name"
     # Two+ word capitalized name required to avoid FPs on common words
-    ("PERSON", r"(?i)\b(?:spoke\s+with|talked\s+to|introduc(?:e|ed|ing)\s+(?:you\s+)?to|got\s+to\s+know)\s+(?-i:[A-Z])[a-z]{2,}\s+(?-i:[A-Z])[a-z]{2,}\b", 0.68),
+    # Denylist blocks technical terms on the first name part
+    ("PERSON", r"(?i)\b(?:spoke\s+with|talked\s+to|introduc(?:e|ed|ing)\s+(?:you\s+)?to|got\s+to\s+know)\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}\s+(?-i:[A-Z])[a-z]{2,}\b", 0.68),
     # "introducing / please welcome / meet our new hire / say hello to + Name"
-    ("PERSON", r"(?i)\b(?:introducing|please\s+welcome|meet\s+(?:our\s+)?(?:new\s+)?(?:hire|teammate|colleague|team\s+member)|say\s+hello\s+to|shoutout\s+to)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.68),
+    # Denylist blocks technical terms on the name part
+    ("PERSON", r"(?i)\b(?:introducing|please\s+welcome|meet\s+(?:our\s+)?(?:new\s+)?(?:hire|teammate|colleague|team\s+member)|say\s+hello\s+to|shoutout\s+to)\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.68),
     # "regarding Name" — two capitalized words after regarding
-    ("PERSON", r"(?i)\bregarding\s+(?-i:[A-Z])[a-z]{2,}\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|Incorporated|PLC|AG|SA|Systems|Technologies|Tech|Software|Solutions|Group|Partners|Holdings|Services|Consulting|Associates)[A-Z])[a-z]{2,}(?!\s+(?:Inc|Corp|LLC))\b", 0.55),
+    # Denylist blocks technical terms on the first name part
+    ("PERSON", r"(?i)\bregarding\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|Incorporated|PLC|AG|SA|Systems|Technologies|Tech|Software|Solutions|Group|Partners|Holdings|Services|Consulting|Associates)[A-Z])[a-z]{2,}(?!\s+(?:Inc|Corp|LLC))\b", 0.55),
     # "Manager: / Supervisor:" prefix patterns
     # Exclude common UI/technical words that could follow these labels
     ("PERSON", r"(?i)\b(?:Manager|Supervisor|Coordinator|Lead|Admin|HR\s+rep)\s*:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof)\s+)?(?-i:(?!Settings|Config|Options|Admin|Dashboard|Profile|Account|General|System|Network|Security|Users|Roles|Permissions|Logs|Backup|Notifications|Integrations|Plugins|Extensions|Appearance|Layout|Theme)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.75),
@@ -499,7 +505,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # parenthetical references (e.g. "(famous from Employee Training)").
     ("PERSON", r"(?i)\bEmployee\s+(?-i:(?!from|of|at\b)[A-Z])[a-z]{2,}(?!\s+(?-i:[A-Z])[a-z]{2,})(?!\s+(?:name|ID|id|number))\b(?!\s*\))", 0.65),
     # "Signed, Name" — comma after signed, then capitalized name
-    ("PERSON", r"(?i)\bsigned[-,]\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.72),
+    # Denylist blocks technical terms on the name part
+    ("PERSON", r"(?i)\bsigned[-,]\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.72),
     # Bare "FirstName LastName" at sentence start or after period/newline — capture the
     # first two capitalized words. Exclude common sentence-starting words, company suffixes,
     # and known non-person entities. Very carefully limited to avoid FPs.
@@ -708,6 +715,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Supports hyphenated company names like "Weyland-Yutani".
     ("COMPANY", r"(?i)from\s+(?-i:(?!London|Paris|Berlin|Madrid|Rome|Moscow|Tokyo|Delhi|Mumbai|Beijing|Shanghai|Sydney|Dublin|Amsterdam|Vienna|Zurich|Boston|Chicago|Seattle|Austin|Denver|New|San|Los|Las|Cape|Buenos|Kuala|Hong|Rio|Sao|Bangkok|Kowloon|Spain|France|Germany|Italy|UK|USA|Canada|Australia|China|Japan|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|Egypt|Thailand|Vietnam|Indonesia|Malaysia|Singapore|Greece|Finland|Hungary|Romania|Ukraine|Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd|Project|Tech)[A-Z])[a-z]+(?:[-][A-Z][a-z]+)?\b(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|BV|NV|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|and|the|of|in|at|on|for|with|from|is|was|has|had|have|not|by|to))\b(?![^(]*\))", 0.55),
     # Single-word company name after "regarding" — catch brands and hyphenated names
-    ("COMPANY", r"(?i)regarding\s+(?-i:[A-Z])[a-z]{2,}(?:[-][A-Z][a-z]+)?\b", 0.55),
+    # Denylist blocks technical terms, geographic names, and project names
+    ("COMPANY", r"(?i)regarding\s+(?-i:(?!New|Los|San|Las|Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd|Project|Tech)[A-Z])[a-z]{2,}(?:[-][A-Z][a-z]+)?\b", 0.55),
 
 ]
