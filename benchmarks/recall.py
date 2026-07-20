@@ -342,16 +342,17 @@ def make_regex_adapter() -> DetectorAdapter:
             _detector_instance = _RealRegexDetector()
             await _detector_instance.initialize()
         raw = await _detector_instance.detect(text)
-        # Normalize keys: the real detector returns 'type' but the
-        # benchmark evaluation expects 'entity_type'.
+        # Normalize keys: the real detector returns CandidateSpan (dataclass)
+        # with attributes, not dict keys. The benchmark evaluation expects a dict.
+        # EntityType is an enum — we need .value to get the bare string.
         return [
             {
-                "entity_type": d["type"],
-                "value": d["text"],
-                "start": d["start"],
-                "end": d["end"],
-                "score": d["score"],
-                "detector": d["detector"],
+                "entity_type": d.entity_type.value if hasattr(d.entity_type, 'value') else d.entity_type,
+                "value": d.text,
+                "start": d.start,
+                "end": d.end,
+                "score": d.raw_score,
+                "detector": d.detector,
             }
             for d in raw
         ]
@@ -772,7 +773,9 @@ async def evaluate_detector(detector_name: str, dataset: list[LabeledExample],
         "total_false_negatives": total_fn,
         "overall_precision": total_tp / (total_tp + total_fp) if (total_tp + total_fp) else 0.0,
         "overall_recall": total_tp / (total_tp + total_fn) if (total_tp + total_fn) else 0.0,
-        "overall_f1": 2 * (total_tp / (total_tp + total_fp)) * (total_tp / (total_tp + total_fn)) / ((total_tp / (total_tp + total_fp)) + (total_tp / (total_tp + total_fn))) if (total_tp + total_fp) and (total_tp + total_fn) else 0.0,
+        "overall_f1": (2 * total_tp / (total_tp + total_fp) * total_tp / (total_tp + total_fn) /
+                       (total_tp / (total_tp + total_fp) + total_tp / (total_tp + total_fn)))
+                       if (total_tp + total_fp) and (total_tp + total_fn) and total_tp > 0 else 0.0,
         "per_type": {},
         "confusion_matrix": {k: dict(v) for k, v in confusion.items()},
         "example_results": example_results,

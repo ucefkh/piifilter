@@ -167,16 +167,16 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         # Keyword-prefixed phone numbers (phone/tel/mobile/cell/call + number)
         # Must have at least 7 digits to avoid matching short sequences.
         # Negative lookahead avoids matching credit card numbers (4 groups of 4+ digits).
-        ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*\-?\s*(?!\d{4,}[–—−\-.\\s]\d{4,}[–—−\-.\\s]\d{4,})\+?[\d\(][\d\s\-\.,\)]{7,20}\b", 0.90),
+        ("PHONE", r"(?i)\b(?:phone|tel|telephone|mobile|cell|call)\s*(?:number|no|#)?\s*\-?\s*(?!\d{4,}[–—−\-.\s]\d{4,}[–—−\-.\s]\d{4,})\+?[\d\(][\d\s\-.,\)]{7,20}\b", 0.90),
         # International with + and unicode dashes: +1-555-123-4567, +1–555–123–4567, +1—555—123—4567, +1−555−123−4567
         ("PHONE", r"(?:^|\s)\+\d{1,3}[–—−\-\. ]\d{2,4}[–—−\-\. ]\d{3,4}[–—−\-\. ]\d{4}\b", 0.88),
         # International with + and spaces only (variable groupings): +44 20 7946 0958, +1 555 123 4567
         ("PHONE", r"(?:^|\s)\+\d{1,3}(?:\s+\d{2,4}){2,4}\b", 0.85),
         # International with +, country code 1 digit, spaced with optional unicode dashes inside
-        ("PHONE", r"(?:^|\s)\+\d\s+\d{3}\s+\d{3}[–—−\-. ]?\d{2}[–—−\-. ]?\d{2}\b", 0.85),
+        ("PHONE", r"(?:^|\s)\+\d\s+\d{3}\s+\d{3}[–—−\-\. ]?\d{2}[–—−\-\. ]?\d{2}\b", 0.85),
         # International with + and mixed separators (any combo of dash types and spaces)
-        ("PHONE", r"(?:^|\s)\+\d{1,3}[–—−\-.]\d{2,4}[–—−\-. ]\d{3,4}[–—−\-. ]?\d{3,4}\b", 0.85),
-        # Bare E.164 with + prefix: "+14055551212" style
+        ("PHONE", r"(?:^|\s)\+\d{1,3}[–—−\-.]\d{2,4}[–—−\-\. ]\d{3,4}[–—−\-\. ]?\d{3,4}\b", 0.85),
+        # Bare E.164 with + prefix: "+140****1212" style
         ("PHONE", r"\+\d{7,15}\b", 0.80),
         # Parenthesized area code with separator: (415) 555–2671, (120) 625-59444
         ("PHONE", r"\(\d{3}\)\s*\d{3}[–—−\-.]\d{4,6}\b", 0.82),
@@ -230,7 +230,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
                 #   - Credit card 4-4-4-4 patterns (already covered by CREDIT_CARD)
                 #   - IBAN segments (preceded by 2-letter country code)
                 #   - Space-separated 4-group IPs like "10 10 10 10", "192 168 1 100"
-                ("PHONE", r"(?!\d{1,3}(?:\.\d{1,3}){3}\b)(?!\d{1,3}\s+\d{1,3}\s+\d{1,3}\s+\d{1,3}\b)(?![A-Z]{2}\d)\b\d{2,4}[–—−\-\.\\s]\d{2,4}[–—−\-\.\\s]\d{2,4}[–—−\-\.\\s]?\d{2,4}\b(?![–—−\-\.\\s]?\d{2,4})", 0.55),
+                ("PHONE", r"(?!\d{1,3}(?:\.\d{1,3}){3}\b)(?!\d{1,3}\s+\d{1,3}\s+\d{1,3}\s+\d{1,3}\b)(?![A-Z]{2}\d)\b\d{2,4}[–—−\-\.\s]\d{2,4}[–—−\-\.\s]\d{2,4}[–—−\-\.\s]?\d{2,4}\b(?![–—−\-\.\s]?\d{2,4})", 0.55),
 
     # ── IP_ADDRESS ───────────────────────────────────────────────────
     # Standard dotted-decimal IPv4 with strict octet validation (0-255 per octet).
@@ -415,26 +415,33 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         ("ADDRESS", r"\b(?:Suite|Apt|Unit|Building)\s+#?\d+[A-Za-z]?\b", 0.80),
 
     # ── CITY ─────────────────────────────────────────────────────────
-    ("CITY", r"(?i)\b(?:city|town)\s*(?:of|pop|population)?\s*:?\s*(?!(?:The|A|An|This|That|These|Those|Our|Their|My|Your|His|Her|Its)\b)[A-Z][a-z]+(?:[ -]+[A-Z][a-z]+)?\b", 0.70),
+    # City in population context: "X (37M), Y (32M)" — match just the city name before the parenthetical
+    # Must come before broader keyword-prefixed patterns so the narrower match wins dedup.
+    ("CITY", r"\b[A-Z][a-z]+(?=\s*\(\d+\s*M\))", 0.55),
+    # City after "of" keyword — use lookbehind so "of " isn't part of the match.
+    # Must come before keyword-prefixed patterns so the narrower match wins.
+    ("CITY", r"(?i)(?<=of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam|Latin)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
+    ("CITY", r"(?i)(?<=city of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
     # Cities followed by comma + known country — use positive lookahead so match is JUST the city name
     # Exclude country names from the city position to avoid COUNTRY→CITY confusion
     ("CITY", r"\b(?!(?:Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Indonesia|Malaysia|Singapore|New Zealand|Greece|Finland|Hungary|Romania|Ukraine)\b)[A-Z][a-z]+(?:[ -]+[A-Z][a-z]+)?(?=\s*,\s*(?:Germany|France|Italy|Spain|UK|England|USA|US|China|Japan|India|Brazil|Canada|Australia)\b)", 0.70),
-    # City after "works at X in City" or "based in City"
-        ("CITY", r"(?i)\b(?:based\s+in|works?\s+(?:at\s+\S+\s+)?in|lives?\s+in|located\s+in|situated\s+in)\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
-        # City after "in" — capture just the city name (no country in match)
-        # Require 4+ chars and exclude common non-city capitalized words and backtick-quoted words
-        ("CITY", r"(?i)\bin\s+(?!(?:Nature|Science|General|Practice|Theory|Process|System|Market|Public|Private|Common|Control|Research|Development|Management|Support|Security|Service|Report|History|Current|Future|Recent|Final|Total|Average|Standard|Normal|Special|Maintenance|Text|Mode|Progress|Review|Summary|Detail|Analysis|Backticks|Quotes|Brackets|Parentheses|Here|There|This|That|These|Those|The|A|An)\b)[A-Z][a-z]{3,}\b(?=\s*,|\s*\.|\s*-|\s+and|\s+or|\s*$)", 0.50),
-    # City in population context: "X (37M), Y (32M)"
-        ("CITY", r"(?i)\b[A-Z][a-z]+\s*\(\d+\s*M\)", 0.55),
-        # Standalone city name at sentence start or after period+space
-        ("CITY", r"(?<!\d\s)(?:^|\.\s+)(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)\b", 0.40),
-        # City before comma+non-country (like postcode, street suffix) — lower confidence
-        ("CITY", r"\b(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)(?=\s*,\s*[A-Z0-9])", 0.35),
-        # City after "of" keyword — use lookbehind so "of " isn't part of the match.
-        # Split into two fixed-width lookbehinds: one for "of " and one for "city of "
-        # Exclude common country names to avoid COUNTRY→CITY confusion
-        ("CITY", r"(?i)(?<=of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam|Latin)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
-        ("CITY", r"(?i)(?<=city of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
+    # City after "works at X in City" or "based in City" using lookbehind for "in "
+    # Fixed-width lookbehind prevents keyword from being part of the match span.
+    ("CITY", r"(?i)(?<=\bin\s)(?!(?:Nature|Science|General|Practice|Theory|Process|System|Market|Public|Private|Common|Control|Research|Development|Management|Support|Security|Service|Report|History|Current|Future|Recent|Final|Total|Average|Standard|Normal|Special|Maintenance|Text|Mode|Progress|Review|Summary|Detail|Analysis|Backticks|Quotes|Brackets|Parentheses|Here|There|This|That|These|Those|The|A|An)\b)(?-i:[A-Z])[a-z]{2,}\b(?=\s*,|\s*\.|\s*-|\s+and|\s+or|\s*$)", 0.50),
+    # Keyword-prefixed: "city/town of/pop: Name" — the keyword prefix is included in the match.
+    # These come last so narrower city-specific patterns (of, in, population) fire first.
+    ("CITY", r"(?i)\b(?:city(?: (?:of|pop:?|population:?))?|town(?: (?:of|pop:?))?)\s*:?\s*(?!(?:The|A|An|This|That|These|Those|Our|Their|My|Your|His|Her|Its)\b)(?-i:[A-Z])[a-z]+(?:[ -]+(?-i:[A-Z])[a-z]+)?\b", 0.70),
+    # "based in/located in/situated in" — broader patterns. Must come after narrower in-pattern
+    # so the narrower in-lookbehind match wins dedup.
+    ("CITY", r"(?i)\b(?:based\s+in|lives?\s+in|located\s+in|situated\s+in)\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
+    # "works at X in City" or "works in City"
+    ("CITY", r"(?i)\bworks?\s+(?:at\s+\S+\s+)?in\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
+    # Standalone city name at sentence start or after period+space
+    ("CITY", r"(?<!\d\s)(?:^|\.\s+)(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)\b", 0.40),
+    # City before comma+non-country (like postcode, street suffix) — lower confidence
+    # Must come after narrower "based in/located in" patterns so "..., New York, ..." gets priority
+    # over broader keyword matches.
+    ("CITY", r"\b(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)(?=\s*,\s*[A-Za-z0-9])", 0.35),
 
     # ── COUNTRY ──────────────────────────────────────────────────────
     ("COUNTRY", r"\b(?:USA|US(?:A)?|UK|United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|UAE|Israel|Greece|Czech|Finland|Hungary|Romania|Ukraine)\b", 0.80),

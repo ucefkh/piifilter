@@ -32,6 +32,8 @@ import base64
 import re
 import unicodedata
 
+from piifilter.shared.models import NormalizedText
+
 # ── HTML entity decoder ──────────────────────────────────────────────────────
 
 _HTML_DECIMAL_RE = re.compile(r"&#(\d{1,5});")
@@ -177,7 +179,7 @@ class Deobfuscator:
         r"\b(?:(?:ROT|rot|Rot)[- ]?13|caesar|cipher)\b"
     )
 
-    def __call__(self, text: str) -> tuple[str, list[dict]]:
+    def __call__(self, text: str) -> tuple[str, list[dict], str]:
         """Apply all deobfuscation transforms.
 
         Args:
@@ -1510,3 +1512,114 @@ class Deobfuscator:
                     "changed": True,
                 })
             return text
+
+    # ═════════════════════════════════════════════════════════════════════
+    # Multi-pass fixpoint normalization with offset tracking
+    # ═════════════════════════════════════════════════════════════════════
+
+    def normalize_with_offsets(self, text: str, max_depth: int = 3) -> NormalizedText:
+        """Multi-pass fixpoint deobfuscation that outputs a ``NormalizedText``
+        with per-character offset mappings back to the original.
+
+        Runs all transforms in a loop until the text stabilises (no more
+        changes) or ``max_depth`` iterations are reached.  Each iteration
+        builds a character-level offset map from the *previous* iteration's
+        text back to the original, then composes them at the end.
+
+        Args:
+            text: Raw input text potentially containing obfuscated PII.
+            max_depth: Maximum fixpoint iterations (default 3).
+
+        Returns:
+            A ``NormalizedText`` with ``.text`` set to the fully normalized
+            output, ``.original`` set to the input *text*, and
+            ``.offset_map`` mapping each normalized character to its
+            originating position in *text*.
+        """
+        original = text
+        # Start with the identity offset map: each char maps to itself
+        current = text
+        offset_map: list[int | None] = list(range(len(current)))
+
+        for _round in range(max_depth):
+            prev = current
+            # Run the standard deobfuscation pipeline to get the new text
+            cleaned, _log, _gps = self.__call__(current)
+
+            if cleaned == prev:
+                # Stable — done
+                current = cleaned
+                break
+
+            # Build the delta offset map: cleaned-char → prev-char index
+            # We compose it with the existing offset_map to get:
+            #   cleaned-char → original-char index
+            delta_map = self._build_offset_map(prev, cleaned)
+            if not delta_map:
+                # Fallback: identity mapping
+                current = cleaned
+                offset_map = list(range(len(cleaned)))
+                break
+
+            # Compose: for each position in cleaned, map through delta → existing offset
+            new_offsets: list[int | None] = []
+            for idx, prev_idx in enumerate(delta_map):
+                if prev_idx is not None and prev_idx < len(offset_map):
+                    orig_idx = offset_map[prev_idx]
+                    new_offsets.append(orig_idx)
+                else:
+                    new_offsets.append(None)
+            offset_map = new_offsets
+            current = cleaned
+
+        return NormalizedText(
+            text=current,
+            offset_map=offset_map,
+            original=original,
+        )
+
+    @staticmethod
+    def _build_offset_map(source: str, target: str) -> list[int | None]:
+        """Build a per-character offset mapping from *target* → *source*.
+
+        Uses a greedy longest-common subsequence algorithm on the character
+        level.  For each character position in *target* the output gives
+        the corresponding index in *source*, or ``None`` for inserted chars.
+
+        This is correct for *deletion* (target shorter than source) and
+        *substitution* (same length, char-by-char) but is best-effort for
+        complex insertions/restructurings.  The offset-preserving property
+        matters most for deletion-heavy transforms (strip separators,
+        remove ZW chars, collapse spaces) where the mapping is exact.
+        """
+        if not source and not target:
+            return []
+        if not target:
+            return []
+        if source == target:
+            return list(range(len(target)))
+
+        # LCS-based alignment
+        src_len, tgt_len = len(source), len(target)
+        # Build LCS table
+        dp = [[0] * (tgt_len + 1) for _ in range(src_len + 1)]
+        for i in range(1, src_len + 1):
+            for j in range(1, tgt_len + 1):
+                if source[i - 1] == target[j - 1]:
+                    dp[i][j] = dp[i - 1][j - 1] + 1
+                else:
+                    dp[i][j] = max(dp[i - 1][j], dp[i][j - 1])
+
+        # Backtrack to get alignment
+        result: list[int | None] = [None] * tgt_len
+        i, j = src_len, tgt_len
+        while i > 0 and j > 0:
+            if source[i - 1] == target[j - 1]:
+                result[j - 1] = i - 1
+                i -= 1
+                j -= 1
+            elif dp[i - 1][j] >= dp[i][j - 1]:
+                i -= 1  # char in source was deleted
+            else:
+                j -= 1  # char in target was inserted
+        return result

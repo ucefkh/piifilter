@@ -12,7 +12,7 @@ from typing import Any, Pattern
 
 from piifilter.interfaces.detector import Detector
 from piifilter.session import Session
-from piifilter.shared.models import DetectedEntity, EntityType
+from piifilter.shared.models import DetectedEntity, EntityType, CandidateSpan
 from piifilter.shared.deobfuscator import Deobfuscator
 from piifilter.telemetry import telemetry
 
@@ -58,7 +58,7 @@ class RegexDetector(Detector):
         """No-op: nothing to release."""
         return
 
-    async def detect(self, text: str, *, language: str | None = None) -> list[dict[str, Any]]:
+    async def detect(self, text: str, *, language: str | None = None) -> list[CandidateSpan]:
         """Detect PII entities in *text*.
 
         Text is first run through the deobfuscation preprocessor
@@ -232,19 +232,9 @@ class RegexDetector(Detector):
 
         elapsed = time.monotonic() - t0
 
-        # ── Telemetry hook ──────────────────────────────────────────
-        result = [
-            {
-                "text": e.value,
-                "type": e.entity_type.value,
-                "start": e.start,
-                "end": e.end,
-                "score": e.score,
-                "detector": "regex",
-            }
-            for e in entities
-        ]
-        telemetry.record(elapsed=elapsed, detections=result, transforms=_log)
+        # ── Convert DetectedEntity list to CandidateSpan list ──────
+        result = [_entity_to_candidate(e, text=cleaned if e.start < len(cleaned) else text) for e in entities]
+        telemetry.record(elapsed=elapsed, detections=[r.to_dict() for r in result], transforms=_log)
         return result
 
     # ── Session-based detection ──────────────────────────────────────
@@ -972,6 +962,242 @@ class RegexDetector(Detector):
                 )
             )
         return found
+
+
+def _entity_to_candidate(
+    entity: DetectedEntity,
+    text: str | None = None,
+) -> CandidateSpan:
+    """Convert a ``DetectedEntity`` (internal pipeline model) to a ``CandidateSpan``
+    with extracted ``raw_score`` and ``features`` dict.
+
+    The features dict is populated from the entity's properties and the
+    surrounding text context, providing explainable evidence for the
+    Arbitrator to consume.
+    """
+    features: dict[str, Any] = {}
+
+    # ── checksum_valid ────────────────────────────────────────────
+    # CREDIT_CARD entities have already passed Luhn validation in the
+    # pipeline — so if we see a CREDIT_CARD entity, Luhn is valid.
+    # SOCIAL_SECURITY entities have passed area/group/serial validation.
+    if entity.entity_type == EntityType.CREDIT_CARD:
+        features["checksum_valid"] = True
+    elif entity.entity_type == EntityType.SOCIAL_SECURITY:
+        # SSNs validated via area/group/serial rules
+        features["checksum_valid"] = True
+    else:
+        features["checksum_valid"] = None
+
+    # ── context_keywords ─────────────────────────────────────────
+    # Scan the text before the match for known PII context keywords.
+    keywords: list[str] = []
+    if text:
+        before = text[max(0, entity.start - 80):entity.start].lower()
+        # General PII keywords by entity type
+        _CTX_SSN = ("ssn", "social security", "tax id", "ss#")
+        _CTX_DATE = ("date", "dob", "born", "expir", "valid until", "updated", "issued", "created on")
+        _CTX_PHONE = ("phone", "tel", "mobile", "cell", "call", "contact", "dial", "number")
+        _CTX_BANK = ("bank", "account", "acct", "a/c")
+        _CTX_EMAIL = ("email", "e-mail", "mail")
+        _CTX_CC = ("credit card", "credit", "cc", "card number", "card no")
+        _CTX_IP = ("ip", "ip address")
+        _CTX_GPS = ("gps", "lat", "lng", "lon", "latitude", "longitude", "coordinates", "location")
+        _CTX_PERSON = ("name", "person", "contact", "user")
+        _CTX_ADDR = ("address", "street", "suite", "apt", "unit")
+        _CTX_JWT = ("jwt", "token")
+        _CTX_API = ("api key", "api", "token", "secret", "key")
+        _CTX_SSH = ("ssh key", "private key", "ssh")
+        _CTX_URL = ("url", "http", "https", "connection", "endpoint")
+        _CTX_DOMAIN = ("domain", "hostname")
+
+        # Entity-type-specific keyword groups
+        type_map: dict[EntityType, tuple[str, ...]] = {
+            EntityType.SOCIAL_SECURITY: _CTX_SSN,
+            EntityType.DATE: _CTX_DATE,
+            EntityType.PHONE: _CTX_PHONE,
+            EntityType.BANK_ACCOUNT: _CTX_BANK + _CTX_SSN,
+            EntityType.CREDIT_CARD: _CTX_CC,
+            EntityType.EMAIL: _CTX_EMAIL,
+            EntityType.IP_ADDRESS: _CTX_IP,
+            EntityType.GPS: _CTX_GPS,
+            EntityType.PERSON: _CTX_PERSON,
+            EntityType.ADDRESS: _CTX_ADDR,
+            EntityType.JWT: _CTX_JWT,
+            EntityType.API_KEY: _CTX_API,
+            EntityType.SSH_KEY: _CTX_SSH,
+            EntityType.URL: _CTX_URL,
+            EntityType.DOMAIN: _CTX_DOMAIN,
+            EntityType.DATABASE_URL: _CTX_URL,
+            EntityType.PRIVATE_URL: _CTX_URL,
+            EntityType.IBAN: _CTX_BANK,
+        }
+        keywords = [
+            kw for kw in type_map.get(entity.entity_type, ())
+            if kw in before
+        ]
+    features["context_keywords"] = keywords
+
+    # ── format_class ──────────────────────────────────────────────
+    features["format_class"] = _infer_format_class(entity)
+
+    return CandidateSpan(
+        start=entity.start,
+        end=entity.end,
+        text=entity.value,
+        entity_type=entity.entity_type,
+        detector="regex",
+        raw_score=entity.confidence,
+        features=features,
+    )
+
+
+def _infer_format_class(entity: DetectedEntity) -> str:
+    """Infer the format class of a detected entity from its value and type.
+
+    Returns a human-readable string describing the format variant (e.g.
+    ``"4-4-4-4"``, ``"dotted"``, ``"keyword-prefixed"``, ``"masked"``, ``"bare-digit"``).
+    """
+    val = entity.value
+    et = entity.entity_type
+
+    # Generic helpers
+    has_separator = bool(re.search("[- .\u00A0–—−/]", val))
+    has_dots = "." in val
+    has_dashes = bool(re.search(r"[-–—−]", val))
+    has_spaces = " " in val
+    has_slashes = "/" in val
+    has_asterisk = "*" in val
+    has_x_mask = "X" in val.upper() and "X" in val
+    has_bullet = any(c in val for c in ("\u2022", "\u25CF"))
+    is_all_digits = val.strip().isdigit()
+    is_masked = has_asterisk or has_x_mask or has_bullet
+
+    # Keyword-prefixed: starts with context keyword
+    _KEYWORD_PREFIXES = (
+        "ssn", "social", "phone", "tel", "credit", "card", "bank",
+        "account", "acct", "passport", "email", "date", "dob", "gps",
+        "lat", "lng", "lon", "ip", "http", "https", "ssh", "token", "api",
+    )
+    has_keyword_prefix = val.lower().startswith(_KEYWORD_PREFIXES) or (
+        len(val) > 4 and val.lower().split(":")[0].strip() in (
+            "ssn", "phone", "credit card", "credit", "card", "email",
+            "date", "bank account", "account", "passport", "gps",
+        )
+    )
+
+    if et == EntityType.CREDIT_CARD:
+        if is_masked:
+            return "masked"
+        if has_keyword_prefix:
+            return "keyword-prefixed"
+        dot_count = val.count(".")
+        dash_count = len(re.findall(r"[-–—−]", val))
+        if dot_count >= 2:
+            if dash_count > 0:
+                return "mixed"
+            return "dot-separated"
+        if dash_count >= 3:
+            return "4-4-4-4"
+        if dash_count == 2:
+            return "4-6-5"
+        if has_spaces:
+            space_segments = val.split()
+            if len(space_segments) == 8:
+                return "2-digit-pair"
+            return "space-separated"
+        return "bare-digit"
+
+    if et == EntityType.SOCIAL_SECURITY:
+        if is_masked:
+            return "masked"
+        if has_keyword_prefix:
+            return "keyword-prefixed"
+        if has_dashes or " " in val:
+            return "separator"
+        return "bare-digit"
+
+    if et == EntityType.PHONE:
+        if val.startswith("+"):
+            return "international"
+        if "电话" in val or "電話" in val:
+            return "cjk-keyword"
+        if has_keyword_prefix:
+            return "keyword-prefixed"
+        if "(" in val:
+            return "parenthesized"
+        if has_dashes and val.count("-") >= 2:
+            return "dashed"
+        if has_dots:
+            return "dotted"
+        if has_spaces:
+            return "spaced"
+        return "bare-digit"
+
+    if et in (EntityType.EMAIL, EntityType.URL, EntityType.DATABASE_URL, EntityType.PRIVATE_URL):
+        if "://" in val:
+            return "protocol"
+        if "@" in val:
+            return "email-format"
+        return "bare"
+
+    if et == EntityType.IP_ADDRESS:
+        if ":" in val:
+            return "ipv6"
+        if has_dots and val.count(".") == 3:
+            return "dotted"
+        if " " in val:
+            return "space-separated"
+        if val.startswith("0x"):
+            return "hex"
+        if val.startswith("0") and len(val) > 1:
+            return "octal"
+        return "decimal"
+
+    if et == EntityType.GPS:
+        if has_keyword_prefix:
+            return "keyword-prefixed"
+        if "," in val or ";" in val:
+            return "coordinate-pair"
+        return "decimal"
+
+    if et in (EntityType.JWT, EntityType.API_KEY, EntityType.SSH_KEY):
+        if val.count(".") >= 2:
+            return "dotted"
+        return "continuous"
+
+    if et in (EntityType.DATE,):
+        if " " in val and not has_slashes and not has_dashes:
+            return "month-name"
+        if "-" in val:
+            return "iso"
+        if "/" in val:
+            return "slash"
+        return "bare"
+
+    if et == EntityType.ADDRESS:
+        if "P.O." in val.upper() or "BOX" in val.upper():
+            return "po-box"
+        if val.startswith(("Suite", "Apt", "Unit")):
+            return "subunit"
+        if "/" in val or val.count(",") >= 1:
+            return "european"
+        return "standard"
+
+    if et in (EntityType.PERSON, EntityType.CUSTOMER_NAME, EntityType.EMPLOYEE_NAME, EntityType.COMPANY, EntityType.PROJECT_NAME):
+        if has_keyword_prefix:
+            return "keyword-prefixed"
+        return "name"
+
+    if et == EntityType.IBAN:
+        return "iban"
+
+    if et == EntityType.PASSPORT:
+        if has_keyword_prefix:
+            return "keyword-prefixed"
+        return "bare"
+
+    return "unknown"
 
 
 def _resolve_entity_type(name: str) -> EntityType:

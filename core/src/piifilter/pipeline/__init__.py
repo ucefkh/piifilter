@@ -15,8 +15,9 @@ from piifilter.session import Session
 from piifilter.events.bus import EventBus, PipelineEvent
 from piifilter.registry.registry import PluginRegistry
 from piifilter.config import FilterConfig
-from piifilter.shared.models import DetectedEntity, ReplacementMode, RiskLevel
+from piifilter.shared.models import DetectedEntity, NormalizedText, ReplacementMode, RiskLevel
 from piifilter.shared.alias_store import AliasStore
+from piifilter.shared.deobfuscator import Deobfuscator
 
 logger = logging.getLogger(__name__)
 
@@ -39,6 +40,7 @@ class FilterPipeline:
         self.registry = registry or PluginRegistry()
         self.event_bus = event_bus or EventBus()
         self.alias_store = alias_store
+        self._deobfuscator = Deobfuscator()
 
     async def run(self, session: Session) -> Session:
         """Execute the full pipeline on a Session."""
@@ -100,27 +102,109 @@ class FilterPipeline:
         return await self._finish(session)
 
     async def _detect(self, session: Session) -> Session:
-        """Run all registered detectors on the session."""
-        all_entities = []
+        """Run all registered detectors on the session using multi-view detection.
+
+        1. Pre-normalize the prompt with offset-preserving multi-pass fixpoint
+        2. Run every detector on the **original** text
+        3. Run every detector on the **normalized** text
+        4. Map normalized-coordinate entity spans back to original coordinates
+        5. Merge both sets: prefer original-coordinate entities, add
+           normalized-derived ones whose spans don't overlap
+        """
+        # ── Step 1: Pre-normalize with offset mapping ──────────────────
+        normalized: NormalizedText = self._deobfuscator.normalize_with_offsets(
+            session.prompt, max_depth=3
+        )
+        session.metadata["normalized_text"] = normalized
+
+        # ── Step 2: Detect on original text ─────────────────────────────
+        all_entities: list[dict | DetectedEntity] = []
         for detector in self.registry.list_detectors():
             try:
                 entities = await detector.detect(session.prompt)
                 all_entities.extend(entities)
             except Exception as exc:
-                logger.warning("Detector %s failed: %s", detector.name, exc)
+                logger.warning("Detector %s failed on original text: %s", detector.name, exc)
                 session.add_audit("detection", "error", {
                     "detector": detector.name,
                     "error": str(exc),
                 })
-                await self.event_bus.emit(
-                    PipelineEvent.PIPELINE_ERROR, session
-                )
+                await self.event_bus.emit(PipelineEvent.PIPELINE_ERROR, session)
 
-        # Priority-based dedup: give regex higher priority than presidio
-        # for overlapping spans, since regex has higher precision.
-        # Sort by detector priority first (regex=0, presidio=1, gliner=2),
-        # then by score descending, then position.
-        all_entities.sort(key=lambda e: (
+        # ── Step 3: Detect on normalized text and remap spans ────────────
+        normalized_entities: list[dict | DetectedEntity] = []
+        if normalized.text != session.prompt:
+            for detector in self.registry.list_detectors():
+                try:
+                    entities = await detector.detect(normalized.text)
+                    # Remap each entity's span back to original coordinates
+                    for e in entities:
+                        if isinstance(e, dict):
+                            n_start = e.get("start", 0)
+                            n_end = e.get("end", 0)
+                        else:
+                            n_start = e.start
+                            n_end = e.end
+                        o_start, o_end = normalized.map_span_to_original(n_start, n_end)
+                        if isinstance(e, dict):
+                            e["start"] = o_start
+                            e["end"] = o_end
+                            e["text"] = session.prompt[o_start:o_end]
+                            e["value"] = session.prompt[o_start:o_end]
+                            # Tag the entity source for metrics / debugging
+                            e["view"] = "normalized"
+                        else:
+                            e.start = o_start
+                            e.end = o_end
+                            e.value = session.prompt[o_start:o_end]
+                            if hasattr(e, 'text'):
+                                e.text = session.prompt[o_start:o_end]
+                            # Set detector metadata for normalized-derived entities
+                            if hasattr(e, 'view'):
+                                e.view = "normalized"  # type: ignore[attr-defined]
+                        normalized_entities.append(e)
+                except Exception as exc:
+                    logger.warning("Detector %s failed on normalized text: %s", detector.name, exc)
+                    session.add_audit("detection", "error", {
+                        "detector": detector.name,
+                        "error": str(exc),
+                    })
+
+        # ── Step 4: Merge ──────────────────────────────────────────────
+        # All entities now have original-coordinate spans.  Walk through
+        # original-derived entities first (preferred), then add
+        # normalized-derived entities that don't overlap with any kept entity.
+        merged: list[dict | DetectedEntity] = list(all_entities)
+
+        # Build interval index for quick overlap checks
+        merged_intervals: list[tuple[int, int, str]] = []
+        for e in merged:
+            s, epos, et = _entity_span(e)
+            merged_intervals.append((s, epos, et))
+
+        for ne in normalized_entities:
+            ns, nepos, net = _entity_span(ne)
+            # Check: does this span overlap with any already-kept entity of the
+            # same type?  If so, the original-coordinate match is more precise.
+            overlaps = any(
+                s <= ns and nepos <= epos and ot == net
+                for s, epos, ot in merged_intervals
+            )
+            if not overlaps:
+                # Also check: does this span overlap with ANY kept entity
+                # (regardless of type)?  Broader-span original entities take
+                # priority, but a different-type entity on a non-overlapping
+                # region is fine.
+                overlaps_any_type = any(
+                    not (nepos <= s or ns >= epos)
+                    for s, epos, _ot in merged_intervals
+                )
+                if not overlaps_any_type:
+                    merged.append(ne)
+                    merged_intervals.append((ns, nepos, net))
+
+        # Priority-based sort (same as before)
+        merged.sort(key=lambda e: (
             0 if (e.get("detector") if isinstance(e, dict) else e.detector) == "regex"
             else 1 if (e.get("detector") if isinstance(e, dict) else e.detector) == "presidio"
             else 2,
@@ -134,9 +218,9 @@ class FilterPipeline:
         # correct regex match.  Regex has perfect precision on its entity
         # types — if it matched, the match is real.
         _raw_regex_entities: list[dict | DetectedEntity] = [
-            e for e in all_entities
-            if _entity_detector(e) == "regex"
-        ]
+                    e for e in merged
+                    if _entity_detector(e) == 'regex'
+                ]
 
         # Dedup by interval: if a higher-priority (regex) entity already
         # covers this span, skip lower-priority ones.
@@ -258,7 +342,7 @@ class FilterPipeline:
         seen_intervals: dict[str, list[tuple[int, int]]] = {}
         all_interval_map: dict[str, list[tuple[int, int]]] = {}
         deduped = []
-        for e in all_entities:
+        for e in merged:
             if isinstance(e, dict):
                 et = e.get("entity_type", "UNKNOWN")
                 estart, eend = e.get("start", 0), e.get("end", 0)
