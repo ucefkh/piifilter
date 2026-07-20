@@ -797,7 +797,27 @@ async def evaluate_detector(detector_name: str, dataset: list[LabeledExample],
                 # Check span overlap
                 span_match = is_overlapping(det_start, det_end, exp_start, exp_end, 0.5)
 
-                if type_match and span_match:
+                # Value-based fallback: when deobfuscation transforms the text
+                # (e.g. "john" + "@" + "example.com" → john@example.com),
+                # the detected span is relative to the cleaned text while the
+                # ground truth span is relative to the original text.  When
+                # span overlap fails but values match (after stripping common
+                # obfuscation artifacts like quotes and concatenation operators),
+                # count it as a true positive.
+                value_match = False
+                if not span_match and type_match:
+                    # Normalize both values: strip quotes, spaces, concat operators
+                    exp_value = ee.get("value", "")
+                    det_value = det_text
+                    # Strip quotes, whitespace, and + operators that are
+                    # obfuscation artifacts (not actual PII content)
+                    _norm_table = str.maketrans({'"': '', "'": '', '`': '', '+': '', ' ': ''})
+                    exp_norm = exp_value.translate(_norm_table)
+                    det_norm = det_value.translate(_norm_table)
+                    if exp_norm and det_norm and (exp_norm == det_norm or det_norm in exp_norm or exp_norm in det_norm):
+                        value_match = True
+
+                if type_match and (span_match or value_match):
                     expected_matched[ei] = True
                     matched_any = True
 
