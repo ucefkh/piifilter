@@ -108,7 +108,7 @@ class TestPIIFilterProperties:
 
     # ── Invariant: Short plain text should not trigger ─────────────────
 
-    @given(text=st.text(alphabet=st.characters(whitelist_categories=("L", " ", ".")), min_size=1, max_size=10))
+    @given(text=st.text(alphabet=st.characters(whitelist_categories=("L", "P", "Z")), min_size=1, max_size=10))
     @settings(suppress_health_check=[HealthCheck.function_scoped_fixture])
     def test_short_plain_text_no_detections(self, detector, text):
         """Very short text with no PII patterns should produce no detections."""
@@ -136,8 +136,21 @@ class TestPIIFilterProperties:
     def _get_attr(self, entity, attr):
         """Get attribute from CandidateSpan (dataclass) safely."""
         if isinstance(entity, dict):
-            return entity.get(attr, entity.get({"type": "entity_type", "score": "confidence"}.get(attr, attr), ""))
-        return getattr(entity, {"type": "entity_type", "value": "value", "start": "start", "end": "end", "score": "confidence"}.get(attr, attr), "")
+            return entity.get(attr, entity.get({"type": "entity_type", "score": "raw_score", "value": "text"}.get(attr, attr), ""))
+        # Map common attribute names to actual CandidateSpan fields
+        attr_map = {
+            "type": "entity_type",
+            "value": "text",
+            "start": "start",
+            "end": "end",
+            "score": "raw_score",
+        }
+        actual_attr = attr_map.get(attr, attr)
+        val = getattr(entity, actual_attr, "")
+        # If it's an Enum (like EntityType.PHONE), return the string value
+        if hasattr(val, "value"):
+            return val.value
+        return val
 
     def _entity_type(self, entity):
         return self._get_attr(entity, "type")
@@ -189,7 +202,7 @@ class TestPIIFilterProperties:
         text = prefix + name + suffix
         result = self._run_detect(detector, text)
         for entity in result:
-            s, e = entity["start"], entity["end"]
+            s, e = self._entity_start(entity), self._entity_end(entity)
             assert 0 <= s < e <= len(text), (
                 f"Invalid span ({s}, {e}) for text len={len(text)}: {entity}"
             )
@@ -202,11 +215,13 @@ class TestPIIFilterProperties:
         """Non-PII number sequences should not be detected as CREDIT_CARD or SSN."""
         result = self._run_detect(detector, text)
         pii_types = {"CREDIT_CARD", "SOCIAL_SECURITY", "BANK_ACCOUNT", "PHONE"}
-        detected_types = {d["type"] for d in result}
+        detected_types = {self._entity_type(d) for d in result}
         # These simple number sequences should not be high-confidence matches
         for d in result:
-            if d["type"] in pii_types and d.get("score", 1.0) >= 0.80:
-                pytest.fail(f"Non-PII number {text!r} detected as {d['type']} (score={d['score']})")
+            dtype = self._entity_type(d)
+            dscore = self._entity_score(d)
+            if dtype in pii_types and dscore >= 0.80:
+                pytest.fail(f"Non-PII number {text!r} detected as {dtype} (score={dscore})")
 
     # ── Invariant: Detections are deterministic ────────────────────────
 
@@ -219,7 +234,7 @@ class TestPIIFilterProperties:
         # Normalize for comparison: sort by (start, end, type)
         def normalize(results):
             return sorted(
-                [(d["type"], d["start"], d["end"], d["value"]) for d in results],
+                [(self._entity_type(d), self._entity_start(d), self._entity_end(d), self._entity_value(d)) for d in results],
                 key=lambda x: (x[1], x[2], x[0]),
             )
         assert normalize(r1) == normalize(r2), (
@@ -240,9 +255,9 @@ class TestPIIFilterProperties:
     def test_ip_addresses_detected(self, detector, text):
         """Standard IP addresses should be detected."""
         result = self._run_detect(detector, text)
-        ip_detected = [d for d in result if d["type"] == "IP_ADDRESS"]
+        ip_detected = [d for d in result if self._entity_type(d) == "IP_ADDRESS"]
         assert len(ip_detected) >= 1, (
-            f"IP not detected in {text!r}! Got: {[(d['type'], d['value']) for d in result]}"
+            f"IP not detected in {text!r}! Got: {[(self._entity_type(d), self._entity_value(d)) for d in result]}"
         )
 
 
@@ -399,21 +414,21 @@ class TestScoreMetrics:
 
     def test_compute_metrics_perfect(self):
         from tests.benchmark_runner import compute_metrics
-        m = compute_metrics(tp=10, fp=0, fn=0)
+        m = compute_metrics(10, 0, 0)
         assert m["precision"] == 1.0
         assert m["recall"] == 1.0
         assert m["f1"] == 1.0
 
     def test_compute_metrics_no_tp(self):
         from tests.benchmark_runner import compute_metrics
-        m = compute_metrics(tp=0, fp=10, fn=5)
+        m = compute_metrics(0, 10, 5)
         assert m["precision"] == 0.0
         assert m["recall"] == 0.0
         assert m["f1"] == 0.0
 
     def test_compute_metrics_zero_division(self):
         from tests.benchmark_runner import compute_metrics
-        m = compute_metrics(tp=0, fp=0, fn=0)
+        m = compute_metrics(0, 0, 0)
         assert m["precision"] == 0.0
         assert m["recall"] == 0.0
         assert m["f1"] == 0.0

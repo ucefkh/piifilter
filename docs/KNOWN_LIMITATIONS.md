@@ -1,105 +1,62 @@
 # Known Limitations
 
-This document catalogs known limitations, edge cases, and false-positive/negative patterns in PIIFilter's regex-based detector. It is intended for developers and maintainers.
+This document captures known limitations and gaps in PIIFilter's detection capabilities. These are not bugs — they are deliberate scope boundaries, unsolved problems, or tradeoffs we've accepted for performance/stability.
 
-## Table of Contents
+## Detection Gaps
 
-- [Detection Limitations](#detection-limitations)
-- [False Positives](#false-positives)
-- [Deobfuscator Limitations](#deobfuscator-limitations)
-- [Benchmark Limitations](#benchmark-limitations)
+### Entity Types
 
-## Detection Limitations
+1. **DOMAIN_NAME**: Not implemented as a separate entity type. Domain names are detected as sub-components of `EMAIL`, `URL`, and `DATABASE_URL` matches. Standalone domain names (e.g., `example.com` without protocol or email context) are not flagged.
 
-### EMAIL
+2. **ORGANIZATION / COMPANY / PERSON**: No ML/NER backend. All person/company/organization detection is regex-based and context-driven. This means:
+   - Names without context keywords (`Name:`, `contact`, `regarding`) may be missed
+   - Unusual name formats (hyphenated, initials-only) may not match
+   - Ambiguous names like `Jordan` or `Paris` in isolation are not detected
+   - Multi-word organizations without explicit structure (e.g., `The Foundation for Internet Development`) are not reliably captured
 
-| Issue | Details |
-|-------|---------|
-| Zero-width chars in email | Emails like `joh\u200dn@example.com` are reconstructed by the deobfuscator to `john@example.com`, but the span positions shift, causing a benchmark false-negative because the expected value is the original obfuscated form. |
-| URL-encoded emails | `john%40example.com` is deobfuscated to `john@example.com` but span mismatch causes benchmark FN. |
-| HTML entity emails | `john&#64;example&#46;com` deobfuscated to `john@example.com` — same span issue. |
-| JSON escaped emails | `john\\u0040example\\u002Ecom` deobfuscated correctly, span mismatch. |
-| Full-width emails | `ａｌｉｃｅ＠ａｃｍｅ．ｃｏｍ` deobfuscated via NFKC but span positions differ. |
-| Token-split emails | `"john" + "@" + "example.com"` — the reconstructed concatenation has different positions than the original labeled entity. |
+3. **ADDRESS** (International): Non-Western address formats (Japanese, Chinese, Arabic addressing conventions) have limited coverage. European-style addresses (number-after-street) have basic support.
 
-Recovery: The benchmark should match against the deobfuscated text, or the detector should report both raw and deobfuscated spans.
+4. **BANK_ACCOUNT**: Detection requires context keywords or long digit sequences (12+ digits). Short account numbers (8-11 digits) without context are not detected.
 
-### PHONE
+5. **PASSPORT**: Limited to Western alphanumeric formats (`AB1234567`). Non-Latin passport numbers and various national formats are not covered.
 
-| Issue | Details |
-|-------|---------|
-| Cyrillic homoglyph digits | `+1-555-123-4Ӧ97` where `Ӧ` (U+04E6) visually resembles `5`. The deobfuscator has no Cyrillic→Latin digit mapping, so this phone is missed. |
-| Negative context phrases | `"not a real phone"` preceding a phone-like number (e.g., `123-456-7890`) produces a false positive. |
-| Spaced bare digits on stripped text | After _strip_non_alpha_seps, phone-like digit sequences from stripped IPs can match phone patterns (e.g., 10-digit remain of a dotted IP). Partially mitigated by `_filter_phone_overlap`. |
+6. **PHONE**: International formats beyond E.164, US/UK/DE/FR patterns have partial coverage. CJK phone keywords are supported but format variations are extensive.
 
-### GPS
+### Format-Specific Limitations
 
-| Issue | Details |
-|-------|---------|
-| Decimal-only FPs | Standalone decimal numbers (e.g., `192.168` from `192.168.x.x` notation) can be caught by the catch-all GPS pattern. |
-| Keyword-prefixed coordinates | Coordinates labeled with `lat:`/`lon:` keywords that the benchmark doesn't tag as GPS appear as false positives, but are correct detections. |
+1. **Decimal GPS coordinates**: Individual decimal numbers (e.g., `40.7128`) have low matching confidence (0.55) to avoid FPs on non-GPS decimals. Pair matching is more reliable (0.88).
 
-### PERSON
+2. **CREDIT_CARD with non-standard separators**: Non-breaking spaces, mixed separators within the same number (dash + space), and unusual grouping patterns may not match.
 
-| Issue | Details |
-|-------|---------|
-| Arabic `اتصل بـ` prefix | The Arabic phrase `اتصل بـ أحمد` (call Ahmed) matches a PERSON pattern that includes the `بـ` prefix, producing a FP span. |
-| CJK user context | `用户张伟` (user Zhang Wei) is detected as PERSON, which is correct but the benchmark doesn't always label it. |
-| Cyrillic names | `O Γιώργος` (Greek "the George") and Russian names are detected but may not be benchmarked. |
+3. **Masked values**: Detection confidence for masked values (e.g., `XXXX-XXXX-XXXX-1111`) is deliberately lower to avoid matching static placeholders.
 
-### SOCIAL_SECURITY
+### Performance Limitations
 
-| Issue | Details |
-|-------|---------|
-| Masked SSNs | Partially redacted SSNs like `***-**-6789` are detected but may be suppressed if the digit portion is too short. |
-| IP→SSN residue | After inner-separator stripping, a dotted IP like `192.168.1.50` becomes `192168150` — a 9-digit string that passes SSN validation. Mitigated by `_filter_ssn_overlap`. |
+1. **Regex Explosion**: Some patterns use extensive negative lookaheads (especially PERSON patterns). Very long inputs with many capitalized words may trigger catastrophic backtracking. In practice this is rare for typical prompt-length text (<4K tokens).
 
-### URL
+2. **Overlapping Detections**: When multiple patterns match the same span at different confidences, only the highest-confidence match is kept. This is correct behavior but can mask secondary entity types.
 
-| Issue | Details |
-|-------|---------|
-| No URL entities in dataset | The benchmark dataset has 0 expected URL entities. The 3 false positives (`http://127001/api/health`, `www.example.com`, `https://example.com/api`) are actually reasonable detections that should likely be labeled as URL or DOMAIN. |
+## Architecture Limitations
 
-### CREDIT_CARD
+1. **No NLP/NER Backend**: All detection is pattern-based. Entity types that require semantic understanding (PERSON, COMPANY, CITY, ADDRESS without keywords) will have lower recall than ML-based alternatives. This is a deliberate tradeoff for speed and offline capability.
 
-| Issue | Details |
-|-------|---------|
-| IBAN trailing segments | IBAN trailing digit segments (e.g., `6016 1331 9268 19`) can look like 4-4-4-2 CC patterns. Mitigated by placing IBAN patterns before CC patterns and using the `(?<![A-Z]{2}\\d{2}\\s)` lookbehind on CC patterns. |
-| Luhn gate FP/FN | The Luhn validation gate eliminates ~99% of random 16-digit FPs, but some Luhn-valid non-CC numbers (like certain IBANs) can still pass. |
+2. **Language Coverage**: Non-Latin scripts (CJK, Cyrillic, Arabic) have keyword-triggered patterns but limited native coverage. Detection quality degrades for mixed-script or transliterated text.
 
-### COMPANY
+3. **Context Window**: Detection operates per-text-call with no cross-message state. Entity types detected from conversational context spanning multiple messages are not supported.
 
-| Issue | Details |
-|-------|---------|
-| Context-prefixed matches | `works at Microsoft Research` includes the `works at ` prefix in the match because the pattern uses a keyword prefix. The dedup logic prefers narrower same-type matches, but if the narrower pattern fires first, the broader match is preserved. |
-| Single-word company names | The explicit-known-companies list (line 484) covers ~150 well-known brands. Smaller or less-known companies may be missed without keyword context. |
+4. **No Entity Resolution**: The same entity mentioned multiple times is detected each time independently. There is no deduplication or canonicalization across occurrences.
 
-## False Positives
+## Testing Coverage Gaps
 
-These entity types have precision < 0.95 on the benchmark dataset (regex detector):
+1. **Golden Corpus**: The golden corpus at `benchmarks/data/golden_corpus.json` contains 257 examples covering 25 entity types, but:
+   - Some entity types have minimal coverage (3-5 examples)
+   - Annotation quality varies — spans and values may not perfectly align due to historical corpus construction
+   - Negative examples (texts with no PII) are limited
 
-| Type | Precision | Known FP patterns |
-|------|-----------|-------------------|
-| SOCIAL_SECURITY | 0.9333 | Masked SSN `***-**-6789` detected without full digit content |
-| PERSON | 0.9474 | Arabic `اتصل بـ` prefix match |
-| PHONE | 0.9032 | Negative-context phones (`not a real phone`), bare-digit stripped-IP residue |
-| IP_ADDRESS | 0.9032 | Version numbers, dates with dot separators passing through pre-strip guards |
-| PRIVATE_URL | 0.9333 | DATABASE_URL→PRIVATE_URL substring confusion |
+2. **Fuzz Testing**: Hypothesis-based property tests run on every commit but use deterministic seeds. Edge cases not covered by the seeded strategy may be missed.
 
-## Deobfuscator Limitations
+3. **Integration Tests**: Integration tests in `tests/integration/` require external services (Inference Gateway) and are excluded from CI by default.
 
-| Transform | Limitation |
-|-----------|------------|
-| NFKC normalization | Does NOT normalize Cyrillic homoglyphs that visually resemble Latin letters or digits (e.g., `Ӧ` (U+04E6) → `5`, `А` (U+0410) → `A`). NFKC only normalizes canonical equivalents. |
-| Digit homoglyph map | No mapping exists for non-ASCII characters that visually resemble digits (e.g., Cyrillic letters that look like 0-9, superscript/subscript numerals). |
-| Spoken number parser | Limited to single-digit words (`one`→`1`, ..., `nine`→`9`, `oh`→`0`). Does not handle multi-digit spoken numbers like `one hundred twenty three`. |
-| Pig latin decoder | Heuristic-only; may produce incorrect reversals for words that happen to match the pattern but aren't pig latin. |
-| Base64/hex decoders | Simple regex-based — may produce false positives on strings that happen to be valid base64 but aren't encoded PII. |
+## Future Work
 
-## Benchmark Limitations
-
-| Issue | Details |
-|-------|---------|
-| Span mismatch for deobfuscated entities | The benchmark compares entity spans from the raw text against detected entities from the deobfuscated text. For any entity whose position shifts during deobfuscation (zero-width char removal, URL decoding, HTML entity decoding), the benchmark reports a false-negative even though the entity was correctly detected on the deobfuscated text. |
-| Label coverage | Some examples have entities in the text that are not labeled in the entity list. This inflates false-positive counts for types like CITY, GPS, and COMPANY. |
-| URL entity absence | The dataset contains 0 URL-typed entities, making URL metrics meaningless. |
+See [ROADMAP.md](../ROADMAP.md) for planned improvements.
