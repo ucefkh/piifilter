@@ -141,12 +141,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Lower confidence since no format hint — relies on Luhn gate.
     ("CREDIT_CARD", r"\b\d{13,19}\b", 0.65),
     # Context-prefixed CC: "Credit card: 4111111111111111" — placed last so bare
-    # CC patterns fire first and the broader context-prefixed match is skipped
-    # by the same-type containment check.
-    ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
-    # Continuous 16-digit credit card numbers (no dashes) — keyword-prefixed
-    # Must come AFTER the bare IIN-prefix pattern so the narrower match wins.
-    ("CREDIT_CARD", r"(?i)(?:credit\s*card|cc|card\s+#?)\b\s*\d{16}\b", 0.80),
+        # CC patterns fire first and the broader context-prefixed match is skipped
+        # by the same-type containment check.
+        ("CREDIT_CARD", r"(?i)\b(?:credit\s*card|cc|card)\s*(?:number|no|#)?\s*:?\s*\d[ -]*?\d{13,18}\b", 0.90),
+        # Continuous 16-digit credit card numbers (no dashes) — keyword-prefixed
+        # Must come AFTER the bare IIN-prefix pattern so the narrower match wins.
+        ("CREDIT_CARD", r"(?i)(?:credit\s*card|cc|card\s+#?)\b\s*\d{16}\b", 0.80),
+        # Brand + "ending in" + last 4 digits: "Visa ending in 1111", "Mastercard ending in 0004", "Amex ending in 1117"
+        ("CREDIT_CARD", r"(?i)\b(?:Visa|Mastercard|Master Card|Amex|American Express|Discover|Diners|JCB)\s+ending\s+in\s+\d{4}\b", 0.75),
 
     # ── EMAIL ────────────────────────────────────────────────────────
     # Local part: word chars, dots, +, -, *, percent-encoded chars, quotable specials
@@ -546,5 +548,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # NOTE: "from" prefix is included in the match. The narrower company-only
     # pattern fires separately (e.g. "Widgets Inc") so this is supplementary.
     ("COMPANY", r"(?i)from\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s*(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
+    # Single-word company name after "from" — known brand names that won't be confused with cities.
+    # Supports hyphenated company names like "Weyland-Yutani".
+    ("COMPANY", r"(?i)from\s+(?-i:[A-Z])[a-z]+(?:[-][A-Z][a-z]+)?\b(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|BV|NV|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|and|the|of|in|at|on|for|with|from|is|was|has|had|have|not|by|to))\b", 0.55),
+    # Single-word company name after "regarding" — catch brands and hyphenated names
+    ("COMPANY", r"(?i)regarding\s+(?-i:[A-Z])[a-z]{2,}(?:[-][A-Z][a-z]+)?\b", 0.55),
 
 ]
