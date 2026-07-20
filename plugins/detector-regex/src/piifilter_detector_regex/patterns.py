@@ -534,7 +534,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
             # Uses negative lookbehind (?<!not\s) to block ", not 123 Main St" teaching patterns.
             # Uses a general negative lookahead for parentheticals that look like media references.
             # Optional suffix captures city, state abbreviation + ZIP, or UK postcode after street.
-            ("ADDRESS", r"\b(?<!not\s)\d{1,5}\s+(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s+(?:St(?:reet)?|Ave(?:nue)?|Dr(?:ive)?|Rd|Road|Blvd|Boulevard|Ln|Lane|Way|Ct|Court|Pl|Place|Cir(?:cle)?|Pkwy|Parkway)(?:,\s*[A-Z][a-z]+(?:[\s-]+[A-Z][a-z]+)*(?:,\s*(?:[A-Z]{2}\s+\d{5}(?:-\d{4})?|[A-Z]{1,2}\d{1,2}[A-Z]?\s+\d[A-Z]{2}|\d{5})))?(?:\s*,\s*[A-Za-z]+(?:\s+[A-Za-z]+)?)?(?![,.]?\s*(?:\w+\s+){0,5}\([^)]*(?:movie|show|film|game|series|cartoon|animation|episode|from\s+[A-Z]))\b", 0.85),
+            ("ADDRESS", r"\b(?<!not\s)\d{1,5}\s+(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3})\s+(?:St(?:reet)?|Ave(?:nue)?|Dr(?:ive)?|Rd|Road|Blvd|Boulevard|Ln|Lane|Way|Ct|Court|Pl|Place|Cir(?:cle)?|Pkwy|Parkway)(?:,\s*(?!not\b)[A-Z][a-z]+(?:[\s-]+[A-Z][a-z]+)*(?:,\s*(?:[A-Z]{2}\s+\d{5}(?:-\d{4})?|[A-Z]{1,2}\d{1,2}[A-Z]?\s+\d[A-Z]{2}|\d{5})))?(?:\s*,\s*(?!not\b)[A-Za-z]+(?:\s+[A-Za-z]+)?)?(?![,.]?\s*(?:\w+\s+){0,5}\([^)]*(?:movie|show|film|game|series|cartoon|animation|episode|from\s+[A-Z]))\b", 0.85),
             # European-style addresses: "Street Name N, Postcode City" — where the number comes
         # after the street name, followed by comma and postcode + city.
         # Supports multi-word street names with lowercase particles (den, der, von, etc.)
