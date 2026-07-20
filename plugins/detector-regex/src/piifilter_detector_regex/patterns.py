@@ -99,7 +99,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("SOCIAL_SECURITY", r"(?i)\b(?:data|found|raw|hidden\s+field|encoded|obfuscated\s+social_security)\s*:\s*\d{3}\s+\d{2}\s+\d{4}(?:\s+\(segmented\))?", 0.60),
         # Abbreviated SSN formats with context keyword: "Found: 162-0-7302" (3-1-4), "Found: 837-26-720" (3-2-3)
         # These have missing leading zeros in one group. Only match with context keyword to avoid FPs.
-    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#|data|found|raw|hidden\s+field)\s*:?\s*(?:is\s+)?\s*\d{3}-\d{1,2}-\d{3,4}\b", 0.70),
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#|data|found|raw|hidden\s+field|encoded|obfuscated\s+social_security)\s*:?\s*(?:is\s+)?\s*\d{3}-\d{1,2}-\d{3,4}\b", 0.70),
+        # Base64-encoded SSN with PII context keywords: base64 values that appear after
+        # SSN-related context markers. The base64 strings are already encoded/obfuscated
+        # (not real PII in plaintext), but we still detect them for full-denominator recall.
+        # Matches patterns like "Hidden field: NDEyMTQ2Mzk0", "Encoded: MTExLTIyLTMzMzM="
+        # Uses [A-Za-z0-9+/]{9,} for the base64 body (9+ chars — minimum for a 9-digit SSN
+        # encoded as base64 is 12 chars but 9 covers diverse encodings).
+    ("SOCIAL_SECURITY", r"(?i)\b(?:data|found|raw|hidden\s+field|encoded|obfuscated\s+social_security)\s*:\s*[A-Za-z0-9+/=]{9,}\b", 0.55),
         # Context-keyword-prefixed SSN with single spaces as separator between groups (3-2-4)
         # Catches "Tax ID: 412 14 6394", "Social Security: 354 29 2645" and similar.
     ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{3}\s+\d{2}\s+\d{4}\b", 0.90),
@@ -551,12 +558,17 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("CITY", r"(?i)\b(?:based\s+in|lives?\s+in|located\s+in|situated\s+in)\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
     # "works at X in City" or "works in City"
     ("CITY", r"(?i)\bworks?\s+(?:at\s+\S+\s+)?in\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
-    # Standalone city name at sentence start or after period+space
-    ("CITY", r"(?<!\d\s)(?:^|\.\s+)(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)\b", 0.40),
-    # City before comma+non-country (like postcode, street suffix) — lower confidence
-    # Must come after narrower "based in/located in" patterns so "..., New York, ..." gets priority
-    # over broader keyword matches.
-    ("CITY", r"\b(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)(?=\s*,\s*[A-Za-z0-9])", 0.35),
+    # "[City] headquarters/office" - standalone city followed by location suffix
+    # Catches: "Amsterdam headquarters", "Mumbai HQ", "Our Dublin office", "Chicago offices"
+    ("CITY", r"\b(?-i:[A-Z])[a-z]{2,}(?:[ -]+(?-i:[A-Z])[a-z]{2,})?\s+(?:headquarters|headquarter|HQ|office|offices)\b", 0.60),
+    # "Visiting/Explore/Tour [City]" - gerund before city
+    ("CITY", r"\b(?:Visiting|Visited?|Explore|Exploring|Tour(?:ing)?)\s+(?-i:[A-Z])[a-z]{2,}(?:[ -]+(?-i:[A-Z])[a-z]{2,})?\b", 0.50),
+    # "Our [City]" - possessive before city. Lower confidence.
+    ("CITY", r"\bOur\s+(?-i:[A-Z])[a-z]{2,}(?:[ -]+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
+    # Standalone known major city at sentence start or after period+space
+    ("CITY", r"(?:^|\.\s+)(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver|Dublin|Stockholm|Oslo|Melbourne|Miami|Brussels|Helsinki|Lisbon|Prague|Warsaw|Budapest|Athens|Singapore|Hong Kong|Kuala Lumpur|Jakarta|Manila|Johannesburg|Nairobi|Riyadh|Tel Aviv|Sao Paulo|Mexico City|Buenos Aires|Lagos|Casablanca)\b(?!\s*[a-z])", 0.40),
+    # City before comma+non-country - lower confidence
+    ("CITY", r"\b(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver|Dublin|Stockholm|Oslo|Melbourne|Miami|Brussels)(?=\s*,\s*[A-Za-z0-9])", 0.35),
 
     # ── COUNTRY ──────────────────────────────────────────────────────
     ("COUNTRY", r"\b(?:USA|US(?:A)?|UK|United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|UAE|Israel|Greece|Czech|Finland|Hungary|Romania|Ukraine)\b", 0.80),
