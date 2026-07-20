@@ -172,7 +172,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         ("PHONE", r"(?:^|\s)\+\d\s+\d{3}\s+\d{3}[–—−\-. ]?\d{2}[–—−\-. ]?\d{2}\b", 0.85),
         # International with + and mixed separators (any combo of dash types and spaces)
         ("PHONE", r"(?:^|\s)\+\d{1,3}[–—−\-.]\d{2,4}[–—−\-. ]\d{3,4}[–—−\-. ]?\d{3,4}\b", 0.85),
-        # Bare E.164 with + prefix: "+140****1212" style
+        # Bare E.164 with + prefix: "+14055551212" style
         ("PHONE", r"\+\d{7,15}\b", 0.80),
         # Parenthesized area code with separator: (415) 555–2671, (120) 625-59444
         ("PHONE", r"\(\d{3}\)\s*\d{3}[–—−\-.]\d{4,6}\b", 0.82),
@@ -279,7 +279,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Individual numbers that are clearly coordinates (1-3 digit integer part, 2+ decimal places)
     # Catches longitudes like -122.4194 and values like 52.52 or 13.405 with fewer decimals
     # Excludes IP address fragments (e.g. "192.168" in "192.168.1.1") and prices ("$3.50")
-    ("GPS", r"(?<!\d)(?<!\d\.)(?<!\$)[-+]?\d{1,3}\.\d{2,}(?!\.\d)(?!\d)", 0.70),
+    # Excludes phone fragments like "555.2671" (3-digit + dot + 4-digit = phone-like)
+    ("GPS", r"(?<!\d)(?<!\d\.)(?<!\$)(?<!\d{3}\.)[-+]?\d{1,3}\.\d{3,}(?!\.\d)(?!\d)", 0.55),
 
     # ── FILE_PATH ────────────────────────────────────────────────────
     ("FILE_PATH", r"(?<!\/)/(?:[a-zA-Z0-9._-]+/){3,}[a-zA-Z0-9._-]*(?!\w)", 0.85),
