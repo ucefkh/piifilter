@@ -740,6 +740,12 @@
           "value": "123 Maple Drive, Springfield, IL 62704, USA",
           "start": 14,
           "end": 57
+        },
+        {
+          "type": "CITY",
+          "value": "Springfield",
+          "start": 31,
+          "end": 42
         }
       ]
     },
@@ -952,6 +958,18 @@
           "value": "151.2093",
           "start": 71,
           "end": 79
+        },
+        {
+          "type": "CITY",
+          "value": "Tokyo",
+          "start": 29,
+          "end": 34
+        },
+        {
+          "type": "CITY",
+          "value": "Sydney",
+          "start": 81,
+          "end": 87
         }
       ]
     },
@@ -1505,7 +1523,14 @@
     },
     {
       "text": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
-      "entities": []
+      "entities": [
+        {
+          "type": "CITY",
+          "value": "Sydney",
+          "start": 34,
+          "end": 40
+        }
+      ]
     },
     {
       "text": "User 192.168.x.x is a common notation for private networks.",
@@ -1666,7 +1691,14 @@
     },
     {
       "text": "Person: James researcher published his findings in Nature at London University.",
-      "entities": []
+      "entities": [
+        {
+          "type": "CITY",
+          "value": "London",
+          "start": 61,
+          "end": 67
+        }
+      ]
     },
     {
       "text": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
