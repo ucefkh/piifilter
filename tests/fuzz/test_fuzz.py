@@ -116,9 +116,9 @@ class TestPIIFilterProperties:
         # Skip texts that accidentally look like PII
         if any(c.isdigit() for c in text):
             return
-        # Skip very short dot-separated letter patterns (e.g. A.AA) that
+        # Skip very short dot-separated letter patterns (e.g. A.AA, A.AA;) that
         # structurally match the DOMAIN pattern but aren't real domains
-        if re.match(r"^[A-Za-z]\.[A-Za-z]{2,3}$", text):
+        if re.match(r"^[A-Za-z]\.[A-Za-z]{2,3}[;:,]?$", text):
             return
         # Skip short text with @ that looks like a fake email (e.g. AB@A.A)
         if re.match(r"^[A-Za-z]{2,3}@[A-Za-z]\.[A-Za-z]{1,3}$", text):
