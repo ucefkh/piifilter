@@ -383,7 +383,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # "I'm/My name is/Call me + Name"
     # Require 2+ chars after initial capital to catch 3-letter names like "Bob", "Tom"
     # Denylist blocks common non-name capitalized words
-    ("PERSON", r"(?i)(?:\bmy name is|\bI'm|\bcall me|\bname is)\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,}){0,2}\b", 0.80),
+    ("PERSON", r"(?i)(?:\bmy name is|\bI'm|\bcall me|\bname is)\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,}){0,2}\b", 0.80),
     # "ROLE + Name" — exclude common role/researcher-type words after the name
     # Require 2+ chars after initial capital to match names like "Bob" (B+ob=2 lowercase)
     # with lower confidence; avoids missing 3-letter names like "Bob", "Tom", "Sam"
@@ -403,7 +403,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PERSON", r"(?i)\b(?:contact|person)\s*[：:]\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof|Rev|Hon)\.?\s+)?[A-Z][a-z]{2,}(?:\s+[A-Z][a-z]{2,})?(?!\s+(?:researcher|published|from|at|in|of|the|a|an|and|or|for|with|by|to|on|is|was|has|had|said|says|who|whom|whose|where|when|what|which|that|this|these|those|Inc|Corp|LLC|Ltd|Limited|GmbH|Street|St|Avenue|Ave|Road|Rd))\b", 0.75),
     # user: prefix — more restrictive to avoid technical terms like 'user: postgresql'
     # Extended exclusion list for common non-person user labels; require 3+ chars in name
-    ("PERSON", r"(?i)\buser\s*[：:](?!\s*(?:admin|root|postgres|postgresql|mysql|default|guest|test|anonymous|nobody|system|api|service|demo|readonly|backup|deploy|ci|cd|bot|monitor|agent|worker|dev|prod|staging|localhost|primary|secondary))\s*[A-Z][a-z]{3,}(?:\s+[A-Z][a-z]{3,})?\b", 0.65),
+    ("PERSON", r"(?i)\buser\s*[：:](?!\s*(?:admin|root|postgres|postgresql|mysql|default|guest|test|anonymous|nobody|system|api|service|demo|readonly|backup|deploy|ci|cd|bot|monitor|agent|worker|dev|prod|staging|localhost|primary|secondary|nginx|git|www|web|app|db|redis|memcache|rabbitmq|elasticsearch|kibana|jenkins|docker|kubernetes|k8s|terraform|ansible|puppet|chef|vagrant|node|npm|yarn|pip|composer|gradle|go|rust|php|python|ruby|java|scala|kotlin|swift|flutter|react|angular|vue|svelte|nextjs|nuxt|gatsby|jekyll|hugo|django|flask|spring|rails|laravel|symfony|express|fastify|koa|hapi|socket|stream|event|queue|cache|search|index|proxy|gateway|firewall|vpn|ssh|ssl|tls|oauth|saml|ldap|kerberos))\s*[A-Z][a-z]{3,}(?:\s+[A-Z][a-z]{3,})?\b", 0.65),
     # CJK-specific: 用户/联系人/姓名 directly followed by 2+ CJK characters
     ("PERSON", r"(?:用户|联系人|姓名|名前)[：:]?\s*[\u4e00-\u9fff]{2,4}(?:\s+[\u4e00-\u9fff]{2,4})?\b", 0.80),
     # Russian/Cyrillic names
@@ -445,7 +445,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Negative lookahead on: company suffixes, geographic roles, job titles
     # Second name word must not be a company suffix (Corp, Inc, etc.)
     # First name word denylist blocks common non-name capitalized words
-    ("PERSON", r"(?i)\b(?:Signed|signed)\s+by\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile)[A-Z])[a-z]{2,}\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA)[A-Z])[a-z]{2,}(?!\s+(?:researcher|published|from|at|in|of|the|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln))\b", 0.78),
+    ("PERSON", r"(?i)\b(?:Signed|signed)\s+by\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|Team|Group)[A-Z])[a-z]{2,}(?!\s+(?:researcher|published|from|at|in|of|the|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln))\b", 0.78),
     # "from Name" — Name must be two capitalized words (first + last) to avoid
     # matching city names or single-word entities. Lower confidence since
     # "from" can precede companies, cities, and countries.
@@ -684,7 +684,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Avoid matching inside parentheticals like "(famous from Finding Nemo)"
     # NOTE: "from" prefix is included in the match. The narrower company-only
     # pattern fires separately (e.g. "Widgets Inc") so this is supplementary.
-    ("COMPANY", r"(?i)from\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s*(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
+    ("COMPANY", r"(?i)from\s+(?-i:(?!New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Cape|Las|Buenos|Kowloon)[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s*(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
     # Single-word company name after "from" — known brand names that won't be confused with cities.
     # Supports hyphenated company names like "Weyland-Yutani".
     ("COMPANY", r"(?i)from\s+(?-i:(?!London|Paris|Berlin|Madrid|Rome|Moscow|Tokyo|Delhi|Mumbai|Beijing|Shanghai|Sydney|Dublin|Amsterdam|Vienna|Zurich|Boston|Chicago|Seattle|Austin|Denver|Spain|France|Germany|Italy|UK|USA|Canada|Australia|China|Japan|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|Egypt|Thailand|Vietnam|Indonesia|Malaysia|Singapore|Greece|Finland|Hungary|Romania|Ukraine)[A-Z])[a-z]+(?:[-][A-Z][a-z]+)?\b(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|BV|NV|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|and|the|of|in|at|on|for|with|from|is|was|has|had|have|not|by|to))\b(?![^(]*\))", 0.55),
