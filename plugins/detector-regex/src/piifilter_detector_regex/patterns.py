@@ -370,7 +370,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # ── URL ──────────────────────────────────────────────────────────
     # URL comes AFTER PRIVATE_URL so that the more specific PRIVATE_URL
     # match takes priority when both match the same span.
-    ("URL", r"\bhttps?://[\w./?=&%-]+(?:\.[\w./?=&%-]+)*\b", 0.85),
+    # Hostname must contain a dot (example.com) or be "localhost" to avoid
+    # matching stripped IP artifacts like http://127001/api/health.
+    ("URL", r"\bhttps?://(?!\d+(?:/|\b))(?:[\w-]+\.)+[\w-]+(?::\d+)?(?:/[\w./?=&%-]*)?\b", 0.85),
+    ("URL", r"\bhttps?://localhost(?::\d+)?(?:/[\w./?=&%-]*)?\b", 0.85),
 
     # ── PASSPORT ─────────────────────────────────────────────────────
     ("PASSPORT", r"(?i)(?:^|\s)(?:passport)\s*(?:number|no|#)?\s*:?\s*[A-Z]{0,2}\d{6,9}\b", 0.85),
