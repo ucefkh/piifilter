@@ -561,8 +561,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
         ("CITY", r"\b[A-Z][a-z]+(?=\s*\(\d+\s*M\))", 0.55),
         # City after "of" keyword - use lookbehind so "of " isn't part of the match.
         # Must come before keyword-prefixed patterns so the narrower match wins.
-        ("CITY", r"(?i)(?<=of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam|Latin)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
-        ("CITY", r"(?i)(?<=city of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
+        ("CITY", r"(?i)(?<=of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam|Latin)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.50),
+        ("CITY", r"(?i)(?<=city of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.50),
+        # Cities at start of sentence — explicit list of well-known city names.
+        # High confidence: these are unambiguously place names ("Paris has...", "London is...").
+        ("CITY", r"\b(?:Paris|London|Tokyo|Berlin|Moscow|Beijing|Shanghai|Sydney|Melbourne|Bangkok|Seoul|Mumbai|Delhi|Cairo|Dubai|Singapore|Hong Kong|Madrid|Rome|Roma|Vienna|Prague|Budapest|Warsaw|Amsterdam|Brussels|Stockholm|Oslo|Helsinki|Copenhagen|Dublin|Lisbon|Athens|Zurich|Munich|Hamburg|Frankfurt|Milan|Barcelona|Istanbul|Jerusalem|Riyadh|Manila|Jakarta|Hanoi|Taipei|Kuala Lumpur|Mexico City|Lima|Santiago|Bogota|Buenos Aires|Rio de Janeiro|Sao Paulo|Nairobi|Lagos|Cape Town|Johannesburg|Casablanca)\b", 0.75),
+
         # Cities followed by comma + known country — use positive lookahead so match is JUST the city name
         # Exclude country names from the city position to avoid COUNTRY->CITY confusion
         ("CITY", r"\b(?!(?:Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Indonesia|Malaysia|Singapore|New Zealand|Greece|Finland|Hungary|Romania|Ukraine)\b)[A-Z][a-z]+(?:[ -]+[A-Z][a-z]+)?(?=\s*,\s*(?:Germany|France|Italy|Spain|UK|England|USA|US|China|Japan|India|Brazil|Canada|Australia)\b)", 0.70),
