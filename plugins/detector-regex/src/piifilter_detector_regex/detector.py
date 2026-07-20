@@ -648,10 +648,20 @@ class RegexDetector(Detector):
                     # last-4 visible digits are not the full CC number and don't
                     # need PII protection.
                     non_digits = "".join(c for c in match.group() if not c.isdigit())
-                    if len(digits) <= 6 and all(
+                    # Check BOTH: the full non-digits (for mask-only matches like
+                    # ****-****-****-1111) AND the tail portion after the keyword
+                    # (for context-prefixed matches like "credit card is ****-****-****-1111").
+                    # The key signal is the presence of 3+ consecutive mask chars
+                    # followed by digits — this is the "XXXX-XXXX-XXXX-1111" structure.
+                    is_fully_masked = len(digits) <= 6 and all(
                         c in ("X", "*", "#", "\u2022", "\u25CF") or c.isspace() or c in "-. "
                         for c in non_digits
-                    ):
+                    )
+                    # For context-prefixed matches, check if the card portion contains
+                    # blocks of repeating mask characters (like ****, XXXX).
+                    import re as _re
+                    has_mask_blocks = _re.search(r'([X*#])\1{3}', match.group()) is not None
+                    if is_fully_masked or (has_mask_blocks and len(digits) <= 6):
                         # This is a masked/redacted card — suppress entirely.
                         continue
                     if len(digits) >= 13 and not self._luhn_check(digits):
@@ -663,6 +673,20 @@ class RegexDetector(Detector):
                 if entity_type == EntityType.SOCIAL_SECURITY:
                     if "X" in match.group().upper() or "*" in match.group() or "#" in match.group() or "\u2022" in match.group() or "\u25CF" in match.group():
                         continue
+
+                # Masked-email guard: suppress emails where the local part
+                # is entirely redaction characters (all same char repeated,
+                # or all X/x/* chars). These are obfuscated references like
+                # xxxx@domain.com, ****@domain.com — not real PII.
+                if entity_type == EntityType.EMAIL:
+                    local_part = match.group().split("@")[0] if "@" in match.group() else ""
+                    if local_part:
+                        # All same char repeated (e.g. xxxx, ****, ....)
+                        if len(set(local_part.upper())) == 1:
+                            continue
+                        # All X/* chars (e.g. xxxx, XXXX, ****)
+                        if all(c in "xX*" for c in local_part):
+                            continue
 
                 # Numeric validation for decimal IP: ensure value is in valid
                 # 32-bit unsigned integer range (16777216 to 4294967295).

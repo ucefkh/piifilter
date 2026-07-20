@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T08:51:45Z",
+  "timestamp": "2026-07-20T09:09:41Z",
   "arbitration": {
     "enabled": true
   },
@@ -8,7 +8,7 @@
     "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
     "total_examples": 150,
     "test_examples": 150,
-    "total_entities": 212,
+    "total_entities": 213,
     "entity_types": [
       "ADDRESS",
       "API_KEY",
@@ -41,14 +41,14 @@
     "regex": {
       "detector": "regex",
       "total_examples": 150,
-      "total_expected_entities": 212,
-      "total_detected_entities": 232,
+      "total_expected_entities": 213,
+      "total_detected_entities": 233,
       "total_true_positives": 208,
-      "total_false_positives": 24,
-      "total_false_negatives": 4,
-      "overall_precision": 0.896551724137931,
-      "overall_recall": 0.9811320754716981,
-      "overall_f1": 0.9369369369369369,
+      "total_false_positives": 25,
+      "total_false_negatives": 5,
+      "overall_precision": 0.8927038626609443,
+      "overall_recall": 0.9765258215962441,
+      "overall_f1": 0.9327354260089685,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -72,13 +72,13 @@
         },
         "API_KEY": {
           "true_positives": 5,
-          "false_positives": 1,
+          "false_positives": 6,
           "false_negatives": 0,
           "n": 5,
-          "precision": 0.8333,
+          "precision": 0.4545,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 0.625,
+          "f2": 0.8065,
           "recall_ci": [
             0.5655,
             1.0
@@ -111,22 +111,22 @@
           ]
         },
         "CITY": {
-          "true_positives": 8,
-          "false_positives": 2,
+          "true_positives": 9,
+          "false_positives": 1,
           "false_negatives": 0,
-          "n": 8,
-          "precision": 0.8,
+          "n": 9,
+          "precision": 0.9,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 0.9474,
+          "f2": 0.9783,
           "recall_ci": [
-            0.6756,
+            0.7008,
             1.0
           ],
-          "real_n": 8,
+          "real_n": 9,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6756,
+            0.7008,
             1.0
           ]
         },
@@ -172,13 +172,13 @@
         },
         "CREDIT_CARD": {
           "true_positives": 7,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 7,
-          "precision": 0.875,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6457,
             1.0
@@ -232,13 +232,13 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.9,
+          "precision": 0.8182,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 0.9,
+          "f2": 0.9574,
           "recall_ci": [
             0.7008,
             1.0
@@ -252,13 +252,13 @@
         },
         "EMAIL": {
           "true_positives": 40,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 2,
           "n": 42,
-          "precision": 0.9302,
+          "precision": 0.9524,
           "recall": 0.9524,
-          "f1": 0.9412,
-          "f2": 0.9479,
+          "f1": 0.9524,
+          "f2": 0.9524,
           "recall_ci": [
             0.8421,
             0.9868
@@ -291,23 +291,23 @@
           ]
         },
         "FILE_PATH": {
-          "true_positives": 7,
+          "true_positives": 6,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "n": 7,
-          "precision": 0.875,
-          "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "precision": 0.8571,
+          "recall": 0.8571,
+          "f1": 0.8571,
+          "f2": 0.8571,
           "recall_ci": [
-            0.6457,
-            1.0
+            0.4869,
+            0.9743
           ],
           "real_n": 7,
-          "real_recall": 1.0,
+          "real_recall": 0.8571,
           "real_recall_ci": [
-            0.6457,
-            1.0
+            0.4869,
+            0.9743
           ]
         },
         "GPS": {
@@ -352,13 +352,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 14,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 1,
           "n": 15,
-          "precision": 0.8235,
+          "precision": 0.875,
           "recall": 0.9333,
-          "f1": 0.875,
-          "f2": 0.9091,
+          "f1": 0.9032,
+          "f2": 0.9211,
           "recall_ci": [
             0.7018,
             0.9881
@@ -492,13 +492,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 7,
-          "precision": 0.875,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6457,
             1.0
@@ -546,9 +546,6 @@
         }
       },
       "confusion_matrix": {
-        "ADDRESS": {
-          "CITY": 1
-        },
         "NONE": {
           "CITY": 1,
           "FILE_PATH": 1,
@@ -558,21 +555,23 @@
           "ADDRESS": 1,
           "COMPANY": 1,
           "URL": 1,
-          "API_KEY": 1,
-          "CREDIT_CARD": 1,
-          "SOCIAL_SECURITY": 1,
-          "EMAIL": 3,
-          "JWT": 1
+          "API_KEY": 3,
+          "DOMAIN": 1,
+          "JWT": 1,
+          "EMAIL": 2
         },
         "PRIVATE_URL": {
-          "URL": 1,
-          "IP_ADDRESS": 1
+          "URL": 1
         },
         "IP_ADDRESS": {
+          "API_KEY": 2,
           "IP_ADDRESS": 2
         },
         "PHONE": {
           "PHONE": 2
+        },
+        "FILE_PATH": {
+          "API_KEY": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -606,13 +605,14 @@
         {
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
-          "expected": 1,
+          "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ],
           "detected_types": [
             "ADDRESS",
@@ -1130,15 +1130,14 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -1263,14 +1262,15 @@
           "index": 42,
           "text_preview": "IPv6 address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -1372,14 +1372,15 @@
           "index": 49,
           "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -1493,14 +1494,14 @@
           "text_preview": "File: /home/user/tmp/cache/data",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "FILE_PATH"
+            "API_KEY"
           ]
         },
         {
@@ -2303,15 +2304,12 @@
           "index": 112,
           "text_preview": "Partially redacted: My credit card is ****-****-****-1111 and SSN is ***-**-6789",
           "expected": 0,
-          "detected": 2,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "CREDIT_CARD",
-            "SOCIAL_SECURITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 113,
@@ -2323,7 +2321,7 @@
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "EMAIL"
+            "DOMAIN"
           ]
         },
         {
@@ -2407,12 +2405,13 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
+            "API_KEY",
             "JWT"
           ]
         },
@@ -2480,14 +2479,15 @@
           "index": 126,
           "text_preview": "Base64: am9obkBleGFtcGxlLmNvbQ== decodes to john@example.com",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
+            "API_KEY",
             "EMAIL"
           ]
         },
@@ -2837,14 +2837,14 @@
     "pipeline-arbitration": {
       "detector": "pipeline-arbitration",
       "total_examples": 150,
-      "total_expected_entities": 212,
-      "total_detected_entities": 226,
+      "total_expected_entities": 213,
+      "total_detected_entities": 228,
       "total_true_positives": 208,
-      "total_false_positives": 22,
-      "total_false_negatives": 4,
-      "overall_precision": 0.9043478260869565,
-      "overall_recall": 0.9811320754716981,
-      "overall_f1": 0.9411764705882354,
+      "total_false_positives": 24,
+      "total_false_negatives": 5,
+      "overall_precision": 0.896551724137931,
+      "overall_recall": 0.9765258215962441,
+      "overall_f1": 0.9348314606741573,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -2868,13 +2868,13 @@
         },
         "API_KEY": {
           "true_positives": 5,
-          "false_positives": 1,
+          "false_positives": 6,
           "false_negatives": 0,
           "n": 5,
-          "precision": 0.8333,
+          "precision": 0.4545,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 0.625,
+          "f2": 0.8065,
           "recall_ci": [
             0.5655,
             1.0
@@ -2907,22 +2907,22 @@
           ]
         },
         "CITY": {
-          "true_positives": 8,
-          "false_positives": 2,
+          "true_positives": 9,
+          "false_positives": 1,
           "false_negatives": 0,
-          "n": 8,
-          "precision": 0.8,
+          "n": 9,
+          "precision": 0.9,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 0.9474,
+          "f2": 0.9783,
           "recall_ci": [
-            0.6756,
+            0.7008,
             1.0
           ],
-          "real_n": 8,
+          "real_n": 9,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6756,
+            0.7008,
             1.0
           ]
         },
@@ -2968,13 +2968,13 @@
         },
         "CREDIT_CARD": {
           "true_positives": 7,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 7,
-          "precision": 0.875,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6457,
             1.0
@@ -3028,13 +3028,13 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.9,
+          "precision": 0.8182,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 0.9,
+          "f2": 0.9574,
           "recall_ci": [
             0.7008,
             1.0
@@ -3087,23 +3087,23 @@
           ]
         },
         "FILE_PATH": {
-          "true_positives": 7,
+          "true_positives": 6,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "n": 7,
-          "precision": 0.875,
-          "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "precision": 0.8571,
+          "recall": 0.8571,
+          "f1": 0.8571,
+          "f2": 0.8571,
           "recall_ci": [
-            0.6457,
-            1.0
+            0.4869,
+            0.9743
           ],
           "real_n": 7,
-          "real_recall": 1.0,
+          "real_recall": 0.8571,
           "real_recall_ci": [
-            0.6457,
-            1.0
+            0.4869,
+            0.9743
           ]
         },
         "GPS": {
@@ -3148,13 +3148,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 14,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "n": 15,
-          "precision": 0.9333,
+          "precision": 1.0,
           "recall": 0.9333,
-          "f1": 0.9333,
-          "f2": 0.9333,
+          "f1": 0.9655,
+          "f2": 0.9459,
           "recall_ci": [
             0.7018,
             0.9881
@@ -3288,13 +3288,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 7,
-          "precision": 0.875,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6457,
             1.0
@@ -3342,10 +3342,6 @@
         }
       },
       "confusion_matrix": {
-        "ADDRESS": {
-          "CITY": 1,
-          "PERSON": 1
-        },
         "NONE": {
           "CITY": 1,
           "FILE_PATH": 1,
@@ -3356,15 +3352,22 @@
           "COMPANY": 1,
           "PERSON": 1,
           "URL": 1,
-          "API_KEY": 1,
-          "CREDIT_CARD": 1,
-          "SOCIAL_SECURITY": 1,
+          "API_KEY": 3,
           "EMAIL": 3,
+          "DOMAIN": 1,
           "JWT": 1
         },
         "PRIVATE_URL": {
-          "URL": 1,
-          "IP_ADDRESS": 1
+          "URL": 1
+        },
+        "IP_ADDRESS": {
+          "API_KEY": 2
+        },
+        "ADDRESS": {
+          "PERSON": 1
+        },
+        "FILE_PATH": {
+          "API_KEY": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -3398,13 +3401,14 @@
         {
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
-          "expected": 1,
+          "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ],
           "detected_types": [
             "ADDRESS",
@@ -3922,15 +3926,14 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -4055,14 +4058,15 @@
           "index": 42,
           "text_preview": "IPv6 address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -4165,14 +4169,15 @@
           "index": 49,
           "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -4286,14 +4291,14 @@
           "text_preview": "File: /home/user/tmp/cache/data",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "FILE_PATH"
+            "API_KEY"
           ]
         },
         {
@@ -5097,26 +5102,24 @@
           "index": 112,
           "text_preview": "Partially redacted: My credit card is ****-****-****-1111 and SSN is ***-**-6789",
           "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 113,
+          "text_preview": "Redacted phone: XXX-XXX-7890 and email: xxxx@domain.com",
+          "expected": 0,
           "detected": 2,
           "true_positives": 0,
           "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "CREDIT_CARD",
-            "SOCIAL_SECURITY"
-          ]
-        },
-        {
-          "index": 113,
-          "text_preview": "Redacted phone: XXX-XXX-7890 and email: xxxx@domain.com",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
+            "DOMAIN",
             "EMAIL"
           ]
         },
@@ -5201,12 +5204,13 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
+            "API_KEY",
             "JWT"
           ]
         },
@@ -5274,14 +5278,15 @@
           "index": 126,
           "text_preview": "Base64: am9obkBleGFtcGxlLmNvbQ== decodes to john@example.com",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
+            "API_KEY",
             "EMAIL"
           ]
         },
@@ -5631,14 +5636,14 @@
     "pipeline-raw": {
       "detector": "pipeline-raw",
       "total_examples": 150,
-      "total_expected_entities": 212,
-      "total_detected_entities": 245,
+      "total_expected_entities": 213,
+      "total_detected_entities": 248,
       "total_true_positives": 208,
-      "total_false_positives": 37,
-      "total_false_negatives": 4,
-      "overall_precision": 0.8489795918367347,
-      "overall_recall": 0.9811320754716981,
-      "overall_f1": 0.9102844638949671,
+      "total_false_positives": 40,
+      "total_false_negatives": 5,
+      "overall_precision": 0.8387096774193549,
+      "overall_recall": 0.9765258215962441,
+      "overall_f1": 0.9023861171366595,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -5662,13 +5667,13 @@
         },
         "API_KEY": {
           "true_positives": 5,
-          "false_positives": 1,
+          "false_positives": 6,
           "false_negatives": 0,
           "n": 5,
-          "precision": 0.8333,
+          "precision": 0.4545,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 0.625,
+          "f2": 0.8065,
           "recall_ci": [
             0.5655,
             1.0
@@ -5701,22 +5706,22 @@
           ]
         },
         "CITY": {
-          "true_positives": 8,
-          "false_positives": 2,
+          "true_positives": 9,
+          "false_positives": 1,
           "false_negatives": 0,
-          "n": 8,
-          "precision": 0.8,
+          "n": 9,
+          "precision": 0.9,
           "recall": 1.0,
-          "f1": 0.8889,
-          "f2": 0.9524,
+          "f1": 0.9474,
+          "f2": 0.9783,
           "recall_ci": [
-            0.6756,
+            0.7008,
             1.0
           ],
-          "real_n": 8,
+          "real_n": 9,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6756,
+            0.7008,
             1.0
           ]
         },
@@ -5762,13 +5767,13 @@
         },
         "CREDIT_CARD": {
           "true_positives": 7,
-          "false_positives": 6,
+          "false_positives": 5,
           "false_negatives": 0,
           "n": 7,
-          "precision": 0.5385,
+          "precision": 0.5833,
           "recall": 1.0,
-          "f1": 0.7,
-          "f2": 0.8537,
+          "f1": 0.7368,
+          "f2": 0.875,
           "recall_ci": [
             0.6457,
             1.0
@@ -5822,13 +5827,13 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.9,
+          "precision": 0.8182,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 0.9,
+          "f2": 0.9574,
           "recall_ci": [
             0.7008,
             1.0
@@ -5842,13 +5847,13 @@
         },
         "EMAIL": {
           "true_positives": 40,
-          "false_positives": 5,
+          "false_positives": 6,
           "false_negatives": 2,
           "n": 42,
-          "precision": 0.8889,
+          "precision": 0.8696,
           "recall": 0.9524,
-          "f1": 0.9195,
-          "f2": 0.939,
+          "f1": 0.9091,
+          "f2": 0.9346,
           "recall_ci": [
             0.8421,
             0.9868
@@ -5881,23 +5886,23 @@
           ]
         },
         "FILE_PATH": {
-          "true_positives": 7,
+          "true_positives": 6,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "n": 7,
-          "precision": 0.875,
-          "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "precision": 0.8571,
+          "recall": 0.8571,
+          "f1": 0.8571,
+          "f2": 0.8571,
           "recall_ci": [
-            0.6457,
-            1.0
+            0.4869,
+            0.9743
           ],
           "real_n": 7,
-          "real_recall": 1.0,
+          "real_recall": 0.8571,
           "real_recall_ci": [
-            0.6457,
-            1.0
+            0.4869,
+            0.9743
           ]
         },
         "GPS": {
@@ -5942,13 +5947,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 14,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 1,
           "n": 15,
-          "precision": 0.8235,
+          "precision": 0.875,
           "recall": 0.9333,
-          "f1": 0.875,
-          "f2": 0.9091,
+          "f1": 0.9032,
+          "f2": 0.9211,
           "recall_ci": [
             0.7018,
             0.9881
@@ -6082,13 +6087,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 7,
-          "precision": 0.7,
+          "precision": 0.7778,
           "recall": 1.0,
-          "f1": 0.8235,
-          "f2": 0.9211,
+          "f1": 0.875,
+          "f2": 0.9459,
           "recall_ci": [
             0.6457,
             1.0
@@ -6136,10 +6141,6 @@
         }
       },
       "confusion_matrix": {
-        "ADDRESS": {
-          "CITY": 1,
-          "PERSON": 1
-        },
         "CREDIT_CARD": {
           "CREDIT_CARD": 5
         },
@@ -6153,27 +6154,35 @@
           "COMPANY": 1,
           "PERSON": 1,
           "URL": 1,
-          "API_KEY": 1,
-          "CREDIT_CARD": 1,
-          "SOCIAL_SECURITY": 1,
+          "API_KEY": 3,
           "EMAIL": 3,
+          "DOMAIN": 1,
           "JWT": 1
         },
         "SOCIAL_SECURITY": {
           "SOCIAL_SECURITY": 2
         },
         "PRIVATE_URL": {
-          "URL": 1,
-          "IP_ADDRESS": 1
+          "URL": 1
         },
         "IP_ADDRESS": {
+          "API_KEY": 2,
           "IP_ADDRESS": 2
+        },
+        "ADDRESS": {
+          "PERSON": 1
         },
         "PHONE": {
           "PHONE": 4
         },
+        "FILE_PATH": {
+          "API_KEY": 1
+        },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
+        },
+        "PERSON": {
+          "EMAIL": 1
         },
         "EMAIL": {
           "EMAIL": 2,
@@ -6205,13 +6214,14 @@
         {
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
-          "expected": 1,
+          "expected": 2,
           "detected": 2,
-          "true_positives": 1,
-          "false_positives": 1,
+          "true_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ],
           "detected_types": [
             "ADDRESS",
@@ -6729,15 +6739,14 @@
           "index": 34,
           "text_preview": "Private: https://localhost:3000/dashboard and http://127.0.0.1/api/health",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PRIVATE_URL"
           ],
           "detected_types": [
-            "IP_ADDRESS",
             "PRIVATE_URL",
             "URL"
           ]
@@ -6862,14 +6871,15 @@
           "index": 42,
           "text_preview": "IPv6 address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -6972,14 +6982,15 @@
           "index": 49,
           "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -7093,14 +7104,14 @@
           "text_preview": "File: /home/user/tmp/cache/data",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "FILE_PATH"
+            "API_KEY"
           ]
         },
         {
@@ -7823,9 +7834,9 @@
           "index": 107,
           "text_preview": "Japanese: 田中太郎のメールはtanaka@example.jp、電話は+81 90-1234-5678",
           "expected": 3,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 3,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL",
@@ -7904,26 +7915,24 @@
           "index": 112,
           "text_preview": "Partially redacted: My credit card is ****-****-****-1111 and SSN is ***-**-6789",
           "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 113,
+          "text_preview": "Redacted phone: XXX-XXX-7890 and email: xxxx@domain.com",
+          "expected": 0,
           "detected": 2,
           "true_positives": 0,
           "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "CREDIT_CARD",
-            "SOCIAL_SECURITY"
-          ]
-        },
-        {
-          "index": 113,
-          "text_preview": "Redacted phone: XXX-XXX-7890 and email: xxxx@domain.com",
-          "expected": 0,
-          "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 0,
-          "expected_types": [],
-          "detected_types": [
+            "DOMAIN",
             "EMAIL"
           ]
         },
@@ -8008,12 +8017,13 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
+            "API_KEY",
             "JWT"
           ]
         },
@@ -8081,14 +8091,15 @@
           "index": 126,
           "text_preview": "Base64: am9obkBleGFtcGxlLmNvbQ== decodes to john@example.com",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
+            "API_KEY",
             "EMAIL"
           ]
         },
