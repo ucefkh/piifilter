@@ -310,7 +310,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("PASSPORT", r"\b[A-Z]{1,2}\d{6,9}\b", 0.75),
 
     # ── BANK_ACCOUNT ─────────────────────────────────────────────────
-    ("BANK_ACCOUNT", r"(?i)\b(?:bank|account|acct|A/c)\s*(?:number|no|#)?\s*:?\s*\d{8,17}\b", 0.85),
+    # Matches keyword-prefixed bank account numbers. Supports connecting words
+    # like "is" and "was" between the keyword and the number (e.g., "Bank account is 123456789012"),
+    # as well as common prefix/suffix patterns like "Bank:", "account:", "acct no:", "A/c:".
+    ("BANK_ACCOUNT", r"(?i)\b(?:bank|account|acct|A/c)\s*(?:number|no|#)?\s*(?::|is|was)?\s*\d{8,17}\b", 0.85),
     # Non-IBAN-looking digit sequences — exclude those starting with 2 letters
     ("BANK_ACCOUNT", r"(?<![A-Za-z])\b\d{12,20}\b", 0.55),
 

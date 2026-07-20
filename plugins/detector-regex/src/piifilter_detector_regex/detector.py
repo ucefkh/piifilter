@@ -103,11 +103,18 @@ class RegexDetector(Detector):
         # already destroyed dotted-decimal format.
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
+        # Build a comprehensive set of covered spans from ALL entity types found
+        # by _run_patterns, not just CC/SSN. This prevents the structural recall
+        # validators from re-adding a CREDIT_CARD match that was replaced by a
+        # more specific BANK_ACCOUNT match (e.g. "account: 8765432109876543").
+        all_spans: set[tuple[int, int]] = {
+            (e.start, e.end) for e in entities
+        } | cc_ssn_spans
         # Structural recall pass: Luhn check on ALL 13-19 digit runs
         # and SSN validator on ALL exactly-9-digit runs not already matched.
-        luhn_found = self._run_luhn_on_numeric_runs(stripped, cc_ssn_spans)
+        luhn_found = self._run_luhn_on_numeric_runs(stripped, all_spans)
         entities.extend(luhn_found)
-        ssn_found = self._validate_ssn_runs(stripped, cc_ssn_spans)
+        ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
         # Merge pre-strip entities (GPS + DATE + IP) with the rest (from stripped text)
         entities.extend(gps_entities)
@@ -159,10 +166,15 @@ class RegexDetector(Detector):
         ip_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.IP_ADDRESS})
         stripped = Deobfuscator._strip_inner_separators(cleaned)
         entities, cc_ssn_spans = self._run_patterns(stripped)
+        # Build comprehensive covered spans to prevent Luhn/SSN validators
+        # from re-detecting digit runs already covered by non-CC/SSN types.
+        all_spans: set[tuple[int, int]] = {
+            (e.start, e.end) for e in entities
+        } | cc_ssn_spans
         # Structural recall pass
-        luhn_found = self._run_luhn_on_numeric_runs(stripped, cc_ssn_spans)
+        luhn_found = self._run_luhn_on_numeric_runs(stripped, all_spans)
         entities.extend(luhn_found)
-        ssn_found = self._validate_ssn_runs(stripped, cc_ssn_spans)
+        ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
         entities.extend(gps_entities)
         entities.extend(date_entities)
@@ -329,24 +341,29 @@ class RegexDetector(Detector):
                 # NEW: If this match CONTAINS an already-found match, prefer the narrower
                 # match (better boundary precision). This prevents context-prefixed
                 # matches like "from Acme Corp" from surviving alongside "Acme Corp".
+                # IMPORTANT: When the contained entities have DIFFERENT entity types
+                # than the new match, the keyword-extension heuristic does NOT apply.
+                # A context-keyword match (e.g. BANK_ACCOUNT "account: 8765432109876543")
+                # should always replace a generic match of a different type (e.g. CREDIT_CARD
+                # "8765432109876543") because the context-keyword pattern is more specific.
                 contained_by_new = [(i, (s, e)) for i, (s, e) in enumerate(seen_intervals)
                                     if start <= s and e <= end]
                 if contained_by_new:
-                    # Replace the contained intervals with this new one if it represents
-                    # a genuinely different span (not just a keyword extension).
-                    # For context-prefixed patterns (keywords + company name), we prefer
-                    # the narrower match. But for cases like URL overlapping DOMAIN,
-                    # we prefer the broader match (handled by pattern ordering).
-                    # Heuristic: if the new match starts at least 2 chars before the
-                    # contained match, it's likely a keyword-prefixed pattern and should
-                    # be skipped (the narrower match is better).
-                    contained_start = min(s for _, (s, _) in contained_by_new)
-                    if start < contained_start - 1:
-                        # This new match starts well before the contained match —
-                        # it's likely a keyword extension. Skip it.
-                        continue
-                    # Otherwise, the new match is a genuine superset. Remove the
-                    # narrower matches and keep this broader one.
+                    # Check if ALL contained matches have the SAME type as the new match.
+                    # Cross-type containment means the broader match is more specific
+                    # (has context keywords), so we should replace the narrower match.
+                    contained_types = {entities[i].entity_type for i, _ in contained_by_new}
+                    same_type_only = len(contained_types) == 1 and entity_type in contained_types
+
+                    if same_type_only:
+                        # Same-type containment: prefer narrower match (keyword extension heuristic).
+                        contained_start = min(s for _, (s, _) in contained_by_new)
+                        if start < contained_start - 1:
+                            # This new match starts well before the contained match —
+                            # it's likely a keyword extension. Skip it.
+                            continue
+                    # Otherwise (cross-type or exact-same-span), the new context-keyword
+                    # match is more specific — replace the contained matches.
                     for i, _ in reversed(contained_by_new):
                         entities.pop(i)
                         seen_intervals.pop(i)
