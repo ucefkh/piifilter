@@ -1,6 +1,6 @@
 {
   "title": "Held-Out Adversarial Benchmark Report",
-  "timestamp": "2026-07-20T12:36:25.758116",
+  "timestamp": "2026-07-20T23:07:30.693856",
   "train_benchmark": {
     "label": "v1 benchmark (original)",
     "full_pipeline_rate": 78.6,
@@ -10,11 +10,11 @@
     {
       "label": "v4 (DeepSeek, seed_A, 10 strategies)",
       "total": 260,
-      "full_pipeline": 125,
-      "full_pipeline_rate": 48.1,
-      "raw_regex": 91,
-      "raw_regex_rate": 35.0,
-      "improvement": 13.1,
+      "full_pipeline": 134,
+      "full_pipeline_rate": 51.5,
+      "raw_regex": 103,
+      "raw_regex_rate": 39.6,
+      "improvement": 11.9,
       "entries": [
         {
           "text": "Our team is excited to launch P\\u200br\\u200bo\\u200bj\\u200be\\u200bc\\u200bt\\u200b \\u200bA\\u200bl\\u200bp\\u200bh\\u200ba next quarter.",
@@ -841,8 +841,8 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PHONE",
-              "value": "930760111623"
+              "type": "IBAN",
+              "value": "CH930760111623"
             },
             {
               "type": "PASSPORT",
@@ -1376,12 +1376,29 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CITY",
+              "value": "Our Berlin office"
+            },
+            {
+              "type": "CITY",
+              "value": "Berlin"
+            },
+            {
               "type": "PHONE",
               "value": "+491705553456"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Our Berlin office"
+            },
+            {
+              "type": "CITY",
+              "value": "Berlin"
+            }
+          ]
         },
         {
           "text": "Please forward all delivery issues to +3\\u200b3\\u200b1\\u200b4\\u200b5\\u200b6\\u200b7\\u200b8\\u200b9\\u200b0\\u200b1, our logistics hotline.",
@@ -1404,12 +1421,29 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CITY",
+              "value": "our Sydney branch"
+            },
+            {
+              "type": "CITY",
+              "value": "Sydney"
+            },
+            {
               "type": "PHONE",
               "value": "+612940012345"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "our Sydney branch"
+            },
+            {
+              "type": "CITY",
+              "value": "Sydney"
+            }
+          ]
         },
         {
           "text": "The Tokyo team uses +8\\u200b1\\u200b3\\u200b0\\u200b1\\u200b2\\u200b3\\u200b4\\u200b5\\u200b6\\u200b7 as their shared mobile line.",
@@ -1418,12 +1452,21 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CITY",
+              "value": "Tokyo"
+            },
+            {
               "type": "PHONE",
               "value": "+81301234567"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Tokyo"
+            }
+          ]
         },
         {
           "text": "For the Mumbai conference, Dr. Patel shared +9\\u200b1\\u200b9\\u200b8\\u200b7\\u200b6\\u200b5\\u200b4\\u200b3\\u200b2\\u200b1\\u200b0 as his contact.",
@@ -1431,6 +1474,10 @@
           "strategy": "zero-width-space-insertion",
           "full_pipeline_detected": true,
           "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Mumbai"
+            },
             {
               "type": "PERSON",
               "value": "Dr. Patel"
@@ -1442,6 +1489,10 @@
           ],
           "raw_regex_detected": true,
           "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Mumbai"
+            },
             {
               "type": "PERSON",
               "value": "Dr. Patel"
@@ -1866,8 +1917,8 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PERSON",
-              "value": "http://19216811008080"
+              "type": "BANK_ACCOUNT",
+              "value": "19216811008080"
             }
           ],
           "raw_regex_detected": true,
@@ -1911,10 +1962,6 @@
           "strategy": "whitespace_stretching",
           "full_pipeline_detected": true,
           "full_detections": [
-            {
-              "type": "PERSON",
-              "value": "http://100053000"
-            },
             {
               "type": "SOCIAL_SECURITY",
               "value": "100053000"
@@ -1966,10 +2013,6 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PERSON",
-              "value": "http://172160205000"
-            },
-            {
               "type": "PHONE",
               "value": "172160205000"
             }
@@ -2020,8 +2063,8 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PERSON",
-              "value": "http://19216850107676"
+              "type": "BANK_ACCOUNT",
+              "value": "19216850107676"
             }
           ],
           "raw_regex_detected": true,
@@ -2067,37 +2110,77 @@
           "text": "I visited <span style='color:white'>Paris</span> last summer and loved the architecture.",
           "entity_type": "CITY",
           "strategy": "white-on-white",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Paris"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Paris"
+            }
+          ]
         },
         {
           "text": "Her meeting is scheduled in <span style='color:white'>Tokyo</span> next week.",
           "entity_type": "CITY",
           "strategy": "white-on-white",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Tokyo"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Tokyo"
+            }
+          ]
         },
         {
           "text": "The conference will be held in <span style='color:white'>Berlin</span> this March.",
           "entity_type": "CITY",
           "strategy": "white-on-white",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Berlin"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Berlin"
+            }
+          ]
         },
         {
           "text": "He moved to <span style='color:white'>Cairo</span> for a new job opportunity.",
           "entity_type": "CITY",
           "strategy": "white-on-white",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Cairo"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Cairo"
+            }
+          ]
         },
         {
           "text": "We are planning a family trip to <span style='color:white'>Sydney</span> in December.",
@@ -2107,11 +2190,19 @@
           "full_detections": [
             {
               "type": "CITY",
+              "value": "Sydney"
+            },
+            {
+              "type": "CITY",
               "value": "December"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Sydney"
+            },
             {
               "type": "CITY",
               "value": "December"
@@ -2122,10 +2213,28 @@
           "text": "The package was shipped from <span style='color:white'>Mumbai</span> to London.",
           "entity_type": "CITY",
           "strategy": "white-on-white",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Mumbai"
+            },
+            {
+              "type": "CITY",
+              "value": "London"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Mumbai"
+            },
+            {
+              "type": "CITY",
+              "value": "London"
+            }
+          ]
         },
         {
           "text": "She studied at the university in <span style='color:white'>Toronto</span> for two years.",
@@ -2140,10 +2249,20 @@
           "text": "The tech summit in <span style='color:white'>Seoul</span> attracted global experts.",
           "entity_type": "CITY",
           "strategy": "white-on-white",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Seoul"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Seoul"
+            }
+          ]
         },
         {
           "text": "The package was delivered to 742%20Evergreen%20Terrace despite the rain.",
@@ -2504,6 +2623,10 @@
             {
               "type": "IBAN",
               "value": "FR142004101005050001302"
+            },
+            {
+              "type": "PERSON",
+              "value": "Lyon"
             }
           ],
           "raw_regex_detected": true,
@@ -2511,6 +2634,10 @@
             {
               "type": "IBAN",
               "value": "FR14 2004 1010 0505 0001 3"
+            },
+            {
+              "type": "PERSON",
+              "value": "Lyon"
             }
           ]
         },
@@ -2521,12 +2648,20 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CITY",
+              "value": "London"
+            },
+            {
               "type": "IBAN",
               "value": "GB29 NWBK 60161331926819"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "London"
+            },
             {
               "type": "IBAN",
               "value": "GB29 NWBK 6016 1331 9268"
@@ -2537,8 +2672,13 @@
           "text": "The Italian contractor specified IBAN IT60 X054 2811 1010 0000 0123 ][45 for the invoice.",
           "entity_type": "IBAN",
           "strategy": "mirrored_brackets",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "IBAN",
+              "value": "IT60 X054281110100000012345"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -2573,8 +2713,8 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PHONE",
-              "value": "041716430088"
+              "type": "IBAN",
+              "value": "NL91 ABNA 041716430088"
             }
           ],
           "raw_regex_detected": true,
@@ -2663,8 +2803,13 @@
           "text": "For the wire transfer, use our Italian account IT60%20X054%202811%2000%2003%2012%2054%2E293 as stated.",
           "entity_type": "IBAN",
           "strategy": "url-encoded",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "IBAN",
+              "value": "IT60 X054281100031254293"
+            }
+          ],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -2689,8 +2834,8 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PHONE",
-              "value": "0471643846"
+              "type": "IBAN",
+              "value": "NL91 ABNA 0471643846"
             }
           ],
           "raw_regex_detected": false,
@@ -3067,12 +3212,29 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CITY",
+              "value": "Our New York office"
+            },
+            {
+              "type": "PERSON",
+              "value": "New York"
+            },
+            {
               "type": "PHONE",
               "value": "407128740060"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Our New York office"
+            },
+            {
+              "type": "PERSON",
+              "value": "New York"
+            }
+          ]
         },
         {
           "text": "The rendezvous point was set at 48/8566, 2/3522 near the Eiffel Tower.",
@@ -3097,10 +3259,19 @@
             {
               "type": "PHONE",
               "value": "51507401278"
+            },
+            {
+              "type": "CITY",
+              "value": "London"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "London"
+            }
+          ]
         },
         {
           "text": "The shipment was scanned at 35//6895, 139//6917 in Tokyo.",
@@ -3180,10 +3351,19 @@
             {
               "type": "BANK_ACCOUNT",
               "value": "3386881512093"
+            },
+            {
+              "type": "CITY",
+              "value": "Sydney"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Sydney"
+            }
+          ]
         },
         {
           "text": "Please configure the new service with the API key a 1 b 2 c 3 d 4 e 5 f 6 g 7 h 8 i 9 j 0 k 1 l 2 m 3 n 4 o 5 for the staging environment.",
@@ -3198,8 +3378,13 @@
           "text": "The integration token for CloudSync is x 9 y 8 z 7 w 6 v 5 u 4 t 3 s 2 r 1 q 0 p 9 o 8 n 7 m 6, keep it secret.",
           "entity_type": "API_KEY",
           "strategy": "whitespace-stretching",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "COMPANY",
+              "value": "CloudSync"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -3649,11 +3834,11 @@
     {
       "label": "v5 (DeepSeek, seed_B, 10 strategies)",
       "total": 238,
-      "full_pipeline": 72,
-      "full_pipeline_rate": 30.3,
-      "raw_regex": 56,
-      "raw_regex_rate": 23.5,
-      "improvement": 6.7,
+      "full_pipeline": 73,
+      "full_pipeline_rate": 30.7,
+      "raw_regex": 61,
+      "raw_regex_rate": 25.6,
+      "improvement": 5.0,
       "entries": [
         {
           "text": "The report was uploaded to ｵﾌｲﾜｳ｡ｹﾞﾑ for further analysis.",
@@ -3812,14 +3997,14 @@
           "full_detections": [
             {
               "type": "PERSON",
-              "value": "http://evil.com?leak=Harper"
+              "value": "http://evil.com"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "PERSON",
-              "value": "http://evil.com?leak=Harper%20Lee"
+              "value": "http://evil.com"
             }
           ]
         },
@@ -3840,14 +4025,14 @@
           "full_detections": [
             {
               "type": "PERSON",
-              "value": "http://malicious.net?data=Chen"
+              "value": "http://malicious.net"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "PERSON",
-              "value": "http://malicious.net?data=Chen%20Wei"
+              "value": "http://malicious.net"
             }
           ]
         },
@@ -3868,14 +4053,14 @@
           "full_detections": [
             {
               "type": "PERSON",
-              "value": "http://phish.com?target=James"
+              "value": "http://phish.com"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
               "type": "PERSON",
-              "value": "http://phish.com?target=James%20Wilson"
+              "value": "http://phish.com"
             }
           ]
         },
@@ -4214,8 +4399,13 @@
           "text": "For the refund, use IBAN LD12 3456 7890 1234.",
           "entity_type": "IBAN",
           "strategy": "reduction-cipher",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "IBAN",
+              "value": "LD12345678901234"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -4247,8 +4437,13 @@
           "text": "Please confirm that HJ54 3210 9876 5432 10 is the correct IBAN.",
           "entity_type": "IBAN",
           "strategy": "reduction-cipher",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "IBAN",
+              "value": "HJ5432109876543210"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -4564,12 +4759,29 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CITY",
+              "value": "our London office"
+            },
+            {
+              "type": "CITY",
+              "value": "London"
+            },
+            {
               "type": "API_KEY",
               "value": "4444444444444442787654321"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "our London office"
+            },
+            {
+              "type": "CITY",
+              "value": "London"
+            }
+          ]
         },
         {
           "text": "Our toll-free number is &#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#56;&#48;&#48;&#49;&#50;&#51;&#52;&#53;&#54; for customer support.",
@@ -4592,12 +4804,21 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CITY",
+              "value": "Munich"
+            },
+            {
               "type": "API_KEY",
               "value": "4949494949494949176321876"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Munich"
+            }
+          ]
         },
         {
           "text": "Dial &#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#32;&#52;&#50;&#52;&#48;&#50;&#51;&#52;&#53;&#54;&#55;&#56; for our Prague-based team.",
@@ -4608,10 +4829,19 @@
             {
               "type": "API_KEY",
               "value": "4242424242424242402345678"
+            },
+            {
+              "type": "CITY",
+              "value": "Prague"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Prague"
+            }
+          ]
         },
         {
           "text": "Our Paris headquarters can be reached at &#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#32;&#52;&#51;&#57;&#48;&#49;&#50;&#51;&#52;&#53;&#54;&#55;.",
@@ -4620,12 +4850,29 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CITY",
+              "value": "Our Paris headquarters"
+            },
+            {
+              "type": "CITY",
+              "value": "Paris"
+            },
+            {
               "type": "API_KEY",
               "value": "4343434343434343901234567"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Our Paris headquarters"
+            },
+            {
+              "type": "CITY",
+              "value": "Paris"
+            }
+          ]
         },
         {
           "text": "The event line is &#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#32;&#52;&#52;&#50;&#48;&#55;&#52;&#57;&#56;&#51;&#50;&#49; for RSVPs.",
@@ -4648,12 +4895,21 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CITY",
+              "value": "Stockholm"
+            },
+            {
               "type": "API_KEY",
               "value": "4646464646464646801234567"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Stockholm"
+            }
+          ]
         },
         {
           "text": "New York sales can be reached by calling &#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#32;&#52;&#49;&#50;&#49;&#50;&#51;&#52;&#53;&#54;&#55;&#56;.",
@@ -6108,19 +6364,10 @@
           "text": "The IPv6 router is accessible at `2001:db8::ff00:42:8329`.",
           "entity_type": "IP_ADDRESS",
           "strategy": "backtick-wrapping",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "IP_ADDRESS",
-              "value": "2001:db8::"
-            }
-          ],
+          "full_pipeline_detected": false,
+          "full_detections": [],
           "raw_regex_detected": true,
           "raw_detections": [
-            {
-              "type": "IP_ADDRESS",
-              "value": "2001:db8::"
-            },
             {
               "type": "IP_ADDRESS",
               "value": "2001:db8::ff00:42:8329"
@@ -6470,11 +6717,11 @@
     {
       "label": "v6 (3rd generator, seed_C, 10 strategies)",
       "total": 208,
-      "full_pipeline": 110,
-      "full_pipeline_rate": 52.9,
-      "raw_regex": 92,
-      "raw_regex_rate": 44.2,
-      "improvement": 8.7,
+      "full_pipeline": 114,
+      "full_pipeline_rate": 54.8,
+      "raw_regex": 95,
+      "raw_regex_rate": 45.7,
+      "improvement": 9.1,
       "entries": [
         {
           "text": "Please remit payment to account \\u0049\\u0054\\u0036\\u0030\\u0058\\u0030\\u0035\\u0034\\u0032\\u0033\\u0031\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0030\\u0036\\u0031\\u0032\\u0032.",
@@ -6511,12 +6758,29 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
+              "type": "CITY",
+              "value": "Our German branch"
+            },
+            {
+              "type": "COUNTRY",
+              "value": "German"
+            },
+            {
               "type": "IBAN",
               "value": "DE7512345678901234567"
             }
           ],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Our German branch"
+            },
+            {
+              "type": "COUNTRY",
+              "value": "German"
+            }
+          ]
         },
         {
           "text": "The French supplier requested payment to \\u0046\\u0052\\u0037\\u0036\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038\\u0039\\u0030\\u0031\\u0032\\u0033\\u0034\\u0035\\u0036\\u0037\\u0038\\u0039.",
@@ -6553,8 +6817,8 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PHONE",
-              "value": "0436231356"
+              "type": "IBAN",
+              "value": "NL39ABNC0436231356"
             }
           ],
           "raw_regex_detected": false,
@@ -6753,13 +7017,8 @@
           "text": "The G00gl3 internship program is highly competitive this year.",
           "entity_type": "COMPANY",
           "strategy": "staggered capitalization with digit substitution",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "COMPANY",
-              "value": "Google"
-            }
-          ],
+          "full_pipeline_detected": false,
+          "full_detections": [],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -6820,14 +7079,14 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "CITY",
+              "type": "COUNTRY",
               "value": "Canada"
             }
           ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "CITY",
+              "type": "COUNTRY",
               "value": "Canada"
             }
           ]
@@ -6994,19 +7253,39 @@
           "text": "Could you decode JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVH to call the Tokyo office?",
           "entity_type": "PHONE",
           "strategy": "nested-encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Tokyo"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Tokyo"
+            }
+          ]
         },
         {
           "text": "The support team asked me to use JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVJ for the Mumbai hotline.",
           "entity_type": "PHONE",
           "strategy": "nested-encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Mumbai"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Mumbai"
+            }
+          ]
         },
         {
           "text": "Her new number is encoded as JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVK in the file.",
@@ -7021,10 +7300,20 @@
           "text": "Please update the record with JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVL for the Paris contact.",
           "entity_type": "PHONE",
           "strategy": "nested-encoding",
-          "full_pipeline_detected": false,
-          "full_detections": [],
-          "raw_regex_detected": false,
-          "raw_detections": []
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Paris"
+            }
+          ],
+          "raw_regex_detected": true,
+          "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Paris"
+            }
+          ]
         },
         {
           "text": "During the meeting, they shared JTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVEJTVCJTIyJTVM as the callback number.",
@@ -7062,7 +7351,7 @@
           "full_detections": [
             {
               "type": "API_KEY",
-              "value": "uOOAOXkBvPTJz9Qw2RfLMtANl6ChEBgSDeBSaO"
+              "value": "UooaoxKbVptjZ9qW2rFlmTanL6cHebGsdEbsAo"
             }
           ],
           "raw_regex_detected": true,
@@ -7118,7 +7407,7 @@
           "full_detections": [
             {
               "type": "API_KEY",
-              "value": "uOOAOAbECdAEfSGh6IjTKlBMn9OpOQrLSt2UvEWxAYzS"
+              "value": "UooaoaBecDaeFsgH6iJtkLbmN9oPoqRlsT2uVewXayZs"
             }
           ],
           "raw_regex_detected": true,
@@ -7705,13 +7994,8 @@
           "text": "We received a package postmarked from C4n4d4 yesterday.",
           "entity_type": "COUNTRY",
           "strategy": "short-name",
-          "full_pipeline_detected": true,
-          "full_detections": [
-            {
-              "type": "COUNTRY",
-              "value": "Canada"
-            }
-          ],
+          "full_pipeline_detected": false,
+          "full_detections": [],
           "raw_regex_detected": false,
           "raw_detections": []
         },
@@ -7779,10 +8063,6 @@
           "raw_detections": [
             {
               "type": "IP_ADDRESS",
-              "value": "db8:85a3::"
-            },
-            {
-              "type": "IP_ADDRESS",
               "value": "db8:85a3::8a2e:370:7334"
             }
           ]
@@ -7821,13 +8101,8 @@
           "strategy": "staggered capitalization with digit substitution",
           "full_pipeline_detected": false,
           "full_detections": [],
-          "raw_regex_detected": true,
-          "raw_detections": [
-            {
-              "type": "IP_ADDRESS",
-              "value": "fe80::"
-            }
-          ]
+          "raw_regex_detected": false,
+          "raw_detections": []
         },
         {
           "text": "The backup script failed because it tried to connect using postgresql://admín:passwörd@db.example.com:5432/écommerce, which returned a charset error.",
@@ -8072,7 +8347,11 @@
           "raw_detections": [
             {
               "type": "PERSON",
-              "value": "http://www.ex%U0061mple.net/login"
+              "value": "http://www.ex"
+            },
+            {
+              "type": "DOMAIN",
+              "value": "U0061mple.net"
             }
           ]
         },
@@ -8103,7 +8382,11 @@
             },
             {
               "type": "PERSON",
-              "value": "https://api.d%U0061taserver.com/v2/users"
+              "value": "https://api.d"
+            },
+            {
+              "type": "DOMAIN",
+              "value": "U0061taserver.com"
             }
           ]
         },
@@ -8133,10 +8416,6 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PERSON",
-              "value": "http://secure-p"
-            },
-            {
               "type": "DOMAIN",
               "value": "Uoo6lyments.com"
             }
@@ -8144,8 +8423,8 @@
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PERSON",
-              "value": "http://secure-p%U0061yments.com/checkout"
+              "type": "DOMAIN",
+              "value": "U0061yments.com"
             }
           ]
         },
@@ -8156,10 +8435,6 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PERSON",
-              "value": "https://m"
-            },
-            {
               "type": "DOMAIN",
               "value": "U0061il.hubspot.com"
             }
@@ -8167,8 +8442,8 @@
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PERSON",
-              "value": "https://m%U0061il.hubspot.com/inbox"
+              "type": "DOMAIN",
+              "value": "U0061il.hubspot.com"
             }
           ]
         },
@@ -8179,10 +8454,6 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PERSON",
-              "value": "http://w"
-            },
-            {
               "type": "DOMAIN",
               "value": "U0077w.opensource.org"
             }
@@ -8190,8 +8461,8 @@
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PERSON",
-              "value": "http://w%U0077w.opensource.org/license"
+              "type": "DOMAIN",
+              "value": "U0077w.opensource.org"
             }
           ]
         },
@@ -8202,10 +8473,6 @@
           "full_pipeline_detected": true,
           "full_detections": [
             {
-              "type": "PERSON",
-              "value": "https://st"
-            },
-            {
               "type": "DOMAIN",
               "value": "Uoo6lging.app.test.com"
             }
@@ -8213,8 +8480,8 @@
           "raw_regex_detected": true,
           "raw_detections": [
             {
-              "type": "PERSON",
-              "value": "https://st%U0061ging.app.test.com/api/status"
+              "type": "DOMAIN",
+              "value": "U0061ging.app.test.com"
             }
           ]
         },
@@ -8911,8 +9178,13 @@
           "text": "The GPS coordinates for 5 Willow Way, Phoenix, AZ 81203 are incorrect.",
           "entity_type": "ADDRESS",
           "strategy": "zip code reversal",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Phoenix"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -8929,7 +9201,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "mARy.jONESAMAIL"
+              "value": "MarY.Jonesamail"
             }
           ],
           "raw_regex_detected": true,
@@ -8948,7 +9220,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "jOHn.dOEAWORK"
+              "value": "JohN.Doeawork"
             }
           ],
           "raw_regex_detected": true,
@@ -8967,7 +9239,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "sARAH.lEWLSAGMALL"
+              "value": "Sarah.Lewlsagmall"
             }
           ],
           "raw_regex_detected": true,
@@ -8986,7 +9258,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "mLKE.bROWNAYAHOO"
+              "value": "M1k3.Brownayahoo"
             }
           ],
           "raw_regex_detected": true,
@@ -9005,7 +9277,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "lLZa.pEREZACOMPANY"
+              "value": "LlzA.Perezacompany"
             }
           ],
           "raw_regex_detected": true,
@@ -9024,7 +9296,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "dAVLD.lEEAUNLV"
+              "value": "Davld.Leeaunlv"
             }
           ],
           "raw_regex_detected": true,
@@ -9043,7 +9315,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "kATE.wLLLLAMSAMALN"
+              "value": "K4t3.Wllllamsamaln"
             }
           ],
           "raw_regex_detected": true,
@@ -9062,7 +9334,7 @@
           "full_detections": [
             {
               "type": "DOMAIN",
-              "value": "t0M.hARRLSAWEB"
+              "value": "T0m.Harrlsaweb"
             }
           ],
           "raw_regex_detected": true,
@@ -9302,10 +9574,23 @@
           "text": "Our office in Milan uses IBAN IT60 X054 2811 1010 0000 0123 4́56 for payments.",
           "entity_type": "IBAN",
           "strategy": "short-name",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "CITY",
+              "value": "Milan"
+            },
+            {
+              "type": "IBAN",
+              "value": "IT60 X0542811101000000123456"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
+            {
+              "type": "CITY",
+              "value": "Milan"
+            },
             {
               "type": "IBAN",
               "value": "IT60 X054 2811 1010 0000 0123 4"
@@ -9377,11 +9662,11 @@
           "full_detections": [
             {
               "type": "CITY",
-              "value": "IBAN GBls"
+              "value": "IBAN"
             },
             {
-              "type": "CREDIT_CARD",
-              "value": "09012345678912"
+              "type": "IBAN",
+              "value": "GB15 ABBY 09012345678912"
             }
           ],
           "raw_regex_detected": true,
@@ -9400,8 +9685,13 @@
           "text": "The rental contract specifies IBAN IT31 L030 0203 2800 0004 0002 6́78.",
           "entity_type": "IBAN",
           "strategy": "short-name",
-          "full_pipeline_detected": false,
-          "full_detections": [],
+          "full_pipeline_detected": true,
+          "full_detections": [
+            {
+              "type": "IBAN",
+              "value": "IT31 L0300203280000040002678"
+            }
+          ],
           "raw_regex_detected": true,
           "raw_detections": [
             {
@@ -9419,6 +9709,10 @@
             {
               "type": "IBAN",
               "value": "ES760049150005123456789012"
+            },
+            {
+              "type": "CITY",
+              "value": "Madrid"
             }
           ],
           "raw_regex_detected": true,
@@ -9426,6 +9720,10 @@
             {
               "type": "IBAN",
               "value": "ES76 0049 1500 0512 3456 7890 1"
+            },
+            {
+              "type": "CITY",
+              "value": "Madrid"
             }
           ]
         },
@@ -9437,7 +9735,7 @@
           "full_detections": [
             {
               "type": "API_KEY",
-              "value": "SK-La2bEcAdSe6fTgBh9iOjLk2lEmAnSo6pTqBr9sOtLu2vEwAxSy6zTaBb9cOdLe"
+              "value": "SK-1a2b3c4d5e6f7g8h9i0j1k2l3m4n5o6p7q8r9s0t1u2v3w4x5y6z7a8b9c0d1e"
             }
           ],
           "raw_regex_detected": true,
@@ -9559,11 +9857,11 @@
   ],
   "combined_held_out": {
     "total_examples": 706,
-    "full_pipeline_detected": 307,
-    "full_pipeline_rate": 43.5,
-    "raw_regex_detected": 239,
-    "raw_regex_rate": 33.9,
-    "deobfuscation_improvement": 9.6
+    "full_pipeline_detected": 321,
+    "full_pipeline_rate": 45.5,
+    "raw_regex_detected": 259,
+    "raw_regex_rate": 36.7,
+    "deobfuscation_improvement": 8.8
   },
-  "generalization_gap": 34.8
+  "generalization_gap": 32.9
 }

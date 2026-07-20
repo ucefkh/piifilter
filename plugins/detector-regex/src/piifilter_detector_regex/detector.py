@@ -437,6 +437,37 @@ class RegexDetector(Detector):
                             entities.remove(e)
                             break
 
+        # ── Suppress EMAIL entities after ROT13/hash encoding markers ──
+        # When text contains ROT13-encoded emails like
+        # "ROT13: wbua@rknzcyr.pbz", the ROT13 decoder produces
+        # decoded text that still contains the encoded email form.
+        # The encoded version is not real PII — it's a ciphertext reference.
+        # We only suppress the SECOND email in the text after the marker
+        # (the encoded one), not the first (the decoded one).
+        for e in list(entities):
+            if e.entity_type == EntityType.EMAIL:
+                before_clean = cleaned[max(0, e.start - 80):e.start].lower().rstrip()
+                _EMAIL_ENCODING_KEYWORDS = (
+                    "rot13:", "rot13 ", "rot-13:", "rot-13 ",
+                    "ebg13:", "ebg13 ",  # ROT13 of "ROT13"
+                    "ebgle:", "ebgle ",  # ROT13+l33t decoded "ROT13"
+                    "encoded:", "encoded ",
+                    "cipher:", "ciphertext:", "encrypted:",
+                    "raprbqrq:", "raprbqrq ",  # ROT13 of "encoded"
+                    "pvcure:", "pvcuregrkg:",  # ROT13 of "cipher/ciphertext"
+                )
+                has_marker = any(kw in before_clean for kw in _EMAIL_ENCODING_KEYWORDS)
+                if has_marker:
+                    # Only suppress if there's already another email before this one
+                    # (the decoded email comes first, the encoded copy comes second)
+                    has_earlier_email = len([x for x in entities
+                                             if x.entity_type == EntityType.EMAIL
+                                             and x.start < e.start
+                                             and x is not e]) > 0
+                    if has_earlier_email:
+                        entities.remove(e)
+                        continue
+
         # ── Suppress PHONE entities in demo/teaching/non-real contexts ──
         for e in list(entities):
             if e.entity_type == EntityType.PHONE:

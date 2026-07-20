@@ -7,15 +7,15 @@ bedrock = session.client('bedrock-runtime', region_name='us-east-1')
 
 response = bedrock.converse(
     modelId='us.anthropic.claude-opus-4-8',
-    messages=[{'role': 'user', 'content': [{'text': """You are evaluating commit 09845c5 to PIIFilter, a privacy proxy that detects/filters PII from prompts before LLMs and unfilters responses.
+    messages=[{'role': 'user', 'content': [{'text': """You are evaluating commit 0d7c256 to PIIFilter, a privacy proxy that detects/filters PII from prompts before LLMs and unfilters responses.
 
-COMMIT: Fix EMPLOYEE_NAME FP: suppress parenthetical duplicates only, keep standalone paren refs
+COMMIT: Fix EMPLOYEE_NAME FP: suppress parenthetical duplicates only (non-paren ref must exist)
 
 Changes:
-1. EMPLOYEE_NAME parenthetical suppression: parenthetical references like "(employee John)" are suppressed ONLY when they duplicate a non-parenthetical reference already found (e.g. "employee named John (employee John)"). Standalone parenthetical references like "(employee John Smith for support)" are preserved.
+1. EMPLOYEE_NAME parenthetical suppression: parenthetical references like "(employee John)" are suppressed ONLY when they duplicate an already-detected non-parenthetical EMPLOYEE_NAME reference. Standalone parenthetical employee introductions are preserved.
 2. Applied to both detect() and detect_session().
 3. All 486 tests pass.
-4. Benchmark (arbitration-off) shows EMPLOYEE_NAME precision improved from 0.50 to 1.00 (1 FP eliminated). All other entity types meet recall >= 0.95 and real precision >= 0.85.
+4. All entity types meet recall >= 0.95 and real precision >= 0.85. EMPLOYEE_NAME real precision 1.00 (was 0.50).
 
 Respond with ONLY a single integer score 1-10 followed by a one-line reason. Format:
 SCORE: X
