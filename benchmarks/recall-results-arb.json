@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T09:36:24Z",
+  "timestamp": "2026-07-20T09:49:32Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 229,
+      "total_detected_entities": 230,
       "total_true_positives": 209,
-      "total_false_positives": 20,
+      "total_false_positives": 21,
       "total_false_negatives": 4,
-      "overall_precision": 0.9126637554585153,
+      "overall_precision": 0.908695652173913,
       "overall_recall": 0.9812206572769953,
-      "overall_f1": 0.9457013574660634,
+      "overall_f1": 0.9435665914221218,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -492,13 +492,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 7,
-          "precision": 1.0,
+          "precision": 0.875,
           "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "f1": 0.9333,
+          "f2": 0.9722,
           "recall_ci": [
             0.6457,
             1.0
@@ -556,6 +556,7 @@
           "COMPANY": 1,
           "URL": 1,
           "API_KEY": 1,
+          "SOCIAL_SECURITY": 1,
           "JWT": 1,
           "EMAIL": 2
         },
@@ -2332,12 +2333,14 @@
           "index": 115,
           "text_preview": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 116,
@@ -2829,13 +2832,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 224,
+      "total_detected_entities": 225,
       "total_true_positives": 209,
-      "total_false_positives": 19,
+      "total_false_positives": 20,
       "total_false_negatives": 4,
-      "overall_precision": 0.9166666666666666,
+      "overall_precision": 0.9126637554585153,
       "overall_recall": 0.9812206572769953,
-      "overall_f1": 0.947845804988662,
+      "overall_f1": 0.9457013574660634,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -3279,13 +3282,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 7,
-          "precision": 1.0,
+          "precision": 0.875,
           "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "f1": 0.9333,
+          "f2": 0.9722,
           "recall_ci": [
             0.6457,
             1.0
@@ -3345,6 +3348,7 @@
           "URL": 1,
           "API_KEY": 1,
           "EMAIL": 3,
+          "SOCIAL_SECURITY": 1,
           "JWT": 1
         },
         "PRIVATE_URL": {
@@ -5123,12 +5127,14 @@
           "index": 115,
           "text_preview": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 116,
@@ -5620,13 +5626,13 @@
       "detector": "pipeline-raw",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 244,
+      "total_detected_entities": 245,
       "total_true_positives": 209,
-      "total_false_positives": 35,
+      "total_false_positives": 36,
       "total_false_negatives": 4,
-      "overall_precision": 0.8565573770491803,
+      "overall_precision": 0.8530612244897959,
       "overall_recall": 0.9812206572769953,
-      "overall_f1": 0.9146608315098469,
+      "overall_f1": 0.9126637554585153,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -6070,13 +6076,13 @@
         },
         "SOCIAL_SECURITY": {
           "true_positives": 7,
-          "false_positives": 2,
+          "false_positives": 3,
           "false_negatives": 0,
           "n": 7,
-          "precision": 0.7778,
+          "precision": 0.7,
           "recall": 1.0,
-          "f1": 0.875,
-          "f2": 0.9459,
+          "f1": 0.8235,
+          "f2": 0.9211,
           "recall_ci": [
             0.6457,
             1.0
@@ -6139,6 +6145,7 @@
           "URL": 1,
           "API_KEY": 1,
           "EMAIL": 3,
+          "SOCIAL_SECURITY": 1,
           "JWT": 1
         },
         "SOCIAL_SECURITY": {
@@ -7928,12 +7935,14 @@
           "index": 115,
           "text_preview": "SSN-like: 987654321 is just a long number, not an SSN (no dashes).",
           "expected": 0,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": []
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
         },
         {
           "index": 116,
