@@ -1,0 +1,2835 @@
+{
+  "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
+  "timestamp": "2026-07-20T05:47:58Z",
+  "arbitration": {
+    "enabled": true
+  },
+  "dataset": {
+    "path": "/home/ucefkh/projects/privacy-proxy-ai/benchmarks/data/pii_dataset.json",
+    "total_examples": 150,
+    "test_examples": 28,
+    "total_entities": 48,
+    "entity_types": [
+      "ADDRESS",
+      "API_KEY",
+      "BANK_ACCOUNT",
+      "CITY",
+      "COMPANY",
+      "COUNTRY",
+      "CREDIT_CARD",
+      "CUSTOMER_NAME",
+      "DATABASE_URL",
+      "DOMAIN",
+      "EMAIL",
+      "EMPLOYEE_NAME",
+      "FILE_PATH",
+      "GPS",
+      "IBAN",
+      "IP_ADDRESS",
+      "JWT",
+      "PASSPORT",
+      "PERSON",
+      "PHONE",
+      "PRIVATE_URL",
+      "PROJECT_NAME",
+      "SOCIAL_SECURITY",
+      "SSH_KEY"
+    ]
+  },
+  "split": {
+    "method": "stratified_train_test_split",
+    "test_size": 0.1,
+    "train_examples": 122,
+    "test_examples": 28
+  },
+  "detectors": {
+    "regex": {
+      "detector": "regex",
+      "total_examples": 28,
+      "total_expected_entities": 48,
+      "total_detected_entities": 49,
+      "total_true_positives": 47,
+      "total_false_positives": 2,
+      "total_false_negatives": 1,
+      "overall_precision": 0.9591836734693877,
+      "overall_recall": 0.9791666666666666,
+      "overall_f1": 0.9690721649484536,
+      "per_type": {
+        "ADDRESS": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "API_KEY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "BANK_ACCOUNT": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "CITY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "COMPANY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "COUNTRY": {
+          "true_positives": 6,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 6,
+          "precision": 0.8571,
+          "recall": 1.0,
+          "f1": 0.9231,
+          "f2": 0.9677,
+          "recall_ci": [
+            0.6097,
+            1.0
+          ],
+          "real_n": 6,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.6097,
+            1.0
+          ]
+        },
+        "CREDIT_CARD": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "CUSTOMER_NAME": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "DATABASE_URL": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "DOMAIN": {
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 3,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.4385,
+            1.0
+          ],
+          "real_n": 3,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.4385,
+            1.0
+          ]
+        },
+        "EMAIL": {
+          "true_positives": 7,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 7,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.6457,
+            1.0
+          ],
+          "real_n": 7,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.6457,
+            1.0
+          ]
+        },
+        "EMPLOYEE_NAME": {
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "FILE_PATH": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "GPS": {
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 4,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.5101,
+            1.0
+          ],
+          "real_n": 4,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.5101,
+            1.0
+          ]
+        },
+        "IBAN": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "IP_ADDRESS": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6667,
+          "f2": 0.5556,
+          "recall_ci": [
+            0.0945,
+            0.9055
+          ],
+          "real_n": 2,
+          "real_recall": 0.5,
+          "real_recall_ci": [
+            0.0945,
+            0.9055
+          ]
+        },
+        "JWT": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "PASSPORT": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "PERSON": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "PHONE": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "PRIVATE_URL": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "PROJECT_NAME": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "SOCIAL_SECURITY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "SSH_KEY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        }
+      },
+      "confusion_matrix": {
+        "NONE": {
+          "EMPLOYEE_NAME": 1,
+          "COUNTRY": 1
+        }
+      },
+      "example_results": [
+        {
+          "index": 0,
+          "text_preview": "API key: pk-98765fedcba0987654321fedcba0987654321fedcba",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "API_KEY"
+          ],
+          "detected_types": [
+            "API_KEY"
+          ]
+        },
+        {
+          "index": 1,
+          "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
+          "expected": 4,
+          "detected": 4,
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "GPS"
+          ],
+          "detected_types": [
+            "GPS"
+          ]
+        },
+        {
+          "index": 2,
+          "text_preview": "Please use ticket number TKT-12345 for the bug report.",
+          "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 3,
+          "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
+          "expected": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
+          ],
+          "detected_types": [
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
+          ]
+        },
+        {
+          "index": 4,
+          "text_preview": "City: The population of Mumbai is over 20 million.",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "CITY"
+          ],
+          "detected_types": [
+            "CITY"
+          ]
+        },
+        {
+          "index": 5,
+          "text_preview": "Passport: CD987654 and also passport XY123456",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "PASSPORT"
+          ],
+          "detected_types": [
+            "PASSPORT"
+          ]
+        },
+        {
+          "index": 6,
+          "text_preview": "The best customer we have is Clara Oswald and she works at Data Corp.",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "COMPANY",
+            "CUSTOMER_NAME"
+          ],
+          "detected_types": [
+            "COMPANY",
+            "CUSTOMER_NAME"
+          ]
+        },
+        {
+          "index": 7,
+          "text_preview": "SSH key: -----BEGIN OPENSSH PRIVATE KEY-----\nABC123...\n-----END OPENSSH PRIVATE ",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "SSH_KEY"
+          ],
+          "detected_types": [
+            "SSH_KEY"
+          ]
+        },
+        {
+          "index": 8,
+          "text_preview": "Internal app: https://payroll.corp.local/admin",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "PRIVATE_URL"
+          ],
+          "detected_types": [
+            "PRIVATE_URL"
+          ]
+        },
+        {
+          "index": 9,
+          "text_preview": "Phone: 07700 900 123 (UK mobile)",
+          "expected": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "expected_types": [
+            "PHONE"
+          ],
+          "detected_types": [
+            "COUNTRY",
+            "PHONE"
+          ]
+        },
+        {
+          "index": 10,
+          "text_preview": "The server maintenance is scheduled for this weekend.",
+          "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 11,
+          "text_preview": "SSN: 111-22-3333 is used as the sample number",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "SOCIAL_SECURITY"
+          ],
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
+        },
+        {
+          "index": 12,
+          "text_preview": "Contact person: Donna Noble (donna@temp-services.co.uk). Project Bad Wolf is GO.",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL",
+            "PERSON",
+            "PROJECT_NAME"
+          ],
+          "detected_types": [
+            "EMAIL",
+            "PERSON",
+            "PROJECT_NAME"
+          ]
+        },
+        {
+          "index": 13,
+          "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
+          "expected": 6,
+          "detected": 6,
+          "true_positives": 6,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "COUNTRY"
+          ],
+          "detected_types": [
+            "COUNTRY"
+          ]
+        },
+        {
+          "index": 14,
+          "text_preview": "Email: bob​@​example.com (zero-width spaces)",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL"
+          ],
+          "detected_types": [
+            "EMAIL"
+          ]
+        },
+        {
+          "index": 15,
+          "text_preview": "CC: 3782-822463-10005 (Amex) and 6011-1111-1111-1117 (Discover)",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "CREDIT_CARD"
+          ],
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
+        },
+        {
+          "index": 16,
+          "text_preview": "File path: /home/alice/projects/src/main/config.yaml and C:\\Users\\Bob\\Documents\\",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "FILE_PATH"
+          ],
+          "detected_types": [
+            "FILE_PATH"
+          ]
+        },
+        {
+          "index": 17,
+          "text_preview": "Send to: maria.garcia@co.jp | CC: info@company.co.uk | BCC: devops@internal.corp",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL"
+          ],
+          "detected_types": [
+            "EMAIL"
+          ]
+        },
+        {
+          "index": 18,
+          "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
+          "expected": 1,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "expected_types": [
+            "IP_ADDRESS"
+          ],
+          "detected_types": []
+        },
+        {
+          "index": 19,
+          "text_preview": "JWT: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "JWT"
+          ],
+          "detected_types": [
+            "JWT"
+          ]
+        },
+        {
+          "index": 20,
+          "text_preview": "IBAN: CH93 0076 2011 6238 5295 7",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "IBAN"
+          ],
+          "detected_types": [
+            "IBAN"
+          ]
+        },
+        {
+          "index": 21,
+          "text_preview": "MySQL: mysql://dev_user:dev_pass@mysql-dev.internal:3306/staging",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "DATABASE_URL"
+          ],
+          "detected_types": [
+            "DATABASE_URL"
+          ]
+        },
+        {
+          "index": 22,
+          "text_preview": "Domain: example.internal and mysql.corp.local and api.staging.private",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "DOMAIN"
+          ],
+          "detected_types": [
+            "DOMAIN"
+          ]
+        },
+        {
+          "index": 23,
+          "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "ADDRESS"
+          ],
+          "detected_types": [
+            "ADDRESS"
+          ]
+        },
+        {
+          "index": 24,
+          "text_preview": "Bank: 98765432109876543210 and IBAN: GB29 NWBK 6016 1331 9268 19",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "BANK_ACCOUNT",
+            "IBAN"
+          ],
+          "detected_types": [
+            "BANK_ACCOUNT",
+            "IBAN"
+          ]
+        },
+        {
+          "index": 25,
+          "text_preview": "Domain: 123 is not a valid domain name by itself.",
+          "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 26,
+          "text_preview": "Unicode PII: 联系用户张伟，邮箱是zhangwei@example.cn，电话+86 138-0013-8000",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL",
+            "PERSON",
+            "PHONE"
+          ],
+          "detected_types": [
+            "EMAIL",
+            "PERSON",
+            "PHONE"
+          ]
+        },
+        {
+          "index": 27,
+          "text_preview": "Customer: Martha Jones (martha.jones@bigpharma.com) order #ORD-001",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL"
+          ],
+          "detected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL"
+          ]
+        }
+      ]
+    },
+    "pipeline-arbitration": {
+      "detector": "pipeline-arbitration",
+      "total_examples": 28,
+      "total_expected_entities": 48,
+      "total_detected_entities": 49,
+      "total_true_positives": 47,
+      "total_false_positives": 2,
+      "total_false_negatives": 1,
+      "overall_precision": 0.9591836734693877,
+      "overall_recall": 0.9791666666666666,
+      "overall_f1": 0.9690721649484536,
+      "per_type": {
+        "ADDRESS": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "API_KEY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "BANK_ACCOUNT": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "CITY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "COMPANY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "COUNTRY": {
+          "true_positives": 6,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 6,
+          "precision": 0.8571,
+          "recall": 1.0,
+          "f1": 0.9231,
+          "f2": 0.9677,
+          "recall_ci": [
+            0.6097,
+            1.0
+          ],
+          "real_n": 6,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.6097,
+            1.0
+          ]
+        },
+        "CREDIT_CARD": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "CUSTOMER_NAME": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "DATABASE_URL": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "DOMAIN": {
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 3,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.4385,
+            1.0
+          ],
+          "real_n": 3,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.4385,
+            1.0
+          ]
+        },
+        "EMAIL": {
+          "true_positives": 7,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 7,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.6457,
+            1.0
+          ],
+          "real_n": 7,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.6457,
+            1.0
+          ]
+        },
+        "EMPLOYEE_NAME": {
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "FILE_PATH": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "GPS": {
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 4,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.5101,
+            1.0
+          ],
+          "real_n": 4,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.5101,
+            1.0
+          ]
+        },
+        "IBAN": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "IP_ADDRESS": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6667,
+          "f2": 0.5556,
+          "recall_ci": [
+            0.0945,
+            0.9055
+          ],
+          "real_n": 2,
+          "real_recall": 0.5,
+          "real_recall_ci": [
+            0.0945,
+            0.9055
+          ]
+        },
+        "JWT": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "PASSPORT": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "PERSON": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "PHONE": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "PRIVATE_URL": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "PROJECT_NAME": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "SOCIAL_SECURITY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "SSH_KEY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        }
+      },
+      "confusion_matrix": {
+        "NONE": {
+          "EMPLOYEE_NAME": 1,
+          "COUNTRY": 1
+        }
+      },
+      "example_results": [
+        {
+          "index": 0,
+          "text_preview": "API key: pk-98765fedcba0987654321fedcba0987654321fedcba",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "API_KEY"
+          ],
+          "detected_types": [
+            "API_KEY"
+          ]
+        },
+        {
+          "index": 1,
+          "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
+          "expected": 4,
+          "detected": 4,
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "GPS"
+          ],
+          "detected_types": [
+            "GPS"
+          ]
+        },
+        {
+          "index": 2,
+          "text_preview": "Please use ticket number TKT-12345 for the bug report.",
+          "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 3,
+          "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
+          "expected": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
+          ],
+          "detected_types": [
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
+          ]
+        },
+        {
+          "index": 4,
+          "text_preview": "City: The population of Mumbai is over 20 million.",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "CITY"
+          ],
+          "detected_types": [
+            "CITY"
+          ]
+        },
+        {
+          "index": 5,
+          "text_preview": "Passport: CD987654 and also passport XY123456",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "PASSPORT"
+          ],
+          "detected_types": [
+            "PASSPORT"
+          ]
+        },
+        {
+          "index": 6,
+          "text_preview": "The best customer we have is Clara Oswald and she works at Data Corp.",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "COMPANY",
+            "CUSTOMER_NAME"
+          ],
+          "detected_types": [
+            "COMPANY",
+            "CUSTOMER_NAME"
+          ]
+        },
+        {
+          "index": 7,
+          "text_preview": "SSH key: -----BEGIN OPENSSH PRIVATE KEY-----\nABC123...\n-----END OPENSSH PRIVATE ",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "SSH_KEY"
+          ],
+          "detected_types": [
+            "SSH_KEY"
+          ]
+        },
+        {
+          "index": 8,
+          "text_preview": "Internal app: https://payroll.corp.local/admin",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "PRIVATE_URL"
+          ],
+          "detected_types": [
+            "PRIVATE_URL"
+          ]
+        },
+        {
+          "index": 9,
+          "text_preview": "Phone: 07700 900 123 (UK mobile)",
+          "expected": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "expected_types": [
+            "PHONE"
+          ],
+          "detected_types": [
+            "COUNTRY",
+            "PHONE"
+          ]
+        },
+        {
+          "index": 10,
+          "text_preview": "The server maintenance is scheduled for this weekend.",
+          "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 11,
+          "text_preview": "SSN: 111-22-3333 is used as the sample number",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "SOCIAL_SECURITY"
+          ],
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
+        },
+        {
+          "index": 12,
+          "text_preview": "Contact person: Donna Noble (donna@temp-services.co.uk). Project Bad Wolf is GO.",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL",
+            "PERSON",
+            "PROJECT_NAME"
+          ],
+          "detected_types": [
+            "EMAIL",
+            "PERSON",
+            "PROJECT_NAME"
+          ]
+        },
+        {
+          "index": 13,
+          "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
+          "expected": 6,
+          "detected": 6,
+          "true_positives": 6,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "COUNTRY"
+          ],
+          "detected_types": [
+            "COUNTRY"
+          ]
+        },
+        {
+          "index": 14,
+          "text_preview": "Email: bob​@​example.com (zero-width spaces)",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL"
+          ],
+          "detected_types": [
+            "EMAIL"
+          ]
+        },
+        {
+          "index": 15,
+          "text_preview": "CC: 3782-822463-10005 (Amex) and 6011-1111-1111-1117 (Discover)",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "CREDIT_CARD"
+          ],
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
+        },
+        {
+          "index": 16,
+          "text_preview": "File path: /home/alice/projects/src/main/config.yaml and C:\\Users\\Bob\\Documents\\",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "FILE_PATH"
+          ],
+          "detected_types": [
+            "FILE_PATH"
+          ]
+        },
+        {
+          "index": 17,
+          "text_preview": "Send to: maria.garcia@co.jp | CC: info@company.co.uk | BCC: devops@internal.corp",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL"
+          ],
+          "detected_types": [
+            "EMAIL"
+          ]
+        },
+        {
+          "index": 18,
+          "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
+          "expected": 1,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "expected_types": [
+            "IP_ADDRESS"
+          ],
+          "detected_types": []
+        },
+        {
+          "index": 19,
+          "text_preview": "JWT: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "JWT"
+          ],
+          "detected_types": [
+            "JWT"
+          ]
+        },
+        {
+          "index": 20,
+          "text_preview": "IBAN: CH93 0076 2011 6238 5295 7",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "IBAN"
+          ],
+          "detected_types": [
+            "IBAN"
+          ]
+        },
+        {
+          "index": 21,
+          "text_preview": "MySQL: mysql://dev_user:dev_pass@mysql-dev.internal:3306/staging",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "DATABASE_URL"
+          ],
+          "detected_types": [
+            "DATABASE_URL"
+          ]
+        },
+        {
+          "index": 22,
+          "text_preview": "Domain: example.internal and mysql.corp.local and api.staging.private",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "DOMAIN"
+          ],
+          "detected_types": [
+            "DOMAIN"
+          ]
+        },
+        {
+          "index": 23,
+          "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "ADDRESS"
+          ],
+          "detected_types": [
+            "ADDRESS"
+          ]
+        },
+        {
+          "index": 24,
+          "text_preview": "Bank: 98765432109876543210 and IBAN: GB29 NWBK 6016 1331 9268 19",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "BANK_ACCOUNT",
+            "IBAN"
+          ],
+          "detected_types": [
+            "BANK_ACCOUNT",
+            "IBAN"
+          ]
+        },
+        {
+          "index": 25,
+          "text_preview": "Domain: 123 is not a valid domain name by itself.",
+          "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 26,
+          "text_preview": "Unicode PII: 联系用户张伟，邮箱是zhangwei@example.cn，电话+86 138-0013-8000",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL",
+            "PERSON",
+            "PHONE"
+          ],
+          "detected_types": [
+            "EMAIL",
+            "PERSON",
+            "PHONE"
+          ]
+        },
+        {
+          "index": 27,
+          "text_preview": "Customer: Martha Jones (martha.jones@bigpharma.com) order #ORD-001",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL"
+          ],
+          "detected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL"
+          ]
+        }
+      ]
+    },
+    "pipeline-raw": {
+      "detector": "pipeline-raw",
+      "total_examples": 28,
+      "total_expected_entities": 48,
+      "total_detected_entities": 54,
+      "total_true_positives": 47,
+      "total_false_positives": 7,
+      "total_false_negatives": 1,
+      "overall_precision": 0.8703703703703703,
+      "overall_recall": 0.9791666666666666,
+      "overall_f1": 0.9215686274509804,
+      "per_type": {
+        "ADDRESS": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "API_KEY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "BANK_ACCOUNT": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "CITY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "COMPANY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "COUNTRY": {
+          "true_positives": 6,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 6,
+          "precision": 0.8571,
+          "recall": 1.0,
+          "f1": 0.9231,
+          "f2": 0.9677,
+          "recall_ci": [
+            0.6097,
+            1.0
+          ],
+          "real_n": 6,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.6097,
+            1.0
+          ]
+        },
+        "CREDIT_CARD": {
+          "true_positives": 2,
+          "false_positives": 2,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "CUSTOMER_NAME": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "DATABASE_URL": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "DOMAIN": {
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 3,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.4385,
+            1.0
+          ],
+          "real_n": 3,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.4385,
+            1.0
+          ]
+        },
+        "EMAIL": {
+          "true_positives": 7,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 7,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.6457,
+            1.0
+          ],
+          "real_n": 7,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.6457,
+            1.0
+          ]
+        },
+        "EMPLOYEE_NAME": {
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "FILE_PATH": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "GPS": {
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 4,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.5101,
+            1.0
+          ],
+          "real_n": 4,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.5101,
+            1.0
+          ]
+        },
+        "IBAN": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "IP_ADDRESS": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 0.5,
+          "f1": 0.6667,
+          "f2": 0.5556,
+          "recall_ci": [
+            0.0945,
+            0.9055
+          ],
+          "real_n": 2,
+          "real_recall": 0.5,
+          "real_recall_ci": [
+            0.0945,
+            0.9055
+          ]
+        },
+        "JWT": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "PASSPORT": {
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "PERSON": {
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 0.6667,
+          "recall": 1.0,
+          "f1": 0.8,
+          "f2": 0.9091,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "PHONE": {
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 2,
+          "precision": 0.6667,
+          "recall": 1.0,
+          "f1": 0.8,
+          "f2": 0.9091,
+          "recall_ci": [
+            0.3424,
+            1.0
+          ],
+          "real_n": 2,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.3424,
+            1.0
+          ]
+        },
+        "PRIVATE_URL": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "PROJECT_NAME": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "SOCIAL_SECURITY": {
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 0.5,
+          "recall": 1.0,
+          "f1": 0.6667,
+          "f2": 0.8333,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        },
+        "SSH_KEY": {
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "n": 1,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
+          "recall_ci": [
+            0.2065,
+            1.0
+          ],
+          "real_n": 1,
+          "real_recall": 1.0,
+          "real_recall_ci": [
+            0.2065,
+            1.0
+          ]
+        }
+      },
+      "confusion_matrix": {
+        "NONE": {
+          "EMPLOYEE_NAME": 1,
+          "COUNTRY": 1
+        },
+        "PHONE": {
+          "PHONE": 1
+        },
+        "SOCIAL_SECURITY": {
+          "SOCIAL_SECURITY": 1
+        },
+        "CREDIT_CARD": {
+          "CREDIT_CARD": 2
+        },
+        "ADDRESS": {
+          "PERSON": 1
+        }
+      },
+      "example_results": [
+        {
+          "index": 0,
+          "text_preview": "API key: pk-98765fedcba0987654321fedcba0987654321fedcba",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "API_KEY"
+          ],
+          "detected_types": [
+            "API_KEY"
+          ]
+        },
+        {
+          "index": 1,
+          "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
+          "expected": 4,
+          "detected": 4,
+          "true_positives": 4,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "GPS"
+          ],
+          "detected_types": [
+            "GPS"
+          ]
+        },
+        {
+          "index": 2,
+          "text_preview": "Please use ticket number TKT-12345 for the bug report.",
+          "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 3,
+          "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
+          "expected": 2,
+          "detected": 3,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
+          ],
+          "detected_types": [
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
+          ]
+        },
+        {
+          "index": 4,
+          "text_preview": "City: The population of Mumbai is over 20 million.",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "CITY"
+          ],
+          "detected_types": [
+            "CITY"
+          ]
+        },
+        {
+          "index": 5,
+          "text_preview": "Passport: CD987654 and also passport XY123456",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "PASSPORT"
+          ],
+          "detected_types": [
+            "PASSPORT"
+          ]
+        },
+        {
+          "index": 6,
+          "text_preview": "The best customer we have is Clara Oswald and she works at Data Corp.",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "COMPANY",
+            "CUSTOMER_NAME"
+          ],
+          "detected_types": [
+            "COMPANY",
+            "CUSTOMER_NAME"
+          ]
+        },
+        {
+          "index": 7,
+          "text_preview": "SSH key: -----BEGIN OPENSSH PRIVATE KEY-----\nABC123...\n-----END OPENSSH PRIVATE ",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "SSH_KEY"
+          ],
+          "detected_types": [
+            "SSH_KEY"
+          ]
+        },
+        {
+          "index": 8,
+          "text_preview": "Internal app: https://payroll.corp.local/admin",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "PRIVATE_URL"
+          ],
+          "detected_types": [
+            "PRIVATE_URL"
+          ]
+        },
+        {
+          "index": 9,
+          "text_preview": "Phone: 07700 900 123 (UK mobile)",
+          "expected": 1,
+          "detected": 3,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 0,
+          "expected_types": [
+            "PHONE"
+          ],
+          "detected_types": [
+            "COUNTRY",
+            "PHONE"
+          ]
+        },
+        {
+          "index": 10,
+          "text_preview": "The server maintenance is scheduled for this weekend.",
+          "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 11,
+          "text_preview": "SSN: 111-22-3333 is used as the sample number",
+          "expected": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "expected_types": [
+            "SOCIAL_SECURITY"
+          ],
+          "detected_types": [
+            "SOCIAL_SECURITY"
+          ]
+        },
+        {
+          "index": 12,
+          "text_preview": "Contact person: Donna Noble (donna@temp-services.co.uk). Project Bad Wolf is GO.",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL",
+            "PERSON",
+            "PROJECT_NAME"
+          ],
+          "detected_types": [
+            "EMAIL",
+            "PERSON",
+            "PROJECT_NAME"
+          ]
+        },
+        {
+          "index": 13,
+          "text_preview": "Countries: Canada, Australia, Japan, Brazil, India, Egypt",
+          "expected": 6,
+          "detected": 6,
+          "true_positives": 6,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "COUNTRY"
+          ],
+          "detected_types": [
+            "COUNTRY"
+          ]
+        },
+        {
+          "index": 14,
+          "text_preview": "Email: bob​@​example.com (zero-width spaces)",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL"
+          ],
+          "detected_types": [
+            "EMAIL"
+          ]
+        },
+        {
+          "index": 15,
+          "text_preview": "CC: 3782-822463-10005 (Amex) and 6011-1111-1111-1117 (Discover)",
+          "expected": 2,
+          "detected": 4,
+          "true_positives": 2,
+          "false_positives": 2,
+          "false_negatives": 0,
+          "expected_types": [
+            "CREDIT_CARD"
+          ],
+          "detected_types": [
+            "CREDIT_CARD"
+          ]
+        },
+        {
+          "index": 16,
+          "text_preview": "File path: /home/alice/projects/src/main/config.yaml and C:\\Users\\Bob\\Documents\\",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "FILE_PATH"
+          ],
+          "detected_types": [
+            "FILE_PATH"
+          ]
+        },
+        {
+          "index": 17,
+          "text_preview": "Send to: maria.garcia@co.jp | CC: info@company.co.uk | BCC: devops@internal.corp",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL"
+          ],
+          "detected_types": [
+            "EMAIL"
+          ]
+        },
+        {
+          "index": 18,
+          "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
+          "expected": 1,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 1,
+          "expected_types": [
+            "IP_ADDRESS"
+          ],
+          "detected_types": []
+        },
+        {
+          "index": 19,
+          "text_preview": "JWT: eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "JWT"
+          ],
+          "detected_types": [
+            "JWT"
+          ]
+        },
+        {
+          "index": 20,
+          "text_preview": "IBAN: CH93 0076 2011 6238 5295 7",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "IBAN"
+          ],
+          "detected_types": [
+            "IBAN"
+          ]
+        },
+        {
+          "index": 21,
+          "text_preview": "MySQL: mysql://dev_user:dev_pass@mysql-dev.internal:3306/staging",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "DATABASE_URL"
+          ],
+          "detected_types": [
+            "DATABASE_URL"
+          ]
+        },
+        {
+          "index": 22,
+          "text_preview": "Domain: example.internal and mysql.corp.local and api.staging.private",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "DOMAIN"
+          ],
+          "detected_types": [
+            "DOMAIN"
+          ]
+        },
+        {
+          "index": 23,
+          "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
+          "expected": 1,
+          "detected": 2,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 0,
+          "expected_types": [
+            "ADDRESS"
+          ],
+          "detected_types": [
+            "ADDRESS",
+            "PERSON"
+          ]
+        },
+        {
+          "index": 24,
+          "text_preview": "Bank: 98765432109876543210 and IBAN: GB29 NWBK 6016 1331 9268 19",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "BANK_ACCOUNT",
+            "IBAN"
+          ],
+          "detected_types": [
+            "BANK_ACCOUNT",
+            "IBAN"
+          ]
+        },
+        {
+          "index": 25,
+          "text_preview": "Domain: 123 is not a valid domain name by itself.",
+          "expected": 0,
+          "detected": 0,
+          "true_positives": 0,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [],
+          "detected_types": []
+        },
+        {
+          "index": 26,
+          "text_preview": "Unicode PII: 联系用户张伟，邮箱是zhangwei@example.cn，电话+86 138-0013-8000",
+          "expected": 3,
+          "detected": 3,
+          "true_positives": 3,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "EMAIL",
+            "PERSON",
+            "PHONE"
+          ],
+          "detected_types": [
+            "EMAIL",
+            "PERSON",
+            "PHONE"
+          ]
+        },
+        {
+          "index": 27,
+          "text_preview": "Customer: Martha Jones (martha.jones@bigpharma.com) order #ORD-001",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
+          "false_positives": 0,
+          "false_negatives": 0,
+          "expected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL"
+          ],
+          "detected_types": [
+            "CUSTOMER_NAME",
+            "EMAIL"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -12,6 +12,7 @@ from typing import Any
 import pytest
 
 from piifilter.pipeline import FilterPipeline
+from piifilter.config import FilterConfig, PolicyConfig, PolicyRule
 from piifilter.session import Session
 from piifilter.events.bus import EventBus, PipelineEvent
 from piifilter.registry.registry import PluginRegistry
@@ -396,15 +397,16 @@ class TestPipelineBlocking:
         result = await pipeline.run(basic_session)
         assert not result.is_blocked
 
-    async def test_block_reason_recorded(self, pipeline, basic_session):
+    async def test_block_reason_recorded(self, pipeline):
+        """Pipeline records block reason when blocking a session."""
+        cfg = FilterConfig(policy=PolicyConfig(rules=[
+            PolicyRule(if_condition={"type": "CREDIT_CARD"}, action="BLOCK"),
+        ]))
+        session = Session(prompt="4111-1111-1111-1111", config=cfg)
         pipeline.registry.register_detector(MockDetector(
             "d", entities=[DetectedEntity(EntityType.CREDIT_CARD, "4111-1111-1111-1111", 0, 19)]
         ))
-        # CREDIT_CARD isn't in the default block list, so add a policy rule for it
-        basic_session.config.policy.rules.append(
-            PolicyRule(if_condition={"type": "CREDIT_CARD"}, action="BLOCK")
-        )
-        result = await pipeline.run(basic_session)
+        result = await pipeline.run(session)
         assert result.is_blocked
         assert "BLOCK" in (result.block_reason or "")
         assert "credit_card" in (result.block_reason or "").lower()

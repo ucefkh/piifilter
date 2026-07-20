@@ -386,10 +386,12 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("EMPLOYEE_NAME", r"(?i)\bEmployee\s+name:\s*(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
 
     # ── PROJECT_NAME ─────────────────────────────────────────────────
-    ("PROJECT_NAME", r"(?i)\b(?:project|initiative|campaign|program)\s+(?:name\s+)?(?:is\s+)?(?:called\s+)?(?-i:[A-Z])[a-zA-Z0-9]+(?:\s+(?-i:[A-Z])[a-zA-Z0-9]+)*\b", 0.80),
+    # "project name is Name", "Project: Name", "initiative called Name"
+    ("PROJECT_NAME", r"(?i)\b(?:project|initiative|campaign|program)\s*:\s*(?:(?:name\s*)?(?:is\s*)?(?:called\s*)?)?(?-i:[A-Z])[a-zA-Z0-9]+(?:\s+(?-i:[A-Z])[a-zA-Z0-9]+)*\b", 0.80),
+    # "Code-name Name", "Project Name" (capitalized keyword prefix)
     ("PROJECT_NAME", r"\b(?:Project|Operation|Initiative|Program|Code[- ]?name)\s+(?-i:[A-Z])[a-zA-Z0-9]+\b", 0.85),
-    # Standalone capitalized project names like "Project Phoenix", "Omega Protocol"
-    ("PROJECT_NAME", r"\b(?:Project|Operation|Initiative|Program|Task)\s+(?-i:[A-Z])[a-zA-Z]+(?:\s+(?-i:[A-Z])[a-zA-Z0-9]+)?\b", 0.80),
+    # Standalone capitalized project names like "Project Phoenix", "Project code-name Delta Force"
+    ("PROJECT_NAME", r"\b(?:Project|Operation|Initiative|Program|Task)(?:\s+code[- ]?name)?\s+(?-i:[A-Z])[a-zA-Z]+(?:\s+(?-i:[A-Z])[a-zA-Z0-9]+)?\b", 0.80),
     # Two-word capitalized names in project context like "Blue Sky", "Omega Protocol"
     ("PROJECT_NAME", r"(?i)\b(?:working\s+on|assigned\s+to)\s+(?-i:[A-Z])[a-zA-Z]+(?:\s+(?-i:[A-Z])[a-zA-Z]+)?\b", 0.70),
     # "X milestone due" pattern

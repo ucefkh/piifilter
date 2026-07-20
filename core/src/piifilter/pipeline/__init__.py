@@ -521,10 +521,16 @@ class FilterPipeline:
 
     async def _apply_policy(self, session: Session) -> Session:
         """Evaluate policy rules against detected entities and risk."""
-        if not session.config.policy.rules:
+        # Merge pipeline-level config rules with session-level rules
+        rules = list(session.config.policy.rules)
+        if self.config is not None:
+            for r in self.config.policy.rules:
+                if r not in rules:
+                    rules.append(r)
+        if not rules:
             return session
 
-        for rule in session.config.policy.rules:
+        for rule in rules:
             condition = rule.if_condition
             entity_types_in_condition = condition.get("type", "")
             risk_threshold = condition.get("risk", 0)

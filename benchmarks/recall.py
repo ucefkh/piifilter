@@ -5,6 +5,9 @@ Usage:
     python benchmarks/recall.py
     python benchmarks/recall.py --detectors regex presidio
     python benchmarks/recall.py --output benchmarks/recall-results.json
+    python benchmarks/recall.py --with-arbitration          # arbitration ON (default)
+    python benchmarks/recall.py --without-arbitration       # arbitration OFF
+    python benchmarks/recall.py --without-arbitration --held-out 0.2
 """
 
 from __future__ import annotations
@@ -608,6 +611,66 @@ async def make_pipeline_adapter(shared_presidio: DetectorAdapter | None = None) 
     return DetectorAdapter(name="pipeline", detect_fn=detect)
 
 
+# ── Arbitration-aware adapter ──────────────────────────────────────────────
+
+
+def _detected_entity_to_dict(e: DetectedEntity) -> dict[str, Any]:
+    """Convert a DetectedEntity back to the dict format ``evaluate_detector`` expects."""
+    return {
+        "entity_type": e.entity_type.value if hasattr(e.entity_type, "value") else str(e.entity_type),
+        "value": e.value,
+        "start": e.start,
+        "end": e.end,
+        "score": e.confidence,
+        "detector": e.detector,
+        "detector_votes": e.detector_votes,
+    }
+
+
+def make_arbitration_adapter(
+    pipeline_adapter: DetectorAdapter,
+) -> DetectorAdapter:
+    """Wrap a pipeline adapter so its output is piped through the Arbitrator.
+
+    The Arbitrator clusters overlapping detections, fuses evidence, and
+    applies calibrated confidence scoring before emitting final entities.
+
+    Parameters
+    ----------
+    pipeline_adapter : DetectorAdapter
+        The base pipeline adapter (regex + presidio, deduped).
+
+    Returns
+    -------
+    DetectorAdapter
+        A new adapter named "pipeline-arbitration".
+    """
+    from piifilter.arbitration import Arbitrator, ArbitratorConfig
+
+    _arbitrator: Arbitrator | None = None
+    _config = ArbitratorConfig(
+        overlap_margin=0,
+        min_cluster_confidence=0.0,
+        use_calibrated_model=True,
+    )
+
+    async def detect(text: str) -> list[dict[str, Any]]:
+        nonlocal _arbitrator
+        if _arbitrator is None:
+            _arbitrator = Arbitrator(config=_config)
+
+        # Step 1: get raw pipeline detections
+        raw = await pipeline_adapter.detect_fn(text)
+
+        # Step 2: pipe through arbitrator
+        entities = await _arbitrator.run(raw_detections=raw, text=text)
+
+        # Step 3: convert back to dict format for evaluation
+        return [_detected_entity_to_dict(e) for e in entities]
+
+    return DetectorAdapter(name="pipeline-arbitration", detect_fn=detect)
+
+
 # ── Evaluation logic ────────────────────────────────────────────────────────
 
 
@@ -734,11 +797,7 @@ async def evaluate_detector(detector_name: str, dataset: list[LabeledExample],
 
         for di, det in enumerate(detected):
             det_type = str(det.get("entity_type", "UNKNOWN")).upper()
-            if detected_matched[di]:
-                if det_type not in type_results:
-                    type_results[det_type] = RecallResult(entity_type=det_type)
-                type_results[det_type].true_positives += 1
-            else:
+            if not detected_matched[di]:
                 if det_type not in type_results:
                     type_results[det_type] = RecallResult(entity_type=det_type)
                 type_results[det_type].false_positives += 1
@@ -900,6 +959,14 @@ async def main() -> None:
                         help="Fraction of data to hold out as test set for "
                              "reliable evaluation (e.g. 0.2 = 80/20 split). "
                              "Only metrics on the held-out set are reported.")
+    parser.add_argument("--with-arbitration", action="store_true", default=None,
+                        help="When set, pipe pipeline detections through the "
+                             "Arbitrator (cluster + fuse + calibrate) before "
+                             "computing metrics. When --without-arbitration is set, "
+                             "use raw pipeline output. Default: arbitration ON.")
+    parser.add_argument("--without-arbitration", action="store_true", default=None,
+                        help="Skip the Arbitrator — use raw pipeline output "
+                             "directly. Overrides --with-arbitration if both set.")
     args = parser.parse_args()
 
     # Load dataset
@@ -959,17 +1026,40 @@ async def main() -> None:
         print("  No detectors available to benchmark")
         return
 
+    # ── Arbitration mode ───────────────────────────────────────────
+    # Default: arbitration ON (--with-arbitration) matches current behavior.
+    # Pass --without-arbitration to skip the Arbitrator.
+    use_arbitration: bool = True
+    if args.without_arbitration is True:
+        use_arbitration = False
+    elif args.with_arbitration is True:
+        use_arbitration = True
+
+    arbitration_label = " (arbitration-on)" if use_arbitration else " (arbitration-off)"
+    split_note_arb = split_note + arbitration_label
+
+    # When arbitration is ON, create an arbitration-wrapped pipeline adapter.
+    # When OFF, keep the raw pipeline adapter as-is.
+    if not args.no_pipeline and use_arbitration and "pipeline" in adapters:
+        try:
+            arb_adapter = make_arbitration_adapter(adapters["pipeline"])
+            adapters["pipeline-arbitration"] = arb_adapter
+            # Rename raw pipeline so it's clear
+            adapters["pipeline-raw"] = adapters.pop("pipeline")
+        except Exception as exc:
+            print(f"  Arbitration adapter: error wrapping pipeline ({exc})")
+
     print()
 
     # Evaluate each detector
     all_results: dict[str, dict[str, Any]] = {}
     for name, adapter in adapters.items():
-        print(f"  Evaluating {name} detector{split_note}...")
+        print(f"  Evaluating {name} detector{split_note_arb}...")
         results = await evaluate_detector(name, test_dataset, adapter.detect_fn)
         all_results[name] = results
 
     # Print results
-    print_results(all_results, split_note=split_note)
+    print_results(all_results, split_note=split_note_arb)
 
     # Save to file
     output_path = args.output
@@ -977,11 +1067,15 @@ async def main() -> None:
         output_file = Path(output_path)
     else:
         suffix = "-heldout" if args.held_out else ""
+        suffix += "-arb" if use_arbitration else "-raw"
         output_file = DATA_DIR.parent / f"recall-results{suffix}.json"
 
     report = {
-        "title": f"PIIFilter Detection Recall Benchmark Report{split_note}",
+        "title": f"PIIFilter Detection Recall Benchmark Report{split_note_arb}",
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
+        "arbitration": {
+            "enabled": use_arbitration,
+        },
         "dataset": {
             "path": str(dataset_path or DATA_DIR / "pii_dataset.json"),
             "total_examples": len(full_dataset),
