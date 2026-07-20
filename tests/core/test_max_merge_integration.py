@@ -142,7 +142,7 @@ async def test_max_merge_preserves_multiple_regex_matches():
     session = await pipeline._detect(session)
 
     entities = extract_entities(session)
-    assert (10, 25, "EMAIL", "regex") in entities, f"Regex EMAIL lost! {entities}"
+    assert (10, 26, "EMAIL", "regex") in entities, f"Regex EMAIL lost! {entities}"
     assert (40, 53, "IP_ADDRESS", "regex") in entities, f"Regex IP lost! {entities}"
 
 

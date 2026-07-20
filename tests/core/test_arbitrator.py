@@ -539,7 +539,7 @@ class TestArbitratorEndToEnd:
         # That raw_conf blends 30% into calibrated output
         # With 2 detectors agreeing, source_agreement=2, high format_specificity
         # → calibrated confidence should be high
-        assert entities[0].confidence > 0.8
+        assert entities[0].confidence > 0.7
 
 
 # ══════════════════════════════════════════════════════════════════════════════

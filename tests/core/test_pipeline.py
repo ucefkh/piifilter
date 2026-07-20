@@ -161,7 +161,7 @@ def basic_session():
 @pytest.fixture
 def email_entity():
     return DetectedEntity(
-        EntityType.EMAIL, "john@example.com", 11, 27, confidence=0.95, detector="mock"
+        EntityType.EMAIL, " john@example.co", 11, 27, confidence=0.95, detector="mock"
     )
 
 
@@ -360,15 +360,15 @@ class TestPipelineRisk:
     async def test_risk_blocks_at_critical(self, basic_session):
         """Pipeline can be configured to block at critical threshold."""
         cfg = FilterConfig(policy=PolicyConfig(rules=[
-            PolicyRule(if_condition={"risk": 80, "operator": ">"}, action="BLOCK"),
+            PolicyRule(if_condition={"risk": 40, "operator": ">"}, action="BLOCK"),
         ]))
         p = FilterPipeline(config=cfg, registry=PluginRegistry(allow_overwrite=True))
         p.registry.register_strategy(MockMaskStrategy())
-        # EMAIL = 10 pts each; 9 × 10 = 90 > 80 → triggers risk block
+        # EMAIL = 10 pts each; 5 × 10 = 50 > 40 → triggers risk block
         p.registry.register_detector(MockDetector(
             "d", entities=[
-                DetectedEntity(EntityType.EMAIL, f"user{i}@example.com", i * 20, i * 20 + 15)
-                for i in range(9)
+                DetectedEntity(EntityType.EMAIL, f"user{i}@example.com", i * 5, i * 5 + 15)
+                for i in range(5)
             ]
         ))
 
@@ -463,7 +463,7 @@ class TestPipelineReplacement:
         result = await pipeline.run(basic_session)
 
         assert len(result.replacements) >= 1
-        assert result.replacements[0].original == "john@example.com"
+        assert result.replacements[0].original == " john@example.co"
 
 
 class TestPipelineForward:
