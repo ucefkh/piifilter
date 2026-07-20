@@ -379,12 +379,41 @@ class RegexDetector(Detector):
                             break
 
         # ── Suppress EMPLOYEE_NAME entities in parenthetical context ──
+        # Only suppress if the entity value (minus the keyword prefix) is a
+        # substring of another non-paren EMPLOYEE_NAME. This handles:
+        #   "The employee named John (employee John)" → "(employee John)"
+        #   is a clarification of "employee named John", so suppress it.
+        # But does NOT suppress standalone parenthetical employee names like
+        #   "Please contact (employee John Smith) for support"
+        # where the parenthetical IS the primary introduction.
+        employee_names = [e for e in entities if e.entity_type == EntityType.EMPLOYEE_NAME]
         for e in list(entities):
-            if e.entity_type == EntityType.EMPLOYEE_NAME:
-                before_span = cleaned[max(0, e.start - 5):e.start]
-                after_span = cleaned[e.end:min(len(cleaned), e.end + 5)]
-                if '(' in before_span and ')' in after_span:
-                    entities.remove(e)
+            if e.entity_type != EntityType.EMPLOYEE_NAME:
+                continue
+            before_span = cleaned[max(0, e.start - 5):e.start]
+            after_span = cleaned[e.end:min(len(cleaned), e.end + 5)]
+            if not ('(' in before_span and ')' in after_span):
+                continue
+            # Extract the actual name (last word or two after the keyword)
+            parts = e.value.split()
+            if len(parts) >= 2:
+                actual_name = ' '.join(parts[1:]).lower()  # Skip "employee", "staff", etc.
+            else:
+                actual_name = e.value.lower()
+            # Check if this name is a substring of another non-paren EMPLOYEE_NAME
+            is_duplicate = False
+            for other in employee_names:
+                if other is e:
+                    continue
+                other_before = cleaned[max(0, other.start - 5):other.start]
+                other_after = cleaned[other.end:min(len(cleaned), other.end + 5)]
+                if '(' in other_before and ')' in other_after:
+                    continue
+                if actual_name in other.value.lower():
+                    is_duplicate = True
+                    break
+            if is_duplicate:
+                entities.remove(e)
 
         # ── Suppress ADDRESS entities in generic/teaching contexts ──
         # Patterns like "my street is 123 Main Street" or "the address is 456 Oak Ave"
@@ -613,12 +642,41 @@ class RegexDetector(Detector):
                             break
 
         # ── Suppress EMPLOYEE_NAME entities in parenthetical context ──
+        # Only suppress if the entity value (minus the keyword prefix) is a
+        # substring of another non-paren EMPLOYEE_NAME. This handles:
+        #   "The employee named John (employee John)" → "(employee John)"
+        #   is a clarification of "employee named John", so suppress it.
+        # But does NOT suppress standalone parenthetical employee names like
+        #   "Please contact (employee John Smith) for support"
+        # where the parenthetical IS the primary introduction.
+        employee_names = [e for e in entities if e.entity_type == EntityType.EMPLOYEE_NAME]
         for e in list(entities):
-            if e.entity_type == EntityType.EMPLOYEE_NAME:
-                before_span = cleaned[max(0, e.start - 5):e.start]
-                after_span = cleaned[e.end:min(len(cleaned), e.end + 5)]
-                if '(' in before_span and ')' in after_span:
-                    entities.remove(e)
+            if e.entity_type != EntityType.EMPLOYEE_NAME:
+                continue
+            before_span = cleaned[max(0, e.start - 5):e.start]
+            after_span = cleaned[e.end:min(len(cleaned), e.end + 5)]
+            if not ('(' in before_span and ')' in after_span):
+                continue
+            # Extract the actual name (last word or two after the keyword)
+            parts = e.value.split()
+            if len(parts) >= 2:
+                actual_name = ' '.join(parts[1:]).lower()  # Skip "employee", "staff", etc.
+            else:
+                actual_name = e.value.lower()
+            # Check if this name is a substring of another non-paren EMPLOYEE_NAME
+            is_duplicate = False
+            for other in employee_names:
+                if other is e:
+                    continue
+                other_before = cleaned[max(0, other.start - 5):other.start]
+                other_after = cleaned[other.end:min(len(cleaned), other.end + 5)]
+                if '(' in other_before and ')' in other_after:
+                    continue
+                if actual_name in other.value.lower():
+                    is_duplicate = True
+                    break
+            if is_duplicate:
+                entities.remove(e)
 
         # ── Suppress ADDRESS entities in generic/teaching contexts ──
         # Patterns like "my street is 123 Main Street" or "the address is 456 Oak Ave"

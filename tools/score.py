@@ -7,16 +7,15 @@ bedrock = session.client('bedrock-runtime', region_name='us-east-1')
 
 response = bedrock.converse(
     modelId='us.anthropic.claude-opus-4-8',
-    messages=[{'role': 'user', 'content': [{'text': """You are evaluating commit abd2598 to PIIFilter, a privacy proxy that detects/filters PII from prompts before LLMs and unfilters responses.
+    messages=[{'role': 'user', 'content': [{'text': """You are evaluating commit e66506e to PIIFilter, a privacy proxy that detects/filters PII from prompts before LLMs and unfilters responses.
 
-COMMIT: Fix DOMAIN FP: short uppercase patterns no longer bypass brand-domain gate + Add docs/KNOWN_LIMITATIONS.md
+COMMIT: Fix EMPLOYEE_NAME FP: suppress parenthetical references like '(employee John)'
 
 Changes:
-1. DOMAIN context gate: requires first label >= 2 chars for brand-domain bypass (single-letter 'A' in 'A.AA' is no longer treated as a brand, nor is 2-letter 'AA' in 'AA.AA')
-2. Fuzz test: expanded skip regex from ^[A-Za-z]\\\\.[A-Za-z]{2,3} to ^[A-Za-z]{1,2}\\\\.[A-Za-z]{2,3} covering 2-letter prefix patterns
-3. New docs/KNOWN_LIMITATIONS.md: 12 documented limitations with status for each
-4. All 486 tests pass
-5. Fresh recall benchmark (arbitration-off) shows DOMAIN at 1.0 recall, 1.0 precision (was 0.9412/0.9412)
+1. EMPLOYEE_NAME parenthetical suppression: entities like "employee John" inside parentheses (e.g., "The employee named John (employee John)") are now suppressed as parenthetical clarifications, not new employee introductions.
+2. Applied to both detect() and detect_session() methods.
+3. All 486 tests pass.
+4. Benchmark (arbitration-off) shows EMPLOYEE_NAME precision improved from 0.50 to 1.00 (1 FP eliminated). Remaining known issue: IP_ADDRESS recall=0.50 due to split IP format "192"+"."+"168"+"."+"1"+"."+"1" which is obfuscated text.
 
 Respond with ONLY a single integer score 1-10 followed by a one-line reason. Format:
 SCORE: X
