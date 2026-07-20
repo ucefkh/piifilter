@@ -129,6 +129,10 @@ class TestPIIFilterProperties:
         # short uppercase letter combos that legitimately match patterns
         if re.match(r"^[A-Z]{2}$", text):
             return
+        # Skip capitalization + Inc/Corp/LLC patterns like "Aa Inc", "Xyz LLC"
+        # which genuinely match the COMPANY pattern, not a PII leak
+        if re.match(r"^[A-Z][a-z]+ (?:Inc|Corp|LLC|Ltd|GmbH|Co|PLC|AG|SA|BV|NV)\.?$", text):
+            return
         result = self._run_detect(detector, text)
         assert len(result) == 0
 

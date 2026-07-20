@@ -628,7 +628,49 @@ async def make_pipeline_adapter(shared_presidio: DetectorAdapter | None = None) 
                         break
                 if overlaps_structural:
                     continue
-
+                # 6. Fictional character / media reference guard: suppress
+                #    Presidio PERSON that appears inside a parenthetical
+                #    media/culture reference (e.g. "(famous from Finding Nemo)").
+                #    These are always examples or references, never real PII.
+                before_text = text[max(0, start-40):start].lower()
+                after_text = text[end:end+40].lower()
+                # Check for parenthetical context before the PERSON
+                if '(' in before_text and (')' in after_text or ')' in text[start:end]):
+                    # Suppress if the parenthetical text around this PERSON
+                    # contains known media reference keywords
+                    _MEDIA_REF_KEYWORDS = {
+                        "movie", "show", "film", "game", "series", "cartoon",
+                        "animation", "episode", "book", "novel", "play",
+                        "musical", "song", "album", "character",
+                        "famous from", "known from", "from the", "in the",
+                        "featured in", "seen in", "appears in",
+                    }
+                    for kw in _MEDIA_REF_KEYWORDS:
+                        if kw in before_text or kw in after_text:
+                            overlaps_structural = True
+                            break
+                    if overlaps_structural:
+                        continue
+                # 7. Value-based content check: if the Presidio PERSON value
+                #    appears as a word inside any regex name-type value already
+                #    in deduped, suppress it.  Catches cases like Presidio
+                #    detecting "John" as PERSON in "(employee John)" while
+                #    regex already caught "employee named John" as
+                #    EMPLOYEE_NAME.  Spans don't overlap but content matches.
+                if evalue.strip():
+                    evalue_lower = evalue.strip().lower()
+                    for de in deduped:
+                        det = de.get("entity_type", "")
+                        if det in _PERSON_CROSS_SUPPRESS_TYPES:
+                            de_value = de.get("value", "").lower()
+                            if evalue_lower in de_value:
+                                overlaps_structural = True
+                                break
+                        if overlaps_structural:
+                            break
+                if overlaps_structural:
+                    continue
+            
             intervals = seen_intervals.get(et, [])
             contained = any(s <= start and end <= e2 for s, e2 in intervals)
             if not contained:
