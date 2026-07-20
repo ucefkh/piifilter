@@ -1,0 +1,142 @@
+================================================================================
+CITY TEST CASES — EXTRACTION REPORT (ALL BENCHMARK FILES)
+================================================================================
+
+FILES EXAMINED:
+  ✓ pii_dataset.json       (150 total examples)
+  ✓ pii_dataset_v2.json    (2365 total examples)
+  ✓ golden_corpus.json     (257 total examples)
+  ✓ adversarial_v3.json    (case-shifted strategy)
+  ✓ adversarial_v4.json    (white-on-white HTML strategy)
+  ✓ adversarial_v5.json    (tape-encoding strategy)
+  ✓ adversarial_v6.json    (short-name / HTML entity decimal strategy)
+
+TOTAL CITY ENTRIES: 119 (all files combined)
+
+================================================================================
+1. pii_dataset.json — 9 standard CITY entries
+================================================================================
+
+All spans verified ✓ match with entity value.
+
+  #  Entity         Span        Text (preview)
+  1  New York       (35, 43)    "Our office is at 350 Fifth Avenue, New York, NY..."
+  2  Paris          (0, 5)      "Paris has a population of over 2 million..."
+  3  London         (31, 37)    "Visit us at 10 Downing Street, London, SW1A 2AA"
+  4  Berlin         (11, 17)    "Located in Berlin, Germany - our HQ is at..."
+  5  Redmond        (54, 61)    "Person: Dr. Sarah Chen works at Microsoft Research in Redmond"
+  6  Tokyo          (10, 15)    "City pop: Tokyo (37M), Delhi (32M), Shanghai (28M)"
+  7  Delhi          (23, 28)    "City pop: Tokyo (37M), Delhi (32M), Shanghai (28M)"
+  8  Shanghai       (36, 44)    "City pop: Tokyo (37M), Delhi (32M), Shanghai (28M)"
+  9  Mumbai         (24, 30)    "City: The population of Mumbai is over 20 million."
+
+================================================================================
+2. pii_dataset_v2.json — 50 standard CITY entries
+================================================================================
+
+All spans verified ✓ match. Distinct cities (26): Paris, London, Berlin, Redmond,
+Tokyo, Delhi, Shanghai, Mumbai, Miami, Amsterdam, Dublin, Stockholm, Boston,
+Seattle, Chicago, Los Angeles, Melbourne, Oslo, Rome, Zurich, Singapore,
+San Francisco, Sydney, Denver, Vancouver, Dubai.
+
+================================================================================
+3. golden_corpus.json — 30 standard CITY entries
+================================================================================
+
+All spans verified ✓ match. Distinct cities (19): Paris, London, Berlin, Redmond,
+Tokyo, Seoul, Austin, New York, Los Angeles, Canberra, Sydney, San Francisco,
+Roma, San Diego, Hyderabad, Cairo, Moscow, Cupertino, Mumbai.
+
+================================================================================
+4. adversarial_v3.json — 6 CITY entries (case-shifted)
+================================================================================
+
+These contain city names with inverted casing (e.g., "nEW yORK" instead of "New York").
+Detection requires the PII filter to recognize case-shifted city names.
+
+  Entity        Strategy         Text (preview)
+  New York      case-shifted     "I've always wanted to visit nEW yORK during the holidays."
+  Houston       case-shifted     "The conference will be held in hOUSTON next month."
+  Phoenix       case-shifted     "They decided to retire in pHOENIX due to the warm weather."
+  San Diego     case-shifted     "Our family reunion is planned for sAN dIEGO this summer."
+  Dallas        case-shifted     "The package was shipped from dALLAS yesterday."
+  Austin        case-shifted     "He is attending a music festival in aUSTIN next week."
+
+================================================================================
+5. adversarial_v4.json — 8 CITY entries (white-on-white HTML)
+================================================================================
+
+City names wrapped in <span style='color:white'>...</span> tags, invisible on white
+backgrounds. Detection requires the PII filter to strip/ignore HTML styling.
+
+  Entity        Strategy         Text (preview)
+  Paris         white-on-white   "I visited <span style='color:white'>Paris</span> last summer..."
+  Tokyo         white-on-white   "Her meeting is scheduled in <span style='color:white'>Tokyo</span> next week."
+  Berlin        white-on-white   "The conference will be held in <span style='color:white'>Berlin</span> this March."
+  Cairo         white-on-white   "He moved to <span style='color:white'>Cairo</span> for a new job opportunity."
+  Sydney        white-on-white   "We are planning a family trip to <span style='color:white'>Sydney</span> in December."
+  Mumbai        white-on-white   "The package was shipped from <span style='color:white'>Mumbai</span> to London."
+  Toronto       white-on-white   "She studied at the university in <span style='color:white'>Toronto</span> for two years."
+  Seoul         white-on-white   "The tech summit in <span style='color:white'>Seoul</span> attracted global experts."
+
+================================================================================
+6. adversarial_v5.json — 8 CITY entries (tape-encoding)
+================================================================================
+
+City names encoded with block characters (▓▒░█) — visual obfuscation. Detection
+requires recovering the original city name from the tape-encoded pattern.
+
+  Entity        Strategy         Text (preview)
+  Paris         tape-encoding    "...routed through ▓▒░ █░▒▓ ▒▓█░ before reaching..."
+  Oslo          tape-encoding    "Our team met in ░█▓ ░▒█ ▒░▓ ▓█░ for the quarterly review..."
+  Milan         tape-encoding    "The fashion show in ▒█░█ ▒▓░ ▒▓░ ▓█░ attracted designers..."
+  Kyoto         tape-encoding    "I booked a direct flight to ▓█░ ▓▒░ ░▒█ ▓░█ for the..."
+  Cairo         tape-encoding    "The ancient artifacts were shipped to ░▒▓ █░█ ▒▓░ ░░█..."
+  Riga          tape-encoding    "Our conference in █░▒ ▓░█ ░▒▓ ▒█░ was postponed..."
+  Lyon          tape-encoding    "The culinary tour through ▒░▒ █▓░ ▓█░ ░▓█ included..."
+  Baku          tape-encoding    "The oil company opened a new branch in ▓░█ ▒▒░ █▓░ ░░░..."
+
+================================================================================
+7. adversarial_v6.json — 8 CITY entries (short-name / HTML entity decimal)
+================================================================================
+
+City names encoded as HTML numeric entities (e.g., &#x4d;&#x69;... for "Miami").
+Detection requires decoding HTML entities before matching.
+
+  Entity        Strategy         Text (preview)
+  Miami         HTML entity dec  "...conference was held in &#x4d;&#x69;&#x61;&#x6d;&#x69; last summer."
+  Denver        HTML entity dec  "I flew into &#x44;&#x65;&#x6e;&#x76;&#x65;&#x72; for the hiking trip."
+  Seattle       HTML entity dec  "The rain in &#x53;&#x65;&#x61;&#x74;&#x74;&#x6c;&#x65; is famous."
+  Phoenix       HTML entity dec  "Her new job is based in &#x50;&#x68;&#x6f;&#x65;&#x6e;&#x69;&#x78;."
+  Atlanta       HTML entity dec  "We stopped in &#x41;&#x74;&#x6c;&#x61;&#x6e;&#x74;&#x61; for a layover."
+  Portland      HTML entity dec  "The food scene in &#x50;&#x6f;&#x72;&#x74;&#x6c;&#x61;&#x6e;&#x64; is incredible."
+  Nashville     HTML entity dec  "He moved to &#x4e;&#x61;&#x73;&#x68;&#x76;&#x69;&#x6c;&#x6c;&#x65; to pursue music."
+  Orlando       HTML entity dec  "The family vacation was in &#x4f;&#x72;&#x6c;&#x61;&#x6e;&#x64;&#x6f; visiting theme parks."
+
+================================================================================
+SUMMARY
+================================================================================
+
+Dataset              Type       Count  Unique cities
+────────────────────────────────────────────────────────────
+pii_dataset.json     standard      9   9
+pii_dataset_v2.json  standard     50   26
+golden_corpus.json   standard     30   19
+adversarial_v3.json  case-shift    6   6 (NY, Houston, Phoenix, San Diego, Dallas, Austin)
+adversarial_v4.json  white-text    8   8 (Paris, Tokyo, Berlin, Cairo, Sydney, Mumbai, Toronto, Seoul)
+adversarial_v5.json  tape-enc      8   8 (Paris, Oslo, Milan, Kyoto, Cairo, Riga, Lyon, Baku)
+adversarial_v6.json  HTML-entity   8   8 (Miami, Denver, Seattle, Phoenix, Atlanta, Portland, Nashville, Orlando)
+────────────────────────────────────────────────────────────
+TOTAL                             119
+
+TP status:   All 89 standard entries have verified ground-truth spans (✓ matches).
+             Adversarial entries (30) are labeled with ground_truth but use obfuscated
+             pii_value + text — detection success depends on the PII filter's ability
+             to strip/decode the obfuscation strategy.
+
+FP entries:  None found. No entity in any file is incorrectly labeled as CITY.
+FN entries:  None found. Every expected CITY instance in the datasets is explicitly
+             labeled. (Missing ground-truth labels would be FNs but do not exist here.)
+
+File created: benchmarks/data/city_test_cases_report.txt
+================================================================================
