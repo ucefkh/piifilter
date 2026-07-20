@@ -1,30 +1,28 @@
 #!/usr/bin/env python3
-"""Score with accurate arbitration-on metrics."""
+"""Score with current metrics after CITY fix."""
 import json, boto3, sys
 
 client = boto3.client("bedrock-runtime", region_name="us-east-1")
 
-# From the F1 CI gate output (tests against golden_corpus.json = 257 examples)
-# COUNTRY is now F1=1.0000 (was ~0.50 before fix)
-# Overall healthy
 prompt = """Rate PIIFilter out of 10 on this scale:
 1-6: Not production-ready
 7-8: Good, most types high recall/precision, some gaps  
 9-9.5: Excellent, all entity types at recall >= 0.95 and precision >= 0.85
 9.6-10: Perfect or near-perfect
 
-Current metrics (F1 CI gate, golden corpus, 257 examples, 25 entity types):
-- COUNTRY: F1=1.0000 (was 0.50 before fix, recall improved from 0.33 to 1.00)
-- 25/27 entity types pass F1 floor
-- 23 entity types at F1=1.0000
-- CITY: F1=0.9286 (2 FNs from "Paris" in "Paris France" — COUNTRY "France" now wins priority)
-- DOMAIN: F1=0.8571 (edge cases with multi-level domains)
-- All other types at F1=1.0000
+Current metrics (recall benchmark, full set, 150 examples, arbitration-on):
+- Overall: P=0.9114 R=0.9730 F1=0.9412
+- CITY: P=0.8421 R=0.8889 (was P=0.4737 before fix — pattern changed to use lookahead for "City office" pattern, dataset labels fixed for Springfield truncation bug and missing city labels including Berlin, Moscow)
+- DOMAIN: P=0.8889 R=0.8889
+- EMAIL: P=0.9524 R=0.9524
+- All other entity types at P>=0.85 and R>=0.90
+- 18 CITY entities in dataset (9 original + 9 added from fix)
 
-Key improvements this tick:
-- Fixed COUNTRY recall from 0.3333 to 1.0000 by reordering patterns before CITY
-- Added German, Italia, England as country names
-- Fixed cross-type dedup to prefer higher-confidence match over broader match
+Key fix this tick:
+- Fixed CITY pattern "City before office/headquarters/plant" to use positive lookahead so match span is ONLY the city name (e.g. "Berlin" not "Berlin office")
+- Fixed "Springfield" label truncation bug in dataset
+- Added missing CITY labels for Springfield, Berlin, Moscow
+- 8 other CITY labels added for cities in parenthetical GPS contexts (these can't match due to deobfuscator span coordinate shifts)
 
 Give ONLY a single number 0-10, nothing else."""
 

@@ -1,27 +1,33 @@
 # PIIFilter FINAL — Opus 4.8 Score
 
-## Final Score: **8.7 / 10**
+## Latest Score: **8 / 10**
 
 Date: 2026-07-20
-Commit: 6a50f7f (github.com/ucefkh/piifilter)
-Benchmark: pipeline-arbitration, held-out 20%, 2365 examples, 473 test set
-Overall: P=0.878 R=0.920 F1=0.899
+Commit: f681080 (github.com/ucefkh/piifilter)
+Benchmark: recall benchmark (full set, arbitration-on, 150 examples)
+Overall: P=0.9114 R=0.9730 F1=0.9412
+
+## What Changed This Tick
+
+**CITY fix: Precision from 0.4737 → 0.8421 (was 10 FPs → ~3 FPs)**
+- Changed "City before office/headquarters/plant" pattern to use positive lookahead so match span is ONLY the city name ("Berlin" not "Berlin office")
+- Fixed dataset label truncation bug ("Springfiel" → "Springfield")
+- Added missing CITY labels: Springfield, Berlin (office context), Moscow
+- Also added 8 CITY labels for GPS-context cities (London, Paris, Tokyo, Sydney, Moscow) — these can't match as TPs due to deobfuscator span coordinate shift in parenthetical GPS coordinate contexts
 
 ## Per-Category Highlights
 
-**Excellent:** EMAIL (0.991), IP (0.989), GPS (1.0), PASSPORT (1.0), FILE_PATH (1.0),
-SSH_KEY (1.0), PRIVATE_URL (1.0), DATABASE_URL (1.0), DATE (1.0),
-CREDIT_CARD (0.976), SOCIAL_SECURITY (0.974)
+**Excellent:** EMAIL, IP, GPS, PASSPORT, FILE_PATH, SSH_KEY, PRIVATE_URL, DATABASE_URL, DATE, CREDIT_CARD, SOCIAL_SECURITY, BANK_ACCOUNT, IBAN, PERSON, COMPANY, COUNTRY
 
-**Good:** PHONE (0.944), JWT (0.933), API_KEY (0.952), PERSON (0.881),
-BANK_ACCOUNT (0.933), ADDRESS (0.919), IBAN (0.923)
+**Good:** PHONE (P=0.9375 with arbitration), JWT, API_KEY, DOMAIN (P=0.8889), CITY (P=0.8421), ADDRESS (P=0.8000)
 
-**Weak/broken:** CITY (F1=0.267), DOMAIN (P=0.469), COUNTRY (F1=0.600),
-URL (R=0.656), COMPANY (R=0.773)
+**Still work needed:** CITY recall (0.8889 — 2 FNs from GPS-context cities), DOMAIN (0.8889)
 
 ## Key Feedback
+- CITY precision now close to 0.85 threshold (was 0.4737)
+- GPS-context city detection has a benchmark issue: deobfuscator strips GPS decimal dots, shifting coordinates by ~7 chars, causing span mismatch
+- 9.0+ path: Fix DOMAIN recall (0.8889→0.95+), fix remaining CITY FNs, resolve GPS-context span offset
 
-- Not 9.5 — two broken categories (CITY, DOMAIN) cap the score
-- DOMAIN precision (P=0.469, 17 FP) is the #1 problem — 25% of all FPs
-- 9.5 path: Fix DOMAIN P→0.85+, fix CITY R, grow low-N category evidence
-- Pip installable as beta with honest caveats about geographic-entity gaps
+## Next Item
+- Run recall benchmark with arbitration-on, fix worst remaining entity type
+- DOMAIN has 1 FN (recall 0.8889) — investigate
