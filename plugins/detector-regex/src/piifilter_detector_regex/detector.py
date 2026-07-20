@@ -99,6 +99,10 @@ class RegexDetector(Detector):
         #           text, so pre-strip address entities are merged and deduped.
         # PRIVATE_URL — contains dotted IP addresses (127.0.0.1, 10.x.x.x, etc.)
         #           that inner-separator stripping destroys.
+        # IBAN  — IBAN bank identifiers use spaced groups (e.g. "NL91 ABNA 0417 1643 00")
+        #           that digit-collapse destroys by merging consecutive digit groups.
+        #           Without pre-strip, IBANs are completely undetectable because the
+        #           structured group format is lost after digit-space collapse.
         gps_entities, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.GPS}
         )
@@ -116,6 +120,10 @@ class RegexDetector(Detector):
         )
         private_url_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.PRIVATE_URL}
+        )
+        # ── IBAN (pre-strip) — digit-collapse destroys spaced group format
+        iban_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.IBAN}
         )
         # ── CITY (pre-strip) — correct span positions after GPS dot removal
         city_entities_presistrip, _ = self._run_patterns_for_type(
@@ -175,13 +183,14 @@ class RegexDetector(Detector):
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
-        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS + PRIVATE_URL + CITY) with the rest (from stripped text)
+        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS + PRIVATE_URL + IBAN + CITY) with the rest (from stripped text)
         entities.extend(gps_entities)
         entities.extend(date_entities)
         entities.extend(ip_entities)
         entities.extend(phone_entities_presistrip)
         entities.extend(address_entities_presistrip)
         entities.extend(private_url_entities_presistrip)
+        entities.extend(iban_entities_presistrip)
         entities.extend(city_entities_presistrip)
         entities.sort(key=lambda e: e.start)
 
@@ -452,6 +461,10 @@ class RegexDetector(Detector):
         private_url_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.PRIVATE_URL}
         )
+        # ── IBAN (pre-strip) — digit-collapse destroys spaced group format
+        iban_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.IBAN}
+        )
         # ── CITY (pre-strip) — correct span positions after GPS dot removal
         city_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.CITY}
@@ -484,6 +497,7 @@ class RegexDetector(Detector):
         entities.extend(phone_entities_presistrip)
         entities.extend(address_entities_presistrip)
         entities.extend(private_url_entities_presistrip)
+        entities.extend(iban_entities_presistrip)
         entities.extend(city_entities_presistrip)
 
         # ── Cross-type dedup: suppress pre-strip PRIVATE_URL entities ──

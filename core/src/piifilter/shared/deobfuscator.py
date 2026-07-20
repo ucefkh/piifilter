@@ -1239,10 +1239,15 @@ class Deobfuscator:
 
         def _try_l33t(m: re.Match[str]) -> str:
             token = m.group(0)
-            # Skip tokens where >50% of characters are digits — these are
-            # numeric codes (passport numbers, IBANs, etc.), not l33tspeak.
+            # Skip tokens where >=50% of characters are digits — these are
+            # numeric codes (passport numbers, IBANs like NL91 with 2/4=50%,
+            # etc.), not l33tspeak.
             digit_ratio = sum(1 for c in token if c.isdigit()) / max(len(token), 1)
-            if digit_ratio > 0.5:
+            if digit_ratio >= 0.5:
+                return token
+            # Also skip tokens matching IBAN country code prefix (2 letters + 2 digits
+            # at the start, e.g. NL91, DE89, GB29) even if overall digit ratio is low.
+            if len(token) >= 4 and token[:2].isalpha() and token[2:4].isdigit():
                 return token
             decoded = token.translate(cls._L33T_MAP)
             if decoded != token:

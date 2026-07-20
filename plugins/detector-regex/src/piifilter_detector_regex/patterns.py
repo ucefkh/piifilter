@@ -124,6 +124,13 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("IBAN", r"\b[A-Z]{2}\d{2}(?:[ ]?(?:[A-Z0-9]{4})){4,7}(?:[ ]?\d{1,4})?\b", 0.85),
     # Shorter IBAN variants: NL91 ABNA 0417 1643 00, DK50 0040 0440 1162 43, NO93 8601 1117 947
     ("IBAN", r"\b[A-Z]{2}\d{2}\s+[A-Z]{4}\s+\d{4}\s+\d{4}\s+\d{2,4}(?:\s+\d{1,3})?\b", 0.85),
+    # Collapsed IBAN (after digit-space merging): catches cases where
+    # _collapse_digit_spaces has merged digit groups (e.g. "0417 1643 00"
+    # -> "0417164300") or the bank code is all-numeric (e.g. NO93 8601...).
+    # Bank code must be 4 alphanumeric chars, digit portion 6-20 chars to
+    # cover short (NL=10, DK=10), medium (GB=14, CH=14), and long (DE=18,
+    # ES=20) IBANs.
+    ("IBAN", r"\b[A-Z]{2}\d{2}\s*[A-Z0-9]{4}\s*\d{6,20}\b", 0.75),
 
     # ── CREDIT_CARD ──────────────────────────────────────────────────
     # Masked/bullet CC — partial redaction with last-4 visible: XXXX-XXXX-XXXX-1234, ****-****-****-5678
