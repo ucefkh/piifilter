@@ -367,12 +367,6 @@
           "value": "10 Downing Street, London, SW1A 2AA",
           "start": 12,
           "end": 47
-        },
-        {
-          "type": "CITY",
-          "value": "London",
-          "start": 31,
-          "end": 37
         }
       ]
     },

@@ -484,7 +484,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # City in population context: "X (37M), Y (32M)" — match just the city name before the parenthetical
     # Must come before broader keyword-prefixed patterns so the narrower match wins dedup.
     ("CITY", r"\b[A-Z][a-z]+(?=\s*\(\d+\s*M\))", 0.55),
-    # City after "of" keyword — use lookbehind so "of " isn't part of the match.
+    # City after "of" keyword - use lookbehind so "of " isn't part of the match.
     # Must come before keyword-prefixed patterns so the narrower match wins.
     ("CITY", r"(?i)(?<=of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam|Latin)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
     ("CITY", r"(?i)(?<=city of )(?!(?:Germany|France|Italy|Spain|UK|USA|US|Canada|Australia|England|China|India|Japan|Brazil|Mexico|Russia|Poland|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Turkey|Greece|Egypt|Thailand|Vietnam)\b)(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.40),
