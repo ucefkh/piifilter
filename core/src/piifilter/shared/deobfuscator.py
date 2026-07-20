@@ -202,6 +202,7 @@ class Deobfuscator:
         # Morse code BEFORE at_dot so dots in morse (e.g. ".--") aren't destroyed
         text = self._decode_morse(text, log)
         text = self._unwrap_at_dot(text, log)
+        text = self._normalize_url_protocol(text, log)
         text = self._fix_obfuscated_email_entities(text, log)
         # NEW: XML escape decoder (before HTML entity decoding)
         text = self._decode_xml_escape(text, log)
@@ -447,6 +448,39 @@ class Deobfuscator:
             log.append({
                 "transform": "at_dot",
                 "description": "Unwrapped [at]/[dot] style obfuscation",
+                "changed": True,
+            })
+        return text
+
+    # ── 2a. URL protocol normalization ────────────────────────────────
+    # Converts obfuscated URL formats back to standard protocol form.
+    # Handles:
+    #   - hxxps:// → https://  and hxxp:// → http://  (protocol letter substitution)
+    #   - https: // ... → https:// ...  (spaces between colon and //)
+    #   - https : // ... → https:// ...  (spaces before colon or after)
+    # This must run AFTER _unwrap_at_dot so that [dot]-space cleanup has
+    # already happened (which converts " . " → "."), and BEFORE any
+    # pattern matching that needs the canonical https:// form.
+
+    _HXXP_PROTOCOL_RE = re.compile(r"(?<!\w)\bhxxps?://", re.IGNORECASE)
+    _PROTOCOL_SPACED_COLON_RE = re.compile(r"(?<!\w)(https?)\s*:\s*//")
+    # Strip trailing spaces after the // in a protocol string, e.g.
+    # "https:// www.domain.com" → "https://www.domain.com"
+    # This handles "https: // www . domain . com" which first becomes
+    # "https:// www.domain.com" after other transforms.
+    _PROTOCOL_AFTER_SLASH_SPACE_RE = re.compile(r"\b(https?://)\s+")
+
+    @classmethod
+    def _normalize_url_protocol(cls, text: str, log: list) -> str:
+        original = text
+        text = cls._HXXP_PROTOCOL_RE.sub(lambda m: m.group(0).lower().replace("hxxp", "http"), text)
+        text = cls._PROTOCOL_SPACED_COLON_RE.sub(r"\1://", text)
+        # Strip spaces right after :// so the domain is contiguous with protocol
+        text = cls._PROTOCOL_AFTER_SLASH_SPACE_RE.sub(r"\1", text)
+        if text != original:
+            log.append({
+                "transform": "url_protocol",
+                "description": "Normalized URL protocol (hxxp→http, : //→://)",
                 "changed": True,
             })
         return text

@@ -8,4 +8,4 @@ dist/
 .hermes/
 .hypothesis/
 .ruff_cache/
-.pytest_cache/
+.pytest_cache/_*.py

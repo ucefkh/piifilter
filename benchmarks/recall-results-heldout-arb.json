@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
-  "timestamp": "2026-07-20T12:10:24Z",
+  "timestamp": "2026-07-20T12:14:45Z",
   "arbitration": {
     "enabled": true
   },
@@ -49,13 +49,13 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 584,
-      "total_true_positives": 504,
-      "total_false_positives": 80,
-      "total_false_negatives": 36,
-      "overall_precision": 0.863013698630137,
-      "overall_recall": 0.9333333333333333,
-      "overall_f1": 0.896797153024911,
+      "total_detected_entities": 590,
+      "total_true_positives": 515,
+      "total_false_positives": 75,
+      "total_false_negatives": 25,
+      "overall_precision": 0.8728813559322034,
+      "overall_recall": 0.9537037037037037,
+      "overall_f1": 0.911504424778761,
       "per_type": {
         "ADDRESS": {
           "true_positives": 16,
@@ -164,14 +164,14 @@
         },
         "COUNTRY": {
           "true_positives": 6,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 3,
           "n": 9,
           "n_total": 9,
-          "precision": 0.6667,
+          "precision": 0.75,
           "recall": 0.6667,
-          "f1": 0.6667,
-          "f2": 0.6667,
+          "f1": 0.7059,
+          "f2": 0.6818,
           "recall_ci": [
             0.3542,
             0.8794
@@ -271,14 +271,14 @@
         },
         "DOMAIN": {
           "true_positives": 15,
-          "false_positives": 5,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.75,
+          "precision": 0.9375,
           "recall": 1.0,
-          "f1": 0.8571,
-          "f2": 0.9375,
+          "f1": 0.9677,
+          "f2": 0.9868,
           "recall_ci": [
             0.7961,
             1.0
@@ -602,24 +602,24 @@
           ]
         },
         "URL": {
-          "true_positives": 21,
+          "true_positives": 32,
           "false_positives": 2,
-          "false_negatives": 11,
+          "false_negatives": 0,
           "n": 32,
           "n_total": 32,
-          "precision": 0.913,
-          "recall": 0.6562,
-          "f1": 0.7636,
-          "f2": 0.6954,
+          "precision": 0.9412,
+          "recall": 1.0,
+          "f1": 0.9697,
+          "f2": 0.9877,
           "recall_ci": [
-            0.4831,
-            0.7959
+            0.8928,
+            1.0
           ],
           "real_n": 32,
-          "real_recall": 0.6562,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4831,
-            0.7959
+            0.8928,
+            1.0
           ]
         }
       },
@@ -627,7 +627,6 @@
         "NONE": {
           "GPS": 3,
           "EMPLOYEE_NAME": 1,
-          "COUNTRY": 1,
           "ADDRESS": 1
         },
         "IP_ADDRESS": {
@@ -648,9 +647,6 @@
         },
         "CREDIT_CARD": {
           "MASKED_SSN": 6
-        },
-        "URL": {
-          "DOMAIN": 4
         },
         "GPS": {
           "GPS": 4
@@ -1389,14 +1385,14 @@
           "text_preview": "Obfuscated url: hxxps://www.acme.com/login",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -2171,14 +2167,16 @@
           "index": 97,
           "text_preview": "Raw: https: // www . mail-server . co . jp/profile",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 98,
@@ -2442,14 +2440,16 @@
           "index": 115,
           "text_preview": "Raw: hxxps://www.startup.io/docs/api-reference",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 116,
@@ -3570,14 +3570,16 @@
           "index": 188,
           "text_preview": "Data: hxxps://www.bigpharma.com/dashboard",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 189,
@@ -4086,15 +4088,14 @@
           "index": 222,
           "text_preview": "Phone: 07700 900 123 (UK mobile)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "COUNTRY",
             "PHONE"
           ]
         },
@@ -5844,14 +5845,14 @@
           "text_preview": "Obfuscated url: hxxps://www.company.org/dashboard",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -6323,14 +6324,16 @@
           "index": 368,
           "text_preview": "Encoded: hxxps://www.mail-server.co.jp/profile",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 369,
@@ -6534,14 +6537,16 @@
           "index": 382,
           "text_preview": "Raw: https: // www . mail . company . io/profile",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 383,
@@ -6875,14 +6880,14 @@
           "text_preview": "Obfuscated url: https: // www . torchwood . xyz/download",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -7114,14 +7119,16 @@
           "index": 421,
           "text_preview": "Hidden field: https: // www . weeping-angels . com/assets/img/logo . png",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 422,
@@ -7702,14 +7709,16 @@
           "index": 460,
           "text_preview": "Found: https: // www . data-service . ai/download",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 461,
@@ -7746,14 +7755,14 @@
           "text_preview": "Obfuscated url: https: // www . torchwood . xyz/dashboard",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -7902,13 +7911,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 576,
-      "total_true_positives": 504,
-      "total_false_positives": 72,
-      "total_false_negatives": 36,
-      "overall_precision": 0.875,
-      "overall_recall": 0.9333333333333333,
-      "overall_f1": 0.9032258064516129,
+      "total_detected_entities": 582,
+      "total_true_positives": 515,
+      "total_false_positives": 67,
+      "total_false_negatives": 25,
+      "overall_precision": 0.8848797250859106,
+      "overall_recall": 0.9537037037037037,
+      "overall_f1": 0.9180035650623886,
       "per_type": {
         "ADDRESS": {
           "true_positives": 16,
@@ -8017,14 +8026,14 @@
         },
         "COUNTRY": {
           "true_positives": 6,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 3,
           "n": 9,
           "n_total": 9,
-          "precision": 0.6667,
+          "precision": 0.75,
           "recall": 0.6667,
-          "f1": 0.6667,
-          "f2": 0.6667,
+          "f1": 0.7059,
+          "f2": 0.6818,
           "recall_ci": [
             0.3542,
             0.8794
@@ -8124,14 +8133,14 @@
         },
         "DOMAIN": {
           "true_positives": 15,
-          "false_positives": 5,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.75,
+          "precision": 0.9375,
           "recall": 1.0,
-          "f1": 0.8571,
-          "f2": 0.9375,
+          "f1": 0.9677,
+          "f2": 0.9868,
           "recall_ci": [
             0.7961,
             1.0
@@ -8455,24 +8464,24 @@
           ]
         },
         "URL": {
-          "true_positives": 21,
+          "true_positives": 32,
           "false_positives": 2,
-          "false_negatives": 11,
+          "false_negatives": 0,
           "n": 32,
           "n_total": 32,
-          "precision": 0.913,
-          "recall": 0.6562,
-          "f1": 0.7636,
-          "f2": 0.6954,
+          "precision": 0.9412,
+          "recall": 1.0,
+          "f1": 0.9697,
+          "f2": 0.9877,
           "recall_ci": [
-            0.4831,
-            0.7959
+            0.8928,
+            1.0
           ],
           "real_n": 32,
-          "real_recall": 0.6562,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4831,
-            0.7959
+            0.8928,
+            1.0
           ]
         }
       },
@@ -8494,13 +8503,9 @@
         "CREDIT_CARD": {
           "MASKED_SSN": 6
         },
-        "URL": {
-          "DOMAIN": 4
-        },
         "NONE": {
           "PERSON": 4,
           "EMPLOYEE_NAME": 1,
-          "COUNTRY": 1,
           "ADDRESS": 1
         },
         "PRIVATE_URL": {
@@ -9234,14 +9239,14 @@
           "text_preview": "Obfuscated url: hxxps://www.acme.com/login",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -10017,14 +10022,16 @@
           "index": 97,
           "text_preview": "Raw: https: // www . mail-server . co . jp/profile",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 98,
@@ -10288,14 +10295,16 @@
           "index": 115,
           "text_preview": "Raw: hxxps://www.startup.io/docs/api-reference",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 116,
@@ -11418,14 +11427,16 @@
           "index": 188,
           "text_preview": "Data: hxxps://www.bigpharma.com/dashboard",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 189,
@@ -11934,15 +11945,14 @@
           "index": 222,
           "text_preview": "Phone: 07700 900 123 (UK mobile)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "COUNTRY",
             "PHONE"
           ]
         },
@@ -13692,14 +13702,14 @@
           "text_preview": "Obfuscated url: hxxps://www.company.org/dashboard",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -14171,14 +14181,16 @@
           "index": 368,
           "text_preview": "Encoded: hxxps://www.mail-server.co.jp/profile",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 369,
@@ -14382,14 +14394,16 @@
           "index": 382,
           "text_preview": "Raw: https: // www . mail . company . io/profile",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 383,
@@ -14723,14 +14737,14 @@
           "text_preview": "Obfuscated url: https: // www . torchwood . xyz/download",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -14962,14 +14976,16 @@
           "index": 421,
           "text_preview": "Hidden field: https: // www . weeping-angels . com/assets/img/logo . png",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 422,
@@ -15551,14 +15567,16 @@
           "index": 460,
           "text_preview": "Found: https: // www . data-service . ai/download",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 461,
@@ -15595,14 +15613,14 @@
           "text_preview": "Obfuscated url: https: // www . torchwood . xyz/dashboard",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -15751,13 +15769,13 @@
       "detector": "pipeline-raw",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 621,
-      "total_true_positives": 504,
-      "total_false_positives": 117,
-      "total_false_negatives": 36,
-      "overall_precision": 0.8115942028985508,
-      "overall_recall": 0.9333333333333333,
-      "overall_f1": 0.8682170542635659,
+      "total_detected_entities": 627,
+      "total_true_positives": 515,
+      "total_false_positives": 112,
+      "total_false_negatives": 25,
+      "overall_precision": 0.8213716108452951,
+      "overall_recall": 0.9537037037037037,
+      "overall_f1": 0.882604970008569,
       "per_type": {
         "ADDRESS": {
           "true_positives": 16,
@@ -15866,14 +15884,14 @@
         },
         "COUNTRY": {
           "true_positives": 6,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 3,
           "n": 9,
           "n_total": 9,
-          "precision": 0.6667,
+          "precision": 0.75,
           "recall": 0.6667,
-          "f1": 0.6667,
-          "f2": 0.6667,
+          "f1": 0.7059,
+          "f2": 0.6818,
           "recall_ci": [
             0.3542,
             0.8794
@@ -15973,14 +15991,14 @@
         },
         "DOMAIN": {
           "true_positives": 15,
-          "false_positives": 5,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.75,
+          "precision": 0.9375,
           "recall": 1.0,
-          "f1": 0.8571,
-          "f2": 0.9375,
+          "f1": 0.9677,
+          "f2": 0.9868,
           "recall_ci": [
             0.7961,
             1.0
@@ -16304,24 +16322,24 @@
           ]
         },
         "URL": {
-          "true_positives": 21,
+          "true_positives": 32,
           "false_positives": 2,
-          "false_negatives": 11,
+          "false_negatives": 0,
           "n": 32,
           "n_total": 32,
-          "precision": 0.913,
-          "recall": 0.6562,
-          "f1": 0.7636,
-          "f2": 0.6954,
+          "precision": 0.9412,
+          "recall": 1.0,
+          "f1": 0.9697,
+          "f2": 0.9877,
           "recall_ci": [
-            0.4831,
-            0.7959
+            0.8928,
+            1.0
           ],
           "real_n": 32,
-          "real_recall": 0.6562,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4831,
-            0.7959
+            0.8928,
+            1.0
           ]
         }
       },
@@ -16330,7 +16348,6 @@
           "GPS": 3,
           "PERSON": 4,
           "EMPLOYEE_NAME": 1,
-          "COUNTRY": 1,
           "ADDRESS": 1
         },
         "IP_ADDRESS": {
@@ -16357,9 +16374,6 @@
         "PHONE": {
           "MASKED_SSN": 12,
           "PHONE": 3
-        },
-        "URL": {
-          "DOMAIN": 4
         },
         "EMAIL": {
           "EMAIL": 3,
@@ -17096,14 +17110,14 @@
           "text_preview": "Obfuscated url: hxxps://www.acme.com/login",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -17879,14 +17893,16 @@
           "index": 97,
           "text_preview": "Raw: https: // www . mail-server . co . jp/profile",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 98,
@@ -18150,14 +18166,16 @@
           "index": 115,
           "text_preview": "Raw: hxxps://www.startup.io/docs/api-reference",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 116,
@@ -19280,14 +19298,16 @@
           "index": 188,
           "text_preview": "Data: hxxps://www.bigpharma.com/dashboard",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 189,
@@ -19796,15 +19816,14 @@
           "index": 222,
           "text_preview": "Phone: 07700 900 123 (UK mobile)",
           "expected": 1,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
           "detected_types": [
-            "COUNTRY",
             "PHONE"
           ]
         },
@@ -21555,14 +21574,14 @@
           "text_preview": "Obfuscated url: hxxps://www.company.org/dashboard",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -22034,14 +22053,16 @@
           "index": 368,
           "text_preview": "Encoded: hxxps://www.mail-server.co.jp/profile",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 369,
@@ -22245,14 +22266,16 @@
           "index": 382,
           "text_preview": "Raw: https: // www . mail . company . io/profile",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 383,
@@ -22586,14 +22609,14 @@
           "text_preview": "Obfuscated url: https: // www . torchwood . xyz/download",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
@@ -22825,14 +22848,16 @@
           "index": 421,
           "text_preview": "Hidden field: https: // www . weeping-angels . com/assets/img/logo . png",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 422,
@@ -23415,14 +23440,16 @@
           "index": 460,
           "text_preview": "Found: https: // www . data-service . ai/download",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
-          "detected_types": []
+          "detected_types": [
+            "URL"
+          ]
         },
         {
           "index": 461,
@@ -23459,14 +23486,14 @@
           "text_preview": "Obfuscated url: https: // www . torchwood . xyz/dashboard",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "URL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "URL"
           ]
         },
         {
