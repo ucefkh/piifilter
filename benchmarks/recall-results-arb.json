@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T20:37:36Z",
+  "timestamp": "2026-07-20T22:59:02Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 226,
-      "total_true_positives": 215,
-      "total_false_positives": 11,
-      "total_false_negatives": 3,
-      "overall_precision": 0.9513274336283186,
-      "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9684684684684686,
+      "total_detected_entities": 224,
+      "total_true_positives": 218,
+      "total_false_positives": 6,
+      "total_false_negatives": 0,
+      "overall_precision": 0.9732142857142857,
+      "overall_recall": 1.0,
+      "overall_f1": 0.9864253393665159,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -261,36 +261,36 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 40,
-          "false_positives": 3,
-          "false_negatives": 2,
+          "true_positives": 42,
+          "false_positives": 0,
+          "false_negatives": 0,
           "n": 42,
           "n_total": 42,
-          "precision": 0.9302,
-          "recall": 0.9524,
-          "f1": 0.9412,
-          "f2": 0.9479,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.8421,
-            0.9868
+            0.9162,
+            1.0
           ],
           "real_n": 42,
-          "real_recall": 0.9524,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.8421,
-            0.9868
+            0.9162,
+            1.0
           ]
         },
         "EMPLOYEE_NAME": {
           "true_positives": 6,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 6,
           "n_total": 6,
-          "precision": 0.8571,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9231,
-          "f2": 0.9677,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6097,
             1.0
@@ -366,24 +366,24 @@
           ]
         },
         "IP_ADDRESS": {
-          "true_positives": 14,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 15,
+          "false_positives": 0,
+          "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.9333,
-          "recall": 0.9333,
-          "f1": 0.9333,
-          "f2": 0.9333,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ],
           "real_n": 15,
-          "real_recall": 0.9333,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ]
         },
         "JWT": {
@@ -606,18 +606,12 @@
         },
         "NONE": {
           "FILE_PATH": 1,
-          "EMPLOYEE_NAME": 1,
           "URL": 1,
           "MASKED_CC": 1,
-          "MASKED_SSN": 1,
-          "EMAIL": 2,
-          "IP_ADDRESS": 1
+          "MASKED_SSN": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
-        },
-        "EMAIL": {
-          "EMAIL": 1
         }
       },
       "example_results": [
@@ -1251,9 +1245,9 @@
           "index": 39,
           "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMPLOYEE_NAME",
@@ -2546,9 +2540,9 @@
           "index": 128,
           "text_preview": "ROT13: wbua@rknzcyr.pbz (john@example.com)",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
@@ -2607,9 +2601,9 @@
           "text_preview": "Token split: \"john\" + \"@\" + \"example.com\"",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
@@ -2622,9 +2616,9 @@
           "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
@@ -2862,9 +2856,9 @@
           "text_preview": "// email = 'john' + '@' + 'example.com'",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
@@ -2879,12 +2873,12 @@
       "total_examples": 150,
       "total_expected_entities": 218,
       "total_detected_entities": 211,
-      "total_true_positives": 201,
-      "total_false_positives": 13,
-      "total_false_negatives": 17,
-      "overall_precision": 0.9392523364485982,
-      "overall_recall": 0.9220183486238532,
-      "overall_f1": 0.9305555555555555,
+      "total_true_positives": 204,
+      "total_false_positives": 10,
+      "total_false_negatives": 14,
+      "overall_precision": 0.9532710280373832,
+      "overall_recall": 0.9357798165137615,
+      "overall_f1": 0.9444444444444444,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -3097,36 +3091,36 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 40,
-          "false_positives": 4,
-          "false_negatives": 2,
+          "true_positives": 42,
+          "false_positives": 2,
+          "false_negatives": 0,
           "n": 42,
           "n_total": 42,
-          "precision": 0.9091,
-          "recall": 0.9524,
-          "f1": 0.9302,
-          "f2": 0.9434,
+          "precision": 0.9545,
+          "recall": 1.0,
+          "f1": 0.9767,
+          "f2": 0.9906,
           "recall_ci": [
-            0.8421,
-            0.9868
+            0.9162,
+            1.0
           ],
           "real_n": 42,
-          "real_recall": 0.9524,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.8421,
-            0.9868
+            0.9162,
+            1.0
           ]
         },
         "EMPLOYEE_NAME": {
           "true_positives": 6,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 6,
           "n_total": 6,
-          "precision": 0.8571,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9231,
-          "f2": 0.9677,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6097,
             1.0
@@ -3202,24 +3196,24 @@
           ]
         },
         "IP_ADDRESS": {
-          "true_positives": 14,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 15,
+          "false_positives": 0,
+          "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.9333,
-          "recall": 0.9333,
-          "f1": 0.9333,
-          "f2": 0.9333,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ],
           "real_n": 15,
-          "real_recall": 0.9333,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ]
         },
         "JWT": {
@@ -3296,14 +3290,14 @@
         },
         "PERSON": {
           "true_positives": 9,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.9,
+          "precision": 0.8182,
           "recall": 1.0,
-          "f1": 0.9474,
-          "f2": 0.9783,
+          "f1": 0.9,
+          "f2": 0.9574,
           "recall_ci": [
             0.7008,
             1.0
@@ -3439,20 +3433,15 @@
       "confusion_matrix": {
         "NONE": {
           "FILE_PATH": 1,
-          "EMPLOYEE_NAME": 1,
+          "PERSON": 2,
           "PHONE": 1,
-          "PERSON": 1,
           "URL": 1,
           "MASKED_CC": 1,
           "MASKED_SSN": 1,
-          "EMAIL": 3,
-          "IP_ADDRESS": 1
+          "EMAIL": 2
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
-        },
-        "EMAIL": {
-          "EMAIL": 1
         }
       },
       "example_results": [
@@ -4092,7 +4081,8 @@
           ],
           "detected_types": [
             "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "PERSON"
           ]
         },
         {
@@ -5433,9 +5423,9 @@
           "text_preview": "Token split: \"john\" + \"@\" + \"example.com\"",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
@@ -5448,9 +5438,9 @@
           "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
@@ -5688,9 +5678,9 @@
           "text_preview": "// email = 'john' + '@' + 'example.com'",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
@@ -5705,12 +5695,12 @@
       "total_examples": 150,
       "total_expected_entities": 218,
       "total_detected_entities": 242,
-      "total_true_positives": 215,
-      "total_false_positives": 27,
-      "total_false_negatives": 3,
-      "overall_precision": 0.8884297520661157,
-      "overall_recall": 0.9862385321100917,
-      "overall_f1": 0.9347826086956522,
+      "total_true_positives": 218,
+      "total_false_positives": 24,
+      "total_false_negatives": 0,
+      "overall_precision": 0.9008264462809917,
+      "overall_recall": 1.0,
+      "overall_f1": 0.9478260869565219,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -5923,36 +5913,36 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 40,
-          "false_positives": 7,
-          "false_negatives": 2,
+          "true_positives": 42,
+          "false_positives": 5,
+          "false_negatives": 0,
           "n": 42,
           "n_total": 42,
-          "precision": 0.8511,
-          "recall": 0.9524,
-          "f1": 0.8989,
-          "f2": 0.9302,
+          "precision": 0.8936,
+          "recall": 1.0,
+          "f1": 0.9438,
+          "f2": 0.9767,
           "recall_ci": [
-            0.8421,
-            0.9868
+            0.9162,
+            1.0
           ],
           "real_n": 42,
-          "real_recall": 0.9524,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.8421,
-            0.9868
+            0.9162,
+            1.0
           ]
         },
         "EMPLOYEE_NAME": {
           "true_positives": 6,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 6,
           "n_total": 6,
-          "precision": 0.8571,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9231,
-          "f2": 0.9677,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.6097,
             1.0
@@ -6028,24 +6018,24 @@
           ]
         },
         "IP_ADDRESS": {
-          "true_positives": 14,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 15,
+          "false_positives": 0,
+          "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.9333,
-          "recall": 0.9333,
-          "f1": 0.9333,
-          "f2": 0.9333,
+          "precision": 1.0,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ],
           "real_n": 15,
-          "real_recall": 0.9333,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.7018,
-            0.9881
+            0.7961,
+            1.0
           ]
         },
         "JWT": {
@@ -6122,14 +6112,14 @@
         },
         "PERSON": {
           "true_positives": 9,
-          "false_positives": 2,
+          "false_positives": 3,
           "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.8182,
+          "precision": 0.75,
           "recall": 1.0,
-          "f1": 0.9,
-          "f2": 0.9574,
+          "f1": 0.8571,
+          "f2": 0.9375,
           "recall_ci": [
             0.7008,
             1.0
@@ -6275,14 +6265,12 @@
         },
         "NONE": {
           "FILE_PATH": 1,
-          "EMPLOYEE_NAME": 1,
+          "PERSON": 2,
           "PHONE": 1,
-          "PERSON": 1,
           "URL": 1,
           "MASKED_CC": 1,
           "MASKED_SSN": 1,
-          "EMAIL": 3,
-          "IP_ADDRESS": 1
+          "EMAIL": 2
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -6294,7 +6282,7 @@
           "EMAIL": 1
         },
         "EMAIL": {
-          "EMAIL": 3
+          "EMAIL": 2
         }
       },
       "example_results": [
@@ -6938,7 +6926,8 @@
           ],
           "detected_types": [
             "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "PERSON"
           ]
         },
         {
@@ -8290,9 +8279,9 @@
           "text_preview": "Token split: \"john\" + \"@\" + \"example.com\"",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
@@ -8305,9 +8294,9 @@
           "text_preview": "IP split: \"192\" + \".\" + \"168\" + \".\" + \"1\" + \".\" + \"1\"",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
@@ -8545,9 +8534,9 @@
           "text_preview": "// email = 'john' + '@' + 'example.com'",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
