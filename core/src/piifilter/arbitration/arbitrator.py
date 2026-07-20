@@ -691,7 +691,7 @@ class Arbitrator:
             EntityType.FILE_PATH,
         }
 
-        # Collect all container spans (start, end) for fast lookup
+                # Collect all container spans (start, end) for fast lookup
         container_intervals: list[tuple[int, int]] = []
         for e in deduped:
             if e.entity_type in _DOMAIN_CONTAINER_TYPES:
@@ -713,8 +713,66 @@ class Arbitrator:
                 # else: drop the DOMAIN span — it's an FP
             deduped = filtered
 
-        # ── PERSON overlap suppression ──────────────────────────────────────
-        # PERSON spans that overlap with higher-specificity types (COMPANY,
+        # ── DOMAIN context / proximity gate ─────────────────────────────────
+        # After containment dedup, suppress remaining standalone DOMAIN entities
+        # that are NOT preceded by PII/domain keywords AND NOT within 10 chars
+        # of a URL, EMAIL, or IP_ADDRESS span.  Standalone domain fragments like
+        # "long.dotted.path" or "value.with.dots" in prose are noise.
+        _DOMAIN_PROXIMITY_TYPES = {
+            EntityType.EMAIL,
+            EntityType.URL,
+            EntityType.PRIVATE_URL,
+            EntityType.DATABASE_URL,
+            EntityType.IP_ADDRESS,
+        }
+        _DOMAIN_CONTEXT_KEYWORDS = {
+            # Direct domain references
+            "domain", "subdomain", "hostname",
+            "email", "mail",
+            "url", "uri", "endpoint",
+            "site", "website",
+            "host", "hosted", "server",
+            "access", "login", "signup", "register",
+            "dns", "mx", "cname",
+            # PII/security context
+            "phishing", "malware", "blocked",
+            "allowlist", "whitelist", "blacklist",
+            "ssl", "tls", "certificate",
+            # Deployment context
+            "deploy", "deployment", "production",
+            "staging",
+        }
+
+        # Collect proximity spans
+        proximity_intervals: list[tuple[int, int]] = []
+        for e in deduped:
+            if e.entity_type in _DOMAIN_PROXIMITY_TYPES:
+                proximity_intervals.append((e.start, e.end))
+
+        if proximity_intervals:
+            filtered: list[DetectedEntity] = []
+            for e in deduped:
+                if e.entity_type != EntityType.DOMAIN:
+                    filtered.append(e)
+                    continue
+                # Check context keywords within 80 chars left of the span
+                has_context = False
+                if original_text and e.start > 0:
+                    left_ctx = original_text[max(0, e.start - 80):e.start].lower()
+                    has_context = any(kw in left_ctx for kw in _DOMAIN_CONTEXT_KEYWORDS)
+                # Check proximity to URL/EMAIL/IP spans (within 10 chars)
+                near_proximity = any(
+                    abs(e.start - ce) <= 10 or abs(e.end - cs) <= 10
+                    for cs, ce in proximity_intervals
+                )
+                if not has_context and not near_proximity:
+                    # No context, no proximity — this is a false positive
+                    continue
+                filtered.append(e)
+            deduped = filtered
+
+                # ── PERSON overlap suppression ──────────────────────────────────────
+        # PERSON spans that overlap with higher-specificity spans (COMPANY,
         # ADDRESS, CITY) are almost always false positives — the same text
         # was more precisely classified by a different type. Drop the PERSON
         # span when it overlaps with any of these higher-specificity spans.
@@ -771,8 +829,8 @@ class Arbitrator:
                     continue
                 # Check if this DOMAIN/EMAIL span overlaps with any URL span
                 overlaps_url = any(
-                    e.start < ue and ustart < e.end
-                    for ustart, ue in url_intervals
+                    cs <= e.start and e.end <= ce
+                    for cs, ce in url_intervals
                 )
                 if not overlaps_url:
                     filtered.append(e)
@@ -788,27 +846,31 @@ class Arbitrator:
             EntityType.COUNTRY,
         }
 
-        # Collect all geo-neighbor intervals with 15-char margin
+        # Collect all geo-neighbor intervals with 15-char margin on each side
         geo_intervals: list[tuple[int, int]] = []
         for e in deduped:
             if e.entity_type in _CITY_GEO_TYPES:
                 geo_intervals.append((e.start - 15, e.end + 15))
 
-        if geo_intervals:
-            filtered_by_geo: list[DetectedEntity] = []
-            for e in deduped:
-                if e.entity_type != EntityType.CITY:
-                    filtered_by_geo.append(e)
-                    continue
-                # Check if this CITY span is within 15 chars of any geo span
-                near_geo = any(
-                    gs <= e.start and e.end <= ge
-                    for gs, ge in geo_intervals
-                )
-                if near_geo:
-                    filtered_by_geo.append(e)
-                # else: drop the CITY span — no geographic anchor nearby
-            deduped = filtered_by_geo
+        # Filter: low-confidence CITY spans (< 0.50) that lack a geo neighbor are dropped
+        _CITY_GEO_CONFIDENCE_THRESHOLD = 0.50
+        filtered_by_geo: list[DetectedEntity] = []
+        for e in deduped:
+            if e.entity_type != EntityType.CITY:
+                filtered_by_geo.append(e)
+                continue
+            # High-confidence CITY (context-patterned at 0.60+) is always kept
+            if e.confidence >= _CITY_GEO_CONFIDENCE_THRESHOLD:
+                filtered_by_geo.append(e)
+                continue
+            # Low-confidence CITY: only keep if near a geo span
+            near_geo = any(
+                gs <= e.start and e.end <= ge
+                for gs, ge in geo_intervals
+            )
+            if near_geo:
+                filtered_by_geo.append(e)
+        deduped = filtered_by_geo
 
         deduped.sort(key=lambda e: e.start)
         return deduped

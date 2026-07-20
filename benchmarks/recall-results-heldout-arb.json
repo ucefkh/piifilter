@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
-  "timestamp": "2026-07-20T11:24:11Z",
+  "timestamp": "2026-07-20T11:30:52Z",
   "arbitration": {
     "enabled": true
   },
@@ -49,13 +49,13 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 573,
+      "total_detected_entities": 561,
       "total_true_positives": 496,
-      "total_false_positives": 77,
+      "total_false_positives": 65,
       "total_false_negatives": 43,
-      "overall_precision": 0.8656195462478184,
+      "overall_precision": 0.8841354723707665,
       "overall_recall": 0.9202226345083488,
-      "overall_f1": 0.8920863309352517,
+      "overall_f1": 0.9018181818181817,
       "per_type": {
         "ADDRESS": {
           "true_positives": 17,
@@ -271,14 +271,14 @@
         },
         "DOMAIN": {
           "true_positives": 15,
-          "false_positives": 17,
+          "false_positives": 5,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.4688,
+          "precision": 0.75,
           "recall": 1.0,
-          "f1": 0.6383,
-          "f2": 0.8152,
+          "f1": 0.8571,
+          "f2": 0.9375,
           "recall_ci": [
             0.7961,
             1.0
@@ -629,10 +629,6 @@
           "COUNTRY": 1,
           "ADDRESS": 1
         },
-        "JWT": {
-          "DOMAIN": 5,
-          "JWT": 2
-        },
         "IP_ADDRESS": {
           "MASKED_SSN": 6,
           "API_KEY": 1,
@@ -653,7 +649,7 @@
           "MASKED_SSN": 6
         },
         "URL": {
-          "DOMAIN": 11
+          "DOMAIN": 4
         },
         "GPS": {
           "GPS": 4
@@ -670,6 +666,9 @@
         },
         "PERSON": {
           "PERSON": 1
+        },
+        "JWT": {
+          "JWT": 2
         },
         "COMPANY": {
           "PERSON": 3
@@ -989,9 +988,9 @@
           "index": 20,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30Tk66IvBmYb1kVI4GMxq9DNaJYL7rmL.S",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -999,7 +998,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -1903,9 +1901,9 @@
           "index": 80,
           "text_preview": "CC: 3782-8224-6310-005 Token: eyJ0eX...NiJ9.e30JLfYOas51j1RCGVdnuj6UnsrMqFLUS.Sf",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -1913,7 +1911,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -2168,16 +2165,14 @@
           "index": 97,
           "text_preview": "Raw: https: // www . mail-server . co . jp/profile",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 98,
@@ -2379,9 +2374,9 @@
           "index": 111,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30ZXWsrNjaAlUqlXPHoomw6Tx3pcAYYk.S",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -2389,7 +2384,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -2442,16 +2436,14 @@
           "index": 115,
           "text_preview": "Raw: hxxps://www.startup.io/docs/api-reference",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 116,
@@ -3563,16 +3555,14 @@
           "index": 188,
           "text_preview": "Data: hxxps://www.bigpharma.com/dashboard",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 189,
@@ -6210,9 +6200,9 @@
           "index": 362,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30TJlArbrDpHkjpvnfybEBpIZpTFkC1Z.S",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -6220,7 +6210,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -6305,16 +6294,14 @@
           "index": 368,
           "text_preview": "Encoded: hxxps://www.mail-server.co.jp/profile",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 369,
@@ -6518,16 +6505,14 @@
           "index": 382,
           "text_preview": "Raw: https: // www . mail . company . io/profile",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 383,
@@ -7099,16 +7084,14 @@
           "index": 421,
           "text_preview": "Hidden field: https: // www . weeping-angels . com/assets/img/logo . png",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 422,
@@ -7144,9 +7127,9 @@
           "index": 424,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30ge7mwQfSUc2Z2s1C2kzipyHRF3I2EE.S",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -7154,7 +7137,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -7690,16 +7672,14 @@
           "index": 460,
           "text_preview": "Found: https: // www . data-service . ai/download",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 461,
@@ -7891,13 +7871,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 565,
-      "total_true_positives": 496,
-      "total_false_positives": 69,
-      "total_false_negatives": 43,
-      "overall_precision": 0.8778761061946903,
-      "overall_recall": 0.9202226345083488,
-      "overall_f1": 0.8985507246376812,
+      "total_detected_entities": 549,
+      "total_true_positives": 494,
+      "total_false_positives": 55,
+      "total_false_negatives": 45,
+      "overall_precision": 0.8998178506375227,
+      "overall_recall": 0.9165120593692022,
+      "overall_f1": 0.9080882352941176,
       "per_type": {
         "ADDRESS": {
           "true_positives": 17,
@@ -7963,24 +7943,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 2,
-          "false_positives": 4,
-          "false_negatives": 7,
+          "true_positives": 0,
+          "false_positives": 2,
+          "false_negatives": 9,
           "n": 9,
           "n_total": 9,
-          "precision": 0.3333,
-          "recall": 0.2222,
-          "f1": 0.2667,
-          "f2": 0.2381,
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1": 0.0,
+          "f2": 0.0,
           "recall_ci": [
-            0.0632,
-            0.5474
+            0.0,
+            0.2992
           ],
           "real_n": 9,
-          "real_recall": 0.2222,
+          "real_recall": 0.0,
           "real_recall_ci": [
-            0.0632,
-            0.5474
+            0.0,
+            0.2992
           ]
         },
         "COMPANY": {
@@ -8113,14 +8093,14 @@
         },
         "DOMAIN": {
           "true_positives": 15,
-          "false_positives": 17,
+          "false_positives": 5,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.4688,
+          "precision": 0.75,
           "recall": 1.0,
-          "f1": 0.6383,
-          "f2": 0.8152,
+          "f1": 0.8571,
+          "f2": 0.9375,
           "recall_ci": [
             0.7961,
             1.0
@@ -8466,10 +8446,6 @@
         }
       },
       "confusion_matrix": {
-        "JWT": {
-          "DOMAIN": 5,
-          "JWT": 2
-        },
         "IP_ADDRESS": {
           "MASKED_SSN": 6,
           "API_KEY": 1,
@@ -8488,7 +8464,7 @@
           "MASKED_SSN": 6
         },
         "URL": {
-          "DOMAIN": 11
+          "DOMAIN": 4
         },
         "NONE": {
           "PERSON": 4,
@@ -8499,11 +8475,13 @@
           "URL": 2
         },
         "COUNTRY": {
-          "COMPANY": 1,
-          "CITY": 2
+          "COMPANY": 1
         },
         "SOCIAL_SECURITY": {
           "MASKED_SSN": 2
+        },
+        "JWT": {
+          "JWT": 2
         },
         "COMPANY": {
           "PERSON": 3
@@ -8823,9 +8801,9 @@
           "index": 20,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30Tk66IvBmYb1kVI4GMxq9DNaJYL7rmL.S",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -8833,7 +8811,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -8917,16 +8894,14 @@
           "index": 26,
           "text_preview": "City: The population of Mumbai is over 20 million.",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 27,
@@ -9737,9 +9712,9 @@
           "index": 80,
           "text_preview": "CC: 3782-8224-6310-005 Token: eyJ0eX...NiJ9.e30JLfYOas51j1RCGVdnuj6UnsrMqFLUS.Sf",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -9747,7 +9722,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -10003,16 +9977,14 @@
           "index": 97,
           "text_preview": "Raw: https: // www . mail-server . co . jp/profile",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 98,
@@ -10214,9 +10186,9 @@
           "index": 111,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30ZXWsrNjaAlUqlXPHoomw6Tx3pcAYYk.S",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -10224,7 +10196,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -10277,16 +10248,14 @@
           "index": 115,
           "text_preview": "Raw: hxxps://www.startup.io/docs/api-reference",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 116,
@@ -10794,16 +10763,14 @@
           "index": 149,
           "text_preview": "Based in Stockholm",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 150,
@@ -11400,16 +11367,14 @@
           "index": 188,
           "text_preview": "Data: hxxps://www.bigpharma.com/dashboard",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 189,
@@ -12194,16 +12159,14 @@
           "index": 240,
           "text_preview": "Based in Singapore",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "COUNTRY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 241,
@@ -14047,9 +14010,9 @@
           "index": 362,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30TJlArbrDpHkjpvnfybEBpIZpTFkC1Z.S",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -14057,7 +14020,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -14142,16 +14104,14 @@
           "index": 368,
           "text_preview": "Encoded: hxxps://www.mail-server.co.jp/profile",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 369,
@@ -14355,16 +14315,14 @@
           "index": 382,
           "text_preview": "Raw: https: // www . mail . company . io/profile",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 383,
@@ -14906,16 +14864,14 @@
           "index": 419,
           "text_preview": "HQ in France",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "COUNTRY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 420,
@@ -14936,16 +14892,14 @@
           "index": 421,
           "text_preview": "Hidden field: https: // www . weeping-angels . com/assets/img/logo . png",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 422,
@@ -14981,9 +14935,9 @@
           "index": 424,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30ge7mwQfSUc2Z2s1C2kzipyHRF3I2EE.S",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -14991,7 +14945,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -15528,16 +15481,14 @@
           "index": 460,
           "text_preview": "Found: https: // www . data-service . ai/download",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 461,
@@ -15729,13 +15680,13 @@
       "detector": "pipeline-raw",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 610,
+      "total_detected_entities": 598,
       "total_true_positives": 496,
-      "total_false_positives": 114,
+      "total_false_positives": 102,
       "total_false_negatives": 43,
-      "overall_precision": 0.8131147540983606,
+      "overall_precision": 0.8294314381270903,
       "overall_recall": 0.9202226345083488,
-      "overall_f1": 0.8633594429939077,
+      "overall_f1": 0.872471416007036,
       "per_type": {
         "ADDRESS": {
           "true_positives": 17,
@@ -15951,14 +15902,14 @@
         },
         "DOMAIN": {
           "true_positives": 15,
-          "false_positives": 17,
+          "false_positives": 5,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.4688,
+          "precision": 0.75,
           "recall": 1.0,
-          "f1": 0.6383,
-          "f2": 0.8152,
+          "f1": 0.8571,
+          "f2": 0.9375,
           "recall_ci": [
             0.7961,
             1.0
@@ -16322,10 +16273,6 @@
           "CREDIT_CARD": 11,
           "MASKED_SSN": 6
         },
-        "JWT": {
-          "DOMAIN": 5,
-          "JWT": 2
-        },
         "SOCIAL_SECURITY": {
           "SOCIAL_SECURITY": 12,
           "MASKED_SSN": 2
@@ -16340,7 +16287,7 @@
           "PHONE": 3
         },
         "URL": {
-          "DOMAIN": 11
+          "DOMAIN": 4
         },
         "EMAIL": {
           "EMAIL": 3,
@@ -16361,6 +16308,9 @@
         },
         "PERSON": {
           "PERSON": 1
+        },
+        "JWT": {
+          "JWT": 2
         }
       },
       "example_results": [
@@ -16674,9 +16624,9 @@
           "index": 20,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30Tk66IvBmYb1kVI4GMxq9DNaJYL7rmL.S",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -16684,7 +16634,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -17588,9 +17537,9 @@
           "index": 80,
           "text_preview": "CC: 3782-8224-6310-005 Token: eyJ0eX...NiJ9.e30JLfYOas51j1RCGVdnuj6UnsrMqFLUS.Sf",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -17598,7 +17547,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -17854,16 +17802,14 @@
           "index": 97,
           "text_preview": "Raw: https: // www . mail-server . co . jp/profile",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 98,
@@ -18065,9 +18011,9 @@
           "index": 111,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30ZXWsrNjaAlUqlXPHoomw6Tx3pcAYYk.S",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -18075,7 +18021,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -18128,16 +18073,14 @@
           "index": 115,
           "text_preview": "Raw: hxxps://www.startup.io/docs/api-reference",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 116,
@@ -19251,16 +19194,14 @@
           "index": 188,
           "text_preview": "Data: hxxps://www.bigpharma.com/dashboard",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 189,
@@ -21899,9 +21840,9 @@
           "index": 362,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30TJlArbrDpHkjpvnfybEBpIZpTFkC1Z.S",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -21909,7 +21850,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -21994,16 +21934,14 @@
           "index": 368,
           "text_preview": "Encoded: hxxps://www.mail-server.co.jp/profile",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 369,
@@ -22207,16 +22145,14 @@
           "index": 382,
           "text_preview": "Raw: https: // www . mail . company . io/profile",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 383,
@@ -22788,16 +22724,14 @@
           "index": 421,
           "text_preview": "Hidden field: https: // www . weeping-angels . com/assets/img/logo . png",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 422,
@@ -22833,9 +22767,9 @@
           "index": 424,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30ge7mwQfSUc2Z2s1C2kzipyHRF3I2EE.S",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -22843,7 +22777,6 @@
           ],
           "detected_types": [
             "CREDIT_CARD",
-            "DOMAIN",
             "JWT"
           ]
         },
@@ -23381,16 +23314,14 @@
           "index": 460,
           "text_preview": "Found: https: // www . data-service . ai/download",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "URL"
           ],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 461,
