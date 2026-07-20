@@ -472,11 +472,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Second name word must not be a company suffix
     # Negative lookahead blocks parenthetical media references: "from Finding Nemo)"
     # First name word denylist blocks both city names and common non-name capitalized words
-    ("PERSON", r"(?i)\bfrom\s+(?-i:(?!New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Buenos|Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile)[A-Z][a-z]{2,})\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|and|or|the|Street|St|Avenue|Ave|Road|Rd)[A-Z])[a-z]{2,}\b(?![^(]*\))", 0.65),
+    ("PERSON", r"(?i)\bfrom\s+(?-i:(?!New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Buenos|Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Project|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd|Tech|Technologies|Systems|Software|Solutions|Services|Industries|Enterprises|Consulting|Associates|Group|Partners|Holdings|Ventures)[A-Z][a-z]{2,})\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|and|or|the|Street|St|Avenue|Ave|Road|Rd)[A-Z])[a-z]{2,}\b(?![^(]*\))", 0.65),
     # "by Name" — two-word capitalized name after "by"
     # Excludes geographic continuations (cities, countries) and company suffixes
     # Second name word must not be a company suffix
-    ("PERSON", r"(?i)\bby\s+(?-i:[A-Z])[a-z]{2,}\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|and|or|the|Street|St|Avenue|Ave|Road|Rd|Drive|Dr)[A-Z])[a-z]{2,}\b", 0.60),
+    ("PERSON", r"(?i)\bby\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd|Project)[A-Z])[a-z]{2,}\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|and|or|the|Street|St|Avenue|Ave|Road|Rd|Drive|Dr)[A-Z])[a-z]{2,}\b", 0.60),
     # "contact/reach/met (with)/meet (with) + Name" — verb of communication + person
     # Both single-name (contact Robert) and full-name (contact Alice Smith) supported
     # "meet with" and "met with" are handled by the optional "with" between verb and name
@@ -676,7 +676,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # (those are already caught by the higher-confidence patterns).
     # NOTE: keyword prefix is matched as part of finditer() but the detector
     # dedup will prefer the narrower "name only" match if that pattern fires first.
-    ("COMPANY", r"(?i)(?:(?:work|works)\s+at|Invoice\s+from|Signed\s+by|regarding)\s+(?:(?:the|our)\s+)?(?-i:[A-Z])[a-z]{3,}(?:(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]{2,}))?\b", 0.65),
+    ("COMPANY", r"(?i)(?:(?:work|works)\s+at|Invoice\s+from|Signed\s+by|regarding)\s+(?:(?:the|our)\s+)?(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd|Project|New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Cape|Kowloon)[A-Z])[a-z]{3,}(?:(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]{2,}))?\b", 0.65),
     # "Company: X" / "Vendor: X" / "Organization: X" prefix — NOT "Client:" which
     # often precedes a person name.
     ("COMPANY", r"(?i)(?:Company|Vendor|Organization)\s*[：:]\s*(?:(?:the|our)\s+)?(?-i:[A-Z])[a-z]{2,}(?:\s+(?:(?:the|our|and)\s+)?(?-i:[A-Z])[a-z]+)?\b", 0.70),
@@ -686,7 +686,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # company context — preceded by known company keywords.
     # NOTE: keyword prefix is matched as part of finditer() but the detector
     # dedup will prefer the narrower "name only" match if that pattern fires first.
-    ("COMPANY", r"(?i)(?:(?:work|works)\s+at|Invoice\s+from|Signed\s+by|regarding)\s+(?-i:[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)\b", 0.60),
+    ("COMPANY", r"(?i)(?:(?:work|works)\s+at|Invoice\s+from|Signed\s+by|regarding)\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd|Project|New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Cape|Kowloon)[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)\b", 0.60),
     # Explicit known companies list — single-word brand names that are
     # well-known companies. These are high-precision names that don't
     # require context keywords. Only include names that are unlikely to
@@ -703,10 +703,10 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # Avoid matching inside parentheticals like "(famous from Finding Nemo)"
     # NOTE: "from" prefix is included in the match. The narrower company-only
     # pattern fires separately (e.g. "Widgets Inc") so this is supplementary.
-    ("COMPANY", r"(?i)from\s+(?-i:(?!New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Cape|Las|Buenos|Kowloon)[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s*(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
+    ("COMPANY", r"(?i)from\s+(?-i:(?!New|Los|San|Las|Buenos|Bangkok|Hong|Kuala|Rio|Sao|Cape|Las|Buenos|Kowloon|Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd|Project)[A-Z])[a-z]+(?:\s+(?:(?:the|our|and|n|'n)\s+)?(?-i:[A-Z])[a-z]+)(?![^(]*\))(?!\s*(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co\.?|Company|Corporation|PLC|AG|SA|BV|NV))\b", 0.50),
     # Single-word company name after "from" — known brand names that won't be confused with cities.
     # Supports hyphenated company names like "Weyland-Yutani".
-    ("COMPANY", r"(?i)from\s+(?-i:(?!London|Paris|Berlin|Madrid|Rome|Moscow|Tokyo|Delhi|Mumbai|Beijing|Shanghai|Sydney|Dublin|Amsterdam|Vienna|Zurich|Boston|Chicago|Seattle|Austin|Denver|Spain|France|Germany|Italy|UK|USA|Canada|Australia|China|Japan|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|Egypt|Thailand|Vietnam|Indonesia|Malaysia|Singapore|Greece|Finland|Hungary|Romania|Ukraine)[A-Z])[a-z]+(?:[-][A-Z][a-z]+)?\b(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|BV|NV|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|and|the|of|in|at|on|for|with|from|is|was|has|had|have|not|by|to))\b(?![^(]*\))", 0.55),
+    ("COMPANY", r"(?i)from\s+(?-i:(?!London|Paris|Berlin|Madrid|Rome|Moscow|Tokyo|Delhi|Mumbai|Beijing|Shanghai|Sydney|Dublin|Amsterdam|Vienna|Zurich|Boston|Chicago|Seattle|Austin|Denver|New|San|Los|Las|Cape|Buenos|Kuala|Hong|Rio|Sao|Bangkok|Kowloon|Spain|France|Germany|Italy|UK|USA|Canada|Australia|China|Japan|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|Egypt|Thailand|Vietnam|Indonesia|Malaysia|Singapore|Greece|Finland|Hungary|Romania|Ukraine|Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd|Project|Tech)[A-Z])[a-z]+(?:[-][A-Z][a-z]+)?\b(?!\s+(?:Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|PLC|AG|SA|BV|NV|Street|St|Avenue|Ave|Road|Rd|Drive|Dr|Lane|Ln|Boulevard|Blvd|and|the|of|in|at|on|for|with|from|is|was|has|had|have|not|by|to))\b(?![^(]*\))", 0.55),
     # Single-word company name after "regarding" — catch brands and hyphenated names
     ("COMPANY", r"(?i)regarding\s+(?-i:[A-Z])[a-z]{2,}(?:[-][A-Z][a-z]+)?\b", 0.55),
 
