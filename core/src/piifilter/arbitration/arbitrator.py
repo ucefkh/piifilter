@@ -166,7 +166,7 @@ class ArbitratorConfig:
         default_factory=lambda: dict(_DETECTOR_WEIGHTS)
     )
     use_calibrated_model: bool = True
-    enable_city: bool = False
+    enable_city: bool = True
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -839,11 +839,17 @@ class Arbitrator:
             deduped = filtered
 
         # ── CITY gate ────────────────────────────────────────────────────────
-        # When enable_city is False (default), all CITY entities are suppressed.
-        # This is the primary mechanism to eliminate CITY false positives (~21 of
-        # 75 total FPs, ~28%). When enable_city is True, CITY entities are only
-        # kept if geographically anchored — within 20 characters of an ADDRESS,
-        # COUNTRY, or GPS coordinate entity.
+        # CITY entities are allowed through by default. When `enable_city` is
+        # True (the default), CITY entities are filtered through a proximity
+        # gate: they must be within 20 characters of an ADDRESS, COUNTRY, or
+        # GPS coordinate entity, OR have a calibrated confidence ≥ 0.40.
+        # This dual filter catches geo-anchored cities AND standalone city
+        # names detected by high-specificity patterns (e.g. known-city lists,
+        # comma+country context, UK postcode context).
+        #
+        # When `enable_city` is False, all CITY entities are suppressed.
+        # This mode is useful for strict pipelines where city names are not
+        # considered PII.
         if not self.config.enable_city:
             # Drop all CITY entities outright
             deduped = [e for e in deduped if e.entity_type != EntityType.CITY]
@@ -861,6 +867,7 @@ class Arbitrator:
                     geo_intervals.append((e.start - 20, e.end + 20))
 
             # Only keep CITY entities that are within 20 chars of a geo span
+            # OR have high calibrated confidence (≥0.40)
             filtered: list[DetectedEntity] = []
             for e in deduped:
                 if e.entity_type != EntityType.CITY:
@@ -870,7 +877,7 @@ class Arbitrator:
                     gs <= e.start and e.end <= ge
                     for gs, ge in geo_intervals
                 )
-                if near_geo:
+                if near_geo or e.confidence >= 0.40:
                     filtered.append(e)
             deduped = filtered
 

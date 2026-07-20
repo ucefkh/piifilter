@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T22:59:02Z",
+  "timestamp": "2026-07-20T23:17:01Z",
   "arbitration": {
     "enabled": true
   },
@@ -2872,13 +2872,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 218,
-      "total_detected_entities": 211,
-      "total_true_positives": 204,
-      "total_false_positives": 10,
-      "total_false_negatives": 14,
-      "overall_precision": 0.9532710280373832,
-      "overall_recall": 0.9357798165137615,
-      "overall_f1": 0.9444444444444444,
+      "total_detected_entities": 226,
+      "total_true_positives": 218,
+      "total_false_positives": 11,
+      "total_false_negatives": 0,
+      "overall_precision": 0.9519650655021834,
+      "overall_recall": 1.0,
+      "overall_f1": 0.9753914988814317,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -2944,24 +2944,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 0,
-          "false_positives": 0,
-          "false_negatives": 14,
+          "true_positives": 14,
+          "false_positives": 1,
+          "false_negatives": 0,
           "n": 14,
           "n_total": 14,
-          "precision": 0.0,
-          "recall": 0.0,
-          "f1": 0.0,
-          "f2": 0.0,
+          "precision": 0.9333,
+          "recall": 1.0,
+          "f1": 0.9655,
+          "f2": 0.9859,
           "recall_ci": [
-            0.0,
-            0.2153
+            0.7847,
+            1.0
           ],
           "real_n": 14,
-          "real_recall": 0.0,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.0,
-            0.2153
+            0.7847,
+            1.0
           ]
         },
         "COMPANY": {
@@ -3431,6 +3431,9 @@
         }
       },
       "confusion_matrix": {
+        "ADDRESS": {
+          "CITY": 1
+        },
         "NONE": {
           "FILE_PATH": 1,
           "PERSON": 2,
@@ -3470,31 +3473,33 @@
           "index": 1,
           "text_preview": "Our office is at 350 Fifth Avenue, New York, NY 10118",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
           "index": 2,
           "text_preview": "Paris has a population of over 2 million people and is the capital of France.",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COUNTRY"
           ],
           "detected_types": [
+            "CITY",
             "COUNTRY"
           ]
         },
@@ -3788,26 +3793,27 @@
           "index": 21,
           "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
           "index": 22,
           "text_preview": "Located in Berlin, Germany - our HQ is at Unter den Linden 1, 10117 Berlin",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 1,
+          "detected": 4,
+          "true_positives": 3,
+          "false_positives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY",
@@ -3815,6 +3821,7 @@
           ],
           "detected_types": [
             "ADDRESS",
+            "CITY",
             "COUNTRY"
           ]
         },
@@ -4151,32 +4158,34 @@
           "index": 44,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 2,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "ADDRESS"
+            "ADDRESS",
+            "CITY"
           ]
         },
         {
           "index": 45,
           "text_preview": "Person: Dr. Sarah Chen works at Microsoft Research in Redmond",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "COMPANY",
             "PERSON"
           ],
           "detected_types": [
+            "CITY",
             "COMPANY",
             "PERSON"
           ]
@@ -4185,14 +4194,16 @@
           "index": 46,
           "text_preview": "City pop: Tokyo (37M), Delhi (32M), Shanghai (28M)",
           "expected": 3,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 3,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 47,
@@ -4303,15 +4314,16 @@
           "index": 54,
           "text_preview": "Lat: 35.6762, Lng: 139.6503 (Tokyo) and latitude: -33.8688, longitude: 151.2093 ",
           "expected": 6,
-          "detected": 4,
-          "true_positives": 4,
+          "detected": 6,
+          "true_positives": 6,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 0,
           "expected_types": [
             "CITY",
             "GPS"
           ],
           "detected_types": [
+            "CITY",
             "GPS"
           ]
         },
@@ -4660,14 +4672,16 @@
           "index": 77,
           "text_preview": "City: The population of Mumbai is over 20 million.",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 78,
@@ -4980,14 +4994,15 @@
           "index": 101,
           "text_preview": "The address is at 42 Wallaby Way, Sydney (famous from Finding Nemo).",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
           "detected_types": [
+            "CITY",
             "PERSON"
           ]
         },
@@ -5182,14 +5197,16 @@
           "index": 114,
           "text_preview": "Person: James researcher published his findings in Nature at London University.",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": []
+          "detected_types": [
+            "CITY"
+          ]
         },
         {
           "index": 115,
