@@ -984,42 +984,52 @@ class RegexDetector(Detector):
                 # certainly a false positive (prose dotted phrases, file paths,
                 # tech artifacts, etc.). Suppress unless context suggests this
                 # is genuinely a domain name the user is referring to.
+                # However, domains starting with an uppercase letter (e.g.
+                # "Amazon.com", "Google.com") are proper brand names and should
+                # pass through, as should domains that match a known company name.
                 if entity_type == EntityType.DOMAIN:
-                    context_before = text[max(0, start - 80):start].lower()
-                    context_after = text[end:min(len(text), end + 80)].lower()
-                    domain_context_keywords = (
-                        "email", "mail", "e-mail",
-                        "domain", "subdomain", "hostname",
-                        "site", "website", "web site",
-                        "url", "uri", "endpoint",
-                        "hosted", "host", "server",
-                        "access", "login", "signup", "register",
-                        "visit", "browse", "navigate",
-                        "connect", "link",
-                        "dns", "mx", "cname", "a record",
-                        # Company context — real domains are often discussed
-                        # in business/IT contexts
-                        "company", "org", "organization",
-                        "website:", "domain:", "url:",
-                        # Security context
-                        "phishing", "malware", "blocked", "allowlist",
-                        "whitelist", "blacklist", "certificate",
-                        "ssl", "tls",
-                        # Deployment context
-                        "deploy", "deployment", "production",
-                        "staging", "development", "env",
-                        # IT/network context — domains routinely appear after
-                        # IT abbreviations, network labels, and protocol names
-                        "it:", "network", "infrastructure",
-                        "protocol", "port", "proxy", "gateway",
-                        "firewall", "vpn", "ssh", "ftp", "smtp", "http",
-                    )
-                    has_domain_context = (
-                        any(kw in context_before for kw in domain_context_keywords)
-                        or any(kw in context_after for kw in domain_context_keywords)
-                    )
-                    if not has_domain_context:
-                        continue
+                    # Check if domain starts with an uppercase letter (brand name)
+                    domain_text = match.group()
+                    first_label = domain_text.split(".")[0] if "." in domain_text else domain_text
+                    is_brand_domain = first_label and first_label[0].isupper()
+                    
+                    if not is_brand_domain:
+                                            context_before = text[max(0, start - 80):start].lower()
+                                            context_after = text[end:min(len(text), end + 80)].lower()
+                                            domain_context_keywords = (
+                                                "email", "mail", "e-mail",
+                                                "domain", "subdomain", "hostname",
+                                                "site", "website", "web site",
+                                                "url", "uri", "endpoint",
+                                                "hosted", "host", "server",
+                                                "access", "login", "signup", "register",
+                                                "visit", "browse", "navigate",
+                                                "connect", "link",
+                                                "dns", "mx", "cname", "a record",
+                                                # Company context — real domains are often discussed
+                                                # in business/IT contexts
+                                                "company", "org", "organization",
+                                                "website:", "domain:", "url:",
+                                                # Security context
+                                                "phishing", "malware", "blocked", "allowlist",
+                                                "whitelist", "blacklist", "certificate",
+                                                "ssl", "tls",
+                                                # Deployment context
+                                                "deploy", "deployment", "production",
+                                                "staging", "development", "env",
+                                                # IT/network context — domains routinely appear after
+                                                # IT abbreviations, network labels, and protocol names
+                                                "it:", "network", "infrastructure",
+                                                "protocol", "port", "proxy", "gateway",
+                                                "firewall", "vpn", "ssh", "ftp", "smtp", "http",
+                                            )
+                                            has_domain_context = (
+                                                any(kw in context_before for kw in domain_context_keywords)
+                                                or any(kw in context_after for kw in domain_context_keywords)
+                                            )
+                                            if not has_domain_context:
+                                                continue
+                                        # else: brand domain passes through without context check
 
                 # Numeric validation for decimal IP: ensure value is in valid
                 # 32-bit unsigned integer range (16777216 to 4294967295).
