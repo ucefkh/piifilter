@@ -458,9 +458,11 @@ class RegexDetector(Detector):
                 if entity_type == EntityType.IP_ADDRESS:
                     ip_text = match.group()
 
-                    # --- Anti-date guard: skip if first two octets are valid
-                    # month/day (1-12/1-31), indicating a date like "12.31.2025"
-                    # or "3.14.1592" rather than an IP address.
+                    # --- Anti-date guard: skip if first two octets look like a
+                    # month/day date AND the third octet is a valid 4-digit year,
+                    # indicating dates like "12.31.2025" rather than an IP address.
+                    # Pure month/day (10.10.x.x) is common for real IPs in the
+                    # 10.x.x.x range and should NOT be suppressed.
                     dots = ip_text.count(".")
                     if dots >= 2:
                         # Extract the first two dot-separated groups
@@ -469,11 +471,15 @@ class RegexDetector(Detector):
                             try:
                                 first = int(groups[0])
                                 second = int(groups[1])
-                                # Month (1-12) + valid day (1-31) = very likely a date
-                                if 1 <= first <= 12 and 1 <= second <= 31:
-                                    # Only skip for standard dotted-decimal (4 groups),
-                                    # not for hex/octal/space-separated formats
-                                    if dots == 3:
+                                # Month (1-12) + valid day (1-31) = date-like.
+                                # But only suppress if the third octet is a valid
+                                # 4-digit year (e.g. 12.31.2025 has year=2025,
+                                # while 10.10.10.10 has third=10 — not a year).
+                                if (1 <= first <= 12 and 1 <= second <= 31
+                                        and dots == 3 and len(groups) >= 4):
+                                    third = int(groups[2])
+                                    # Valid 4-digit years: 1900-2099 (common date range)
+                                    if 1900 <= third <= 2099:
                                         continue
                             except ValueError:
                                 pass
@@ -501,6 +507,9 @@ class RegexDetector(Detector):
                     # --- Context keyword guard: check surrounding text for
                     # non-IP context keywords that suggest this is SSN, phone,
                     # or date data rather than an IP address.
+                    # Uses word-boundary matching (\b) for keywords that are
+                    # substrings of common words (e.g. "account" in "accounting",
+                    # "a/c" in "data/cache") to avoid false suppression.
                     if dots == 3:
                         context_before = text[max(0, start - 60):start].lower()
                         context_after = text[end:min(len(text), end + 30)].lower()
@@ -516,14 +525,27 @@ class RegexDetector(Detector):
                             # Phone keywords
                             "phone", "tel", "mobile", "cell", "call",
                             "contact", "dial", "number",
-                            # Bank keywords
-                            "bank", "account", "acct", "a/c",
+                            # Bank keywords — use word-boundary check for
+                            # "account" to avoid matching "accounting"
+                            # "a/c" checked below with boundary regex
+                            "bank", "acct",
                             # Version/measurement keywords
                             "version", "ver.", "v.", "release",
                             "build", "rev", "revision",
                         )
-                        any_non_ip = any(kw in context_before for kw in non_ip_keywords)
-                        any_non_ip_after = any(kw in context_after for kw in non_ip_keywords)
+                        # Check "account" with word boundaries to avoid "accounting"
+                        def _has_word_boundary(text: str, word: str) -> bool:
+                            return bool(re.search(rf"\b{re.escape(word)}\b", text))
+                        any_non_ip = (
+                            any(kw in context_before for kw in non_ip_keywords)
+                            or _has_word_boundary(context_before, "account")
+                            or _has_word_boundary(context_before, "a/c")
+                        )
+                        any_non_ip_after = (
+                            any(kw in context_after for kw in non_ip_keywords)
+                            or _has_word_boundary(context_after, "account")
+                            or _has_word_boundary(context_after, "a/c")
+                        )
                         has_ip_context = "ip" in context_before
                         if any_non_ip and not has_ip_context:
                             continue
