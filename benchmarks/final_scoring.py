@@ -14,30 +14,32 @@ for k in ['AWS_BEARER_TOKEN_BEDROCK', 'AWS_CONFIG_FILE', 'AWS_SHARED_CREDENTIALS
 session = boto3.Session(profile_name='claude-bedrock', region_name='us-east-1')
 client = session.client('bedrock-runtime')
 
-# ── 1. RECALL (held-out 20%) ──
+# ── 1. RECALL (held-out 20%) — PIPELINE-ARBITRATION ──
+# Run date: 2026-07-20. Dataset: pii_dataset_v2.json (2365 examples, 473 held-out).
 recall_pipeline = {
-    "overall": "Precision=0.8482  Recall=0.9000  F1=0.8733  TP=486  FP=87  FN=54",
+    "overall": "Precision=0.9077  Recall=0.8757  F1=0.8914  TP=472  FP=48  FN=67",
     "strong_entities": {
-        "EMAIL":       "Recall=0.9908, Prec=0.9863",
-        "PHONE":       "Recall=0.9730, Prec=0.9474",
-        "URL":         "Recall=1.0000, Prec=0.9697",
-        "IP_ADDRESS":  "Recall=0.9545, Prec=0.8660",
-        "PERSON":      "Recall=0.9804, Prec=0.8197",
-        "COMPANY":     "Recall=0.9524, Prec=0.8696",
+        "EMAIL":       "Recall=0.9817, Prec=1.0000",
+        "PHONE":       "Recall=0.9825, Prec=1.0000",
+        "IP_ADDRESS":  "Recall=0.9783, Prec=0.8036",
+        "PERSON":      "Recall=1.0000, Prec=0.7027",
+        "BANK_ACCOUNT":"Recall=1.0000, Prec=1.0000",
+        "DOMAIN":      "Recall=1.0000, Prec=0.5357",
+        "GPS":         "Recall=1.0000, Prec=0.8000",
     },
     "weak_entities": {
-        "ADDRESS":     "Recall=0.8750, Prec=0.9655",
-        "API_KEY":     "Recall=0.7500, Prec=1.0000",
-        "CITY":        "Recall=0.7143, Prec=0.7143",
-        "COUNTRY":     "Recall=0.8750, Prec=0.7368",
-        "CREDIT_CARD": "Recall=0.8125, Prec=0.8254",
-        "DOMAIN":      "Recall=0.9286, Prec=0.8125",
-        "SOCIAL_SECURITY": "Recall=0.8312, Prec=0.9143",
+        "ADDRESS":     "Recall=0.8947, Prec=0.9444",
+        "API_KEY":     "Recall=0.6000, Prec=1.0000",
+        "CITY":        "Recall=0.3333, Prec=0.4286",
+        "COUNTRY":     "Recall=0.7778, Prec=0.6364",
+        "CREDIT_CARD": "Recall=0.6842 (real=0.8667*), Prec=1.0000",
+        "COMPANY":     "Recall=0.6364, Prec=1.0000",
+        "SOCIAL_SECURITY": "Recall=0.7111 (real=0.8947*), Prec=0.9697",
+        "URL":         "Recall=0.6562, Prec=0.9130",
     },
     "perfect_entities": [
         "BANK_ACCOUNT", "CUSTOMER_NAME", "DATABASE_URL", "DATE",
-        "EMPLOYEE_NAME", "FILE_PATH", "GPS", "JWT", "PASSPORT",
-        "PROJECT_NAME", "SSH_KEY",
+        "FILE_PATH", "GPS", "PASSPORT", "PROJECT_NAME",
     ],
 }
 # Masked/obfuscated PII excluded from real-only metrics — already anonymized.
@@ -91,10 +93,10 @@ perf = {
 
 # ── 4. TESTS ──
 tests = {
-    "passed": 458,
+    "passed": 392,
     "skipped": 25,
-    "integration_skipped": "6+11+8=25 (provider real/streaming/unfilter roundtrip — need real API keys)",
-    "runtime": "3.18s",
+    "integration_skipped": "25 (integration tests needing real API keys — provider real/streaming/unfilter roundtrip)",
+    "runtime": "3.25s",
 }
 
 # ── 5. CI (last 10 commits) ──
@@ -114,46 +116,54 @@ ci_commits = [
 # ── 6. GAPS & OPEN ISSUES ──
 gaps = """
 GAPS:
-1. CITY recall=0.7143, ADDRESS recall=0.8750 — geography still weak
-2. CREDIT_CARD recall=0.8125, precision=0.8254 — both below target
-3. SOCIAL_SECURITY recall=0.8312 — below 95% target
-4. API_KEY recall=0.7500 — needs improvement
-5. Adversarial: punctuation-stuffed (0%), morse (0%), unicode-fractions (0%),
-   syllabic-split (0%), xml-esc (0%), ZWJ interleaving (0%) — 6 transforms at 0%
-6. Adversarial: double-encoding only 20%, URL morse 0%, DATE/EMAIL/EMPLOYEE_NAME adversarial at 0%
-7. Pipeline precision=0.8482 — still generating 87 FPs in 473 held-out examples
-8. No adversarial coverage for: social security, phone, iban, api_key, jwt, database_url, file_path
+1. CITY recall=0.3333 — geography extremely weak (3/9 detected)
+2. COMPANY recall=0.6364 — lost 8 of 22 companies
+3. URL recall=0.6562 — 11 FNs from 32
+4. API_KEY recall=0.6000 — 4 of 10 missed
+5. CREDIT_CARD recall=0.6842 (real=0.8667*) — obfuscated CCs still missed
+6. SOCIAL_SECURITY recall=0.7111 (real=0.8947*) — obfuscated SSNs missed
+7. Pipeline precision=0.9077 — 48 FPs in 473 examples (PERSON 11, DOMAIN 13 dominant)
+8. PERSON precision=0.7027 — 11 FPs from new communication-verb patterns
+9. JWT recall=0.9286 — still losing some tokens
+10. Adversarial: 8 transforms at 0% (morse, punctuation-stuffed, unicode fractions, syllabic split, xml escaping, ZWJ interleaving, circular-shifted)
+11. No adversarial coverage for: social_security, phone, iban, api_key, jwt, database_url, file_path, project_name
 """
 
 # Build the comprehensive prompt
 prompt = f"""You are evaluating PIIFilter, a local-first PII detection system that runs fully offline with no external API calls. This is the FINAL comprehensive evaluation. Use ALL the data below — no hand-waving, no rounding up.
 
-## 1. HELD-OUT RECALL (20% held-out, 473 test examples, 540 entities)
+## 1. HELD-OUT RECALL (20% held-out, 473 test examples, ~539 entities)
 
-PIPELINE OVERALL: Precision=0.8482  Recall=0.9000  F1=0.8733  TP=486  FP=87  FN=54
+PIPELINE OVERALL: Precision=0.9077  Recall=0.8757  F1=0.8914  TP=472  FP=48  FN=67
 
-Strong entities (all >0.95 recall):
-- EMAIL: Recall=0.9908, Precision=0.9863 (216/218 detected, near-perfect)
-- PHONE: Recall=0.9730, Precision=0.9474 (108/111)
-- URL: Recall=1.0000, Precision=0.9697 (64/64)
-- IP_ADDRESS: Recall=0.9545, Precision=0.8660 (84/88)
-- PERSON: Recall=0.9804, Precision=0.8197 (50/51) — high recall but 11 FPs
-- COMPANY: Recall=0.9524, Precision=0.8696 (40/42)
+Strong entities (recall >0.95 or precision =1.0):
+- EMAIL: Recall=0.9817, Precision=1.0000 (107/109, 0 FPs) — perfect precision
+- PHONE: Recall=0.9825, Precision=1.0000 (56/57, 0 FPs) — perfect precision
+- IP_ADDRESS: Recall=0.9783, Precision=0.8036 (45/46, 11 FPs)
+- PERSON: Recall=1.0000, Precision=0.7027 (26/26, 11 FPs) — perfect recall now
+- BANK_ACCOUNT: Recall=1.0000, Precision=1.0000 (perfect)
+- DOMAIN: Recall=1.0000, Precision=0.5357 (15/15, 13 FPs)
+- GPS: Recall=1.0000, Precision=0.8000
+- DATE: Recall=1.0000, Precision=1.0000
+- DATABASE_URL: Recall=1.0000, Precision=1.0000
+- FILE_PATH: Recall=1.0000, Precision=1.0000
+- PASSPORT: Recall=1.0000, Precision=1.0000
+- CUSTOMER_NAME: Recall=1.0000, Precision=1.0000
+- PROJECT_NAME: Recall=1.0000, Precision=1.0000
 
-Perfect recall entities (11 types, all 1.000):
-BANK_ACCOUNT, CUSTOMER_NAME, DATABASE_URL, DATE, EMPLOYEE_NAME, FILE_PATH,
-GPS, JWT, PASSPORT, PROJECT_NAME, SSH_KEY
-
-Weak entities:
-- CREDIT_CARD: Recall=0.8125, Precision=0.8254 (52/64, 11 FPs, 12 FNs)
-- SOCIAL_SECURITY: Recall=0.8312, Precision=0.9143 (64/77, 6 FPs, 13 FNs)
-- CITY: Recall=0.7143, Precision=0.7143 (10/14, 4 FPs, 4 FNs)
-- ADDRESS: Recall=0.8750, Precision=0.9655 (28/32)
-- API_KEY: Recall=0.7500, Precision=1.0000 (12/16, 0 FPs)
-- COUNTRY: Recall=0.8750, Precision=0.7368 (14/16, 5 FPs)
-- DOMAIN: Recall=0.9286, Precision=0.8125 (26/28, 6 FPs)
+Weak entities (recall <0.90):
+- CREDIT_CARD: Recall=0.6842 (real masked=0.8667*), Prec=1.0000 (26/38, 0 FPs, 12 FNs — all FNs are obfuscated)
+- SOCIAL_SECURITY: Recall=0.7111 (real masked=0.8947*), Prec=0.9697 (32/45, 1 FP, 13 FNs — all FNs obfuscated)
+- URL: Recall=0.6562, Precision=0.9130 (21/32, 2 FPs, 11 FNs)
+- CITY: Recall=0.3333, Precision=0.4286 (3/9, 4 FPs, 6 FNs) — very weak
+- COMPANY: Recall=0.6364, Precision=1.0000 (14/22, 0 FPs, 8 FNs)
+- API_KEY: Recall=0.6000, Precision=1.0000 (6/10, 0 FPs, 4 FNs)
+- ADDRESS: Recall=0.8947, Precision=0.9444 (17/19)
+- COUNTRY: Recall=0.7778, Precision=0.6364 (7/9, 4 FPs, 2 FNs)
+- JWT: Recall=0.9286, Precision=0.9286 (13/14)
 
 Note: Masked/obfuscated PII (X-encoded, hash-like, hex, base64, spoken-out) are excluded from real-only metrics — already anonymized, not PII leaks.
+(*) Asterisk marks recall columns where obfuscated entries are excluded.
 
 ## 2. ADVERSARIAL V3 (201 challenging obfuscated examples)
 
@@ -196,7 +206,7 @@ Deobfuscator: ~20% of total time. Bottleneck: unwrap_at_dot (16.9% of deobf time
 
 ## 4. UNIT TESTS
 
-458 passed, 25 skipped in 3.18s
+392 passed, 25 skipped in 3.25s
 Skipped: integration tests requiring real API keys (provider, streaming, unfilter roundtrip)
 
 ## 5. RECENT FIXES (last 10 commits)
@@ -212,18 +222,21 @@ Skipped: integration tests requiring real API keys (provider, streaming, unfilte
 
 ## 6. KNOWN GAPS
 
-1. CITY recall=0.7143, ADDRESS recall=0.8750 — geography still weak
-2. CREDIT_CARD recall=0.8125, precision=0.8254 — both significant
-3. SOCIAL_SECURITY recall=0.8312 (FNs=13) — still losing real SSNs
-4. API_KEY recall=0.7500 — needs more pattern coverage
-5. Pipeline precision=0.8482 — 87 FPs across 473 examples is too many
-6. 8 adversarial categories at 0% detection
-7. 8+ PII types have no adversarial test coverage
-8. Double encoding adversarial detection only 20%
+1. CITY recall=0.3333 — extremely weak, geography needs full rebuild
+2. COMPANY recall=0.6364 — corporate entity detection needs major improvement
+3. URL recall=0.6562 — URL pattern coverage is too narrow
+4. API_KEY recall=0.6000 — API keys being missed
+5. CREDIT_CARD recall=0.6842 (but real masked=0.8667*) — obfuscated CCs
+6. SOCIAL_SECURITY recall=0.7111 (but real masked=0.8947*) — obfuscated SSNs
+7. Pipeline precision=0.9077 — 48 FPs (PERSON 11 from new verb patterns, DOMAIN 13)
+8. PERSON precision=0.7027 — 11 FPs needs tightening
+9. 8 adversarial transforms at 0% detection
+10. 8+ PII types have no adversarial test coverage
+11. Company, City, URL, API_KEY are still below 80% recall
 
 ## FINAL TASK
 
-Based on ALL of the above data (not prior scores, not optimistic projections — these are the real current numbers as of July 19, 2026), please provide:
+Based on ALL of the above data (not prior scores, not optimistic projections — these are the real current numbers as of July 20, 2026), please provide:
 
 1. **OVERALL SCORE /10** — a single number representing the system's overall maturity
 2. **PER-CATEGORY BREAKDOWN** — score each dimension separately:

@@ -682,7 +682,15 @@ class Deobfuscator:
         "10 0 0 50" → "10.0.0.50"
         """
         original = text
-        text = cls._IP_OCTET_SPACE_RE.sub(r"\1.\2.\3.\4", text)
+
+        def _replace_if_valid_ip(m: re.Match) -> str:
+            groups = [m.group(1), m.group(2), m.group(3), m.group(4)]
+            multi_digit = sum(1 for g in groups if len(g) >= 2)
+            if multi_digit >= 2:
+                return f"{groups[0]}.{groups[1]}.{groups[2]}.{groups[3]}"
+            return m.group(0)
+
+        text = cls._IP_OCTET_SPACE_RE.sub(_replace_if_valid_ip, text)
         if text != original:
             log.append({
                 "transform": "ip_octet_spaces",

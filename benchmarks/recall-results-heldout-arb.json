@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
-  "timestamp": "2026-07-20T06:01:31Z",
+  "timestamp": "2026-07-20T06:04:33Z",
   "arbitration": {
     "enabled": true
   },
@@ -49,13 +49,13 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 536,
-      "total_true_positives": 472,
-      "total_false_positives": 64,
-      "total_false_negatives": 67,
-      "overall_precision": 0.8805970149253731,
-      "overall_recall": 0.87569573283859,
-      "overall_f1": 0.878139534883721,
+      "total_detected_entities": 543,
+      "total_true_positives": 482,
+      "total_false_positives": 61,
+      "total_false_negatives": 57,
+      "overall_precision": 0.8876611418047882,
+      "overall_recall": 0.8942486085343229,
+      "overall_f1": 0.8909426987060998,
       "per_type": {
         "ADDRESS": {
           "true_positives": 17,
@@ -138,23 +138,23 @@
           ]
         },
         "COMPANY": {
-          "true_positives": 18,
+          "true_positives": 15,
           "false_positives": 0,
-          "false_negatives": 4,
+          "false_negatives": 7,
           "n": 22,
           "precision": 1.0,
-          "recall": 0.8182,
-          "f1": 0.9,
-          "f2": 0.8491,
+          "recall": 0.6818,
+          "f1": 0.8108,
+          "f2": 0.7282,
           "recall_ci": [
-            0.6148,
-            0.9269
+            0.4732,
+            0.8364
           ],
           "real_n": 22,
-          "real_recall": 0.8182,
+          "real_recall": 0.6818,
           "real_recall_ci": [
-            0.6148,
-            0.9269
+            0.4732,
+            0.8364
           ]
         },
         "COUNTRY": {
@@ -298,23 +298,23 @@
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 6,
-          "false_positives": 1,
-          "false_negatives": 0,
+          "true_positives": 5,
+          "false_positives": 0,
+          "false_negatives": 1,
           "n": 6,
-          "precision": 0.8571,
-          "recall": 1.0,
-          "f1": 0.9231,
-          "f2": 0.9677,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "f1": 0.9091,
+          "f2": 0.8621,
           "recall_ci": [
-            0.6097,
-            1.0
+            0.4365,
+            0.9699
           ],
           "real_n": 6,
-          "real_recall": 1.0,
+          "real_recall": 0.8333,
           "real_recall_ci": [
-            0.6097,
-            1.0
+            0.4365,
+            0.9699
           ]
         },
         "FILE_PATH": {
@@ -379,13 +379,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 45,
-          "false_positives": 14,
+          "false_positives": 7,
           "false_negatives": 1,
           "n": 46,
-          "precision": 0.7627,
+          "precision": 0.8654,
           "recall": 0.9783,
-          "f1": 0.8571,
-          "f2": 0.9259,
+          "f1": 0.9184,
+          "f2": 0.9534,
           "recall_ci": [
             0.8866,
             0.9962
@@ -438,23 +438,23 @@
           ]
         },
         "PERSON": {
-          "true_positives": 18,
-          "false_positives": 0,
-          "false_negatives": 8,
+          "true_positives": 26,
+          "false_positives": 5,
+          "false_negatives": 0,
           "n": 26,
-          "precision": 1.0,
-          "recall": 0.6923,
-          "f1": 0.8182,
-          "f2": 0.7377,
+          "precision": 0.8387,
+          "recall": 1.0,
+          "f1": 0.9123,
+          "f2": 0.963,
           "recall_ci": [
-            0.5001,
-            0.835
+            0.8713,
+            1.0
           ],
           "real_n": 26,
-          "real_recall": 0.6923,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.5001,
-            0.835
+            0.8713,
+            1.0
           ]
         },
         "PHONE": {
@@ -518,17 +518,17 @@
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 32,
+          "true_positives": 38,
           "false_positives": 1,
-          "false_negatives": 13,
+          "false_negatives": 7,
           "n": 45,
-          "precision": 0.9697,
-          "recall": 0.7111,
-          "f1": 0.8205,
-          "f2": 0.7512,
+          "precision": 0.9744,
+          "recall": 0.8444,
+          "f1": 0.9048,
+          "f2": 0.8676,
           "recall_ci": [
-            0.5663,
-            0.8227
+            0.7122,
+            0.9225
           ],
           "real_n": 19,
           "real_recall": 0.8947,
@@ -589,7 +589,7 @@
           "JWT": 1
         },
         "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 10
+          "IP_ADDRESS": 3
         },
         "ADDRESS": {
           "COUNTRY": 4,
@@ -619,10 +619,16 @@
           "CITY": 2
         },
         "PERSON": {
-          "EMPLOYEE_NAME": 1
+          "PERSON": 1
+        },
+        "COMPANY": {
+          "PERSON": 3
         },
         "EMAIL": {
           "DOMAIN": 1
+        },
+        "EMPLOYEE_NAME": {
+          "PERSON": 1
         }
       },
       "example_results": [
@@ -1263,17 +1269,18 @@
           "index": 42,
           "text_preview": "Contact Ivan Garcia at ivan.garcia@bigpharma.com regarding Weyland-Yutani",
           "expected": 3,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
-          "false_negatives": 2,
+          "false_negatives": 1,
           "expected_types": [
             "COMPANY",
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "EMAIL"
+            "EMAIL",
+            "PERSON"
           ]
         },
         {
@@ -2626,14 +2633,14 @@
           "text_preview": "Obfuscated social_security: 4 5 6 7 8 9 0 1 2",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -2747,10 +2754,10 @@
           "index": 140,
           "text_preview": "Contact Elif Davis at elif.davis@mail.company.io regarding Tesla",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "EMAIL",
@@ -2758,7 +2765,8 @@
           ],
           "detected_types": [
             "COMPANY",
-            "EMAIL"
+            "EMAIL",
+            "PERSON"
           ]
         },
         {
@@ -4345,7 +4353,6 @@
             "PERSON"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
             "PERSON"
           ]
         },
@@ -4895,14 +4902,16 @@
           "index": 281,
           "text_preview": "Signed, Hugo Lee",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PERSON"
+          ]
         },
         {
           "index": 282,
@@ -4939,14 +4948,14 @@
           "text_preview": "Data: 2 6 2 5 8 5 1 5 0",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -5431,14 +5440,16 @@
           "index": 317,
           "text_preview": "Signed, Xavier Allen",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PERSON"
+          ]
         },
         {
           "index": 318,
@@ -5459,9 +5470,9 @@
           "index": 319,
           "text_preview": "Contact Alice Sanchez at alice.sanchez@mail-server.co.jp regarding Tyrell Corp",
           "expected": 3,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "COMPANY",
@@ -5469,8 +5480,8 @@
             "PERSON"
           ],
           "detected_types": [
-            "COMPANY",
-            "EMAIL"
+            "EMAIL",
+            "PERSON"
           ]
         },
         {
@@ -5992,14 +6003,14 @@
           "text_preview": "Data: 1 2 3 4 5 6 7 8 9",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -6081,9 +6092,9 @@
           "index": 360,
           "text_preview": "Contact Ivan Harris at ivan.harris@data-service.ai regarding Soylent Corp",
           "expected": 3,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "COMPANY",
@@ -6091,8 +6102,8 @@
             "PERSON"
           ],
           "detected_types": [
-            "COMPANY",
-            "EMAIL"
+            "EMAIL",
+            "PERSON"
           ]
         },
         {
@@ -6180,14 +6191,14 @@
           "text_preview": "Encoded: 1 1 8 6 0 7 4 2 9",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -6254,9 +6265,9 @@
           "index": 371,
           "text_preview": "Data: 9 3 4 4 3 6 9 5 8",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
@@ -6374,9 +6385,9 @@
           "index": 379,
           "text_preview": "Contact Fatima Nelson at fatima.nelson@company.org regarding Cyberdyne Systems",
           "expected": 3,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "COMPANY",
@@ -6384,8 +6395,8 @@
             "PERSON"
           ],
           "detected_types": [
-            "COMPANY",
-            "EMAIL"
+            "EMAIL",
+            "PERSON"
           ]
         },
         {
@@ -6453,14 +6464,14 @@
           "text_preview": "Obfuscated social_security: 3 1 8 9 1 4 2 6 9",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -6809,14 +6820,16 @@
           "index": 408,
           "text_preview": "Ingrid Rivera approved the request",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PERSON"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PERSON"
+          ]
         },
         {
           "index": 409,
@@ -7150,14 +7163,14 @@
           "text_preview": "Found: 8 9 3 9 9 8 1 6 1",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -7180,16 +7193,16 @@
           "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
           "expected": 2,
           "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "EMPLOYEE_NAME",
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "PERSON"
           ]
         },
         {
@@ -7786,13 +7799,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 473,
       "total_expected_entities": 539,
-      "total_detected_entities": 519,
-      "total_true_positives": 476,
-      "total_false_positives": 43,
-      "total_false_negatives": 63,
-      "overall_precision": 0.9171483622350675,
-      "overall_recall": 0.8831168831168831,
-      "overall_f1": 0.8998109640831758,
+      "total_detected_entities": 520,
+      "total_true_positives": 479,
+      "total_false_positives": 41,
+      "total_false_negatives": 60,
+      "overall_precision": 0.9211538461538461,
+      "overall_recall": 0.8886827458256029,
+      "overall_f1": 0.9046270066100094,
       "per_type": {
         "ADDRESS": {
           "true_positives": 17,
@@ -7875,23 +7888,23 @@
           ]
         },
         "COMPANY": {
-          "true_positives": 18,
+          "true_positives": 15,
           "false_positives": 0,
-          "false_negatives": 4,
+          "false_negatives": 7,
           "n": 22,
           "precision": 1.0,
-          "recall": 0.8182,
-          "f1": 0.9,
-          "f2": 0.8491,
+          "recall": 0.6818,
+          "f1": 0.8108,
+          "f2": 0.7282,
           "recall_ci": [
-            0.6148,
-            0.9269
+            0.4732,
+            0.8364
           ],
           "real_n": 22,
-          "real_recall": 0.8182,
+          "real_recall": 0.6818,
           "real_recall_ci": [
-            0.6148,
-            0.9269
+            0.4732,
+            0.8364
           ]
         },
         "COUNTRY": {
@@ -8035,23 +8048,23 @@
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 6,
+          "true_positives": 5,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "n": 6,
           "precision": 1.0,
-          "recall": 1.0,
-          "f1": 1.0,
-          "f2": 1.0,
+          "recall": 0.8333,
+          "f1": 0.9091,
+          "f2": 0.8621,
           "recall_ci": [
-            0.6097,
-            1.0
+            0.4365,
+            0.9699
           ],
           "real_n": 6,
-          "real_recall": 1.0,
+          "real_recall": 0.8333,
           "real_recall_ci": [
-            0.6097,
-            1.0
+            0.4365,
+            0.9699
           ]
         },
         "FILE_PATH": {
@@ -8116,13 +8129,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 45,
-          "false_positives": 11,
+          "false_positives": 5,
           "false_negatives": 1,
           "n": 46,
-          "precision": 0.8036,
+          "precision": 0.9,
           "recall": 0.9783,
-          "f1": 0.8824,
-          "f2": 0.9375,
+          "f1": 0.9375,
+          "f2": 0.9615,
           "recall_ci": [
             0.8866,
             0.9962
@@ -8175,23 +8188,23 @@
           ]
         },
         "PERSON": {
-          "true_positives": 25,
-          "false_positives": 6,
-          "false_negatives": 1,
+          "true_positives": 26,
+          "false_positives": 10,
+          "false_negatives": 0,
           "n": 26,
-          "precision": 0.8065,
-          "recall": 0.9615,
-          "f1": 0.8772,
-          "f2": 0.9259,
+          "precision": 0.7222,
+          "recall": 1.0,
+          "f1": 0.8387,
+          "f2": 0.9286,
           "recall_ci": [
-            0.8111,
-            0.9932
+            0.8713,
+            1.0
           ],
           "real_n": 26,
-          "real_recall": 0.9615,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.8111,
-            0.9932
+            0.8713,
+            1.0
           ]
         },
         "PHONE": {
@@ -8255,17 +8268,17 @@
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 32,
+          "true_positives": 38,
           "false_positives": 1,
-          "false_negatives": 13,
+          "false_negatives": 7,
           "n": 45,
-          "precision": 0.9697,
-          "recall": 0.7111,
-          "f1": 0.8205,
-          "f2": 0.7512,
+          "precision": 0.9744,
+          "recall": 0.8444,
+          "f1": 0.9048,
+          "f2": 0.8676,
           "recall_ci": [
-            0.5663,
-            0.8227
+            0.7122,
+            0.9225
           ],
           "real_n": 19,
           "real_recall": 0.8947,
@@ -8317,7 +8330,7 @@
       },
       "confusion_matrix": {
         "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 9
+          "IP_ADDRESS": 3
         },
         "ADDRESS": {
           "COUNTRY": 3,
@@ -8339,7 +8352,7 @@
           "IP_ADDRESS": 2
         },
         "COMPANY": {
-          "PERSON": 2
+          "PERSON": 5
         },
         "COUNTRY": {
           "CITY": 2
@@ -8350,6 +8363,9 @@
         },
         "EMAIL": {
           "DOMAIN": 1
+        },
+        "EMPLOYEE_NAME": {
+          "PERSON": 1
         }
       },
       "example_results": [
@@ -10350,14 +10366,14 @@
           "text_preview": "Obfuscated social_security: 4 5 6 7 8 9 0 1 2",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -10472,10 +10488,10 @@
           "index": 140,
           "text_preview": "Contact Elif Davis at elif.davis@mail.company.io regarding Tesla",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "EMAIL",
@@ -10483,7 +10499,8 @@
           ],
           "detected_types": [
             "COMPANY",
-            "EMAIL"
+            "EMAIL",
+            "PERSON"
           ]
         },
         {
@@ -12661,14 +12678,14 @@
           "text_preview": "Data: 2 6 2 5 8 5 1 5 0",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -13181,16 +13198,15 @@
           "text_preview": "Contact Alice Sanchez at alice.sanchez@mail-server.co.jp regarding Tyrell Corp",
           "expected": 3,
           "detected": 3,
-          "true_positives": 3,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "COMPANY",
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "COMPANY",
             "EMAIL",
             "PERSON"
           ]
@@ -13713,14 +13729,14 @@
           "text_preview": "Data: 1 2 3 4 5 6 7 8 9",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -13803,16 +13819,15 @@
           "text_preview": "Contact Ivan Harris at ivan.harris@data-service.ai regarding Soylent Corp",
           "expected": 3,
           "detected": 3,
-          "true_positives": 3,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "COMPANY",
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "COMPANY",
             "EMAIL",
             "PERSON"
           ]
@@ -13901,14 +13916,14 @@
           "text_preview": "Encoded: 1 1 8 6 0 7 4 2 9",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -14096,16 +14111,15 @@
           "text_preview": "Contact Fatima Nelson at fatima.nelson@company.org regarding Cyberdyne Systems",
           "expected": 3,
           "detected": 3,
-          "true_positives": 3,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "COMPANY",
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "COMPANY",
             "EMAIL",
             "PERSON"
           ]
@@ -14175,14 +14189,14 @@
           "text_preview": "Obfuscated social_security: 3 1 8 9 1 4 2 6 9",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -14872,14 +14886,14 @@
           "text_preview": "Found: 8 9 3 9 9 8 1 6 1",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -14902,16 +14916,16 @@
           "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
           "expected": 2,
           "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "EMPLOYEE_NAME",
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "PERSON"
           ]
         },
         {
@@ -15510,12 +15524,12 @@
       "total_examples": 473,
       "total_expected_entities": 539,
       "total_detected_entities": 580,
-      "total_true_positives": 480,
-      "total_false_positives": 100,
-      "total_false_negatives": 59,
-      "overall_precision": 0.8275862068965517,
-      "overall_recall": 0.8905380333951762,
-      "overall_f1": 0.8579088471849867,
+      "total_true_positives": 483,
+      "total_false_positives": 97,
+      "total_false_negatives": 56,
+      "overall_precision": 0.8327586206896552,
+      "overall_recall": 0.8961038961038961,
+      "overall_f1": 0.8632707774798928,
       "per_type": {
         "ADDRESS": {
           "true_positives": 17,
@@ -15598,23 +15612,23 @@
           ]
         },
         "COMPANY": {
-          "true_positives": 18,
+          "true_positives": 15,
           "false_positives": 0,
-          "false_negatives": 4,
+          "false_negatives": 7,
           "n": 22,
           "precision": 1.0,
-          "recall": 0.8182,
-          "f1": 0.9,
-          "f2": 0.8491,
+          "recall": 0.6818,
+          "f1": 0.8108,
+          "f2": 0.7282,
           "recall_ci": [
-            0.6148,
-            0.9269
+            0.4732,
+            0.8364
           ],
           "real_n": 22,
-          "real_recall": 0.8182,
+          "real_recall": 0.6818,
           "real_recall_ci": [
-            0.6148,
-            0.9269
+            0.4732,
+            0.8364
           ]
         },
         "COUNTRY": {
@@ -15758,23 +15772,23 @@
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 6,
-          "false_positives": 1,
-          "false_negatives": 0,
+          "true_positives": 5,
+          "false_positives": 0,
+          "false_negatives": 1,
           "n": 6,
-          "precision": 0.8571,
-          "recall": 1.0,
-          "f1": 0.9231,
-          "f2": 0.9677,
+          "precision": 1.0,
+          "recall": 0.8333,
+          "f1": 0.9091,
+          "f2": 0.8621,
           "recall_ci": [
-            0.6097,
-            1.0
+            0.4365,
+            0.9699
           ],
           "real_n": 6,
-          "real_recall": 1.0,
+          "real_recall": 0.8333,
           "real_recall_ci": [
-            0.6097,
-            1.0
+            0.4365,
+            0.9699
           ]
         },
         "FILE_PATH": {
@@ -15839,13 +15853,13 @@
         },
         "IP_ADDRESS": {
           "true_positives": 45,
-          "false_positives": 15,
+          "false_positives": 8,
           "false_negatives": 1,
           "n": 46,
-          "precision": 0.75,
+          "precision": 0.8491,
           "recall": 0.9783,
-          "f1": 0.8491,
-          "f2": 0.9221,
+          "f1": 0.9091,
+          "f2": 0.9494,
           "recall_ci": [
             0.8866,
             0.9962
@@ -15898,23 +15912,23 @@
           ]
         },
         "PERSON": {
-          "true_positives": 25,
-          "false_positives": 9,
-          "false_negatives": 1,
+          "true_positives": 26,
+          "false_positives": 14,
+          "false_negatives": 0,
           "n": 26,
-          "precision": 0.7353,
-          "recall": 0.9615,
-          "f1": 0.8333,
-          "f2": 0.9058,
+          "precision": 0.65,
+          "recall": 1.0,
+          "f1": 0.7879,
+          "f2": 0.9028,
           "recall_ci": [
-            0.8111,
-            0.9932
+            0.8713,
+            1.0
           ],
           "real_n": 26,
-          "real_recall": 0.9615,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.8111,
-            0.9932
+            0.8713,
+            1.0
           ]
         },
         "PHONE": {
@@ -15978,17 +15992,17 @@
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 33,
+          "true_positives": 39,
           "false_positives": 12,
-          "false_negatives": 12,
+          "false_negatives": 6,
           "n": 45,
-          "precision": 0.7333,
-          "recall": 0.7333,
-          "f1": 0.7333,
-          "f2": 0.7333,
+          "precision": 0.7647,
+          "recall": 0.8667,
+          "f1": 0.8125,
+          "f2": 0.8442,
           "recall_ci": [
-            0.5896,
-            0.8404
+            0.7382,
+            0.9374
           ],
           "real_n": 19,
           "real_recall": 0.8947,
@@ -16059,7 +16073,7 @@
           "JWT": 1
         },
         "SOCIAL_SECURITY": {
-          "IP_ADDRESS": 10,
+          "IP_ADDRESS": 3,
           "SOCIAL_SECURITY": 11
         },
         "ADDRESS": {
@@ -16086,13 +16100,16 @@
           "IP_ADDRESS": 2
         },
         "COMPANY": {
-          "PERSON": 3
+          "PERSON": 6
         },
         "COUNTRY": {
           "CITY": 2
         },
         "PERSON": {
-          "EMPLOYEE_NAME": 1
+          "PERSON": 1
+        },
+        "EMPLOYEE_NAME": {
+          "PERSON": 1
         }
       },
       "example_results": [
@@ -18099,14 +18116,14 @@
           "text_preview": "Obfuscated social_security: 4 5 6 7 8 9 0 1 2",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -18221,10 +18238,10 @@
           "index": 140,
           "text_preview": "Contact Elif Davis at elif.davis@mail.company.io regarding Tesla",
           "expected": 3,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 3,
+          "true_positives": 3,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COMPANY",
             "EMAIL",
@@ -18232,7 +18249,8 @@
           ],
           "detected_types": [
             "COMPANY",
-            "EMAIL"
+            "EMAIL",
+            "PERSON"
           ]
         },
         {
@@ -19820,7 +19838,6 @@
             "PERSON"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
             "PERSON"
           ]
         },
@@ -20416,14 +20433,14 @@
           "text_preview": "Data: 2 6 2 5 8 5 1 5 0",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -20939,16 +20956,15 @@
           "text_preview": "Contact Alice Sanchez at alice.sanchez@mail-server.co.jp regarding Tyrell Corp",
           "expected": 3,
           "detected": 3,
-          "true_positives": 3,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "COMPANY",
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "COMPANY",
             "EMAIL",
             "PERSON"
           ]
@@ -21473,14 +21489,14 @@
           "text_preview": "Data: 1 2 3 4 5 6 7 8 9",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -21563,16 +21579,15 @@
           "text_preview": "Contact Ivan Harris at ivan.harris@data-service.ai regarding Soylent Corp",
           "expected": 3,
           "detected": 3,
-          "true_positives": 3,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "COMPANY",
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "COMPANY",
             "EMAIL",
             "PERSON"
           ]
@@ -21662,14 +21677,14 @@
           "text_preview": "Encoded: 1 1 8 6 0 7 4 2 9",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -21736,9 +21751,9 @@
           "index": 371,
           "text_preview": "Data: 9 3 4 4 3 6 9 5 8",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
@@ -21857,16 +21872,15 @@
           "text_preview": "Contact Fatima Nelson at fatima.nelson@company.org regarding Cyberdyne Systems",
           "expected": 3,
           "detected": 3,
-          "true_positives": 3,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "COMPANY",
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "COMPANY",
             "EMAIL",
             "PERSON"
           ]
@@ -21936,14 +21950,14 @@
           "text_preview": "Obfuscated social_security: 3 1 8 9 1 4 2 6 9",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -22635,14 +22649,14 @@
           "text_preview": "Found: 8 9 3 9 9 8 1 6 1",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "IP_ADDRESS"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -22665,16 +22679,16 @@
           "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
           "expected": 2,
           "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "EMPLOYEE_NAME",
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "IP_ADDRESS",
+            "PERSON"
           ]
         },
         {
