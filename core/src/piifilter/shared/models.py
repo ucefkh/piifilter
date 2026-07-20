@@ -22,6 +22,8 @@ class EntityType(str, Enum):
     CREDIT_CARD = "CREDIT_CARD"
     PASSPORT = "PASSPORT"
     SOCIAL_SECURITY = "SOCIAL_SECURITY"
+    MASKED_SSN = "MASKED_SSN"
+    MASKED_CC = "MASKED_CC"
     JWT = "JWT"
     API_KEY = "API_KEY"
     SSH_KEY = "SSH_KEY"

@@ -38,3 +38,4 @@ apps/vscode-extension/out/
 # Temp test files from subagents
 _*.py
 benchmarks/_*.py
+.hermes-tmp.*
