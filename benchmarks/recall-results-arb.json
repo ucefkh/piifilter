@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (full set) (arbitration-on)",
-  "timestamp": "2026-07-20T09:09:41Z",
+  "timestamp": "2026-07-20T09:31:57Z",
   "arbitration": {
     "enabled": true
   },
@@ -42,13 +42,13 @@
       "detector": "regex",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 233,
-      "total_true_positives": 208,
-      "total_false_positives": 25,
-      "total_false_negatives": 5,
-      "overall_precision": 0.8927038626609443,
-      "overall_recall": 0.9765258215962441,
-      "overall_f1": 0.9327354260089685,
+      "total_detected_entities": 229,
+      "total_true_positives": 209,
+      "total_false_positives": 20,
+      "total_false_negatives": 4,
+      "overall_precision": 0.9126637554585153,
+      "overall_recall": 0.9812206572769953,
+      "overall_f1": 0.9457013574660634,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -72,13 +72,13 @@
         },
         "API_KEY": {
           "true_positives": 5,
-          "false_positives": 6,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 5,
-          "precision": 0.4545,
+          "precision": 0.7143,
           "recall": 1.0,
-          "f1": 0.625,
-          "f2": 0.8065,
+          "f1": 0.8333,
+          "f2": 0.9259,
           "recall_ci": [
             0.5655,
             1.0
@@ -232,13 +232,13 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.8182,
+          "precision": 0.9,
           "recall": 1.0,
-          "f1": 0.9,
-          "f2": 0.9574,
+          "f1": 0.9474,
+          "f2": 0.9783,
           "recall_ci": [
             0.7008,
             1.0
@@ -291,23 +291,23 @@
           ]
         },
         "FILE_PATH": {
-          "true_positives": 6,
+          "true_positives": 7,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 7,
-          "precision": 0.8571,
-          "recall": 0.8571,
-          "f1": 0.8571,
-          "f2": 0.8571,
+          "precision": 0.875,
+          "recall": 1.0,
+          "f1": 0.9333,
+          "f2": 0.9722,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "GPS": {
@@ -555,8 +555,7 @@
           "ADDRESS": 1,
           "COMPANY": 1,
           "URL": 1,
-          "API_KEY": 3,
-          "DOMAIN": 1,
+          "API_KEY": 1,
           "JWT": 1,
           "EMAIL": 2
         },
@@ -564,14 +563,11 @@
           "URL": 1
         },
         "IP_ADDRESS": {
-          "API_KEY": 2,
+          "API_KEY": 1,
           "IP_ADDRESS": 2
         },
         "PHONE": {
           "PHONE": 2
-        },
-        "FILE_PATH": {
-          "API_KEY": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -1372,15 +1368,14 @@
           "index": 49,
           "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -1494,14 +1489,14 @@
           "text_preview": "File: /home/user/tmp/cache/data",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "API_KEY"
+            "FILE_PATH"
           ]
         },
         {
@@ -2315,14 +2310,12 @@
           "index": 113,
           "text_preview": "Redacted phone: XXX-XXX-7890 and email: xxxx@domain.com",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "DOMAIN"
-          ]
+          "detected_types": []
         },
         {
           "index": 114,
@@ -2405,13 +2398,12 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "API_KEY",
             "JWT"
           ]
         },
@@ -2479,15 +2471,14 @@
           "index": 126,
           "text_preview": "Base64: am9obkBleGFtcGxlLmNvbQ== decodes to john@example.com",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "API_KEY",
             "EMAIL"
           ]
         },
@@ -2838,13 +2829,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 228,
-      "total_true_positives": 208,
-      "total_false_positives": 24,
-      "total_false_negatives": 5,
-      "overall_precision": 0.896551724137931,
-      "overall_recall": 0.9765258215962441,
-      "overall_f1": 0.9348314606741573,
+      "total_detected_entities": 224,
+      "total_true_positives": 209,
+      "total_false_positives": 19,
+      "total_false_negatives": 4,
+      "overall_precision": 0.9166666666666666,
+      "overall_recall": 0.9812206572769953,
+      "overall_f1": 0.947845804988662,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -2868,13 +2859,13 @@
         },
         "API_KEY": {
           "true_positives": 5,
-          "false_positives": 6,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 5,
-          "precision": 0.4545,
+          "precision": 0.7143,
           "recall": 1.0,
-          "f1": 0.625,
-          "f2": 0.8065,
+          "f1": 0.8333,
+          "f2": 0.9259,
           "recall_ci": [
             0.5655,
             1.0
@@ -3028,13 +3019,13 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.8182,
+          "precision": 0.9,
           "recall": 1.0,
-          "f1": 0.9,
-          "f2": 0.9574,
+          "f1": 0.9474,
+          "f2": 0.9783,
           "recall_ci": [
             0.7008,
             1.0
@@ -3087,23 +3078,23 @@
           ]
         },
         "FILE_PATH": {
-          "true_positives": 6,
+          "true_positives": 7,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 7,
-          "precision": 0.8571,
-          "recall": 0.8571,
-          "f1": 0.8571,
-          "f2": 0.8571,
+          "precision": 0.875,
+          "recall": 1.0,
+          "f1": 0.9333,
+          "f2": 0.9722,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "GPS": {
@@ -3352,22 +3343,18 @@
           "COMPANY": 1,
           "PERSON": 1,
           "URL": 1,
-          "API_KEY": 3,
+          "API_KEY": 1,
           "EMAIL": 3,
-          "DOMAIN": 1,
           "JWT": 1
         },
         "PRIVATE_URL": {
           "URL": 1
         },
         "IP_ADDRESS": {
-          "API_KEY": 2
+          "API_KEY": 1
         },
         "ADDRESS": {
           "PERSON": 1
-        },
-        "FILE_PATH": {
-          "API_KEY": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -4169,15 +4156,14 @@
           "index": 49,
           "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -4291,14 +4277,14 @@
           "text_preview": "File: /home/user/tmp/cache/data",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "API_KEY"
+            "FILE_PATH"
           ]
         },
         {
@@ -5113,13 +5099,12 @@
           "index": 113,
           "text_preview": "Redacted phone: XXX-XXX-7890 and email: xxxx@domain.com",
           "expected": 0,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "DOMAIN",
             "EMAIL"
           ]
         },
@@ -5204,13 +5189,12 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "API_KEY",
             "JWT"
           ]
         },
@@ -5278,15 +5262,14 @@
           "index": 126,
           "text_preview": "Base64: am9obkBleGFtcGxlLmNvbQ== decodes to john@example.com",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "API_KEY",
             "EMAIL"
           ]
         },
@@ -5637,13 +5620,13 @@
       "detector": "pipeline-raw",
       "total_examples": 150,
       "total_expected_entities": 213,
-      "total_detected_entities": 248,
-      "total_true_positives": 208,
-      "total_false_positives": 40,
-      "total_false_negatives": 5,
-      "overall_precision": 0.8387096774193549,
-      "overall_recall": 0.9765258215962441,
-      "overall_f1": 0.9023861171366595,
+      "total_detected_entities": 244,
+      "total_true_positives": 209,
+      "total_false_positives": 35,
+      "total_false_negatives": 4,
+      "overall_precision": 0.8565573770491803,
+      "overall_recall": 0.9812206572769953,
+      "overall_f1": 0.9146608315098469,
       "per_type": {
         "ADDRESS": {
           "true_positives": 4,
@@ -5667,13 +5650,13 @@
         },
         "API_KEY": {
           "true_positives": 5,
-          "false_positives": 6,
+          "false_positives": 2,
           "false_negatives": 0,
           "n": 5,
-          "precision": 0.4545,
+          "precision": 0.7143,
           "recall": 1.0,
-          "f1": 0.625,
-          "f2": 0.8065,
+          "f1": 0.8333,
+          "f2": 0.9259,
           "recall_ci": [
             0.5655,
             1.0
@@ -5827,13 +5810,13 @@
         },
         "DOMAIN": {
           "true_positives": 9,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "n": 9,
-          "precision": 0.8182,
+          "precision": 0.9,
           "recall": 1.0,
-          "f1": 0.9,
-          "f2": 0.9574,
+          "f1": 0.9474,
+          "f2": 0.9783,
           "recall_ci": [
             0.7008,
             1.0
@@ -5886,23 +5869,23 @@
           ]
         },
         "FILE_PATH": {
-          "true_positives": 6,
+          "true_positives": 7,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 7,
-          "precision": 0.8571,
-          "recall": 0.8571,
-          "f1": 0.8571,
-          "f2": 0.8571,
+          "precision": 0.875,
+          "recall": 1.0,
+          "f1": 0.9333,
+          "f2": 0.9722,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "GPS": {
@@ -6154,9 +6137,8 @@
           "COMPANY": 1,
           "PERSON": 1,
           "URL": 1,
-          "API_KEY": 3,
+          "API_KEY": 1,
           "EMAIL": 3,
-          "DOMAIN": 1,
           "JWT": 1
         },
         "SOCIAL_SECURITY": {
@@ -6166,7 +6148,7 @@
           "URL": 1
         },
         "IP_ADDRESS": {
-          "API_KEY": 2,
+          "API_KEY": 1,
           "IP_ADDRESS": 2
         },
         "ADDRESS": {
@@ -6174,9 +6156,6 @@
         },
         "PHONE": {
           "PHONE": 4
-        },
-        "FILE_PATH": {
-          "API_KEY": 1
         },
         "DATABASE_URL": {
           "PRIVATE_URL": 1
@@ -6982,15 +6961,14 @@
           "index": 49,
           "text_preview": "IPv4: 10.10.10.10, 172.16.0.1, 192.168.10.255",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -7104,14 +7082,14 @@
           "text_preview": "File: /home/user/tmp/cache/data",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "FILE_PATH"
           ],
           "detected_types": [
-            "API_KEY"
+            "FILE_PATH"
           ]
         },
         {
@@ -7926,13 +7904,12 @@
           "index": 113,
           "text_preview": "Redacted phone: XXX-XXX-7890 and email: xxxx@domain.com",
           "expected": 0,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "DOMAIN",
             "EMAIL"
           ]
         },
@@ -8017,13 +7994,12 @@
           "index": 121,
           "text_preview": "JWT-like in text: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...eyJzdWIiOiIxMjM0NTY3ODk",
           "expected": 0,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [],
           "detected_types": [
-            "API_KEY",
             "JWT"
           ]
         },
@@ -8091,15 +8067,14 @@
           "index": 126,
           "text_preview": "Base64: am9obkBleGFtcGxlLmNvbQ== decodes to john@example.com",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "API_KEY",
             "EMAIL"
           ]
         },
