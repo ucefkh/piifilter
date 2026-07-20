@@ -713,6 +713,103 @@ class Arbitrator:
                 # else: drop the DOMAIN span — it's an FP
             deduped = filtered
 
+        # ── PERSON overlap suppression ──────────────────────────────────────
+        # PERSON spans that overlap with higher-specificity types (COMPANY,
+        # ADDRESS, CITY) are almost always false positives — the same text
+        # was more precisely classified by a different type. Drop the PERSON
+        # span when it overlaps with any of these higher-specificity spans.
+        _PERSON_OVERRIDE_TYPES = {
+            EntityType.COMPANY,
+            EntityType.ADDRESS,
+            EntityType.CITY,
+        }
+
+        # Collect overrider spans (start, end) for overlap check
+        overrider_intervals: list[tuple[int, int]] = []
+        for e in deduped:
+            if e.entity_type in _PERSON_OVERRIDE_TYPES:
+                overrider_intervals.append((e.start, e.end))
+
+        if overrider_intervals:
+            filtered: list[DetectedEntity] = []
+            for e in deduped:
+                if e.entity_type != EntityType.PERSON:
+                    filtered.append(e)
+                    continue
+                # Check if this PERSON span overlaps with any overrider span
+                overlaps = any(
+                    e.start < oe and ostart < e.end
+                    for ostart, oe in overrider_intervals
+                )
+                if not overlaps:
+                    filtered.append(e)
+                # else: drop the PERSON span — it's an FP, the overrider type is more specific
+            deduped = filtered
+
+        # ── URL priority over DOMAIN/EMAIL ──────────────────────────────────
+        # When a URL span overlaps with DOMAIN or EMAIL spans, keep the URL
+        # and drop the DOMAIN/EMAIL. URL is the most specific and important
+        # type for web contexts. This catches cases where DOMAIN or EMAIL
+        # patterns steal URL parts (e.g. DOMAIN matching "example.com" inside
+        # "https://example.com/api", leaving the URL incomplete).
+        _URL_OVERRIDDEN_TYPES = {
+            EntityType.DOMAIN,
+            EntityType.EMAIL,
+        }
+
+        # Collect URL intervals for overlap check
+        url_intervals: list[tuple[int, int]] = []
+        for e in deduped:
+            if e.entity_type == EntityType.URL:
+                url_intervals.append((e.start, e.end))
+
+        if url_intervals:
+            filtered: list[DetectedEntity] = []
+            for e in deduped:
+                if e.entity_type not in _URL_OVERRIDDEN_TYPES:
+                    filtered.append(e)
+                    continue
+                # Check if this DOMAIN/EMAIL span overlaps with any URL span
+                overlaps_url = any(
+                    e.start < ue and ustart < e.end
+                    for ustart, ue in url_intervals
+                )
+                if not overlaps_url:
+                    filtered.append(e)
+                # else: drop the DOMAIN/EMAIL span — URL is more specific
+            deduped = filtered
+
+        # ── CITY geographic proximity gate ──────────────────────────────────
+        # CITY spans that are NOT within 15 characters of an ADDRESS, COUNTRY,
+        # or STATE/PROVINCE span are almost certainly false positives.
+        # Suppress lone city names that lack geographic context.
+        _CITY_GEO_TYPES = {
+            EntityType.ADDRESS,
+            EntityType.COUNTRY,
+        }
+
+        # Collect all geo-neighbor intervals with 15-char margin
+        geo_intervals: list[tuple[int, int]] = []
+        for e in deduped:
+            if e.entity_type in _CITY_GEO_TYPES:
+                geo_intervals.append((e.start - 15, e.end + 15))
+
+        if geo_intervals:
+            filtered_by_geo: list[DetectedEntity] = []
+            for e in deduped:
+                if e.entity_type != EntityType.CITY:
+                    filtered_by_geo.append(e)
+                    continue
+                # Check if this CITY span is within 15 chars of any geo span
+                near_geo = any(
+                    gs <= e.start and e.end <= ge
+                    for gs, ge in geo_intervals
+                )
+                if near_geo:
+                    filtered_by_geo.append(e)
+                # else: drop the CITY span — no geographic anchor nearby
+            deduped = filtered_by_geo
+
         deduped.sort(key=lambda e: e.start)
         return deduped
 

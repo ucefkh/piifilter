@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
-  "timestamp": "2026-07-20T10:10:21Z",
+  "timestamp": "2026-07-20T11:24:11Z",
   "arbitration": {
     "enabled": true
   },
@@ -8,7 +8,7 @@
     "path": "benchmarks/data/pii_dataset_v2.json",
     "total_examples": 2365,
     "test_examples": 473,
-    "total_entities": 540,
+    "total_entities": 539,
     "entity_types": [
       "ADDRESS",
       "API_KEY",
@@ -48,34 +48,34 @@
     "regex": {
       "detector": "regex",
       "total_examples": 473,
-      "total_expected_entities": 540,
-      "total_detected_entities": 587,
-      "total_true_positives": 499,
-      "total_false_positives": 88,
-      "total_false_negatives": 41,
-      "overall_precision": 0.8500851788756388,
-      "overall_recall": 0.924074074074074,
-      "overall_f1": 0.8855368234250223,
+      "total_expected_entities": 539,
+      "total_detected_entities": 573,
+      "total_true_positives": 496,
+      "total_false_positives": 77,
+      "total_false_negatives": 43,
+      "overall_precision": 0.8656195462478184,
+      "overall_recall": 0.9202226345083488,
+      "overall_f1": 0.8920863309352517,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 16,
+          "true_positives": 17,
           "false_positives": 1,
           "false_negatives": 2,
-          "n": 18,
-          "n_total": 18,
-          "precision": 0.9412,
-          "recall": 0.8889,
-          "f1": 0.9143,
-          "f2": 0.8989,
+          "n": 19,
+          "n_total": 19,
+          "precision": 0.9444,
+          "recall": 0.8947,
+          "f1": 0.9189,
+          "f2": 0.9043,
           "recall_ci": [
-            0.672,
-            0.969
+            0.6861,
+            0.9706
           ],
-          "real_n": 18,
-          "real_recall": 0.8889,
+          "real_n": 19,
+          "real_recall": 0.8947,
           "real_recall_ci": [
-            0.672,
-            0.969
+            0.6861,
+            0.9706
           ]
         },
         "API_KEY": {
@@ -121,24 +121,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 5,
-          "false_positives": 14,
-          "false_negatives": 4,
+          "true_positives": 2,
+          "false_positives": 4,
+          "false_negatives": 7,
           "n": 9,
           "n_total": 9,
-          "precision": 0.2632,
-          "recall": 0.5556,
-          "f1": 0.3571,
-          "f2": 0.4545,
+          "precision": 0.3333,
+          "recall": 0.2222,
+          "f1": 0.2667,
+          "f2": 0.2381,
           "recall_ci": [
-            0.2666,
-            0.8112
+            0.0632,
+            0.5474
           ],
           "real_n": 9,
-          "real_recall": 0.5556,
+          "real_recall": 0.2222,
           "real_recall_ci": [
-            0.2666,
-            0.8112
+            0.0632,
+            0.5474
           ]
         },
         "COMPANY": {
@@ -207,23 +207,23 @@
           ]
         },
         "CUSTOMER_NAME": {
-          "true_positives": 7,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 7,
-          "n_total": 7,
+          "n": 6,
+          "n_total": 6,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.6457,
+            0.6097,
             1.0
           ],
-          "real_n": 7,
+          "real_n": 6,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6457,
+            0.6097,
             1.0
           ]
         },
@@ -291,44 +291,44 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 108,
+          "true_positives": 107,
           "false_positives": 0,
           "false_negatives": 2,
-          "n": 110,
-          "n_total": 110,
+          "n": 109,
+          "n_total": 109,
           "precision": 1.0,
-          "recall": 0.9818,
-          "f1": 0.9908,
-          "f2": 0.9854,
+          "recall": 0.9817,
+          "f1": 0.9907,
+          "f2": 0.9853,
           "recall_ci": [
-            0.9361,
+            0.9356,
             0.995
           ],
-          "real_n": 110,
-          "real_recall": 0.9818,
+          "real_n": 109,
+          "real_recall": 0.9817,
           "real_recall_ci": [
-            0.9361,
+            0.9356,
             0.995
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 5,
-          "false_positives": 1,
+          "true_positives": 6,
+          "false_positives": 0,
           "false_negatives": 0,
-          "n": 5,
-          "n_total": 5,
-          "precision": 0.8333,
+          "n": 6,
+          "n_total": 6,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ],
-          "real_n": 5,
+          "real_n": 6,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ]
         },
@@ -495,24 +495,24 @@
           ]
         },
         "PHONE": {
-          "true_positives": 50,
+          "true_positives": 51,
           "false_positives": 2,
-          "false_negatives": 7,
+          "false_negatives": 6,
           "n": 57,
           "n_total": 57,
-          "precision": 0.9615,
-          "recall": 0.8772,
-          "f1": 0.9174,
-          "f2": 0.8929,
+          "precision": 0.9623,
+          "recall": 0.8947,
+          "f1": 0.9273,
+          "f2": 0.9075,
           "recall_ci": [
-            0.7675,
-            0.9392
+            0.7888,
+            0.9509
           ],
           "real_n": 57,
-          "real_recall": 0.8772,
+          "real_recall": 0.8947,
           "real_recall_ci": [
-            0.7675,
-            0.9392
+            0.7888,
+            0.9509
           ]
         },
         "PRIVATE_URL": {
@@ -537,23 +537,23 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 6,
+          "true_positives": 5,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 6,
-          "n_total": 6,
+          "n": 5,
+          "n_total": 5,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ],
-          "real_n": 6,
+          "real_n": 5,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ]
         },
@@ -626,7 +626,6 @@
       "confusion_matrix": {
         "NONE": {
           "GPS": 3,
-          "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
           "ADDRESS": 1
         },
@@ -644,7 +643,7 @@
         },
         "ADDRESS": {
           "COUNTRY": 4,
-          "CITY": 12
+          "CITY": 2
         },
         "PHONE": {
           "MASKED_SSN": 12,
@@ -1713,9 +1712,9 @@
           "index": 67,
           "text_preview": "Ship to 6633 Green Lane, Chicago, IL 48201. Phone: +1-695-818-2684",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -1723,7 +1722,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -1744,7 +1742,7 @@
         },
         {
           "index": 69,
-          "text_preview": "Team member Michael Flores",
+          "text_preview": "Employee: Kai Harris",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -1983,9 +1981,9 @@
           "index": 85,
           "text_preview": "Ship to 6921 Oak Avenue, Tokyo, IL 80201. Phone: +44-594-549-6836",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -1993,7 +1991,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -2783,12 +2780,12 @@
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "MASKED_SSN"
+            "SOCIAL_SECURITY"
           ]
         },
         {
           "index": 138,
-          "text_preview": "Customer name: Yara Davis",
+          "text_preview": "User Lena Thomas ordered",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -2871,16 +2868,15 @@
           "index": 143,
           "text_preview": "Our address is 4565 Lake Drive, Shanghai, CO 19106, UK",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -3241,9 +3237,9 @@
           "index": 167,
           "text_preview": "Ship to 9489 High Street, Denver, IL 90001. Phone: +1-363-523-2075",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -3251,7 +3247,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -3347,19 +3342,17 @@
         },
         {
           "index": 174,
-          "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
-          "expected": 2,
-          "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
+          "text_preview": "Staff: Tina Gonzalez",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ]
         },
         {
@@ -3478,16 +3471,14 @@
           "index": 182,
           "text_preview": "Mumbai headquarters",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 183,
@@ -3906,14 +3897,16 @@
           "index": 210,
           "text_preview": "Raw: +1—555—123—4Ӧ97",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PHONE"
+          ]
         },
         {
           "index": 211,
@@ -4119,9 +4112,9 @@
           "index": 224,
           "text_preview": "Ship to 4055 Lake Drive, Los Angeles, IL 55401. Phone: +1-489-263-7355",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -4129,7 +4122,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -4212,20 +4204,16 @@
         },
         {
           "index": 230,
-          "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
-          "expected": 3,
-          "detected": 3,
-          "true_positives": 3,
+          "text_preview": "Project Nebula starts next quarter",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CUSTOMER_NAME",
-            "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "CUSTOMER_NAME",
-            "EMAIL",
             "PROJECT_NAME"
           ]
         },
@@ -4246,7 +4234,7 @@
         },
         {
           "index": 232,
-          "text_preview": "Staff: Dalia Scott",
+          "text_preview": "Staff: Hugo Lee",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -4354,16 +4342,15 @@
           "index": 239,
           "text_preview": "Address: 3630 Lake Drive, London, OR 02101, Canada",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -5018,7 +5005,7 @@
         },
         {
           "index": 283,
-          "text_preview": "Client: Wei Lopez",
+          "text_preview": "Customer name: Cheng Martinez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -5320,18 +5307,16 @@
         },
         {
           "index": 303,
-          "text_preview": "Dubai headquarters",
+          "text_preview": "Our Amsterdam office",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 304,
@@ -5811,16 +5796,14 @@
           "index": 335,
           "text_preview": "Our address is Church Road, #7345, Seattle, OR 80201",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "ADDRESS"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 336,
@@ -5869,17 +5852,17 @@
         },
         {
           "index": 339,
-          "text_preview": "Working on Moonlight",
+          "text_preview": "Client: Wei Lopez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "PROJECT_NAME"
+            "CUSTOMER_NAME"
           ],
           "detected_types": [
-            "PROJECT_NAME"
+            "CUSTOMER_NAME"
           ]
         },
         {
@@ -5977,7 +5960,7 @@
         },
         {
           "index": 346,
-          "text_preview": "Customer: Tariq Martin",
+          "text_preview": "Customer name: Hiro Clark",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -6024,17 +6007,18 @@
         },
         {
           "index": 349,
-          "text_preview": "I live in Mumbai",
-          "expected": 1,
+          "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
+          "expected": 2,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
+            "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -6259,9 +6243,9 @@
           "index": 364,
           "text_preview": "Ship to 5361 Main Street, Denver, CA 33101. Phone: +44-452-473-4922",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -6269,7 +6253,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -6350,7 +6333,7 @@
         },
         {
           "index": 370,
-          "text_preview": "Project Orion is in development",
+          "text_preview": "Project Pandorica is in development",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -6440,7 +6423,7 @@
         },
         {
           "index": 376,
-          "text_preview": "Working on Omega Protocol",
+          "text_preview": "Project Orion starts next quarter",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -6608,7 +6591,7 @@
         },
         {
           "index": 387,
-          "text_preview": "Customer name: Cheng Martinez",
+          "text_preview": "Customer name: Yara Davis",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -6815,7 +6798,7 @@
         },
         {
           "index": 401,
-          "text_preview": "User Lena Thomas ordered",
+          "text_preview": "Customer: Tariq Martin",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -7039,7 +7022,7 @@
         },
         {
           "index": 416,
-          "text_preview": "Working on Project Aurora",
+          "text_preview": "Working on Project Phoenix",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -7101,16 +7084,15 @@
           "index": 420,
           "text_preview": "Location: 2325 High Street, Los Angeles, NY 94102",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -7294,17 +7276,19 @@
         },
         {
           "index": 433,
-          "text_preview": "Team member Val Patel",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ]
         },
         {
@@ -7794,17 +7778,17 @@
         },
         {
           "index": 466,
-          "text_preview": "Customer name: Hiro Clark",
+          "text_preview": "Team member Victor Hernandez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CUSTOMER_NAME"
+            "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "CUSTOMER_NAME"
+            "EMPLOYEE_NAME"
           ]
         },
         {
@@ -7873,9 +7857,9 @@
           "index": 471,
           "text_preview": "Ship to 1775 Willow Way, Seattle, IL 77001. Phone: +44-990-508-7596",
           "expected": 2,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -7883,7 +7867,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -7907,34 +7890,34 @@
     "pipeline-arbitration": {
       "detector": "pipeline-arbitration",
       "total_examples": 473,
-      "total_expected_entities": 540,
-      "total_detected_entities": 584,
-      "total_true_positives": 499,
-      "total_false_positives": 85,
-      "total_false_negatives": 41,
-      "overall_precision": 0.8544520547945206,
-      "overall_recall": 0.924074074074074,
-      "overall_f1": 0.887900355871886,
+      "total_expected_entities": 539,
+      "total_detected_entities": 565,
+      "total_true_positives": 496,
+      "total_false_positives": 69,
+      "total_false_negatives": 43,
+      "overall_precision": 0.8778761061946903,
+      "overall_recall": 0.9202226345083488,
+      "overall_f1": 0.8985507246376812,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 16,
+          "true_positives": 17,
           "false_positives": 1,
           "false_negatives": 2,
-          "n": 18,
-          "n_total": 18,
-          "precision": 0.9412,
-          "recall": 0.8889,
-          "f1": 0.9143,
-          "f2": 0.8989,
+          "n": 19,
+          "n_total": 19,
+          "precision": 0.9444,
+          "recall": 0.8947,
+          "f1": 0.9189,
+          "f2": 0.9043,
           "recall_ci": [
-            0.672,
-            0.969
+            0.6861,
+            0.9706
           ],
-          "real_n": 18,
-          "real_recall": 0.8889,
+          "real_n": 19,
+          "real_recall": 0.8947,
           "real_recall_ci": [
-            0.672,
-            0.969
+            0.6861,
+            0.9706
           ]
         },
         "API_KEY": {
@@ -7980,24 +7963,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 5,
-          "false_positives": 14,
-          "false_negatives": 4,
+          "true_positives": 2,
+          "false_positives": 4,
+          "false_negatives": 7,
           "n": 9,
           "n_total": 9,
-          "precision": 0.2632,
-          "recall": 0.5556,
-          "f1": 0.3571,
-          "f2": 0.4545,
+          "precision": 0.3333,
+          "recall": 0.2222,
+          "f1": 0.2667,
+          "f2": 0.2381,
           "recall_ci": [
-            0.2666,
-            0.8112
+            0.0632,
+            0.5474
           ],
           "real_n": 9,
-          "real_recall": 0.5556,
+          "real_recall": 0.2222,
           "real_recall_ci": [
-            0.2666,
-            0.8112
+            0.0632,
+            0.5474
           ]
         },
         "COMPANY": {
@@ -8066,23 +8049,23 @@
           ]
         },
         "CUSTOMER_NAME": {
-          "true_positives": 7,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 7,
-          "n_total": 7,
+          "n": 6,
+          "n_total": 6,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.6457,
+            0.6097,
             1.0
           ],
-          "real_n": 7,
+          "real_n": 6,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6457,
+            0.6097,
             1.0
           ]
         },
@@ -8150,44 +8133,44 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 108,
+          "true_positives": 107,
           "false_positives": 0,
           "false_negatives": 2,
-          "n": 110,
-          "n_total": 110,
+          "n": 109,
+          "n_total": 109,
           "precision": 1.0,
-          "recall": 0.9818,
-          "f1": 0.9908,
-          "f2": 0.9854,
+          "recall": 0.9817,
+          "f1": 0.9907,
+          "f2": 0.9853,
           "recall_ci": [
-            0.9361,
+            0.9356,
             0.995
           ],
-          "real_n": 110,
-          "real_recall": 0.9818,
+          "real_n": 109,
+          "real_recall": 0.9817,
           "real_recall_ci": [
-            0.9361,
+            0.9356,
             0.995
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 5,
-          "false_positives": 1,
+          "true_positives": 6,
+          "false_positives": 0,
           "false_negatives": 0,
-          "n": 5,
-          "n_total": 5,
-          "precision": 0.8333,
+          "n": 6,
+          "n_total": 6,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ],
-          "real_n": 5,
+          "real_n": 6,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ]
         },
@@ -8334,14 +8317,14 @@
         },
         "PERSON": {
           "true_positives": 26,
-          "false_positives": 12,
+          "false_positives": 7,
           "false_negatives": 0,
           "n": 26,
           "n_total": 26,
-          "precision": 0.6842,
+          "precision": 0.7879,
           "recall": 1.0,
-          "f1": 0.8125,
-          "f2": 0.9155,
+          "f1": 0.8814,
+          "f2": 0.9489,
           "recall_ci": [
             0.8713,
             1.0
@@ -8354,24 +8337,24 @@
           ]
         },
         "PHONE": {
-          "true_positives": 50,
+          "true_positives": 51,
           "false_positives": 0,
-          "false_negatives": 7,
+          "false_negatives": 6,
           "n": 57,
           "n_total": 57,
           "precision": 1.0,
-          "recall": 0.8772,
-          "f1": 0.9346,
-          "f2": 0.8993,
+          "recall": 0.8947,
+          "f1": 0.9444,
+          "f2": 0.914,
           "recall_ci": [
-            0.7675,
-            0.9392
+            0.7888,
+            0.9509
           ],
           "real_n": 57,
-          "real_recall": 0.8772,
+          "real_recall": 0.8947,
           "real_recall_ci": [
-            0.7675,
-            0.9392
+            0.7888,
+            0.9509
           ]
         },
         "PRIVATE_URL": {
@@ -8396,23 +8379,23 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 6,
+          "true_positives": 5,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 6,
-          "n_total": 6,
+          "n": 5,
+          "n_total": 5,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ],
-          "real_n": 6,
+          "real_n": 5,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ]
         },
@@ -8496,8 +8479,7 @@
         },
         "ADDRESS": {
           "COUNTRY": 4,
-          "CITY": 12,
-          "PERSON": 2
+          "CITY": 2
         },
         "PHONE": {
           "MASKED_SSN": 12
@@ -8510,7 +8492,6 @@
         },
         "NONE": {
           "PERSON": 4,
-          "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
           "ADDRESS": 1
         },
@@ -8521,11 +8502,11 @@
           "COMPANY": 1,
           "CITY": 2
         },
-        "COMPANY": {
-          "PERSON": 6
-        },
         "SOCIAL_SECURITY": {
           "MASKED_SSN": 2
+        },
+        "COMPANY": {
+          "PERSON": 3
         },
         "EMAIL": {
           "DOMAIN": 1
@@ -9565,9 +9546,9 @@
           "index": 67,
           "text_preview": "Ship to 6633 Green Lane, Chicago, IL 48201. Phone: +1-695-818-2684",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -9575,7 +9556,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -9596,7 +9576,7 @@
         },
         {
           "index": 69,
-          "text_preview": "Team member Michael Flores",
+          "text_preview": "Employee: Kai Harris",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -9835,9 +9815,9 @@
           "index": 85,
           "text_preview": "Ship to 6921 Oak Avenue, Tokyo, IL 80201. Phone: +44-594-549-6836",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -9845,7 +9825,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -10637,12 +10616,12 @@
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "MASKED_SSN"
+            "SOCIAL_SECURITY"
           ]
         },
         {
           "index": 138,
-          "text_preview": "Customer name: Yara Davis",
+          "text_preview": "User Lena Thomas ordered",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -10725,16 +10704,15 @@
           "index": 143,
           "text_preview": "Our address is 4565 Lake Drive, Shanghai, CO 19106, UK",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -11096,9 +11074,9 @@
           "index": 167,
           "text_preview": "Ship to 9489 High Street, Denver, IL 90001. Phone: +1-363-523-2075",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -11106,7 +11084,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -11202,19 +11179,17 @@
         },
         {
           "index": 174,
-          "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
-          "expected": 2,
-          "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
+          "text_preview": "Staff: Tina Gonzalez",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ]
         },
         {
@@ -11333,16 +11308,14 @@
           "index": 182,
           "text_preview": "Mumbai headquarters",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 183,
@@ -11761,14 +11734,16 @@
           "index": 210,
           "text_preview": "Raw: +1—555—123—4Ӧ97",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PHONE"
+          ]
         },
         {
           "index": 211,
@@ -11804,9 +11779,9 @@
           "index": 213,
           "text_preview": "Hi, I'm Bella Gonzalez from Hooli. Email: bella.gonzalez@example.com",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -11974,9 +11949,9 @@
           "index": 224,
           "text_preview": "Ship to 4055 Lake Drive, Los Angeles, IL 55401. Phone: +1-489-263-7355",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -11984,7 +11959,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -12067,20 +12041,16 @@
         },
         {
           "index": 230,
-          "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
-          "expected": 3,
-          "detected": 3,
-          "true_positives": 3,
+          "text_preview": "Project Nebula starts next quarter",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CUSTOMER_NAME",
-            "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "CUSTOMER_NAME",
-            "EMAIL",
             "PROJECT_NAME"
           ]
         },
@@ -12101,7 +12071,7 @@
         },
         {
           "index": 232,
-          "text_preview": "Staff: Dalia Scott",
+          "text_preview": "Staff: Hugo Lee",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -12209,16 +12179,15 @@
           "index": 239,
           "text_preview": "Address: 3630 Lake Drive, London, OR 02101, Canada",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -12873,7 +12842,7 @@
         },
         {
           "index": 283,
-          "text_preview": "Client: Wei Lopez",
+          "text_preview": "Customer name: Cheng Martinez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -13175,18 +13144,16 @@
         },
         {
           "index": 303,
-          "text_preview": "Dubai headquarters",
+          "text_preview": "Our Amsterdam office",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 304,
@@ -13252,9 +13219,9 @@
           "index": 308,
           "text_preview": "Hi, I'm Usman White from Hooli. Email: usman.white@data-service.ai",
           "expected": 3,
-          "detected": 4,
+          "detected": 3,
           "true_positives": 3,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY",
@@ -13621,16 +13588,15 @@
           "index": 332,
           "text_preview": "Home address: 123 Maple Drive, Springfield, IL 62704, USA",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "PERSON"
+            "ADDRESS"
           ]
         },
         {
@@ -13667,16 +13633,14 @@
           "index": 335,
           "text_preview": "Our address is Church Road, #7345, Seattle, OR 80201",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "ADDRESS"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 336,
@@ -13725,17 +13689,17 @@
         },
         {
           "index": 339,
-          "text_preview": "Working on Moonlight",
+          "text_preview": "Client: Wei Lopez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "PROJECT_NAME"
+            "CUSTOMER_NAME"
           ],
           "detected_types": [
-            "PROJECT_NAME"
+            "CUSTOMER_NAME"
           ]
         },
         {
@@ -13833,7 +13797,7 @@
         },
         {
           "index": 346,
-          "text_preview": "Customer: Tariq Martin",
+          "text_preview": "Customer name: Hiro Clark",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -13880,17 +13844,18 @@
         },
         {
           "index": 349,
-          "text_preview": "I live in Mumbai",
-          "expected": 1,
+          "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
+          "expected": 2,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
+            "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -14115,9 +14080,9 @@
           "index": 364,
           "text_preview": "Ship to 5361 Main Street, Denver, CA 33101. Phone: +44-452-473-4922",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -14125,7 +14090,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -14206,7 +14170,7 @@
         },
         {
           "index": 370,
-          "text_preview": "Project Orion is in development",
+          "text_preview": "Project Pandorica is in development",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -14296,7 +14260,7 @@
         },
         {
           "index": 376,
-          "text_preview": "Working on Omega Protocol",
+          "text_preview": "Project Orion starts next quarter",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -14464,7 +14428,7 @@
         },
         {
           "index": 387,
-          "text_preview": "Customer name: Cheng Martinez",
+          "text_preview": "Customer name: Yara Davis",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -14671,7 +14635,7 @@
         },
         {
           "index": 401,
-          "text_preview": "User Lena Thomas ordered",
+          "text_preview": "Customer: Tariq Martin",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -14895,7 +14859,7 @@
         },
         {
           "index": 416,
-          "text_preview": "Working on Project Aurora",
+          "text_preview": "Working on Project Phoenix",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -14957,16 +14921,15 @@
           "index": 420,
           "text_preview": "Location: 2325 High Street, Los Angeles, NY 94102",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -15150,17 +15113,19 @@
         },
         {
           "index": 433,
-          "text_preview": "Team member Val Patel",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ]
         },
         {
@@ -15441,16 +15406,15 @@
           "index": 452,
           "text_preview": "Hooli is the vendor",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "COMPANY"
           ],
           "detected_types": [
-            "COMPANY",
-            "PERSON"
+            "COMPANY"
           ]
         },
         {
@@ -15652,17 +15616,17 @@
         },
         {
           "index": 466,
-          "text_preview": "Customer name: Hiro Clark",
+          "text_preview": "Team member Victor Hernandez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CUSTOMER_NAME"
+            "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "CUSTOMER_NAME"
+            "EMPLOYEE_NAME"
           ]
         },
         {
@@ -15731,9 +15695,9 @@
           "index": 471,
           "text_preview": "Ship to 1775 Willow Way, Seattle, IL 77001. Phone: +44-990-508-7596",
           "expected": 2,
-          "detected": 4,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -15741,8 +15705,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "PERSON",
             "PHONE"
           ]
         },
@@ -15766,34 +15728,34 @@
     "pipeline-raw": {
       "detector": "pipeline-raw",
       "total_examples": 473,
-      "total_expected_entities": 540,
-      "total_detected_entities": 624,
-      "total_true_positives": 499,
-      "total_false_positives": 125,
-      "total_false_negatives": 41,
-      "overall_precision": 0.7996794871794872,
-      "overall_recall": 0.924074074074074,
-      "overall_f1": 0.8573883161512028,
+      "total_expected_entities": 539,
+      "total_detected_entities": 610,
+      "total_true_positives": 496,
+      "total_false_positives": 114,
+      "total_false_negatives": 43,
+      "overall_precision": 0.8131147540983606,
+      "overall_recall": 0.9202226345083488,
+      "overall_f1": 0.8633594429939077,
       "per_type": {
         "ADDRESS": {
-          "true_positives": 16,
+          "true_positives": 17,
           "false_positives": 1,
           "false_negatives": 2,
-          "n": 18,
-          "n_total": 18,
-          "precision": 0.9412,
-          "recall": 0.8889,
-          "f1": 0.9143,
-          "f2": 0.8989,
+          "n": 19,
+          "n_total": 19,
+          "precision": 0.9444,
+          "recall": 0.8947,
+          "f1": 0.9189,
+          "f2": 0.9043,
           "recall_ci": [
-            0.672,
-            0.969
+            0.6861,
+            0.9706
           ],
-          "real_n": 18,
-          "real_recall": 0.8889,
+          "real_n": 19,
+          "real_recall": 0.8947,
           "real_recall_ci": [
-            0.672,
-            0.969
+            0.6861,
+            0.9706
           ]
         },
         "API_KEY": {
@@ -15839,24 +15801,24 @@
           ]
         },
         "CITY": {
-          "true_positives": 5,
-          "false_positives": 14,
-          "false_negatives": 4,
+          "true_positives": 2,
+          "false_positives": 4,
+          "false_negatives": 7,
           "n": 9,
           "n_total": 9,
-          "precision": 0.2632,
-          "recall": 0.5556,
-          "f1": 0.3571,
-          "f2": 0.4545,
+          "precision": 0.3333,
+          "recall": 0.2222,
+          "f1": 0.2667,
+          "f2": 0.2381,
           "recall_ci": [
-            0.2666,
-            0.8112
+            0.0632,
+            0.5474
           ],
           "real_n": 9,
-          "real_recall": 0.5556,
+          "real_recall": 0.2222,
           "real_recall_ci": [
-            0.2666,
-            0.8112
+            0.0632,
+            0.5474
           ]
         },
         "COMPANY": {
@@ -15925,23 +15887,23 @@
           ]
         },
         "CUSTOMER_NAME": {
-          "true_positives": 7,
+          "true_positives": 6,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 7,
-          "n_total": 7,
+          "n": 6,
+          "n_total": 6,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.6457,
+            0.6097,
             1.0
           ],
-          "real_n": 7,
+          "real_n": 6,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6457,
+            0.6097,
             1.0
           ]
         },
@@ -16009,44 +15971,44 @@
           ]
         },
         "EMAIL": {
-          "true_positives": 108,
+          "true_positives": 107,
           "false_positives": 3,
           "false_negatives": 2,
-          "n": 110,
-          "n_total": 110,
-          "precision": 0.973,
-          "recall": 0.9818,
-          "f1": 0.9774,
-          "f2": 0.98,
+          "n": 109,
+          "n_total": 109,
+          "precision": 0.9727,
+          "recall": 0.9817,
+          "f1": 0.9772,
+          "f2": 0.9799,
           "recall_ci": [
-            0.9361,
+            0.9356,
             0.995
           ],
-          "real_n": 110,
-          "real_recall": 0.9818,
+          "real_n": 109,
+          "real_recall": 0.9817,
           "real_recall_ci": [
-            0.9361,
+            0.9356,
             0.995
           ]
         },
         "EMPLOYEE_NAME": {
-          "true_positives": 5,
-          "false_positives": 1,
+          "true_positives": 6,
+          "false_positives": 0,
           "false_negatives": 0,
-          "n": 5,
-          "n_total": 5,
-          "precision": 0.8333,
+          "n": 6,
+          "n_total": 6,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9091,
-          "f2": 0.9615,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ],
-          "real_n": 5,
+          "real_n": 6,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.5655,
+            0.6097,
             1.0
           ]
         },
@@ -16213,24 +16175,24 @@
           ]
         },
         "PHONE": {
-          "true_positives": 50,
+          "true_positives": 51,
           "false_positives": 3,
-          "false_negatives": 7,
+          "false_negatives": 6,
           "n": 57,
           "n_total": 57,
-          "precision": 0.9434,
-          "recall": 0.8772,
-          "f1": 0.9091,
-          "f2": 0.8897,
+          "precision": 0.9444,
+          "recall": 0.8947,
+          "f1": 0.9189,
+          "f2": 0.9043,
           "recall_ci": [
-            0.7675,
-            0.9392
+            0.7888,
+            0.9509
           ],
           "real_n": 57,
-          "real_recall": 0.8772,
+          "real_recall": 0.8947,
           "real_recall_ci": [
-            0.7675,
-            0.9392
+            0.7888,
+            0.9509
           ]
         },
         "PRIVATE_URL": {
@@ -16255,23 +16217,23 @@
           ]
         },
         "PROJECT_NAME": {
-          "true_positives": 6,
+          "true_positives": 5,
           "false_positives": 0,
           "false_negatives": 0,
-          "n": 6,
-          "n_total": 6,
+          "n": 5,
+          "n_total": 5,
           "precision": 1.0,
           "recall": 1.0,
           "f1": 1.0,
           "f2": 1.0,
           "recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ],
-          "real_n": 6,
+          "real_n": 5,
           "real_recall": 1.0,
           "real_recall_ci": [
-            0.6097,
+            0.5655,
             1.0
           ]
         },
@@ -16345,7 +16307,6 @@
         "NONE": {
           "GPS": 3,
           "PERSON": 4,
-          "EMPLOYEE_NAME": 1,
           "COUNTRY": 1,
           "ADDRESS": 1
         },
@@ -16371,7 +16332,7 @@
         },
         "ADDRESS": {
           "COUNTRY": 4,
-          "CITY": 12,
+          "CITY": 2,
           "PERSON": 2
         },
         "PHONE": {
@@ -17436,9 +17397,9 @@
           "index": 67,
           "text_preview": "Ship to 6633 Green Lane, Chicago, IL 48201. Phone: +1-695-818-2684",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -17446,7 +17407,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -17467,7 +17427,7 @@
         },
         {
           "index": 69,
-          "text_preview": "Team member Michael Flores",
+          "text_preview": "Employee: Kai Harris",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -17706,9 +17666,9 @@
           "index": 85,
           "text_preview": "Ship to 6921 Oak Avenue, Tokyo, IL 80201. Phone: +44-594-549-6836",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -17716,7 +17676,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -18508,12 +18467,12 @@
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "MASKED_SSN"
+            "SOCIAL_SECURITY"
           ]
         },
         {
           "index": 138,
-          "text_preview": "Customer name: Yara Davis",
+          "text_preview": "User Lena Thomas ordered",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -18596,16 +18555,15 @@
           "index": 143,
           "text_preview": "Our address is 4565 Lake Drive, Shanghai, CO 19106, UK",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -18967,9 +18925,9 @@
           "index": 167,
           "text_preview": "Ship to 9489 High Street, Denver, IL 90001. Phone: +1-363-523-2075",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -18977,7 +18935,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -19073,19 +19030,17 @@
         },
         {
           "index": 174,
-          "text_preview": "The employee named John (employee John) can access server 10.0.0.50",
-          "expected": 2,
-          "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
+          "text_preview": "Staff: Tina Gonzalez",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME",
-            "IP_ADDRESS"
+            "EMPLOYEE_NAME"
           ]
         },
         {
@@ -19204,16 +19159,14 @@
           "index": 182,
           "text_preview": "Mumbai headquarters",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 183,
@@ -19632,14 +19585,16 @@
           "index": 210,
           "text_preview": "Raw: +1—555—123—4Ӧ97",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "PHONE"
           ],
-          "detected_types": []
+          "detected_types": [
+            "PHONE"
+          ]
         },
         {
           "index": 211,
@@ -19845,9 +19800,9 @@
           "index": 224,
           "text_preview": "Ship to 4055 Lake Drive, Los Angeles, IL 55401. Phone: +1-489-263-7355",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -19855,7 +19810,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -19938,20 +19892,16 @@
         },
         {
           "index": 230,
-          "text_preview": "Customer: Amy Pond (amy.pond@weeping-angels.com) - project Pandorica",
-          "expected": 3,
-          "detected": 3,
-          "true_positives": 3,
+          "text_preview": "Project Nebula starts next quarter",
+          "expected": 1,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CUSTOMER_NAME",
-            "EMAIL",
             "PROJECT_NAME"
           ],
           "detected_types": [
-            "CUSTOMER_NAME",
-            "EMAIL",
             "PROJECT_NAME"
           ]
         },
@@ -19972,7 +19922,7 @@
         },
         {
           "index": 232,
-          "text_preview": "Staff: Dalia Scott",
+          "text_preview": "Staff: Hugo Lee",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -20080,16 +20030,15 @@
           "index": 239,
           "text_preview": "Address: 3630 Lake Drive, London, OR 02101, Canada",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -20744,7 +20693,7 @@
         },
         {
           "index": 283,
-          "text_preview": "Client: Wei Lopez",
+          "text_preview": "Customer name: Cheng Martinez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -21046,18 +20995,16 @@
         },
         {
           "index": 303,
-          "text_preview": "Dubai headquarters",
+          "text_preview": "Our Amsterdam office",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CITY"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 304,
@@ -21538,16 +21485,14 @@
           "index": 335,
           "text_preview": "Our address is Church Road, #7345, Seattle, OR 80201",
           "expected": 1,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 1,
           "expected_types": [
             "ADDRESS"
           ],
-          "detected_types": [
-            "CITY"
-          ]
+          "detected_types": []
         },
         {
           "index": 336,
@@ -21596,17 +21541,17 @@
         },
         {
           "index": 339,
-          "text_preview": "Working on Moonlight",
+          "text_preview": "Client: Wei Lopez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "PROJECT_NAME"
+            "CUSTOMER_NAME"
           ],
           "detected_types": [
-            "PROJECT_NAME"
+            "CUSTOMER_NAME"
           ]
         },
         {
@@ -21704,7 +21649,7 @@
         },
         {
           "index": 346,
-          "text_preview": "Customer: Tariq Martin",
+          "text_preview": "Customer name: Hiro Clark",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -21751,17 +21696,18 @@
         },
         {
           "index": 349,
-          "text_preview": "I live in Mumbai",
-          "expected": 1,
+          "text_preview": "Visit us at 10 Downing Street, London, SW1A 2AA",
+          "expected": 2,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
+            "ADDRESS",
             "CITY"
           ],
           "detected_types": [
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -21986,9 +21932,9 @@
           "index": 364,
           "text_preview": "Ship to 5361 Main Street, Denver, CA 33101. Phone: +44-452-473-4922",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -21996,7 +21942,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PHONE"
           ]
         },
@@ -22077,7 +22022,7 @@
         },
         {
           "index": 370,
-          "text_preview": "Project Orion is in development",
+          "text_preview": "Project Pandorica is in development",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -22167,7 +22112,7 @@
         },
         {
           "index": 376,
-          "text_preview": "Working on Omega Protocol",
+          "text_preview": "Project Orion starts next quarter",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -22335,7 +22280,7 @@
         },
         {
           "index": 387,
-          "text_preview": "Customer name: Cheng Martinez",
+          "text_preview": "Customer name: Yara Davis",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -22542,7 +22487,7 @@
         },
         {
           "index": 401,
-          "text_preview": "User Lena Thomas ordered",
+          "text_preview": "Customer: Tariq Martin",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -22766,7 +22711,7 @@
         },
         {
           "index": 416,
-          "text_preview": "Working on Project Aurora",
+          "text_preview": "Working on Project Phoenix",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
@@ -22828,16 +22773,15 @@
           "index": 420,
           "text_preview": "Location: 2325 High Street, Los Angeles, NY 94102",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "ADDRESS",
-            "CITY"
+            "ADDRESS"
           ]
         },
         {
@@ -23021,17 +22965,19 @@
         },
         {
           "index": 433,
-          "text_preview": "Team member Val Patel",
-          "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "text_preview": "Employee Bob Marley from accounting needs VPN access to 10.88.0.1",
+          "expected": 2,
+          "detected": 2,
+          "true_positives": 2,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ],
           "detected_types": [
-            "EMPLOYEE_NAME"
+            "EMPLOYEE_NAME",
+            "IP_ADDRESS"
           ]
         },
         {
@@ -23523,17 +23469,17 @@
         },
         {
           "index": 466,
-          "text_preview": "Customer name: Hiro Clark",
+          "text_preview": "Team member Victor Hernandez",
           "expected": 1,
           "detected": 1,
           "true_positives": 1,
           "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
-            "CUSTOMER_NAME"
+            "EMPLOYEE_NAME"
           ],
           "detected_types": [
-            "CUSTOMER_NAME"
+            "EMPLOYEE_NAME"
           ]
         },
         {
@@ -23602,9 +23548,9 @@
           "index": 471,
           "text_preview": "Ship to 1775 Willow Way, Seattle, IL 77001. Phone: +44-990-508-7596",
           "expected": 2,
-          "detected": 5,
+          "detected": 4,
           "true_positives": 2,
-          "false_positives": 3,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -23612,7 +23558,6 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
             "PERSON",
             "PHONE"
           ]

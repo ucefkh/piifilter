@@ -856,6 +856,43 @@ class RegexDetector(Detector):
                         if all(c in "xX*" for c in local_part):
                             continue
 
+                # ── DOMAIN context gate ──────────────────────────────────────────
+                # DOMAIN without PII context keywords within 80 chars is almost
+                # certainly a false positive (prose dotted phrases, file paths,
+                # tech artifacts, etc.). Suppress unless context suggests this
+                # is genuinely a domain name the user is referring to.
+                if entity_type == EntityType.DOMAIN:
+                    context_before = text[max(0, start - 80):start].lower()
+                    context_after = text[end:min(len(text), end + 80)].lower()
+                    domain_context_keywords = (
+                        "email", "mail", "e-mail",
+                        "domain", "subdomain", "hostname",
+                        "site", "website", "web site",
+                        "url", "uri", "endpoint",
+                        "hosted", "host", "server",
+                        "access", "login", "signup", "register",
+                        "visit", "browse", "navigate",
+                        "connect", "link",
+                        "dns", "mx", "cname", "a record",
+                        # Company context — real domains are often discussed
+                        # in business/IT contexts
+                        "company", "org", "organization",
+                        "website:", "domain:", "url:",
+                        # Security context
+                        "phishing", "malware", "blocked", "allowlist",
+                        "whitelist", "blacklist", "certificate",
+                        "ssl", "tls",
+                        # Deployment context
+                        "deploy", "deployment", "production",
+                        "staging", "development", "env",
+                    )
+                    has_domain_context = (
+                        any(kw in context_before for kw in domain_context_keywords)
+                        or any(kw in context_after for kw in domain_context_keywords)
+                    )
+                    if not has_domain_context:
+                        continue
+
                 # Numeric validation for decimal IP: ensure value is in valid
                 # 32-bit unsigned integer range (16777216 to 4294967295).
                 # This prevents 8-digit dates like "12312025" (Dec 31, 2025)

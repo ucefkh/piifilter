@@ -562,12 +562,9 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("CITY", r"(?i)\b(?:based\s+in|lives?\s+in|located\s+in|situated\s+in)\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
     # "works at X in City" or "works in City"
     ("CITY", r"(?i)\bworks?\s+(?:at\s+\S+\s+)?in\s+(?-i:[A-Z])[a-z]{2,}\b", 0.60),
-    # Standalone city name at sentence start or after period+space
-    ("CITY", r"(?<!\d\s)(?:^|\.\s+)(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)\b", 0.40),
-    # City before comma+non-country (like postcode, street suffix) — lower confidence
-    # Must come after narrower "based in/located in" patterns so "..., New York, ..." gets priority
-    # over broader keyword matches.
-    ("CITY", r"\b(?:Paris|London|Berlin|Mumbai|Tokyo|Delhi|Shanghai|Sydney|Moscow|Rome|Madrid|Cairo|Dubai|Istanbul|Seoul|Bangkok|New York|Chicago|Los Angeles|Toronto|Vancouver|Boston|San Francisco|Amsterdam|Vienna|Zurich|Redmond|Seattle|Austin|Denver)(?=\s*,\s*[A-Za-z0-9])", 0.35),
+    # (Standalone city patterns removed — they generated too many FPs with P=0.263.
+        #  Only context-gated patterns (based in, lives in, located in, city of, etc.)
+        #  are retained for higher precision.)
 
     # ── COUNTRY ──────────────────────────────────────────────────────
     ("COUNTRY", r"\b(?:USA|US(?:A)?|UK|United States|United Kingdom|Canada|Australia|Germany|France|Italy|Spain|Japan|China|India|Brazil|Mexico|Netherlands|Sweden|Norway|Denmark|Switzerland|Austria|Belgium|Ireland|Portugal|Poland|Russia|Turkey|South Korea|Argentina|Chile|Colombia|Egypt|Nigeria|South Africa|Kenya|Thailand|Vietnam|Philippines|Indonesia|Malaysia|Singapore|New Zealand|Saudi Arabia|UAE|Israel|Greece|Czech|Finland|Hungary|Romania|Ukraine)\b", 0.80),
