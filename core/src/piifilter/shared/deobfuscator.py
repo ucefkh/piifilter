@@ -871,8 +871,11 @@ class Deobfuscator:
 
     # Pattern: pipe-separated tokens
     # e.g. 'john | @ | example | . | com' or "john|@|example|.com"
+    # IMPORTANT: Negative lookahead prevents matching pipe-separated list items
+    # like "co.jp | CC" or "co.uk | BCC" where the pipe is actually a list
+    # separator (CC:, BCC:, To:, From:, Subject:) rather than a PII split token.
     _PIPE_SEP_RE = re.compile(
-        r"(?<!\w)([a-zA-Z0-9._%+\-]+(?:\s*\|\s*[a-zA-Z0-9._%+\-@]+)+)(?!\w)"
+        r"(?<!\w)([a-zA-Z0-9._%+\-]+(?:\s*\|\s*(?!CC:|BCC:|To:|From:|Subject:|C:|F:|T:|S:)[a-zA-Z0-9._%+\-@]+)+)(?!\w)"
     )
 
     # Pattern: comma-separated quoted tokens
