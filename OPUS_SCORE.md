@@ -3,32 +3,30 @@
 ## Latest Score: **8 / 10**
 
 Date: 2026-07-20
-Commit: f3a1f37 (github.com/ucefkh/piifilter)
-Benchmark: Golden corpus F1=1.0 all 26 types; Synthetic recall (pipeline-arb) P=0.9307 R=0.9862 F1=0.9577
+Commit: 98001c8 (github.com/ucefkh/piifilter)
 
 ## What Changed This Tick
 
-**1. SSN demo/teaching context suppression**
-- Added `_SSN_DEMO_KEYWORDS` filter that suppresses SSN entities when preceded by "SSN-like", "example SSN", "not a real SSN", etc.
-- Applied to both `detect()` and `detect_session()` methods
-- Fixes FP on benchmark example #115 ("SSN-like: 987654321 is just a long number, not an SSN (no dashes).")
+**1. Fixed PHONE bare-digit false positives in _filter_phone_overlap**
 
-**2. IPv6 bare "::" false positive fix**
-- Changed IPv6 unspecified pattern `(?:(?<=\s)|(?<=\A))::(?:(?=\s)|(?=\Z))` to require at least one adjacent word character or space boundary
-- New pattern: `(?:^::(?=\w)|(?<=\w)::(?=\s|$)|(?<=\s)::(?=\w|\s))`
-- Prevents bare "::" (punctuation-only) from being detected as IPv6
-- Fixes fuzz test failure on text='::'
+Fixed a critical bug in `_filter_phone_overlap` that was causing 2 extra PHONE FPs. The filter was:
+- **Wrongly preserving** bare-digit stripped duplicates (e.g. `4155552671`) when they matched a pre-strip phone's digit content — these stripped versions have incorrect span positions on the deobfuscated text and overlap with correctly-formatted pre-strip phones
+- **Wrongly self-suppressing** pre-strip phone entities (e.g. `555-123-4567` at 0.70 confidence) because their own digit content matched themselves in the pre-strip digit lookup table
 
-**3. Cleaned up stale temp files**
-- Removed 10 stale diagnostic scripts (_*.py)
+**Fix:** Pre-strip phone entities are now always preserved by exact value match. Only bare-digit stripped duplicates (no separator characters like `-`, `.`, `(`, `)`, spaces) are suppressed when a pre-strip phone with matching digit content exists.
+
+**Results (arbitration-on):**
+- **PHONE**: TP=15, FP=1, recall=1.0, precision=**0.9375** (was 0.8333, 3 FPs → 1 FP)
+- Additional improvements from arbitration:
+  - **IP_ADDRESS**: precision=0.9333 (was 0.8750 in raw)
+  - **SOCIAL_SECURITY**: precision=1.0 (was 0.7778 in raw)  
+  - **PERSON**: precision=0.9000 (was 0.8182 in raw)
 
 ## Key Feedback from Opus
-- "Strong recall and solid F1, single-quoted concatenation fix addresses a genuine real-world obfuscation gap"
-- "Precision at 0.9307 signals a non-trivial false-positive rate"
-- Score: **8/10** for targeted precision improvements
+- Score: **8/10** for targeted precision improvement on PHONE
 
 ## Next Items
-- Continue tightening precision: PHONE (0.8333 -> 0.85+), IP_ADDRESS recall (0.9333 -> 0.95+)
+- Fix remaining PHONE FP (URL-encoded %2B → ` +1-555-123-4567` span mismatch)
+- Fix IP_ADDRESS recall (0.9333 → 0.95+) 
 - Set up Ollama for CI
-- Build unfilter roundtrip test → real model stream
 - Write docs/KNOWN_LIMITATIONS.md

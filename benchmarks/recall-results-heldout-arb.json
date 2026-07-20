@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
-  "timestamp": "2026-07-20T12:14:45Z",
+  "timestamp": "2026-07-20T19:06:20Z",
   "arbitration": {
     "enabled": true
   },
@@ -49,24 +49,24 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 590,
-      "total_true_positives": 515,
+      "total_detected_entities": 593,
+      "total_true_positives": 518,
       "total_false_positives": 75,
-      "total_false_negatives": 25,
-      "overall_precision": 0.8728813559322034,
-      "overall_recall": 0.9537037037037037,
-      "overall_f1": 0.911504424778761,
+      "total_false_negatives": 22,
+      "overall_precision": 0.8735244519392917,
+      "overall_recall": 0.9592592592592593,
+      "overall_f1": 0.9143865842894969,
       "per_type": {
         "ADDRESS": {
           "true_positives": 16,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 2,
           "n": 18,
           "n_total": 18,
-          "precision": 0.9412,
+          "precision": 1.0,
           "recall": 0.8889,
-          "f1": 0.9143,
-          "f2": 0.8989,
+          "f1": 0.9412,
+          "f2": 0.9091,
           "recall_ci": [
             0.672,
             0.969
@@ -80,14 +80,14 @@
         },
         "API_KEY": {
           "true_positives": 10,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 10,
           "n_total": 10,
-          "precision": 0.9091,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9524,
-          "f2": 0.9804,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7225,
             1.0
@@ -122,14 +122,14 @@
         },
         "CITY": {
           "true_positives": 9,
-          "false_positives": 20,
+          "false_positives": 21,
           "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.3103,
+          "precision": 0.3,
           "recall": 1.0,
-          "f1": 0.4737,
-          "f2": 0.6923,
+          "f1": 0.4615,
+          "f2": 0.6818,
           "recall_ci": [
             0.7008,
             1.0
@@ -143,14 +143,14 @@
         },
         "COMPANY": {
           "true_positives": 17,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 5,
           "n": 22,
           "n_total": 22,
-          "precision": 0.9444,
+          "precision": 1.0,
           "recall": 0.7727,
-          "f1": 0.85,
-          "f2": 0.8019,
+          "f1": 0.8718,
+          "f2": 0.8095,
           "recall_ci": [
             0.5656,
             0.8988
@@ -163,24 +163,24 @@
           ]
         },
         "COUNTRY": {
-          "true_positives": 6,
-          "false_positives": 2,
-          "false_negatives": 3,
+          "true_positives": 9,
+          "false_positives": 4,
+          "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.75,
-          "recall": 0.6667,
-          "f1": 0.7059,
-          "f2": 0.6818,
+          "precision": 0.6923,
+          "recall": 1.0,
+          "f1": 0.8182,
+          "f2": 0.9184,
           "recall_ci": [
-            0.3542,
-            0.8794
+            0.7008,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.6667,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.3542,
-            0.8794
+            0.7008,
+            1.0
           ]
         },
         "CREDIT_CARD": {
@@ -271,14 +271,14 @@
         },
         "DOMAIN": {
           "true_positives": 15,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.9375,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9677,
-          "f2": 0.9868,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7961,
             1.0
@@ -292,14 +292,14 @@
         },
         "EMAIL": {
           "true_positives": 108,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 2,
           "n": 110,
           "n_total": 110,
-          "precision": 1.0,
+          "precision": 0.9908,
           "recall": 0.9818,
-          "f1": 0.9908,
-          "f2": 0.9854,
+          "f1": 0.9863,
+          "f2": 0.9836,
           "recall_ci": [
             0.9361,
             0.995
@@ -375,24 +375,24 @@
           ]
         },
         "IBAN": {
-          "true_positives": 6,
+          "true_positives": 7,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 7,
           "n_total": 7,
           "precision": 1.0,
-          "recall": 0.8571,
-          "f1": 0.9231,
-          "f2": 0.8824,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "IP_ADDRESS": {
@@ -558,18 +558,18 @@
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 41,
+          "true_positives": 40,
           "false_positives": 1,
           "false_negatives": 2,
-          "n": 43,
-          "n_total": 69,
-          "precision": 0.9762,
-          "recall": 0.971,
-          "f1": 0.9736,
-          "f2": 0.972,
+          "n": 42,
+          "n_total": 68,
+          "precision": 0.9756,
+          "recall": 0.9706,
+          "f1": 0.9731,
+          "f2": 0.9716,
           "recall_ci": [
-            0.9003,
-            0.992
+            0.899,
+            0.9919
           ],
           "masked_total": 26,
           "masked_matched": 26,
@@ -626,20 +626,18 @@
       "confusion_matrix": {
         "NONE": {
           "GPS": 3,
-          "EMPLOYEE_NAME": 1,
-          "ADDRESS": 1
+          "EMPLOYEE_NAME": 1
         },
         "IP_ADDRESS": {
           "MASKED_SSN": 6,
-          "API_KEY": 1,
           "IP_ADDRESS": 2,
           "SOCIAL_SECURITY": 1,
           "CREDIT_CARD": 1,
           "BANK_ACCOUNT": 1
         },
         "ADDRESS": {
-          "CITY": 18,
-          "COUNTRY": 2
+          "COUNTRY": 4,
+          "CITY": 18
         },
         "PHONE": {
           "MASKED_SSN": 12,
@@ -648,18 +646,20 @@
         "CREDIT_CARD": {
           "MASKED_SSN": 6
         },
+        "CITY": {
+          "CITY": 1
+        },
         "GPS": {
           "GPS": 4
         },
         "PRIVATE_URL": {
           "URL": 2
         },
-        "COUNTRY": {
-          "COMPANY": 1,
-          "CITY": 2
-        },
         "SOCIAL_SECURITY": {
           "MASKED_SSN": 2
+        },
+        "COUNTRY": {
+          "CITY": 2
         },
         "PERSON": {
           "PERSON": 1
@@ -671,7 +671,7 @@
           "PERSON": 3
         },
         "EMAIL": {
-          "DOMAIN": 1
+          "EMAIL": 1
         }
       },
       "example_results": [
@@ -1138,16 +1138,14 @@
           "index": 30,
           "text_preview": "Encoded: ***-**-9284",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "MASKED_SSN"
-          ]
+          "detected_types": []
         },
         {
           "index": 31,
@@ -1304,15 +1302,16 @@
           "index": 41,
           "text_preview": "Address: Park Avenue, #9788, Singapore, FL 33101",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 1,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "CITY"
+            "CITY",
+            "COUNTRY"
           ]
         },
         {
@@ -2074,9 +2073,9 @@
           "index": 91,
           "text_preview": "Our Rome office",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CITY"
@@ -2149,9 +2148,9 @@
           "index": 96,
           "text_preview": "Ship to 5207 Willow Way, Singapore, WA 94102. Phone: +44-661-662-5296",
           "expected": 2,
-          "detected": 4,
+          "detected": 5,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 3,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -2160,6 +2159,7 @@
           "detected_types": [
             "ADDRESS",
             "CITY",
+            "COUNTRY",
             "PHONE"
           ]
         },
@@ -2332,15 +2332,14 @@
           "index": 108,
           "text_preview": "IPv6 address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -2568,7 +2567,7 @@
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "MASKED_SSN"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -3663,14 +3662,14 @@
           "text_preview": "From Kenya",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
           "detected_types": [
-            "COMPANY"
+            "COUNTRY"
           ]
         },
         {
@@ -4369,15 +4368,16 @@
           "index": 240,
           "text_preview": "Based in Singapore",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY"
+            "CITY",
+            "COUNTRY"
           ]
         },
         {
@@ -5338,14 +5338,12 @@
           "index": 304,
           "text_preview": "My street is 123 Main Street, not 123 Main St.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 305,
@@ -7066,7 +7064,7 @@
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "EMAIL"
           ]
         },
         {
@@ -7088,15 +7086,16 @@
           "index": 419,
           "text_preview": "HQ in France",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY"
+            "CITY",
+            "COUNTRY"
           ]
         },
         {
@@ -7226,14 +7225,16 @@
           "index": 428,
           "text_preview": "Bank IBAN: NO93 8601 1117 947",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IBAN"
+          ]
         },
         {
           "index": 429,
@@ -7777,7 +7778,7 @@
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "MASKED_SSN"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -7911,24 +7912,24 @@
       "detector": "pipeline-arbitration",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 582,
-      "total_true_positives": 515,
-      "total_false_positives": 67,
-      "total_false_negatives": 25,
-      "overall_precision": 0.8848797250859106,
-      "overall_recall": 0.9537037037037037,
-      "overall_f1": 0.9180035650623886,
+      "total_detected_entities": 581,
+      "total_true_positives": 518,
+      "total_false_positives": 63,
+      "total_false_negatives": 22,
+      "overall_precision": 0.891566265060241,
+      "overall_recall": 0.9592592592592593,
+      "overall_f1": 0.9241748438893844,
       "per_type": {
         "ADDRESS": {
           "true_positives": 16,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 2,
           "n": 18,
           "n_total": 18,
-          "precision": 0.9412,
+          "precision": 1.0,
           "recall": 0.8889,
-          "f1": 0.9143,
-          "f2": 0.8989,
+          "f1": 0.9412,
+          "f2": 0.9091,
           "recall_ci": [
             0.672,
             0.969
@@ -7942,14 +7943,14 @@
         },
         "API_KEY": {
           "true_positives": 10,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 10,
           "n_total": 10,
-          "precision": 0.9091,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9524,
-          "f2": 0.9804,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7225,
             1.0
@@ -7984,14 +7985,14 @@
         },
         "CITY": {
           "true_positives": 9,
-          "false_positives": 20,
+          "false_positives": 17,
           "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.3103,
+          "precision": 0.3462,
           "recall": 1.0,
-          "f1": 0.4737,
-          "f2": 0.6923,
+          "f1": 0.5143,
+          "f2": 0.7258,
           "recall_ci": [
             0.7008,
             1.0
@@ -8005,14 +8006,14 @@
         },
         "COMPANY": {
           "true_positives": 17,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 5,
           "n": 22,
           "n_total": 22,
-          "precision": 0.9444,
+          "precision": 1.0,
           "recall": 0.7727,
-          "f1": 0.85,
-          "f2": 0.8019,
+          "f1": 0.8718,
+          "f2": 0.8095,
           "recall_ci": [
             0.5656,
             0.8988
@@ -8025,24 +8026,24 @@
           ]
         },
         "COUNTRY": {
-          "true_positives": 6,
-          "false_positives": 2,
-          "false_negatives": 3,
+          "true_positives": 9,
+          "false_positives": 4,
+          "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.75,
-          "recall": 0.6667,
-          "f1": 0.7059,
-          "f2": 0.6818,
+          "precision": 0.6923,
+          "recall": 1.0,
+          "f1": 0.8182,
+          "f2": 0.9184,
           "recall_ci": [
-            0.3542,
-            0.8794
+            0.7008,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.6667,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.3542,
-            0.8794
+            0.7008,
+            1.0
           ]
         },
         "CREDIT_CARD": {
@@ -8133,14 +8134,14 @@
         },
         "DOMAIN": {
           "true_positives": 15,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.9375,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9677,
-          "f2": 0.9868,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7961,
             1.0
@@ -8154,14 +8155,14 @@
         },
         "EMAIL": {
           "true_positives": 108,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 2,
           "n": 110,
           "n_total": 110,
-          "precision": 1.0,
+          "precision": 0.9908,
           "recall": 0.9818,
-          "f1": 0.9908,
-          "f2": 0.9854,
+          "f1": 0.9863,
+          "f2": 0.9836,
           "recall_ci": [
             0.9361,
             0.995
@@ -8237,24 +8238,24 @@
           ]
         },
         "IBAN": {
-          "true_positives": 6,
+          "true_positives": 7,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 7,
           "n_total": 7,
           "precision": 1.0,
-          "recall": 0.8571,
-          "f1": 0.9231,
-          "f2": 0.8824,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "IP_ADDRESS": {
@@ -8420,18 +8421,18 @@
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 41,
+          "true_positives": 40,
           "false_positives": 1,
           "false_negatives": 2,
-          "n": 43,
-          "n_total": 69,
-          "precision": 0.9762,
-          "recall": 0.971,
-          "f1": 0.9736,
-          "f2": 0.972,
+          "n": 42,
+          "n_total": 68,
+          "precision": 0.9756,
+          "recall": 0.9706,
+          "f1": 0.9731,
+          "f2": 0.9716,
           "recall_ci": [
-            0.9003,
-            0.992
+            0.899,
+            0.9919
           ],
           "masked_total": 26,
           "masked_matched": 26,
@@ -8488,14 +8489,13 @@
       "confusion_matrix": {
         "IP_ADDRESS": {
           "MASKED_SSN": 6,
-          "API_KEY": 1,
           "SOCIAL_SECURITY": 1,
           "CREDIT_CARD": 1,
           "BANK_ACCOUNT": 1
         },
         "ADDRESS": {
-          "CITY": 18,
-          "COUNTRY": 2
+          "COUNTRY": 4,
+          "CITY": 17
         },
         "PHONE": {
           "MASKED_SSN": 12
@@ -8505,15 +8505,10 @@
         },
         "NONE": {
           "PERSON": 4,
-          "EMPLOYEE_NAME": 1,
-          "ADDRESS": 1
+          "EMPLOYEE_NAME": 1
         },
         "PRIVATE_URL": {
           "URL": 2
-        },
-        "COUNTRY": {
-          "COMPANY": 1,
-          "CITY": 2
         },
         "SOCIAL_SECURITY": {
           "MASKED_SSN": 2
@@ -8525,7 +8520,7 @@
           "PERSON": 3
         },
         "EMAIL": {
-          "DOMAIN": 1
+          "EMAIL": 1
         }
       },
       "example_results": [
@@ -8992,16 +8987,14 @@
           "index": 30,
           "text_preview": "Encoded: ***-**-9284",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "MASKED_SSN"
-          ]
+          "detected_types": []
         },
         {
           "index": 31,
@@ -9166,7 +9159,7 @@
             "ADDRESS"
           ],
           "detected_types": [
-            "CITY"
+            "COUNTRY"
           ]
         },
         {
@@ -10004,9 +9997,9 @@
           "index": 96,
           "text_preview": "Ship to 5207 Willow Way, Singapore, WA 94102. Phone: +44-661-662-5296",
           "expected": 2,
-          "detected": 3,
+          "detected": 4,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -10015,6 +10008,7 @@
           "detected_types": [
             "ADDRESS",
             "CITY",
+            "COUNTRY",
             "PHONE"
           ]
         },
@@ -10187,15 +10181,14 @@
           "index": 108,
           "text_preview": "IPv6 address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -10423,7 +10416,7 @@
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "MASKED_SSN"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -11520,14 +11513,14 @@
           "text_preview": "From Kenya",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
           "detected_types": [
-            "COMPANY"
+            "COUNTRY"
           ]
         },
         {
@@ -12227,14 +12220,14 @@
           "text_preview": "Based in Singapore",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY"
+            "COUNTRY"
           ]
         },
         {
@@ -13195,14 +13188,12 @@
           "index": 304,
           "text_preview": "My street is 123 Main Street, not 123 Main St.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 305,
@@ -14923,7 +14914,7 @@
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "EMAIL"
           ]
         },
         {
@@ -14946,14 +14937,14 @@
           "text_preview": "HQ in France",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY"
+            "COUNTRY"
           ]
         },
         {
@@ -15083,14 +15074,16 @@
           "index": 428,
           "text_preview": "Bank IBAN: NO93 8601 1117 947",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IBAN"
+          ]
         },
         {
           "index": 429,
@@ -15635,7 +15628,7 @@
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "MASKED_SSN"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -15769,24 +15762,24 @@
       "detector": "pipeline-raw",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 627,
-      "total_true_positives": 515,
+      "total_detected_entities": 630,
+      "total_true_positives": 518,
       "total_false_positives": 112,
-      "total_false_negatives": 25,
-      "overall_precision": 0.8213716108452951,
-      "overall_recall": 0.9537037037037037,
-      "overall_f1": 0.882604970008569,
+      "total_false_negatives": 22,
+      "overall_precision": 0.8222222222222222,
+      "overall_recall": 0.9592592592592593,
+      "overall_f1": 0.8854700854700855,
       "per_type": {
         "ADDRESS": {
           "true_positives": 16,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 2,
           "n": 18,
           "n_total": 18,
-          "precision": 0.9412,
+          "precision": 1.0,
           "recall": 0.8889,
-          "f1": 0.9143,
-          "f2": 0.8989,
+          "f1": 0.9412,
+          "f2": 0.9091,
           "recall_ci": [
             0.672,
             0.969
@@ -15800,14 +15793,14 @@
         },
         "API_KEY": {
           "true_positives": 10,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 10,
           "n_total": 10,
-          "precision": 0.9091,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9524,
-          "f2": 0.9804,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7225,
             1.0
@@ -15842,14 +15835,14 @@
         },
         "CITY": {
           "true_positives": 9,
-          "false_positives": 20,
+          "false_positives": 21,
           "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.3103,
+          "precision": 0.3,
           "recall": 1.0,
-          "f1": 0.4737,
-          "f2": 0.6923,
+          "f1": 0.4615,
+          "f2": 0.6818,
           "recall_ci": [
             0.7008,
             1.0
@@ -15863,14 +15856,14 @@
         },
         "COMPANY": {
           "true_positives": 17,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 5,
           "n": 22,
           "n_total": 22,
-          "precision": 0.9444,
+          "precision": 1.0,
           "recall": 0.7727,
-          "f1": 0.85,
-          "f2": 0.8019,
+          "f1": 0.8718,
+          "f2": 0.8095,
           "recall_ci": [
             0.5656,
             0.8988
@@ -15883,24 +15876,24 @@
           ]
         },
         "COUNTRY": {
-          "true_positives": 6,
-          "false_positives": 2,
-          "false_negatives": 3,
+          "true_positives": 9,
+          "false_positives": 4,
+          "false_negatives": 0,
           "n": 9,
           "n_total": 9,
-          "precision": 0.75,
-          "recall": 0.6667,
-          "f1": 0.7059,
-          "f2": 0.6818,
+          "precision": 0.6923,
+          "recall": 1.0,
+          "f1": 0.8182,
+          "f2": 0.9184,
           "recall_ci": [
-            0.3542,
-            0.8794
+            0.7008,
+            1.0
           ],
           "real_n": 9,
-          "real_recall": 0.6667,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.3542,
-            0.8794
+            0.7008,
+            1.0
           ]
         },
         "CREDIT_CARD": {
@@ -15991,14 +15984,14 @@
         },
         "DOMAIN": {
           "true_positives": 15,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "n": 15,
           "n_total": 15,
-          "precision": 0.9375,
+          "precision": 1.0,
           "recall": 1.0,
-          "f1": 0.9677,
-          "f2": 0.9868,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
             0.7961,
             1.0
@@ -16012,14 +16005,14 @@
         },
         "EMAIL": {
           "true_positives": 108,
-          "false_positives": 3,
+          "false_positives": 4,
           "false_negatives": 2,
           "n": 110,
           "n_total": 110,
-          "precision": 0.973,
+          "precision": 0.9643,
           "recall": 0.9818,
-          "f1": 0.9774,
-          "f2": 0.98,
+          "f1": 0.973,
+          "f2": 0.9783,
           "recall_ci": [
             0.9361,
             0.995
@@ -16095,24 +16088,24 @@
           ]
         },
         "IBAN": {
-          "true_positives": 6,
+          "true_positives": 7,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "n": 7,
           "n_total": 7,
           "precision": 1.0,
-          "recall": 0.8571,
-          "f1": 0.9231,
-          "f2": 0.8824,
+          "recall": 1.0,
+          "f1": 1.0,
+          "f2": 1.0,
           "recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ],
           "real_n": 7,
-          "real_recall": 0.8571,
+          "real_recall": 1.0,
           "real_recall_ci": [
-            0.4869,
-            0.9743
+            0.6457,
+            1.0
           ]
         },
         "IP_ADDRESS": {
@@ -16278,18 +16271,18 @@
           ]
         },
         "SOCIAL_SECURITY": {
-          "true_positives": 41,
+          "true_positives": 40,
           "false_positives": 13,
           "false_negatives": 2,
-          "n": 43,
-          "n_total": 69,
-          "precision": 0.7593,
-          "recall": 0.971,
-          "f1": 0.8522,
-          "f2": 0.9197,
+          "n": 42,
+          "n_total": 68,
+          "precision": 0.7547,
+          "recall": 0.9706,
+          "f1": 0.8491,
+          "f2": 0.9181,
           "recall_ci": [
-            0.9003,
-            0.992
+            0.899,
+            0.9919
           ],
           "masked_total": 26,
           "masked_matched": 26,
@@ -16347,13 +16340,11 @@
         "NONE": {
           "GPS": 3,
           "PERSON": 4,
-          "EMPLOYEE_NAME": 1,
-          "ADDRESS": 1
+          "EMPLOYEE_NAME": 1
         },
         "IP_ADDRESS": {
           "IP_ADDRESS": 3,
           "MASKED_SSN": 6,
-          "API_KEY": 1,
           "SOCIAL_SECURITY": 1,
           "CREDIT_CARD": 1,
           "BANK_ACCOUNT": 1
@@ -16367,8 +16358,8 @@
           "MASKED_SSN": 2
         },
         "ADDRESS": {
+          "COUNTRY": 4,
           "CITY": 18,
-          "COUNTRY": 2,
           "PERSON": 2
         },
         "PHONE": {
@@ -16376,8 +16367,10 @@
           "PHONE": 3
         },
         "EMAIL": {
-          "EMAIL": 3,
-          "DOMAIN": 1
+          "EMAIL": 4
+        },
+        "CITY": {
+          "CITY": 1
         },
         "GPS": {
           "GPS": 4
@@ -16385,12 +16378,11 @@
         "PRIVATE_URL": {
           "URL": 2
         },
-        "COUNTRY": {
-          "COMPANY": 1,
-          "CITY": 2
-        },
         "COMPANY": {
           "PERSON": 6
+        },
+        "COUNTRY": {
+          "CITY": 2
         },
         "PERSON": {
           "PERSON": 1
@@ -16863,16 +16855,14 @@
           "index": 30,
           "text_preview": "Encoded: ***-**-9284",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 1,
+          "detected": 0,
+          "true_positives": 0,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
-          "detected_types": [
-            "MASKED_SSN"
-          ]
+          "detected_types": []
         },
         {
           "index": 31,
@@ -17029,15 +17019,16 @@
           "index": 41,
           "text_preview": "Address: Park Avenue, #9788, Singapore, FL 33101",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 1,
           "expected_types": [
             "ADDRESS"
           ],
           "detected_types": [
-            "CITY"
+            "CITY",
+            "COUNTRY"
           ]
         },
         {
@@ -17800,9 +17791,9 @@
           "index": 91,
           "text_preview": "Our Rome office",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CITY"
@@ -17875,9 +17866,9 @@
           "index": 96,
           "text_preview": "Ship to 5207 Willow Way, Singapore, WA 94102. Phone: +44-661-662-5296",
           "expected": 2,
-          "detected": 4,
+          "detected": 5,
           "true_positives": 2,
-          "false_positives": 2,
+          "false_positives": 3,
           "false_negatives": 0,
           "expected_types": [
             "ADDRESS",
@@ -17886,6 +17877,7 @@
           "detected_types": [
             "ADDRESS",
             "CITY",
+            "COUNTRY",
             "PHONE"
           ]
         },
@@ -18058,15 +18050,14 @@
           "index": 108,
           "text_preview": "IPv6 address: 2001:0db8:85a3:0000:0000:8a2e:0370:7334",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
-            "API_KEY",
             "IP_ADDRESS"
           ]
         },
@@ -18294,7 +18285,7 @@
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "MASKED_SSN"
+            "SOCIAL_SECURITY"
           ]
         },
         {
@@ -19391,14 +19382,14 @@
           "text_preview": "From Kenya",
           "expected": 1,
           "detected": 1,
-          "true_positives": 0,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 0,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
           "detected_types": [
-            "COMPANY"
+            "COUNTRY"
           ]
         },
         {
@@ -20097,15 +20088,16 @@
           "index": 240,
           "text_preview": "Based in Singapore",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY"
+            "CITY",
+            "COUNTRY"
           ]
         },
         {
@@ -21066,14 +21058,12 @@
           "index": 304,
           "text_preview": "My street is 123 Main Street, not 123 Main St.",
           "expected": 0,
-          "detected": 1,
+          "detected": 0,
           "true_positives": 0,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [],
-          "detected_types": [
-            "ADDRESS"
-          ]
+          "detected_types": []
         },
         {
           "index": 305,
@@ -22795,7 +22785,7 @@
             "EMAIL"
           ],
           "detected_types": [
-            "DOMAIN"
+            "EMAIL"
           ]
         },
         {
@@ -22817,15 +22807,16 @@
           "index": 419,
           "text_preview": "HQ in France",
           "expected": 1,
-          "detected": 1,
-          "true_positives": 0,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "COUNTRY"
           ],
           "detected_types": [
-            "CITY"
+            "CITY",
+            "COUNTRY"
           ]
         },
         {
@@ -22955,14 +22946,16 @@
           "index": 428,
           "text_preview": "Bank IBAN: NO93 8601 1117 947",
           "expected": 1,
-          "detected": 0,
-          "true_positives": 0,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 1,
+          "false_negatives": 0,
           "expected_types": [
             "IBAN"
           ],
-          "detected_types": []
+          "detected_types": [
+            "IBAN"
+          ]
         },
         {
           "index": 429,
@@ -23508,7 +23501,7 @@
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
-            "MASKED_SSN"
+            "SOCIAL_SECURITY"
           ]
         },
         {

@@ -478,7 +478,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # "introducing / please welcome / meet our new hire / say hello to + Name"
     ("PERSON", r"(?i)\b(?:introducing|please\s+welcome|meet\s+(?:our\s+)?(?:new\s+)?(?:hire|teammate|colleague|team\s+member)|say\s+hello\s+to|shoutout\s+to)\s+(?-i:[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.68),
     # "regarding Name" — two capitalized words after regarding
-    ("PERSON", r"(?i)\bregarding\s+(?-i:[A-Z])[a-z]{2,}\s+(?-i:[A-Z])[a-z]{2,}(?!\s+(?:Inc|Corp|LLC))\b", 0.55),
+    ("PERSON", r"(?i)\bregarding\s+(?-i:[A-Z])[a-z]{2,}\s+(?-i:(?!Inc|Corp|LLC|Ltd|Limited|GmbH|Co|Company|Corporation|Incorporated|PLC|AG|SA|Systems|Technologies|Tech|Software|Solutions|Group|Partners|Holdings|Services|Consulting|Associates)[A-Z])[a-z]{2,}(?!\s+(?:Inc|Corp|LLC))\b", 0.55),
     # "Manager: / Supervisor:" prefix patterns
     # Exclude common UI/technical words that could follow these labels
     ("PERSON", r"(?i)\b(?:Manager|Supervisor|Coordinator|Lead|Admin|HR\s+rep)\s*:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof)\s+)?(?-i:(?!Settings|Config|Options|Admin|Dashboard|Profile|Account|General|System|Network|Security|Users|Roles|Permissions|Logs|Backup|Notifications|Integrations|Plugins|Extensions|Appearance|Layout|Theme)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.75),

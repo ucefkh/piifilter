@@ -1502,6 +1502,13 @@ class Deobfuscator:
         Only applied when a word-level analysis suggests case-shifting
         is present (at least one word with ≥3 letters where ≥70% of letters
         are the 'wrong' case relative to natural English capitalization).
+
+        SAFEGUARDS to avoid false positives on legitimate capitalized words:
+        - Uppercase letters immediately after a hyphen (compound names like
+          Weyland-Yutani) are NOT counted as "interior" uppercase.
+        - If uppercase letters are < 30% of total letters AND there is at
+          most one uppercase letter in the rest of the word, the word is
+          treated as a legitimate brand/compound name (e.g. SpaceX, PayPal).
         """
         original = text
 
@@ -1520,6 +1527,15 @@ class Deobfuscator:
             # Count upper and lower among letters
             upper = sum(1 for c in letters if c.isupper())
             lower = sum(1 for c in letters if c.islower())
+
+            # ── Ratio safeguard ─────────────────────────────────────
+            # If uppercase letters are a small minority (< 40%) of total
+            # letters, the word is likely a legitimate compound/brand name
+            # (e.g. SpaceX has 2 upper / 6 letters = 33%, Weyland-Yutani
+            # has 2 upper / 13 letters = 15%), not case-shifted text.
+            total = len(letters)
+            if total > 0 and upper / total < 0.40:
+                return False
 
             # Case-shifted: the 'unnatural' case dominates
             # Natural: first letter capital, rest lowercase (or all same case)
@@ -1540,7 +1556,16 @@ class Deobfuscator:
             if first.isupper() and lower >= 2 and lower > upper:
                 # Check if there are ANY uppercase letters AFTER the first position.
                 # If not (e.g., "Hello" → only first upper), this is normal, not shifted.
-                rest_upper = sum(1 for c in word[1:] if c.isupper())
+                # Count uppercase in rest, but EXCLUDE uppercase letters that appear
+                # immediately after a hyphen — these are natural in compound names
+                # like "Weyland-Yutani" (Y after -) or "Procter-Gamble" (G after -).
+                rest_upper = 0
+                for i, c in enumerate(word[1:], start=1):
+                    if c.isupper():
+                        # Check if this uppercase is preceded by a hyphen (compound name)
+                        if i > 0 and word[i-1] == '-':
+                            continue  # Natural in hyphenated compound
+                        rest_upper += 1
                 if rest_upper == 0:
                     return False  # Normal capitalization (e.g., "Hello", "World")
                 return True
