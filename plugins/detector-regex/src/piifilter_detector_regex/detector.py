@@ -1266,7 +1266,11 @@ class RegexDetector(Detector):
                     # Check if domain starts with an uppercase letter (brand name)
                     domain_text = match.group()
                     first_label = domain_text.split(".")[0] if "." in domain_text else domain_text
-                    is_brand_domain = first_label and first_label[0].isupper()
+                    is_brand_domain = (
+                        first_label
+                        and len(first_label) >= 2
+                        and first_label[0].isupper()
+                    )
                     
                     if not is_brand_domain:
                                             context_before = text[max(0, start - 80):start].lower()

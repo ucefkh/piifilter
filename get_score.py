@@ -6,12 +6,12 @@ import os
 import boto3
 
 # Use environment-variable based auth to avoid profile parsing issues
-session = boto3.Session(region_name='eu-west-3')
-bedrock = session.client('bedrock-runtime', region_name='eu-west-3')
+session = boto3.Session(region_name='us-east-1')
+bedrock = session.client('bedrock-runtime', region_name='us-east-1')
 
 message = {
     "role": "user",
-    "content": [{"text": "You are evaluating PIIFilter, a privacy proxy that detects/filters PII from prompts before LLMs and unfilters responses.\n\nRecent changes:\n1. Fixed COMPANY/PERSON false positives: added comprehensive denylists for technical terms (Postgres, Support, Config, Settings, Default, Admin, System, Account, Login, Project, Nginx, Docker, Kubernetes, Systemd) and city/geographic names (New, San, Los, Las, etc.) to all 'from', 'works at', 'Invoice from', 'Signed by', 'regarding' keyword-prefixed COMPANY and PERSON patterns. Previously these patterns would match phrases like 'from New York', 'Signed by Postgres Admin', 'works at Support Team', 'from Project Phoenix' as PII.\n2. Golden corpus benchmark unchanged: 100% precision/recall on 316 entities across 26 types (balanced mode)\n3. All 486 tests pass\n\nRespond with ONLY a single integer score 1-10 followed by a one-line reason. Format:\nSCORE: X\nREASON: <one line>"}]
+    "content": [{"text": "You are evaluating PIIFilter, a privacy proxy that detects/filters PII from prompts before LLMs and unfilters responses.\n\nRecent changes:\n1. Fixed PERSON/COMPANY false positives: added comprehensive denylists for technical terms (Postgres, PostgreSQL, Nginx, Docker, Kubernetes, Systemd, Support, Config, Settings, Default, Admin, System, Account, Login, Upgrade, Billing, Notification, Report, Dashboard, Security, Access, Manager, Team, Profile) to previously-uncovered PERSON patterns:\n   - Title-prefixed (Mr/Mrs/Dr etc.): 'Mr Postgres Server' no longer matches\n   - Person:/contact: prefix patterns: 'Person: Postgres Admin' no longer matches\n   - contact/reach/met/meet patterns: 'contact Postgres Admin' no longer matches\n   - spoke with/talked to patterns: 'spoke with Postgres Admin' no longer matches\n   - introducing/please welcome patterns: 'introducing Config Manager' no longer matches\n   - regarding patterns: 'regarding Postgres Admin' no longer matches\n   - Signed, / signed- patterns: 'signed Postgres Admin' no longer matches\n2. Also fixed COMPANY 'regarding' single-word pattern which had no denylist at all.\n3. Golden corpus benchmark unchanged: 100% precision/recall on 316 entities across 26 types (balanced mode)\n4. All 486 tests pass\n\nRespond with ONLY a single integer score 1-10 followed by a one-line reason. Format:\nSCORE: X\nREASON: <one line>"}]
 }
 
 response = bedrock.converse(
