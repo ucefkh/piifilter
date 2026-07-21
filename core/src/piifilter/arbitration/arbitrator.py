@@ -937,11 +937,17 @@ class Arbitrator:
             deduped = filtered
 
         # ── URL priority over DOMAIN/EMAIL ──────────────────────────────────
-        # When a URL span overlaps with DOMAIN or EMAIL spans, keep the URL
-        # and drop the DOMAIN/EMAIL. URL is the most specific and important
-        # type for web contexts. This catches cases where DOMAIN or EMAIL
-        # patterns steal URL parts (e.g. DOMAIN matching "example.com" inside
-        # "https://example.com/api", leaving the URL incomplete).
+        # When a URL span partially overlaps with DOMAIN or EMAIL spans (i.e.,
+        # DOMAIN/EMAIL extends before the URL start, "stealing" URL protocol or
+        # host parts), keep the URL and drop the DOMAIN/EMAIL.
+        #
+        # When a DOMAIN span is fully contained inside a URL (e.g., "probase.app"
+        # inside "https://www.probase.app/home"), it is a useful sub-entity
+        # extraction — keep both the URL and the DOMAIN.
+        #
+        # When a DOMAIN span extends past the URL end (e.g., "example.org" at
+        # [24:35] overlapping "https://x.com" at [11:26]), it adds info beyond
+        # the URL — keep the DOMAIN too.
         _URL_OVERRIDDEN_TYPES = {
             EntityType.DOMAIN,
             EntityType.EMAIL,
@@ -959,12 +965,16 @@ class Arbitrator:
                 if e.entity_type not in _URL_OVERRIDDEN_TYPES:
                     filtered.append(e)
                     continue
-                # Check if this DOMAIN/EMAIL span overlaps with any URL span
-                overlaps_url = any(
-                    cs <= e.start and e.end <= ce
+                # Check if this DOMAIN/EMAIL span starts before any URL span.
+                # DOMAIN/EMAIL starting before the URL means it's "stealing"
+                # URL protocol or host prefix parts — drop these.  DOMAIN/EMAIL
+                # that starts inside or after the URL is either a useful sub-
+                # entity or additional info beyond the URL — keep it.
+                steals_from_url = any(
+                    e.start < cs
                     for cs, ce in url_intervals
                 )
-                if not overlaps_url:
+                if not steals_from_url:
                     filtered.append(e)
                 # else: drop the DOMAIN/EMAIL span — URL is more specific
             deduped = filtered

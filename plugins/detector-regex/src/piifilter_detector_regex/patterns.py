@@ -518,12 +518,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # "Signed, Name" — comma after signed, then capitalized name
     # Denylist blocks technical terms on the name part
     ("PERSON", r"(?i)\bsigned[-,]\s+(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access|Manager|Team|Profile|Postgres|PostgreSQL|Nginx|Docker|Kubernetes|Systemd)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.72),
+    # "Author:" prefix — caught missed OOD patterns like "Author: Elizabeth Carter"
+    ("PERSON", r"(?i)\bAuthor:\s*(?:(?:Mr|Mrs|Ms|Miss|Dr|Prof)\s+)?(?-i:(?!Support|Config|Settings|Default|Admin|System|Account|Login|Upgrade|Billing|Notification|Report|Dashboard|Security|Access)[A-Z])[a-z]{2,}(?:\s+(?-i:[A-Z])[a-z]{2,})?\b", 0.80),
     # Bare "FirstName LastName" at sentence start or after period/newline — capture the
     # first two capitalized words. Exclude common sentence-starting words, company suffixes,
     # and known non-person entities. Very carefully limited to avoid FPs.
     # Negative lookahead blocks: company words, role/job words, sentence particles,
     # geographic names, known non-person sentence starters, and common 2-word phrases.
-    ("PERSON", r"(?:^|\.\s+)(?-i:[A-Z])[a-z]{2,}\s+(?-i:[A-Z])[a-z]{2,}(?=\s+(?:approved|confirmed|requested|signed|said|reported|joined|left|called|sent|wrote|emailed|asked|answered|explained|mentioned|noted|added|replied|checked|updated|created|started|finished|completed|submitted|reviewed))", 0.55),
+    ("PERSON", r"(?:^|\.\s+)(?-i:[A-Z])[a-z]{2,}\s+(?-i:[A-Z])[a-z]{2,}(?=\s+(?:approved|confirmed|requested|signed|said|reported|joined|left|called|sent|wrote|emailed|asked|answered|explained|mentioned|noted|added|replied|checked|updated|created|started|finished|completed|submitted|reviewed|works))", 0.55),
 
     # ── CUSTOMER_NAME ────────────────────────────────────────────────
     ("CUSTOMER_NAME", r"(?i)\b(?:customer|client)\s+(?:name\s+)?(?:is\s+)?(?-i:[A-Z])[a-z]+(?:\s+(?-i:[A-Z])[a-z]+)?\b", 0.80),
