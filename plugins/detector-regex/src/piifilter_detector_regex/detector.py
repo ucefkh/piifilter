@@ -125,6 +125,48 @@ class RegexDetector(Detector):
         iban_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.IBAN}
         )
+        # ── ABBREVIATED SSN (pre-strip, context-anchored) — abbreviated SSN
+        # patterns have keyword context (ssn/social/encoded/found) and require
+        # dashes, which are destroyed by inner-separator stripping. Only keep
+        # matches with exactly 9 digits (real SSNs).
+        ssn_entities_presistrip: list = []
+        _re = __import__("re")
+        _ssn_prep_keywords = r"(?i)(?:ssn|social security|tax id|ss#|found|encoded)"
+        for _m in _re.finditer(
+            rf"{_ssn_prep_keywords}\s*:?\s*(?:is\s+)?\s*\d{{3}}-\d{{1,2}}-\d{{3,4}}\b",
+            text_for_gps
+        ):
+            _val = text_for_gps[_m.start():_m.end()]
+            # Accept if total digits >= 8 (abbreviated SSNs like 162-0-7302 have 8)
+            if sum(1 for c in _val if c.isdigit()) >= 8:
+                ssn_entities_presistrip.append(DetectedEntity(
+                    start=_m.start(), end=_m.end(),
+                    value=_val, entity_type=EntityType.SOCIAL_SECURITY,
+                    detector="regex", confidence=0.70,
+
+                ))
+        # ── Context-anchor reject: suppress pre-strip SSN matches that overlap
+        # with or are within 15 chars of PHONE, ADDRESS, IP, or DATE entities.
+        # These are false positives where a non-SSN dashed digit pattern happens
+        # to match near another PII entity type that the earlier pre-strip pass
+        # correctly identified.
+        _span_nearby_entities: list[DetectedEntity] = []
+        _span_nearby_entities.extend(phone_entities_presistrip)
+        _span_nearby_entities.extend(address_entities_presistrip)
+        _span_nearby_entities.extend(ip_entities)
+        _span_nearby_entities.extend(date_entities)
+        _filtered_ssn_pre: list[DetectedEntity] = []
+        for _ssn_e in ssn_entities_presistrip:
+            _reject = False
+            for _other in _span_nearby_entities:
+                # Check if spans overlap or are within 15 chars
+                _gap = max(_ssn_e.start, _other.start) - min(_ssn_e.end, _other.end)
+                if _gap <= 15:
+                    _reject = True
+                    break
+            if not _reject:
+                _filtered_ssn_pre.append(_ssn_e)
+        ssn_entities_presistrip = _filtered_ssn_pre
         # ── CITY (pre-strip) — correct span positions after GPS dot removal
         city_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.CITY}
@@ -183,7 +225,7 @@ class RegexDetector(Detector):
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
-        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS + PRIVATE_URL + IBAN + CITY) with the rest (from stripped text)
+        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS + PRIVATE_URL + IBAN + SSN + CITY) with the rest (from stripped text)
         entities.extend(gps_entities)
         entities.extend(date_entities)
         entities.extend(ip_entities)
@@ -191,6 +233,7 @@ class RegexDetector(Detector):
         entities.extend(address_entities_presistrip)
         entities.extend(private_url_entities_presistrip)
         entities.extend(iban_entities_presistrip)
+        entities.extend(ssn_entities_presistrip)
         entities.extend(city_entities_presistrip)
         entities.sort(key=lambda e: e.start)
 
@@ -537,6 +580,41 @@ class RegexDetector(Detector):
         iban_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.IBAN}
         )
+        # ── ABBREVIATED SSN (pre-strip, context-anchored) — same rationale as detect()
+        ssn_entities_presistrip: list = []
+        _re_sess = __import__("re")
+        _kw_sess = r"(?i)(?:ssn|social security|tax id|ss#|found|encoded)"
+        for _m in _re_sess.finditer(
+            rf"{_kw_sess}\s*:?\s*(?:is\s+)?\s*\d{{3}}-\d{{1,2}}-\d{{3,4}}\b",
+            text_for_gps
+        ):
+            _val = text_for_gps[_m.start():_m.end()]
+            # Accept if total digits >= 8 (abbreviated SSNs like 162-0-7302 have 8)
+            if sum(1 for c in _val if c.isdigit()) >= 8:
+                ssn_entities_presistrip.append(DetectedEntity(
+                    start=_m.start(), end=_m.end(),
+                    value=_val, entity_type=EntityType.SOCIAL_SECURITY,
+                    detector="regex", confidence=0.70,
+
+                ))
+        # ── Context-anchor reject: suppress pre-strip SSN matches that overlap
+        # with or are within 15 chars of PHONE, ADDRESS, IP, or DATE entities.
+        _span_nearby_entities: list[DetectedEntity] = []
+        _span_nearby_entities.extend(phone_entities_presistrip)
+        _span_nearby_entities.extend(address_entities_presistrip)
+        _span_nearby_entities.extend(ip_entities)
+        _span_nearby_entities.extend(date_entities)
+        _filtered_ssn_pre: list[DetectedEntity] = []
+        for _ssn_e in ssn_entities_presistrip:
+            _reject = False
+            for _other in _span_nearby_entities:
+                _gap = max(_ssn_e.start, _other.start) - min(_ssn_e.end, _other.end)
+                if _gap <= 15:
+                    _reject = True
+                    break
+            if not _reject:
+                _filtered_ssn_pre.append(_ssn_e)
+        ssn_entities_presistrip = _filtered_ssn_pre
         # ── CITY (pre-strip) — correct span positions after GPS dot removal
         city_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.CITY}
@@ -570,6 +648,7 @@ class RegexDetector(Detector):
         entities.extend(address_entities_presistrip)
         entities.extend(private_url_entities_presistrip)
         entities.extend(iban_entities_presistrip)
+        entities.extend(ssn_entities_presistrip)
         entities.extend(city_entities_presistrip)
 
         # ── Cross-type dedup: suppress pre-strip PRIVATE_URL entities ──

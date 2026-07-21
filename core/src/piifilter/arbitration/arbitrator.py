@@ -838,6 +838,35 @@ class Arbitrator:
                 # else: drop the DOMAIN/EMAIL span — URL is more specific
             deduped = filtered
 
+        # ── COUNTRY context gate ──────────────────────────────────────────────
+        # COUNTRY entities that overlap with or are within 5 characters of an
+        # ADDRESS entity are almost always false positives — the COUNTRY name
+        # is being used as a fake city/state in a fabricated US-style address
+        # (e.g. "4641 River Road, Miami, UK" where "UK" is a fake state).
+        # All standalone COUNTRY references (e.g. "Country: Australia",
+        # "Based in Ireland") have no ADDRESS nearby and should be kept.
+        _COUNTRY_ANCHOR_MARGIN = 5
+        country_address_intervals: list[tuple[int, int]] = []
+        for e in deduped:
+            if e.entity_type == EntityType.ADDRESS:
+                country_address_intervals.append((e.start, e.end))
+
+        if country_address_intervals:
+            filtered: list[DetectedEntity] = []
+            for e in deduped:
+                if e.entity_type != EntityType.COUNTRY:
+                    filtered.append(e)
+                    continue
+                # Suppress COUNTRY that overlaps or is within margin of ADDRESS
+                near_address = any(
+                    not (e.end + _COUNTRY_ANCHOR_MARGIN <= cs or e.start - _COUNTRY_ANCHOR_MARGIN >= ce)
+                    for cs, ce in country_address_intervals
+                )
+                if not near_address:
+                    filtered.append(e)
+                # else: drop the COUNTRY span — it's an FP inside address context
+            deduped = filtered
+
         # ── CITY gate ────────────────────────────────────────────────────────
         # CITY entities are allowed through by default. When `enable_city` is
         # True (the default), CITY entities are filtered through a proximity

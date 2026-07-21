@@ -112,7 +112,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("SOCIAL_SECURITY", r"(?i)\b(?:data|found|raw|hidden\s+field|encoded|obfuscated\s+social_security)\s*:\s*\d{3}\s+\d{2}\s+\d{4}(?:\s+\(segmented\))?", 0.60),
         # Abbreviated SSN formats with context keyword: "Found: 162-0-7302" (3-1-4), "Found: 837-26-720" (3-2-3)
         # These have missing leading zeros in one group. Only match with context keyword to avoid FPs.
-    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#|data|found|raw|hidden\s+field)\s*:?\s*(?:is\s+)?\s*\d{3}-\d{1,2}-\d{3,4}\b", 0.70),
+    ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#|data|found|raw|hidden\s+field|encoded)\s*:?\s*(?:is\s+)?\s*\d{3}-\d{1,2}-\d{3,4}\b", 0.70),
         # Context-keyword-prefixed SSN with single spaces as separator between groups (3-2-4)
         # Catches "Tax ID: 412 14 6394", "Social Security: 354 29 2645" and similar.
     ("SOCIAL_SECURITY", r"(?i)\b(?:ssn|social security|tax id|ss#)\s*:?\s*(?:is\s+)?\s*\d{3}\s+\d{2}\s+\d{4}\b", 0.90),
@@ -296,6 +296,14 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
                 #   - IBAN segments (preceded by 2-letter country code)
                 #   - Space-separated 4-group IPs like "10 10 10 10", "192 168 1 100"
                 ("PHONE", r"(?!\d{1,3}(?:\.\d{1,3}){3}\b)(?!\d{1,3}\s+\d{1,3}\s+\d{1,3}\s+\d{1,3}\b)(?![A-Z]{2}\d)\b\d{2,4}[–—−\-\.\s]\d{2,4}[–—−\-\.\s]\d{2,4}[–—−\-\.\s]?\d{2,4}\b(?![–—−\-\.\s]?\d{2,4})", 0.55),
+        # Context-prefixed bare international number: "Hidden field: 448959514933", "Encoded: 493012345678"
+        # These match the FULL span including prefix, so they out-compete MASKED_SSN patterns
+        # in cross-type containment (same span, higher confidence -> PHONE replaces MASKED_SSN).
+        ("PHONE", r"(?i)(?:hidden\s+field|encoded|encrypted|obfuscat)[a-z]*\s*[:=]\s*\d{11}(?!\d)", 0.72),
+        ("PHONE", r"(?i)(?:hidden\s+field|encoded|encrypted|obfuscat)[a-z]*\s*[:=]\s*\d{12}(?!\d)", 0.72),
+        ("PHONE", r"(?i)(?:hidden\s+field|encoded|encrypted|obfuscat)[a-z]*\s*[:=]\s*\d{13}(?!\d)", 0.72),
+        ("PHONE", r"(?i)(?:hidden\s+field|encoded|encrypted|obfuscat)[a-z]*\s*[:=]\s*\d{14}(?!\d)", 0.72),
+
 
     # ── IP_ADDRESS ───────────────────────────────────────────────────
     # Standard dotted-decimal IPv4 with strict octet validation (0-255 per octet).
@@ -570,6 +578,11 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     ("ADDRESS", r"\b(?:[A-Z]\w*(?:\s+(?:[A-Z]\w*|den|der|die|das|von|vom|zum|zur|am|im|in|an|auf|bei|mit|und|oder|aus|nicht|dem|des|ein|eine|einer|einem|für|über|unter|und|of|the|la|le|les|de|del|della|dos|das|van|ver|des|du|sur|aux|en|el)){0,5})\s+\d{1,4}[a-z]?,\s*\d{4,5}\s+\w+(?:[\s-]+\w+)?\b", 0.80),
         ("ADDRESS", r"\bP\.?\s*O\.?\s+Box\s+\d+\b", 0.85),
         ("ADDRESS", r"\b(?:Suite|Apt|Unit|Building)\s+#?\d+[A-Za-z]?\b", 0.80),
+        # Street-name-first with #N suffix: "Street Name Road, #7345, City, ST ZIP"
+        # Catches addresses where the house/building number comes AFTER the street name,
+        # prefixed by # (common in databases and informal address listings).
+        # Supports street suffixes (St, Rd, Ave, Blvd, etc.), optional city, state ZIP.
+        ("ADDRESS", r"\b[A-Z][a-z]+(?:\s+[A-Z][a-z]+){0,3}\s+(?:St(?:reet)?|Ave(?:nue)?|Dr(?:ive)?|Rd|Road|Blvd|Boulevard|Ln|Lane|Way|Ct|Court|Pl|Place|Cir(?:cle)?|Pkwy|Parkway),\s*#\d+(?:,\s*[A-Z][a-z]+(?:[\s-]+[A-Z][a-z]+)*(?:,\s*(?:[A-Z]{2}\s+\d{5}(?:-\d{4})?|\d{5}))?)?\b", 0.85),
 
     # ── COUNTRY ──────────────────────────────────────────────────────
         # IMPORTANT: COUNTRY must come BEFORE CITY so that higher-confidence (0.80)
