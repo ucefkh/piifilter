@@ -775,7 +775,135 @@ class Arbitrator:
                 filtered.append(e)
             deduped = filtered
 
-                # ── PERSON overlap suppression ──────────────────────────────────────
+        # ── PERSON Presidio denylist ─────────────────────────────────────────────────
+        # Presidio NER often misidentifies technical header words, field labels,
+        # and common English nouns as PERSON at its default confidence threshold.
+        # These are single-capitalized-word spans that are NOT real person names.
+        # Suppress any Presidio-origin PERSON entity whose value matches these
+        # known false-positive tokens.
+        _PRESIDIO_PERSON_FP_TOKENS: set[str] = {
+            # Technical headers / field labels (OOD FP class #1)
+            "subdomain", "hostname", "host", "domain", "endpoint",
+            "namespace", "cluster", "instance", "volume",
+            "account", "profile", "setting", "config",
+            # Support / contact headers
+            "support", "help", "contact", "about", "home",
+            # Common role nouns that Presidio overmatches
+            "manager", "director", "owner", "admin", "member",
+            "employee", "customer", "client", "vendor",
+            # Common sentence-start words
+            "please", "thank", "thanks", "hello", "hi", "hey",
+            "yes", "no", "ok", "okay", "note", "info",
+            # Month / day names (not always people)
+            "january", "february", "march", "april", "june", "july",
+            "august", "september", "october", "november", "december",
+            "monday", "tuesday", "wednesday", "thursday", "friday",
+            "saturday", "sunday",
+            # Single tokens commonly misidentified
+            "value", "key", "code", "type", "name", "text",
+            "file", "data", "path", "line", "page", "site",
+            "link", "url", "uri", "urn", "email", "mail",
+            "address", "phone", "mobile", "fax",
+            "id", "ids", "ref", "no", "num", "str", "int",
+            "token", "pass", "cert", "salt", "hash",
+            "img", "src", "href", "result", "status",
+            "error", "warning", "success", "default",
+            "public", "private", "internal", "external",
+            "start", "end", "next", "prev", "last", "first",
+            "head", "body", "title", "desc", "description",
+            "select", "insert", "update", "delete",
+            "build", "deploy", "release", "version", "commit",
+            "api", "rest", "graphql", "grpc", "soap",
+            "json", "xml", "yaml", "toml", "csv",
+            "true", "false", "null", "none", "nil",
+            "test", "prod", "dev", "stage", "debug",
+            "buy", "sell", "trade", "order", "bid", "ask",
+        }
+
+        filtered: list[DetectedEntity] = []
+        for e in deduped:
+            if e.entity_type != EntityType.PERSON:
+                filtered.append(e)
+                continue
+            # Only apply Presidio-specific denylist to NER-origin PERSON.
+            # The arbitrator's emit() produces entities with detector="arbitrator",
+            # so check detector_votes for presidio evidence sources.
+            has_presidio_evidence = False
+            detector_votes = getattr(e, 'detector_votes', None)
+            if detector_votes and isinstance(detector_votes, list):
+                has_presidio_evidence = any(
+                    v.get("detector") == "presidio" for v in detector_votes
+                )
+            if has_presidio_evidence:
+                value_lower = e.value.strip().lower()
+                tokens = value_lower.split()
+                # Single-token PERSON from Presidio matching a known FP token → suppress
+                if len(tokens) == 1 and tokens[0] in _PRESIDIO_PERSON_FP_TOKENS:
+                    continue
+                # Multi-token spans where ALL tokens are known FP tokens → suppress
+                if len(tokens) > 1 and all(t in _PRESIDIO_PERSON_FP_TOKENS for t in tokens):
+                    continue
+            filtered.append(e)
+        deduped = filtered
+
+        # ── PERSON possessive-name guard ────────────────────────────────────────────
+        # Presidio NER sometimes detects single-word first names (e.g. "Yuki",
+        # "Thabo", "Mei") that are followed by "'s" and a PII keyword (SSN, CC,
+        # PHONE, etc.). These are possessive attributes, not person references.
+        # Suppress PERSON entities from Presidio followed by "'s" within 3 chars
+        # AND any PII-type entity within 30 chars to the right.
+        _PERSON_POSSESSIVE_PII_TYPES = {
+            EntityType.SOCIAL_SECURITY,
+            EntityType.CREDIT_CARD,
+            EntityType.PHONE,
+            EntityType.PASSPORT,
+            EntityType.BANK_ACCOUNT,
+        }
+
+        # Collect intervals for PII entities to the right
+        pii_right_intervals: list[tuple[int, int]] = []
+        for e in deduped:
+            if e.entity_type in _PERSON_POSSESSIVE_PII_TYPES:
+                pii_right_intervals.append((e.start, e.end))
+
+        if pii_right_intervals:
+            filtered: list[DetectedEntity] = []
+            for e in deduped:
+                if e.entity_type != EntityType.PERSON:
+                    filtered.append(e)
+                    continue
+                detector_name = getattr(e, 'detector', '') or getattr(e, 'source_detector', '')
+                # The arbitrator produces entities with detector="arbitrator",
+                # so check detector_votes for presidio evidence sources.
+                has_presidio_evidence = detector_name == 'presidio'
+                if not has_presidio_evidence:
+                    detector_votes = getattr(e, 'detector_votes', None)
+                    if detector_votes and isinstance(detector_votes, list):
+                        has_presidio_evidence = any(
+                            v.get("detector") == "presidio" for v in detector_votes
+                        )
+                if not has_presidio_evidence:
+                    filtered.append(e)
+                    continue
+                # Check if this PERSON is followed by "'s" within 3 chars
+                pos_end = e.end
+                after_text = original_text[pos_end:pos_end + 5] if original_text and pos_end < len(original_text) else ""
+                is_possessive = after_text.startswith("'s")
+                if not is_possessive:
+                    filtered.append(e)
+                    continue
+                # Check if any PII entity exists within 30 chars to the right
+                near_pii = any(
+                    not (e.end + 30 <= ps or e.start >= pe)
+                    for ps, pe in pii_right_intervals
+                )
+                if near_pii:
+                    # Suppress — possessive name before PII entity
+                    continue
+                filtered.append(e)
+            deduped = filtered
+
+        # ── PERSON overlap suppression ──────────────────────────────────────
         # PERSON spans that overlap with higher-specificity spans (COMPANY,
         # ADDRESS, CITY) are almost always false positives — the same text
         # was more precisely classified by a different type. Drop the PERSON

@@ -51,7 +51,9 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # JWT with 3 dots as ellipsis: "eyJzdW...IyfQ"
     ("JWT", r"\beyJ[a-zA-Z0-9_-]+\.\.\.[a-zA-Z0-9_-]+\b", 0.85),
     # JWT that is essentially a base64 encoded payload (single segment, no dots)
-    ("JWT", r"\beyJ[a-zA-Z0-9+/=_-]{20,}\b", 0.70),
+    # Bare eyJ — requires at least two segments separated by a dot to avoid
+    # matching non-JWT base64 strings that happen to start with eyJ.
+    ("JWT", r"\beyJ[a-zA-Z0-9_-]+?\.[a-zA-Z0-9_-]{2,}(?:\.[a-zA-Z0-9_-]+)?\b", 0.70),
 
     # ── SSN ──────────────────────────────────────────────────────────
     # IMPORTANT ORDERING: More specific patterns (context-prefixed) must come
@@ -402,7 +404,8 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # as well as common prefix/suffix patterns like "Bank:", "account:", "acct no:", "A/c:".
     ("BANK_ACCOUNT", r"(?i)\b(?:bank|account|acct|A/c)\s*(?:number|no|#)?\s*(?::|is|was)?\s*\d{8,17}\b", 0.85),
     # Non-IBAN-looking digit sequences — exclude those starting with 2 letters
-    # Removed bare \d{12,20} pattern — was causing 28 CC FPs on OOD. Context-anchored only.
+    # Bare 12-20 digit sequences at low confidence — context gate (detector.py:1821-1836) filters FPs
+    ("BANK_ACCOUNT", r"\b\d{12,20}\b", 0.45),
 
     # ── PERSON ───────────────────────────────────────────────────────
     # Title-prefixed — name must be 2+ chars, not a single letter

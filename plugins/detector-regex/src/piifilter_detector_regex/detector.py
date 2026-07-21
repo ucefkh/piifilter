@@ -167,6 +167,14 @@ class RegexDetector(Detector):
             if not _reject:
                 _filtered_ssn_pre.append(_ssn_e)
         ssn_entities_presistrip = _filtered_ssn_pre
+        # ── CREDIT_CARD (pre-strip) — format-specific patterns (space/dash/dot separated groups)
+        # run on pre-strip text where separators are preserved. After inner-separator stripping,
+        # these patterns can't match. The Luhn safety net on stripped text catches Luhn-valid ones,
+        # but non-Luhn-valid ones with proper format+context need the pre-strip pass.
+        # Dedup (same-type containment) later handles overlap with stripped-text CC matches.
+        credit_card_entities_presistrip, _ = self._run_patterns_for_type(
+            text_for_gps, {EntityType.CREDIT_CARD}
+        )
         # ── CITY (pre-strip) — correct span positions after GPS dot removal
         city_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.CITY}
