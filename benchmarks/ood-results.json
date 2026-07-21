@@ -1,11 +1,11 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
-  "timestamp": "2026-07-21T11:27:43Z",
+  "timestamp": "2026-07-21T08:45:42Z",
   "arbitration": {
     "enabled": true
   },
   "dataset": {
-    "path": "benchmarks/data/ood_corpus_v2.json",
+    "path": "benchmarks/data/ood_corpus_v1.json",
     "total_examples": 250,
     "test_examples": 238,
     "total_entities": 272,
@@ -35,13 +35,13 @@
       "detector": "regex",
       "total_examples": 238,
       "total_expected_entities": 272,
-      "total_detected_entities": 296,
-      "total_true_positives": 225,
-      "total_false_positives": 71,
-      "total_false_negatives": 47,
-      "overall_precision": 0.7601351351351351,
-      "overall_recall": 0.8272058823529411,
-      "overall_f1": 0.7922535211267606,
+      "total_detected_entities": 300,
+      "total_true_positives": 201,
+      "total_false_positives": 99,
+      "total_false_negatives": 71,
+      "overall_precision": 0.67,
+      "overall_recall": 0.7389705882352942,
+      "overall_f1": 0.7027972027972028,
       "per_type": {
         "ADDRESS": {
           "true_positives": 23,
@@ -66,14 +66,14 @@
         },
         "BANK_ACCOUNT": {
           "true_positives": 10,
-          "false_positives": 0,
+          "false_positives": 28,
           "false_negatives": 4,
           "n": 14,
           "n_total": 14,
-          "precision": 1.0,
+          "precision": 0.2632,
           "recall": 0.7143,
-          "f1": 0.8333,
-          "f2": 0.7576,
+          "f1": 0.3846,
+          "f2": 0.5319,
           "recall_ci": [
             0.4535,
             0.8828
@@ -122,24 +122,24 @@
           ]
         },
         "CREDIT_CARD": {
-          "true_positives": 21,
+          "true_positives": 2,
           "false_positives": 6,
-          "false_negatives": 8,
+          "false_negatives": 27,
           "n": 29,
           "n_total": 29,
-          "precision": 0.7778,
-          "recall": 0.7241,
-          "f1": 0.75,
-          "f2": 0.7343,
+          "precision": 0.25,
+          "recall": 0.069,
+          "f1": 0.1081,
+          "f2": 0.0806,
           "recall_ci": [
-            0.5428,
-            0.853
+            0.0191,
+            0.2196
           ],
           "real_n": 29,
-          "real_recall": 0.7241,
+          "real_recall": 0.069,
           "real_recall_ci": [
-            0.5428,
-            0.853
+            0.0191,
+            0.2196
           ]
         },
         "DATE": {
@@ -164,24 +164,24 @@
           ]
         },
         "DOMAIN": {
-          "true_positives": 17,
+          "true_positives": 12,
           "false_positives": 2,
-          "false_negatives": 0,
+          "false_negatives": 5,
           "n": 17,
           "n_total": 17,
-          "precision": 0.8947,
-          "recall": 1.0,
-          "f1": 0.9444,
-          "f2": 0.977,
+          "precision": 0.8571,
+          "recall": 0.7059,
+          "f1": 0.7742,
+          "f2": 0.7317,
           "recall_ci": [
-            0.8157,
-            1.0
+            0.4687,
+            0.8672
           ],
           "real_n": 17,
-          "real_recall": 1.0,
+          "real_recall": 0.7059,
           "real_recall_ci": [
-            0.8157,
-            1.0
+            0.4687,
+            0.8672
           ]
         },
         "EMAIL": {
@@ -354,11 +354,15 @@
           "PERSON": 12,
           "CITY": 5
         },
+        "CREDIT_CARD": {
+          "BANK_ACCOUNT": 27
+        },
         "DOMAIN": {
           "URL": 5
         },
         "IP_ADDRESS": {
-          "CREDIT_CARD": 3
+          "CREDIT_CARD": 3,
+          "BANK_ACCOUNT": 1
         },
         "PERSON": {
           "EMPLOYEE_NAME": 4,
@@ -501,31 +505,33 @@
         },
         {
           "index": 8,
-          "text_preview": "Amex: 2705-988543-37843",
+          "text_preview": "Amex: 3588-880673-79527",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
           "index": 9,
           "text_preview": "Credit card: 7182.7564.7459.3874",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 10,
@@ -544,18 +550,18 @@
         },
         {
           "index": 11,
-          "text_preview": "Payment: 3412-4635-2293-9038, Contact: +1-844-693-2272",
+          "text_preview": "Payment: 3457-6443-0949-9981, Contact: +1-844-693-2272",
           "expected": 2,
           "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD",
             "PHONE"
           ],
           "detected_types": [
-            "CREDIT_CARD",
+            "BANK_ACCOUNT",
             "PHONE"
           ]
         },
@@ -625,15 +631,14 @@
           "index": 16,
           "text_preview": "Visit our website at https://www.devforge.net/home",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
             "URL"
           ]
         },
@@ -760,17 +765,17 @@
         },
         {
           "index": 25,
-          "text_preview": "Visa: 3824 9182 0989 7629",
+          "text_preview": "Visa: 8729 8761 4203 7749",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -824,14 +829,16 @@
           "index": 29,
           "text_preview": "cc 8581  5205  5556  4825",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 30,
@@ -1093,18 +1100,18 @@
         },
         {
           "index": 47,
-          "text_preview": "Payment: 5850-3251-6019-1483, Contact: +1-624-380-5081",
+          "text_preview": "Payment: 0010-1429-9328-3903, Contact: +1-624-380-5081",
           "expected": 2,
           "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD",
             "PHONE"
           ],
           "detected_types": [
-            "CREDIT_CARD",
+            "BANK_ACCOUNT",
             "PHONE"
           ]
         },
@@ -1357,17 +1364,17 @@
         },
         {
           "index": 64,
-          "text_preview": "Card number: 2171-8834-4120-6768",
+          "text_preview": "Card number: 9558-5057-3648-3515",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -1389,27 +1396,31 @@
           "index": 66,
           "text_preview": "Visa: 1263 7306 4158 1206",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 67,
           "text_preview": "Card: 2796 8142-0533 1615",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 68,
@@ -1445,14 +1456,16 @@
           "index": 70,
           "text_preview": "Payment method: 2493102788080271",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 71,
@@ -1488,17 +1501,17 @@
         },
         {
           "index": 73,
-          "text_preview": "Card number: 3196-6192-4314-5369",
+          "text_preview": "Card number: 9658-3485-3982-5495",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -1630,15 +1643,14 @@
           "index": 82,
           "text_preview": "Visit our website at https://www.probase.app/home",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
             "URL"
           ]
         },
@@ -1662,14 +1674,16 @@
           "index": 84,
           "text_preview": "Card number: 8988-1792-0882-8762",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 85,
@@ -1736,15 +1750,14 @@
           "index": 89,
           "text_preview": "Visit our website at https://www.trybase.tech/home",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
             "URL"
           ]
         },
@@ -2071,15 +2084,14 @@
           "index": 111,
           "text_preview": "Visit our website at https://www.getvault.io/home",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
             "URL"
           ]
         },
@@ -2100,17 +2112,17 @@
         },
         {
           "index": 113,
-          "text_preview": "Amex: 4121-983617-79634",
+          "text_preview": "Amex: 3824-381334-21715",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -2461,12 +2473,12 @@
         },
         {
           "index": 137,
-          "text_preview": "Hiroshi Müller, CC: 4344-0357-2572-5314, Address: 5909 Main Street, Santa Fe, NY",
+          "text_preview": "Hiroshi Müller, CC: 8589-6148-2994-9939, Address: 5909 Main Street, Santa Fe, NY",
           "expected": 3,
           "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 2,
           "expected_types": [
             "ADDRESS",
             "CREDIT_CARD",
@@ -2474,23 +2486,23 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "CREDIT_CARD"
+            "BANK_ACCOUNT",
+            "CITY"
           ]
         },
         {
           "index": 138,
-          "text_preview": "Card number: 2011-3185-1444-2820",
+          "text_preview": "Card number: 3458-4881-1342-2734",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -2631,17 +2643,17 @@
         },
         {
           "index": 148,
-          "text_preview": "cc 6063 - 4113 - 2349 - 8139",
+          "text_preview": "cc 0816 - 1092 - 1221 - 3701",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -2707,17 +2719,17 @@
         },
         {
           "index": 153,
-          "text_preview": "Credit card: 4323.4492.1426.1589",
+          "text_preview": "Credit card: 4072.3899.6537.3481",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -2832,28 +2844,30 @@
           "index": 161,
           "text_preview": "Credit card: 0916.3652.3376.9289",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 162,
-          "text_preview": "Visa: 5050 0579 2665 8509",
+          "text_preview": "Visa: 3879 0016 5809 9309",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -2933,14 +2947,15 @@
           "index": 168,
           "text_preview": "Endpoint: http://143.118.252.70:4139/api/v2",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "BANK_ACCOUNT",
             "IP_ADDRESS"
           ]
         },
@@ -3132,17 +3147,17 @@
         },
         {
           "index": 181,
-          "text_preview": "Visa: 4802 5029 9265 9976",
+          "text_preview": "Visa: 7793 6795 6866 4957",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -3164,14 +3179,16 @@
           "index": 183,
           "text_preview": "Amex: 3662-344744-17645",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 184,
@@ -3297,17 +3314,17 @@
         },
         {
           "index": 192,
-          "text_preview": "cc 5458  2921  5422  3043",
+          "text_preview": "cc 5032  2860  1098  5670",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -3343,17 +3360,17 @@
         },
         {
           "index": 195,
-          "text_preview": "Card: 6840-8252-4506-4713",
+          "text_preview": "Card: 0783 1991-7635 8311",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -3435,17 +3452,17 @@
         },
         {
           "index": 201,
-          "text_preview": "Card: 3080-4094-9382-1136",
+          "text_preview": "Card: 8437 3949-2722 4582",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -3482,15 +3499,14 @@
           "index": 204,
           "text_preview": "Visit our website at https://www.procore.app/home",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
             "URL"
           ]
         },
@@ -3647,18 +3663,18 @@
         },
         {
           "index": 215,
-          "text_preview": "Payment: 5342-3162-8956-3294, Contact: +1-549-690-4302",
+          "text_preview": "Payment: 2247-6926-5790-4817, Contact: +1-549-690-4302",
           "expected": 2,
           "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD",
             "PHONE"
           ],
           "detected_types": [
-            "CREDIT_CARD",
+            "BANK_ACCOUNT",
             "PHONE"
           ]
         },
@@ -3802,12 +3818,12 @@
         },
         {
           "index": 225,
-          "text_preview": "Fatima Yamamoto, CC: 2001-2543-6936-3013, Address: 3837 Jefferson Avenue, Raleig",
+          "text_preview": "Fatima Yamamoto, CC: 8705-0211-0603-7975, Address: 3837 Jefferson Avenue, Raleig",
           "expected": 3,
           "detected": 3,
-          "true_positives": 2,
-          "false_positives": 1,
-          "false_negatives": 1,
+          "true_positives": 1,
+          "false_positives": 2,
+          "false_negatives": 2,
           "expected_types": [
             "ADDRESS",
             "CREDIT_CARD",
@@ -3815,23 +3831,23 @@
           ],
           "detected_types": [
             "ADDRESS",
-            "CITY",
-            "CREDIT_CARD"
+            "BANK_ACCOUNT",
+            "CITY"
           ]
         },
         {
           "index": 226,
-          "text_preview": "Card number: 3015-9026-5714-7553",
+          "text_preview": "Card number: 8431-1707-7124-1204",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -4006,13 +4022,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 238,
       "total_expected_entities": 272,
-      "total_detected_entities": 299,
-      "total_true_positives": 242,
-      "total_false_positives": 57,
-      "total_false_negatives": 30,
-      "overall_precision": 0.8093645484949833,
-      "overall_recall": 0.8897058823529411,
-      "overall_f1": 0.8476357267950964,
+      "total_detected_entities": 300,
+      "total_true_positives": 220,
+      "total_false_positives": 80,
+      "total_false_negatives": 52,
+      "overall_precision": 0.7333333333333333,
+      "overall_recall": 0.8088235294117647,
+      "overall_f1": 0.7692307692307692,
       "per_type": {
         "ADDRESS": {
           "true_positives": 23,
@@ -4037,14 +4053,14 @@
         },
         "BANK_ACCOUNT": {
           "true_positives": 10,
-          "false_positives": 0,
+          "false_positives": 28,
           "false_negatives": 4,
           "n": 14,
           "n_total": 14,
-          "precision": 1.0,
+          "precision": 0.2632,
           "recall": 0.7143,
-          "f1": 0.8333,
-          "f2": 0.7576,
+          "f1": 0.3846,
+          "f2": 0.5319,
           "recall_ci": [
             0.4535,
             0.8828
@@ -4093,24 +4109,24 @@
           ]
         },
         "CREDIT_CARD": {
-          "true_positives": 21,
+          "true_positives": 2,
           "false_positives": 6,
-          "false_negatives": 8,
+          "false_negatives": 27,
           "n": 29,
           "n_total": 29,
-          "precision": 0.7778,
-          "recall": 0.7241,
-          "f1": 0.75,
-          "f2": 0.7343,
+          "precision": 0.25,
+          "recall": 0.069,
+          "f1": 0.1081,
+          "f2": 0.0806,
           "recall_ci": [
-            0.5428,
-            0.853
+            0.0191,
+            0.2196
           ],
           "real_n": 29,
-          "real_recall": 0.7241,
+          "real_recall": 0.069,
           "real_recall_ci": [
-            0.5428,
-            0.853
+            0.0191,
+            0.2196
           ]
         },
         "DATE": {
@@ -4234,24 +4250,24 @@
           ]
         },
         "PERSON": {
-          "true_positives": 22,
-          "false_positives": 16,
-          "false_negatives": 10,
+          "true_positives": 19,
+          "false_positives": 11,
+          "false_negatives": 13,
           "n": 32,
           "n_total": 32,
-          "precision": 0.5789,
-          "recall": 0.6875,
-          "f1": 0.6286,
-          "f2": 0.6627,
+          "precision": 0.6333,
+          "recall": 0.5938,
+          "f1": 0.6129,
+          "f2": 0.6013,
           "recall_ci": [
-            0.5143,
-            0.8205
+            0.4226,
+            0.7448
           ],
           "real_n": 32,
-          "real_recall": 0.6875,
+          "real_recall": 0.5938,
           "real_recall_ci": [
-            0.5143,
-            0.8205
+            0.4226,
+            0.7448
           ]
         },
         "PHONE": {
@@ -4319,15 +4335,19 @@
         "GPS": {
           "CREDIT_CARD": 3
         },
+        "CREDIT_CARD": {
+          "BANK_ACCOUNT": 27
+        },
         "NONE": {
-          "PERSON": 16,
+          "PERSON": 11,
           "CITY": 5
         },
         "DOMAIN": {
           "URL": 5
         },
         "IP_ADDRESS": {
-          "CREDIT_CARD": 3
+          "CREDIT_CARD": 3,
+          "BANK_ACCOUNT": 1
         },
         "SOCIAL_SECURITY": {
           "PHONE": 2
@@ -4426,16 +4446,15 @@
           "index": 5,
           "text_preview": "Reach Raj at thabo.hansen@sandbox.tech",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "EMAIL"
           ]
         },
         {
@@ -4470,31 +4489,33 @@
         },
         {
           "index": 8,
-          "text_preview": "Amex: 2705-988543-37843",
+          "text_preview": "Amex: 3588-880673-79527",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
           "index": 9,
           "text_preview": "Credit card: 7182.7564.7459.3874",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 10,
@@ -4513,18 +4534,18 @@
         },
         {
           "index": 11,
-          "text_preview": "Payment: 3412-4635-2293-9038, Contact: +1-844-693-2272",
+          "text_preview": "Payment: 3457-6443-0949-9981, Contact: +1-844-693-2272",
           "expected": 2,
           "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD",
             "PHONE"
           ],
           "detected_types": [
-            "CREDIT_CARD",
+            "BANK_ACCOUNT",
             "PHONE"
           ]
         },
@@ -4729,17 +4750,17 @@
         },
         {
           "index": 25,
-          "text_preview": "Visa: 3824 9182 0989 7629",
+          "text_preview": "Visa: 8729 8761 4203 7749",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -4794,14 +4815,16 @@
           "index": 29,
           "text_preview": "cc 8581  5205  5556  4825",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 30,
@@ -4882,16 +4905,15 @@
           "index": 35,
           "text_preview": "Reach Zara at raj_dubois@demoapp.cloud",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "EMAIL"
           ]
         },
         {
@@ -5065,18 +5087,18 @@
         },
         {
           "index": 47,
-          "text_preview": "Payment: 5850-3251-6019-1483, Contact: +1-624-380-5081",
+          "text_preview": "Payment: 0010-1429-9328-3903, Contact: +1-624-380-5081",
           "expected": 2,
           "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD",
             "PHONE"
           ],
           "detected_types": [
-            "CREDIT_CARD",
+            "BANK_ACCOUNT",
             "PHONE"
           ]
         },
@@ -5330,17 +5352,17 @@
         },
         {
           "index": 64,
-          "text_preview": "Card number: 2171-8834-4120-6768",
+          "text_preview": "Card number: 9558-5057-3648-3515",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -5362,27 +5384,31 @@
           "index": 66,
           "text_preview": "Visa: 1263 7306 4158 1206",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 67,
           "text_preview": "Card: 2796 8142-0533 1615",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 68,
@@ -5418,14 +5444,16 @@
           "index": 70,
           "text_preview": "Payment method: 2493102788080271",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 71,
@@ -5462,17 +5490,17 @@
         },
         {
           "index": 73,
-          "text_preview": "Card number: 3196-6192-4314-5369",
+          "text_preview": "Card number: 9658-3485-3982-5495",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -5637,14 +5665,16 @@
           "index": 84,
           "text_preview": "Card number: 8988-1792-0882-8762",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 85,
@@ -5989,16 +6019,15 @@
           "index": 107,
           "text_preview": "Reach Kwame at yuki49@webmail.app",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "EMAIL"
           ]
         },
         {
@@ -6078,17 +6107,17 @@
         },
         {
           "index": 113,
-          "text_preview": "Amex: 4121-983617-79634",
+          "text_preview": "Amex: 3824-381334-21715",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -6441,12 +6470,12 @@
         },
         {
           "index": 137,
-          "text_preview": "Hiroshi Müller, CC: 4344-0357-2572-5314, Address: 5909 Main Street, Santa Fe, NY",
+          "text_preview": "Hiroshi Müller, CC: 8589-6148-2994-9939, Address: 5909 Main Street, Santa Fe, NY",
           "expected": 3,
           "detected": 4,
-          "true_positives": 3,
-          "false_positives": 1,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 2,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CREDIT_CARD",
@@ -6454,24 +6483,24 @@
           ],
           "detected_types": [
             "ADDRESS",
+            "BANK_ACCOUNT",
             "CITY",
-            "CREDIT_CARD",
             "PERSON"
           ]
         },
         {
           "index": 138,
-          "text_preview": "Card number: 2011-3185-1444-2820",
+          "text_preview": "Card number: 3458-4881-1342-2734",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -6613,17 +6642,17 @@
         },
         {
           "index": 148,
-          "text_preview": "cc 6063 - 4113 - 2349 - 8139",
+          "text_preview": "cc 0816 - 1092 - 1221 - 3701",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -6691,17 +6720,17 @@
         },
         {
           "index": 153,
-          "text_preview": "Credit card: 4323.4492.1426.1589",
+          "text_preview": "Credit card: 4072.3899.6537.3481",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -6815,28 +6844,30 @@
           "index": 161,
           "text_preview": "Credit card: 0916.3652.3376.9289",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 162,
-          "text_preview": "Visa: 5050 0579 2665 8509",
+          "text_preview": "Visa: 3879 0016 5809 9309",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -6918,14 +6949,15 @@
           "index": 168,
           "text_preview": "Endpoint: http://143.118.252.70:4139/api/v2",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "BANK_ACCOUNT",
             "IP_ADDRESS"
           ]
         },
@@ -7119,17 +7151,17 @@
         },
         {
           "index": 181,
-          "text_preview": "Visa: 4802 5029 9265 9976",
+          "text_preview": "Visa: 7793 6795 6866 4957",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -7151,14 +7183,16 @@
           "index": 183,
           "text_preview": "Amex: 3662-344744-17645",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 184,
@@ -7286,17 +7320,17 @@
         },
         {
           "index": 192,
-          "text_preview": "cc 5458  2921  5422  3043",
+          "text_preview": "cc 5032  2860  1098  5670",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -7332,17 +7366,17 @@
         },
         {
           "index": 195,
-          "text_preview": "Card: 6840-8252-4506-4713",
+          "text_preview": "Card: 0783 1991-7635 8311",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -7395,16 +7429,15 @@
           "index": 199,
           "text_preview": "Reach Noor at bjorn.nguyen@mycompany.co.uk",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "EMAIL"
           ]
         },
         {
@@ -7424,17 +7457,17 @@
         },
         {
           "index": 201,
-          "text_preview": "Card: 3080-4094-9382-1136",
+          "text_preview": "Card: 8437 3949-2722 4582",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -7533,16 +7566,15 @@
           "index": 208,
           "text_preview": "Reach Aisha at amara_petrov@webmail.app",
           "expected": 1,
-          "detected": 2,
+          "detected": 1,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "EMAIL"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "EMAIL"
           ]
         },
         {
@@ -7594,17 +7626,16 @@
           "index": 212,
           "text_preview": "Hiroshi Hansen — hiroshi.hansen@mailinator.org",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "EMAIL"
           ]
         },
         {
@@ -7639,18 +7670,18 @@
         },
         {
           "index": 215,
-          "text_preview": "Payment: 5342-3162-8956-3294, Contact: +1-549-690-4302",
+          "text_preview": "Payment: 2247-6926-5790-4817, Contact: +1-549-690-4302",
           "expected": 2,
           "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD",
             "PHONE"
           ],
           "detected_types": [
-            "CREDIT_CARD",
+            "BANK_ACCOUNT",
             "PHONE"
           ]
         },
@@ -7794,12 +7825,12 @@
         },
         {
           "index": 225,
-          "text_preview": "Fatima Yamamoto, CC: 2001-2543-6936-3013, Address: 3837 Jefferson Avenue, Raleig",
+          "text_preview": "Fatima Yamamoto, CC: 8705-0211-0603-7975, Address: 3837 Jefferson Avenue, Raleig",
           "expected": 3,
           "detected": 4,
-          "true_positives": 3,
-          "false_positives": 1,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 2,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CREDIT_CARD",
@@ -7807,24 +7838,24 @@
           ],
           "detected_types": [
             "ADDRESS",
+            "BANK_ACCOUNT",
             "CITY",
-            "CREDIT_CARD",
             "PERSON"
           ]
         },
         {
           "index": 226,
-          "text_preview": "Card number: 3015-9026-5714-7553",
+          "text_preview": "Card number: 8431-1707-7124-1204",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -7935,17 +7966,16 @@
           "index": 234,
           "text_preview": "Noor Nguyen — noor.nguyen@service.eu",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "EMAIL"
           ]
         },
         {
@@ -7968,17 +7998,16 @@
           "index": 236,
           "text_preview": "James Nguyen — james.nguyen@example.com",
           "expected": 2,
-          "detected": 2,
-          "true_positives": 2,
+          "detected": 1,
+          "true_positives": 1,
           "false_positives": 0,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "EMAIL",
             "PERSON"
           ],
           "detected_types": [
-            "EMAIL",
-            "PERSON"
+            "EMAIL"
           ]
         },
         {
@@ -8002,13 +8031,13 @@
       "detector": "pipeline-raw",
       "total_examples": 238,
       "total_expected_entities": 272,
-      "total_detected_entities": 358,
-      "total_true_positives": 251,
-      "total_false_positives": 107,
-      "total_false_negatives": 21,
-      "overall_precision": 0.7011173184357542,
-      "overall_recall": 0.9227941176470589,
-      "overall_f1": 0.7968253968253969,
+      "total_detected_entities": 351,
+      "total_true_positives": 227,
+      "total_false_positives": 124,
+      "total_false_negatives": 45,
+      "overall_precision": 0.6467236467236467,
+      "overall_recall": 0.8345588235294118,
+      "overall_f1": 0.7287319422150882,
       "per_type": {
         "ADDRESS": {
           "true_positives": 23,
@@ -8033,14 +8062,14 @@
         },
         "BANK_ACCOUNT": {
           "true_positives": 10,
-          "false_positives": 0,
+          "false_positives": 28,
           "false_negatives": 4,
           "n": 14,
           "n_total": 14,
-          "precision": 1.0,
+          "precision": 0.2632,
           "recall": 0.7143,
-          "f1": 0.8333,
-          "f2": 0.7576,
+          "f1": 0.3846,
+          "f2": 0.5319,
           "recall_ci": [
             0.4535,
             0.8828
@@ -8089,24 +8118,24 @@
           ]
         },
         "CREDIT_CARD": {
-          "true_positives": 21,
-          "false_positives": 17,
-          "false_negatives": 8,
+          "true_positives": 2,
+          "false_positives": 6,
+          "false_negatives": 27,
           "n": 29,
           "n_total": 29,
-          "precision": 0.5526,
-          "recall": 0.7241,
-          "f1": 0.6269,
-          "f2": 0.6818,
+          "precision": 0.25,
+          "recall": 0.069,
+          "f1": 0.1081,
+          "f2": 0.0806,
           "recall_ci": [
-            0.5428,
-            0.853
+            0.0191,
+            0.2196
           ],
           "real_n": 29,
-          "real_recall": 0.7241,
+          "real_recall": 0.069,
           "real_recall_ci": [
-            0.5428,
-            0.853
+            0.0191,
+            0.2196
           ]
         },
         "DATE": {
@@ -8131,24 +8160,24 @@
           ]
         },
         "DOMAIN": {
-          "true_positives": 17,
+          "true_positives": 12,
           "false_positives": 2,
-          "false_negatives": 0,
+          "false_negatives": 5,
           "n": 17,
           "n_total": 17,
-          "precision": 0.8947,
-          "recall": 1.0,
-          "f1": 0.9444,
-          "f2": 0.977,
+          "precision": 0.8571,
+          "recall": 0.7059,
+          "f1": 0.7742,
+          "f2": 0.7317,
           "recall_ci": [
-            0.8157,
-            1.0
+            0.4687,
+            0.8672
           ],
           "real_n": 17,
-          "real_recall": 1.0,
+          "real_recall": 0.7059,
           "real_recall_ci": [
-            0.8157,
-            1.0
+            0.4687,
+            0.8672
           ]
         },
         "EMAIL": {
@@ -8326,13 +8355,14 @@
           "CITY": 5
         },
         "CREDIT_CARD": {
-          "CREDIT_CARD": 11
+          "BANK_ACCOUNT": 27
         },
         "DOMAIN": {
           "URL": 5
         },
         "IP_ADDRESS": {
-          "CREDIT_CARD": 3
+          "CREDIT_CARD": 3,
+          "BANK_ACCOUNT": 1
         },
         "PERSON": {
           "EMPLOYEE_NAME": 4,
@@ -8475,31 +8505,33 @@
         },
         {
           "index": 8,
-          "text_preview": "Amex: 2705-988543-37843",
+          "text_preview": "Amex: 3588-880673-79527",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
           "index": 9,
           "text_preview": "Credit card: 7182.7564.7459.3874",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 10,
@@ -8518,18 +8550,18 @@
         },
         {
           "index": 11,
-          "text_preview": "Payment: 3412-4635-2293-9038, Contact: +1-844-693-2272",
+          "text_preview": "Payment: 3457-6443-0949-9981, Contact: +1-844-693-2272",
           "expected": 2,
-          "detected": 3,
-          "true_positives": 2,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD",
             "PHONE"
           ],
           "detected_types": [
-            "CREDIT_CARD",
+            "BANK_ACCOUNT",
             "PHONE"
           ]
         },
@@ -8599,15 +8631,14 @@
           "index": 16,
           "text_preview": "Visit our website at https://www.devforge.net/home",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
             "URL"
           ]
         },
@@ -8735,17 +8766,17 @@
         },
         {
           "index": 25,
-          "text_preview": "Visa: 3824 9182 0989 7629",
+          "text_preview": "Visa: 8729 8761 4203 7749",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -8800,14 +8831,16 @@
           "index": 29,
           "text_preview": "cc 8581  5205  5556  4825",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 30,
@@ -9071,18 +9104,18 @@
         },
         {
           "index": 47,
-          "text_preview": "Payment: 5850-3251-6019-1483, Contact: +1-624-380-5081",
+          "text_preview": "Payment: 0010-1429-9328-3903, Contact: +1-624-380-5081",
           "expected": 2,
           "detected": 2,
-          "true_positives": 2,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 1,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD",
             "PHONE"
           ],
           "detected_types": [
-            "CREDIT_CARD",
+            "BANK_ACCOUNT",
             "PHONE"
           ]
         },
@@ -9336,17 +9369,17 @@
         },
         {
           "index": 64,
-          "text_preview": "Card number: 2171-8834-4120-6768",
+          "text_preview": "Card number: 9558-5057-3648-3515",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -9368,27 +9401,31 @@
           "index": 66,
           "text_preview": "Visa: 1263 7306 4158 1206",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 67,
           "text_preview": "Card: 2796 8142-0533 1615",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 68,
@@ -9424,14 +9461,16 @@
           "index": 70,
           "text_preview": "Payment method: 2493102788080271",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 71,
@@ -9469,17 +9508,17 @@
         },
         {
           "index": 73,
-          "text_preview": "Card number: 3196-6192-4314-5369",
+          "text_preview": "Card number: 9658-3485-3982-5495",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -9613,15 +9652,14 @@
           "index": 82,
           "text_preview": "Visit our website at https://www.probase.app/home",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
             "URL"
           ]
         },
@@ -9645,14 +9683,16 @@
           "index": 84,
           "text_preview": "Card number: 8988-1792-0882-8762",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 85,
@@ -9720,15 +9760,14 @@
           "index": 89,
           "text_preview": "Visit our website at https://www.trybase.tech/home",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
             "URL"
           ]
         },
@@ -10060,15 +10099,14 @@
           "index": 111,
           "text_preview": "Visit our website at https://www.getvault.io/home",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
             "URL"
           ]
         },
@@ -10089,17 +10127,17 @@
         },
         {
           "index": 113,
-          "text_preview": "Amex: 4121-983617-79634",
+          "text_preview": "Amex: 3824-381334-21715",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -10452,12 +10490,12 @@
         },
         {
           "index": 137,
-          "text_preview": "Hiroshi Müller, CC: 4344-0357-2572-5314, Address: 5909 Main Street, Santa Fe, NY",
+          "text_preview": "Hiroshi Müller, CC: 8589-6148-2994-9939, Address: 5909 Main Street, Santa Fe, NY",
           "expected": 3,
-          "detected": 5,
-          "true_positives": 3,
+          "detected": 4,
+          "true_positives": 2,
           "false_positives": 2,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CREDIT_CARD",
@@ -10465,24 +10503,24 @@
           ],
           "detected_types": [
             "ADDRESS",
+            "BANK_ACCOUNT",
             "CITY",
-            "CREDIT_CARD",
             "PERSON"
           ]
         },
         {
           "index": 138,
-          "text_preview": "Card number: 2011-3185-1444-2820",
+          "text_preview": "Card number: 3458-4881-1342-2734",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -10624,17 +10662,17 @@
         },
         {
           "index": 148,
-          "text_preview": "cc 6063 - 4113 - 2349 - 8139",
+          "text_preview": "cc 0816 - 1092 - 1221 - 3701",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -10702,17 +10740,17 @@
         },
         {
           "index": 153,
-          "text_preview": "Credit card: 4323.4492.1426.1589",
+          "text_preview": "Credit card: 4072.3899.6537.3481",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -10827,28 +10865,30 @@
           "index": 161,
           "text_preview": "Credit card: 0916.3652.3376.9289",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 162,
-          "text_preview": "Visa: 5050 0579 2665 8509",
+          "text_preview": "Visa: 3879 0016 5809 9309",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -10930,14 +10970,15 @@
           "index": 168,
           "text_preview": "Endpoint: http://143.118.252.70:4139/api/v2",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "IP_ADDRESS"
           ],
           "detected_types": [
+            "BANK_ACCOUNT",
             "IP_ADDRESS"
           ]
         },
@@ -11131,17 +11172,17 @@
         },
         {
           "index": 181,
-          "text_preview": "Visa: 4802 5029 9265 9976",
+          "text_preview": "Visa: 7793 6795 6866 4957",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -11163,14 +11204,16 @@
           "index": 183,
           "text_preview": "Amex: 3662-344744-17645",
           "expected": 1,
-          "detected": 0,
+          "detected": 1,
           "true_positives": 0,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
-          "detected_types": []
+          "detected_types": [
+            "BANK_ACCOUNT"
+          ]
         },
         {
           "index": 184,
@@ -11299,17 +11342,17 @@
         },
         {
           "index": 192,
-          "text_preview": "cc 5458  2921  5422  3043",
+          "text_preview": "cc 5032  2860  1098  5670",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -11345,17 +11388,17 @@
         },
         {
           "index": 195,
-          "text_preview": "Card: 6840-8252-4506-4713",
+          "text_preview": "Card: 0783 1991-7635 8311",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -11437,17 +11480,17 @@
         },
         {
           "index": 201,
-          "text_preview": "Card: 3080-4094-9382-1136",
+          "text_preview": "Card: 8437 3949-2722 4582",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {
@@ -11485,15 +11528,14 @@
           "index": 204,
           "text_preview": "Visit our website at https://www.procore.app/home",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "DOMAIN"
           ],
           "detected_types": [
-            "DOMAIN",
             "URL"
           ]
         },
@@ -11654,18 +11696,18 @@
         },
         {
           "index": 215,
-          "text_preview": "Payment: 5342-3162-8956-3294, Contact: +1-549-690-4302",
+          "text_preview": "Payment: 2247-6926-5790-4817, Contact: +1-549-690-4302",
           "expected": 2,
-          "detected": 3,
-          "true_positives": 2,
+          "detected": 2,
+          "true_positives": 1,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD",
             "PHONE"
           ],
           "detected_types": [
-            "CREDIT_CARD",
+            "BANK_ACCOUNT",
             "PHONE"
           ]
         },
@@ -11809,12 +11851,12 @@
         },
         {
           "index": 225,
-          "text_preview": "Fatima Yamamoto, CC: 2001-2543-6936-3013, Address: 3837 Jefferson Avenue, Raleig",
+          "text_preview": "Fatima Yamamoto, CC: 8705-0211-0603-7975, Address: 3837 Jefferson Avenue, Raleig",
           "expected": 3,
           "detected": 4,
-          "true_positives": 3,
-          "false_positives": 1,
-          "false_negatives": 0,
+          "true_positives": 2,
+          "false_positives": 2,
+          "false_negatives": 1,
           "expected_types": [
             "ADDRESS",
             "CREDIT_CARD",
@@ -11822,24 +11864,24 @@
           ],
           "detected_types": [
             "ADDRESS",
+            "BANK_ACCOUNT",
             "CITY",
-            "CREDIT_CARD",
             "PERSON"
           ]
         },
         {
           "index": 226,
-          "text_preview": "Card number: 3015-9026-5714-7553",
+          "text_preview": "Card number: 8431-1707-7124-1204",
           "expected": 1,
-          "detected": 2,
-          "true_positives": 1,
+          "detected": 1,
+          "true_positives": 0,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 1,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "CREDIT_CARD"
+            "BANK_ACCOUNT"
           ]
         },
         {

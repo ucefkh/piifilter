@@ -1,0 +1,2973 @@
+{
+  "description": "OOD PII Test Corpus v1 \u2014 independently sourced, out-of-distribution evaluation set. Generated programmatically with diverse formats, international variants, and mixed-entity contexts. Seed=8675309. NOT derived from the existing pii_dataset.json.",
+  "version": "1.0.0",
+  "seed": 8675309,
+  "examples": [
+    {
+      "text": "Visit our website at https://www.probase.app/home",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "probase.app",
+          "start": 33,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "text": "My Social Security number is 680-65-4603.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "680-65-4603",
+          "start": 29,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "text": "Manager Diego Dubois approved the request.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Diego Dubois",
+          "start": 8,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "text": "Coordinates: -5.11884, -109.23512",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-5.11884, -109.23512",
+          "start": 13,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "text": "Account #: 7350580517",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "7350580517",
+          "start": 11,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "text": "If you need help, please contact our support team at diego.ali@sandbox.tech.",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "diego.ali@sandbox.tech",
+          "start": 53,
+          "end": 75
+        }
+      ]
+    },
+    {
+      "text": "Date of birth: 08/10/2015",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "08/10/2015",
+          "start": 15,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Phone: +1.937.751.1876",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1.937.751.1876",
+          "start": 7,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "DNS record: getpulse.net",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "getpulse.net",
+          "start": 12,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "Coordinates: 58.017482, 141.076856",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "58.017482, 141.076856",
+          "start": 13,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "Send to lena.ali+support@demoapp.cloud",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "lena.ali+support@demoapp.cloud",
+          "start": 8,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "text": "My Social Security number is 883-83-3722.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "883-83-3722",
+          "start": 29,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "text": "Server: usevault.net (139.28.20.22)",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "usevault.net",
+          "start": 8,
+          "end": 20
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "139.28.20.22",
+          "start": 22,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "Endpoint: http://78.148.25.188:4197/api/v2",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "78.148.25.188",
+          "start": 17,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Santiago Petrov, email iyamamoto@service.eu",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Santiago Petrov",
+          "start": 0,
+          "end": 15
+        },
+        {
+          "type": "EMAIL",
+          "value": "iyamamoto@service.eu",
+          "start": 23,
+          "end": 43
+        }
+      ]
+    },
+    {
+      "text": "Tel: +1-912-227-6085 (office hours 9-5)",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-912-227-6085",
+          "start": 5,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "text": "Emergency: +1-493-995-5301",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-493-995-5301",
+          "start": 11,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Date of birth: 11/7/2021",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "11/7/2021",
+          "start": 15,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "Payment: 5342-3162-8956-3294, Contact: +1-549-690-4302",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "5342-3162-8956-3294",
+          "start": 9,
+          "end": 28
+        },
+        {
+          "type": "PHONE",
+          "value": "+1-549-690-4302",
+          "start": 39,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "text": "Hiroshi Hansen \u2014 hiroshi.hansen@mailinator.org",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Hiroshi Hansen",
+          "start": 0,
+          "end": 14
+        },
+        {
+          "type": "EMAIL",
+          "value": "hiroshi.hansen@mailinator.org",
+          "start": 17,
+          "end": 46
+        }
+      ]
+    },
+    {
+      "text": "Last updated: Nov 3, 2018",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "Nov 3, 2018",
+          "start": 14,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Card number: 2011-3185-1444-2820",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "2011-3185-1444-2820",
+          "start": 13,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Reach Santiago at nokafor@mycompany.co.uk",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "nokafor@mycompany.co.uk",
+          "start": 18,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "text": "IPv6: a3af:0628:5019:5c3c:c9b7:b2ed:fd3d:3773",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "a3af:0628:5019:5c3c:c9b7:b2ed:fd3d:3773",
+          "start": 6,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "Forward the invoice to zara_okafor@service.eu for processing.",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "zara_okafor@service.eu",
+          "start": 23,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "Deposit to account ACC-76437042",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "ACC-76437042",
+          "start": 19,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "James Nguyen \u2014 james.nguyen@example.com",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "James Nguyen",
+          "start": 0,
+          "end": 12
+        },
+        {
+          "type": "EMAIL",
+          "value": "james.nguyen@example.com",
+          "start": 15,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "Reach Raj at thabo.hansen@sandbox.tech",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "thabo.hansen@sandbox.tech",
+          "start": 13,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "text": "Card: 2796 8142-0533 1615",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "2796 8142-0533 1615",
+          "start": 6,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Location found at 73.215743, 176.904887",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "73.215743, 176.904887",
+          "start": 18,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "Card number: 3196-6192-4314-5369",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "3196-6192-4314-5369",
+          "start": 13,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "International: +61 198 556 249",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+61 198 556 249",
+          "start": 15,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Author: Hiroshi Hansen",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Hiroshi Hansen",
+          "start": 8,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "My Social Security number is 658-92-5750.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "658-92-5750",
+          "start": 29,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "text": "Credit card: 7182.7564.7459.3874",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "7182.7564.7459.3874",
+          "start": 13,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Thabo Nguyen works at ApexSoft.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Thabo Nguyen",
+          "start": 0,
+          "end": 12
+        },
+        {
+          "type": "COMPANY",
+          "value": "ApexSoft",
+          "start": 22,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Account #: ACC-64890460",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "ACC-64890460",
+          "start": 11,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Manager Amara Johansson approved the request.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Amara Johansson",
+          "start": 8,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Interview with Amara Nguyen, CEO of Quantum Labs.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Amara Nguyen",
+          "start": 15,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "text": "Endpoint: http://143.118.252.70:4139/api/v2",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "143.118.252.70",
+          "start": 17,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "SS# 106-26-5975 (employee verification)",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "106-26-5975",
+          "start": 4,
+          "end": 15
+        }
+      ]
+    },
+    {
+      "text": "Credit card: 0916.3652.3376.9289",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "0916.3652.3376.9289",
+          "start": 13,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Payment method: 5349165752246298",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "5349165752246298",
+          "start": 16,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Subdomain: api.mybase.tech",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "api.mybase.tech",
+          "start": 11,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Redirect *.provault.co.uk to new server",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "provault.co.uk",
+          "start": 11,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "DOB: 2015-09-06",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "2015-09-06",
+          "start": 5,
+          "end": 15
+        }
+      ]
+    },
+    {
+      "text": "Email: ingrid_patel@webmail.app, Address: 7130 Maple Drive, Apt 29, Durham, NY 97401",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "ingrid_patel@webmail.app",
+          "start": 7,
+          "end": 31
+        },
+        {
+          "type": "ADDRESS",
+          "value": "7130 Maple Drive, Apt 29, Durham, NY 97401",
+          "start": 42,
+          "end": 84
+        }
+      ]
+    },
+    {
+      "text": "Author: Amara Cohen",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Amara Cohen",
+          "start": 8,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "text": "Callback number: (632) 951-4923",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "(632) 951-4923",
+          "start": 17,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "Redirect *.usewave.net to new server",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "usewave.net",
+          "start": 11,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "Account #: ACC-11241633",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "ACC-11241633",
+          "start": 11,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Ship to: 7315 Park Avenue, Denver, NY 97201",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "7315 Park Avenue, Denver, NY 97201",
+          "start": 9,
+          "end": 43
+        }
+      ]
+    },
+    {
+      "text": "Zara Patel works at DataForge.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Zara Patel",
+          "start": 0,
+          "end": 10
+        },
+        {
+          "type": "COMPANY",
+          "value": "DataForge",
+          "start": 20,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "text": "SSN: 758 69 4353",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "758 69 4353",
+          "start": 5,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "text": "Routing: 021000021, Account: 744138475",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "744138475",
+          "start": 29,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "text": "Deposit to account 7032213928",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "7032213928",
+          "start": 19,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "text": "My Social Security number is 051-30-6021.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "051-30-6021",
+          "start": 29,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "text": "Fatima Yamamoto, CC: 2001-2543-6936-3013, Address: 3837 Jefferson Avenue, Raleigh, IL 48104",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Fatima Yamamoto",
+          "start": 0,
+          "end": 15
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "2001-2543-6936-3013",
+          "start": 21,
+          "end": 40
+        },
+        {
+          "type": "ADDRESS",
+          "value": "3837 Jefferson Avenue, Raleigh, IL 48104",
+          "start": 51,
+          "end": 91
+        }
+      ]
+    },
+    {
+      "text": "Reach Noor at bjorn.nguyen@mycompany.co.uk",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "bjorn.nguyen@mycompany.co.uk",
+          "start": 14,
+          "end": 42
+        }
+      ]
+    },
+    {
+      "text": "Email: santiagog@demoapp.cloud",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "santiagog@demoapp.cloud",
+          "start": 7,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Deposit to account 33615148",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "33615148",
+          "start": 19,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "text": "Yuki's SSN is 034-60-5580 \u2014 keep it confidential.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "034-60-5580",
+          "start": 14,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Pickup at 20.357693, -142.708688, call +1-368-963-5971 when you arrive",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "20.357693, -142.708688",
+          "start": 10,
+          "end": 32
+        },
+        {
+          "type": "PHONE",
+          "value": "+1-368-963-5971",
+          "start": 39,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "text": "Server IP: 178.94.183.165",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "178.94.183.165",
+          "start": 11,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "cc 5458  2921  5422  3043",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "5458  2921  5422  3043",
+          "start": 3,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Kwame Johansson works at ApexSoft.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Kwame Johansson",
+          "start": 0,
+          "end": 15
+        },
+        {
+          "type": "COMPANY",
+          "value": "ApexSoft",
+          "start": 25,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "text": "Payment method: 4134174189253903",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "4134174189253903",
+          "start": 16,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Ship to: 1728 River Road\\nRaleigh, IL 53703",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "1728 River Road\\nRaleigh, IL 53703",
+          "start": 9,
+          "end": 43
+        }
+      ]
+    },
+    {
+      "text": "Thabo's SSN is 831-49-2815 \u2014 keep it confidential.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "831-49-2815",
+          "start": 15,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Amex: 2705-988543-37843",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "2705-988543-37843",
+          "start": 6,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Email: santiago_petrov@example.com",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "santiago_petrov@example.com",
+          "start": 7,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "Endpoint: http://125.209.174.165:5536/api/v2",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "125.209.174.165",
+          "start": 17,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Forward the invoice to lena18@webmail.app for processing.",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "lena18@webmail.app",
+          "start": 23,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "text": "Kwame Petrov works at ApexSoft.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Kwame Petrov",
+          "start": 0,
+          "end": 12
+        },
+        {
+          "type": "COMPANY",
+          "value": "ApexSoft",
+          "start": 22,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Phone: +1.221.353.1348",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1.221.353.1348",
+          "start": 7,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "Expires: 03/14/2018",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "03/14/2018",
+          "start": 9,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "text": "Pay Hiroshi Kowalski via ACH to account 754100725",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Hiroshi Kowalski",
+          "start": 4,
+          "end": 20
+        },
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "754100725",
+          "start": 40,
+          "end": 49
+        }
+      ]
+    },
+    {
+      "text": "Date of birth: Oct 2, 2026",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "Oct 2, 2026",
+          "start": 15,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Our office is at 4873 Maple Drive, Raleigh, FL 97201.",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "4873 Maple Drive, Raleigh, FL 97201",
+          "start": 17,
+          "end": 52
+        }
+      ]
+    },
+    {
+      "text": "Expires: 2017-12-21",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "2017-12-21",
+          "start": 9,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "text": "GPS: 13.550598, -36.47557 (accuracy 5m)",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "13.550598, -36.47557",
+          "start": 5,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Please send correspondence to 5761 Lake Drive\\nCharleston, CA 53703.",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "5761 Lake Drive\\nCharleston, CA 53703",
+          "start": 30,
+          "end": 67
+        }
+      ]
+    },
+    {
+      "text": "Data: 371-85-0341",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "371-85-0341",
+          "start": 6,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "text": "Billing: 692 Highland Road, Burlington, Minnesota 23219",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "692 Highland Road, Burlington, Minnesota 23219",
+          "start": 9,
+          "end": 55
+        }
+      ]
+    },
+    {
+      "text": "Data: 897-43-7384",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "897-43-7384",
+          "start": 6,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "text": "Dr. Silva, could you review the patient records for Room 220?",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Dr. Silva",
+          "start": 0,
+          "end": 9
+        }
+      ]
+    },
+    {
+      "text": "International: +55 148 011 643",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+55 148 011 643",
+          "start": 15,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Data: 314-66-1365",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "314-66-1365",
+          "start": 6,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "text": "Hiroshi M\u00fcller, CC: 4344-0357-2572-5314, Address: 5909 Main Street, Santa Fe, NY 29401",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Hiroshi M\u00fcller",
+          "start": 0,
+          "end": 14
+        },
+        {
+          "type": "CREDIT_CARD",
+          "value": "4344-0357-2572-5314",
+          "start": 20,
+          "end": 39
+        },
+        {
+          "type": "ADDRESS",
+          "value": "5909 Main Street, Santa Fe, NY 29401",
+          "start": 50,
+          "end": 86
+        }
+      ]
+    },
+    {
+      "text": "Ship to: 6168 Cedar Lane, Savannah, OR 80301",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "6168 Cedar Lane, Savannah, OR 80301",
+          "start": 9,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "text": "Access from 60.218.111.145 blocked",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "60.218.111.145",
+          "start": 12,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Tax ID: 076448621",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "076448621",
+          "start": 8,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "text": "DOB: 02/11/2022",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "02/11/2022",
+          "start": 5,
+          "end": 15
+        }
+      ]
+    },
+    {
+      "text": "Visa: 4802 5029 9265 9976",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "4802 5029 9265 9976",
+          "start": 6,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Server: myforge.cloud (175.26.23.39)",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "myforge.cloud",
+          "start": 8,
+          "end": 21
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "175.26.23.39",
+          "start": 23,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "text": "GPS: -64.186041, -69.417847 (accuracy 5m)",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-64.186041, -69.417847",
+          "start": 5,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "text": "cc 7724  7674  5550  4302",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "7724  7674  5550  4302",
+          "start": 3,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "IPv6: d1e1:007c:8b4c:8dc6:8092:ae0b:c268:8603",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "d1e1:007c:8b4c:8dc6:8092:ae0b:c268:8603",
+          "start": 6,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "Our office is at 2801 Highland Road, Ann Arbor, Florida 29401.",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "2801 Highland Road, Ann Arbor, Florida 29401",
+          "start": 17,
+          "end": 61
+        }
+      ]
+    },
+    {
+      "text": "Endpoint: http://106.210.135.220:7319/api/v2",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "106.210.135.220",
+          "start": 17,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Valid until 2025-04-06",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "2025-04-06",
+          "start": 12,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "Send to fatima.rodriguez+team@mycompany.co.uk",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "fatima.rodriguez+team@mycompany.co.uk",
+          "start": 8,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "Send to diego.cohen+team@testmail.io",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "diego.cohen+team@testmail.io",
+          "start": 8,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "text": "Manager Diego Ivanova approved the request.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Diego Ivanova",
+          "start": 8,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "text": "Internal network: 192.168.46.226",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.46.226",
+          "start": 18,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Server IP: 13.117.174.115",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "13.117.174.115",
+          "start": 11,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Lat/Lon: 35.043212, 126.848672",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "35.043212, 126.848672",
+          "start": 9,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Pin: -85.775592, 86.605234 \u2014 meet here.",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-85.775592, 86.605234",
+          "start": 5,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Location found at 85.318851, -75.895034",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "85.318851, -75.895034",
+          "start": 18,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "My Social Security number is 412-28-8360.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "412-28-8360",
+          "start": 29,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "text": "Noor Nguyen \u2014 noor.nguyen@service.eu",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Noor Nguyen",
+          "start": 0,
+          "end": 11
+        },
+        {
+          "type": "EMAIL",
+          "value": "noor.nguyen@service.eu",
+          "start": 14,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "text": "Contact Fatima at +1-661-699-8185",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-661-699-8185",
+          "start": 18,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "text": "Mei's SSN is 210-78-8977 \u2014 keep it confidential.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "210-78-8977",
+          "start": 13,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "SSN: 865 82 2244",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "865 82 2244",
+          "start": 5,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "text": "Tax ID: 456248728",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "456248728",
+          "start": 8,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "text": "Emergency: +1-989-421-5350",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-989-421-5350",
+          "start": 11,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Phone: +1.648.207.7308",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1.648.207.7308",
+          "start": 7,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "cc 6063 - 4113 - 2349 - 8139",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "6063 - 4113 - 2349 - 8139",
+          "start": 3,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "text": "Our office is at 6094 Sunset Boulevard\\nMinneapolis, NC 27601.",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "6094 Sunset Boulevard\\nMinneapolis, NC 27601",
+          "start": 17,
+          "end": 61
+        }
+      ]
+    },
+    {
+      "text": "Contact Hiroshi at +1-424-986-5517",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-424-986-5517",
+          "start": 19,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "Subdomain: api.hubbase.app",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "api.hubbase.app",
+          "start": 11,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Routing: 021000021, Account: 385913930",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "385913930",
+          "start": 29,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "text": "SSN: 148 25 4546",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "148 25 4546",
+          "start": 5,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "text": "Email: maria_nguyen@quickstart.dev, Address: 2283 Washington Boulevard, Apt 16, Denver, IL 01101",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "maria_nguyen@quickstart.dev",
+          "start": 7,
+          "end": 34
+        },
+        {
+          "type": "ADDRESS",
+          "value": "2283 Washington Boulevard, Apt 16, Denver, IL 01101",
+          "start": 45,
+          "end": 96
+        }
+      ]
+    },
+    {
+      "text": "Tax ID: 039024018",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "039024018",
+          "start": 8,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "text": "Hiroshi Sato works at GreenLeaf Analytics.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Hiroshi Sato",
+          "start": 0,
+          "end": 12
+        },
+        {
+          "type": "COMPANY",
+          "value": "GreenLeaf Analytics",
+          "start": 22,
+          "end": 41
+        }
+      ]
+    },
+    {
+      "text": "DOB: 1/5/2018, SSN: 703-89-0603",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "1/5/2018",
+          "start": 5,
+          "end": 13
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "703-89-0603",
+          "start": 20,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "Emergency: +1-267-752-1598",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-267-752-1598",
+          "start": 11,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Reach Zara at raj_dubois@demoapp.cloud",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "raj_dubois@demoapp.cloud",
+          "start": 14,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "text": "Author: Aisha Cohen",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Aisha Cohen",
+          "start": 8,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "text": "Contact Ingrid at +1-294-377-7549",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-294-377-7549",
+          "start": 18,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "text": "Expires: Sep 26, 2015",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "Sep 26, 2015",
+          "start": 9,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "text": "Payment: 3412-4635-2293-9038, Contact: +1-844-693-2272",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "3412-4635-2293-9038",
+          "start": 9,
+          "end": 28
+        },
+        {
+          "type": "PHONE",
+          "value": "+1-844-693-2272",
+          "start": 39,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "text": "Internal network: 192.168.226.7",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.226.7",
+          "start": 18,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "Coordinates: -61.731541, -1.175813",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-61.731541, -1.175813",
+          "start": 13,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "Email: yukiy@quickstart.dev",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "yukiy@quickstart.dev",
+          "start": 7,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "text": "Lat/Lon: -41.745328, 120.366509",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-41.745328, 120.366509",
+          "start": 9,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "IPv6: e5c4:bbab:61d3:c8c7:d940:05d3:df1a:791e",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "e5c4:bbab:61d3:c8c7:d940:05d3:df1a:791e",
+          "start": 6,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "International: +86 596 506 190",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+86 596 506 190",
+          "start": 15,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "International: +61 520 530 306",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+61 520 530 306",
+          "start": 15,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Dr. Petrov, could you review the patient records for Room 496?",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Dr. Petrov",
+          "start": 0,
+          "end": 10
+        }
+      ]
+    },
+    {
+      "text": "Card: 3080-4094-9382-1136",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "3080-4094-9382-1136",
+          "start": 6,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Santiago Silva works at Arcadia MedTech.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Santiago Silva",
+          "start": 0,
+          "end": 14
+        },
+        {
+          "type": "COMPANY",
+          "value": "Arcadia MedTech",
+          "start": 24,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "Bank account: 9367855145",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "9367855145",
+          "start": 14,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "DOB: Mar 7, 2015, SSN: 256-40-9907",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "Mar 7, 2015",
+          "start": 5,
+          "end": 16
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "256-40-9907",
+          "start": 23,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "GPS: 79.759338, 79.09279 (accuracy 5m)",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "79.759338, 79.09279",
+          "start": 5,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "Interview with Lena Garcia, CEO of Pinnacle Finance.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Lena Garcia",
+          "start": 15,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Pin: -86.046779, -42.424366 \u2014 meet here.",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-86.046779, -42.424366",
+          "start": 5,
+          "end": 27
+        }
+      ]
+    },
+    {
+      "text": "Email: bjorn13@service.eu, Address: 1654 Broadway, Apt 18, Springfield, OR 53703",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "bjorn13@service.eu",
+          "start": 7,
+          "end": 25
+        },
+        {
+          "type": "ADDRESS",
+          "value": "1654 Broadway, Apt 18, Springfield, OR 53703",
+          "start": 36,
+          "end": 80
+        }
+      ]
+    },
+    {
+      "text": "Location found at 15.688054, 150.577148",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "15.688054, 150.577148",
+          "start": 18,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "Server IP: 52.46.7.233",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "52.46.7.233",
+          "start": 11,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "Our office is at 7796 Pine Street\\nMadison, CA 98101.",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "7796 Pine Street\\nMadison, CA 98101",
+          "start": 17,
+          "end": 52
+        }
+      ]
+    },
+    {
+      "text": "Amex: 4121-983617-79634",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "4121-983617-79634",
+          "start": 6,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Phone: +1.535.495.8314",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1.535.495.8314",
+          "start": 7,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "Pickup at -28.407329, 40.253882, call +1-651-790-2966 when you arrive",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-28.407329, 40.253882",
+          "start": 10,
+          "end": 31
+        },
+        {
+          "type": "PHONE",
+          "value": "+1-651-790-2966",
+          "start": 38,
+          "end": 53
+        }
+      ]
+    },
+    {
+      "text": "Kwame Rodriguez\\n6871 Jefferson Avenue, Charleston, OR 05401",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Kwame Rodriguez",
+          "start": 0,
+          "end": 15
+        },
+        {
+          "type": "ADDRESS",
+          "value": "6871 Jefferson Avenue, Charleston, OR 05401",
+          "start": 17,
+          "end": 60
+        }
+      ]
+    },
+    {
+      "text": "Date of birth: 2024-03-26",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "2024-03-26",
+          "start": 15,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Author: Noor Dubois",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Noor Dubois",
+          "start": 8,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "text": "Redirect *.usenexus.com to new server",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "usenexus.com",
+          "start": 11,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Server IP: 202.76.180.116",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "202.76.180.116",
+          "start": 11,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Dr. Yamamoto, could you review the patient records for Room 391?",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Dr. Yamamoto",
+          "start": 0,
+          "end": 12
+        }
+      ]
+    },
+    {
+      "text": "Billing: 6020 Sunset Boulevard, Apt 10, Seattle, TX 23219",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "6020 Sunset Boulevard, Apt 10, Seattle, TX 23219",
+          "start": 9,
+          "end": 57
+        }
+      ]
+    },
+    {
+      "text": "Callback number: (844) 699-3505",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "(844) 699-3505",
+          "start": 17,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "Last updated: 05/13/2024",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "05/13/2024",
+          "start": 14,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "Valid until 2/11/2021",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "2/11/2021",
+          "start": 12,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "text": "My Social Security number is 629-90-5712.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "629-90-5712",
+          "start": 29,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "text": "Date of birth: 8/4/2016",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "8/4/2016",
+          "start": 15,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Diego Silva\\n2838 River Road, Raleigh, Oregon 80202",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Diego Silva",
+          "start": 0,
+          "end": 11
+        },
+        {
+          "type": "ADDRESS",
+          "value": "2838 River Road, Raleigh, Oregon 80202",
+          "start": 13,
+          "end": 51
+        }
+      ]
+    },
+    {
+      "text": "Last updated: 10/2/2018",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "10/2/2018",
+          "start": 14,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Card number: 2171-8834-4120-6768",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "2171-8834-4120-6768",
+          "start": 13,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Please send correspondence to 1654 Pine Street, Santa Fe, FL 73301.",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "1654 Pine Street, Santa Fe, FL 73301",
+          "start": 30,
+          "end": 66
+        }
+      ]
+    },
+    {
+      "text": "Bank account: 93573592",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "93573592",
+          "start": 14,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "cc 8581  5205  5556  4825",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "8581  5205  5556  4825",
+          "start": 3,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Tel: +1-450-358-8645 (office hours 9-5)",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-450-358-8645",
+          "start": 5,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "text": "Visa: 3824 9182 0989 7629",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "3824 9182 0989 7629",
+          "start": 6,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Coordinates: 74.041074, -79.854694",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "74.041074, -79.854694",
+          "start": 13,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "If you need help, please contact our support team at chen.patel@mycompany.co.uk.",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "chen.patel@mycompany.co.uk",
+          "start": 53,
+          "end": 79
+        }
+      ]
+    },
+    {
+      "text": "Ship to: 7574 Pine Street, Springfield, Washington 01101",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "7574 Pine Street, Springfield, Washington 01101",
+          "start": 9,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "text": "Forward the invoice to tgarcia@acmecorp.net for processing.",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "tgarcia@acmecorp.net",
+          "start": 23,
+          "end": 43
+        }
+      ]
+    },
+    {
+      "text": "DNS record: provault.cloud",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "provault.cloud",
+          "start": 12,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Author: Noor Ali",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Noor Ali",
+          "start": 8,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "text": "DOB: Mar 8, 2022, SSN: 638-20-8049",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "Mar 8, 2022",
+          "start": 5,
+          "end": 16
+        },
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "638-20-8049",
+          "start": 23,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "Credit card: 4323.4492.1426.1589",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "4323.4492.1426.1589",
+          "start": 13,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Contact Bjorn at +1-783-210-6580",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-783-210-6580",
+          "start": 17,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Ship to: 2098 Oak Avenue\\nAnn Arbor, OR 73301",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "2098 Oak Avenue\\nAnn Arbor, OR 73301",
+          "start": 9,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "Ship to: 4836 Park Avenue, Raleigh, North Carolina 27701",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "4836 Park Avenue, Raleigh, North Carolina 27701",
+          "start": 9,
+          "end": 56
+        }
+      ]
+    },
+    {
+      "text": "SS# 887-66-6342 (employee verification)",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "887-66-6342",
+          "start": 4,
+          "end": 15
+        }
+      ]
+    },
+    {
+      "text": "My Social Security number is 665-41-7911.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "665-41-7911",
+          "start": 29,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "text": "SSN: 397 30 3887",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "397 30 3887",
+          "start": 5,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "text": "Pay Ingrid Ali via ACH to account 7528251932",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Ingrid Ali",
+          "start": 4,
+          "end": 14
+        },
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "7528251932",
+          "start": 34,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "text": "Coordinates: -64.710267, 69.854219",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-64.710267, 69.854219",
+          "start": 13,
+          "end": 34
+        }
+      ]
+    },
+    {
+      "text": "If you need help, please contact our support team at chen10@testmail.io.",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "chen10@testmail.io",
+          "start": 53,
+          "end": 71
+        }
+      ]
+    },
+    {
+      "text": "Tel: +1-602-768-5557 (office hours 9-5)",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-602-768-5557",
+          "start": 5,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "text": "Location found at 4.782139, -171.045472",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "4.782139, -171.045472",
+          "start": 18,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "Visit our website at https://www.devforge.net/home",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "devforge.net",
+          "start": 33,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "Card: 6840-8252-4506-4713",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "6840-8252-4506-4713",
+          "start": 6,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Tel: +1-513-209-4099 (office hours 9-5)",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-513-209-4099",
+          "start": 5,
+          "end": 20
+        }
+      ]
+    },
+    {
+      "text": "Data: 716-31-9438",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "716-31-9438",
+          "start": 6,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "text": "Callback number: (912) 442-1455",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "(912) 442-1455",
+          "start": 17,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "DOB: 06/02/2019",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "06/02/2019",
+          "start": 5,
+          "end": 15
+        }
+      ]
+    },
+    {
+      "text": "Expires: 04/13/2024",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "04/13/2024",
+          "start": 9,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "text": "Internal network: 192.168.205.90",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.205.90",
+          "start": 18,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "GPS: -73.664566, 72.35287 (accuracy 5m)",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-73.664566, 72.35287",
+          "start": 5,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Visit our website at https://www.trybase.tech/home",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "trybase.tech",
+          "start": 33,
+          "end": 45
+        }
+      ]
+    },
+    {
+      "text": "Access from 103.21.177.72 blocked",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "103.21.177.72",
+          "start": 12,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "SS# 782-09-1986 (employee verification)",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "782-09-1986",
+          "start": 4,
+          "end": 15
+        }
+      ]
+    },
+    {
+      "text": "Callback number: (452) 436-2098",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "(452) 436-2098",
+          "start": 17,
+          "end": 31
+        }
+      ]
+    },
+    {
+      "text": "Billing: 3689 Lake Drive, Apt 45, Olympia, MN 85701",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "3689 Lake Drive, Apt 45, Olympia, MN 85701",
+          "start": 9,
+          "end": 51
+        }
+      ]
+    },
+    {
+      "text": "Payment method: 2493102788080271",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "2493102788080271",
+          "start": 16,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "DNS record: devcore.io",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "devcore.io",
+          "start": 12,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "Payment: 5850-3251-6019-1483, Contact: +1-624-380-5081",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "5850-3251-6019-1483",
+          "start": 9,
+          "end": 28
+        },
+        {
+          "type": "PHONE",
+          "value": "+1-624-380-5081",
+          "start": 39,
+          "end": 54
+        }
+      ]
+    },
+    {
+      "text": "Aisha Garcia, email yuki-nguyen@mycompany.co.uk",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Aisha Garcia",
+          "start": 0,
+          "end": 12
+        },
+        {
+          "type": "EMAIL",
+          "value": "yuki-nguyen@mycompany.co.uk",
+          "start": 20,
+          "end": 47
+        }
+      ]
+    },
+    {
+      "text": "Card number: 3015-9026-5714-7553",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "3015-9026-5714-7553",
+          "start": 13,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Please send correspondence to 6390 Maple Drive\\nBurlington, IL 80301.",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "6390 Maple Drive\\nBurlington, IL 80301",
+          "start": 30,
+          "end": 68
+        }
+      ]
+    },
+    {
+      "text": "My Social Security number is 094-02-8125.",
+      "entities": [
+        {
+          "type": "SOCIAL_SECURITY",
+          "value": "094-02-8125",
+          "start": 29,
+          "end": 40
+        }
+      ]
+    },
+    {
+      "text": "Send to ingrid.ali+support@example.com",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "ingrid.ali+support@example.com",
+          "start": 8,
+          "end": 38
+        }
+      ]
+    },
+    {
+      "text": "Billing: 8092 Main Street\\nBoulder, NC 73301",
+      "entities": [
+        {
+          "type": "ADDRESS",
+          "value": "8092 Main Street\\nBoulder, NC 73301",
+          "start": 9,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "text": "Reach Kwame at yuki49@webmail.app",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "yuki49@webmail.app",
+          "start": 15,
+          "end": 33
+        }
+      ]
+    },
+    {
+      "text": "Server IP: 128.184.59.167",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "128.184.59.167",
+          "start": 11,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Amex: 3662-344744-17645",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "3662-344744-17645",
+          "start": 6,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Visit our website at https://www.procore.app/home",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "procore.app",
+          "start": 33,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "text": "Aisha Yamamoto\\n9461 Oak Avenue, Apt 39, Seattle, IL 53703",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Aisha Yamamoto",
+          "start": 0,
+          "end": 14
+        },
+        {
+          "type": "ADDRESS",
+          "value": "9461 Oak Avenue, Apt 39, Seattle, IL 53703",
+          "start": 16,
+          "end": 58
+        }
+      ]
+    },
+    {
+      "text": "Access from 242.85.121.197 blocked",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "242.85.121.197",
+          "start": 12,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Contact Raj at +1-724-428-2695",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-724-428-2695",
+          "start": 15,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Internal network: 192.168.175.76",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "192.168.175.76",
+          "start": 18,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Lat/Lon: -8.332836, -20.24075",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-8.332836, -20.24075",
+          "start": 9,
+          "end": 29
+        }
+      ]
+    },
+    {
+      "text": "Visit our website at https://www.getvault.io/home",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "getvault.io",
+          "start": 33,
+          "end": 44
+        }
+      ]
+    },
+    {
+      "text": "Subdomain: api.tryvault.tech",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "api.tryvault.tech",
+          "start": 11,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "text": "Visa: 5050 0579 2665 8509",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "5050 0579 2665 8509",
+          "start": 6,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Aisha Kim, email lena-garcia@service.eu",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Aisha Kim",
+          "start": 0,
+          "end": 9
+        },
+        {
+          "type": "EMAIL",
+          "value": "lena-garcia@service.eu",
+          "start": 17,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "Visa: 1263 7306 4158 1206",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "1263 7306 4158 1206",
+          "start": 6,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Last updated: 2025-10-28",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "2025-10-28",
+          "start": 14,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "Pickup at -30.454658, 172.30729, call +1-478-587-5967 when you arrive",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "-30.454658, 172.30729",
+          "start": 10,
+          "end": 31
+        },
+        {
+          "type": "PHONE",
+          "value": "+1-478-587-5967",
+          "start": 38,
+          "end": 53
+        }
+      ]
+    },
+    {
+      "text": "Card number: 8988-1792-0882-8762",
+      "entities": [
+        {
+          "type": "CREDIT_CARD",
+          "value": "8988-1792-0882-8762",
+          "start": 13,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Reach Aisha at amara_petrov@webmail.app",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "amara_petrov@webmail.app",
+          "start": 15,
+          "end": 39
+        }
+      ]
+    },
+    {
+      "text": "Pin: 52.547262, 57.490792 \u2014 meet here.",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "52.547262, 57.490792",
+          "start": 5,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Bank account: 146044266",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "146044266",
+          "start": 14,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "Coordinates: 3.467825, 14.934331",
+      "entities": [
+        {
+          "type": "GPS",
+          "value": "3.467825, 14.934331",
+          "start": 13,
+          "end": 32
+        }
+      ]
+    },
+    {
+      "text": "Manager Olga Ali approved the request.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Olga Ali",
+          "start": 8,
+          "end": 16
+        }
+      ]
+    },
+    {
+      "text": "Bank account: 386697063",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "386697063",
+          "start": 14,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "text": "DNS record: proforge.dev",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "proforge.dev",
+          "start": 12,
+          "end": 24
+        }
+      ]
+    },
+    {
+      "text": "Access from 116.11.154.165 blocked",
+      "entities": [
+        {
+          "type": "IP_ADDRESS",
+          "value": "116.11.154.165",
+          "start": 12,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Contact Mei at +1-356-795-2605",
+      "entities": [
+        {
+          "type": "PHONE",
+          "value": "+1-356-795-2605",
+          "start": 15,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "text": "Email: hiroshi-okafor@demoapp.cloud",
+      "entities": [
+        {
+          "type": "EMAIL",
+          "value": "hiroshi-okafor@demoapp.cloud",
+          "start": 7,
+          "end": 35
+        }
+      ]
+    },
+    {
+      "text": "Valid until 2019-05-19",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "2019-05-19",
+          "start": 12,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "Interview with Hiroshi Ali, CEO of CloudPeak.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Hiroshi Ali",
+          "start": 15,
+          "end": 26
+        }
+      ]
+    },
+    {
+      "text": "Bank account: # 831814188",
+      "entities": [
+        {
+          "type": "BANK_ACCOUNT",
+          "value": "# 831814188",
+          "start": 14,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "text": "Interview with Zara Kowalski, CEO of ApexSoft.",
+      "entities": [
+        {
+          "type": "PERSON",
+          "value": "Zara Kowalski",
+          "start": 15,
+          "end": 28
+        }
+      ]
+    },
+    {
+      "text": "Valid until 2025-11-04",
+      "entities": [
+        {
+          "type": "DATE",
+          "value": "2025-11-04",
+          "start": 12,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "text": "Server: govault.org (145.125.6.197)",
+      "entities": [
+        {
+          "type": "DOMAIN",
+          "value": "govault.org",
+          "start": 8,
+          "end": 19
+        },
+        {
+          "type": "IP_ADDRESS",
+          "value": "145.125.6.197",
+          "start": 21,
+          "end": 34
+        }
+      ]
+    }
+  ]
+}

@@ -402,7 +402,7 @@ PATTERN_DEFS: list[tuple[str, str, float]] = [
     # as well as common prefix/suffix patterns like "Bank:", "account:", "acct no:", "A/c:".
     ("BANK_ACCOUNT", r"(?i)\b(?:bank|account|acct|A/c)\s*(?:number|no|#)?\s*(?::|is|was)?\s*\d{8,17}\b", 0.85),
     # Non-IBAN-looking digit sequences — exclude those starting with 2 letters
-    ("BANK_ACCOUNT", r"(?<![A-Za-z])\b\d{12,20}\b", 0.55),
+    # Removed bare \d{12,20} pattern — was causing 28 CC FPs on OOD. Context-anchored only.
 
     # ── PERSON ───────────────────────────────────────────────────────
     # Title-prefixed — name must be 2+ chars, not a single letter

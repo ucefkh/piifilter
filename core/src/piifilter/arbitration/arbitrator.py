@@ -685,7 +685,10 @@ class Arbitrator:
         # by the more specific entity type. Drop the DOMAIN span entirely.
         _DOMAIN_CONTAINER_TYPES = {
             EntityType.EMAIL,
-            EntityType.URL,
+            # URL entities deliberately excluded — the bare domain (e.g.,
+            # \"probase.app\") is a useful sub-entity extraction even when
+            # contained inside a full URL (\"https://www.probase.app/home\").
+            # EntityType.URL,
             EntityType.PRIVATE_URL,
             EntityType.DATABASE_URL,
             EntityType.IP_ADDRESS,

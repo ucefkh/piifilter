@@ -1277,6 +1277,10 @@ class RegexDetector(Detector):
                         entities[i].entity_type == EntityType.ADDRESS
                         and entity_type == EntityType.CITY
                     )
+                    and not (
+                        entities[i].entity_type == EntityType.URL
+                        and entity_type == EntityType.DOMAIN
+                    )
                 ):
                     continue
 
