@@ -1,6 +1,6 @@
 {
   "title": "PIIFilter Detection Recall Benchmark Report (held-out) (arbitration-on)",
-  "timestamp": "2026-07-21T12:04:07Z",
+  "timestamp": "2026-07-21T20:43:10Z",
   "arbitration": {
     "enabled": true
   },
@@ -49,13 +49,13 @@
       "detector": "regex",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 632,
+      "total_detected_entities": 654,
       "total_true_positives": 534,
-      "total_false_positives": 98,
+      "total_false_positives": 120,
       "total_false_negatives": 6,
-      "overall_precision": 0.8449367088607594,
+      "overall_precision": 0.8165137614678899,
       "overall_recall": 0.9888888888888889,
-      "overall_f1": 0.9112627986348122,
+      "overall_f1": 0.8944723618090452,
       "per_type": {
         "ADDRESS": {
           "true_positives": 18,
@@ -185,14 +185,14 @@
         },
         "CREDIT_CARD": {
           "true_positives": 37,
-          "false_positives": 1,
+          "false_positives": 23,
           "false_negatives": 1,
           "n": 38,
           "n_total": 46,
-          "precision": 0.9737,
+          "precision": 0.6167,
           "recall": 0.9783,
-          "f1": 0.976,
-          "f2": 0.9773,
+          "f1": 0.7565,
+          "f2": 0.8756,
           "recall_ci": [
             0.8866,
             0.9962
@@ -627,11 +627,19 @@
         "NONE": {
           "GPS": 3
         },
+        "CREDIT_CARD": {
+          "CREDIT_CARD": 16,
+          "MASKED_SSN": 6
+        },
         "IP_ADDRESS": {
           "MASKED_SSN": 6,
           "SOCIAL_SECURITY": 1,
           "CREDIT_CARD": 1,
           "BANK_ACCOUNT": 1
+        },
+        "SOCIAL_SECURITY": {
+          "CREDIT_CARD": 3,
+          "MASKED_SSN": 2
         },
         "URL": {
           "DOMAIN": 32
@@ -644,17 +652,14 @@
           "MASKED_SSN": 12,
           "PHONE": 2
         },
-        "CREDIT_CARD": {
-          "MASKED_SSN": 6
-        },
         "CITY": {
           "CITY": 1
         },
         "GPS": {
           "GPS": 4
         },
-        "SOCIAL_SECURITY": {
-          "MASKED_SSN": 2
+        "BANK_ACCOUNT": {
+          "CREDIT_CARD": 3
         },
         "COUNTRY": {
           "CITY": 2
@@ -934,14 +939,15 @@
           "index": 17,
           "text_preview": "Raw: XXXX-XXXX-XXXX-1111",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "MASKED_CC"
           ]
         },
@@ -979,9 +985,9 @@
           "index": 20,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30Tk66IvBmYb1kVI4GMxq9DNaJYL7rmL.S",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -1026,14 +1032,15 @@
           "index": 23,
           "text_preview": "Raw: XXXX-XXXX-XXXX-0015",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "MASKED_CC"
           ]
         },
@@ -1057,14 +1064,15 @@
           "index": 25,
           "text_preview": "Found: 323134383630303530",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -1364,9 +1372,9 @@
           "index": 45,
           "text_preview": "Hidden field: 4111 1111-1111 1111",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -1549,9 +1557,9 @@
           "index": 57,
           "text_preview": "Obfuscated credit_card: 5500 0000-0000 0004",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -1811,14 +1819,15 @@
           "index": 74,
           "text_preview": "Data: 313330323933303131",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -1963,14 +1972,15 @@
           "index": 84,
           "text_preview": "Data: XXXX-XXXX-XXXX-0004",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "MASKED_CC"
           ]
         },
@@ -2381,9 +2391,9 @@
           "index": 111,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30ZXWsrNjaAlUqlXPHoomw6Tx3pcAYYk.S",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -2685,15 +2695,16 @@
           "index": 131,
           "text_preview": "Account: 5393818839392082",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
@@ -3370,9 +3381,9 @@
           "index": 175,
           "text_preview": "Encoded: 5500 . 0000 . 0000 . 0004",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -3535,14 +3546,15 @@
           "index": 185,
           "text_preview": "Raw: 313037333432393339",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -3825,9 +3837,9 @@
           "index": 204,
           "text_preview": "Hidden field: 6011 0000-0000 0004",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -4492,9 +4504,9 @@
           "index": 247,
           "text_preview": "Credit card: 6011-0000-0000-0004",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -4960,9 +4972,9 @@
           "index": 278,
           "text_preview": "Obfuscated credit_card: 5500 0000-0000 0004",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -5722,9 +5734,9 @@
           "index": 328,
           "text_preview": "Hidden field: 4111 . 1111 . 1111 . 1111",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -6248,9 +6260,9 @@
           "index": 362,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30TJlArbrDpHkjpvnfybEBpIZpTFkC1Z.S",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -6729,30 +6741,32 @@
           "index": 393,
           "text_preview": "A/c: 362659033034859265",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
           "index": 394,
           "text_preview": "Bank account 514142907840163367",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
@@ -6828,9 +6842,9 @@
           "index": 400,
           "text_preview": "Hidden field: 4111.1111.1111.1111",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -7196,9 +7210,9 @@
           "index": 424,
           "text_preview": "CC: 4111-1111-1111-1111 Token: eyJ0eX...NiJ9.e30ge7mwQfSUc2Z2s1C2kzipyHRF3I2EE.S",
           "expected": 2,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 2,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -7487,9 +7501,9 @@
           "index": 443,
           "text_preview": "Encoded: 3782 8224 6310 005",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -7951,13 +7965,13 @@
       "detector": "pipeline-arbitration",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 587,
-      "total_true_positives": 534,
-      "total_false_positives": 53,
-      "total_false_negatives": 6,
-      "overall_precision": 0.909710391822828,
-      "overall_recall": 0.9888888888888889,
-      "overall_f1": 0.9476486246672582,
+      "total_detected_entities": 591,
+      "total_true_positives": 532,
+      "total_false_positives": 59,
+      "total_false_negatives": 8,
+      "overall_precision": 0.9001692047377327,
+      "overall_recall": 0.9851851851851852,
+      "overall_f1": 0.940760389036251,
       "per_type": {
         "ADDRESS": {
           "true_positives": 18,
@@ -8002,24 +8016,24 @@
           ]
         },
         "BANK_ACCOUNT": {
-          "true_positives": 7,
+          "true_positives": 5,
           "false_positives": 1,
-          "false_negatives": 0,
+          "false_negatives": 2,
           "n": 7,
           "n_total": 7,
-          "precision": 0.875,
-          "recall": 1.0,
-          "f1": 0.9333,
-          "f2": 0.9722,
+          "precision": 0.8333,
+          "recall": 0.7143,
+          "f1": 0.7692,
+          "f2": 0.7353,
           "recall_ci": [
-            0.6457,
-            1.0
+            0.3589,
+            0.9178
           ],
           "real_n": 7,
-          "real_recall": 1.0,
+          "real_recall": 0.7143,
           "real_recall_ci": [
-            0.6457,
-            1.0
+            0.3589,
+            0.9178
           ]
         },
         "CITY": {
@@ -8087,14 +8101,14 @@
         },
         "CREDIT_CARD": {
           "true_positives": 37,
-          "false_positives": 1,
+          "false_positives": 7,
           "false_negatives": 1,
           "n": 38,
           "n_total": 46,
-          "precision": 0.9737,
+          "precision": 0.8409,
           "recall": 0.9783,
-          "f1": 0.976,
-          "f2": 0.9773,
+          "f1": 0.9044,
+          "f2": 0.9473,
           "recall_ci": [
             0.8866,
             0.9962
@@ -8532,6 +8546,10 @@
           "CREDIT_CARD": 1,
           "BANK_ACCOUNT": 1
         },
+        "SOCIAL_SECURITY": {
+          "CREDIT_CARD": 3,
+          "MASKED_SSN": 2
+        },
         "ADDRESS": {
           "CITY": 18
         },
@@ -8547,8 +8565,8 @@
         "NONE": {
           "PERSON": 4
         },
-        "SOCIAL_SECURITY": {
-          "MASKED_SSN": 2
+        "BANK_ACCOUNT": {
+          "CREDIT_CARD": 3
         }
       },
       "example_results": [
@@ -8827,7 +8845,7 @@
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "MASKED_CC"
+            "CREDIT_CARD"
           ]
         },
         {
@@ -8919,7 +8937,7 @@
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "MASKED_CC"
+            "CREDIT_CARD"
           ]
         },
         {
@@ -8942,14 +8960,15 @@
           "index": 25,
           "text_preview": "Found: 323134383630303530",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -9693,14 +9712,15 @@
           "index": 74,
           "text_preview": "Data: 313330323933303131",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -9851,7 +9871,7 @@
             "CREDIT_CARD"
           ],
           "detected_types": [
-            "MASKED_CC"
+            "CREDIT_CARD"
           ]
         },
         {
@@ -10562,15 +10582,16 @@
           "index": 131,
           "text_preview": "Account: 5393818839392082",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
@@ -11410,14 +11431,15 @@
           "index": 185,
           "text_preview": "Raw: 313037333432393339",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -14590,14 +14612,14 @@
           "text_preview": "A/c: 362659033034859265",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "CREDIT_CARD"
           ]
         },
         {
@@ -14605,14 +14627,14 @@
           "text_preview": "Bank account 514142907840163367",
           "expected": 1,
           "detected": 1,
-          "true_positives": 1,
-          "false_positives": 0,
-          "false_negatives": 0,
+          "true_positives": 0,
+          "false_positives": 1,
+          "false_negatives": 1,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "CREDIT_CARD"
           ]
         },
         {
@@ -15805,13 +15827,13 @@
       "detector": "pipeline-raw",
       "total_examples": 473,
       "total_expected_entities": 540,
-      "total_detected_entities": 669,
+      "total_detected_entities": 680,
       "total_true_positives": 534,
-      "total_false_positives": 135,
+      "total_false_positives": 146,
       "total_false_negatives": 6,
-      "overall_precision": 0.7982062780269058,
+      "overall_precision": 0.7852941176470588,
       "overall_recall": 0.9888888888888889,
-      "overall_f1": 0.8833746898263027,
+      "overall_f1": 0.8754098360655738,
       "per_type": {
         "ADDRESS": {
           "true_positives": 18,
@@ -15941,14 +15963,14 @@
         },
         "CREDIT_CARD": {
           "true_positives": 37,
-          "false_positives": 12,
+          "false_positives": 23,
           "false_negatives": 1,
           "n": 38,
           "n_total": 46,
-          "precision": 0.7551,
+          "precision": 0.6167,
           "recall": 0.9783,
-          "f1": 0.8523,
-          "f2": 0.9237,
+          "f1": 0.7565,
+          "f2": 0.8756,
           "recall_ci": [
             0.8866,
             0.9962
@@ -16384,6 +16406,10 @@
           "GPS": 3,
           "PERSON": 4
         },
+        "CREDIT_CARD": {
+          "CREDIT_CARD": 16,
+          "MASKED_SSN": 6
+        },
         "IP_ADDRESS": {
           "IP_ADDRESS": 1,
           "MASKED_SSN": 6,
@@ -16391,16 +16417,13 @@
           "CREDIT_CARD": 1,
           "BANK_ACCOUNT": 1
         },
-        "CREDIT_CARD": {
-          "CREDIT_CARD": 11,
-          "MASKED_SSN": 6
+        "SOCIAL_SECURITY": {
+          "CREDIT_CARD": 3,
+          "SOCIAL_SECURITY": 12,
+          "MASKED_SSN": 2
         },
         "URL": {
           "DOMAIN": 32
-        },
-        "SOCIAL_SECURITY": {
-          "SOCIAL_SECURITY": 12,
-          "MASKED_SSN": 2
         },
         "ADDRESS": {
           "CITY": 18,
@@ -16419,6 +16442,9 @@
         },
         "GPS": {
           "GPS": 4
+        },
+        "BANK_ACCOUNT": {
+          "CREDIT_CARD": 3
         },
         "COMPANY": {
           "PERSON": 3,
@@ -16699,14 +16725,15 @@
           "index": 17,
           "text_preview": "Raw: XXXX-XXXX-XXXX-1111",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "MASKED_CC"
           ]
         },
@@ -16791,14 +16818,15 @@
           "index": 23,
           "text_preview": "Raw: XXXX-XXXX-XXXX-0015",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "MASKED_CC"
           ]
         },
@@ -16822,14 +16850,15 @@
           "index": 25,
           "text_preview": "Found: 323134383630303530",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -17576,14 +17605,15 @@
           "index": 74,
           "text_preview": "Data: 313330323933303131",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -17665,9 +17695,9 @@
           "index": 80,
           "text_preview": "CC: 3782-8224-6310-005 Token: eyJ0eX...NiJ9.e30JLfYOas51j1RCGVdnuj6UnsrMqFLUS.Sf",
           "expected": 2,
-          "detected": 3,
+          "detected": 2,
           "true_positives": 2,
-          "false_positives": 1,
+          "false_positives": 0,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD",
@@ -17728,14 +17758,15 @@
           "index": 84,
           "text_preview": "Data: XXXX-XXXX-XXXX-0004",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "MASKED_CC"
           ]
         },
@@ -18451,15 +18482,16 @@
           "index": 131,
           "text_preview": "Account: 5393818839392082",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
@@ -19138,9 +19170,9 @@
           "index": 175,
           "text_preview": "Encoded: 5500 . 0000 . 0000 . 0004",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -19303,14 +19335,15 @@
           "index": 185,
           "text_preview": "Raw: 313037333432393339",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "SOCIAL_SECURITY"
           ],
           "detected_types": [
+            "CREDIT_CARD",
             "SOCIAL_SECURITY"
           ]
         },
@@ -21490,9 +21523,9 @@
           "index": 328,
           "text_preview": "Hidden field: 4111 . 1111 . 1111 . 1111",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"
@@ -22498,30 +22531,32 @@
           "index": 393,
           "text_preview": "A/c: 362659033034859265",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
           "index": 394,
           "text_preview": "Bank account 514142907840163367",
           "expected": 1,
-          "detected": 1,
+          "detected": 2,
           "true_positives": 1,
-          "false_positives": 0,
+          "false_positives": 1,
           "false_negatives": 0,
           "expected_types": [
             "BANK_ACCOUNT"
           ],
           "detected_types": [
-            "BANK_ACCOUNT"
+            "BANK_ACCOUNT",
+            "CREDIT_CARD"
           ]
         },
         {
@@ -22597,9 +22632,9 @@
           "index": 400,
           "text_preview": "Hidden field: 4111.1111.1111.1111",
           "expected": 1,
-          "detected": 2,
+          "detected": 3,
           "true_positives": 1,
-          "false_positives": 1,
+          "false_positives": 2,
           "false_negatives": 0,
           "expected_types": [
             "CREDIT_CARD"

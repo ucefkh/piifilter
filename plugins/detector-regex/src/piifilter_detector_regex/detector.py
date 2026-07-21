@@ -72,7 +72,7 @@ class RegexDetector(Detector):
         coordinate values (e.g. 40.7128 -> 407128), making GPS undetectable.
         """
         t0 = time.monotonic()
-        cleaned, _log, text_for_gps = self._deobfuscator(text)
+        cleaned, _log, text_for_gps, text_preserved = self._deobfuscator(text)
 
         # ── Pre-strip patterns ─────────────────────────────────────────
         # These entity types MUST run on deobfuscated-but-NOT-stripped text
@@ -173,8 +173,24 @@ class RegexDetector(Detector):
         # but non-Luhn-valid ones with proper format+context need the pre-strip pass.
         # Dedup (same-type containment) later handles overlap with stripped-text CC matches.
         credit_card_entities_presistrip, _ = self._run_patterns_for_type(
-            text_for_gps, {EntityType.CREDIT_CARD}
+            text_preserved, {EntityType.CREDIT_CARD}
         )
+        # Filter: only keep pre-strip CC entities that have FORMAT-specific patterns
+        # (separators like dash/dot/space between groups). Drop bare-digit matches
+        # (conf 0.50 and 0.65 patterns) — those should go through the normal Luhn gate
+        # on stripped text. The format-specific patterns need preserved separators
+        # to match, so they can only fire on text_preserved, not stripped text.
+        # Format patterns have conf ≥ 0.55-0.65 (dash/space/dot separated groups),
+        # context-prefixed have conf 0.80-0.95.
+        # Bare patterns have conf 0.50 (generic 16-digit) and 0.65 (generic 13-19).
+        _cc_filtered_presistrip = []
+        for _cc_e in credit_card_entities_presistrip:
+            # Keep if high confidence (≥0.75) — these are context-prefixed or IIN-prefixed
+            # Keep if medium confidence (0.55-0.74) — these are format-specific patterns
+            # Drop if low confidence (<0.55) — these are bare-digit patterns
+            if _cc_e.confidence >= 0.55:
+                _cc_filtered_presistrip.append(_cc_e)
+        credit_card_entities_presistrip = _cc_filtered_presistrip
         # ── CITY (pre-strip) — correct span positions after GPS dot removal
         city_entities_presistrip, _ = self._run_patterns_for_type(
             text_for_gps, {EntityType.CITY}
@@ -233,7 +249,7 @@ class RegexDetector(Detector):
         entities.extend(luhn_found)
         ssn_found = self._validate_ssn_runs(stripped, all_spans)
         entities.extend(ssn_found)
-        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS + PRIVATE_URL + IBAN + SSN + CITY) with the rest (from stripped text)
+        # Merge pre-strip entities (GPS + DATE + IP + PHONE + ADDRESS + PRIVATE_URL + IBAN + SSN + CC + CITY) with the rest (from stripped text)
         entities.extend(gps_entities)
         entities.extend(date_entities)
         entities.extend(ip_entities)
@@ -242,6 +258,7 @@ class RegexDetector(Detector):
         entities.extend(private_url_entities_presistrip)
         entities.extend(iban_entities_presistrip)
         entities.extend(ssn_entities_presistrip)
+        entities.extend(credit_card_entities_presistrip)
         entities.extend(city_entities_presistrip)
         entities.sort(key=lambda e: e.start)
 
@@ -561,7 +578,7 @@ class RegexDetector(Detector):
 
         IMPORTANT: GPS patterns are run on pre-strip text (see detect() docs).
         """
-        cleaned, _log, text_for_gps = self._deobfuscator(session.prompt)
+        cleaned, _log, text_for_gps, text_preserved = self._deobfuscator(session.prompt)
         # Pre-strip patterns: GPS, DATE, IP, PHONE, ADDRESS, PRIVATE_URL — these need dots/slashes/dashes
         # /commas to survive, which _strip_inner_separators destroys.
         gps_entities, _ = self._run_patterns_for_type(text_for_gps, {EntityType.GPS})

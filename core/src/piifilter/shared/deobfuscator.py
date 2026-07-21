@@ -179,7 +179,7 @@ class Deobfuscator:
         r"\b(?:(?:ROT|rot|Rot)[- ]?13|caesar|cipher)\b"
     )
 
-    def __call__(self, text: str) -> tuple[str, list[dict], str]:
+    def __call__(self, text: str) -> tuple[str, list[dict], str, str]:
         """Apply all deobfuscation transforms.
 
         Args:
@@ -237,6 +237,12 @@ class Deobfuscator:
         text = self._map_spoken_separators(text, log)
         text = self._normalize_ip_octet_spaces(text, log)
         text = self._normalize_ip_octet_dots(text, log)
+        # Save a copy of the text BEFORE the segment-normalization block
+        # (SSN, CC, digit-space collapse) so that format-specific CC patterns
+        # (space/dash/dot separated groups) can still be matched on pre-strip
+        # text that preserves those separators. This is used by the detector
+        # for the CC pre-strip detection pass.
+        text_preserved = text
         text = self._normalize_ssn_segments(text, log)
         text = self._normalize_cc_segments(text, log)
         text = self._cleanup_dash_spaces(text, log)
@@ -264,7 +270,7 @@ class Deobfuscator:
         text = self._remove_punctuation_stuffing(text, log)
         text = self._decode_pig_latin(text, log)
         text = self._swap_case(text, log)
-        return text, log, text_for_gps
+        return text, log, text_for_gps, text_preserved
 
     # ── 1. NFKC normalization ──────────────────────────────────────────
 
@@ -1685,7 +1691,7 @@ class Deobfuscator:
         for _round in range(max_depth):
             prev = current
             # Run the standard deobfuscation pipeline to get the new text
-            cleaned, _log, _gps = self.__call__(current)
+            cleaned, _log, _gps, _preserved = self.__call__(current)
 
             if cleaned == prev:
                 # Stable — done
